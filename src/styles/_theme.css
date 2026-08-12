@@ -3,15 +3,20 @@
  *
  * `inline` is required, for two independent reasons:
  *
- * 1. The font stacks reference another custom property (--font-inter /
- *    --font-bebas, injected by next/font). A non-inline @theme would emit
- *    `font-family: var(--font-sans)` and the indirection would resolve in the
- *    wrong place.
+ * 1. --font-bebas is BOTH a theme token here and the custom property next/font
+ *    injects onto <html>. A non-inline @theme emits it into :root as
+ *    `--font-bebas: var(--font-bebas), <fallbacks>` — self-referential. The
+ *    unlayered next/font declaration wins and the fallback stack is silently
+ *    dropped (measured: the loader's two families and nothing else).
+ *    --font-sans is safe, since it points at the differently-named
+ *    --font-inter; the collision is what forces the inline form.
  * 2. A large amount of hand-written CSS in _components.css reads the underlying
  *    channel properties directly (`hsl(var(--primary-transparent-200))`). The
  *    :root block in _base.css stays the single source of truth for those
  *    values; this file only names them for Tailwind. Flattening the indirection
  *    was considered and rejected — it would fork the palette in two places.
+ *
+ * See docs/adr/0002-colour-tokens-keep-indirection.md for the full reasoning.
  */
 @theme inline {
   /*

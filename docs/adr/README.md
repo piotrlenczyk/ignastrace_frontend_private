@@ -1,0 +1,19 @@
+# Architecture decision records
+
+A record belongs here when a decision is **hard to reverse**, **surprising without
+context**, and **the outcome of a real trade-off** — someone weighed alternatives and
+rejected them for reasons that are not visible in the resulting code. Everything else
+belongs in a code comment or in the regular docs.
+
+Records are immutable once merged. A decision that stops holding gets a _new_ record
+that supersedes the old one; the old one stays, with its status updated, so the reasoning
+trail survives.
+
+Keep repository file paths and excerpts of project code out of these records. They
+outlive the layout of the tree, and a record that names a file is wrong the day the file
+moves. Describe things by their role instead.
+
+| #                                              | Decision                                                     | Status   |
+| ---------------------------------------------- | ------------------------------------------------------------ | -------- |
+| [0001](0001-explicit-content-sources.md)       | Declare Tailwind's content sources explicitly, detection off | Accepted |
+| [0002](0002-colour-tokens-keep-indirection.md) | Colour tokens keep their custom-property indirection         | Accepted |

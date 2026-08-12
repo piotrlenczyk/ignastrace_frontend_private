@@ -15,6 +15,8 @@
  * across ~15 languages), docs/, figma-variables.json, and src/styles/new — the
  * generated Figma token pipeline, which is frozen and must never contribute
  * class names.
+ *
+ * See docs/adr/0001-explicit-content-sources.md for the full reasoning.
  */
 @source '../**/*.{js,ts,jsx,tsx}';
 

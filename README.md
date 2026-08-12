@@ -5,6 +5,7 @@ Next.js project for Mobitrace.io with typescript and tailwindcss
 - [Development](docs/development.md)
 - [Deployment](docs/deployment.md)
 - [Translations](docs/translations.md)
+- [Architecture decision records](docs/adr/README.md)
 
 ## Design
 
