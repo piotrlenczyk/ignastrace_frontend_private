@@ -1,0 +1,1882 @@
+{
+  "common": {
+    "back": "Volver",
+    "close": "Cerrar",
+    "close_menu": "Cerrar el menú",
+    "copied_to_clipboard": "Copiado al portapapeles",
+    "email_label": "Correo electrónico",
+    "errors": {
+      "email_exists": "Esta dirección de correo electrónico ya está en uso",
+      "rate_limit_error": "Has alcanzado tu límite diario. Por favor, inténtalo de nuevo mañana.",
+      "rate_limit_error_title": "Se ha alcanzado el límite",
+      "server_error": "Error del servidor",
+      "server_error_description": "Ocurrió un error al procesar tu solicitud. Por favor, inténtalo de nuevo."
+    },
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "open_menu": "Abrir el menú",
+    "settings": "Ajustes",
+    "subscription": "Suscripción"
+  },
+  "components": {
+    "country_selector": {
+      "no_results": "Código de país no encontrado.",
+      "placeholder": "Selecciona el código del país...",
+      "search_placeholder": "Búsqueda por país o código..."
+    },
+    "forms": {
+      "change_email": {
+        "confirmation_email_sent_description": "Hemos enviado un correo de confirmación a la nueva dirección. Por favor, confirma el cambio.",
+        "confirmation_email_sent_title": "Envío de correo electrónico de confirmación",
+        "current_email_label": "Correo electrónico actual",
+        "current_password_label": "Por seguridad, introduce tu contraseña actual",
+        "current_password_placeholder": "Introduce tu contraseña actual",
+        "errors": {
+          "current_password_required": "La contraseña actual es obligatoria.",
+          "invalid_email": "Introduce un correo electrónico válido."
+        },
+        "new_email_label": "Nuevo correo electrónico",
+        "new_email_placeholder": "Introducir nuevo correo electrónico",
+        "save_button": "Actualizar correo electrónico"
+      },
+      "change_password": {
+        "confirm_password_label": "Confirmar nueva contraseña",
+        "confirm_password_placeholder": "Confirma tu nueva contraseña",
+        "current_password_label": "Contraseña actual",
+        "current_password_placeholder": "Introduce tu contraseña actual",
+        "errors": {
+          "confirm_password_min_length": "Confirma la nueva contraseña con al menos 6 caracteres",
+          "current_password_required": "Se requiere la contraseña actual",
+          "new_password_min_length": "La nueva contraseña debe tener 6 caracteres como mínimo",
+          "new_password_required": "Es obligatorio introducir una nueva contraseña",
+          "passwords_must_match": "Las contraseñas deben coincidir"
+        },
+        "new_password_label": "Nueva contraseña",
+        "new_password_placeholder": "Introduce tu nueva contraseña",
+        "save_button": "Guardar cambios"
+      },
+      "delete_account": {
+        "cancel_button": "Cancelar",
+        "confirm_button": "Sí, eliminar mi cuenta",
+        "confirmation_message": "La cuenta se ha eliminado correctamente.",
+        "delete_account_button": "Borrar cuenta",
+        "description": "Esta acción no se puede deshacer. Por favor, asegúrate de tu decisión.",
+        "dialog_description": "Esta acción no se puede deshacer. Esto borrará permanentemente tu cuenta y eliminará tus datos de nuestros servidores.",
+        "dialog_title": "¿Está completamente seguro?",
+        "title": "Eliminar cuenta"
+      },
+      "edit_company": {
+        "add_social_network_button": "Añadir red social",
+        "address_label": "Dirección",
+        "address_placeholder": "Introduce la dirección de la empresa",
+        "company_name_label": "Nombre de la empresa",
+        "company_name_placeholder": "Introduce el nombre de la empresa",
+        "errors": {
+          "company_name_required": "El nombre de la empresa es obligatorio",
+          "url_invalid": "Introduce una URL válida"
+        },
+        "hide_address_map": "Ocultar mapa",
+        "horizontal_logo_alt_text": "Logotipo horizontal de la empresa",
+        "horizontal_logo_description": "Recomendado: JPEG, PNG. Máximo 5MB. 600x200px",
+        "horizontal_logo_label": "Logotipo horizontal",
+        "opening_hours_label": "Horario de apertura",
+        "opening_hours_placeholder": "Por ejemplo, de lunes a viernes: 9:00-17:00, sábado: 10:00-14:00, domingo: cerrado",
+        "profile_url_placeholder": "URL del perfil",
+        "save_button": "Guardar cambios",
+        "show_address_map": "Mostrar mapa",
+        "social_networks_label": "Redes sociales",
+        "squared_logo_alt_text": "Logotipo cuadrado de la empresa",
+        "squared_logo_label": "Logo cuadrado",
+        "website_label": "Página web",
+        "website_placeholder": "https://www.ejemplo.com"
+      },
+      "edit_profile": {
+        "description": "Actualiza tu información personal",
+        "errors": {
+          "first_name_required": "El nombre es obligatorio.",
+          "invalid_phone": "El número de teléfono no es válido.",
+          "last_name_required": "Los apellidos son obligatorios."
+        },
+        "first_name_label": "Nombre",
+        "first_name_placeholder": "Introduce tu nombre",
+        "last_name_label": "Apellido(s)",
+        "last_name_placeholder": "Introduce tu apellido",
+        "phone_label": "Número de teléfono",
+        "phone_placeholder": "Introduce tu número de teléfono",
+        "privacy_label": "Privacidad",
+        "profile_picture_alt": "Foto de perfil",
+        "profile_picture_label": "Foto de perfil",
+        "public_email_label": "Hacer que mi correo electrónico sea visible públicamente en mi perfil",
+        "public_phone_label": "Publicar mi número de teléfono en mi perfil",
+        "save_button": "Guardar cambios",
+        "title": "Editar perfil",
+        "upload_description": "Recomendado: JPEG, PNG. Máximo 5MB. 400x400px",
+        "upload_picture": "Cargar nueva foto",
+        "whatsapp_label": "Tengo una cuenta de WhatsApp con este número"
+      },
+      "forgot_password": {
+        "cancel_button": "Cancelar",
+        "email_label": "Correo electrónico",
+        "email_placeholder": "Dirección de correo electrónico",
+        "errors": {
+          "invalid_email": "Introduce un correo electrónico válido."
+        },
+        "submit_button": "Enviar contraseña",
+        "subtitle": "Introduce tu correo electrónico y te enviaremos tu contraseña",
+        "success": {
+          "done": "Listo",
+          "line_1": "Hemos enviado tu contraseña a",
+          "line_2": "Comprueba tu correo electrónico para iniciar sesión.",
+          "title": "Se ha enviado la contraseña"
+        },
+        "title": "¿Olvidaste la contraseña?"
+      },
+      "reset_password": {
+        "confirm_password_label": "Confirmar nueva contraseña",
+        "confirm_password_placeholder": "Confirma tu nueva contraseña",
+        "errors": {
+          "password_min_length": "La contraseña debe tener 6 caracteres como mínimo.",
+          "passwords_do_not_match": "Las contraseñas no coinciden."
+        },
+        "new_password_label": "Nueva contraseña",
+        "new_password_placeholder": "Introduce tu nueva contraseña",
+        "submit_button": "Restablecer contraseña"
+      },
+      "sign_in": {
+        "email_label": "Correo electrónico",
+        "email_placeholder": "Dirección de correo electrónico",
+        "errors": {
+          "account_not_found": "No se pudo encontrar tu cuenta de Mobitrace.",
+          "invalid_credentials": "El correo electrónico y la contraseña que has introducido no coinciden con nuestros registros. Por favor, revisa tus credenciales e inténtalo de nuevo.",
+          "invalid_email": "Introduce un correo electrónico válido.",
+          "password_min_length": "La contraseña debe tener 6 caracteres como mínimo."
+        },
+        "forgot_password": "¿Olvidaste la contraseña?",
+        "or": "o",
+        "password_label": "Contraseña",
+        "password_placeholder": "Contraseña",
+        "submit_button": "Iniciar sesión",
+        "title": "Inicia sesión en tu cuenta"
+      },
+      "stripe_form": {
+        "card_name_placeholder": "Nombre en la tarjeta",
+        "credit_card_label": "Tarjeta de crédito",
+        "credit_card_placeholder": "1234 1234 1234 1234",
+        "cvc_placeholder": "CVC",
+        "errors": {
+          "apple_pay_not_available": "Apple Pay no es compatible",
+          "apple_pay_not_available_description": "No tienes habilitado este método de pago para este dispositivo o navegador. Por favor, elige otro método de pago.",
+          "card_name_required": "Introduce el nombre en la tarjeta.",
+          "card_number_required": "Introduce el número de la tarjeta.",
+          "cvc_required": "Introduce el CVC.",
+          "expiration_date_required": "Introduce la fecha de caducidad.",
+          "google_pay_not_available": "Google Pay no es compatible",
+          "google_pay_not_available_description": "No tienes habilitado este método de pago para este dispositivo o navegador. Por favor, elige otro método de pago.",
+          "name_invalid_characters": "El nombre no puede contener números.",
+          "name_invalid_special_characters": "El nombre no puede contener caracteres especiales.",
+          "stripe_generic_error": "No podemos autenticar su método de pago. Por favor, elija un método de pago diferente e inténtelo de nuevo.",
+          "stripe_generic_error_title": "Error de pago",
+          "zip_code_invalid_format": "Introduce un código postal válido."
+        },
+        "expiration_date_placeholder": "MM/AA",
+        "zip_code_placeholder": "Código postal (opcional)"
+      }
+    },
+    "image_upload_input": {
+      "upload_button_text": "Cargar nueva foto",
+      "upload_description": "Recomendado: JPEG, PNG. Máximo 5MB. 400x400px",
+      "upload_label": "Foto de perfil"
+    },
+    "phone_input": {
+      "errors": {
+        "invalid_phone": "Introduce un número de teléfono válido."
+      },
+      "label": "Introduce el número que quieres localizar",
+      "no_results": "Código de país no encontrado.",
+      "phone_placeholder": "123456789",
+      "search_placeholder": "Búsqueda por país o código...",
+      "submit": "Localizar"
+    },
+    "settings_navigator": {
+      "change_email": {
+        "description": "Actualiza tu dirección de correo electrónico",
+        "label": "Cambiar correo electrónico"
+      },
+      "change_password": {
+        "description": "Actualiza la contraseña de tu cuenta",
+        "label": "Cambiar contraseña"
+      },
+      "company_profile": {
+        "description": "Actualiza la información de tu empresa",
+        "label": "Perfil de la empresa"
+      },
+      "delete_account": {
+        "description": "Elimina tu cuenta y todos los datos asociados",
+        "label": "Eliminar cuenta"
+      },
+      "edit_profile": {
+        "description": "Actualiza tu información personal",
+        "label": "Editar perfil"
+      },
+      "no_access": "No tienes acceso a esta sección. Este contenido es exclusivo para usuarios profesionales.",
+      "notifications": {
+        "description": "Gestiona tus preferencias de notificación por correo electrónico",
+        "label": "Notificaciones"
+      },
+      "subscription": {
+        "description": "Gestiona tu plan de suscripción",
+        "label": "Suscripción"
+      },
+      "title": "Ajustes"
+    }
+  },
+  "consent": {
+    "accept": "Aceptar",
+    "decline": "Rechazar",
+    "decline_accept": "Volver a inicio",
+    "decline_description": "Necesitamos tu permiso para usar nuestro servicio de mensajería, especialmente para números de EE. UU. y Canadá. Sin él, esta función no está disponible. Vuelve cuando quieras continuar.",
+    "decline_title": "¡Vaya! Necesitamos tu consentimiento",
+    "description": "Para localizar tu teléfono, necesitamos enviarte un SMS. Confirma que aceptas recibirlo.",
+    "title": "Confirmación requerida"
+  },
+  "contest": {
+    "agree": "Aceptar",
+    "decline": "Rechazar",
+    "description": "Confirmo que el número de teléfono introducido es mío y acepto recibir mensajes.",
+    "title": "¿Deseas recibir mensajes?"
+  },
+  "footer": {
+    "brand": "Mobitrace.io",
+    "description": "Localiza cualquier teléfono móvil, al instante y sin esfuerzo con Mobitrace.",
+    "links": {
+      "about_us": "Quiénes somos",
+      "cancel_subscription": "Cancelar suscripción",
+      "contact": "Contacto",
+      "contacts": "Contacto",
+      "cookie_policy": "Política de cookies",
+      "faqs": "Preguntas frecuentes",
+      "home": "Inicio",
+      "location_number": "Ubicación por número",
+      "login": "Iniciar sesión",
+      "pricing": "Precios",
+      "privacy policy": "Política de privacidad",
+      "reverse_lookup": "Búsqueda inversa",
+      "terms_and_conditions": "Términos y condiciones"
+    },
+    "rights": "Todos los derechos reservados."
+  },
+  "header": {
+    "about": "Quiénes somos",
+    "home": "Inicio",
+    "open_menu": "Abrir el menú",
+    "sign_in": "Iniciar sesión",
+    "sign_up": "Registrarse"
+  },
+  "language": {
+    "english": "English",
+    "spanish": "Español"
+  },
+  "navigation": {
+    "about_us": "Quiénes somos",
+    "contact": "Contacto",
+    "dashboard": "Panel",
+    "faqs": "Preguntas frecuentes",
+    "home": "Inicio",
+    "mobile_dialog_description": "Este cuadro de diálogo contiene los principales enlaces de navegación",
+    "mobile_dialog_title": "Navegación principal",
+    "pricing": "Precios",
+    "settings": "Ajustes"
+  },
+  "pages": {
+    "about": {
+      "cards": {
+        "card_1": {
+          "description": "<p>En Mobitrace, hacemos que el rastreo de la ubicación sea simple, fiable y seguro. Nuestra misión es ayudarte a mantenerte conectado con tus seres queridos o personal clave, utilizando tecnología avanzada para el rastreo de la ubicación de teléfonos en tiempo real.</p>",
+          "title": "Nuestra misión"
+        },
+        "card_2": {
+          "description": "<p>Mobitrace combina el rastreo de teléfonos con servicios detallados de información pública:</p><ul><li>Rastreo de teléfonos: Envía un mensaje de texto personalizado con un enlace que permite a los destinatarios compartir su ubicación. El rastreo solo se realiza con el consentimiento explícito del destinatario.</li><li>Búsqueda avanzada de datos: Accede a datos de contacto, historial de ubicaciones y mucho más.</li><li>Alcance global: Funciona en todos los teléfonos, redes y países: localiza cualquier número de teléfono, esté donde esté.</li></ul>",
+          "title": "Qué ofrecemos"
+        },
+        "card_3": {
+          "description": "<ul><li>Simplicidad: Genera una URL, envíala y haz el rastreo una vez aprobada.</li><li>Seguridad: Todo el seguimiento es consensuado y seguro.</li><li>Precisión en tiempo real: Recibe datos de ubicación actualizados y precisos.</li></ul>",
+          "title": "Por qué elegir Mobitrace"
+        },
+        "card_4": {
+          "description": "<p>Ya seas un padre o madre precavido o un amigo que se preocupa, Mobitrace está aquí para ayudarte a mantenerte conectado con las personas que más te importan. Gracias por elegir Mobitrace, donde el rastreo y la información se unen para mantenerte informado y seguro.</p>",
+          "title": "Únete a nosotros"
+        }
+      },
+      "description": "Te damos la bienvenida a Mobitrace, tu servicio de confianza para encontrar teléfonos móviles fácilmente y acceder a información pública detallada. Colaboramos con los principales proveedores de datos globales de EE. UU., Reino Unido, Europa y más, garantizando búsquedas precisas de teléfonos y direcciones para que estés informado y conectado.",
+      "title": "Quiénes somos"
+    },
+    "cancellation": {
+      "form": {
+        "email_label": "Dirección de correo electrónico",
+        "error_not_found_description": "Por favor, verifica e inténtalo de nuevo",
+        "error_not_found_title": "¡Ups! No hay ninguna cuenta que coincida con el correo electrónico.",
+        "error_not_subscribed_title": "No estás suscrito.",
+        "errors": {
+          "invalid_email": "Introduce un correo electrónico válido."
+        },
+        "submit": "Cancelar suscripción",
+        "success_description": "Ya no te cobrarán.",
+        "success_title": "Te has dado de baja."
+      },
+      "info_email": "Si no recuerdas qué correo electrónico utilizaste para registrarte, busca en tu bandeja de entrada correos electrónicos de \"mobitrace.io\". Si no, ponte en contacto con nuestro amable servicio de atención al cliente  <link>aquí</link>.",
+      "info_user": "También puedes cancelar tu suscripción iniciando sesión en tu cuenta, yendo a la pestaña \"Suscripción\" y haciendo clic en \"Cancelar suscripción\".",
+      "subtitle": "Para cancelar tu suscripción fácilmente, introduce el correo electrónico que usaste al crear la cuenta.",
+      "title": "Cancelar suscripción"
+    },
+    "checkout": {
+      "action_form": "Obtener ubicación",
+      "agree_description": "Al continuar, aceptas que se te cobre la cantidad de {trialPrice} ahora y aceptas nuestras <terms>Condiciones de uso</terms> y <privacy>Política de privacidad</privacy>. El pago aparecerá como \"mobitrace.io\" en el extracto de tu tarjeta de crédito. Después de 7 días se te cobrarán {subscriptionPrice} cada 4 semanas hasta que finalice la suscripción. Puedes cancelar en cualquier momento. Para cualquier consulta, escríbenos a support@mobitrace.io o llámanos al +1 360 525 2573.",
+      "agree_description_24": "Al continuar con el pago, aceptas iniciar hoy una prueba de 24 horas de {trialPrice}. A menos que la canceles antes de que termine la prueba, tu suscripción se renovará automáticamente a {subscriptionPrice} cada 4 semanas. Puedes cancelar en cualquier momento. Al continuar, también aceptas nuestros <terms>Términos de uso</terms> y reconoces nuestra <privacy>Política de privacidad</privacy>.",
+      "agree_description_reactivate": "Al continuar, aceptas reactivar tu suscripción y que se te cobre {subscriptionPrice} ahora. El pago aparecerá como \"mobitrace.io\" en el extracto de tu tarjeta de crédito. Se te cobrará {subscriptionPrice} cada 4 semanas hasta que finalice tu suscripción. Puedes cancelar en cualquier momento. Para cualquier consulta, puedes contactarnos en support@mobitrace.io o por teléfono en el +1 360 525 2573",
+      "agree_description_subscription": "Al continuar, aceptas que se te cobre {subscriptionPrice} ahora y aceptas nuestras <terms>Condiciones de uso</terms> y <privacy>Política de privacidad</privacy>. El pago aparecerá como \"mobitrace.io\" en el extracto de tu tarjeta de crédito. Se te cobrarán {subscriptionPrice} cada 4 semanas hasta que finalice la suscripción. Puedes cancelar en cualquier momento. Para cualquier consulta, escríbenos a support@mobitrace.io o llámanos al +1 360 525 2573.",
+      "back_description": "Si no quedas completamente satisfecho durante el periodo de prueba de 7 días, comunícanoslo y estaremos encantados de tramitar un reembolso completo.",
+      "back_description_24": "Si no quedas completamente satisfecho durante el periodo de prueba de 24 horas, no tienes más que comunicárnoslo y te reembolsaremos el importe íntegro.",
+      "back_title": "Te devolvemos el dinero",
+      "cancel_description": "Puedes darte de baja en cualquier momento desde tu panel de control o contactando con nosotros en <email>support@mobitrace.io</email>.",
+      "cancel_title": "Cancela en cualquier momento",
+      "loading": "Estamos procesando el pago...",
+      "title": "Desbloquea la ubicación de",
+      "total": "Total a pagar:",
+      "trust_100": "Pagos 100% seguros",
+      "trust_cancel": "Cancela en cualquier momento"
+    },
+    "contact": {
+      "contact_information": {
+        "company_description": "<strong>Estados Unidos</strong><br>800 N King Street Suite 304-1119<br>Wilmington, DE 19801 US</br></br><strong>Emiratos Árabes Unidos</strong></br>Building A1, Dubai Digital Park</br>Dubai Silicon Oasis, Dubai</br>IFZA Business Park, DDP</br>Premises No. 5342-001</br>Emiratos Árabes Unidos</br></br><strong>Irlanda</strong></br>40 Mespil Road</br>Dublín 4, Irlanda",
+        "company_title": "Ubicaciones",
+        "email_description": "support@mobitrace.io",
+        "email_title": "Correo electrónico",
+        "phone_description": "+1-360-525-2573",
+        "phone_title": "Teléfono",
+        "title": "Información de contacto"
+      },
+      "contact_us": "Contacto",
+      "form": {
+        "billing_question": "Pregunta sobre facturación",
+        "email_label": "Correo electrónico",
+        "errors": {
+          "invalid_email": "Introduce un correo electrónico válido.",
+          "invalid_name_format": "Introduce un nombre válido.",
+          "invalid_surname_format": "Introduce un appelido(s) válido.",
+          "max_length": "Has superado el límite de caracteres.",
+          "message_max_length": "El mensaje no puede superar los {maxLength} caracteres.",
+          "message_required": "Introduce tu mensaje.",
+          "name_required": "Introduce tu nombre.",
+          "surname_required": "Introduce tus apellidos."
+        },
+        "message_label": "Mensaje",
+        "name_label": "Nombre",
+        "other": "Otros",
+        "subject_label": "Asunto",
+        "subject_placeholder": "Seleccionar",
+        "submit": "Enviar mensaje",
+        "submitted": "El mensaje se ha enviado correctamente. Nuestro equipo se pondrá en contacto contigo en un plazo de 2 horas.",
+        "submitted_title": "Se ha enviado el mensaje",
+        "suggested_improvement": "Sugerencia de mejora",
+        "surname_label": "Apellidos",
+        "technical_issue": "Problema técnico",
+        "title": "Contáctanos"
+      },
+      "subtitle": "¿Tienes una pregunta, comentario o necesitas ayuda?<br/> Ponte en contacto con nosotros.",
+      "title": "Estamos aquí para ayudarte"
+    },
+    "error": {
+      "body": "Por favor, inténtalo de nuevo más tarde, o contacta con el soporte si el problema persiste.",
+      "cta": "Volver a Inicio",
+      "title": "¡Ups! Algo salió mal"
+    },
+    "find_by_link": {
+      "find_by_link": "Buscar por enlace",
+      "form": {
+        "errors": {
+          "max_length": "Límite máximo: 255 caracteres.",
+          "min_length": "El enlace debe tener al menos {n} caracteres",
+          "required": "Enlace obligatorio"
+        },
+        "linkLabel": "Asigna un nombre a tu enlace",
+        "linkPlaceholder": "p. ej. Enlace para whatsapp",
+        "submitButton": "Generar enlace"
+      },
+      "steps": {
+        "step1": "Personaliza el enlace de rastreo",
+        "step2": "Compártelo por cualquier aplicación de mensajería",
+        "step3": "Recibe notificaciones sobre el estado",
+        "step4": "Ve al instante su ubicación una vez que toquen el enlace"
+      },
+      "title": "Crea tu enlace personalizado"
+    },
+    "find_by_link_success": {
+      "body": "Asegúrate de compartir este enlace con alguien a quien quieras seguir.",
+      "generateNewCTA": "Generar nuevo enlace",
+      "statusCTA": "Comprobar el estado",
+      "subtitle": "Encuentra tu enlace abajo",
+      "title": "Éxito"
+    },
+    "find_by_number_send_message": {
+      "CTA": "Enviar",
+      "errors": {
+        "empty": "Este campo no puede estar vacío",
+        "max_length": "El texto es demasiado largo. El límite máximo es de {n} caracteres."
+      },
+      "extra_info": {
+        "bullet_1": "El nombre del remitente aparecerá como \"Mobitrace\".",
+        "bullet_2": "Cada mensaje contendrá un enlace único que el destinatario debe pulsar."
+      },
+      "find_by_number": "Buscar por número",
+      "label": "Mensaje",
+      "placeholder": "Introduce tu mensaje.",
+      "title": "Buscando la ubicación del <brandColor>{phoneNumber}</brandColor>"
+    },
+    "find_by_number_send_message_success": {
+      "cta": "Comprobar el estado",
+      "description": "Se ha enviado tu mensaje al <strong>{phoneNumber}</strong>. Te avisaremos tan pronto como se localice el teléfono.",
+      "title": "¡Éxito!"
+    },
+    "forgot_password": {
+      "back_to_login": "Iniciar sesión",
+      "description": "Introduce tu correo electrónico y te enviaremos instrucciones para restablecer tu contraseña",
+      "remember_password": "¿Recordar tu contraseña?",
+      "title": "Restablecer contraseña"
+    },
+    "index": {
+      "faqs": {
+        "question_1": {
+          "answer": "Solo tienes que introducir el número de teléfono y, una vez que el destinatario consienta en compartir su ubicación, recibirás su localización exacta.",
+          "question": "¿Cómo puedo localizar la ubicación de alguien por su número de teléfono?"
+        },
+        "question_2": {
+          "answer": "Sí, la geolocalización es legal, pero requiere el consentimiento explícito del destinatario para compartir su ubicación, respetando las leyes de privacidad.",
+          "question": "¿Es legal geolocalizar a un tercero?"
+        },
+        "question_3": {
+          "answer": "No, no hace falta instalar ninguna app ni ningún software. Todo se gestiona de forma remota a través de nuestro servicio.",
+          "question": "¿Necesito instalar una aplicación para rastrear un número de teléfono?"
+        },
+        "question_4": {
+          "answer": "Nuestro servicio es compatible con todo tipo de teléfonos, desde smartphones hasta modelos más antiguos, siempre que puedan recibir mensajes de texto.",
+          "question": "¿Qué tipos de teléfonos son compatibles?"
+        },
+        "question_5": {
+          "answer": "Sí, nuestro servicio funciona en todo el mundo, independientemente de la ubicación o la red.",
+          "question": "¿Puedo localizar un número de teléfono en cualquier parte del mundo?"
+        },
+        "question_6": {
+          "answer": "Nuestro servicio proporciona detalles precisos de la ubicación, incluida la dirección exacta, utilizando tecnología GPS avanzada.",
+          "question": "¿Cuánta precisión tiene la geolocalización?"
+        },
+        "question_7": {
+          "answer": "Introduce el número de teléfono que quieres investigar y Mobitrace se ocupará del resto. Nuestro sistema escanea múltiples bases de datos en busca de cualquier información relacionada. Muchas búsquedas ofrecen resultados instantáneos, aunque las más detalladas pueden tardar un poco más. Una vez que pruebes nuestra herramienta de búsqueda inversa, entenderás lo potente y eficiente que es.",
+          "question": "¿Cómo funciona la búsqueda inversa de números de teléfono?"
+        },
+        "question_8": {
+          "answer": "La tecnología de búsqueda inversa de números de teléfono de Mobitrace es muy avanzada. Trabajamos con una amplia red de fuentes, desde registros públicos y directorios en línea hasta fuentes menos visibles. Cuando los resultados estén disponibles, Mobitrace te los mostrará. Sin embargo, la velocidad de los resultados depende de la accesibilidad de la información.",
+          "question": "¿Mobitrace proporciona información de cualquier número de teléfono?"
+        },
+        "question_9": {
+          "answer": "Sí, por supuesto. Imagina que has recibido una llamada de alguien que dice ser de tu banco, pidiéndote tu PIN para cancelar una retirada sospechosa de dinero; o que has recibido un mensaje que promete un premio si haces clic en un enlace. Ambas situaciones pueden hacerte perder dinero o información personal. Mobitrace te permite verificar rápidamente quién está detrás de un número desconocido. Con una simple búsqueda inversa puedes detectar posibles estafas y mantener tus datos y finanzas a salvo.",
+          "question": "¿Mobitrace puede ayudarme a evitar estafas por teléfono o mensaje?"
+        },
+        "title": "Preguntas frecuentes"
+      },
+      "hero": {
+        "100": "100%",
+        "card_address": "29 Willow Street, Hackney Wick, Londres E9 5EN, Reino Unido",
+        "card_date": "27 septiembre 2024, 18:46",
+        "card_phone": "+44 633 123 456",
+        "card_title": "¡Ubicación encontrada!",
+        "confidential": "confidencial",
+        "iphone_alt": "smartphone que muestra un mapa de Londres con un marcador de ubicación",
+        "secure": "Seguro",
+        "ssl_encription": "Codificación SSL",
+        "subtitle": "Con Mobitrace.io, puedes solicitar la ubicación en tiempo real de un teléfono por SMS o mediante un enlace. El rastreo solo se realiza con el consentimiento explícito del destinatario.",
+        "title": "Localiza un teléfono móvil"
+      },
+      "how_does_it_work": {
+        "step_1": {
+          "description": "Solo tienes que introducir el número de teléfono que quieres localizar y personalizar el mensaje SMS que se enviará al destinatario.",
+          "title": "Introduce un número de teléfono"
+        },
+        "step_2": {
+          "description": "Mobitrace enviará tu SMS personalizado, pidiendo al destinatario que comparta su ubicación.",
+          "title": "Enviar solicitud de ubicación"
+        },
+        "step_3": {
+          "description": "En cuanto el destinatario acepte, recibirás una notificación con su ubicación exacta, que podrás ver directamente en el mapa de tu panel de control.",
+          "title": "Recibe la ubicación en el mapa"
+        },
+        "title": "¿Cómo funciona?"
+      },
+      "instant_locator": {
+        "subtitle": "Mobitrace es la solución definitiva para descubrir la ubicación o los registros de cualquier persona, simplemente utilizando su número de teléfono.",
+        "title": "¡Localiza el número <underlined>al instante!</underlined>"
+      },
+      "meta_description": "Localiza cualquier teléfono móvil, al instante y sin esfuerzo con Mobitrace.",
+      "meta_title": "Mobitrace.io - Localiza cualquier teléfono en cualquier lugar",
+      "og_description": "Localiza cualquier teléfono móvil, al instante y sin esfuerzo con Mobitrace.",
+      "og_image_alt": "Mobitrace.io - Localiza cualquier teléfono en cualquier lugar",
+      "og_title": "Mobitrace.io - Localiza cualquier teléfono en cualquier lugar",
+      "site_name": "Mobitrace",
+      "welcome_title": "¡Te damos la bienvenida a Mobitrace.io!",
+      "why_choose": {
+        "reasons": {
+          "reason_1": {
+            "description": "Tu privacidad es nuestra máxima prioridad. Descansa con la tranquilidad de saber que tu información personal y actividad de búsqueda se mantienen siempre seguras y confidenciales.",
+            "title": "Privacidad total, garantizada"
+          },
+          "reason_2": {
+            "description": "Sin apps, sin software, sin líos. Solo tienes que introducir el número de teléfono y Mobitrace empieza a funcionar de inmediato.",
+            "title": "No necesita instalación"
+          },
+          "reason_3": {
+            "description": "Desde los últimos iPhones y Androids hasta los teléfonos plegables de la vieja escuela: si puede recibir un mensaje de texto, Mobitrace puede localizarlo. Trabajamos con todos los teléfonos y operadores.",
+            "title": "Todos los teléfonos y operadores"
+          },
+          "reason_4": {
+            "description": "Mobitrace no solo proporciona coordenadas; ofrece la dirección exacta. Aprovecha el poder de la tecnología GPS avanzada para una precisión inigualable.",
+            "title": "Precisión milimétrica"
+          },
+          "reason_5": {
+            "description": "No importa dónde os encontréis tú o el teléfono objetivo, Mobitrace funciona sin problemas en todo el mundo.",
+            "title": "Alcance mundial"
+          }
+        },
+        "subtitle": "Un clic y cero esfuerzo para encontrar la ubicación de cualquier móvil en todo el mundo",
+        "title": "Por qué elegir Mobitrace"
+      }
+    },
+    "legal": {
+      "cookie_policy": {
+        "content": "",
+        "title": "Política de cookies"
+      },
+      "refund_policy": {
+        "content": "",
+        "title": "Política de reembolso"
+      }
+    },
+    "loader": {
+      "step_1": {
+        "carrier": {
+          "loadedDefaultText": "Detectado",
+          "text": "Operador"
+        },
+        "city": {
+          "loadedText": "Ubicada",
+          "text": "Ciudad"
+        },
+        "connecting": "Conexión a satélites",
+        "country": {
+          "text": "País"
+        },
+        "database": {
+          "loadedText": "Accedida",
+          "text": "Base de datos"
+        },
+        "location": {
+          "loadedText": "Detectada",
+          "text": "Ubicación"
+        },
+        "searching": "Buscando resultados..."
+      },
+      "step_2": {
+        "cta": "Obtener ubicación",
+        "subtitle": "Tu búsqueda ha terminado: ya estás listo para acceder a la ubicación.",
+        "title": "¡Ubicación encontrada!"
+      }
+    },
+    "loader_complete": {
+      "title": "Regístrate para obtener la ubicación precisa del <brandColor>{phoneNumber}</brandColor>"
+    },
+    "locate": {
+      "error": "No se pudo recuperar la dirección.",
+      "link_expired": "Enlace caducado",
+      "link_expired_explain": "Ya se ha accedido a este enlace y ya no está disponible.",
+      "loading": "Cargando...",
+      "not_supported": "Tu navegador no admite la geolocalización.",
+      "rejected": "Se ha rechazado el compartir ubicación.",
+      "thank_you": "Gracias."
+    },
+    "memberArea": {
+      "navigation": {
+        "contact_us": "Contacto",
+        "find_by_link": "Buscar por enlace",
+        "find_by_number": "Buscar por número",
+        "find_by_phone_lookup": "Búsqueda de teléfono",
+        "my_activity": "Mi actividad",
+        "notifications": "Notificaciones",
+        "phone_lookup": "Búsqueda de teléfono",
+        "settings": "Ajustes",
+        "sex_offenders_search": "Delincuentes sexuales",
+        "status": "Estado",
+        "tools_library": "Biblioteca de herramientas"
+      }
+    },
+    "not_found": {
+      "body": "Algo ha salido mal, inténtalo de nuevo.",
+      "cta": "Volver a Inicio",
+      "title": "Página no encontrada"
+    },
+    "notifications": {
+      "empty": {
+        "text": "Actualmente no tienes notificaciones.",
+        "title": "Está todo tranquilo"
+      },
+      "link_accessed": "Se accedió al <strong>{notificationName}</strong>.",
+      "link_located": "La ubicación ya está disponible.",
+      "link_rejected": "Se rechazó el compartir ubicación.",
+      "load_more": "Más información",
+      "phone_located": "Se recibió correctamente la <strong>ubicación del {phone}</strong>.",
+      "phone_rejected": "<strong>Ubicación del {phone}</strong> rechazada.",
+      "title": "Notificaciones"
+    },
+    "onboarding": {
+      "navigation": {
+        "step_1": "Primer paso",
+        "step_2": "Paso 2",
+        "step_3": "Paso 3"
+      }
+    },
+    "onboarding_step1": {
+      "body": "Para localizar un número de teléfono, Mobitrace envía un mensaje de texto anónimo con un enlace de localización. Simplemente envía el mensaje y deja que nuestro sistema haga el resto.",
+      "cta": "Continuar",
+      "title": "Envia un enlace de seguimiento"
+    },
+    "onboarding_step2": {
+      "body": "Una vez que el destinatario haga clic en el enlace, dirígete al Historial de Ubicaciones para rastrear su movimiento en el mapa en tiempo real.",
+      "cta": "Continuar",
+      "title": "Seguimiento en tiempo real"
+    },
+    "onboarding_step3": {
+      "body": "Mientras esperas a que el destinatario abra el mensaje, aprovecha otras potentes funciones de Mobitrace para mejorar tu experiencia de rastreo.",
+      "cta": "Empezar ahora",
+      "title": "Más funciones"
+    },
+    "pricing": {
+      "cards": {
+        "subscription": {
+          "badge": "Suscripción",
+          "cta": "Suscribirse ahora",
+          "description": "Una vez que termine tu periodo de prueba de 7 días, se te cobrarán {price} cada 4 semanas. Cancela cuando quieras.",
+          "duration": "Cada 4 semanas",
+          "features": {
+            "feature_1": "Compatible con todos los dispositivos móviles",
+            "feature_2": "Solicitudes ilimitadas de rastreo de ubicación",
+            "feature_3": "Funciones prémium como mensajes personalizados y ubicación precisa",
+            "feature_4": "Atención al cliente 24 horas al día, 7 días a la semana, sin coste adicional"
+          },
+          "new_features": {
+            "feature_1": "Compatible con todos los dispositivos móviles",
+            "feature_2": "Búsquedas de ubicación ilimitadas",
+            "feature_3": "Descarga informes profesionales en PDF sin coste adicional",
+            "feature_4": "Obtén informes completos de tus búsquedas inversas de números de teléfono",
+            "feature_5": "Asistencia técnica ininterrumpida, sin coste adicional"
+          }
+        },
+        "subscription_24": {
+          "badge": "Suscripción",
+          "cta": "Suscribirse ahora",
+          "description": "Una vez que termine el período de prueba de 24 horas, {price} cada 4 semanas. Cancela en cualquier momento.",
+          "duration": "Cada 4 semanas",
+          "features": {
+            "feature_1": "Compatible con todos los dispositivos móviles",
+            "feature_2": "Búsquedas de ubicación ilimitadas",
+            "feature_3": "Descarga informes profesionales en formato PDF sin coste adicional",
+            "feature_4": "Informes ilimitados de búsqueda inversa de teléfonos con información exhaustiva",
+            "feature_5": "Asistencia técnica ininterrumpida sin coste adicional"
+          },
+          "new_features": {
+            "feature_1": "Compatible con todos los dispositivos móviles",
+            "feature_2": "Búsquedas de ubicación ilimitadas",
+            "feature_3": "Descarga informes profesionales en formato PDF sin coste adicional",
+            "feature_4": "Informes ilimitados de búsqueda inversa de teléfonos con información exhaustiva",
+            "feature_5": "Asistencia técnica ininterrumpida sin coste adicional"
+          }
+        },
+        "title": "Precios",
+        "trial": {
+          "badge": "Periodo de prueba",
+          "cta": "Iniciar prueba",
+          "description": "Disfruta de acceso ilimitado a todas las funciones, sin riesgo. tu pago inicial te da acceso completo durante 7 días, luego se te cobrarán {price} cada 4 semanas. Cancela cuando quieras.",
+          "duration": "7 días de prueba",
+          "features": {
+            "feature_1": "Compatible con todos los dispositivos móviles",
+            "feature_2": "Acceso completo a todas las funciones durante 7 días",
+            "feature_3": "Para que lo pruebes, sin compromiso a largo plazo"
+          },
+          "new_features": {
+            "feature_1": "Compatible con todos los dispositivos móviles",
+            "feature_2": "Acceso completo a todas las funciones durante 7 días",
+            "feature_3": "Accede a informes completos de tus búsquedas inversas de números de teléfono",
+            "feature_4": "Para que lo pruebes, sin compromiso a largo plazo",
+            "feature_5": "Opción de descargar informes en formato PDF"
+          }
+        },
+        "trial_24": {
+          "badge": "Período de prueba",
+          "cta": "Iniciar prueba",
+          "description": "Disfruta de acceso ilimitado a todas las funciones sin ningún riesgo. Tu pago inicial te da acceso completo durante 24 horas, luego se te cobrarán {price} cada 4 semanas. Cancela cuando quieras.",
+          "duration": "Prueba de 24 horas",
+          "features": {
+            "feature_1": "Compatible con todos los dispositivos móviles",
+            "feature_2": "Acceso completo a todas las funciones durante 24 horas",
+            "feature_3": "Para que lo pruebes, sin compromiso a largo plazo",
+            "feature_4": "Opción de descargar informes en formato PDF"
+          },
+          "new_features": {
+            "feature_1": "Compatible con todos los dispositivos móviles",
+            "feature_2": "Acceso completo a todas las funciones durante 24 horas",
+            "feature_3": "Acceso a informes detallados de búsqueda inversa de teléfonos",
+            "feature_4": "Para que lo pruebes, sin compromiso a largo plazo",
+            "feature_5": "Opción de descargar informes en formato PDF"
+          }
+        }
+      },
+      "special_offer": "Oferta especial",
+      "subtitle": "Mobitrace ofrece sus servicios a través de un plan de suscripción mensual fácil de gestionar.",
+      "title": "¡Prueba las funcionalidades de Mobitrace por <mark>solo {price}</mark> durante 7 días!",
+      "title_24": "Prueba Mobitrace por <mark>solo {price}</mark> durante 24 horas."
+    },
+    "reset_password": {
+      "back_to_login": "Iniciar sesión",
+      "description": "Introduce tu nueva contraseña para restablecer tu cuenta",
+      "remember_password": "¿Recordar tu contraseña?",
+      "title": "Restablecer contraseña"
+    },
+    "reverse_lookup": {
+      "checkout": {
+        "action_form": "Obtener informe",
+        "back_description": "Si, tras la prueba gratuita de 7 días, el servicio no cumple tus expectativas, escríbenos y tramitaremos un reembolso completo.",
+        "back_description_24": "Si no quedas completamente satisfecho durante el periodo de prueba de 24 horas, no tienes más que comunicárnoslo y te reembolsaremos el importe íntegro.",
+        "back_title": "Te devolvemos el dinero",
+        "cancel_description": "Puedes darte de baja en cualquier momento desde tu panel de control o contactando con nosotros en <email>support@mobitrace.io</email>.",
+        "cancel_title": "Cancela en cualquier momento",
+        "title": "Accede al informe de"
+      },
+      "components": {
+        "always_know_who_called": {
+          "step_1": {
+            "description": "Descubre si el número está registrado a nombre de una persona o una empresa.",
+            "title": "Nombre completo"
+          },
+          "step_2": {
+            "description": "Encuentra direcciones asociadas al número, tanto actuales como antiguas.",
+            "title": "Domicilio"
+          },
+          "step_3": {
+            "description": "Recupera el contacto con familiares lejanos o con quienes has perdido el contacto.",
+            "title": "Familiares"
+          },
+          "step_4": {
+            "description": "Rastrea las principales redes sociales en busca de perfiles.",
+            "title": "Perfiles en redes sociales"
+          },
+          "step_5": {
+            "description": "Consulta todos los correos electrónicos públicos asociados al número.",
+            "title": "Direcciones de correo electrónico"
+          },
+          "step_6": {
+            "description": "Consulta información pública sobre los lugares donde ha estado el propietario.",
+            "title": "Historial de ubicaciones"
+          },
+          "step_7": {
+            "description": "Recopila información de diferentes fuentes de Internet.",
+            "title": "Actividad en Internet"
+          },
+          "subtitle": "Al introducir el número de teléfono en la búsqueda inversa de Mobitrace, obtendrás toda la información pública relacionada con ese número.",
+          "title": "Siempre sabrás quién te llama con Mobitrace"
+        },
+        "as_seen_on": {
+          "title": "Referenciado en"
+        },
+        "customer_carousel": {
+          "subtitle": "Nos esforzamos al máximo para darte una experiencia inigualable.",
+          "title": "Lo que opinan <br class='lg:hidden'/> nuestros clientes"
+        },
+        "customer_opinions": {
+          "title": "Cada vez más gente de todo el mundo descubre nuestros servicios"
+        },
+        "faqs": {
+          "question_1": {
+            "answer": "Solo tienes que introducir el número de teléfono y, si el propietario ha dado el consentimiento para compartir su ubicación anteriormente, recibirás su ubicación exacta.",
+            "question": "¿Cómo puedo localizar a alguien a través de su número de teléfono?"
+          },
+          "question_2": {
+            "answer": "Sí, la geolocalización es legal, pero requiere el consentimiento explícito del usuario para compartir su ubicación, de acuerdo con las leyes de privacidad.",
+            "question": "¿Es legal geolocalizar a un tercero?"
+          },
+          "question_3": {
+            "answer": "No, no es necesario instalar ninguna aplicación ni ningún software. Todo se gestiona de forma remota a través de nuestro servicio.",
+            "question": "¿Necesito instalar una aplicación para rastrear un número de teléfono?"
+          },
+          "question_4": {
+            "answer": "Nuestro servicio es compatible con todo tipo de teléfonos, desde smartphones hasta modelos antiguos, siempre que puedan recibir mensajes de texto.",
+            "question": "¿Qué tipos de teléfonos son compatibles?"
+          },
+          "question_5": {
+            "answer": "Sí, nuestro servicio funciona en todo el mundo, independientemente de la ubicación o la red.",
+            "question": "¿Puedo rastrear un número de teléfono de cualquier parte del mundo?"
+          },
+          "question_6": {
+            "answer": "Gracias a nuestra avanzada tecnología de GPS, te ofrecemos detalles de ubicación precisos, incluida la dirección exacta.",
+            "question": "¿Cómo de precisa es la geolocalización?"
+          },
+          "question_7": {
+            "answer": "Introduce el número de teléfono que quieres investigar y Mobitrace se ocupará del resto. Nuestro sistema escanea múltiples bases de datos en busca de cualquier información relacionada. Muchas búsquedas ofrecen resultados instantáneos, aunque las más detalladas pueden tardar un poco más. Una vez que pruebes nuestra herramienta de búsqueda inversa, entenderás lo potente y eficiente que es.",
+            "question": "¿Cómo funciona la búsqueda inversa de números de teléfono?"
+          },
+          "question_8": {
+            "answer": "La tecnología de búsqueda inversa de números de teléfono de Mobitrace es muy avanzada. Trabajamos con una amplia red de fuentes, desde registros públicos y directorios en línea hasta fuentes menos visibles. Cuando los resultados estén disponibles, Mobitrace te los mostrará. Sin embargo, la velocidad de los resultados dependerá de lo accesible que sea la información.",
+            "question": "¿Mobitrace proporciona información de cualquier número?"
+          },
+          "question_9": {
+            "answer": "Sí, por supuesto. Imagina que has recibido una llamada de alguien que dice ser de tu banco, pidiéndote tu PIN para cancelar una retirada sospechosa de dinero; o que has recibido un mensaje que promete un premio si haces clic en un enlace. Ambas situaciones pueden hacerte perder dinero o información personal. Mobitrace te permite verificar rápidamente quién está detrás de un número desconocido. Con una simple búsqueda inversa puedes detectar posibles estafas y mantener tus datos y finanzas a salvo.",
+            "question": "¿Mobitrace puede ayudarme a evitar estafas por teléfono o mensaje?"
+          },
+          "title": "Preguntas frecuentes"
+        },
+        "get_report": {
+          "cta": "Obtener mi informe",
+          "lookup_today": "Solo hoy, se han realizado más de 99 búsquedas inversas",
+          "product": "7 días de acceso completo",
+          "product_24": "Acceso completo las 24 horas",
+          "product_title": "Informe de búsqueda",
+          "secure": "100 % seguro",
+          "title": "Obtén tu informe",
+          "trial_description": "Garantía de satisfacción de 30 días"
+        },
+        "hero": {
+          "100": "100 %",
+          "card_address": "29 Willow Street, Hackney Wick, Londres E9 5EN, Reino Unido",
+          "card_date": "27/09/2024, 18:46",
+          "card_phone": "+44 633 123 456",
+          "card_title": "¡Ubicación encontrada!",
+          "confidential": "Privacidad",
+          "iphone_alt": "un smartphone muestra un mapa de Londres con un indicador de ubicación",
+          "secure": "Fiable",
+          "ssl_encription": "Cifrado SSL",
+          "subtitle": "¿Quién te está llamando? Descúbrelo al instante: nombres, direcciones, redes sociales y mucho más.",
+          "title": "<mark>Búsqueda</mark> de números de teléfono <mark>inversa</mark>"
+        },
+        "instant_locator": {
+          "subtitle": "Mobitrace te ofre la forma más rápida y precisa de acceder a la ubicación o registros asociados a un número de teléfono.",
+          "title": "Busca cualquier número al instante"
+        },
+        "latest_results": {
+          "result": {
+            "description": "Hace {time} minutos"
+          },
+          "subtitle": "Estos son algunos de los últimos resultados de nuestro servicio de búsqueda inversa de números de teléfono.",
+          "title": "Resultados más recientes"
+        },
+        "limited_offer_tag": {
+          "limited_offer": "Oferta limitada"
+        },
+        "phone_input": {
+          "errors": {
+            "invalid_phone": "Introduce un número de teléfono válido.",
+            "rate_limit_exceeded": "Has superado tu límite diario.",
+            "rate_limit_exceeded_title": "Se ha alcanzado el límite"
+          },
+          "label": "Introduce el número que quieres buscar",
+          "no_results": "Código de país no encontrado.",
+          "phone_placeholder": "123456789",
+          "search_placeholder": "Busca por país o código...",
+          "submit": "Búsqueda"
+        },
+        "pricing": {
+          "cards": {
+            "subscription": {
+              "badge": "Suscripción",
+              "cta": "Suscribirse ahora",
+              "description": "Una vez finalizado el período de prueba de 7 días, la oferta se renovará automáticamente a una suscripción mensual. Puedes cancelar la suscripción en cualquier momento.",
+              "duration": "Facturación mensual",
+              "features": {
+                "feature_1": "Compatible con todos los dispositivos móviles.",
+                "feature_2": "Búsquedas ilimitadas de ubicación",
+                "feature_3": "Descarga informes profesionales en formato PDF sin coste adicional",
+                "feature_4": "Informes ilimitados de búsqueda inversa de teléfonos con información exhaustiva",
+                "feature_5": "Asistencia técnica ininterrumpida, sin coste adicional."
+              }
+            },
+            "title": "Empieza tu prueba gratuita de 7 días",
+            "trial": {
+              "badge": "Período de prueba",
+              "cta": "Iniciar prueba",
+              "description": "Con este pago inicial, podrás acceder a todas las funciones de la plataforma Mobitrace sin límites durante 7 días. Después, se aplicará la tarifa de suscripción de {price} al mes.",
+              "duration": "7 días de prueba",
+              "features": {
+                "feature_1": "Compatible con todos los dispositivos móviles.",
+                "feature_2": "Acceso completo a todas las funciones durante 7 días.",
+                "feature_3": "Acceso a informes detallados de búsqueda inversa de teléfonos",
+                "feature_4": "Solo de prueba. Sin compromiso a largo plazo.",
+                "feature_5": "Posibilidad de descargar informes en formato PDF."
+              }
+            }
+          },
+          "special_offer": "Oferta exclusiva",
+          "subtitle": "Mobitrace ofrece sus servicios a través de un plan de suscripción mensual fácil de administrar.",
+          "title": "¡Prueba las funcionalidades de Mobitrace por <mark>solo {price}</mark> durante 7 días!"
+        },
+        "recent_reveals": {
+          "subtitle": "Estos son algunos de los propietarios de números desconocidos que hemos revelado recientemente.",
+          "title": "Últimos descubrimientos"
+        },
+        "report_ready": {
+          "description": "¡Tu informe está listo!",
+          "download_report_button": "Descargar PDF",
+          "view_report_button": "Ver informe"
+        },
+        "summary_report_card": {
+          "caller_info": "Con Mobitrace, no tendrás que adivinar quién te ha llamado con un número desconocido. Proporcionamos información sobre la persona que llama, incluso datos que esa persona no sabe que pueden ser compartidos.",
+          "carrier": "Compañía telefónica",
+          "continue": "Continuar",
+          "latest_report": "Último informe a fecha de 3 de marzo de 2025",
+          "line_type": "Tipo de línea",
+          "may_include": "Los resultados incluyen:",
+          "result_1": "Nombre completo y dirección postal del propietario",
+          "result_2": "Cuentas y perfiles en redes sociales",
+          "result_3": "Fotografías y vídeos",
+          "result_4": "Histórico de actividad en línea",
+          "result_5": "Direcciones de correo electrónico",
+          "result_6": "Y mucho más",
+          "timer_desktop": "Tu <mark>informe</mark> caduca en",
+          "timer_mobile": "informe caducará en",
+          "title": "Ya puedes consultar el informe del <mark>{phoneNumber}</mark>",
+          "trusted_by": "Más de <span class='font-bold'>7 millones</span> de usuarios confían en Mobitrace"
+        },
+        "upsell_progress_steps": {
+          "access_report": "Acceder al informe",
+          "create_account": "Crear una cuenta",
+          "data_breach": "Filtración de datos",
+          "pdf_export": "Exportar a PDF",
+          "sex_offenders": "Delincuentes sexuales"
+        },
+        "what_you_get": {
+          "item_1": "Busca cualquier número de teléfono, tanto activo como inactivo, y obtén información sobre el propietario.",
+          "item_2": "El propietario del número de teléfono nunca sabrá que lo has buscado.",
+          "item_3": "Nuestra base de datos siempre tiene la información más actualizada.",
+          "item_4": "Mobitrace genera informes a partir de información pública disponible en Internet.",
+          "item_title_1": "Búsqueda avanzada de números de teléfono",
+          "item_title_2": "Privacidad 100 % garantizada",
+          "item_title_3": "Actualización constante",
+          "item_title_4": "Acceso a miles de millones de registros",
+          "title": "Esto es lo que obtendrás"
+        },
+        "why_use": {
+          "phone_input_label": "Introduce el número que quieres buscar",
+          "reasons": {
+            "reason_1": {
+              "description": "Identifica números desconocidos y olvídate de adivinar quién está al otro lado antes de contestar.",
+              "title": "Controlar siempre quién te llama"
+            },
+            "reason_2": {
+              "description": "Mobitrace puede localizar a personas con las que has perdido el contacto, incluso a través de números antiguos.",
+              "title": "Recuperar viejas amistades"
+            },
+            "reason_3": {
+              "description": "Protégete al verificar la identidad de las personas con las que hablas en Internet.",
+              "title": "Verificar la identidad"
+            },
+            "reason_4": {
+              "description": "Las estafas telefónicas y la extracción de datos de sitios web son cada vez más frecuentes. Mobitrace te ayuda a identificar a estos delincuentes sin que tengas que contestar al teléfono.",
+              "title": "Identificar números sospechosos"
+            },
+            "reason_5": {
+              "description": "Introduce tu número en Mobitrace y comprueba cuáles de tus datos son públicos y cuáles están en riesgo de ser filtrados.",
+              "title": "Supervisar tu huella digital"
+            }
+          },
+          "steps": {
+            "step_1": {
+              "description": "Protégete contra llamadas de spam o publicidad"
+            },
+            "step_2": {
+              "description": "Obtén información sobre personas con las que podrías tener una relación, ya sea sentimental o contractual"
+            },
+            "step_3": {
+              "description": "Descubre quién está detrás de las molestas llamadas de spam"
+            },
+            "step_4": {
+              "description": "Recupera el contacto con familiares o viejas amistades"
+            },
+            "step_5": {
+              "description": "Identifica a quienes se hacen pasar por otras personas en aplicaciones de citas o mensajería"
+            }
+          },
+          "subtitle": "Tanto si quieres protegerte digitalmente como si necesitas encontrar contactos perdidos, podemos ayudarte.<br>Con Mobitrace podrás:",
+          "title": "Por qué utilizar la búsqueda inversa de números de teléfono",
+          "title_2": "Otros casos de uso",
+          "title_badge": "EXTRAS"
+        }
+      },
+      "member_area": {
+        "phone_lookup": {
+          "daily_limit": "Límite: 5 búsquedas cada 24 horas.",
+          "label": "Mostrar ID de llamada",
+          "phone_lookup": "Búsqueda de teléfono"
+        }
+      },
+      "report": {
+        "carrier_details": {
+          "info": "Esta sección proporciona información sobre el operador telefónico del individuo, incluidos los detalles de la red y el tipo de servicio.",
+          "labels": {
+            "carrier": "Compañía telefónica",
+            "international_format": "Formato internacional",
+            "local_format": "Formato local",
+            "location": "Ubicación",
+            "type": "Tipo"
+          },
+          "line_types": {
+            "landline": "Teléfono fijo",
+            "mobile": "Móvil"
+          },
+          "title": "Detalles del operador",
+          "title_empty": "Detalles del operador"
+        },
+        "common": {
+          "no_data": "No hay registros disponibles"
+        },
+        "data_breach_history": {
+          "alert_empty": "Esta sección describe el historial de filtraciones de datos, detallando cualquier incidente que haya comprometido información confidencial. Incluye información sobre la naturaleza de las filtraciones, los datos afectados y las medidas adoptadas para abordarlas y prevenirlas en el futuro.",
+          "alert_success": "Esta sección describe el historial de filtraciones de datos, detallando cualquier incidente que haya comprometido información confidencial. Incluye información sobre la naturaleza de las filtraciones, los datos afectados y las medidas adoptadas para abordarlas y prevenirlas en el futuro.",
+          "alert_title": "{count} filtraciones de datos",
+          "report": {
+            "breaches_found_for": "Infracciones detectadas para",
+            "compromised_data": "Datos comprometidos",
+            "data_breaches": "filtraciones de datos",
+            "data_types": {
+              "date_of_birth": "Fecha de nacimiento",
+              "education_levels": "Nivel educativo",
+              "email": "Correo electrónico",
+              "gender": "Género",
+              "geo_location": "Ubicación geográfica",
+              "name": "Nombre",
+              "password": "Contraseña",
+              "phone": "Teléfono",
+              "social_media_profiles": "Perfiles de redes sociales",
+              "username": "Nombre de usuario"
+            },
+            "download_report_button": "Descargar PDF",
+            "title": "Historial de filtraciones de datos"
+          },
+          "show_report": "Mostrar informe",
+          "title": "Historial de filtraciones de datos",
+          "unlock_report": "Desbloquear informe"
+        },
+        "header": {
+          "button": "Descargar PDF",
+          "matches_found": "Coincidencias encontradas para",
+          "title": "Informe de búsqueda de teléfono",
+          "unlock_download_pdf": "Obtener acceso a la descarga de PDF"
+        },
+        "looking_for_more_profiles_dialog": {
+          "description": "Esto puede tardar unos segundos; estamos buscando en plataformas adicionales.",
+          "title": "Buscando más perfiles"
+        },
+        "phone_public_information": {
+          "info": "Esta sección proporciona un resumen de la información pública disponible vinculada al número de teléfono.",
+          "name": "Nombre:",
+          "source": "Fuente:",
+          "sources": {
+            "data_breach": "Filtración de datos",
+            "other": "Otros",
+            "public_records": "Registros públicos",
+            "social_media": "Redes sociales"
+          },
+          "title": "Información pública del teléfono",
+          "title_empty": "No hay información pública del teléfono"
+        },
+        "photos": {
+          "info": "Esta sección muestra posibles imágenes del propietario/a del teléfono para facilitar la identificación visual cuando estén disponibles.",
+          "other": "Otros",
+          "title": "Fotos",
+          "title_empty": "No se han encontrado fotos"
+        },
+        "possible_addresses": {
+          "info": "Esta sección enumera posibles direcciones relacionadas con la persona en cuestión, lo que puede ayudar a identificar lugares de residencia o ubicaciones anteriores.",
+          "labels": {
+            "city": "Ciudad",
+            "country": "País",
+            "county": "Provincia",
+            "latitude": "Latitud",
+            "length_of_residence": "Duración de la residencia",
+            "longitude": "Longitud",
+            "postal_code": "Código postal",
+            "state": "Comunidad autónoma",
+            "street": "Calle"
+          },
+          "title": "Posibles direcciones",
+          "title_empty": "No se han encontrado direcciones",
+          "values": {
+            "years": "{count} años"
+          }
+        },
+        "possible_contact_details": {
+          "info": "Esta sección muestra direcciones de correo electrónico vinculadas al individuo para ayudar a verificar la información de contacto.",
+          "labels": {
+            "associated_emails": "Correos electrónicos asociados",
+            "associated_numbers": "Números asociados"
+          },
+          "title": "Posibles datos de contacto",
+          "title_empty": "No se han encontrado datos de contacto"
+        },
+        "possible_personal_details": {
+          "info": "Esta sección muestra posibles datos personales asociados a la persona en cuestión, lo que ayuda a obtener información adicional sobre ella.",
+          "labels": {
+            "children": "Niños",
+            "date_of_birth": "Fecha de nacimiento",
+            "gender": "Género",
+            "household_size": "Tamaño del hogar",
+            "income": "Ingresos",
+            "marital_status": "Estado civil"
+          },
+          "title": "Posibles datos personales",
+          "title_empty": "No se encontraron datos personales",
+          "values": {
+            "children": "Presentes ({count})",
+            "divorced": "Divorciado/a",
+            "domestic_partnership": "Pareja de hecho",
+            "engaged": "Comprometido/a",
+            "female": "Mujer",
+            "in_relationship": "En relación",
+            "intersex": "Intersexual",
+            "male": "Hombre",
+            "married": "Casado/a",
+            "no_children": "Ninguno",
+            "no_record_available": "No hay registros disponibles",
+            "separated": "Separado/a",
+            "single": "Soltero/a",
+            "widowed": "Viudo/a"
+          }
+        },
+        "possible_social_media_accounts": {
+          "expand_search": {
+            "more_platforms": "Acceda a más plataformas con un solo clic.",
+            "title": "Amplía tu búsqueda",
+            "unlock_platforms": "Plataformas desbloqueadas"
+          },
+          "info": "Esta sección muestra posibles perfiles de redes sociales que podrían estar vinculados a la persona en cuestión, ofreciendo información sobre su presencia online.",
+          "labels": {
+            "id": "Identificación",
+            "name": "Nombre",
+            "opne_url": "Abrir página",
+            "source": "Fuente",
+            "url": "URL"
+          },
+          "network_not_found": "No encontrado",
+          "no_accounts_found": "No se encontraron cuentas en ninguna de las plataformas consultadas. Esto significa que el usuario no está registrado en estas redes o utiliza datos que difieren de los parámetros de búsqueda proporcionados.",
+          "partial_result": {
+            "info": "No se encontró ninguna cuenta en algunas plataformas; esto significa que el usuario no está registrado en esas redes o que utiliza datos que difieren de los parámetros de búsqueda proporcionados.",
+            "no_account_platforms": "Plataformas sin cuenta encontrada",
+            "title": "Resultados de búsqueda completos"
+          },
+          "sources": {
+            "behance": "Behance",
+            "facebook": "Facebook",
+            "github": "Github",
+            "gitlab": "Gitlab",
+            "google": "Google",
+            "instagram": "Instagram",
+            "kick": "Patada",
+            "linkedin": "LinkedIn",
+            "pinterest": "Pinterest",
+            "reddit": "Reddit",
+            "snapchat": "Snapchat",
+            "telegram": "Telegrama",
+            "threads": "Trapos",
+            "tiktok": "TikTok",
+            "tumblr": "Tumblr",
+            "twitch": "Contracción nerviosa",
+            "x": "X",
+            "youtube": "YouTube"
+          },
+          "title": "Posibles cuentas de redes sociales",
+          "title_empty": "No se encontraron cuentas de redes sociales"
+        },
+        "potential_education": {
+          "info": "Esta sección resume la posible información educativa, incluidas las instituciones en las que haya estudiado y las cualificaciones obtenidas.",
+          "title": "Posible educación",
+          "title_empty": "No se han encontrado datos sobre la educación",
+          "values": {
+            "associate_degree": "Formación profesional",
+            "bachelor_degree": "Grado universitario",
+            "doctoral_degree": "Doctorado",
+            "high_school": "Escuela secundaria",
+            "master_degree": "Máster",
+            "no_formal_education": "Sin educación formal",
+            "other": "Otros",
+            "primary_school": "Escuela primaria",
+            "secondary_school": "Escuela secundaria",
+            "vocational_training": "Formación profesional"
+          }
+        },
+        "potential_professional_summary": {
+          "info": "Esta sección destaca los posibles roles en el sector en los que el individuo podría tener experiencia, de acuerdo a los datos disponibles.",
+          "title": "Posible resumen profesional",
+          "title_empty": "Sin resumen profesional",
+          "values": {
+            "agriculture": "Agricultura",
+            "arts_and_entertainment": "Artes y entretenimiento",
+            "construction": "Construcción",
+            "education": "Educación",
+            "energy_and_utilities": "Energía y servicios públicos",
+            "engineering": "Ingeniería",
+            "finance": "Finanzas",
+            "government": "Gobierno",
+            "healthcare": "Sanidad",
+            "hospitality": "Hostelería",
+            "information_technology": "Tecnologías de la información",
+            "legal": "Derecho",
+            "logistics_and_supply_chain": "Logística y cadena de suministro",
+            "manufacturing": "Fabricación",
+            "marketing": "Marketing",
+            "media_and_communications": "Medios y comunicaciones",
+            "military": "Servicio militar",
+            "non_profit": "Sin ánimo de lucro",
+            "other": "Otros",
+            "real_estate": "Bienes inmobiliarios",
+            "retail": "Comercio minorista",
+            "sales": "Ventas",
+            "science": "Ciencias",
+            "skilled_trades": "Oficios especializados",
+            "telecommunications": "Telecomunicaciones",
+            "transportation": "Transporte"
+          }
+        },
+        "profile_summary": {
+          "associated_emails": "Correos electrónicos asociados:",
+          "associated_locations": "Ubicaciones asociadas:",
+          "associated_usernames": "Nombres de usuario asociados:",
+          "empty": "-",
+          "not_identified": "Sin determinar",
+          "possible_owners": "Posibles propietarios:",
+          "potential_date_of_birth": "Posible fecha de nacimiento:",
+          "title": "Resumen del perfil"
+        },
+        "sex_offenders": {
+          "alert": "La verificación de los antecedentes de delincuencia sexual solo está disponibles para registros de EE. UU. Esta sección proporciona información sobre cualquier registro de delincuencia sexual, incluyendo detalles de los delitos, el estado de registro actual y las ubicaciones asociadas.",
+          "report": {
+            "address_information": {
+              "city": "Ciudad",
+              "country": "País",
+              "county": "Provincia",
+              "latitude": "Latitud",
+              "length_of_residence": "Duración de la residencia",
+              "longitude": "Longitud",
+              "postal_code": "Código postal",
+              "state": "Comunidad autónoma",
+              "street": "Calle",
+              "title": "Ubicación"
+            },
+            "body_characteristics": {
+              "age": "Edad",
+              "ethnicity": "Etnia",
+              "eye_color": "Color de ojos",
+              "hair_color": "Color del cabello",
+              "height": "Altura",
+              "race": "Etnia",
+              "sex": "Sexo",
+              "title": "Características corporales",
+              "weight": "Peso"
+            },
+            "crime_information": {
+              "conviction_date": "Fecha de condena",
+              "crime": "Delito",
+              "jurisdiction": "Jurisdicción",
+              "no_information_available": "No hay información disponible",
+              "registration_date": "Fecha de registro",
+              "risk_level": "Nivel de riesgo",
+              "title": "Información sobre el delito"
+            },
+            "distinctive_features": {
+              "back": "Atrás",
+              "head": "Cabeza",
+              "left_arm": "Brazo izquierdo",
+              "left_hand": "Mano izquierda",
+              "left_leg": "Pierna izquierda",
+              "right_arm": "Brazo derecho",
+              "right_hand": "Mano derecha",
+              "right_leg": "Pierna derecha",
+              "title": "Marcas/cicatrices/tatuajes",
+              "torso": "Torso"
+            },
+            "download_report_button": "Descargar PDF",
+            "new_search": "Nueva búsqueda",
+            "others_information": {
+              "is_absconded": "¿Es un fugitivo?",
+              "is_predator": "¿Es un depredador?",
+              "jurisdiction": "Jurisdicción",
+              "link": "Enlace",
+              "original_report": "Fuente original",
+              "title": "Otros",
+              "yes": "Sí"
+            },
+            "personal_information": {
+              "date_of_birth": "Fecha de nacimiento",
+              "first_name": "Nombre de pila",
+              "first_name_nicknames": "Apodos",
+              "last_name": "Apellido(s)",
+              "middle_name": "Segundo nombre",
+              "name": "Nombre",
+              "title": "Información personal"
+            },
+            "photos": {
+              "title": "Fotos"
+            },
+            "records_found_for": "Se han encontrado registros para",
+            "title_profile": "Perfil de delincuentes sexuales",
+            "values": {
+              "body_part": {
+                "back": "Volver",
+                "head": "Cabeza",
+                "left_arm": "Brazo izquierdo",
+                "left_hand": "Mano izquierda",
+                "left_leg": "Pierna izquierda",
+                "right_arm": "Brazo derecho",
+                "right_hand": "Mano derecha",
+                "right_leg": "Pierna derecha",
+                "torso": "Torso"
+              },
+              "ethnicity": {
+                "hispanic": "Hispano",
+                "non_hispanic": "No hispano",
+                "other": "Otros"
+              },
+              "eye_color": {
+                "amber": "Ámbar",
+                "blue": "Azul",
+                "brown": "Marrón",
+                "gray": "Gris",
+                "green": "Verde",
+                "hazel": "Avellana",
+                "other": "Otros",
+                "red": "Rojo",
+                "violet": "Violeta"
+              },
+              "hair_color": {
+                "auburn": "Castaño",
+                "bald": "Calvo",
+                "black": "Negro",
+                "blonde": "Rubio",
+                "brown": "Marrón",
+                "chestnut": "Castaño",
+                "dyed": "Teñido",
+                "gray": "Gris",
+                "other": "Otros",
+                "red": "Rojo",
+                "white": "Blanco"
+              },
+              "race": {
+                "asian": "Asiático",
+                "black_or_african_american": "Negro o afroamericano",
+                "mixed": "Interracial",
+                "native_american": "Nativo americano",
+                "other": "Otros",
+                "pacific_islander": "Isleño del Pacífico",
+                "white": "Blanco"
+              },
+              "risk_level": {
+                "high": "Alto",
+                "low": "Bajo",
+                "medium": "Medio"
+              },
+              "sex": {
+                "female": "Mujer",
+                "intersex": "Intersexual",
+                "male": "Hombre"
+              }
+            }
+          },
+          "title": "Verificación de antecedentes de delincuentes sexuales"
+        },
+        "sex_offenders_background_check": {
+          "alt_icon": "Delincuentes sexuales",
+          "info": "La verificación de los antecedentes de delincuencia sexual solo está disponibles para registros de EE. UU. Esta sección proporciona información sobre cualquier registro de delincuencia sexual, incluyendo detalles de los delitos, el estado de registro actual y las ubicaciones asociadas.",
+          "show_report": "Mostrar informe",
+          "title": "Verificación de antecedentes de delincuentes sexuales",
+          "title_empty": "No se encontraron antecedentes de delincuentes sexuales",
+          "unlock_report": "Desbloquear informe"
+        },
+        "upsell": {
+          "data_breach_history": {
+            "cancel": "Cancelar",
+            "compromise_isa_contact_details": "Datos de contacto comprometidos, incluidos números de teléfono, correos electrónicos y direcciones físicas",
+            "disclaimer_info": "Todos los datos provienen de una amplia base de datos con más de 14 mil millones de registros de filtraciones de datos denunciadas públicamente. Identificamos la información expuesta e informamos al respecto, pero no proporcionamos acceso a datos confidenciales como contraseñas o credenciales privadas.",
+            "limited_offer": "Oferta limitada",
+            "personal_identifiers": "Identificadores personales, incluidos nombres de usuario, nombres completos y fechas de nacimiento",
+            "processing_payment": "Procesando",
+            "professional_information_and_technical_data": "Información profesional y datos técnicos como direcciones IP",
+            "purchase": "Comprar",
+            "special_limited_time_offer": "Esta oferta especial por tiempo limitado vence al abandonar esta página.",
+            "title": "Informe de filtración y exposición de datos",
+            "total_due_today": "Total a pagar:"
+          },
+          "payment_message": {
+            "add_payment_details": "Añadir detalles de pago",
+            "agree_description_upsell": "Al continuar, autorizas un pago único de {price} y aceptas nuestras <terms>Condiciones de uso</terms> y <privacy>Política de privacidad</privacy>. El pago aparecerá como “mobitrace.io” en el extracto de tu cuenta.",
+            "close": "Cerrar",
+            "payment_error": "Ha habido un problema con el pago",
+            "payment_error_description": "Actualiza tu información de pago",
+            "payment_retry_description": "No hemos podido procesar tu tarjeta. Inténtalo de nuevo.",
+            "payment_success": "El pago se ha realizado correctamente",
+            "payment_success_description": "¡Gracias por tu compra! Ya puedes utilizarlo.",
+            "skip": "Saltar",
+            "try_again": "Volver a intentarlo",
+            "update_payment_method": "Actualizar método de pago"
+          },
+          "sex_offenders": {
+            "cancel": "Cancelar",
+            "comprehensive_data": "Acceso a datos completos de delincuentes procedentes de fuentes oficiales",
+            "disclaimer_info": "La verificación de antecedentes de delincuentes sexuales se realiza únicamente en EE. UU. Según el Departamento de Justicia, hay aproximadamente 800 000 delincuentes sexuales registrados en todo el país y siguen aconteciendo casos nuevos cada año. Comprueba los antecedentes de personas desconocidas para tu tranquilidad.",
+            "instant_nationwide_search": "Verificación instantánea a nivel nacional en todos los registros estatales y federales",
+            "limited_offer": "Oferta limitada",
+            "processing_payment": "Procesando",
+            "purchase": "Comprar",
+            "realtime_verification": "Verificación en tiempo real con los datos de registro más actuales",
+            "special_limited_time_offer": "Oferta de verificación de seguridad por tiempo limitado. El servicio solo busca personas registradas en Estados Unidos.",
+            "title": "Verificación del registro de delincuentes sexuales",
+            "total_due_today": "Total a pagar:"
+          },
+          "sex_offenders_search": {
+            "cancel": "Cancelar",
+            "disclaimer_info": "Las verificaciones de antecedentes de delincuentes sexuales están disponibles solo en EE. UU. El Departamento de Justicia de EE. UU. reporta aproximadamente 800 000 delincuentes sexuales registrados en todo el país, con miles de nuevos registros cada año. Verifica a personas desconocidas para tu tranquilidad.\n\nSe trata de una compra única de {price}. Al añadir este informe, autorizas un cargo único al método de pago que tienes registrado. La compra da acceso a un informe de esta serie de productos complementarios.",
+            "instant_access": "Búsqueda instantánea a nivel nacional en todos los registros estatales y federales de EE. UU.",
+            "processing_payment": "Procesando",
+            "purchase": "Comprar",
+            "secure_one_time_payment": "Verificación en tiempo real con los datos de registro más actuales",
+            "special_limited_time_offer": "Oferta de verificación de seguridad por tiempo limitado. El servicio solo busca personas registradas en Estados Unidos.",
+            "title": "Verificación del registro de delincuentes sexuales",
+            "total_due_today": "Total a pagar:",
+            "verified_source_data": "Acceso a datos completos de delincuentes procedentes de fuentes oficiales"
+          },
+          "social_networks": {
+            "cancel": "Cancelar",
+            "disclaimer_info": "Esta búsqueda abarca únicamente las principales plataformas sociales y la información de cuentas visible públicamente. La cobertura puede variar según la plataforma y la disponibilidad del perfil.",
+            "limited_offer": "Oferta limitada",
+            "matching_accounts": "Encuentre las cuentas coincidentes en un informe basado en datos disponibles públicamente.",
+            "processing_payment": "Tratamiento",
+            "purchase": "Compra",
+            "related_usernames_and_public_profile": "Identificar nombres de usuario relacionados y presencia en perfiles públicos",
+            "scan_10_major_social_platforms": "Escanea más de 10 plataformas sociales importantes en busca de cuentas relacionadas.",
+            "special_limited_time_offer": "Esta oferta especial por tiempo limitado expira al salir de esta página.",
+            "title": "Comprobación de plataformas sociales",
+            "total_due_today": "Total a pagar:"
+          },
+          "unlimited_pdf_downloads": {
+            "cancel": "Cancelar",
+            "disclaimer_info": "Se trata de una compra única. Al hacer clic en \"Obtener PDF ilimitados\" se te efectuará un cobro de {price}.",
+            "limited_offer": "Oferta limitada",
+            "processing_payment": "Procesando",
+            "purchase": "Comprar",
+            "special_limited_time_offer": "¡Se ha aplicado un descuento adicional solo para ti!",
+            "title": "Descargas ilimitadas de PDF",
+            "total_due_today": "Total a pagar:",
+            "upsell_benefits_1": "Accesible sin conexión",
+            "upsell_benefits_2": "Fácil de compartir con otras personas",
+            "upsell_benefits_3": "Imprimible bajo demanda",
+            "upsell_benefits_4": "Claro, con un formato atractivo y fácil de leer"
+          }
+        }
+      },
+      "search": {
+        "components": {
+          "loader": {
+            "step_1": {
+              "carrier": {
+                "loadedDefaultText": "Detectada",
+                "text": "Operadora"
+              },
+              "city": {
+                "loadedText": "Detectada",
+                "text": "Ciudad"
+              },
+              "connecting": "Realizando la búsqueda de números de teléfono",
+              "country": {
+                "text": "País"
+              },
+              "location": {
+                "loadedText": "Detectada",
+                "text": "Ubicación"
+              },
+              "searching": "Buscando resultados de",
+              "type": {
+                "loadedText": "Detectada",
+                "text": "Tipo"
+              }
+            },
+            "step_2": {
+              "cta": "Obtener ubicación",
+              "subtitle": "La búsqueda se ha completado. Ya puedes consultar la ubicación.",
+              "title": "¡Ubicación encontrada!"
+            }
+          },
+          "warning_dialog": {
+            "button_text": "Revelar identidad",
+            "description": "Tu informe de Mobitrace está listo. Descubre la información pública que hay asociada a este número.",
+            "info_message": "Tú búsqueda del {phoneNumber} es 100 % segura y fiable.",
+            "telephone": "(0-616) 32211",
+            "title": "IMPORTANTE:"
+          }
+        }
+      },
+      "search_complete": {
+        "components": {
+          "age_verification_dialog": {
+            "button_text": "Sí, tengo 18 años o más",
+            "description": "Este informe puede contener material sensible y está dirigido únicamente a un público adulto. Debes tener 18 años o más para continuar.",
+            "info_message": "Si tienes menos de 18 años, <bold>sal ahora.</bold>",
+            "title": "Verifica tu edad antes de continuar"
+          },
+          "customer_opinions_carousel": {
+            "opinion_1": {
+              "description": "Mi hija había empezado a hablar con alguien y quería asegurarme de que no fuera alguien peligroso. Con Mobitrace, pude revisar quién era y quedarme tranquila. A veces, una simple búsqueda inversa puede marcar la diferencia.",
+              "rate": "4",
+              "timeAgo": "Hace 4 días",
+              "title": "Me ha dado mucha tranquilidad",
+              "user": "Samantha Green"
+            },
+            "opinion_2": {
+              "description": "Esta herramienta es muy precisa y ha funcionado con la mayoría de números que he probado. En un par de ocasiones, la información no estaba actualizada del todo, pero en general, Mobitrace me ha dado los datos que necesitaba. Es fiable y fácil de usar.",
+              "rate": "4.5",
+              "timeAgo": "Hace 1 semana",
+              "title": "Resultados precisos en los que puedo confiar",
+              "user": "Daniel Brooks"
+            },
+            "opinion_3": {
+              "description": "Es rápida, fiable y precisa. Me dio los resultados a una velocidad asombrosa. No podría estar más contenta con el servicio.",
+              "rate": "5",
+              "timeAgo": "Hace 1 día",
+              "title": "Rápido, fácil y eficaz",
+              "user": "Olivia Carter"
+            },
+            "opinion_4": {
+              "description": "Mobitrace se ha convertido en una de mis herramientas favoritas para gestionar llamadas. Me ayuda a averiguar quién esta detrás de números desconocidos, lo que me ahorra tiempo y me permite controlar quién se pone en contacto conmigo.",
+              "rate": "5",
+              "timeAgo": "Hace 2 semanas",
+              "title": "Me da más control sobre mis llamadas",
+              "user": "Matthew Lewis"
+            },
+            "opinion_5": {
+              "description": "No paraba de recibir llamadas de un número desconocido y estaba empezando a preocuparme. Con Mobitrace, pude identificar rápidamente el remitente. Ahora, si algo no me acaba de encajar, siempre acudo a esta aplicación.",
+              "rate": "4.5",
+              "timeAgo": "Hace 2 días",
+              "title": "Ahora siempre sé quién llama",
+              "user": "Sophia Turner"
+            },
+            "opinion_6": {
+              "description": "Recibía llamadas de spam sin parar y me estaba volviendo loco. Con Mobitrace, por fin descubrí quién estaba detrás. Ver el perfil y el historial de la persona que me llamaba me dio las respuestas que necesitaba.",
+              "rate": "5",
+              "timeAgo": "Hace 1 día",
+              "title": "¡Se acabaron los dolores de cabeza por las llamadas no deseadas!",
+              "user": "Christopher Hall"
+            },
+            "opinion_7": {
+              "description": "¡La mejor herramienta que he probado hasta ahora! Con Mobitrace, ya no tengo que preocuparme por llamadas o mensajes de desconocidos. Es rápida, fácil de usar y me da las respuestas que necesito.",
+              "rate": "4",
+              "timeAgo": "Hace 3 días",
+              "title": "La mejor herramienta para llamadas desconocidas",
+              "user": "Grace Mitchell"
+            },
+            "opinion_8": {
+              "description": "Mobitrace me ayudó a descubrir quién me llamaba desde un número desconocido. Incluso me mostró los nombres y sus vínculos familiares. La información no siempre era totalmente correcta, pero en general me dio información valiosa que no pude encontrar en ningún otro lugar.",
+              "rate": "4.5",
+              "timeAgo": "Hace 2 días",
+              "title": "Me sorprendió el nivel de detalle de la información",
+              "user": "Ethan Parker"
+            },
+            "rate": "4.5",
+            "reviews": "Basado en <bold>456 reseñas</bold>",
+            "title": "Excelente"
+          },
+          "customer_say_about": {
+            "subtitle": "Nos esforzamos al máximo para darte una experiencia inigualable.",
+            "title": "Lo que opinan nuestros clientes"
+          },
+          "owner_information": {
+            "collecting_data_address": "Direcciones",
+            "collecting_data_email": "Correo electrónico y números de teléfono",
+            "collecting_data_job": "Información laboral",
+            "collecting_data_online": "Nombres de usuario en Internet",
+            "collecting_data_past": "Relaciones pasadas",
+            "collecting_data_profiles": "Perfiles olvidados",
+            "collecting_data_title": "Recopilando datos...",
+            "progress_bar_description": "Tu historial de búsqueda es privado y confidencial. El propietario del {phoneNumber} nunca sabrá que has buscado su número de teléfono.",
+            "progress_bar_percentage": "{percentage} %",
+            "subtitle": "Espera mientras analizamos miles de millones de registros.",
+            "title": "Recopilando información del propietario de <bold></bold>"
+          }
+        }
+      },
+      "sign_up": {
+        "card_description": "Mobitrace es una herramienta digital avanzada que rastrea miles de millones de datos asociados a números de teléfono en línea. Aunque la mayoría de números desconocidos son solo spam o publicidad, lo que encontrarás en nuestros informes te sorprenderá.",
+        "card_title": "Aviso importante",
+        "email_placeholder": "Tu correo electrónico",
+        "email_title": "Correo electrónico",
+        "errors": {
+          "email_exists": "Esta dirección de correo electrónico ya está registrada. Inicia sesión o utiliza un correo diferente.",
+          "invalid_email": "Introduce un correo electrónico válido."
+        },
+        "form_title": "Introduce tu correo electrónico para obtener el informe",
+        "latest_report": "Informe más reciente a fecha de 3 de marzo de 2025",
+        "submit_button": "Continuar",
+        "title": "Tus resultados están listos"
+      },
+      "thank_you": {
+        "account_link": "Acceder a tu cuenta",
+        "click_below_to_account_your_link": "¡Haz clic abajo para acceder a tu cuenta!",
+        "description": "Hemos enviado los datos del pedido y las credenciales de tu cuenta a {email}. Ya puedes acceder a tu cuenta",
+        "did_you_like_your_shopping_experience": "¿Te gustó tu experiencia de compra?",
+        "more_details_feedback": "Agradecemos tus comentarios: <email>support@mobitrace.io</email>",
+        "no": "No",
+        "thank_you_for_your_feedback": "¡Gracias por tus comentarios!",
+        "title": "El pago se ha realizado correctamente",
+        "we_ll_work_on_making_it_better": "Trabajaremos para mejorarlo.",
+        "yes": "Sí"
+      },
+      "upsell": {
+        "already_purchased": "Ya lo has comprado",
+        "data_breach": {
+          "disclaimer": "Todos los datos provienen de una base de datos exhaustiva con más de 14 mil millones de registros de filtraciones de datos notificadas públicamente. Identificamos e informamos sobre la información divulgada, pero no proporcionamos acceso a datos confidenciales como contraseñas o credenciales privadas.",
+          "purchase": "Añadir informe de filtración de datos",
+          "special_limited_time_offer": "Esta es una oferta especial por tiempo limitado y caduca cuando salgas de esta página.",
+          "title": "Informe de filtración y fuga de datos",
+          "upsell_benefits_1": "Información de identificación personal, incluidos nombres de usuario, nombres completos y fechas de nacimiento",
+          "upsell_benefits_2": "Datos de contacto comprometidos, incluidos números de teléfono, correos electrónicos y direcciones físicas",
+          "upsell_benefits_3": "Información profesional y datos técnicos como direcciones IP"
+        },
+        "limited_offer": "Oferta limitada",
+        "pdf": {
+          "disclaimer": "Se trata de una compra única. Al hacer clic en \"Obtener PDF ilimitados\" se te efectuará un cobro de {price}.",
+          "purchase": "Obtener PDF ilimitados",
+          "special_limited_time_offer": "¡Se ha aplicado un descuento adicional solo para ti!",
+          "title": "Descargas ilimitadas de PDF",
+          "upsell_benefits_1": "Accesible sin conexión",
+          "upsell_benefits_2": "Fácil de compartir con otras personas",
+          "upsell_benefits_3": "Imprimible bajo demanda",
+          "upsell_benefits_4": "Claro, con un formato atractivo y fácil de leer"
+        },
+        "processing": "Procesando",
+        "sex_offenders": {
+          "disclaimer": "La verificación de antecedentes de delincuentes sexuales se realiza únicamente en EE. UU. Según el Departamento de Justicia de EE. UU., hay aproximadamente 800 000 delincuentes sexuales registrados en todo el país y siguen surgiendo nuevos casos cada año. Comprueba los antecedentes de personas desconocidas para tu tranquilidad.",
+          "purchase": "Añadir verificación del registro de delincuentes sexuales",
+          "purchase_terms": "Se trata de una compra única de {price}. Al añadir este informe, autorizas un cargo único al método de pago que tienes registrado. La compra da acceso a un informe de esta serie de productos complementarios.",
+          "special_limited_time_offer": "Oferta de verificación de seguridad por tiempo limitado. El servicio solo busca personas registradas en Estados Unidos.",
+          "title": "Verificación del registro de delincuentes sexuales",
+          "upsell_benefits_1": "Búsqueda instantánea a nivel nacional en todos los registros estatales y federales de EE. UU.",
+          "upsell_benefits_2": "Acceso a datos completos de delincuentes procedentes de fuentes oficiales",
+          "upsell_benefits_3": "Verificación en tiempo real con los datos de registro más actuales"
+        },
+        "skip": "Saltar",
+        "total_due_today": "Total a pagar:"
+      }
+    },
+    "settings": {
+      "billing": {
+        "activate_dialog": {
+          "action_form": "Pagar con tarjeta",
+          "title": "Añadir método de pago"
+        },
+        "active_date": "Activa hasta: {date}",
+        "active_state": "Activa",
+        "cancel_dialog": {
+          "cancel_cta": "Cancelar suscripción",
+          "canceling_cta": "Cancelando...",
+          "close_cta": "Cerrar",
+          "description": "Al cancelar tu suscripción, perderás acceso a todas las funciones y soporte. Puedes reactivar tu suscripción en cualquier momento.",
+          "description_canceled": "Tu suscripción ha sido cancelada.<br> No se te cobrará a partir de ahora.",
+          "done_cta": "Listo",
+          "title": "Confirmación"
+        },
+        "cancel_subscription": "Cancelar suscripción",
+        "canceled_cta": "Reactivar suscripción",
+        "canceled_date": "Cancelación: {date}",
+        "canceled_state": "Cancelada",
+        "expired_cta": "Activar suscripción",
+        "expired_date": "Fecha de expiración: {date}",
+        "expired_description": "Tu suscripción ha caducado. Por favor, reactívala para continuar.",
+        "expired_state": "Caducada",
+        "month": "mes",
+        "next_billing_date": "Próxima facturación: {date}",
+        "privacy_policy": "Política de privacidad",
+        "started_on_date": "Fecha de inicio: {date}",
+        "subscription": "Suscripción",
+        "terms_and_conditions": "Condiciones generales",
+        "title": "Facturación",
+        "total": "Total:"
+      },
+      "get_help": {
+        "title": "Ayuda"
+      },
+      "my_account": {
+        "change_password": {
+          "confirm_password": "Confirmar contraseña",
+          "current_password": "Contraseña actual",
+          "new_password": "Nueva contraseña",
+          "title": "Cambiar contraseña"
+        },
+        "delete_cta": "Eliminar cuenta",
+        "delete_dialog": {
+          "close_cta": "Cerrar",
+          "delete_cta": "Eliminar cuenta",
+          "deleting_cta": "Borrar...",
+          "description": "¿Seguro que quieres eliminar la cuenta? Recuerda que, al confirmar, perderás inmediatamente el acceso al área de miembros.",
+          "description_canceled": "La cuenta se ha eliminado correctamente.",
+          "done_cta": "Listo",
+          "title": "Confirmación"
+        },
+        "errors": {
+          "confirm_password_required": "Es obligatorio confirmar la contraseña",
+          "current_password_invalid": "La contraseña actual no es válida",
+          "current_password_required": "La contraseña actual es obligatoria",
+          "email_max_length": "El correo electrónico debe tener menos de {maxLength} caracteres.",
+          "email_required": "El correo electrónico es obligatorio",
+          "email_taken": "Esta dirección de correo electrónico ya está en uso.",
+          "invalid_email": "Introduce un correo electrónico válido.",
+          "name_invalid_characters": "El nombre no puede contener números.",
+          "name_invalid_special_characters": "El nombre no puede contener caracteres especiales.",
+          "name_max_length": "El nombre debe tener menos de {maxLength} caracteres.",
+          "name_required": "El nombre es obligatorio",
+          "new_password_must_differ_from_current_password": "La nueva contraseña debe ser diferente a la contraseña actual",
+          "new_password_required": "Es obligatorio introducir una nueva contraseña",
+          "password_max_length": "La contraseña debe tener menos de {maxLength} caracteres.",
+          "password_min_length": "La contraseña debe tener 6 caracteres como mínimo.",
+          "passwords_must_match": "Las contraseñas deben coincidir"
+        },
+        "notifications": {
+          "notify_status_changes": "Avisarme cuando cambie el estado",
+          "notify_user_located": "Avisarme cuando se localice al usuario",
+          "title": "Notificaciones"
+        },
+        "profile": {
+          "email": "Correo electrónico",
+          "name": "Nombre y apellidos",
+          "title": "Perfil"
+        },
+        "submit_cta": "Guardar cambios",
+        "success_title": "Tu cuenta ha sido actualizada",
+        "title": "General"
+      },
+      "title": "Ajustes"
+    },
+    "sex_offenders_search": {
+      "form": {
+        "city_placeholder": "Ciudad",
+        "errors": {
+          "first_name_required": "El nombre es obligatorio",
+          "last_name_required": "Es obligatorio indicar el apellido"
+        },
+        "first_name_placeholder": "Nombre de pila",
+        "last_name_placeholder": "Apellido(s)",
+        "state_placeholder": "Todos los estados",
+        "submit_button": "Compruébalo ahora",
+        "title": "Consultar el registro de delincuentes sexuales",
+        "zip_placeholder": "Código postal"
+      },
+      "loading": {
+        "subtitle": "Por favor, espera mientras recuperamos los datos del registro nacional.",
+        "title": "Consultando el registro de delincuentes sexuales..."
+      },
+      "results": {
+        "back": "Volver",
+        "continue": "Continuar",
+        "empty_title": "No se han encontrado delincuentes sexuales",
+        "results_found": "Se han encontrado {count} resultados",
+        "results_found_subtitle": "Selecciona la opción que mejor se adapte a tus necesidades para continuar.",
+        "search_again": "Buscar de nuevo"
+      },
+      "title": "Delincuentes sexuales"
+    },
+    "sign_in": {
+      "description": "Introduce tu correo electrónico para iniciar sesión en tu cuenta",
+      "sign_up_link": "Registrarse",
+      "sign_up_prompt": "¿No tienes una cuenta?",
+      "title": "Iniciar sesión"
+    },
+    "sign_up": {
+      "components": {
+        "sign_up_form": {
+          "continue_with_email": "Continuar con el correo electrónico",
+          "continue_with_facebook": "Continuar con Facebook",
+          "continue_with_google": "Continuar con Google",
+          "email_label": "Correo electrónico",
+          "email_placeholder": "Dirección de correo electrónico",
+          "errors": {
+            "email_exists": "Esta dirección de correo electrónico ya está registrada. Por favor, intenta iniciar sesión o utiliza un correo diferente.",
+            "invalid_email": "Introduce un correo electrónico válido."
+          },
+          "or": "o"
+        }
+      },
+      "title": "Regístrate para obtener la ubicación precisa del <brandColor>{phoneNumber}</brandColor>"
+    },
+    "status": {
+      "description": "Comprueba el progreso abajo",
+      "detail_description": "Ubicación encontrada",
+      "error_fetching_address": "Error al buscar la dirección",
+      "link_name": "Enlace para {name}",
+      "load_more_button": "Más información",
+      "loading_address": "Cargando dirección...",
+      "located_status": "Ubicado",
+      "no_locations_available": "No hay solicitudes",
+      "pending_description": "Estamos a la espera de que el destinatario comparta su goelocalización",
+      "pending_status": "Pendiente",
+      "ready_status": "Informe creado",
+      "rejected_description": "Mejora tu mensaje para convencer al receptor de que comparta su ubicación geográfica",
+      "rejected_status": "Rechazado",
+      "reverse_lookup_description": "Resumen de datos públicos encontrados para el número de teléfono",
+      "reverse_lookup_report_for": "Informe de búsqueda inversa para {phone}",
+      "title": "Centro de actividades"
+    },
+    "success": {
+      "account_link": "Accede a tu cuenta",
+      "click_below_to_account_your_link": "¡Haz clic abajo para acceder a tu cuenta!",
+      "description": "Hemos enviado los datos del pedido y las credenciales de tu cuenta a {email}. Ya puedes acceder a tu cuenta",
+      "did_you_like_your_shopping_experience": "¿Te gustó tu experiencia de compra?",
+      "more_details_feedback": "Agradecemos tus comentarios: <email> support@mobitrace.io </email>",
+      "no": "No",
+      "thank_you_for_your_feedback": "¡Gracias por tus comentarios!",
+      "title": "El pago se ha realizado correctamente.",
+      "we_ll_work_on_making_it_better": "Trabajaremos para mejorarlo",
+      "yes": "Sí"
+    },
+    "upsell": {
+      "cancel_button": "No, gracias",
+      "description": "Disfruta de atención al cliente personalizada 24 horas al día, 7 días a la semana y soporte técnico de primer nivel con tan solo un clic.",
+      "footer_info": "Ten en cuenta que, en función de tu ubicación geográfica, se podría añadir un impuesto sobre las ventas del {percentage} % al total de tu compra.",
+      "order_details": "Detalles del pedido:",
+      "products": {
+        "add_button": "Añadir",
+        "add_order_button": "Añadir por {price}",
+        "added_state": "Añadido",
+        "details_button": "Detalles",
+        "remove_button": "Eliminar",
+        "scan_pro": {
+          "description": "Descubre todos los aspectos de Mobitrace con la ayuda de nuestro equipo de soporte técnico experto. Explora todas las funciones en acción y aprende cómo sacarles el máximo partido.",
+          "dialog": "<p>Maximiza tu experiencia con Mobitrace gracias a la asistencia personalizada paso a paso de nuestro equipo de expertos. Descubre todas las funciones y saca el máximo partido a nuestros servicios.</p><ul><li><strong>Rastreo fluido de la ubicación.</strong>Rastrea fácilmente la ubicación de alguien con un enlace único y sencillo. Nuestro equipo te guiará a través de todo el proceso, asegurándose de que cada detalle técnico se maneje con cuidado.</li><li><strong>Asistencia completa para la creación de perfiles.</strong>Confía en nosotros para descubrir toda la información que necesitas. Desde contactos hasta perfiles en redes sociales, te ayudamos a obtener una visión completa de la persona que estás buscando.</li><li><strong>Encuentra tu teléfono perdido o robado.</strong>Si has perdido el teléfono, estamos aquí para ayudarte. Nuestras herramientas avanzadas pueden localizar rápidamente tu dispositivo y mostrar su posición exacta en un mapa.</li><li><strong>Protege tu seguridad en línea.</strong>Escaneamos las bases de datos para detectar si tu número de teléfono o tu correo electrónico se han visto comprometidos por filtraciones de terceros, ayudándote a ir un paso por delante de las ciberamenazas.</li></ul>",
+          "title": "ScanPRO"
+        },
+        "support_hotline": {
+          "description": "¡No hagas cola para recibir ayuda! Con el Soporte Técnico Prioritario, puedes adelantarte y recibir asistencia rápida y personalizada de nuestros técnicos especializados.",
+          "title": "Asistencia prioritaria 24 horas al día, 7 días a la semana"
+        }
+      },
+      "submit_button": "Añadir al pedido",
+      "subtotal": "Subtotal",
+      "taxes": "Impuesto sobre las ventas ({percentage} %)",
+      "title": "¡Maximiza tu experiencia con Mobitrace!",
+      "total": "Total"
+    }
+  },
+  "routes": {
+    "forgot_password": "forgot-password",
+    "loader": "loader",
+    "reset_password": "reset-password",
+    "sign_in": "sign-in",
+    "sign_up": "sign-up"
+  }
+}

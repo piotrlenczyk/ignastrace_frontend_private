@@ -1,0 +1,109 @@
+name: Update helm chart version
+
+on:
+  repository_dispatch:
+    types:
+      - helm-chart-update
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - helm/**
+      - .github/workflows/helm-chart-update.yaml
+
+env:
+  HELM_CHART: mobitrace-frontend
+
+concurrency: helm-chart-update-${{ github.event.client_payload.branch || github.ref_name }}
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  helm-chart-update-dispatch:
+    runs-on: fmt-generic
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.client_payload.branch || github.ref_name }}
+          token: ${{ secrets.SHARED_GHA_WORKFLOW_TOKEN }}
+
+      - name: Setup yq
+        uses: QR-CODE-App/devops-shared/.github/actions/setup-yq@main
+
+      - name: patch version
+        id: chart-version
+        working-directory: helm/${{ env.HELM_CHART }}
+        run: |
+          TIMESTAMP=$(date +'%Y%m%d%H%M%S')
+          
+          # Determine branch: use payload branch if available, otherwise use github ref
+          if [[ "${{ github.event_name }}" == "repository_dispatch" ]] && [[ -n "${{ github.event.client_payload.branch }}" ]]; then
+            BRANCH="${{ github.event.client_payload.branch }}"
+          else
+            BRANCH="${{ github.ref_name }}"
+          fi
+          
+          # Determine version prefix based on branch
+          if [[ "$BRANCH" == "main" ]]; then
+            VERSION_PREFIX="0.5"
+          else
+            VERSION_PREFIX="0.1"
+          fi
+          
+          yq --inplace ".version = \"${VERSION_PREFIX}.${TIMESTAMP}\"" Chart.yaml
+          echo "version=$(yq .version Chart.yaml)" >> $GITHUB_OUTPUT
+
+      - name: patch app version
+        if: github.event.client_payload.application-image-tag != ''
+        working-directory: helm/${{ env.HELM_CHART }}
+        env:
+          APP_VERSION: ${{ github.event.client_payload.application-image-tag }}
+        run: |
+          yq --inplace '.appVersion = env(APP_VERSION)' Chart.yaml
+
+      - name: 'Commit changes to the repository'
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: 'GitHub Actions'
+          message: "Bump helm chart version to ${{ steps.chart-version.outputs.version }} [skip ci]"
+          add: "helm"
+          push: 'true'
+          pull: '-ff'
+          github_token: '${{ secrets.SHARED_GHA_WORKFLOW_TOKEN }}'
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - uses: azure/setup-helm@v4
+        id: helm-install
+
+      - name: lint chart
+        working-directory: helm
+        run: |
+          helm dependency update ${{ env.HELM_CHART }}
+          helm lint ${{ env.HELM_CHART }}
+
+      - name: upload helm chart
+        working-directory: helm
+        run: |
+          helm package ${{ env.HELM_CHART }}
+          helm push ${{ env.HELM_CHART }}-${{ steps.chart-version.outputs.version }}.tgz oci://${{ steps.login-ecr.outputs.registry }}/
+
+      - name: Update job summary
+        run: |
+          if [[ -n "${{ github.event.client_payload.application-image-tag }}" ]]; then
+            echo "Helm chart was updated to version ${{ steps.chart-version.outputs.version }} and appVersion to ${{ github.event.client_payload.application-image-tag }}!" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "Helm chart was updated to version ${{ steps.chart-version.outputs.version }}!" >> $GITHUB_STEP_SUMMARY
+          fi

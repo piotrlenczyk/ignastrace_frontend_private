@@ -1,0 +1,1882 @@
+{
+  "common": {
+    "back": "Terug",
+    "close": "Sluiten",
+    "close_menu": "Menu sluiten",
+    "copied_to_clipboard": "Gekopieerd naar klembord",
+    "email_label": "E-mailadres",
+    "errors": {
+      "email_exists": "Dit e-mailadres is al in gebruik",
+      "rate_limit_error": "Je hebt je dagelijkse limiet bereikt. Probeer het morgen opnieuw.",
+      "rate_limit_error_title": "Limiet bereikt",
+      "server_error": "Serverfout",
+      "server_error_description": "Er is een fout opgetreden bij het verwerken van je verzoek. Probeer het opnieuw."
+    },
+    "login": "Inloggen",
+    "logout": "Uitloggen",
+    "open_menu": "Menu openen",
+    "settings": "Instellingen",
+    "subscription": "Abonnement"
+  },
+  "components": {
+    "country_selector": {
+      "no_results": "Landcode niet gevonden",
+      "placeholder": "Landcode selecteren...",
+      "search_placeholder": "Zoeken op land of code..."
+    },
+    "forms": {
+      "change_email": {
+        "confirmation_email_sent_description": "We hebben een bevestigingsmail verstuurd naar het nieuwe e-mailadres. Bevestig deze wijziging.",
+        "confirmation_email_sent_title": "Bevestigingsmail verstuurd",
+        "current_email_label": "Huidig e-mailadres",
+        "current_password_label": "Voer om veiligheidsredenen je huidige wachtwoord in.",
+        "current_password_placeholder": "Voer je huidige wachtwoord in",
+        "errors": {
+          "current_password_required": "Huidig wachtwoord is verplicht.",
+          "invalid_email": "Voer een geldig e-mailadres in."
+        },
+        "new_email_label": "Nieuw e-mailadres",
+        "new_email_placeholder": "Voer een nieuw e-mailadres in",
+        "save_button": "E-mailadres bijwerken"
+      },
+      "change_password": {
+        "confirm_password_label": "Nieuw wachtwoord bevestigen",
+        "confirm_password_placeholder": "Bevestig je nieuwe wachtwoord",
+        "current_password_label": "Huidig wachtwoord",
+        "current_password_placeholder": "Voer je huidige wachtwoord in.",
+        "errors": {
+          "confirm_password_min_length": "Bevestig het nieuwe wachtwoord van minimaal 6 tekens.",
+          "current_password_required": "Huidig wachtwoord is vereist",
+          "new_password_min_length": "Het nieuwe wachtwoord moet minstens 6 tekens lang zijn",
+          "new_password_required": "Nieuw wachtwoord is vereist",
+          "passwords_must_match": "Wachtwoorden moeten overeenkomen"
+        },
+        "new_password_label": "Nieuw wachtwoord",
+        "new_password_placeholder": "Voer je nieuwe wachtwoord in.",
+        "save_button": "Wijzigingen opslaan"
+      },
+      "delete_account": {
+        "cancel_button": "Annuleren",
+        "confirm_button": "Ja, mijn account verwijderen",
+        "confirmation_message": "Je account is succesvol verwijderd.",
+        "delete_account_button": "Account verwijderen",
+        "description": "Deze actie kan niet ongedaan worden gemaakt. Zorg ervoor dat je zeker bent van je beslissing.",
+        "dialog_description": "Deze actie kan niet ongedaan worden gemaakt. Je account wordt definitief verwijderd en je gegevens worden van onze servers verwijderd.",
+        "dialog_title": "Weet je het zeker?",
+        "title": "Account verwijderen"
+      },
+      "edit_company": {
+        "add_social_network_button": "Sociaal netwerk toevoegen",
+        "address_label": "Adres",
+        "address_placeholder": "Bedrijfsadres invoeren",
+        "company_name_label": "Bedrijfsnaam",
+        "company_name_placeholder": "Bedrijfsnaam invoeren",
+        "errors": {
+          "company_name_required": "Bedrijfsnaam is verplicht",
+          "url_invalid": "Voer een geldige URL in"
+        },
+        "hide_address_map": "Kaart verbergen",
+        "horizontal_logo_alt_text": "Horizontaal bedrijfslogo",
+        "horizontal_logo_description": "Aanbevolen: jpeg, png. Maximaal 5 MB. 600 x 200 pixels.",
+        "horizontal_logo_label": "Horizontaal logo",
+        "opening_hours_label": "Openingstijden",
+        "opening_hours_placeholder": "Bijv. ma-vr: 9.00-17.00 uur, za: 10.00-14.00 uur, zo: gesloten.",
+        "profile_url_placeholder": "Profiel-URL",
+        "save_button": "Wijzigingen opslaan",
+        "show_address_map": "Kaart tonen",
+        "social_networks_label": "Sociale netwerken",
+        "squared_logo_alt_text": "Vierkant bedrijfslogo",
+        "squared_logo_label": "Vierkant logo",
+        "website_label": "Website",
+        "website_placeholder": "https://www.example.com"
+      },
+      "edit_profile": {
+        "description": "Persoonlijke gegevens bijwerken",
+        "errors": {
+          "first_name_required": "Voornaam is verplicht.",
+          "invalid_phone": "Telefoonnummer is ongeldig.",
+          "last_name_required": "Achternaam is verplicht."
+        },
+        "first_name_label": "Voornaam",
+        "first_name_placeholder": "Voer je voornaam in.",
+        "last_name_label": "Achternaam",
+        "last_name_placeholder": "Voer je achternaam in.",
+        "phone_label": "Telefoonnummer",
+        "phone_placeholder": "Voer je telefoonnummer in.",
+        "privacy_label": "Privacy",
+        "profile_picture_alt": "Profielfoto",
+        "profile_picture_label": "Profielfoto",
+        "public_email_label": "Maak mijn e-mailadres openbaar op mijn profiel.",
+        "public_phone_label": "Maak mijn telefoonnummer openbaar op mijn profiel.",
+        "save_button": "Wijzigingen opslaan",
+        "title": "Profiel bewerken",
+        "upload_description": "Aanbevolen: jpeg, png. Maximaal 5 MB. 400 x 400 pixels.",
+        "upload_picture": "Nieuwe foto uploaden",
+        "whatsapp_label": "Ik heb een WhatsApp-account met dit nummer."
+      },
+      "forgot_password": {
+        "cancel_button": "Annuleren",
+        "email_label": "E-mailadres",
+        "email_placeholder": "Je e-mailadres",
+        "errors": {
+          "invalid_email": "Voer een geldig e-mailadres in."
+        },
+        "submit_button": "Wachtwoord versturen",
+        "subtitle": "Voer je e-mailadres in, dan kunnen wij je wachtwoord versturen.",
+        "success": {
+          "done": "Sluiten",
+          "line_1": "We hebben je wachtwoord gestuurd naar",
+          "line_2": "Bekijk je e-mail om in te loggen.",
+          "title": "Wachtwoord verstuurd"
+        },
+        "title": "Wachtwoord vergeten?"
+      },
+      "reset_password": {
+        "confirm_password_label": "Nieuw wachtwoord bevestigen",
+        "confirm_password_placeholder": "Bevestig je nieuwe wachtwoord",
+        "errors": {
+          "password_min_length": "Het wachtwoord moet minstens 6 tekens lang zijn.",
+          "passwords_do_not_match": "Wachtwoorden komen niet overeen."
+        },
+        "new_password_label": "Nieuw wachtwoord",
+        "new_password_placeholder": "Voer je nieuwe wachtwoord in.",
+        "submit_button": "Wachtwoord resetten"
+      },
+      "sign_in": {
+        "email_label": "E-mailadres",
+        "email_placeholder": "Jouw e-mailadres",
+        "errors": {
+          "account_not_found": "Je Mobitrace-account kon niet worden gevonden.",
+          "invalid_credentials": "Het e-mailadres en wachtwoord dat je hebt ingevoerd, komt niet voor in onze database. Controleer je gegevens en probeer het opnieuw.",
+          "invalid_email": "Voer een geldig e-mailadres in.",
+          "password_min_length": "Het wachtwoord moet minstens 6 tekens lang zijn."
+        },
+        "forgot_password": "Wachtwoord vergeten?",
+        "or": "of",
+        "password_label": "Wachtwoord",
+        "password_placeholder": "Je wachtwoord",
+        "submit_button": "Inloggen",
+        "title": "Inloggen op je account"
+      },
+      "stripe_form": {
+        "card_name_placeholder": "Naam op de kaart",
+        "credit_card_label": "Creditcard",
+        "credit_card_placeholder": "1234 1234 1234 1234",
+        "cvc_placeholder": "CVC",
+        "errors": {
+          "apple_pay_not_available": "Apple Pay wordt niet ondersteund",
+          "apple_pay_not_available_description": "Deze betaalmethode is niet ingeschakeld voor dit apparaat of deze browser. Kies een andere betaalmethode.",
+          "card_name_required": "Voer de naam in zoals op de kaart vermeld staat.",
+          "card_number_required": "Voer het kaartnummer in.",
+          "cvc_required": "Vereist.",
+          "expiration_date_required": "Vereist.",
+          "google_pay_not_available": "Google Pay wordt niet ondersteund",
+          "google_pay_not_available_description": "Deze betaalmethode is niet ingeschakeld voor dit apparaat of deze browser. Kies een andere betaalmethode.",
+          "name_invalid_characters": "Naam mag geen cijfers bevatten.",
+          "name_invalid_special_characters": "Naam kan geen speciale tekens bevatten.",
+          "stripe_generic_error": "We konden je betaalmethode niet authenticeren. Kies een andere betaalmethode en probeer het opnieuw.",
+          "stripe_generic_error_title": "Fout bij betaling",
+          "zip_code_invalid_format": "Voer een geldige postcode in."
+        },
+        "expiration_date_placeholder": "MM/JJ",
+        "zip_code_placeholder": "Postcode (optioneel)"
+      }
+    },
+    "image_upload_input": {
+      "upload_button_text": "Nieuwe foto uploaden",
+      "upload_description": "Aanbevolen: jpeg, png. Maximaal 5 MB. 400 x 400 pixels.",
+      "upload_label": "Profielfoto"
+    },
+    "phone_input": {
+      "errors": {
+        "invalid_phone": "Voer een geldig telefoonnummer in."
+      },
+      "label": "Voer het telefoonnummer in dat je wilt traceren",
+      "no_results": "Landcode niet gevonden",
+      "phone_placeholder": "123456789",
+      "search_placeholder": "Zoeken op land of code...",
+      "submit": "Zoeken"
+    },
+    "settings_navigator": {
+      "change_email": {
+        "description": "E-mailadres bijwerken",
+        "label": "E-mailadres wijzigen"
+      },
+      "change_password": {
+        "description": "Wachtwoord van je account bijwerken",
+        "label": "Wachtwoord wijzigen"
+      },
+      "company_profile": {
+        "description": "Bedrijfsgegevens bijwerken",
+        "label": "Bedrijfsprofiel"
+      },
+      "delete_account": {
+        "description": "Verwijder je account en alle bijbehorende gegevens.",
+        "label": "Account verwijderen"
+      },
+      "edit_profile": {
+        "description": "Persoonlijke gegevens bijwerken",
+        "label": "Profiel bewerken"
+      },
+      "no_access": "Je hebt geen toegang tot dit gedeelte. Deze content is uitsluitend bedoeld voor professionele gebruikers.",
+      "notifications": {
+        "description": "Voorkeuren voor e-mailmeldingen beheren",
+        "label": "Meldingen"
+      },
+      "subscription": {
+        "description": "Beheer je abonnement",
+        "label": "Abonnement"
+      },
+      "title": "Instellingen"
+    }
+  },
+  "consent": {
+    "accept": "Aanvaarden",
+    "decline": "Weigeren",
+    "decline_accept": "Terug naar start",
+    "decline_description": "Om onze berichtenservice te gebruiken, met name voor nummers in de VS en Canada, hebben we jouw toestemming nodig. Zonder je toestemming is deze functie niet beschikbaar. Kom op elk gewenst moment terug om verder te gaan.",
+    "decline_title": "We hebben je toestemming nodig",
+    "description": "Om je telefoon te lokaliseren, moeten we je een sms sturen. Bevestig dat je akkoord gaat met het ontvangen ervan.",
+    "title": "Bevestiging vereist"
+  },
+  "contest": {
+    "agree": "Aanvaarden",
+    "decline": "Weigeren",
+    "description": "Ik bevestig dat het ingevoerde telefoonnummer van mij is en dat ik berichten wil ontvangen.",
+    "title": "Berichten ontvangen?"
+  },
+  "footer": {
+    "brand": "Mobitrace.io",
+    "description": "Met Mobitrace vind je snel en makkelijk mobiele telefoons.",
+    "links": {
+      "about_us": "Over ons",
+      "cancel_subscription": "Abonnement opzeggen",
+      "contact": "Contact",
+      "contacts": "Contacten",
+      "cookie_policy": "Cookiebeleid",
+      "faqs": "Veelgestelde vragen",
+      "home": "Home",
+      "location_number": "Locatie op nummer",
+      "login": "Inloggen",
+      "pricing": "Tarieven",
+      "privacy policy": "Privacybeleid",
+      "reverse_lookup": "Omgekeerd zoeken",
+      "terms_and_conditions": "Algemene voorwaarden"
+    },
+    "rights": "Alle rechten voorbehouden."
+  },
+  "header": {
+    "about": "Over",
+    "home": "Home",
+    "open_menu": "Menu openen",
+    "sign_in": "Inloggen",
+    "sign_up": "Aanmelden"
+  },
+  "language": {
+    "english": "English",
+    "spanish": "Español"
+  },
+  "navigation": {
+    "about_us": "Over ons",
+    "contact": "Contact",
+    "dashboard": "Dashboard",
+    "faqs": "Veelgestelde vragen",
+    "home": "Home",
+    "mobile_dialog_description": "In dit dialoogvenster zie je de belangrijkste navigatielinks",
+    "mobile_dialog_title": "Hoofdnavigatie",
+    "pricing": "Tarieven",
+    "settings": "Instellingen"
+  },
+  "pages": {
+    "about": {
+      "cards": {
+        "card_1": {
+          "description": "<p>Bij Mobitrace maken we locatietracking eenvoudig, betrouwbaar en veilig. Het is onze missie om je te helpen in contact te blijven met vrienden, familie of belangrijke werknemers, met gebruik van geavanceerde technologie waarmee je in real time de locatie van een telefoon traceert.</p>",
+          "title": "Onze missie"
+        },
+        "card_2": {
+          "description": "<p>Met Mobitrace wordt telefoontracking gecombineerd met services op het gebied van openbare informatie:</p><ul><li>Telefoontracking: verstuur een persoonlijk sms-bericht met link, waarmee de ontvanger zijn/haar locatie kan delen. De tracking wordt alleen in gang gezet met de expliciete toestemming van de ontvanger.</li><li>Deep Data Search: krijg toegang tot contactgegevens, locatiegeschiedenis en meer.</li><li>Wereldwijd bereik: werkt op alle telefoons en netwerken, en in alle landen. Vind ieder telefoonnummer, overal.</li></ul>",
+          "title": "Ons aanbod"
+        },
+        "card_3": {
+          "description": "<ul><li>Eenvoud: genereer een URL, verstuur die en begin met traceren zodra die geaccepteerd is.</li><li>Veiligheid: tracking kan alleen met wederzijdse goedkeuring en is veilig.</li><li>Realtime nauwkeurigheid: ontvang actuele, nauwkeurige locatiegegevens.</ul></li>",
+          "title": "Waarom kiezen voor Mobitrace?"
+        },
+        "card_4": {
+          "description": "<p>Mobitrace staat voor je klaar om je te helpen contact te houden met de mensen die ertoe doen, of je nu een bezorgde ouder of een betrokken vriend bent. Bedankt dat je voor Mobitrace gekozen hebt. Bij ons komen tracking en informatie samen om ervoor te zorgen dat je geïnformeerd en gerust bent.</p>",
+          "title": "Meld je aan"
+        }
+      },
+      "description": "Welkom bij Mobitrace, de dienst waarop je kunt vertrouwen voor het moeiteloos traceren van mobiele telefoons en toegang tot gedetailleerde openbare informatie. We werken samen met de beste wereldwijde dataproviders uit de VS, het VK, Europa en daarbuiten. Daardoor kun je met Mobitrace nauwkeurig telefoons en adressen opzoeken en zo geïnformeerd en verbonden blijven.",
+      "title": "Over ons"
+    },
+    "cancellation": {
+      "form": {
+        "email_label": "Je e-mailadres",
+        "error_not_found_description": "Controleer je gegevens en probeer het opnieuw.",
+        "error_not_found_title": "Oeps! Er is geen account gevonden voor dit e-mailadres.",
+        "error_not_subscribed_title": "Je bent niet aangemeld.",
+        "errors": {
+          "invalid_email": "Voer een geldig e-mailadres in."
+        },
+        "submit": "Abonnement opzeggen",
+        "success_description": "Vanaf nu worden er geen kosten meer in rekening gebracht.",
+        "success_title": "Je bent afgemeld."
+      },
+      "info_email": "Als je niet meer weet welk e-mailadres je hebt gebruikt toen je je registreerde, check dan je e-mail en zoek naar e-mails van 'mobitrace.io'. Neem anders <link>hier</link> contact op met onze vriendelijke klantenservice.",
+      "info_user": "Je kunt je abonnement ook opzeggen door in te loggen op je account, naar het tabblad 'Abonnement' te gaan en daar te klikken op 'Abonnement opzeggen'.",
+      "subtitle": "Zeg je abonnement eenvoudig op door het e-mailadres in te voeren waarmee je je account hebt aangemaakt.",
+      "title": "Abonnement opzeggen"
+    },
+    "checkout": {
+      "action_form": "Locatie bepalen",
+      "agree_description": "Door verder te gaan, ga je ermee akkoord dat er nu {trialPrice} in rekening wordt gebracht en ga je akkoord met onze <terms>Gebruiksvoorwaarden</terms> en ons <privacy>Privacybeleid</privacy>. Je betaling verschijnt als 'mobitrace.io' op je creditcardafschrift. Na 7 dagen wordt er per 4 weken {subscriptionPrice} in rekening gebracht totdat je abonnement afloopt. Je kunt op elk moment opzeggen. Je kunt voor vragen contact met ons opnemen via support@mobitrace.io, of telefonisch via +1 360 525 2573",
+      "agree_description_24": "Door de betaling te voltooien ga je ermee akkoord om vandaag een proefperiode van 24 uur te starten voor {trialPrice}. Tenzij je vóór het einde van de proefperiode opzegt, wordt je abonnement automatisch verlengd voor {subscriptionPrice} per 4 weken. Je kunt op elk moment annuleren. Door verder te gaan, accepteer je ook onze <terms>Gebruiksvoorwaarden</terms> en erken je ons <privacy>Privacybeleid</privacy>.",
+      "agree_description_reactivate": "Als je doorgaat, stem je ermee in dat je abonnement opnieuw wordt geactiveerd en dat er nu {subscriptionPrice} in rekening wordt gebracht. Je betaling verschijnt als 'mobitrace.io' op je creditcardafschrift. Er wordt elke 4 weken {subscriptionPrice} in rekening gebracht, totdat je abonnement afloopt. Je kunt op ieder moment opzeggen. Voor vragen kun je contact met ons opnemen via support@mobitrace.io of telefonisch op +1 360 525 2573",
+      "agree_description_subscription": "Door verder te gaan ga je ermee akkoord dat er nu {subscriptionPrice} in rekening wordt gebracht en dat je onze <terms>gebruiksvoorwaarden</terms> en ons <privacy>privacybeleid</privacy> accepteert. Op uw creditcardafschrift wordt de betaling vermeld als \"mobitrace.io\". Er wordt elke 4 weken {subscriptionPrice} in rekening gebracht totdat uw abonnement afloopt. U kunt op elk moment opzeggen. Voor vragen kunt u contact met ons opnemen via support@mobitrace.io of telefonisch op +1 360 525 2573",
+      "back_description": "Als je niet volledig tevreden bent binnen de proefperiode van 7 dagen, laat het ons weten en we zullen met plezier een volledige terugbetaling verwerken.",
+      "back_description_24": "Als je tijdens de proefperiode van 24 uur niet helemaal tevreden bent, laat het ons dan weten zodat we je kunnen terugbetalen.",
+      "back_title": "Geld terug",
+      "cancel_description": "Je kunt op elk moment opzeggen via je dashboard of door contact met ons op te nemen via <email>support@mobitrace.io</email>",
+      "cancel_title": "Op elk moment opzeggen",
+      "loading": "Betaling verwerken...",
+      "title": "Vind de locatie van",
+      "total": "Te betalen:",
+      "trust_100": "100% beveiligde betaling",
+      "trust_cancel": "Op elk moment opzeggen"
+    },
+    "contact": {
+      "contact_information": {
+        "company_description": "<strong>Verenigde Staten</strong><br>800 N King Street Suite 304-1119<br>Wilmington, DE 19801 US</br></br><strong>Verenigde Arabische Emiraten</strong></br>Gebouw A1, Dubai Digital Park</br>Dubai Silicon Oasis, Dubai</br>IFZA Business Park, DDP</br>Pand nr. 5342-001</br>Verenigde Arabische Emiraten</br></br><strong>Ierland</strong></br>40 Mespil Road</br>Dublin 4, Ierland",
+        "company_title": "Locaties",
+        "email_description": "support@mobitrace.io",
+        "email_title": "E-mailadres",
+        "phone_description": "+1-360-525-2573",
+        "phone_title": "Telefoonnummer",
+        "title": "Contactgegevens"
+      },
+      "contact_us": "Contact",
+      "form": {
+        "billing_question": "Vraag over facturering",
+        "email_label": "E-mailadres",
+        "errors": {
+          "invalid_email": "Voer een geldig e-mailadres in.",
+          "invalid_name_format": "Voer een geldige naam in.",
+          "invalid_surname_format": "Voer een geldige achternaam in.",
+          "max_length": "Je hebt de limiet voor het aantal tekens overschreden.",
+          "message_max_length": "Bericht mag niet langer zijn dan {maxLength} tekens.",
+          "message_required": "Voer je bericht in.",
+          "name_required": "Voer je naam in.",
+          "surname_required": "Voer je achternaam in."
+        },
+        "message_label": "Bericht",
+        "name_label": "Naam",
+        "other": "Andere",
+        "subject_label": "Onderwerp",
+        "subject_placeholder": "Selecteer",
+        "submit": "Bericht versturen",
+        "submitted": "Je bericht is verstuurd. Ons team neemt binnen 2 uur contact met je op.",
+        "submitted_title": "Bericht verstuurd",
+        "suggested_improvement": "Suggestie voor verbetering",
+        "surname_label": "Achternaam",
+        "technical_issue": "Technisch probleem",
+        "title": "Contact opnemen"
+      },
+      "subtitle": "Heb je een vraag of feedback, of heb je hulp nodig?<br/> We horen graag van je!",
+      "title": "We staan klaar om je te helpen"
+    },
+    "error": {
+      "body": "Probeer het later opnieuw of neem contact op met de ondersteuning als het probleem zich blijft voordoen.",
+      "cta": "Terug naar Home",
+      "title": "Oeps! Er is iets fout gegaan."
+    },
+    "find_by_link": {
+      "find_by_link": "Zoeken met link",
+      "form": {
+        "errors": {
+          "max_length": "Maximaal 255 tekens.",
+          "min_length": "Link moet minstens {n} tekens lang zijn",
+          "required": "Link is vereist"
+        },
+        "linkLabel": "Geef je link een naam",
+        "linkPlaceholder": "Bijv. link voor WhatsApp",
+        "submitButton": "Genereer mijn link"
+      },
+      "steps": {
+        "step1": "Personaliseer je trackinglink",
+        "step2": "Deel je link via een berichtenapp",
+        "step3": "Krijg bericht over de status",
+        "step4": "Je ziet de locatie direct zodra er op de link wordt geklikt"
+      },
+      "title": "Maak je persoonlijke link"
+    },
+    "find_by_link_success": {
+      "body": "Deel deze link met iemand die je wilt volgen.",
+      "generateNewCTA": "Nieuwe link genereren",
+      "statusCTA": "Check de status",
+      "subtitle": "Hieronder vind je de link",
+      "title": "Gelukt"
+    },
+    "find_by_number_send_message": {
+      "CTA": "Versturen",
+      "errors": {
+        "empty": "Dit veld mag niet leeg zijn",
+        "max_length": "Tekst is te lang. Maximaal {n} tekens."
+      },
+      "extra_info": {
+        "bullet_1": "De naam van de verzender verschijnt als 'Mobitrace'.",
+        "bullet_2": "Aan het einde van ieder bericht staat een unieke link waar de de ontvanger op moet klikken."
+      },
+      "find_by_number": "Zoeken met nummer",
+      "label": "Bericht",
+      "placeholder": "Voer hier je bericht in.",
+      "title": "Locatie zoeken voor <brandColor>{phoneNumber}</brandColor>"
+    },
+    "find_by_number_send_message_success": {
+      "cta": "Check de status",
+      "description": "Je bericht is verstuurd naar <strong>{phoneNumber}</strong>. We laten het weten zodra de telefoon gevonden is.",
+      "title": "Gelukt!"
+    },
+    "forgot_password": {
+      "back_to_login": "Inloggen",
+      "description": "Voer je e-mailadres in, dan sturen we je instructies om je wachtwoord te resetten.",
+      "remember_password": "Weet je je wachtwoord nog?",
+      "title": "Wachtwoord resetten"
+    },
+    "index": {
+      "faqs": {
+        "question_1": {
+          "answer": "Je hoeft alleen het telefoonnummer in te voeren. Zodra de ontvanger ermee akkoord gaat om zijn/haar locatie te delen, ontvang je die direct.",
+          "question": "Hoe vind ik iemands locatie met een telefoonnummer?"
+        },
+        "question_2": {
+          "answer": "Ja, geolokalisatie is legaal, maar de ontvanger moet uitdrukkelijk toestemming geven om zijn/haar locatie te delen, in overeenstemming met de privacywetgeving.",
+          "question": "Is het legaal om iemand te geolokaliseren?"
+        },
+        "question_3": {
+          "answer": "Nee, er is geen app of software-installatie nodig. Alles wordt op afstand geregeld via onze service.",
+          "question": "Moet ik een app installeren om een telefoonnummer te kunnen traceren?"
+        },
+        "question_4": {
+          "answer": "Onze dienst ondersteunt alle soorten telefoons, van smartphones tot oudere modellen, zolang ze maar sms-berichten kunnen ontvangen.",
+          "question": "Welke soort telefoons worden ondersteund?"
+        },
+        "question_5": {
+          "answer": "Ja, onze service werkt wereldwijd, onafhankelijk van de locatie of het netwerk.",
+          "question": "Kan ik telefoonnummers overal ter wereld vinden?"
+        },
+        "question_6": {
+          "answer": "Onze service biedt nauwkeurige locatiegegevens, inclusief het exacte adres, met behulp van geavanceerde gps-technologie.",
+          "question": "Hoe nauwkeurig is geolokalisatie?"
+        },
+        "question_7": {
+          "answer": "Voer simpelweg het telefoonnummer in dat je wilt onderzoeken, en Mobitrace doet de rest. Ons systeem scant meerdere databases om alle beschikbare informatie te vinden die aan dat nummer is gekoppeld. Hoewel veel zoekopdrachten direct resultaten opleveren, kunnen gedetailleerdere zoekopdrachten iets langer duren. Zodra je de tool voor het omgekeerd opzoeken van telefoonnummers van Mobitrace gebruikt, zul je snel merken hoe krachtig en effectief deze is.",
+          "question": "Hoe werkt de tool voor het omgekeerd opzoeken van telefoonnummers?"
+        },
+        "question_8": {
+          "answer": "De technologie voor het omgekeerd opzoeken van telefoonnummers van Mobitrace is zeer geavanceerd. Wanneer je een zoekopdracht uitvoert, wordt een breed scala aan bronnen doorzocht, waaronder openbare gegevens, online telefoongidsen en zelfs minder zichtbare datapunten. Als er relevante informatie wordt gevonden, wordt deze weergegeven. Houd er rekening mee dat niet elke zoekopdracht direct resultaten oplevert, omdat de beschikbaarheid afhankelijk is van de beschikbare gegevens voor elk nummer.",
+          "question": "Levert Mobitrace informatie over elk telefoonnummer?"
+        },
+        "question_9": {
+          "answer": "Jazeker! Stel je voor dat je een telefoontje krijgt van iemand die zich voordoet als je bank, die je om je pincode vraagt om een verdachte afschrijving tegen te houden, of een sms'je dat je een prijs hebt gewonnen en op een link moet klikken om deze te claimen. Beide situaties kunnen leiden tot financieel verlies of diefstal van persoonlijke gegevens. Mobitrace helpt je te verifiëren wie er daadwerkelijk achter onbekende nummers zit. Een snelle opzoekactie van het telefoonnummer kan je waarschuwen voor mogelijke oplichting en je gegevens en financiën beschermen.",
+          "question": "Kan Mobitrace mij helpen om telefoon- en sms-fraude te voorkomen?"
+        },
+        "title": "Veelgestelde vragen"
+      },
+      "hero": {
+        "100": "100%",
+        "card_address": "29 Willow Street, Hackney Wick, Londen E9 5EN, Verenigd Koninkrijk",
+        "card_date": "27 september 2024 18.46 uur",
+        "card_phone": "+44 633 123 456",
+        "card_title": "Locatie gevonden!",
+        "confidential": "vertrouwelijk",
+        "iphone_alt": "Een smartphone met een kaart van Londen en daarop een locatiemarkering",
+        "secure": "Veilig",
+        "ssl_encription": "SSL-versleuteling",
+        "subtitle": "Met Mobitrace.io kun je via een sms of link om realtime telefoonlocaties vragen. Er wordt alleen getraceerd als de ontvanger daar expliciet toestemming voor geeft.",
+        "title": "Traceer een mobiele telefoon"
+      },
+      "how_does_it_work": {
+        "step_1": {
+          "description": "Je hoeft alleen het telefoonnummer in te voeren dat je wilt vinden en het gepersonaliseerde sms-bericht op te stellen dat je naar de ontvanger wilt versturen.",
+          "title": "Voer een telefoonnummer in"
+        },
+        "step_2": {
+          "description": "Mobitrace verstuurt jouw persoonlijke sms met de vraag of de ontvanger zijn/haar locatie wil delen.",
+          "title": "Verstuur een locatieverzoek"
+        },
+        "step_3": {
+          "description": "Zodra de ontvanger toestemming geeft, krijg je een melding met zijn/haar exacte locatie. Die kun je direct op de kaart in je dashboard zien.",
+          "title": "Ontvang de locatie op de kaart"
+        },
+        "title": "Hoe werkt het?"
+      },
+      "instant_locator": {
+        "subtitle": "Mobitrace is de perfecte oplossing om iemands locatie of gegevens te achterhalen, met alleen een telefoonnummer.",
+        "title": "Lokaliseer het nummer <underlined>direct</underlined>!"
+      },
+      "meta_description": "Vind iedere mobiele telefoon – snel en makkelijk met Mobitrace.",
+      "meta_title": "Mobitrace.io – Vind overal de locatie van iedere telefoon",
+      "og_description": "Met Mobitrace vind je snel en makkelijk mobiele telefoons.",
+      "og_image_alt": "Mobitrace.io – Vind overal de locatie van iedere telefoon",
+      "og_title": "Mobitrace.io – Vind overal de locatie van iedere telefoon",
+      "site_name": "Mobitrace",
+      "welcome_title": "Welkom bij Mobitrace.io",
+      "why_choose": {
+        "reasons": {
+          "reason_1": {
+            "description": "Jouw privacy is onze topprioriteit. Wees gerust, je persoonsgegevens en zoekactiviteiten zijn altijd veilig en vertrouwelijk.",
+            "title": "Volledige privacy gegarandeerd"
+          },
+          "reason_2": {
+            "description": "Geen apps, geen software, geen gedoe. Je hoeft alleen het telefoonnummer in te voeren en Mobitrace werkt meteen.",
+            "title": "Geen installatie nodig"
+          },
+          "reason_3": {
+            "description": "Van de nieuwste iPhones en Androids tot oldskool klaptelefoons; als het sms-berichten kan ontvangen, kan Mobitrace het apparaat traceren. We werken met alle telefoons en providers.",
+            "title": "Volledige ondersteuning"
+          },
+          "reason_4": {
+            "description": "Mobitrace geeft je niet alleen de coördinaten, maar het exacte adres. Profiteer van geavanceerde gps-technologie voor ongeëvenaarde nauwkeurigheid.",
+            "title": "Uiterst nauwkeurig"
+          },
+          "reason_5": {
+            "description": "Mobitrace werkt probleemloos over de hele wereld, waar jij of de doeltelefoon zich ook bevindt.",
+            "title": "Wereldwijd bereik"
+          }
+        },
+        "subtitle": "Vind moeiteloos iemands telefoon met één klik, waar dan ook ter wereld",
+        "title": "Waarom kiezen voor Mobitrace?"
+      }
+    },
+    "legal": {
+      "cookie_policy": {
+        "content": "",
+        "title": "Cookiebeleid"
+      },
+      "refund_policy": {
+        "content": "",
+        "title": "Restitutiebeleid"
+      }
+    },
+    "loader": {
+      "step_1": {
+        "carrier": {
+          "loadedDefaultText": "Gedetecteerd",
+          "text": "Provider"
+        },
+        "city": {
+          "loadedText": "Gelokaliseerd",
+          "text": "Plaats"
+        },
+        "connecting": "Verbinding maken met satellieten",
+        "country": {
+          "text": "Land"
+        },
+        "database": {
+          "loadedText": "Geopend",
+          "text": "Database"
+        },
+        "location": {
+          "loadedText": "Gedetecteerd",
+          "text": "Locatie"
+        },
+        "searching": "Resultaten zoeken voor"
+      },
+      "step_2": {
+        "cta": "Locatie vinden",
+        "subtitle": "Het zoeken is voltooid. Je kunt de locatie nu openen.",
+        "title": "Locatie gevonden!"
+      }
+    },
+    "loader_complete": {
+      "title": "Meld je aan om de precieze locatie van <brandColor>{phoneNumber}</brandColor> te vinden"
+    },
+    "locate": {
+      "error": "Het adres was niet te achterhalen.",
+      "link_expired": "Link verlopen",
+      "link_expired_explain": "Deze link is al gebruikt en is niet langer beschikbaar.",
+      "loading": "Laden...",
+      "not_supported": "Je browser ondersteunt geen geolokalisatie.",
+      "rejected": "Locatie delen geweigerd.",
+      "thank_you": "Bedankt!"
+    },
+    "memberArea": {
+      "navigation": {
+        "contact_us": "Contact",
+        "find_by_link": "Zoeken met link",
+        "find_by_number": "Zoeken met nummer",
+        "find_by_phone_lookup": "Telefoonnummer opzoeken",
+        "my_activity": "Mijn activiteit",
+        "notifications": "Meldingen",
+        "phone_lookup": "Telefoonnummer opzoeken",
+        "settings": "Instellingen",
+        "sex_offenders_search": "Zedendelinquenten",
+        "status": "Status",
+        "tools_library": "Bibliotheek"
+      }
+    },
+    "not_found": {
+      "body": "Er is iets fout gegaan, probeer het opnieuw.",
+      "cta": "Terug naar Home",
+      "title": "Pagina niet gevonden"
+    },
+    "notifications": {
+      "empty": {
+        "text": "Je hebt op dit moment geen meldingen.",
+        "title": "Het is hier stil"
+      },
+      "link_accessed": "<strong>{notificationName}</strong> is geopend.",
+      "link_located": "Locatie nu beschikbaar.",
+      "link_rejected": "Locatie delen geweigerd.",
+      "load_more": "Meer laden",
+      "phone_located": "<strong>Locatie voor {phone}</strong> is opgehaald.",
+      "phone_rejected": "<strong>Locatie voor {phone}</strong> is geweigerd.",
+      "title": "Meldingen"
+    },
+    "onboarding": {
+      "navigation": {
+        "step_1": "Stap 1",
+        "step_2": "Stap 2",
+        "step_3": "Stap 3"
+      }
+    },
+    "onboarding_step1": {
+      "body": "Mobitrace verstuurt een anoniem sms-bericht met een lokalisatielink om een telefoonnummer te vinden. Je hoeft alleen het bericht te versturen en ons systeem doet de rest.",
+      "cta": "Verder",
+      "title": "Verstuur de trackinglink"
+    },
+    "onboarding_step2": {
+      "body": "Als de ontvanger de link heeft aangeklikt, ga je naar je locatiegeschiedenis om zijn/haar bewegingen in real time op de kaart te volgen.",
+      "cta": "Verder",
+      "title": "In real time monitoren"
+    },
+    "onboarding_step3": {
+      "body": "Terwijl je wacht tot de ontvanger je bericht geopend heeft, kun je profiteren van andere krachtige Mobitrace-functies om je trackingervaring nog beter te maken.",
+      "cta": "Start",
+      "title": "Ontdek meer functies"
+    },
+    "pricing": {
+      "cards": {
+        "subscription": {
+          "badge": "Abonnement",
+          "cta": "Meld je nu aan",
+          "description": "Zodra je proefperiode van 7 dagen afloopt, betaal je elke 4 weken {price}. Je kunt op elk moment opzeggen.",
+          "duration": "Om de 4 weken",
+          "features": {
+            "feature_1": "Werkt op alle mobiele apparaten",
+            "feature_2": "Onbeperkte verzoeken voor locatietracking",
+            "feature_3": "Premiumfuncties zoals berichten op maat en nauwkeurige locaties",
+            "feature_4": "24/7 ondersteuning zonder extra kosten"
+          },
+          "new_features": {
+            "feature_1": "Werkt op alle mobiele apparaten",
+            "feature_2": "Onbeperkte verzoeken voor locatietracking",
+            "feature_3": "Download professionele pdf-rapporten zonder extra kosten",
+            "feature_4": "Onbeperkte rapporten van opzoekacties van telefoonnummers met uitgebreide details",
+            "feature_5": "24/7 ondersteuning zonder extra kosten"
+          }
+        },
+        "subscription_24": {
+          "badge": "Abonnement",
+          "cta": "Nu abonneren",
+          "description": "Zodra je proefperiode van 24 uur afloopt, wordt er elke 4 weken {price} in rekening gebracht. Opzeggen kan op elk moment.",
+          "duration": "Om de 4 weken",
+          "features": {
+            "feature_1": "Werkt op alle mobiele apparaten",
+            "feature_2": "Onbeperkte verzoeken voor locatietracking",
+            "feature_3": "Download professionele pdf-rapporten zonder extra kosten",
+            "feature_4": "Onbeperkte rapporten over telefoonnummers met uitgebreide details",
+            "feature_5": "24/7 ondersteuning zonder extra kosten"
+          },
+          "new_features": {
+            "feature_1": "Werkt op alle mobiele apparaten",
+            "feature_2": "Onbeperkte verzoeken voor locatietracking",
+            "feature_3": "Download professionele pdf-rapporten zonder extra kosten",
+            "feature_4": "Onbeperkte rapporten over telefoonnummers met uitgebreide details",
+            "feature_5": "24/7 ondersteuning zonder extra kosten"
+          }
+        },
+        "title": "Tarieven",
+        "trial": {
+          "badge": "Proefperiode",
+          "cta": "Start proefabonnement",
+          "description": "Krijg onbeperkte toegang tot alle functies, zonder risico. Met je eerste betaling krijg je 7 dagen lang volledige toegang. Daarna wordt er elke 4 weken {price} in rekening gebracht. Opzeggen kan op elk moment.",
+          "duration": "7-daags proefabonnement",
+          "features": {
+            "feature_1": "Werkt op alle mobiele apparaten",
+            "feature_2": "7 dagen lang volledige toegang tot alle functies",
+            "feature_3": "Uitproberen zonder langetermijnverplichtingen"
+          },
+          "new_features": {
+            "feature_1": "Werkt op alle mobiele apparaten",
+            "feature_2": "7 dagen lang volledige toegang tot alle functies",
+            "feature_3": "Toegang tot gedetailleerde rapporten van opzoekacties van telefoonnummers",
+            "feature_4": "Uitproberen zonder langetermijnverplichtingen",
+            "feature_5": "Mogelijkheid om rapporten als pdf-bestand te downloaden"
+          }
+        },
+        "trial_24": {
+          "badge": "Proefperiode",
+          "cta": "Proefabonnement starten",
+          "description": "Krijg onbeperkte toegang tot alle functies, zonder risico. Met je eerste betaling krijg je 24 uur lang volledige toegang. Daarna wordt er elke 4 weken {price} in rekening gebracht. Opzeggen kan op elk moment.",
+          "duration": "Proefperiode van 24 uur",
+          "features": {
+            "feature_1": "Werkt op alle mobiele apparaten",
+            "feature_2": "24 uur lang volledige toegang tot alle functies",
+            "feature_3": "Uitproberen zonder langetermijnverplichtingen",
+            "feature_4": "Mogelijkheid om rapporten als pdf-bestand te downloaden"
+          },
+          "new_features": {
+            "feature_1": "Werkt op alle mobiele apparaten",
+            "feature_2": "24 uur lang volledige toegang tot alle functies",
+            "feature_3": "Toegang tot gedetailleerde rapporten over telefoonnummers",
+            "feature_4": "Uitproberen zonder langetermijnverplichtingen",
+            "feature_5": "Mogelijkheid om rapporten als pdf-bestand te downloaden"
+          }
+        }
+      },
+      "special_offer": "Speciale aanbieding",
+      "subtitle": "De diensten van Mobitrace worden aangeboden met een makkelijk te beheren maandabonnement.",
+      "title": "Probeer Mobitrace nu 7 dagen uit <mark>voor maar {price}</mark>!",
+      "title_24": "Probeer Mobitrace 24 uur lang voor <mark>slechts {price}</mark>!"
+    },
+    "reset_password": {
+      "back_to_login": "Inloggen",
+      "description": "Voer je wachtwoord in om je account te resetten.",
+      "remember_password": "Weet je je wachtwoord nog?",
+      "title": "Wachtwoord resetten"
+    },
+    "reverse_lookup": {
+      "checkout": {
+        "action_form": "Rapport ophalen",
+        "back_description": "Als je tijdens de proefperiode van 14 dagen niet helemaal tevreden bent, laat het ons dan weten zodat we je kunnen terugbetalen.",
+        "back_description_24": "Als je tijdens de proefperiode van 24 uur niet helemaal tevreden bent, laat het ons dan weten zodat we je kunnen terugbetalen.",
+        "back_title": "Geld terug",
+        "cancel_description": "Je kunt op elk moment opzeggen via je dashboard of door contact met ons op te nemen via <email>support@mobitrace.io</email>",
+        "cancel_title": "Op elk moment opzeggen",
+        "title": "Ontgrendel het rapport van"
+      },
+      "components": {
+        "always_know_who_called": {
+          "step_1": {
+            "description": "Vind alle wettelijke namen of bedrijfsnamen die bij het nummer horen.",
+            "title": "Volledige naam"
+          },
+          "step_2": {
+            "description": "Vind mogelijke adressen die zijn gekoppeld aan het nummer, zowel nu als vroeger.",
+            "title": "Woonadres"
+          },
+          "step_3": {
+            "description": "Kom weer in contact met familieleden die ver weg wonen of met wie je lang geen contact meer hebt gehad.",
+            "title": "Familieleden"
+          },
+          "step_4": {
+            "description": "Vind profielen op alle grote socialemediaplatforms.",
+            "title": "Socialemediaprofielen"
+          },
+          "step_5": {
+            "description": "Bekijk bijbehorende openbare e-mailadressen.",
+            "title": "E-mailadressen"
+          },
+          "step_6": {
+            "description": "Controleer openbaar beschikbare locatiegegevens.",
+            "title": "Locatiegeschiedenis"
+          },
+          "step_7": {
+            "description": "Verzamel informatie van verschillende bronnen op internet.",
+            "title": "Webactiviteit"
+          },
+          "subtitle": "Als je een nummer invoert in de omgekeerde zoekfunctie van Mobitrace, vind je openbaar beschikbare informatie gerelateerd aan het nummer.",
+          "title": "Met Mobitrace weet je altijd wie er belt"
+        },
+        "as_seen_on": {
+          "title": "Hier waren we al te zien"
+        },
+        "customer_carousel": {
+          "subtitle": "We doen ons best om je de beste ervaring te bieden.",
+          "title": "Wat klanten <br class='lg:hidden'/> over ons zeggen"
+        },
+        "customer_opinions": {
+          "title": "Mensen overal ter wereld komen informatie te weten"
+        },
+        "faqs": {
+          "question_1": {
+            "answer": "Je hoeft alleen maar het telefoonnummer in te voeren. Zodra de ontvanger ermee akkoord gaat om de eigen locatie te delen, krijg je die direct.",
+            "question": "Hoe gebruik ik een telefoonnummer om iemands locatie te vinden?"
+          },
+          "question_2": {
+            "answer": "Ja, geolocatie is legaal, maar volgens de privacywetgeving moet de ontvanger uitdrukkelijk toestemming geven om de eigen locatie te delen.",
+            "question": "Is het legaal om de geolocatie van iemand te bepalen?"
+          },
+          "question_3": {
+            "answer": "Nee, je hoeft geen app of software te installeren. Alles wordt op afstand geregeld via onze service.",
+            "question": "Moet ik een app installeren om een telefoonnummer te kunnen traceren?"
+          },
+          "question_4": {
+            "answer": "Onze service ondersteunt alle soorten telefoons, van smartphones tot oudere modellen, zolang ze maar sms-berichten kunnen ontvangen.",
+            "question": "Welke soorten telefoons worden ondersteund?"
+          },
+          "question_5": {
+            "answer": "Ja, onze service werkt wereldwijd, onafhankelijk van de locatie of het netwerk.",
+            "question": "Kan ik overal ter wereld telefoonnummers traceren?"
+          },
+          "question_6": {
+            "answer": "Onze service biedt nauwkeurige locatiegegevens, inclusief het exacte adres, met geavanceerde gps-technologie.",
+            "question": "Hoe nauwkeurig is geolocatie?"
+          },
+          "question_7": {
+            "answer": "Voer simpelweg het telefoonnummer in dat je wilt onderzoeken, en Mobitrace doet de rest. Ons systeem scant meerdere databases om alle beschikbare informatie te vinden die aan dat nummer is gekoppeld. Hoewel veel zoekopdrachten direct resultaten opleveren, kunnen gedetailleerdere zoekopdrachten iets langer duren. Zodra je de tool voor het omgekeerd opzoeken van telefoonnummers van Mobitrace gebruikt, zul je snel merken hoe krachtig en effectief deze is.",
+            "question": "Hoe werkt de tool voor het omgekeerd opzoeken van telefoonnummers?"
+          },
+          "question_8": {
+            "answer": "De technologie voor het omgekeerd opzoeken van telefoonnummers van Mobitrace is zeer geavanceerd. Wanneer je een zoekopdracht uitvoert, wordt een breed scala aan bronnen doorzocht, waaronder openbare gegevens, online telefoongidsen en zelfs minder zichtbare datapunten. Als er relevante informatie wordt gevonden, wordt deze weergegeven. Houd er rekening mee dat niet elke zoekopdracht direct resultaten oplevert, omdat de beschikbaarheid afhankelijk is van de beschikbare gegevens voor elk nummer.",
+            "question": "Levert Mobitrace informatie over elk telefoonnummer?"
+          },
+          "question_9": {
+            "answer": "Jazeker! Stel je voor dat je een telefoontje krijgt van iemand die zich voordoet als je bank, die je om je pincode vraagt om een verdachte afschrijving tegen te houden, of een sms'je dat je een prijs hebt gewonnen en op een link moet klikken om deze te claimen. Beide situaties kunnen leiden tot financieel verlies of diefstal van persoonlijke gegevens. Mobitrace helpt je te verifiëren wie er daadwerkelijk achter onbekende nummers zit. Een snelle opzoekactie van het telefoonnummer kan je waarschuwen voor mogelijke oplichting en je gegevens en financiën beschermen.",
+            "question": "Kan Mobitrace mij helpen om telefoon- en sms-fraude te voorkomen?"
+          },
+          "title": "Veelgestelde vragen"
+        },
+        "get_report": {
+          "cta": "Mijn rapport ophalen",
+          "lookup_today": "Vandaag meer dan 99 omgekeerde zoekopdrachten uitgevoerd",
+          "product": "7 dagen volledige toegang",
+          "product_24": "24 uur volledige toegang",
+          "product_title": "Zoekrapport",
+          "secure": "100% veilig",
+          "title": "Krijg toegang tot je rapport!",
+          "trial_description": "30 dagen geld-teruggarantie"
+        },
+        "hero": {
+          "100": "100%",
+          "card_address": "29 Willow Street, Hackney Wick, Londen E9 5EN, Verenigd Koninkrijk",
+          "card_date": "27 september 2024 18.46 uur",
+          "card_phone": "+44 633 123 456",
+          "card_title": "Locatie gevonden.",
+          "confidential": "vertrouwelijk",
+          "iphone_alt": "Een smartphone met een kaart van Londen en daarop een locatiemarkering",
+          "secure": "Veilig",
+          "ssl_encription": "SSL-versleuteling",
+          "subtitle": "Identificeer onbekende bellers meteen door volledige namen, adressen, socialemediaprofielen en meer te achterhalen.",
+          "title": "<mark>Omgekeerd </mark> telefoonnummer <mark>opzoeken</mark>"
+        },
+        "instant_locator": {
+          "subtitle": "Mobitrace is de perfecte oplossing om iemands locatie of gegevens te achterhalen, met alleen een telefoonnummer",
+          "title": "Zoek nu meteen elk telefoonnummer op!"
+        },
+        "latest_results": {
+          "result": {
+            "description": "{time} minuten geleden"
+          },
+          "subtitle": "Hier zijn enkele van de nieuwste resultaten van onze service voor omgekeerd zoeken.",
+          "title": "Nieuwste resultaten"
+        },
+        "limited_offer_tag": {
+          "limited_offer": "Tijdelijke aanbieding"
+        },
+        "phone_input": {
+          "errors": {
+            "invalid_phone": "Voer een geldig telefoonnummer in.",
+            "rate_limit_exceeded": "Je hebt je dagelijkse limiet overschreden.",
+            "rate_limit_exceeded_title": "Limiet bereikt"
+          },
+          "label": "Voer het telefoonnummer in dat je wilt opzoeken",
+          "no_results": "Landcode niet gevonden.",
+          "phone_placeholder": "123456789",
+          "search_placeholder": "Zoeken op land of code...",
+          "submit": "Opzoeken"
+        },
+        "pricing": {
+          "cards": {
+            "subscription": {
+              "badge": "Abonnement",
+              "cta": "Nu abonneren",
+              "description": "Als je proefperiode van 7 dagen afloopt, wordt het aanbod automatisch verlengd als maandabonnement. Je kunt dit abonnement op ieder moment eenvoudig opzeggen.",
+              "duration": "Per maand",
+              "features": {
+                "feature_1": "Werkt op alle mobiele apparaten",
+                "feature_2": "Onbeperkte verzoeken voor locatietracking",
+                "feature_3": "Download professionele pdf-rapporten zonder extra kosten",
+                "feature_4": "Onbeperkte rapporten van opzoekacties van telefoonnummers met uitgebreide details",
+                "feature_5": "24/7 ondersteuning zonder extra kosten"
+              }
+            },
+            "title": "Start je proefabonnement van 7 dagen",
+            "trial": {
+              "badge": "Proefperiode",
+              "cta": "Proefabonnement starten",
+              "description": "Met deze eerste betaling krijg je 7 dagen lang toegang tot alle functies van Mobitrace, zonder beperkingen. Daarna is het tarief van {price} per maand van toepassing.",
+              "duration": "Proefabonnement van 7 dagen",
+              "features": {
+                "feature_1": "Werkt op alle mobiele apparaten",
+                "feature_2": "7 dagen lang volledige toegang tot alle functies",
+                "feature_3": "Toegang tot gedetailleerde rapporten van opzoekacties van telefoonnummers",
+                "feature_4": "Uitproberen zonder langetermijnverplichtingen",
+                "feature_5": "Mogelijkheid om rapporten als pdf-bestand te downloaden"
+              }
+            }
+          },
+          "special_offer": "Speciale aanbieding",
+          "subtitle": "De services van Mobitrace worden aangeboden als een makkelijk te beheren maandabonnement.",
+          "title": "Probeer Mobitrace nu 7 dagen uit <mark>voor maar {price}</mark>!"
+        },
+        "recent_reveals": {
+          "subtitle": "Hier vind je enkele van de onbekende bellers die we recent hebben geïdentificeerd.",
+          "title": "Recente onthullingen"
+        },
+        "report_ready": {
+          "description": "Je rapport is klaar!",
+          "download_report_button": "Pdf downloaden",
+          "view_report_button": "Rapport bekijken"
+        },
+        "summary_report_card": {
+          "caller_info": "Gissen wie er achter een onbekend nummer zit, hoeft met Mobitrace niet meer. Wij geven je informatie over de beller, waaronder ook informatie waarvan de beller niet wist dat die voor jou beschikbaar was.",
+          "carrier": "Provider",
+          "continue": "Doorgaan",
+          "latest_report": "Nieuwste resultaten per 3 maart 2025",
+          "line_type": "Lijntype",
+          "may_include": "Resultaten kunnen het volgende omvatten:",
+          "result_1": "Volledige naam en volledig adres van de eigenaar",
+          "result_2": "Gebruikersnamen en profielen op sociale media",
+          "result_3": "Foto's en video's",
+          "result_4": "Online activiteit in het verleden",
+          "result_5": "E-mailadressen",
+          "result_6": "En nog veel meer!",
+          "timer_desktop": "Je <mark>rapport</mark> verloopt over",
+          "timer_mobile": "Rapport verloopt over",
+          "title": "Je rapport over <mark>{phoneNumber}</mark> is klaar.",
+          "trusted_by": "Vertrouwd door meer dan  <span class='font-bold'>7 miljoen</span> mensen"
+        },
+        "upsell_progress_steps": {
+          "access_report": "Rapport bekijken",
+          "create_account": "Account aanmaken",
+          "data_breach": "Datalek",
+          "pdf_export": "Pdf-export",
+          "sex_offenders": "Zedendelinquenten"
+        },
+        "what_you_get": {
+          "item_1": "Zoek oude en huidige telefoonnummers op om informatie over de eigenaar te onthullen",
+          "item_2": "De eigenaar van het telefoonnummer wordt nooit op de hoogte gebracht van je zoekopdracht.",
+          "item_3": "Onze database bevat altijd de meest actuele informatie.",
+          "item_4": "Mobitrace stelt de rapporten samen op basis van openbaar beschikbare informatie op internet.",
+          "item_title_1": "Geavanceerde zoekfunctie voor telefoonnummers",
+          "item_title_2": "100% privacygarantie",
+          "item_title_3": "Continue updates",
+          "item_title_4": "Zoeken in miljarden records",
+          "title": "Dit krijg je"
+        },
+        "why_use": {
+          "phone_input_label": "Voer het telefoonnummer in dat je wilt opzoeken",
+          "reasons": {
+            "reason_1": {
+              "description": "Achterhaal de identiteit van onbekende bellers. Geen giswerk meer als je je telefoon beantwoordt.",
+              "title": "Altijd weten wie er belt"
+            },
+            "reason_2": {
+              "description": "Mobitrace helpt je oude of verloren kennissen te vinden, zelfs met oude telefoonnummers.",
+              "title": "Weer in contact komen met oude vrienden"
+            },
+            "reason_3": {
+              "description": "Bescherm jezelf door de identiteit te controleren van online contacten.",
+              "title": "Identiteit verifiëren"
+            },
+            "reason_4": {
+              "description": "Scamoproepen en datascrapers zijn in opkomst. Mobitrace helpt je kwaadwillende personen te identificeren zonder dat je je telefoon hoeft te beantwoorden.",
+              "title": "Verdachte nummers identificeren"
+            },
+            "reason_5": {
+              "description": "Voer je nummer in bij Mobitrace om te achterhalen welke persoonsgegevens er over jou beschikbaar zijn en om potentiële datalekken te ontdekken.",
+              "title": "Je digitale voetafdruk bewaken"
+            }
+          },
+          "steps": {
+            "step_1": {
+              "description": "Bescherm jezelf tegen oplichters en commerciële oproepen."
+            },
+            "step_2": {
+              "description": "Controleer de achtergrond van potentiële partners of huisgenoten."
+            },
+            "step_3": {
+              "description": "Ontdek wie er achter vervelende spamoproepen zit."
+            },
+            "step_4": {
+              "description": "Kom weer in contact met familie of oude vrienden."
+            },
+            "step_5": {
+              "description": "Ontmasker een catfish op dating- of chat-apps."
+            }
+          },
+          "subtitle": "Of je jezelf nu online wilt beschermen of oude contacten wilt vinden,<br>Mobitrace kan je met het volgende helpen:",
+          "title": "Waarom telefoonnummer opzoeken",
+          "title_2": "Aanvullende toepassingen",
+          "title_badge": "EXTRA'S"
+        }
+      },
+      "member_area": {
+        "phone_lookup": {
+          "daily_limit": "Limiet: 5 opzoekingen per 24 uur.",
+          "label": "Beller weergeven",
+          "phone_lookup": "Telefoonnummer opzoeken"
+        }
+      },
+      "report": {
+        "carrier_details": {
+          "info": "Dit gaat bijvoorbeeld om informatie over de mobiele provider van de beller, zoals details over het netwerk en het type service.",
+          "labels": {
+            "carrier": "Provider",
+            "international_format": "Internationale notatie",
+            "local_format": "Lokale notatie",
+            "location": "Locatie",
+            "type": "Type"
+          },
+          "line_types": {
+            "landline": "Vaste lijn",
+            "mobile": "Mobiel"
+          },
+          "title": "Details over de mobiele provider",
+          "title_empty": "Details over de mobiele provider"
+        },
+        "common": {
+          "no_data": "Geen gegevens beschikbaar"
+        },
+        "data_breach_history": {
+          "alert_empty": "In dit gedeelte wordt de geschiedenis van datalekken beschreven, met een gedetailleerde beschrijving van incidenten waarbij gevoelige informatie in gevaar is gekomen. Het bevat informatie over de aard van de inbreuken, de getroffen gegevens en de maatregelen die zijn genomen om toekomstige inbreuken aan te pakken en te voorkomen.",
+          "alert_success": "In dit gedeelte wordt de geschiedenis van datalekken beschreven, met een gedetailleerde beschrijving van incidenten waarbij gevoelige informatie in gevaar is gekomen. Het bevat informatie over de aard van de inbreuken, de getroffen gegevens en de maatregelen die zijn genomen om toekomstige inbreuken aan te pakken en te voorkomen.",
+          "alert_title": "{count} datalekken",
+          "report": {
+            "breaches_found_for": "Inbreuken gevonden voor",
+            "compromised_data": "Gecompromitteerde gegevens",
+            "data_breaches": "datalekken",
+            "data_types": {
+              "date_of_birth": "Geboortedatum",
+              "education_levels": "Opleidingsniveau",
+              "email": "E-mailadres",
+              "gender": "Geslacht",
+              "geo_location": "Geografische locatie",
+              "name": "Naam",
+              "password": "Wachtwoord",
+              "phone": "Telefoonnummer",
+              "social_media_profiles": "Socialmediaprofielen",
+              "username": "Gebruikersnaam"
+            },
+            "download_report_button": "Pdf downloaden",
+            "title": "Geschiedenis van datalekken"
+          },
+          "show_report": "Rapport weergeven",
+          "title": "Geschiedenis van datalekken",
+          "unlock_report": "Rapport ontgrendelen"
+        },
+        "header": {
+          "button": "Pdf downloaden",
+          "matches_found": "Gevonden overeenkomsten voor",
+          "title": "Rapport",
+          "unlock_download_pdf": "Pdf downloaden ontgrendelen"
+        },
+        "looking_for_more_profiles_dialog": {
+          "description": "Dit kan een paar seconden duren — we zoeken op meerdere platforms.",
+          "title": "Op zoek naar meer profielen"
+        },
+        "phone_public_information": {
+          "info": "In dit gedeelte wordt een samenvatting gegeven van de openbaar toegankelijke informatie die aan het telefoonnummer van de beller is gekoppeld.",
+          "name": "Naam:",
+          "source": "Bron:",
+          "sources": {
+            "data_breach": "Datalek",
+            "other": "Andere",
+            "public_records": "Openbare records",
+            "social_media": "Sociale media"
+          },
+          "title": "Openbare informatie telefoonnummer",
+          "title_empty": "Geen openbare informatie telefoonnummer"
+        },
+        "photos": {
+          "info": "In dit gedeelte worden mogelijke afbeeldingen van de eigenaar van de telefoon weergegeven ter ondersteuning van visuele identificatie, indien beschikbaar.",
+          "other": "Andere",
+          "title": "Foto's",
+          "title_empty": "Geen foto's gevonden"
+        },
+        "possible_addresses": {
+          "info": "In dit gedeelte worden mogelijke adressen van de persoon vermeld. Deze kunnen helpen bij het identificeren van woonplaatsen of eerdere locaties.",
+          "labels": {
+            "city": "Plaats",
+            "country": "Land",
+            "county": "District",
+            "latitude": "Breedtegraad",
+            "length_of_residence": "Duur van het verblijf",
+            "longitude": "Lengtegraad",
+            "postal_code": "Postcode",
+            "state": "Staat/provincie",
+            "street": "Adres"
+          },
+          "title": "Mogelijke adressen",
+          "title_empty": "Geen adressen gevonden",
+          "values": {
+            "years": "{count} jaar"
+          }
+        },
+        "possible_contact_details": {
+          "info": "In dit gedeelte worden aan de beller gekoppelde e-mailadressen weergegeven, om te helpen contactgegevens te verifiëren.",
+          "labels": {
+            "associated_emails": "Gekoppelde e-mailadressen",
+            "associated_numbers": "Gekoppelde telefoonnummers"
+          },
+          "title": "Mogelijke contactgegevens",
+          "title_empty": "Geen contactgegevens gevonden"
+        },
+        "possible_personal_details": {
+          "info": "In dit gedeelte worden mogelijke persoonlijke gegevens van de persoon weergegeven, die meer inzicht kunnen bieden in zijn of haar achtergrond.",
+          "labels": {
+            "children": "Kinderen",
+            "date_of_birth": "Geboortedatum",
+            "gender": "Geslacht",
+            "household_size": "Grootte huishouden",
+            "income": "Inkomen",
+            "marital_status": "Burgerlijke staat"
+          },
+          "title": "Mogelijke persoonsgegevens",
+          "title_empty": "Geen persoonsgegevens gevonden",
+          "values": {
+            "children": "Aanwezig ({count})",
+            "divorced": "Gescheiden",
+            "domestic_partnership": "Binnenlands partnerschap",
+            "engaged": "Verloofd",
+            "female": "Vrouw",
+            "in_relationship": "In relatie",
+            "intersex": "Intersekse",
+            "male": "Man",
+            "married": "Getrouwd",
+            "no_children": "Geen",
+            "no_record_available": "Geen gegevens beschikbaar",
+            "separated": "Gescheiden",
+            "single": "Alleenstaand",
+            "widowed": "Weduwe of weduwnaar"
+          }
+        },
+        "possible_social_media_accounts": {
+          "expand_search": {
+            "more_platforms": "Krijg met één klik toegang tot meer platforms.",
+            "title": "Verbreed je zoekopdracht",
+            "unlock_platforms": "Ontgrendel platforms"
+          },
+          "info": "In dit gedeelte worden mogelijke socialemediaprofielen weergegeven die aan de persoon kunnen worden gekoppeld. Dat biedt inzicht in zijn of haar online activiteit.",
+          "labels": {
+            "id": "ID",
+            "name": "Naam",
+            "opne_url": "Open pagina",
+            "source": "Bron",
+            "url": "URL"
+          },
+          "network_not_found": "Niet gevonden",
+          "no_accounts_found": "Er werden geen accounts gevonden op de gecontroleerde platforms. Dit betekent dat de gebruiker ofwel niet geregistreerd is op deze netwerken, ofwel gegevens gebruikt die afwijken van de opgegeven zoekparameters.",
+          "partial_result": {
+            "info": "Er is op sommige platforms geen account gevonden. Dit betekent dat de gebruiker ofwel niet geregistreerd is op die netwerken, ofwel gegevens gebruikt die afwijken van de opgegeven zoekparameters.",
+            "no_account_platforms": "Platformen waar geen account is gevonden",
+            "title": "Zoekresultaten voltooid"
+          },
+          "sources": {
+            "behance": "Behance",
+            "facebook": "Facebook",
+            "github": "Github",
+            "gitlab": "Gitlab",
+            "google": "Google",
+            "instagram": "Instagram",
+            "kick": "Trap",
+            "linkedin": "LinkedIn",
+            "pinterest": "Pinterest",
+            "reddit": "Reddit",
+            "snapchat": "Snapchat",
+            "telegram": "Telegram",
+            "threads": "Draden",
+            "tiktok": "TikTok",
+            "tumblr": "Tumblr",
+            "twitch": "Twitch",
+            "x": "X",
+            "youtube": "YouTube"
+          },
+          "title": "Mogelijke socialemedia-accounts",
+          "title_empty": "Geen socialemedia-accounts gevonden"
+        },
+        "potential_education": {
+          "info": "In dit gedeelte wordt eventuele informatie weergegeven over onderwijs, waaronder scholen en behaalde diploma's.",
+          "title": "Mogelijk onderwijs",
+          "title_empty": "Geen opleidingen gevonden",
+          "values": {
+            "associate_degree": "Associate degree",
+            "bachelor_degree": "Bachelordiploma",
+            "doctoral_degree": "Doctoraat",
+            "high_school": "Middelbare school",
+            "master_degree": "Masterdiploma",
+            "no_formal_education": "Geen formeel onderwijs",
+            "other": "Andere",
+            "primary_school": "Basisschool",
+            "secondary_school": "Middelbare school",
+            "vocational_training": "Beroepsopleiding"
+          }
+        },
+        "potential_professional_summary": {
+          "info": "In dit gedeelte worden mogelijke professionele functies weergegeven waarin de persoon ervaring heeft.",
+          "title": "Mogelijke professionele samenvatting",
+          "title_empty": "Geen samenvatting professionele betrekkingen",
+          "values": {
+            "agriculture": "Landbouw",
+            "arts_and_entertainment": "Kunst en entertainment",
+            "construction": "Bouw",
+            "education": "Onderwijs",
+            "energy_and_utilities": "Energie en nutsbedrijven",
+            "engineering": "Engineering",
+            "finance": "Financiën",
+            "government": "Overheid",
+            "healthcare": "Gezondheidszorg",
+            "hospitality": "Horeca",
+            "information_technology": "Informatietechnologie",
+            "legal": "Juridisch",
+            "logistics_and_supply_chain": "Logistiek en toeleveringsketen",
+            "manufacturing": "Productie",
+            "marketing": "Marketing",
+            "media_and_communications": "Media en communicatie",
+            "military": "Militair",
+            "non_profit": "Non-profit",
+            "other": "Andere",
+            "real_estate": "Vastgoed",
+            "retail": "Detailhandel",
+            "sales": "Verkoop",
+            "science": "Wetenschap",
+            "skilled_trades": "Vakmensen",
+            "telecommunications": "Telecommunicatie",
+            "transportation": "Vervoer"
+          }
+        },
+        "profile_summary": {
+          "associated_emails": "Gekoppelde e-mailadressen:",
+          "associated_locations": "Gekoppelde locaties:",
+          "associated_usernames": "Gekoppelde gebruikersnamen:",
+          "empty": "-",
+          "not_identified": "Niet geïdentificeerd",
+          "possible_owners": "Mogelijke eigenaren:",
+          "potential_date_of_birth": "Mogelijke geboortedatum:",
+          "title": "Profielsamenvatting"
+        },
+        "sex_offenders": {
+          "alert": "Controle op een verleden als zedendelinquent is alleen beschikbaar voor Amerikaanse dossiers. In dit gedeelte wordt informatie over geregistreerde zedendelicten weergegeven, zoals details over de overtredingen, de huidige registratiestatus en de gekoppelde locaties.",
+          "report": {
+            "address_information": {
+              "city": "Plaats",
+              "country": "Land",
+              "county": "District",
+              "latitude": "Breedtegraad",
+              "length_of_residence": "Duur van het verblijf",
+              "longitude": "Lengtegraad",
+              "postal_code": "Postcode",
+              "state": "Staat/provincie",
+              "street": "Adres",
+              "title": "Locatie"
+            },
+            "body_characteristics": {
+              "age": "Leeftijd",
+              "ethnicity": "Etniciteit",
+              "eye_color": "Kleur ogen",
+              "hair_color": "Haarkleur",
+              "height": "Lengte",
+              "race": "Afkomst",
+              "sex": "Geslacht",
+              "title": "Lichaamskenmerken",
+              "weight": "Gewicht"
+            },
+            "crime_information": {
+              "conviction_date": "Datum veroordeling",
+              "crime": "Delict",
+              "jurisdiction": "Rechtsgebied",
+              "no_information_available": "Geen informatie beschikbaar",
+              "registration_date": "Registratiedatum",
+              "risk_level": "Risiconiveau",
+              "title": "Delictinformatie"
+            },
+            "distinctive_features": {
+              "back": "Rug",
+              "head": "Hoofd",
+              "left_arm": "Linkerarm",
+              "left_hand": "Linkerhand",
+              "left_leg": "Linkerbeen",
+              "right_arm": "Rechterarm",
+              "right_hand": "Rechterhand",
+              "right_leg": "Rechterbeen",
+              "title": "Kenmerken / Littekens / Tatoeages",
+              "torso": "Torso"
+            },
+            "download_report_button": "Pdf downloaden",
+            "new_search": "Nieuwe zoekopdracht",
+            "others_information": {
+              "is_absconded": "Voortvluchtig?",
+              "is_predator": "Predator?",
+              "jurisdiction": "Rechtsgebied",
+              "link": "Link",
+              "original_report": "Oorspronkelijke bron",
+              "title": "Andere",
+              "yes": "Ja"
+            },
+            "personal_information": {
+              "date_of_birth": "Geboortedatum",
+              "first_name": "Voornaam",
+              "first_name_nicknames": "Bijnamen voornaam",
+              "last_name": "Achternaam",
+              "middle_name": "Tweede voornaam",
+              "name": "Naam",
+              "title": "Persoonlijke informatie"
+            },
+            "photos": {
+              "title": "Foto's"
+            },
+            "records_found_for": "Records gevonden voor",
+            "title_profile": "Profiel van zedendelinquenten",
+            "values": {
+              "body_part": {
+                "back": "Rug",
+                "head": "Hoofd",
+                "left_arm": "Linkerarm",
+                "left_hand": "Linkerhand",
+                "left_leg": "Linkerbeen",
+                "right_arm": "Rechterarm",
+                "right_hand": "Rechterhand",
+                "right_leg": "Rechterbeen",
+                "torso": "Torso"
+              },
+              "ethnicity": {
+                "hispanic": "Hispanic",
+                "non_hispanic": "Niet-Hispanic",
+                "other": "Andere"
+              },
+              "eye_color": {
+                "amber": "Amber",
+                "blue": "Blauw",
+                "brown": "Bruin",
+                "gray": "Grijs",
+                "green": "Groen",
+                "hazel": "Hazelnoot",
+                "other": "Andere",
+                "red": "Rood",
+                "violet": "Violet"
+              },
+              "hair_color": {
+                "auburn": "Roodbruin",
+                "bald": "Kaal",
+                "black": "Zwart",
+                "blonde": "Blond",
+                "brown": "Bruin",
+                "chestnut": "Kastanje",
+                "dyed": "Geverfd",
+                "gray": "Grijs",
+                "other": "Andere",
+                "red": "Rood",
+                "white": "Wit"
+              },
+              "race": {
+                "asian": "Aziatisch",
+                "black_or_african_american": "Zwart of Afro-Amerikaans",
+                "mixed": "Gemengd",
+                "native_american": "Inheems Amerikaan",
+                "other": "Andere",
+                "pacific_islander": "Pacifische Eilandbewoner",
+                "white": "Blank"
+              },
+              "risk_level": {
+                "high": "Hoog",
+                "low": "Laag",
+                "medium": "Gemiddeld"
+              },
+              "sex": {
+                "female": "Vrouw",
+                "intersex": "Intersekse",
+                "male": "Man"
+              }
+            }
+          },
+          "title": "Controle op verleden als zedendelinquent"
+        },
+        "sex_offenders_background_check": {
+          "alt_icon": "Zedendelinquenten",
+          "info": "Controle op een verleden als zedendelinquent is alleen beschikbaar voor Amerikaanse dossiers. In dit gedeelte wordt informatie over geregistreerde zedendelicten weergegeven, zoals details over de overtredingen, de huidige registratiestatus en de gekoppelde locaties.",
+          "show_report": "Rapport weergeven",
+          "title": "Controle op verleden als zedendelinquent",
+          "title_empty": "Geen verleden als zedendelinquent gevonden",
+          "unlock_report": "Rapport ontgrendelen"
+        },
+        "upsell": {
+          "data_breach_history": {
+            "cancel": "Annuleren",
+            "compromise_isa_contact_details": "Gecompromitteerde contactgegevens, waaronder telefoonnummers, e-mailadressen en fysieke adressen",
+            "disclaimer_info": "Alle gegevens zijn afkomstig uit een uitgebreide database met meer dan 14 miljard records van openbaar gemelde datalekken. We identificeren en rapporteren blootgestelde informatie, maar bieden geen toegang tot gevoelige gegevens zoals wachtwoorden of persoonlijke inloggegevens.",
+            "limited_offer": "Tijdelijke aanbieding",
+            "personal_identifiers": "Persoonlijke identificatiegegevens, zoals gebruikersnamen, volledige namen en geboortedatums",
+            "processing_payment": "Verwerken",
+            "professional_information_and_technical_data": "Professionele informatie en technische gegevens zoals IP-adressen",
+            "purchase": "Kopen",
+            "special_limited_time_offer": "Deze speciale aanbieding vervalt wanneer je deze pagina verlaat.",
+            "title": "Rapport over datalekken",
+            "total_due_today": "Te betalen:"
+          },
+          "payment_message": {
+            "add_payment_details": "Betalingsgegevens toevoegen",
+            "agree_description_upsell": "Door verder te gaan, stem je in met een eenmalige betaling van {price} en ga je akkoord met onze <terms>Gebruiksvoorwaarden</terms> en ons <privacy>Privacybeleid</privacy>. De betaling verschijnt als 'mobitrace.io' op je afschrift.",
+            "close": "Sluiten",
+            "payment_error": "Je betaling is mislukt",
+            "payment_error_description": "Werk je betalingsgegevens bij",
+            "payment_retry_description": "We konden je kaart niet verwerken. Probeer het opnieuw.",
+            "payment_success": "Je betaling is gelukt",
+            "payment_success_description": "Bedankt voor je aankoop! Het is klaar voor gebruik.",
+            "skip": "Overslaan",
+            "try_again": "Opnieuw proberen",
+            "update_payment_method": "Betaalmethode bijwerken"
+          },
+          "sex_offenders": {
+            "cancel": "Annuleren",
+            "comprehensive_data": "Toegang tot uitgebreide gegevens over zedendelinquenten van officiële bronnen",
+            "disclaimer_info": "Controle op een verleden als zedendelinquent is alleen beschikbaar in de Verenigde Staten. Volgens Justitie zijn er landelijk ongeveer 800.000 geregistreerde zedendelinquenten en duizenden nieuwe registraties per jaar. Verifieer onbekende personen voor je gemoedsrust.",
+            "instant_nationwide_search": "Directe landelijke controle in alle staats- en federale registers",
+            "limited_offer": "Tijdelijke aanbieding",
+            "processing_payment": "Verwerken",
+            "purchase": "Kopen",
+            "realtime_verification": "Realtime verificatie tegen de meest actuele registergegevens",
+            "special_limited_time_offer": "Tijdelijke aanbieding voor veiligheidsverificatie. Met deze service wordt alleen gezocht naar geregistreerde personen in de Verenigde Staten.",
+            "title": "Controle op registratie als zedendelinquent",
+            "total_due_today": "Te betalen:"
+          },
+          "sex_offenders_search": {
+            "cancel": "Annuleren",
+            "disclaimer_info": "Achtergrondcontroles voor zedendelinquenten zijn alleen binnen de VS beschikbaar. Het Amerikaanse ministerie van Justitie meldt dat er in het hele land ongeveer 800.000 geregistreerde zedendelinquenten zijn, met jaarlijks duizenden nieuwe registraties. Controleer onbekende personen voor je eigen gemoedsrust.\n\nDit is een eenmalige aankoop van {price}. Door dit rapport toe te voegen, autoriseer je een eenmalige betaling via de betaalmethode die we voor je hebben opgeslagen. Deze aankoop geeft toegang tot één rapport binnen dit assortiment.",
+            "instant_access": "Direct zoeken in het hele land in alle staats- en federale registers",
+            "processing_payment": "Verwerken",
+            "purchase": "Kopen",
+            "secure_one_time_payment": "Realtime verificatie aan de hand van de meest recente registergegevens",
+            "special_limited_time_offer": "Tijdelijke aanbieding voor veiligheidsverificatie. Met deze service wordt alleen gezocht naar geregistreerde personen in de Verenigde Staten.",
+            "title": "Controle op registratie als zedendelinquent",
+            "total_due_today": "Te betalen:",
+            "verified_source_data": "Toegang tot uitgebreide gegevens over zedendelinquenten van officiële bronnen"
+          },
+          "social_networks": {
+            "cancel": "Annuleren",
+            "disclaimer_info": "Deze zoekopdracht omvat alleen de belangrijkste sociale platforms en openbaar zichtbare accountinformatie. De dekking kan variëren afhankelijk van het platform en de beschikbaarheid van profielen.",
+            "limited_offer": "Beperkt aanbod",
+            "matching_accounts": "Zoek de overeenkomende accounts in een rapport op basis van openbaar beschikbare gegevens.",
+            "processing_payment": "Verwerking",
+            "purchase": "Aankoop",
+            "related_usernames_and_public_profile": "Identificeer gerelateerde gebruikersnamen en openbare profielgegevens.",
+            "scan_10_major_social_platforms": "Scan meer dan 10 grote sociale mediaplatformen op gerelateerde accounts.",
+            "special_limited_time_offer": "Deze speciale aanbieding, die slechts tijdelijk geldig is, vervalt zodra u deze pagina verlaat.",
+            "title": "Controle van sociale platforms",
+            "total_due_today": "Te betalen:"
+          },
+          "unlimited_pdf_downloads": {
+            "cancel": "Annuleren",
+            "disclaimer_info": "Dit is een eenmalige aankoop. Als je op 'Onbeperkte pdf's' klikt, wordt er {price} in rekening gebracht.",
+            "limited_offer": "Tijdelijke aanbieding",
+            "processing_payment": "Verwerken",
+            "purchase": "Kopen",
+            "special_limited_time_offer": "Extra korting is speciaal voor jou toegepast!",
+            "title": "Onbeperkte pdf-downloads",
+            "total_due_today": "Te betalen:",
+            "upsell_benefits_1": "Offline toegankelijk",
+            "upsell_benefits_2": "Gemakkelijk te delen met anderen",
+            "upsell_benefits_3": "Afdrukbaar op aanvraag",
+            "upsell_benefits_4": "Duidelijk, mooi vormgegeven en gemakkelijk te lezen"
+          }
+        }
+      },
+      "search": {
+        "components": {
+          "loader": {
+            "step_1": {
+              "carrier": {
+                "loadedDefaultText": "Gedetecteerd",
+                "text": "Provider"
+              },
+              "city": {
+                "loadedText": "Locatie bepaald",
+                "text": "Plaats"
+              },
+              "connecting": "Zoeken naar telefoonnummer starten",
+              "country": {
+                "text": "Land"
+              },
+              "location": {
+                "loadedText": "Gedetecteerd",
+                "text": "Locatie"
+              },
+              "searching": "Resultaten zoeken voor",
+              "type": {
+                "loadedText": "Gedetecteerd",
+                "text": "Type"
+              }
+            },
+            "step_2": {
+              "cta": "Locatie bepalen",
+              "subtitle": "Je zoekopdracht is voltooid. Je kunt nu de locatie bekijken.",
+              "title": "Locatie gevonden."
+            }
+          },
+          "warning_dialog": {
+            "button_text": "Beller onthullen",
+            "description": "Je Mobitrace-rapport is klaar. Ontdek welke openbare informatie aan dit nummer is gekoppeld.",
+            "info_message": "Je zoekopdracht voor {phoneNumber} is 100% veilig.",
+            "telephone": "(0-616) 32211",
+            "title": "WAARSCHUWING:"
+          }
+        }
+      },
+      "search_complete": {
+        "components": {
+          "age_verification_dialog": {
+            "button_text": "Ja, ik ben 18 jaar of ouder",
+            "description": "Dit rapport kan gevoelige inhoud bevatten en is alleen bedoeld voor volwassenen. Je moet 18 jaar of ouder zijn om verder te gaan.",
+            "info_message": "Als je nog geen 18 jaar bent, moet je <bold>nu afsluiten</bold>.",
+            "title": "Leeftijdscontrole vereist"
+          },
+          "customer_opinions_carousel": {
+            "opinion_1": {
+              "description": "Ik merkte dat mijn dochter gesprekken met een onbekende was begonnen en ik wilde er zeker van zijn dat ze veilig was. Dankzij Mobitrace kon ik snel checken wie deze persoon was en dat gaf me gemoedsrust. Soms maakt simpelweg omgekeerd zoeken een enorm verschil.",
+              "rate": "4",
+              "timeAgo": "4 dagen geleden",
+              "title": "Eindelijk wat gemoedsrust",
+              "user": "Samantha Green"
+            },
+            "opinion_2": {
+              "description": "Deze tool is heel precies en werkte prima bij de meeste nummers die ik heb opgezocht. Soms was de informatie niet helemaal actueel, maar over het algemeen kreeg ik dankzij Mobitrace precies wat ik nodig had. Het is betrouwbaar en makkelijk te gebruiken.",
+              "rate": "4.5",
+              "timeAgo": "1 week geleden",
+              "title": "Nauwkeurige resultaten waar ik op kan vertrouwen",
+              "user": "Daniel Brooks"
+            },
+            "opinion_3": {
+              "description": "Snel, betrouwbaar en precies! Ik was onder de indruk van de snelheid waarmee ik met Mobitrace resultaten kreeg. Ik ben 100% tevreden met deze service.",
+              "rate": "5",
+              "timeAgo": "1 dag geleden",
+              "title": "Snel, gemakkelijk en nauwkeurig",
+              "user": "Olivia Carter"
+            },
+            "opinion_4": {
+              "description": "Mobitrace is een van mijn favoriete tools geworden om gesprekken mee te beheren. Ik kan ermee zien wie er echt achter een telefoonnummer zit, waardoor ik tijd bespaar en zelf bepaal wie me kan bereiken.",
+              "rate": "5",
+              "timeAgo": "2 weken geleden",
+              "title": "Geeft me controle over mijn oproepen",
+              "user": "Matthew Lewis"
+            },
+            "opinion_5": {
+              "description": "Ik kreeg oproepen van een telefoonnummer dat ik niet herkende en wist niet goed wat ik ervan moest denken. Ik probeerde Mobitrace uit en daarmee kon ik de beller meteen identificeren. Nu gebruik ik het altijd als iets verdacht overkomt.",
+              "rate": "4.5",
+              "timeAgo": "2 dagen geleden",
+              "title": "Nu weet ik altijd wie er belt",
+              "user": "Sophia Turner"
+            },
+            "opinion_6": {
+              "description": "Ik kreeg constant spamoproepen en ik werd er gek van. Dankzij Mobitrace kwam ik er eindelijk achter wie me steeds belde. Doordat ik het profiel en de geschiedenis van de beller kon zien, kreeg ik de duidelijkheid die ik nodig had.",
+              "rate": "5",
+              "timeAgo": "1 dag geleden",
+              "title": "Geen last meer van spamoproepen",
+              "user": "Christopher Hall"
+            },
+            "opinion_7": {
+              "description": "De beste tool tot nu toe! Met Mobitrace hoef ik me geen zorgen meer te maken over onbekende telefoontjes of sms'jes. Het is snel, gemakkelijk en geeft me de antwoorden die ik nodig heb.",
+              "rate": "4",
+              "timeAgo": "3 dagen geleden",
+              "title": "De beste tool voor onbekende oproepen",
+              "user": "Grace Mitchell"
+            },
+            "opinion_8": {
+              "description": "Met Mobitrace kon ik achterhalen wie me vanaf een onbekend nummer belde. De tool toonde zelfs verwante namen en familierelaties. De informatie was niet altijd perfect, maar over het algemeen gaf het me waardevolle inzichten die ik nergens anders kon vinden.",
+              "rate": "4.5",
+              "timeAgo": "2 dagen geleden",
+              "title": "Verrassend gedetailleerde informatie",
+              "user": "Ethan Parker"
+            },
+            "rate": "4.5",
+            "reviews": "Gebaseerd op <bold>456 beoordelingen</bold>",
+            "title": "Uitstekend"
+          },
+          "customer_say_about": {
+            "subtitle": "We doen ons best om je de beste ervaring ooit te bieden.",
+            "title": "Wat klanten over ons zeggen"
+          },
+          "owner_information": {
+            "collecting_data_address": "Adressen",
+            "collecting_data_email": "E-mailadressen of telefoonnummers",
+            "collecting_data_job": "Arbeidsgegevens",
+            "collecting_data_online": "Online gebruikersnamen",
+            "collecting_data_past": "Eerdere relaties",
+            "collecting_data_profiles": "Vergeten profielen",
+            "collecting_data_title": "Gegevens verzamelen...",
+            "progress_bar_description": "Je zoekgeschiedenis is veilig en privé. De eigenaar van {phoneNumber} wordt NIET op de hoogte gebracht van je zoekopdracht.",
+            "progress_bar_percentage": "{percentage}%",
+            "subtitle": "Even geduld alsjeblieft. Er wordt in miljarden records gezocht.",
+            "title": "Eigenaarsinformatie ophalen voor <bold></bold>"
+          }
+        }
+      },
+      "sign_up": {
+        "card_description": "Mobitrace is een geavanceerde digitale tool die in miljarden online telefoongegevens zoekt. De meeste onbekende nummers zijn afkomstig van spambellers of marketeers. Toch kunnen onze rapporten schokkende informatie bevatten.",
+        "card_title": "Belangrijke mededeling",
+        "email_placeholder": "Je e-mailadres",
+        "email_title": "E-mailadres",
+        "errors": {
+          "email_exists": "Dit e-mailadres is al geregistreerd. Probeer in te loggen of gebruik een ander e-mailadres.",
+          "invalid_email": "Voer een geldig e-mailadres in."
+        },
+        "form_title": "Voer je e-mailadres in om je rapport te openen.",
+        "latest_report": "Nieuwste resultaten per 3 maart 2025",
+        "submit_button": "Doorgaan",
+        "title": "De resultaten zijn klaar!"
+      },
+      "thank_you": {
+        "account_link": "Inloggen op account",
+        "click_below_to_account_your_link": "Klik hieronder om toegang te krijgen tot je account.",
+        "description": "We hebben je bestel- en accountgegevens verstuurd naar {email}. Je kunt nu inloggen op je account",
+        "did_you_like_your_shopping_experience": "Heb je een prettige ervaring gehad?",
+        "more_details_feedback": "We stellen het erg op prijs als je feedback wilt achterlaten via <email>support@mobitrace.io</email>",
+        "no": "Nee",
+        "thank_you_for_your_feedback": "Bedankt voor je feedback!",
+        "title": "Je betaling is gelukt.",
+        "we_ll_work_on_making_it_better": "We proberen het steeds beter te doen!",
+        "yes": "Ja"
+      },
+      "upsell": {
+        "already_purchased": "Al gekocht",
+        "data_breach": {
+          "disclaimer": "Alle gegevens zijn afkomstig uit een uitgebreide database met meer dan 14 miljard records van openbaar gemelde datalekken. We identificeren en rapporteren blootgestelde informatie, maar bieden geen toegang tot gevoelige gegevens zoals wachtwoorden of persoonlijke inloggegevens.",
+          "purchase": "Rapport over datalekken toevoegen",
+          "special_limited_time_offer": "Deze speciale aanbieding vervalt wanneer je deze pagina verlaat.",
+          "title": "Rapport over datalekken",
+          "upsell_benefits_1": "Persoonlijke identificatiegegevens, zoals gebruikersnamen, volledige namen en geboortedatums",
+          "upsell_benefits_2": "Gecompromitteerde contactgegevens, waaronder telefoonnummers, e-mailadressen en fysieke adressen",
+          "upsell_benefits_3": "Professionele informatie en technische gegevens zoals IP-adressen"
+        },
+        "limited_offer": "Tijdelijke aanbieding",
+        "pdf": {
+          "disclaimer": "Dit is een eenmalige aankoop. Als je op 'Onbeperkte pdf's' klikt, wordt er {price} in rekening gebracht.",
+          "purchase": "Onbeperkte pdf's",
+          "special_limited_time_offer": "Extra korting is speciaal voor jou toegepast!",
+          "title": "Onbeperkte PDF-downloads",
+          "upsell_benefits_1": "Offline toegankelijk",
+          "upsell_benefits_2": "Gemakkelijk te delen met anderen",
+          "upsell_benefits_3": "Afdrukbaar op aanvraag",
+          "upsell_benefits_4": "Duidelijk, mooi vormgegeven en gemakkelijk te lezen"
+        },
+        "processing": "Verwerken",
+        "sex_offenders": {
+          "disclaimer": "Controle op een verleden als zedendelinquent is alleen beschikbaar in de Verenigde Staten. Volgens Justitie zijn er landelijk ongeveer 800.000 geregistreerde zedendelinquenten en duizenden nieuwe registraties per jaar. Verifieer onbekende personen voor je gemoedsrust.",
+          "purchase": "Controle op registratie als zedendelinquent toevoegen",
+          "purchase_terms": "Dit is een eenmalige aankoop van {price}. Door dit rapport toe te voegen, autoriseer je een eenmalige betaling via de betaalmethode die we voor je hebben opgeslagen. Deze aankoop geeft toegang tot één rapport binnen dit assortiment.",
+          "special_limited_time_offer": "Tijdelijke aanbieding voor veiligheidsverificatie. Met deze service wordt alleen gezocht naar geregistreerde personen in de Verenigde Staten.",
+          "title": "Controle op registratie als zedendelinquent",
+          "upsell_benefits_1": "Direct zoeken in het hele land in alle staats- en federale registers",
+          "upsell_benefits_2": "Toegang tot uitgebreide gegevens over zedendelinquenten van officiële bronnen",
+          "upsell_benefits_3": "Realtime verificatie aan de hand van de meest recente registergegevens"
+        },
+        "skip": "Overslaan",
+        "total_due_today": "Te betalen:"
+      }
+    },
+    "settings": {
+      "billing": {
+        "activate_dialog": {
+          "action_form": "Met creditcard betalen",
+          "title": "Betaalmethode toevoegen"
+        },
+        "active_date": "Actief tot: {date}",
+        "active_state": "Actief",
+        "cancel_dialog": {
+          "cancel_cta": "Abonnement opzeggen",
+          "canceling_cta": "Opzeggen...",
+          "close_cta": "Sluiten",
+          "description": "Door je abonnement op te zeggen heb je geen toegang meer tot onze functies en ondersteuning. Je kunt je abonnement altijd weer opnieuw activeren.",
+          "description_canceled": "Je abonnement is opgezegd.<br> Er worden vanaf nu geen kosten meer in rekening gebracht.",
+          "done_cta": "Sluiten",
+          "title": "Bevestiging"
+        },
+        "cancel_subscription": "Abonnement opzeggen",
+        "canceled_cta": "Abonnement opnieuw activeren",
+        "canceled_date": "Opgezegd op: {date}",
+        "canceled_state": "Opgezegd",
+        "expired_cta": "Abonnement activeren",
+        "expired_date": "Verlopen op: {date}",
+        "expired_description": "Je abonnement is verlopen. Activeer om door te gaan.",
+        "expired_state": "Verlopen",
+        "month": "maand",
+        "next_billing_date": "Volgende betaling: {date}",
+        "privacy_policy": "Privacybeleid",
+        "started_on_date": "Begonnen op: {date}",
+        "subscription": "Abonnement",
+        "terms_and_conditions": "Algemene voorwaarden",
+        "title": "Facturering",
+        "total": "Totaal:"
+      },
+      "get_help": {
+        "title": "Help"
+      },
+      "my_account": {
+        "change_password": {
+          "confirm_password": "Wachtwoord bevestigen",
+          "current_password": "Huidig wachtwoord",
+          "new_password": "Nieuw wachtwoord",
+          "title": "Wachtwoord wijzigen"
+        },
+        "delete_cta": "Account verwijderen",
+        "delete_dialog": {
+          "close_cta": "Sluiten",
+          "delete_cta": "Account verwijderen",
+          "deleting_cta": "Verwijderen...",
+          "description": "Weet je zeker dat je je account wilt verwijderen? Als je bevestigt, verlies je meteen toegang tot de pagina's voor abonnees.",
+          "description_canceled": "Je account is succesvol verwijderd.",
+          "done_cta": "Sluiten",
+          "title": "Bevestiging"
+        },
+        "errors": {
+          "confirm_password_required": "Wachtwoord bevestigen is vereist",
+          "current_password_invalid": "Huidig wachtwoord is ongeldig",
+          "current_password_required": "Huidig wachtwoord is vereist",
+          "email_max_length": "Het e-mailadres mag niet langer zijn dan {maxLength} tekens.",
+          "email_required": "E-mail is vereist",
+          "email_taken": "De e-mail is al opgenomen",
+          "invalid_email": "Voer een geldig e-mailadres in.",
+          "name_invalid_characters": "Naam mag geen cijfers bevatten.",
+          "name_invalid_special_characters": "Naam kan geen speciale tekens bevatten.",
+          "name_max_length": "De naam mag niet langer zijn dan {maxLength} tekens.",
+          "name_required": "Naam is vereist",
+          "new_password_must_differ_from_current_password": "Het nieuwe wachtwoord moet verschillen van het huidige.",
+          "new_password_required": "Nieuw wachtwoord is vereist",
+          "password_max_length": "Het wachtwoord mag niet langer zijn dan {maxLength} tekens.",
+          "password_min_length": "Het wachtwoord moet minstens 6 tekens lang zijn.",
+          "passwords_must_match": "Wachtwoorden moeten overeenkomen"
+        },
+        "notifications": {
+          "notify_status_changes": "Breng me op de hoogte van statuswijzigingen",
+          "notify_user_located": "Laat het me weten als de gebruiker is gevonden",
+          "title": "Meldingen"
+        },
+        "profile": {
+          "email": "E-mailadres",
+          "name": "Voor- en achternaam",
+          "title": "Profielgegevens"
+        },
+        "submit_cta": "Wijzigingen opslaan",
+        "success_title": "Je account is bijgewerkt",
+        "title": "Algemeen"
+      },
+      "title": "Instellingen"
+    },
+    "sex_offenders_search": {
+      "form": {
+        "city_placeholder": "Plaats",
+        "errors": {
+          "first_name_required": "De voornaam is verplicht",
+          "last_name_required": "Achternaam is verplicht"
+        },
+        "first_name_placeholder": "Voornaam",
+        "last_name_placeholder": "Achternaam",
+        "state_placeholder": "Alle staten",
+        "submit_button": "Nu bekijken",
+        "title": "Controleer het register van zedendelinquenten",
+        "zip_placeholder": "Postcode"
+      },
+      "loading": {
+        "subtitle": "Even geduld alstublieft terwijl we de gegevens uit het nationale register ophalen.",
+        "title": "Het register van zedendelinquenten raadplegen..."
+      },
+      "results": {
+        "back": "Rug",
+        "continue": "Doorgaan",
+        "empty_title": "Er zijn geen zedendelinquenten gevonden",
+        "results_found": "{count} resultaten gevonden",
+        "results_found_subtitle": "Kies de optie die het beste bij je past om verder te gaan.",
+        "search_again": "Opnieuw zoeken"
+      },
+      "title": "Zedendelinquenten"
+    },
+    "sign_in": {
+      "description": "Voer je e-mailadres in om in te loggen op je account.",
+      "sign_up_link": "Aanmelden",
+      "sign_up_prompt": "Heb je geen account?",
+      "title": "Inloggen"
+    },
+    "sign_up": {
+      "components": {
+        "sign_up_form": {
+          "continue_with_email": "Doorgaan met e-mailadres",
+          "continue_with_facebook": "Doorgaan met Facebook",
+          "continue_with_google": "Doorgaan met Google",
+          "email_label": "E-mailadres",
+          "email_placeholder": "Je e-mailadres",
+          "errors": {
+            "email_exists": "Dit e-mailadres staat al geregistreerd. Probeer in te loggen of gebruik een ander e-mailadres.",
+            "invalid_email": "Voer een geldig e-mailadres in."
+          },
+          "or": "of"
+        }
+      },
+      "title": "Meld je aan om de precieze locatie van <brandColor>{phoneNumber}</brandColor> te vinden"
+    },
+    "status": {
+      "description": "Bekijk hieronder de voortgang",
+      "detail_description": "Locatie gevonden",
+      "error_fetching_address": "Fout bij het ophalen van het adres",
+      "link_name": "Link voor {name}",
+      "load_more_button": "Meer laden",
+      "loading_address": "Adres laden...",
+      "located_status": "Gelokaliseerd",
+      "no_locations_available": "Geen verzoeken",
+      "pending_description": "Wachten totdat de ontvanger de geolocatie deelt",
+      "pending_status": "In behandeling",
+      "ready_status": "Rapport gemaakt",
+      "rejected_description": "Verbeter je bericht om de ontvanger aan te moedigen zijn/haar locatie te delen.",
+      "rejected_status": "Afgewezen",
+      "reverse_lookup_description": "Samenvatting van openbare gegevens gevonden voor het telefoonnummer",
+      "reverse_lookup_report_for": "Rapport van omgekeerd opzoeken voor {phone}",
+      "title": "Activiteitencentrum"
+    },
+    "success": {
+      "account_link": "Log in op je account",
+      "click_below_to_account_your_link": "Klik hieronder om toegang te krijgen tot je account.",
+      "description": "We hebben je bestel- en accountgegevens verstuurd naar {email}. Je kunt nu inloggen op je account",
+      "did_you_like_your_shopping_experience": "Heb je een prettige shopervaring gehad?",
+      "more_details_feedback": "We stellen het erg op prijs als je feedback wilt achterlaten via <email>support@mobitrace.io</email>",
+      "no": "Nee",
+      "thank_you_for_your_feedback": "Bedankt voor je feedback!",
+      "title": "Je betaling is gelukt!",
+      "we_ll_work_on_making_it_better": "We streven continu naar verbetering!",
+      "yes": "Ja"
+    },
+    "upsell": {
+      "cancel_button": "Nee, bedankt",
+      "description": "Profiteer van 24/7 gepersonaliseerde ondersteuning en eersteklas technische assistentie, in slechts 1 klik.",
+      "footer_info": "Houd er rekening mee dat er, afhankelijk van je locatie, {percentage}% btw aan het totaal kan worden toegevoegd",
+      "order_details": "Bestelgegevens:",
+      "products": {
+        "add_button": "Toevoegen",
+        "add_order_button": "Toevoegen voor {price}",
+        "added_state": "Toegevoegd",
+        "details_button": "Overzicht",
+        "remove_button": "Verwijderen",
+        "scan_pro": {
+          "description": "Verken ieder aspect van Mobitrace dankzij de adviezen van ons deskundige technisch ondersteuningsteam. Ontdek hoe alle functies werken en kom erachter hoe je er het maximale uit haalt.",
+          "dialog": "<p>Haal alles uit je bezoek aan Mobitrace door gebruik te maken van gepersonaliseerde, stapsgewijze ondersteuning van ons deskundige team. Ontdek alle functies en profiteer maximaal van onze diensten.</p><ul><li><strong>Traceer moeiteloos op elke locatie</strong>Traceer eenvoudig iemands locatie met één eenvoudige link. Ons team begeleidt je tijdens het hele proces en gaat zorgvuldig om met elk technisch detail.</li><li><strong>Uitgebreide ondersteuning bij profilering</strong>Werk met ons samen om alle informatie te vinden die je nodig hebt. We helpen je een volledig beeld te krijgen van de mensen naar wie je zoekt: van contacten tot socialemediaprofielen.</li><li><strong>Vind je verloren of gestolen telefoon terug</strong>Als je je telefoon kwijt bent, kunnen wij je helpen. Dankzij onze geavanceerde tools wordt een apparaat snel gevonden en zie je de exacte locatie ervan op een kaart.</li><li><strong>Bewaak je online veiligheid</strong>We scannen databases om te onderzoeken of je telefoonnummer of e-mailadres in verkeerde handen is gevallen door een lek bij derden. Zo helpen we je cyberdreigingen voor te zijn.</li></ul>",
+          "title": "ScanPRO"
+        },
+        "support_hotline": {
+          "description": "Je hoeft niet te wachten op hulp! Met technische ondersteuning met voorrang ben je eerder aan de beurt en krijg je snelle een-op-een-assistentie van onze deskundige technisch specialisten.",
+          "title": "24/7 ondersteuning met voorrang"
+        }
+      },
+      "submit_button": "Toevoegen aan bestelling",
+      "subtotal": "Subtotaal",
+      "taxes": "Btw ({percentage}%)",
+      "title": "Haal alles uit Mobitrace!",
+      "total": "Totaal"
+    }
+  },
+  "routes": {
+    "forgot_password": "forgot-password",
+    "loader": "loader",
+    "reset_password": "reset-password",
+    "sign_in": "sign-in",
+    "sign_up": "sign-up"
+  }
+}

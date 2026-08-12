@@ -1,0 +1,25 @@
+/* eslint-disable simple-import-sort/imports  */
+/* eslint-disable import/newline-after-import  */
+import { cn } from '@/libs/utils';
+import { type IconProps, sizes } from '../iconDefinition';
+export const IconGender = ({
+  className,
+  color = 'currentColor',
+  size = 'fontSize',
+  ...props
+}: IconProps) => (
+  <svg
+    width={sizes[size]}
+    height={sizes[size]}
+    viewBox="0 0 24 24"
+    fill={color}
+    xmlns="http://www.w3.org/2000/svg"
+    className={cn('inline-block shrink-0', className)}
+    {...props}
+  >
+    <path
+      d="M19.75 3H14.5V4.5H18.44L14.385 8.555C13.185 7.585 11.66 7 10 7C6.14 7 3 10.14 3 14C3 17.86 6.14 21 10 21C13.86 21 17 17.86 17 14C17 12.34 16.415 10.815 15.445 9.615L19.5 5.56V9.5H21V4.25C21 3.56 20.44 3 19.75 3ZM10 19.5C6.965 19.5 4.5 17.035 4.5 14C4.5 10.965 6.965 8.5 10 8.5C13.035 8.5 15.5 10.965 15.5 14C15.5 17.035 13.035 19.5 10 19.5Z"
+      fill="#00A661"
+    />
+  </svg>
+);

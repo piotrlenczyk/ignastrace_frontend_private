@@ -1,0 +1,1882 @@
+{
+  "common": {
+    "back": "Zpět",
+    "close": "Zavřít",
+    "close_menu": "Zavřít nabídku",
+    "copied_to_clipboard": "Zkopírováno do schránky",
+    "email_label": "E-mailová adresa",
+    "errors": {
+      "email_exists": "Tento e-mail již používá jiný uživatel.",
+      "rate_limit_error": "Dosáhli jste svého denního limitu. Zkuste to znovu zítra.",
+      "rate_limit_error_title": "Dosažen limit",
+      "server_error": "Chyba serveru",
+      "server_error_description": "Při zpracování vašeho požadavku došlo k chybě. Zkuste to prosím znovu."
+    },
+    "login": "Přihlásit se",
+    "logout": "Odhlásit se",
+    "open_menu": "Otevřít nabídku",
+    "settings": "Nastavení",
+    "subscription": "Předplatné"
+  },
+  "components": {
+    "country_selector": {
+      "no_results": "Směrové číslo země nenalezeno.",
+      "placeholder": "Vyberte směrové číslo země...",
+      "search_placeholder": "Hledání podle země nebo směrového čísla..."
+    },
+    "forms": {
+      "change_email": {
+        "confirmation_email_sent_description": "Na novou adresu jsme odeslali potvrzovací e-mail. Potvrďte prosím změnu.",
+        "confirmation_email_sent_title": "Potvrzovací e-mail odeslán",
+        "current_email_label": "Aktuální e-mail",
+        "current_password_label": "Z bezpečnostních důvodů zadejte své aktuální heslo",
+        "current_password_placeholder": "Zadejte své aktuální heslo",
+        "errors": {
+          "current_password_required": "Je vyžadováno aktuální heslo.",
+          "invalid_email": "Zadejte platný e-mail."
+        },
+        "new_email_label": "Nový e-mail",
+        "new_email_placeholder": "Zadejte nový e-mail",
+        "save_button": "Aktualizovat e-mail"
+      },
+      "change_password": {
+        "confirm_password_label": "Potvrďte nové heslo",
+        "confirm_password_placeholder": "Potvrďte nové heslo",
+        "current_password_label": "Aktuální heslo",
+        "current_password_placeholder": "Zadejte své aktuální heslo",
+        "errors": {
+          "confirm_password_min_length": "Potvrďte nové heslo s alespoň 6 znaky",
+          "current_password_required": "Je vyžadováno aktuální heslo",
+          "new_password_min_length": "Nové heslo musí mít alespoň 6 znaků",
+          "new_password_required": "Nové heslo je nutné",
+          "passwords_must_match": "Hesla se musí shodovat"
+        },
+        "new_password_label": "Nové heslo",
+        "new_password_placeholder": "Zadejte nové heslo",
+        "save_button": "Uložit změny"
+      },
+      "delete_account": {
+        "cancel_button": "Zrušit",
+        "confirm_button": "Ano, smazat můj účet",
+        "confirmation_message": "Váš účet byl úspěšně smazán.",
+        "delete_account_button": "Smazat účet",
+        "description": "Tuto akci nelze vrátit zpět. Ujistěte se, že víte, co děláte.",
+        "dialog_description": "Tuto akci nelze vrátit zpět. Tímto krokem dojde k trvalému smazání vašeho účtu a odstranění vašich dat z našich serverů.",
+        "dialog_title": "Jste si naprosto jistí?",
+        "title": "Smazat účet"
+      },
+      "edit_company": {
+        "add_social_network_button": "Přidat sociální síť",
+        "address_label": "Adresa",
+        "address_placeholder": "Zadejte adresu společnosti",
+        "company_name_label": "Název společnosti",
+        "company_name_placeholder": "Zadejte název společnosti",
+        "errors": {
+          "company_name_required": "Název společnosti je povinný",
+          "url_invalid": "Zadejte prosím platnou URL adresu"
+        },
+        "hide_address_map": "Skrýt mapu",
+        "horizontal_logo_alt_text": "Horizontální logo společnosti",
+        "horizontal_logo_description": "Doporučené formáty: JPEG, PNG. Maximálně 5 MB. 600 × 200 px",
+        "horizontal_logo_label": "Horizontální logo",
+        "opening_hours_label": "Otevírací doba",
+        "opening_hours_placeholder": "Např. po–pá: 9:00–17:00, so: 10:00–14:00, ne: zavřeno",
+        "profile_url_placeholder": "URL profilu",
+        "save_button": "Uložit změny",
+        "show_address_map": "Zobrazit mapu",
+        "social_networks_label": "Sociální sítě",
+        "squared_logo_alt_text": "Čtvercové logo společnosti",
+        "squared_logo_label": "Čtvercové logo",
+        "website_label": "Web",
+        "website_placeholder": "https://www.example.com"
+      },
+      "edit_profile": {
+        "description": "Aktualizace osobních údajů",
+        "errors": {
+          "first_name_required": "Jméno je povinné.",
+          "invalid_phone": "Telefonní číslo je neplatné.",
+          "last_name_required": "Příjmení je povinné."
+        },
+        "first_name_label": "Jméno",
+        "first_name_placeholder": "Zadejte své jméno",
+        "last_name_label": "Příjmení",
+        "last_name_placeholder": "Zadejte své příjmení",
+        "phone_label": "Telefonní číslo",
+        "phone_placeholder": "Zadejte své telefonní číslo",
+        "privacy_label": "Ochrana soukromí",
+        "profile_picture_alt": "Profilová fotka",
+        "profile_picture_label": "Profilová fotka",
+        "public_email_label": "Zveřejnit na profilu můj e-mail",
+        "public_phone_label": "Zveřejnit na profilu moje telefonní číslo",
+        "save_button": "Uložit změny",
+        "title": "Upravit profil",
+        "upload_description": "Doporučené formáty: JPEG, PNG. Maximálně 5 MB. 600 × 200 px",
+        "upload_picture": "Nahrát novou fotku",
+        "whatsapp_label": "Mám pod tímto číslem účet na WhatsApp"
+      },
+      "forgot_password": {
+        "cancel_button": "Zrušit",
+        "email_label": "E-mail",
+        "email_placeholder": "Vaše e-mailová adresa",
+        "errors": {
+          "invalid_email": "Zadejte prosím platný e-mail."
+        },
+        "submit_button": "Odeslat heslo",
+        "subtitle": "Zadejte svůj e-mail a my vám zašleme heslo",
+        "success": {
+          "done": "Hotovo",
+          "line_1": "Vaše heslo jsme odeslali na adresu",
+          "line_2": "Pro přihlášení prosím zkontrolujte svůj e-mail.",
+          "title": "Heslo odesláno"
+        },
+        "title": "Zapomněli jste heslo?"
+      },
+      "reset_password": {
+        "confirm_password_label": "Potvrďte nové heslo",
+        "confirm_password_placeholder": "Potvrďte nové heslo",
+        "errors": {
+          "password_min_length": "Heslo musí mít alespoň 6 znaků.",
+          "passwords_do_not_match": "Hesla se neshodují."
+        },
+        "new_password_label": "Nové heslo",
+        "new_password_placeholder": "Zadejte nové heslo",
+        "submit_button": "Obnovit heslo"
+      },
+      "sign_in": {
+        "email_label": "E-mailová adresa",
+        "email_placeholder": "Vaše e-mailová adresa",
+        "errors": {
+          "account_not_found": "Váš účet Mobitrace se nepodařilo najít.",
+          "invalid_credentials": "Zadaný e-mail a heslo se neshodují s našimi záznamy. Zkontrolujte prosím své přihlašovací údaje a zkuste to znovu.",
+          "invalid_email": "Zadejte prosím platný e-mail.",
+          "password_min_length": "Heslo musí mít alespoň 6 znaků."
+        },
+        "forgot_password": "Zapomněli jste heslo?",
+        "or": "nebo",
+        "password_label": "Heslo",
+        "password_placeholder": "Vaše heslo",
+        "submit_button": "Přihlásit se",
+        "title": "Přihlaste se ke svému účtu"
+      },
+      "stripe_form": {
+        "card_name_placeholder": "Jméno na kartě",
+        "credit_card_label": "Kreditní karta",
+        "credit_card_placeholder": "1234 1234 1234 1234",
+        "cvc_placeholder": "CVC",
+        "errors": {
+          "apple_pay_not_available": "Služba Apple Pay není podporována",
+          "apple_pay_not_available_description": "Pro toto zařízení nebo prohlížeč nemáte tento způsob platby zapnutý. Zvolte jiný způsob platby.",
+          "card_name_required": "Prosím, zadejte jméno z karty.",
+          "card_number_required": "Zadejte prosím číslo karty.",
+          "cvc_required": "Zadejte prosím CVC kód.",
+          "expiration_date_required": "Zadejte prosím datum platnosti.",
+          "google_pay_not_available": "Služba Google Pay není podporována",
+          "google_pay_not_available_description": "Pro toto zařízení nebo prohlížeč nemáte tento způsob platby zapnutý. Zvolte jiný způsob platby.",
+          "name_invalid_characters": "Jméno nesmí obsahovat čísla.",
+          "name_invalid_special_characters": "Jméno nesmí obsahovat speciální znaky.",
+          "stripe_generic_error": "Nepodařilo se nám ověřit tvoji platební metodu. Vyber jiný způsob platby a zkus to znovu.",
+          "stripe_generic_error_title": "Chyba platby",
+          "zip_code_invalid_format": "Zadejte platné PSČ."
+        },
+        "expiration_date_placeholder": "MM/RR",
+        "zip_code_placeholder": "Poštovní směrovací číslo (volitelné)"
+      }
+    },
+    "image_upload_input": {
+      "upload_button_text": "Nahrát novou fotku",
+      "upload_description": "Doporučené formáty: JPEG, PNG. Maximálně 5 MB. 600 × 200 px",
+      "upload_label": "Profilová fotka"
+    },
+    "phone_input": {
+      "errors": {
+        "invalid_phone": "Zadejte prosím platné telefonní číslo."
+      },
+      "label": "Zadejte číslo, které chcete najít",
+      "no_results": "Směrové číslo země nenalezeno.",
+      "phone_placeholder": "123456789",
+      "search_placeholder": "Hledání podle země nebo směrového čísla...",
+      "submit": "Lokalizovat"
+    },
+    "settings_navigator": {
+      "change_email": {
+        "description": "Aktualizace e-mailové adresy",
+        "label": "Změnit e-mail"
+      },
+      "change_password": {
+        "description": "Aktualizace hesla k účtu",
+        "label": "Změnit heslo"
+      },
+      "company_profile": {
+        "description": "Aktualizace údajů o společnosti",
+        "label": "Firemní profil"
+      },
+      "delete_account": {
+        "description": "Smazání účtu a všech souvisejících dat",
+        "label": "Smazat účet"
+      },
+      "edit_profile": {
+        "description": "Aktualizace osobních údajů",
+        "label": "Upravit profil"
+      },
+      "no_access": "Do této části nemáte přístup. Tento obsah je určen výhradně pro profesionální uživatele.",
+      "notifications": {
+        "description": "Správa nastavení e-mailových oznámení",
+        "label": "Oznámení"
+      },
+      "subscription": {
+        "description": "Správa předplatného",
+        "label": "Předplatné"
+      },
+      "title": "Nastavení"
+    }
+  },
+  "consent": {
+    "accept": "Souhlasím",
+    "decline": "Odmítnout",
+    "decline_accept": "Zpět na úvodní stránku",
+    "decline_description": "K použití naší služby posílání zpráv – zejména pro čísla v USA a Kanadě – potřebujeme váš souhlas. Bez něj tato funkce není k dispozici. Můžete se sem kdykoli vrátit a pokračovat.",
+    "decline_title": "Potřebujeme váš souhlas.",
+    "description": "Abychom mohli váš telefon lokalizovat, musíme vám poslat SMS. Potvrďte, že s jejím přijetím souhlasíte.",
+    "title": "Je nutné potvrzení"
+  },
+  "contest": {
+    "agree": "Souhlasím",
+    "decline": "Odmítnout",
+    "description": "Potvrzuji, že zadané telefonní číslo je moje a souhlasím s příjmem zpráv.",
+    "title": "Dostávat zprávy?"
+  },
+  "footer": {
+    "brand": "Mobitrace.io",
+    "description": "Lokalizujte jakýkoli mobilní telefon – rychle a snadno pomocí Mobitrace.",
+    "links": {
+      "about_us": "O nás",
+      "cancel_subscription": "Zrušit předplatné",
+      "contact": "Kontakt",
+      "contacts": "Kontakty",
+      "cookie_policy": "Zásady používání souborů cookie",
+      "faqs": "Často kladené otázky",
+      "home": "Domů",
+      "location_number": "Poloha podle čísla",
+      "login": "Přihlášení",
+      "pricing": "Ceny",
+      "privacy policy": "Zásady ochrany osobních údajů",
+      "reverse_lookup": "Zpětné vyhledávání",
+      "terms_and_conditions": "Obchodní podmínky"
+    },
+    "rights": "Všechna práva vyhrazena."
+  },
+  "header": {
+    "about": "O",
+    "home": "Domů",
+    "open_menu": "Otevřít nabídku",
+    "sign_in": "Přihlásit se",
+    "sign_up": "Zaregistrovat se"
+  },
+  "language": {
+    "english": "Angličtina",
+    "spanish": "Español"
+  },
+  "navigation": {
+    "about_us": "O nás",
+    "contact": "Kontakt",
+    "dashboard": "Dashboard",
+    "faqs": "Často kladené otázky",
+    "home": "Domů",
+    "mobile_dialog_description": "Tento dialog obsahuje hlavní navigační odkazy",
+    "mobile_dialog_title": "Hlavní navigace",
+    "pricing": "Ceny",
+    "settings": "Nastavení"
+  },
+  "pages": {
+    "about": {
+      "cards": {
+        "card_1": {
+          "description": "<p>Mobitrace umožňuje jednoduché, spolehlivé a bezpečné sledování polohy. Naším posláním je pomáhat vám zůstat ve spojení s blízkými nebo důležitými pracovníky pomocí pokročilé technologie sledování polohy telefonu v reálném čase.</p>",
+          "title": "O co nám jde"
+        },
+        "card_2": {
+          "description": "<p>Mobitrace spojuje sledování mobilních telefonů s podrobnými veřejnými informačními službami:</p><ul><li>Sledování mobilních telefonů: Odešlete vlastní textovou zprávu s odkazem, jehož pomocí mohou příjemci sdílet svou polohu. Sledování probíhá pouze s výslovným souhlasem příjemce.</li><li>Hloubkové hledání dat: Získejte přístup ke kontaktním údajům, historii polohy a dalším informacím.</li><li>Globální dosah: Funguje na všech telefonech, sítích a ve všech zemích – lokalizujte jakékoli telefonní číslo, kdekoli.</li></ul>",
+          "title": "Co nabízíme"
+        },
+        "card_3": {
+          "description": "<ul><li>Jednoduchost: Vygenerujete URL adresu, odešlete ji a po schválení můžete sledovat.</li><li>Bezpečnost a zajištění: Veškeré sledování je konsenzuální a bezpečné.</li><li>Přesnost v reálném čase: Údaje o poloze jsou aktuální a přesné.</li></ul>",
+          "title": "Proč zvolit Mobitrace"
+        },
+        "card_4": {
+          "description": "<p>Ať už si děláte starost jako rodič, nebo vám záleží na kamarádovi nebo kamarádce, Mobitrace je tu proto, aby vám pomohl zůstat v kontaktu s vašimi blízkými. Děkujeme, že jste zvolili Mobitrace – službu, která spojuje sledování a informace, aby vám zajistila přehled a bezpečnost.</p>",
+          "title": "Přidejte se"
+        }
+      },
+      "description": "Vítejte u Mobitrace, důvěryhodné služby pro snadnou lokalizaci mobilních telefonů a přístup k podrobným veřejným informacím. Spolupracujeme s předními světovými poskytovateli dat z USA, Spojeného království, Evropy a dalších zemí a zajišťujeme přesné vyhledávání telefonních čísel a adres. Abyste měli jasno a mohli udržovat spojení.",
+      "title": "O nás"
+    },
+    "cancellation": {
+      "form": {
+        "email_label": "Vaše e-mailová adresa",
+        "error_not_found_description": "Zkontrolujte a zkuste to znovu",
+        "error_not_found_title": "Zadané e-mailové adrese neodpovídá žádný účet.",
+        "error_not_subscribed_title": "Nemáte předplatné.",
+        "errors": {
+          "invalid_email": "Zadejte prosím platný e-mail."
+        },
+        "submit": "Zrušit předplatné",
+        "success_description": "Už se vám nebudou účtovat žádné poplatky.",
+        "success_title": "Jste odhlášeni!"
+      },
+      "info_email": "Pokud si nepamatujete, jaký e-mail jste použili při registraci, zkuste ve své doručené poště vyhledat e-maily od odesílatele „mobitrace.io“. V opačném případě se obraťte na naši zákaznickou podporu <link>tady</link>.",
+      "info_user": "Předplatné můžete také zrušit tak, že se přihlásíte ke svému účtu, přejdete na kartu „Členství“ a kliknete na „Zrušit předplatné“.",
+      "subtitle": "Předplatné můžete snadno zrušit zadáním e-mailu použitého k vytvoření účtu.",
+      "title": "Zrušit předplatné"
+    },
+    "checkout": {
+      "action_form": "Zjistit polohu",
+      "agree_description": "Pokračováním souhlasíte s tím, že se vám teď naúčtuje částka {trialPrice}, a přijímáte naše <terms>Podmínky použití</terms> a <privacy>Zásady ochrany osobních údajů</privacy>. Na výpisu z vaší kreditní karty se platba objeví jako „mobitrace.io“. Částka {subscriptionPrice} se vám bude účtovat každé 4 týdny až do skončení předplatného. Předplatné můžete kdykoli zrušit. V případě jakýchkoli dotazů nás můžete kontaktovat na adrese support@mobitrace.io nebo telefonicky na čísle +1 360 525 2573.",
+      "agree_description_24": "Pokračováním v platbě souhlasíte s okamžitým zahájením 24hodinového zkušebního období za {trialPrice}. Pokud předplatné před koncem zkušebního období nezrušíte, bude se vám každé 4 týdny automaticky obnovovat za {subscriptionPrice}. Předplatné můžete kdykoli zrušit. Pokračováním také přijímáte naše <terms>Podmínky použití</terms> a berete na vědomí naše <privacy>Zásady ochrany osobních údajů</privacy>.",
+      "agree_description_reactivate": "Pokračováním souhlasíte s obnovením předplatného a s tím, že se vám teď naúčtuje částka {subscriptionPrice}. Na výpisu z vaší kreditní karty se platba objeví jako „mobitrace.io“. Částka {subscriptionPrice} se vám bude účtovat každé 4 týdny až do skončení předplatného. Předplatné můžete kdykoli zrušit. V případě jakýchkoli dotazů nás můžete kontaktovat na adrese support@mobitrace.io nebo telefonicky na čísle +1 360 525 2573.",
+      "agree_description_subscription": "Pokračováním souhlasíte s účtováním {subscriptionPrice} nyní a přijměte naše <terms>Podmínky použití</terms> a <privacy>Zásady ochrany osobních údajů</privacy>. Vaše platba se na výpisu z kreditní karty zobrazí jako „mobitrace.io“. Bude vám účtována platba {subscriptionPrice} každé 4 týdny, dokud vaše předplatné neskončí. Předplatné můžete kdykoli zrušit. V případě jakýchkoli dotazů nás můžete kontaktovat na adrese support@mobitrace.io nebo telefonicky na čísle +1 360 525 2573.",
+      "back_description": "Pokud nebudete během 7denní zkušební lhůty plně spokojeni, stačí nám to sdělit a my vám rádi vrátíme celou částku.",
+      "back_description_24": "Pokud nebudete během 24hodinové zkušební lhůty plně spokojeni, stačí nám to sdělit a my vám rádi vrátíme celou částku.",
+      "back_title": "Záruka vrácení peněz",
+      "cancel_description": "Můžete kdykoli zrušit na svém dashboardu nebo tak, že se na nás obrátíte na adrese <email>, support@mobitrace.io</email>.",
+      "cancel_title": "Zrušit kdykoliv",
+      "loading": "Probíhá zpracování platby...",
+      "title": "Zjistěte polohu telefonu",
+      "total": "Celkem k úhradě:",
+      "trust_100": "100% bezpečné platby",
+      "trust_cancel": "Zrušit kdykoliv"
+    },
+    "contact": {
+      "contact_information": {
+        "company_description": "<strong>United States</strong><br>800 N King Street, Suite 304-1119<br>Wilmington, DE 19801, USA</br></br><strong>United Arab Emirates</strong></br>Building A1, Dubai Digital Park</br>Dubai Silicon Oasis, Dubai</br>IFZA Business Park, DDP</br>Premises No. 5342-001</br>United Arab Emirates</br></br><strong>Ireland</strong></br>40 Mespil Road</br>Dublin 4, Ireland",
+        "company_title": "Adresa",
+        "email_description": "support@mobitrace.io",
+        "email_title": "E-mail",
+        "phone_description": "+1-360-525-2573",
+        "phone_title": "Telefon",
+        "title": "Kontaktní údaje"
+      },
+      "contact_us": "Kontakt",
+      "form": {
+        "billing_question": "Dotaz k fakturaci",
+        "email_label": "E-mail",
+        "errors": {
+          "invalid_email": "Zadejte prosím platný e-mail.",
+          "invalid_name_format": "Zadejte platné jméno.",
+          "invalid_surname_format": "Zadejte platné příjmení.",
+          "max_length": "Překročili jste maximální počet znaků.",
+          "message_max_length": "Zpráva nesmí překročit {maxLength} znaků.",
+          "message_required": "Zadejte prosím svou zprávu.",
+          "name_required": "Zadejte prosím své jméno.",
+          "surname_required": "Zadejte své příjmení."
+        },
+        "message_label": "Zpráva",
+        "name_label": "Jméno",
+        "other": "Další",
+        "subject_label": "Předmět",
+        "subject_placeholder": "Vybrat",
+        "submit": "Odeslat zprávu",
+        "submitted": "Zpráva úspěšně odeslána. Náš tým se vám ozve do 2 hodin. ",
+        "submitted_title": "Zpráva odeslána",
+        "suggested_improvement": "Návrh na vylepšení",
+        "surname_label": "Příjmení",
+        "technical_issue": "Technický problém",
+        "title": "Spojte se s námi"
+      },
+      "subtitle": "Máš dotaz, zpětnou vazbu nebo potřebuješ pomoc?<br/> Budeme rádi, když se nám ozvete!",
+      "title": "Jsme tu pro vás"
+    },
+    "error": {
+      "body": "Zkuste to znovu později, nebo pokud problém přetrvává, obraťte se na podporu.",
+      "cta": "Přejít domů",
+      "title": "Něco se pokazilo"
+    },
+    "find_by_link": {
+      "find_by_link": "Najít podle odkazu",
+      "form": {
+        "errors": {
+          "max_length": "Maximální limit: 255 znaků.",
+          "min_length": "Odkaz by měl mít alespoň {n} znaků",
+          "required": "Odkaz je vyžadován"
+        },
+        "linkLabel": "Pojmenujte odkaz",
+        "linkPlaceholder": "např. Odkaz pro WhatsApp",
+        "submitButton": "Vygenerovat odkaz"
+      },
+      "steps": {
+        "step1": "Přizpůsobte si sledovací odkaz",
+        "step2": "Můžete ho nasdílet prostřednictvím jakékoli aplikace na posílání zpráv",
+        "step3": "Budete dostávat oznámení o stavu",
+        "step4": "Jakmile dotyčný na odkaz klikne, okamžitě uvidíte jeho polohu"
+      },
+      "title": "Vytvořte si vlastní odkaz"
+    },
+    "find_by_link_success": {
+      "body": "Tento odkaz nasdílejte tomu, koho chcete sledovat.",
+      "generateNewCTA": "Vygenerovat nový odkaz",
+      "statusCTA": "Zkontrolujte stav",
+      "subtitle": "Odkaz najdete dole",
+      "title": "Úspěch"
+    },
+    "find_by_number_send_message": {
+      "CTA": "Odeslat",
+      "errors": {
+        "empty": "Toto pole nemůže být prázdné",
+        "max_length": "Text je příliš dlouhý. Maximální počet znaků je {n}."
+      },
+      "extra_info": {
+        "bullet_1": "Jako jméno odesílatele se zobrazí „Mobitrace“.",
+        "bullet_2": "Každá zpráva bude na konci obsahovat jedinečný odkaz, na který musí příjemce kliknout."
+      },
+      "find_by_number": "Najít podle čísla",
+      "label": "Zpráva",
+      "placeholder": "Sem zadejte svou zprávu.",
+      "title": "Hledání polohy čísla <brandColor>{phoneNumber}</brandColor>"
+    },
+    "find_by_number_send_message_success": {
+      "cta": "Zkontrolovat stav",
+      "description": "Zpráva byla odeslána na číslo <strong>{phoneNumber}</strong>. Jakmile se telefon podaří lokalizovat, dáme vám vědět.",
+      "title": "Úspěch!"
+    },
+    "forgot_password": {
+      "back_to_login": "Přihlásit se",
+      "description": "Zadejte svůj e-mail a my vám pošleme pokyny k obnovení hesla",
+      "remember_password": "Pamatovat si heslo?",
+      "title": "Obnovit heslo"
+    },
+    "index": {
+      "faqs": {
+        "question_1": {
+          "answer": "Jednoduše zadáte telefonní číslo, a jakmile příjemce udělí souhlas se sdílením své polohy, obdržíte jeho přesnou polohu.",
+          "question": "Jak podle telefonního čísla zjistím něčí polohu?"
+        },
+        "question_2": {
+          "answer": "Ano, geolokace je legální, ale  v souladu se zákony na ochranu osobních údajů vyžaduje výslovný souhlas příjemce se sdílením jeho polohy.",
+          "question": "Je legální zjistit polohu třetí osoby?"
+        },
+        "question_3": {
+          "answer": "Ne, není nutná instalace žádné aplikace ani softwaru. Naše služba se o všechno postará na dálku.",
+          "question": "Musím si pro vysledování telefonního čísla nainstalovat nějakou aplikaci?"
+        },
+        "question_4": {
+          "answer": "Naše služba podporuje všechny typy telefonů od smartphonů až po starší modely. Stačí, aby mohly přijímat textové zprávy.",
+          "question": "Jaké typy telefonů jsou podporované?"
+        },
+        "question_5": {
+          "answer": "Ano, naše služba funguje po celém světě bez ohledu na polohu nebo síť.",
+          "question": "Můžu vyhledat telefonní číslo kdekoli na světě?"
+        },
+        "question_6": {
+          "answer": "Naše služba poskytuje přesné informace o poloze, včetně přesné adresy, pomocí pokročilé technologie GPS.",
+          "question": "Jak přesná je geolokace?"
+        },
+        "question_7": {
+          "answer": "Jednoduše zadejte telefonní číslo, které chcete prošetřit, a Mobitrace se postará o zbytek. Náš systém prohledá několik databází, aby odhalil veškeré dostupné informace související s daným číslem. Mnohá hledání vrací výsledky okamžitě, ovšem podrobnější vyhledávání může trvat trochu déle. Jakmile nástroj Mobitrace pro zpětné vyhledávání telefonních čísel použijete, hned uvidíte, jak je výkonný a efektivní.",
+          "question": "Jak zpětné vyhledávání telefonních čísel funguje?"
+        },
+        "question_8": {
+          "answer": "Technologie Mobitrace pro zpětné vyhledávání telefonních čísel je vysoce pokročilá. Při spuštění vyhledávání prozkoumá širokou škálu zdrojů – včetně veřejných záznamů, online adresářů i méně viditelných datových bodů. Pokud se najdou relevantní informace, zobrazí se vám. Ovšem ne každé vyhledávání může přinést okamžité výsledky, protože dostupnost závisí na datech dostupných pro jednotlivá čísla.",
+          "question": "Poskytuje Mobitrace informace o každém čísle?"
+        },
+        "question_9": {
+          "answer": "Rozhodně! Představte si, že vám zavolá někdo, kdo se vydává za vaši banku, a chce po vás PIN, aby zablokoval podezřelý výběr. Nebo že dostanete SMS s informací o výhře, kterou si vyberete kliknutím na odkaz. Obě situace mohou vést k finanční ztrátě nebo krádeži osobních údajů. Mobitrace vám pomůže ověřit, kdo skutečně stojí za neznámými čísly. Rychlé zpětné vyhledávání vás může upozornit na potenciální podvody a ochránit vaše data a finance.",
+          "question": "Pomůže mi Mobitrace vyhnout se podvodům prostřednictvím telefonních hovorů a SMS zpráv?"
+        },
+        "title": "Často kladené otázky"
+      },
+      "hero": {
+        "100": "100%",
+        "card_address": "29 Willow Street, Hackney Wick, Londýn E9 5EN, Spojené království",
+        "card_date": "27. září 2024   18:46",
+        "card_phone": "+44 633 123 456",
+        "card_title": "Poloha zjištěna!",
+        "confidential": "důvěrné",
+        "iphone_alt": "smartphone s mapou Londýna a značkou polohy",
+        "secure": "Bezpečné",
+        "ssl_encription": "SSL šifrování",
+        "subtitle": "Pomocí Mobitrace.io můžete prostřednictvím SMS nebo odkazu vyžádat polohu telefonu v reálném čase. Sledování probíhá pouze s výslovným souhlasem příjemce.",
+        "title": "Lokalizujte mobilní telefon"
+      },
+      "how_does_it_work": {
+        "step_1": {
+          "description": "Jednoduše zadejte telefonní číslo, které chcete vyhledat, a upravte SMS zprávu, která se odešle příjemci.",
+          "title": "Zadejte telefonní číslo"
+        },
+        "step_2": {
+          "description": "Mobitrace doručí vaši osobní SMS s žádostí o nasdílení polohy.",
+          "title": "Odešlete žádost o sdílení polohy"
+        },
+        "step_3": {
+          "description": "Jakmile příjemce potvrdí souhlas, dostanete oznámení s jeho přesnou polohou, na kterou se můžete podívat na mapě přímo na svém dashboardu.",
+          "title": "Poloha se vám ukáže na mapě"
+        },
+        "title": "Jak to funguje?"
+      },
+      "instant_locator": {
+        "subtitle": "Mobitrace je dokonalé řešení pro zjištění polohy nebo záznamů jakékoli osoby – stačí telefonní číslo dotyčného",
+        "title": "<underlined>Okamžitě</underlined> lokalizujte číslo"
+      },
+      "meta_description": "Lokalizujte jakýkoli mobilní telefon – rychle a snadno pomocí Mobitrace.",
+      "meta_title": "Mobitrace.io – Zjistěte polohu jakéhokoli telefonu, kdekoli",
+      "og_description": "Lokalizujte jakýkoli mobilní telefon – rychle a snadno pomocí Mobitrace.",
+      "og_image_alt": "Mobitrace.io – Zjistěte polohu jakéhokoli telefonu, kdekoli",
+      "og_title": "Mobitrace.io – Zjistěte polohu jakéhokoli telefonu, kdekoli",
+      "site_name": "Mobitrace",
+      "welcome_title": "Vítá vás Mobitrace.io",
+      "why_choose": {
+        "reasons": {
+          "reason_1": {
+            "description": "Vaše soukromí je pro nás nejvyšší prioritou. Můžete být v klidu, že vaše osobní údaje a vyhledávací aktivita jsou vždy v bezpečí a důvěrné.",
+            "title": "Záruka naprostého soukromí"
+          },
+          "reason_2": {
+            "description": "Žádné aplikace, žádný software, žádné komplikace. Stačí zadat telefonní číslo a Mobitrace se okamžitě pustí do práce.",
+            "title": "Nic se nemusí instalovat"
+          },
+          "reason_3": {
+            "description": "Od nejnovějších iPhonů a Androidů až po klasické véčkové telefony – pokud zařízení dokáže přijmout textovou zprávu, Mobitrace ho dokáže lokalizovat. Naše služba funguje se všemi telefony a operátory.",
+            "title": "Podporuje všechny telefony a operátory"
+          },
+          "reason_4": {
+            "description": "Mobitrace neposkytuje jen souřadnice, ale i přesnou adresu. Využijte možnosti pokročilé technologie GPS s bezkonkurenční přesností.",
+            "title": "Naprostá přesnost"
+          },
+          "reason_5": {
+            "description": "Ať už se vy nebo sledovaný telefon nacházíte kdekoli, Mobitrace bez problémů funguje po celém světě.",
+            "title": "Globální dosah"
+          }
+        },
+        "subtitle": "Jedním kliknutím a bez jakékoli námahy zjistíte polohu kohokoli na světě",
+        "title": "Proč zvolit Mobitrace"
+      }
+    },
+    "legal": {
+      "cookie_policy": {
+        "content": "",
+        "title": "Zásady používání souborů cookie"
+      },
+      "refund_policy": {
+        "content": "",
+        "title": "Zásady vracení peněz"
+      }
+    },
+    "loader": {
+      "step_1": {
+        "carrier": {
+          "loadedDefaultText": "Zjištěno",
+          "text": "Operátor"
+        },
+        "city": {
+          "loadedText": "Lokalizována",
+          "text": "Město"
+        },
+        "connecting": "Připojování k satelitům",
+        "country": {
+          "text": "Země"
+        },
+        "database": {
+          "loadedText": "Přístup proběhl",
+          "text": "Databáze"
+        },
+        "location": {
+          "loadedText": "Zjištěno",
+          "text": "Místo"
+        },
+        "searching": "Výsledky vyhledávání pro"
+      },
+      "step_2": {
+        "cta": "Zjistit polohu",
+        "subtitle": "Vyhledávání dokončeno – teď máte přístup k informaci o poloze.",
+        "title": "Poloha zjištěna!"
+      }
+    },
+    "loader_complete": {
+      "title": "Zaregistrujte se a zjistěte přesnou polohu telefonu <brandColor>{phoneNumber}</brandColor>"
+    },
+    "locate": {
+      "error": "Adresu se nepodařilo načíst.",
+      "link_expired": "Platnost odkazu vypršela.",
+      "link_expired_explain": "Odkaz už byl otevřen a není dál k dispozici.",
+      "loading": "Načítání...",
+      "not_supported": "Váš prohlížeč nepodporuje geolokaci.",
+      "rejected": "Sdílení polohy bylo zamítnuto.",
+      "thank_you": "Děkuji"
+    },
+    "memberArea": {
+      "navigation": {
+        "contact_us": "Kontakt",
+        "find_by_link": "Najít podle odkazu",
+        "find_by_number": "Najít podle čísla",
+        "find_by_phone_lookup": "Vyhledání telefonu",
+        "my_activity": "Moje aktivita",
+        "notifications": "Oznámení",
+        "phone_lookup": "Vyhledání telefonu",
+        "settings": "Nastavení",
+        "sex_offenders_search": "Sexuální delikventi",
+        "status": "Stav",
+        "tools_library": "Knihovna nástrojů"
+      }
+    },
+    "not_found": {
+      "body": "Něco se pokazilo, zkuste to prosím znovu.",
+      "cta": "Přejít domů",
+      "title": "Stránka nenalezena"
+    },
+    "notifications": {
+      "empty": {
+        "text": "Momentálně nemáte žádná oznámení.",
+        "title": "Naprosté ticho"
+      },
+      "link_accessed": "<strong>{notificationName}</strong> byl otevřen.",
+      "link_located": "Poloha je k dispozici.",
+      "link_rejected": "Sdílení polohy bylo zamítnuto.",
+      "load_more": "Načíst další",
+      "phone_located": "<strong>Údaje o poloze pro {phone}</strong> úspěšně získány.",
+      "phone_rejected": "<strong>Sdílení polohy pro {phone}</strong> odmítnuto.",
+      "title": "Oznámení"
+    },
+    "onboarding": {
+      "navigation": {
+        "step_1": "Krok 1",
+        "step_2": "Krok 2",
+        "step_3": "Krok 3"
+      }
+    },
+    "onboarding_step1": {
+      "body": "Pokud chcete lokalizovat telefonní číslo, Mobitrace na něj pošle anonymní textovou zprávu s lokalizačním odkazem. Jednoduše zprávu odešlete a nechte náš systém, ať se o zbytek postará.",
+      "cta": "Pokračovat",
+      "title": "Odešlete sledovací odkaz"
+    },
+    "onboarding_step2": {
+      "body": "Jakmile příjemce na odkaz klikne, přejděte do Historie polohy, kde můžete v reálném čase sledovat jeho pohyb na mapě.",
+      "cta": "Pokračovat",
+      "title": "Sledování v reálném čase"
+    },
+    "onboarding_step3": {
+      "body": "Zatímco čekáte, až příjemce zprávu otevře, využijte další výkonné funkce Mobitrace, které vám usnadní sledování.",
+      "cta": "Začít nyní",
+      "title": "Prozkoumejte další funkce"
+    },
+    "pricing": {
+      "cards": {
+        "subscription": {
+          "badge": "Předplatné",
+          "cta": "Předplatit si",
+          "description": "Po uplynutí 7denního zkušebního období se vám bude každé 4 týdny strhávat částka {price}. Službu můžete kdykoli zrušit.",
+          "duration": "Každé 4 týdny",
+          "features": {
+            "feature_1": "Podporuje všechna mobilní zařízení",
+            "feature_2": "Neomezený počet požadavků na zjištění polohy",
+            "feature_3": "Prémiové funkce jako vlastní zprávy a přesná poloha",
+            "feature_4": "Podpora 24/7 bez dalších poplatků"
+          },
+          "new_features": {
+            "feature_1": "Podporuje všechna mobilní zařízení",
+            "feature_2": "Neomezený počet požadavků na zjištění polohy",
+            "feature_3": "Stahování profesionálních přehledů v PDF bez dalších poplatků",
+            "feature_4": "Neomezené přehledy zpětného vyhledávání telefonních čísel s podrobnými informacemi",
+            "feature_5": "Podpora 24/7 bez dalších poplatků"
+          }
+        },
+        "subscription_24": {
+          "badge": "Předplatné",
+          "cta": "Předplatit si",
+          "description": "Po uplynutí 24hodinového zkušebního období se vám bude každé 4 týdny strhávat částka {price}. Službu můžete kdykoli zrušit.",
+          "duration": "Každé 4 týdny",
+          "features": {
+            "feature_1": "Podporuje všechna mobilní zařízení",
+            "feature_2": "Neomezený počet požadavků na zjištění polohy",
+            "feature_3": "Stahování profesionálních přehledů v PDF bez dalších poplatků",
+            "feature_4": "Neomezené přehledy zpětného vyhledávání telefonních čísel s podrobnými informacemi",
+            "feature_5": "Podpora 24/7 bez dalších poplatků"
+          },
+          "new_features": {
+            "feature_1": "Podporuje všechna mobilní zařízení",
+            "feature_2": "Neomezený počet požadavků na zjištění polohy",
+            "feature_3": "Stahování profesionálních přehledů v PDF bez dalších poplatků",
+            "feature_4": "Neomezené přehledy zpětného vyhledávání telefonních čísel s podrobnými informacemi",
+            "feature_5": "Podpora 24/7 bez dalších poplatků"
+          }
+        },
+        "title": "Ceny",
+        "trial": {
+          "badge": "Zkušební období",
+          "cta": "Zahájit zkušební období",
+          "description": "Využijte neomezený přístup ke všem funkcím bez jakéhokoli rizika. Vaše první platba vám zajistí plný přístup na 7 dní a potom se vám bude každé 4 týdny účtovat {price} . Službu můžete kdykoli zrušit.",
+          "duration": "7 dní na zkoušku",
+          "features": {
+            "feature_1": "Podporuje všechna mobilní zařízení",
+            "feature_2": "Plný přístup ke všem funkcím na 7 dní",
+            "feature_3": "Vyzkoušení bez dlouhodobého závazku"
+          },
+          "new_features": {
+            "feature_1": "Podporuje všechna mobilní zařízení",
+            "feature_2": "Plný přístup ke všem funkcím na 7 dní",
+            "feature_3": "Přístup k podrobným přehledům zpětného vyhledávání telefonních čísel",
+            "feature_4": "Vyzkoušení bez dlouhodobého závazku",
+            "feature_5": "Možnost stahování přehledů jako PDF"
+          }
+        },
+        "trial_24": {
+          "badge": "Zkušební období",
+          "cta": "Zahájit zkušební období",
+          "description": "Využijte neomezený přístup ke všem funkcím bez jakéhokoli rizika. Vaše první platba vám zajistí plný přístup na 24 hodin a potom se vám bude každé 4 týdny účtovat {price} . Službu můžete kdykoli zrušit.",
+          "duration": "24 hodin na vyzkoušení",
+          "features": {
+            "feature_1": "Podporuje všechna mobilní zařízení",
+            "feature_2": "Plný přístup ke všem funkcím na 24 hodin",
+            "feature_3": "Vyzkoušení bez dlouhodobého závazku",
+            "feature_4": "Možnost stahování přehledů jako PDF"
+          },
+          "new_features": {
+            "feature_1": "Podporuje všechna mobilní zařízení",
+            "feature_2": "Plný přístup ke všem funkcím na 24 hodin",
+            "feature_3": "Přístup k podrobným přehledům zpětného vyhledávání telefonních čísel",
+            "feature_4": "Vyzkoušení bez dlouhodobého závazku",
+            "feature_5": "Možnost stahování přehledů jako PDF"
+          }
+        }
+      },
+      "special_offer": "Speciální nabídka",
+      "subtitle": "Mobitrace nabízí své služby formou snadno spravovatelného měsíčního předplatného.",
+      "title": "Vyzkoušejte si možnosti Mobitrace za pouhých <mark> {price}</mark> na 7 dní!",
+      "title_24": "Vyzkoušejte Mobitrace na 24 hodin za pouhých <mark>{price}</mark> !"
+    },
+    "reset_password": {
+      "back_to_login": "Přihlásit se",
+      "description": "Pro obnovení účtu zadejte nové heslo",
+      "remember_password": "Pamatovat si heslo?",
+      "title": "Obnovit heslo"
+    },
+    "reverse_lookup": {
+      "checkout": {
+        "action_form": "Získat přehled",
+        "back_description": "Pokud nebudete během 7denní zkušební lhůty plně spokojeni, stačí nám to sdělit a my vám rádi vrátíme celou částku.",
+        "back_description_24": "Pokud nebudete během 24hodinové zkušební lhůty plně spokojeni, stačí nám to sdělit a my vám rádi vrátíme celou částku.",
+        "back_title": "Záruka vrácení peněz",
+        "cancel_description": "Můžete kdykoli zrušit na svém dashboardu nebo tak, že se na nás obrátíte na adrese <email>, support@mobitrace.io</email>.",
+        "cancel_title": "Zrušit kdykoliv",
+        "title": "Odemknout přehled pro"
+      },
+      "components": {
+        "always_know_who_called": {
+          "step_1": {
+            "description": "Zjistěte, zda jsou s číslem spojené právní subjekty nebo názvy společností.",
+            "title": "Celé jméno"
+          },
+          "step_2": {
+            "description": "Zjistěte si potenciální adresy spojené se zadaným číslem, minulé i současné.",
+            "title": "Adresa bydliště"
+          },
+          "step_3": {
+            "description": "Znovu se spojte se vzdálenými členy rodiny nebo dávno ztracenými příbuznými.",
+            "title": "Členové rodiny"
+          },
+          "step_4": {
+            "description": "Vyhledejte profily na všech velkých sociálních sítích.",
+            "title": "Profily na sociálních sítích"
+          },
+          "step_5": {
+            "description": "Podívejte se na všechny související veřejné e-mailové adresy.",
+            "title": "E-mailové adresy"
+          },
+          "step_6": {
+            "description": "Projděte si veřejně dostupnou historii polohy.",
+            "title": "Historie polohy"
+          },
+          "step_7": {
+            "description": "Nechte si shromáždit informace z různých zdrojů na internetu.",
+            "title": "Aktivita na webu"
+          },
+          "subtitle": "Zadáním čísla do zpětného vyhledávače telefonních čísel Mobitrace zjistíte veřejně dostupné informace spojené s tímto číslem.",
+          "title": "S Mobitrace vždycky víte, kdo volá"
+        },
+        "as_seen_on": {
+          "title": "Jak je vidět na"
+        },
+        "customer_carousel": {
+          "subtitle": "Děláme vše pro to, abychom vám poskytovali co nejlepší službu",
+          "title": "Co o nás říkají zákazníci <br class='lg:hidden'/>"
+        },
+        "customer_opinions": {
+          "title": "Lidé po celém světě odhalují neznámé volající"
+        },
+        "faqs": {
+          "question_1": {
+            "answer": "Jednoduše zadáte telefonní číslo, a jakmile příjemce udělí souhlas se sdílením své polohy, obdržíte jeho přesnou polohu.",
+            "question": "Jak můžu podle telefonního čísla vysledovat něčí polohu?"
+          },
+          "question_2": {
+            "answer": "Ano, geolokace je legální, ale  v souladu se zákony na ochranu osobních údajů vyžaduje výslovný souhlas příjemce se sdílením jeho polohy.",
+            "question": "Je legální zjistit polohu třetí osoby?"
+          },
+          "question_3": {
+            "answer": "Ne, není nutná instalace žádné aplikace ani softwaru. Naše služba se o všechno postará na dálku.",
+            "question": "Musím si pro vysledování telefonního čísla nainstalovat nějakou aplikaci?"
+          },
+          "question_4": {
+            "answer": "Naše služba podporuje všechny typy telefonů od smartphonů až po starší modely. Stačí, aby mohly přijímat textové zprávy.",
+            "question": "Jaké typy telefonů jsou podporované?"
+          },
+          "question_5": {
+            "answer": "Ano, naše služba funguje po celém světě bez ohledu na polohu nebo síť.",
+            "question": "Můžu vysledovat telefonní číslo kdekoli na světě?"
+          },
+          "question_6": {
+            "answer": "Naše služba poskytuje přesné informace o poloze, včetně přesné adresy, pomocí pokročilé technologie GPS.",
+            "question": "Jak přesná je geolokace?"
+          },
+          "question_7": {
+            "answer": "Jednoduše zadejte telefonní číslo, které chcete prošetřit, a Mobitrace se postará o zbytek. Náš systém prohledá několik databází, aby odhalil veškeré dostupné informace související s daným číslem. Mnohá hledání vrací výsledky okamžitě, ovšem podrobnější vyhledávání může trvat trochu déle. Jakmile nástroj Mobitrace pro zpětné vyhledávání telefonních čísel použijete, hned uvidíte, jak je výkonný a efektivní.",
+            "question": "Jak zpětné vyhledávání telefonních čísel funguje?"
+          },
+          "question_8": {
+            "answer": "Technologie Mobitrace pro zpětné vyhledávání telefonních čísel je vysoce pokročilá. Při spuštění vyhledávání prozkoumá širokou škálu zdrojů – včetně veřejných záznamů, online adresářů i méně viditelných datových bodů. Pokud se najdou relevantní informace, zobrazí se vám. Ovšem ne každé vyhledávání může přinést okamžité výsledky, protože dostupnost závisí na datech dostupných pro jednotlivá čísla.",
+            "question": "Poskytuje Mobitrace informace o každém čísle?"
+          },
+          "question_9": {
+            "answer": "Rozhodně! Představte si, že vám zavolá někdo, kdo se vydává za vaši banku, a chce po vás PIN, aby zablokoval podezřelý výběr. Nebo že dostanete SMS s informací o výhře, kterou si vyberete kliknutím na odkaz. Obě situace mohou vést k finanční ztrátě nebo krádeži osobních údajů. Mobitrace vám pomůže ověřit, kdo skutečně stojí za neznámými čísly. Rychlé zpětné vyhledávání vás může upozornit na potenciální podvody a ochránit vaše data a finance.",
+            "question": "Pomůže mi Mobitrace vyhnout se podvodům prostřednictvím telefonních hovorů a SMS zpráv?"
+          },
+          "title": "Často kladené otázky"
+        },
+        "get_report": {
+          "cta": "Získat přehled",
+          "lookup_today": "Dnes bylo provedeno přes 99 zpětných vyhledávání",
+          "product": "7denní plný přístup",
+          "product_24": "24hodinový nepřetržitý přístup",
+          "product_title": "Přehled o hledání",
+          "secure": "100% bezpečné",
+          "title": "Získejte přístup k přehledu!",
+          "trial_description": "30denní záruka spokojenosti"
+        },
+        "hero": {
+          "100": "100%",
+          "card_address": "29 Willow Street, Hackney Wick, Londýn E9 5EN, Spojené království",
+          "card_date": "27. září 2024   18:46",
+          "card_phone": "+44 633 123 456",
+          "card_title": "Poloha zjištěna!",
+          "confidential": "důvěrné",
+          "iphone_alt": "smartphone s mapou Londýna a značkou polohy",
+          "secure": "Bezpečné",
+          "ssl_encription": "SSL šifrování",
+          "subtitle": "Okamžitě identifikujte neznámé volající a odhalte jejich celá jména, adresy, profily na sociálních sítích a další informace.",
+          "title": "<mark>Zpětné</mark> <mark>vyhledání</mark> telefonního čísla"
+        },
+        "instant_locator": {
+          "subtitle": "Mobitrace je dokonalé řešení pro zjištění polohy nebo záznamů o jakékoli osobě – jednoduše na základě telefonního čísla dotyčného",
+          "title": "Vyhledejte si jakékoli telefonní číslo!"
+        },
+        "latest_results": {
+          "result": {
+            "description": "Před {time} min."
+          },
+          "subtitle": "Tady jsou některé z posledních výsledků naší služby zpětného vyhledávání telefonních čísel.",
+          "title": "Nejnovější výsledky"
+        },
+        "limited_offer_tag": {
+          "limited_offer": "Omezená nabídka"
+        },
+        "phone_input": {
+          "errors": {
+            "invalid_phone": "Zadejte platné telefonní číslo.",
+            "rate_limit_exceeded": "Překročili jste denní limit.",
+            "rate_limit_exceeded_title": "Dosažen limit"
+          },
+          "label": "Zadejte číslo, které chcete vyhledat",
+          "no_results": "Směrové číslo země nenalezeno.",
+          "phone_placeholder": "123456789",
+          "search_placeholder": "Hledání podle země nebo směrového čísla...",
+          "submit": "Vyhledat"
+        },
+        "pricing": {
+          "cards": {
+            "subscription": {
+              "badge": "Předplatné",
+              "cta": "Předplatit si",
+              "description": "Jakmile skončí vaše 7denní zkušební období, nabídka se automaticky prodlouží jako měsíční předplatné. Předplatné můžete kdykoli snadno zrušit.",
+              "duration": "Měsíční poplatek",
+              "features": {
+                "feature_1": "Podporuje všechna mobilní zařízení",
+                "feature_2": "Neomezený počet požadavků na zjištění polohy",
+                "feature_3": "Stahování profesionálních přehledů v PDF bez dalších poplatků",
+                "feature_4": "Neomezené přehledy zpětného vyhledávání telefonních čísel s podrobnými informacemi",
+                "feature_5": "Podpora 24/7 bez dalších poplatků"
+              }
+            },
+            "title": "Zahájit 7 dní na zkoušku",
+            "trial": {
+              "badge": "Zkušební období",
+              "cta": "Zahájit zkušební období",
+              "description": "Po uhrazení této počáteční platby získáte na 7 dní neomezený přístup ke všem funkcím platformy Mobitrace. Potom se vám začne účtovat měsíční předplatné ve výši {price}.",
+              "duration": "7 dní na zkoušku",
+              "features": {
+                "feature_1": "Podporuje všechna mobilní zařízení",
+                "feature_2": "Plný přístup ke všem funkcím na 7 dní",
+                "feature_3": "Přístup k podrobným přehledům zpětného vyhledávání telefonních čísel",
+                "feature_4": "Vyzkoušení bez dlouhodobého závazku",
+                "feature_5": "Možnost stahování přehledů jako PDF"
+              }
+            }
+          },
+          "special_offer": "Speciální nabídka",
+          "subtitle": "Mobitrace nabízí své služby formou snadno spravovatelného měsíčního předplatného.",
+          "title": "Vyzkoušejte si možnosti Mobitrace za pouhých <mark> {price}</mark> na 7 dní!"
+        },
+        "recent_reveals": {
+          "subtitle": "Tady uvádíme jen některé z neznámých volajících, které jsme v poslední době identifikovali.",
+          "title": "Odhalení z poslední doby"
+        },
+        "report_ready": {
+          "description": "Přehled je připravený.",
+          "download_report_button": "Stáhnout PDF",
+          "view_report_button": "Zobrazit přehled"
+        },
+        "summary_report_card": {
+          "caller_info": "S Mobitrace už nebudete muset hádat, kdo se skrývá za neznámým číslem. Poskytneme vám údaje o volajícím. A to i informace, o kterých by nečekal, že se k nim dostanete.",
+          "carrier": "Operátor",
+          "continue": "Pokračovat",
+          "latest_report": "Nejnovější přehled ze 3. března 2025",
+          "line_type": "Typ linky",
+          "may_include": "Výsledky mohou zahrnovat",
+          "result_1": "Celé jméno a adresa majitele",
+          "result_2": "Účty a profily na sociálních sítích",
+          "result_3": "Fotky a videa",
+          "result_4": "Minulá online aktivita",
+          "result_5": "E-mailové adresy",
+          "result_6": "A ještě mnohem víc!",
+          "timer_desktop": "<mark>Přehled</mark> vyprší za",
+          "timer_mobile": "Platnost přehledu vyprší za",
+          "title": "Váš přehled o čísle <mark>{phoneNumber}</mark> je připravený!",
+          "trusted_by": "Důvěřuje nám přes <span class='font-bold'>7 milionů lidí</span>"
+        },
+        "upsell_progress_steps": {
+          "access_report": "Přístup k přehledu",
+          "create_account": "Vytvořit účet",
+          "data_breach": "Únik dat",
+          "pdf_export": "Export do PDF",
+          "sex_offenders": "Sexuální delikventi"
+        },
+        "what_you_get": {
+          "item_1": "Vyhledejte jakékoli telefonní číslo, minulé i současné, a zjistěte informace o jeho majiteli.",
+          "item_2": "Majitelé telefonního čísla se o vašem hledání nikdy nedozví.",
+          "item_3": "Naše databáze vždy obsahuje nejaktuálnější informace.",
+          "item_4": "Mobitrace sestavuje přehledy z veřejně dostupných informací na internetu.",
+          "item_title_1": "Pokročilé vyhledávání telefonních čísel",
+          "item_title_2": "Vaše soukromí je 100% zaručené",
+          "item_title_3": "Vždy aktuální",
+          "item_title_4": "Prohledávání miliard záznamů",
+          "title": "Co získáte"
+        },
+        "why_use": {
+          "phone_input_label": "Zadejte číslo, které chcete vyhledat",
+          "reasons": {
+            "reason_1": {
+              "description": "Identifikujte neznámé volající a ušetřete si nejistotu při přijímání hovorů.",
+              "title": "Mějte jasno, kdo volá"
+            },
+            "reason_2": {
+              "description": "Mobitrace vám pomůže najít starší nebo ztracená spojení, a to i na základě starých telefonních čísel.",
+              "title": "Znovu se spojte se starými přáteli"
+            },
+            "reason_3": {
+              "description": "Chraňte se ověřováním totožnosti těch, s nimiž komunikujete online.",
+              "title": "Ověřujte totožnost"
+            },
+            "reason_4": {
+              "description": "Množství podvodných hovorů a programů na sběr dat roste. Mobitrace vám pomůže odhalit podvodníky, aniž byste museli zvedat telefon.",
+              "title": "Identifikujte podezřelá čísla"
+            },
+            "reason_5": {
+              "description": "Zadejte do Mobitrace svoje telefonní číslo. Zkontrolujete si tak, jaké vaše osobní údaje jsou k dispozici, a odhalíte případné úniky dat.",
+              "title": "Monitorujte svou vlastní digitální stopu"
+            }
+          },
+          "steps": {
+            "step_1": {
+              "description": "Chránit se před podvodnými volajícími a reklamními hovory."
+            },
+            "step_2": {
+              "description": "Prověření minulosti potenciálních partnerů nebo spolubydlících."
+            },
+            "step_3": {
+              "description": "Zjistit, kdo stojí za otravnými spamovými hovory."
+            },
+            "step_4": {
+              "description": "Znovu se spojit se starými přáteli nebo členy rodiny."
+            },
+            "step_5": {
+              "description": "Rozpoznat podvodníky v seznamovacích a chatovacích aplikacích."
+            }
+          },
+          "subtitle": "Ať už se chcete chránit v digitálním světě, nebo najít ztracené kontakty, jsme tu, abychom vám pomohli.<br>Mobitrace vám pomůže:",
+          "title": "Proč používat zpětné vyhledávání telefonních čísel",
+          "title_2": "Další příklady použití",
+          "title_badge": "NAVÍC"
+        }
+      },
+      "member_area": {
+        "phone_lookup": {
+          "daily_limit": "Limit: 5 hledání za 24 hodin.",
+          "label": "Odhalit ID volajícího",
+          "phone_lookup": "Vyhledání telefonu"
+        }
+      },
+      "report": {
+        "carrier_details": {
+          "info": "Tato část obsahuje informace o telefonním operátorovi dané osoby včetně podrobností o síti a typu služby.",
+          "labels": {
+            "carrier": "Operátor",
+            "international_format": "Mezinárodní formát",
+            "local_format": "Místní formát",
+            "location": "Místo",
+            "type": "Typ"
+          },
+          "line_types": {
+            "landline": "Pevná linka",
+            "mobile": "Mobil"
+          },
+          "title": "Údaje o operátorovi",
+          "title_empty": "Údaje o operátorovi"
+        },
+        "common": {
+          "no_data": "Žádný záznam k dispozici"
+        },
+        "data_breach_history": {
+          "alert_empty": "Tato část popisuje historii úniků dat a podrobně uvádí všechny incidenty, které ohrozily citlivé informace. Zahrnuje informace o povaze úniků, dotčených datech a opatřeních podniknutých k řešení a prevenci budoucích případů.",
+          "alert_success": "Tato část popisuje historii úniků dat a podrobně uvádí všechny incidenty, které ohrozily citlivé informace. Zahrnuje informace o povaze úniků, dotčených datech a opatřeních podniknutých k řešení a prevenci budoucích případů.",
+          "alert_title": "Úniků dat: {count}",
+          "report": {
+            "breaches_found_for": "Zjištěné úniky pro",
+            "compromised_data": "Uniklá data",
+            "data_breaches": "úniky dat",
+            "data_types": {
+              "date_of_birth": "Datum narození",
+              "education_levels": "Dosažené vzdělání",
+              "email": "E-mailová adresa",
+              "gender": "Pohlaví",
+              "geo_location": "Geografická poloha",
+              "name": "Jméno",
+              "password": "Heslo",
+              "phone": "Telefonní číslo",
+              "social_media_profiles": "Profily na sociálních sítích",
+              "username": "Uživatelské jméno"
+            },
+            "download_report_button": "Stáhnout PDF",
+            "title": "Přehled uniklých dat"
+          },
+          "show_report": "Zobrazit přehled",
+          "title": "Historie úniků dat",
+          "unlock_report": "Odemknout přehled"
+        },
+        "header": {
+          "button": "Stáhnout PDF",
+          "matches_found": "Nalezené shody pro",
+          "title": "Přehled o vyhledání telefonu",
+          "unlock_download_pdf": "Odemknout možnost stažení PDF"
+        },
+        "looking_for_more_profiles_dialog": {
+          "description": "Může to několik sekund trvat – prohledáváme další platformy",
+          "title": "Hledání dalších profilů"
+        },
+        "phone_public_information": {
+          "info": "Tato část uvádí souhrn veřejně dostupných informací spojených s telefonním číslem dané osoby.",
+          "name": "Jméno:",
+          "source": "Zdroj:",
+          "sources": {
+            "data_breach": "Únik dat",
+            "other": "Další",
+            "public_records": "Veřejné záznamy",
+            "social_media": "Sociální média"
+          },
+          "title": "Veřejné informace o telefonu",
+          "title_empty": "Žádné veřejné informace o telefonu"
+        },
+        "photos": {
+          "info": "V této části se zobrazují případné fotky majitele telefonu, které se mohou hodit k jeho vizuální identifikaci.",
+          "other": "Další",
+          "title": "Fotky",
+          "title_empty": "Nenalezeny žádné fotky"
+        },
+        "possible_addresses": {
+          "info": "Tato část uvádí možné adresy spojené s danou osobou, které se mohou hodit k identifikaci místa bydliště nebo minulých míst pobytu.",
+          "labels": {
+            "city": "Město",
+            "country": "Země",
+            "county": "Okres",
+            "latitude": "Zeměpisná šířka",
+            "length_of_residence": "Délka pobytu",
+            "longitude": "Zeměpisná délka",
+            "postal_code": "Poštovní směrovací číslo",
+            "state": "Stát/provincie",
+            "street": "Ulice"
+          },
+          "title": "Možné adresy",
+          "title_empty": "Nebyly nalezeny žádné adresy",
+          "values": {
+            "years": "{count} roky/let"
+          }
+        },
+        "possible_contact_details": {
+          "info": "Tato část uvádí e-mailové adresy spojené s danou osobou na pomoc s ověřením kontaktních údajů.",
+          "labels": {
+            "associated_emails": "Související e-maily",
+            "associated_numbers": "Související čísla"
+          },
+          "title": "Možné kontaktní údaje",
+          "title_empty": "Nebyly nalezeny žádné kontaktní údaje"
+        },
+        "possible_personal_details": {
+          "info": "Tato část uvádí možné osobní údaje spojené s danou osobou a může poskytovat další informace o její minulosti.",
+          "labels": {
+            "children": "Děti",
+            "date_of_birth": "Datum narození",
+            "gender": "Pohlaví",
+            "household_size": "Počet členů domácnosti",
+            "income": "Příjem",
+            "marital_status": "Rodinný stav"
+          },
+          "title": "Možné osobní údaje",
+          "title_empty": "Nebyly nalezeny žádné osobní údaje",
+          "values": {
+            "children": "Aktuálně {count}",
+            "divorced": "Rozvedený/á",
+            "domestic_partnership": "Registrované partnerství",
+            "engaged": "Zasnoubený/á",
+            "female": "Žena",
+            "in_relationship": "Ve vztahu",
+            "intersex": "Smíšené",
+            "male": "Muž",
+            "married": "Ženatý/vdaná",
+            "no_children": "Žádné",
+            "no_record_available": "Žádný záznam k dispozici",
+            "separated": "Odloučený/á",
+            "single": "Sám/sama",
+            "widowed": "Vdovec/vdova"
+          }
+        },
+        "possible_social_media_accounts": {
+          "expand_search": {
+            "more_platforms": "Přístup k dalším platformám získáte jedním kliknutím",
+            "title": "Rozšiřte své vyhledávání",
+            "unlock_platforms": "Odemkněte platformy"
+          },
+          "info": "Tato část uvádí možné profily na sociálních sítích, které můžou s danou osobou souviset, a poskytuje tak přehled o online přítomnosti dotyčného.",
+          "labels": {
+            "id": "Identifikátor",
+            "name": "Uživatelské jméno",
+            "opne_url": "Otevřít stránku",
+            "source": "Zdroj",
+            "url": "URL"
+          },
+          "network_not_found": "Nenalezeno",
+          "no_accounts_found": "Na žádné z kontrolovaných platforem nebyly nalezeny žádné účty. To znamená, že uživatel buď není v těchto sítích zaregistrovaný, nebo že používá data, která se liší od zadaných parametrů vyhledávání.",
+          "partial_result": {
+            "info": "Na některých platformách nebyl nalezen žádný účet. To znamená, že uživatel buď není v těchto sítích zaregistrovaný, nebo že používá data, která se liší od zadaných parametrů vyhledávání.",
+            "no_account_platforms": "Platformy bez nalezeného účtu",
+            "title": "Výsledky vyhledávání – dokončeno"
+          },
+          "sources": {
+            "behance": "Behance",
+            "facebook": "Facebook",
+            "github": "Github",
+            "gitlab": "Gitlab",
+            "google": "Google",
+            "instagram": "Instagram",
+            "kick": "Kick",
+            "linkedin": "LinkedIn",
+            "pinterest": "Pinterest",
+            "reddit": "Reddit",
+            "snapchat": "Snapchat",
+            "telegram": "Telegram",
+            "threads": "Threads",
+            "tiktok": "Tiktok",
+            "tumblr": "Tumblr",
+            "twitch": "Twitch",
+            "x": "X",
+            "youtube": "Youtube"
+          },
+          "title": "Možné účty na sociálních sítích",
+          "title_empty": "Nebyly nalezeny žádné účty na sociálních sítích"
+        },
+        "potential_education": {
+          "info": "Tato část shrnuje možné údaje o vzdělání včetně navštěvovaných škol a získaných kvalifikací.",
+          "title": "Možné vzdělání",
+          "title_empty": "Žádný záznam o vzdělání",
+          "values": {
+            "associate_degree": "Diplomovaný specialista",
+            "bachelor_degree": "Bakalářský titul",
+            "doctoral_degree": "Doktorský titul",
+            "high_school": "Střední škola",
+            "master_degree": "Magisterský titul",
+            "no_formal_education": "Žádné formální vzdělání",
+            "other": "Další",
+            "primary_school": "1. stupeň základní školy",
+            "secondary_school": "2. stupeň základní školy",
+            "vocational_training": "Výuční list"
+          }
+        },
+        "potential_professional_summary": {
+          "info": "Tato část na základě dostupných údajů uvádí možné pracovní pozice, ze kterých může mít daná osoba zkušenosti.",
+          "title": "Možný profesní profil",
+          "title_empty": "Žádný profesní profil",
+          "values": {
+            "agriculture": "Zemědělství",
+            "arts_and_entertainment": "Umění a zábava",
+            "construction": "Stavebnictví",
+            "education": "Školství",
+            "energy_and_utilities": "Energetika a veřejné služby",
+            "engineering": "Strojírenství",
+            "finance": "Finance",
+            "government": "Státní správa",
+            "healthcare": "Zdravotnictví",
+            "hospitality": "Pohostinství",
+            "information_technology": "Informační technologie",
+            "legal": "Právo",
+            "logistics_and_supply_chain": "Logistika a dodavatelský řetězec",
+            "manufacturing": "Výroba",
+            "marketing": "Marketing",
+            "media_and_communications": "Média a komunikace",
+            "military": "Armáda",
+            "non_profit": "Neziskový sektor",
+            "other": "Další",
+            "real_estate": "Reality",
+            "retail": "Maloobchod",
+            "sales": "Prodej",
+            "science": "Věda",
+            "skilled_trades": "Řemesla",
+            "telecommunications": "Telekomunikace",
+            "transportation": "Doprava"
+          }
+        },
+        "profile_summary": {
+          "associated_emails": "Související e-maily:",
+          "associated_locations": "Související místa",
+          "associated_usernames": "Související uživatelská jména:",
+          "empty": "-",
+          "not_identified": "Neidentifikováno",
+          "possible_owners": "Možní majitelé:",
+          "potential_date_of_birth": "Pravděpodobné datum narození:",
+          "title": "Souhrn profilu"
+        },
+        "sex_offenders": {
+          "alert": "Prověření záznamů o sexuálních delikventech je k dispozici pouze pro záznamy v USA. Tato část obsahuje informace o všech registrovaných sexuálních delikventech včetně podrobností o spáchaných trestných činech, aktuálním registračním stavu a souvisejících místech.",
+          "report": {
+            "address_information": {
+              "city": "Město",
+              "country": "Země",
+              "county": "Okres",
+              "latitude": "Zeměpisná šířka",
+              "length_of_residence": "Délka pobytu",
+              "longitude": "Zeměpisná délka",
+              "postal_code": "Poštovní směrovací číslo",
+              "state": "Stát/provincie",
+              "street": "Ulice",
+              "title": "Místo"
+            },
+            "body_characteristics": {
+              "age": "Věk",
+              "ethnicity": "Etnická příslušnost",
+              "eye_color": "Barva očí",
+              "hair_color": "Barva vlasů",
+              "height": "Výška",
+              "race": "Rasa",
+              "sex": "Pohlaví",
+              "title": "Tělesné znaky",
+              "weight": "Váha"
+            },
+            "crime_information": {
+              "conviction_date": "Datum vynesení rozsudku",
+              "crime": "Zločin",
+              "jurisdiction": "Jurisdikce",
+              "no_information_available": "Nejsou k dispozici žádné informace",
+              "registration_date": "Datum registrace",
+              "risk_level": "Rizikovost",
+              "title": "Informace o trestné činnosti"
+            },
+            "distinctive_features": {
+              "back": "Zpět",
+              "head": "Hlava",
+              "left_arm": "Levá paže",
+              "left_hand": "Levá ruka",
+              "left_leg": "Levá noha",
+              "right_arm": "Pravá paže",
+              "right_hand": "Pravá ruka",
+              "right_leg": "Pravá noha",
+              "title": "Znaménka / jizvy / tetování",
+              "torso": "Trup"
+            },
+            "download_report_button": "Stáhnout PDF",
+            "new_search": "Nové vyhledávání",
+            "others_information": {
+              "is_absconded": "Jedná se o osobu na útěku?",
+              "is_predator": "Jedná se o predátora?",
+              "jurisdiction": "Jurisdikce",
+              "link": "Odkaz",
+              "original_report": "Původní zdroj",
+              "title": "Další",
+              "yes": "Ano"
+            },
+            "personal_information": {
+              "date_of_birth": "Datum narození",
+              "first_name": "Jméno",
+              "first_name_nicknames": "Domácké podoby jména",
+              "last_name": "Příjmení",
+              "middle_name": "Druhé jméno",
+              "name": "Jméno",
+              "title": "Osobní údaje"
+            },
+            "photos": {
+              "title": "Fotky"
+            },
+            "records_found_for": "Nalezené záznamy pro",
+            "title_profile": "Profil sexuálních delikventů",
+            "values": {
+              "body_part": {
+                "back": "Zpět",
+                "head": "Hlava",
+                "left_arm": "Levá paže",
+                "left_hand": "Levá ruka",
+                "left_leg": "Levá noha",
+                "right_arm": "Pravá paže",
+                "right_hand": "Pravá ruka",
+                "right_leg": "Pravá noha",
+                "torso": "Trup"
+              },
+              "ethnicity": {
+                "hispanic": "Hispánec",
+                "non_hispanic": "Nehispánec",
+                "other": "Další"
+              },
+              "eye_color": {
+                "amber": "Žlutohnědé",
+                "blue": "Modré",
+                "brown": "Hnědé",
+                "gray": "Šedivé",
+                "green": "Zelené",
+                "hazel": "Světle hnědé",
+                "other": "Další",
+                "red": "Červené",
+                "violet": "Fialové"
+              },
+              "hair_color": {
+                "auburn": "Kaštanově hnědé",
+                "bald": "Pleš",
+                "black": "Černé",
+                "blonde": "Blonďaté",
+                "brown": "Hnědé",
+                "chestnut": "Kaštanově hnědé",
+                "dyed": "Obarvené",
+                "gray": "Šedivé",
+                "other": "Další",
+                "red": "Červené",
+                "white": "Bílé"
+              },
+              "race": {
+                "asian": "Asiat",
+                "black_or_african_american": "Černoch nebo Afroameričan",
+                "mixed": "Smíšený",
+                "native_american": "Původní Američan",
+                "other": "Další",
+                "pacific_islander": "Obyvatel tichomořských ostrovů",
+                "white": "Běloch"
+              },
+              "risk_level": {
+                "high": "Vysoké",
+                "low": "Nízké",
+                "medium": "Střední"
+              },
+              "sex": {
+                "female": "Žena",
+                "intersex": "Smíšené",
+                "male": "Muž"
+              }
+            }
+          },
+          "title": "Prověření minulosti sexuálních delikventů"
+        },
+        "sex_offenders_background_check": {
+          "alt_icon": "Sexuální delikventi",
+          "info": "Prověření záznamů o sexuálních delikventech je k dispozici pouze pro záznamy v USA. Tato část obsahuje informace o všech registrovaných sexuálních delikventech včetně podrobností o spáchaných trestných činech, aktuálním registračním stavu a souvisejících místech.",
+          "show_report": "Zobrazit přehled",
+          "title": "Prověření minulosti sexuálních delikventů",
+          "title_empty": "Nebyly nalezeny žádné záznamy v rejstříku sexuálních delikventů",
+          "unlock_report": "Odemknout přehled"
+        },
+        "upsell": {
+          "data_breach_history": {
+            "cancel": "Zrušit",
+            "compromise_isa_contact_details": "Uniklé kontaktní údaje včetně telefonních čísel, e-mailové adresy a fyzické adresy",
+            "disclaimer_info": "Veškerá data pocházejí z komplexní databáze obsahující víc než 14 miliard záznamů z veřejně hlášených úniků dat. Odhalené informace identifikujeme a reportujeme, ale neposkytujeme přístup k citlivým údajům, jako jsou hesla nebo soukromé přihlašovací údaje.",
+            "limited_offer": "Omezená nabídka",
+            "personal_identifiers": "Osobní identifikátory včetně uživatelských jmen, celých jmen a dat narození",
+            "processing_payment": "Probíhá zpracování",
+            "professional_information_and_technical_data": "Profesní údaje a technická data jako IP adresy",
+            "purchase": "Koupit",
+            "special_limited_time_offer": "Jakmile tuto stránku opustíte, tato speciální časově omezená nabídka vyprší.",
+            "title": "Přehled narušení bezpečnosti a uniklých dat",
+            "total_due_today": "Celkem k úhradě:"
+          },
+          "payment_message": {
+            "add_payment_details": "Doplňte platební údaje",
+            "agree_description_upsell": "Pokračováním vyjadřujete souhlas s jednorázovou platbou ve výši {price} a přijímáte naše <terms>podmínky používání</terms> i <privacy>zásady ochrany osobních údajů</privacy>. Poplatek se na vašem výpisu z účtu objeví jako „mobitrace.io“.",
+            "close": "Zavřít",
+            "payment_error": "Platba neprošla.",
+            "payment_error_description": "Aktualizujte prosím své platební údaje",
+            "payment_retry_description": "Kartu se nám nepodařilo zpracovat. Zkuste to znovu.",
+            "payment_success": "Platba proběhla úspěšně",
+            "payment_success_description": "Děkujeme za váš nákup! Připraveno k použití.",
+            "skip": "Přeskočit",
+            "try_again": "Zkusit znovu",
+            "update_payment_method": "Aktualizovat způsob platby"
+          },
+          "sex_offenders": {
+            "cancel": "Zrušit",
+            "comprehensive_data": "Přístup k uceleným údajům o pachatelích z oficiálních zdrojů",
+            "disclaimer_info": "Ověření záznamů o sexuálních delikventech se provádí pouze na území USA. Ministerstvo spravedlnosti uvádí, že v celé zemi je evidováno přibližně 800 000 sexuálních delikventů a každoročně přibývají tisíce nových záznamů. V zájmu vlastního klidu si neznámé osoby ověřujte.",
+            "instant_nationwide_search": "Okamžité celostátní prověření napříč všemi státními a federálními rejstříky",
+            "limited_offer": "Omezená nabídka",
+            "processing_payment": "Probíhá zpracování",
+            "purchase": "Koupit",
+            "realtime_verification": "Ověření v reálném čase proti nejaktuálnějším datům z rejstříků",
+            "special_limited_time_offer": "Časově omezená nabídka bezpečnostního prověření. Služba hledá pouze osoby evidované ve Spojených státech.",
+            "title": "Prověření rejstříku sexuálních delikventů",
+            "total_due_today": "Celkem k úhradě:"
+          },
+          "sex_offenders_search": {
+            "cancel": "Zrušit",
+            "disclaimer_info": "Ověření záznamů o sexuálních delikventech se provádí pouze na území USA. Ministerstvo spravedlnosti USA uvádí, že v celé zemi je evidováno přibližně 800 000 registrovaných sexuálních delikventů a každoročně přibývají tisíce nových záznamů. V zájmu vlastního klidu si neznámé osoby ověřujte.\n\nJedná se o jednorázový nákup za {price}. Přidáním tohoto přehledu autorizujete jednorázovou platbu vaším registrovaným způsobem platby. Nákup poskytuje přístup k jednomu přehledu v rámci tohoto rozsahu doplňkového prodeje.",
+            "instant_access": "Okamžité prohledání všech státních a federálních rejstříků",
+            "processing_payment": "Probíhá zpracování",
+            "purchase": "Koupit",
+            "secure_one_time_payment": "Ověření v reálném čase proti nejaktuálnějším datům z rejstříků",
+            "special_limited_time_offer": "Časově omezená nabídka bezpečnostního prověření. Služba hledá pouze osoby evidované ve Spojených státech.",
+            "title": "Prověření rejstříku sexuálních delikventů",
+            "total_due_today": "Celkem k úhradě:",
+            "verified_source_data": "Přístup k uceleným údajům o pachatelích z oficiálních zdrojů"
+          },
+          "social_networks": {
+            "cancel": "Zrušit",
+            "disclaimer_info": "Toto vyhledávání zahrnuje pouze velké sociální platformy a veřejně dostupné informace o účtech. Rozsah vyhledávání se může lišit v závislosti na platformě a dostupnosti profilů.",
+            "limited_offer": "Omezená nabídka",
+            "matching_accounts": "Odpovídající účty v přehledu vycházejícím z veřejně dostupných údajů.",
+            "processing_payment": "Probíhá zpracování",
+            "purchase": "Koupit",
+            "related_usernames_and_public_profile": "Identifikace souvisejících uživatelských jmen a veřejných profilů",
+            "scan_10_major_social_platforms": "Vyhledání souvisejících účtů na více než 10 velkých sociálních sítích",
+            "special_limited_time_offer": "Jakmile tuto stránku opustíte, tato speciální časově omezená nabídka vyprší",
+            "title": "Prohledání sociálních platforem",
+            "total_due_today": "Celkem k úhradě:"
+          },
+          "unlimited_pdf_downloads": {
+            "cancel": "Zrušit",
+            "disclaimer_info": "Jedná se o jednorázový nákup. Kliknutím na tlačítko „Získat neomezený přístup k PDF“ se vám naúčtuje {price}.",
+            "limited_offer": "Omezená nabídka",
+            "processing_payment": "Probíhá zpracování",
+            "purchase": "Koupit",
+            "special_limited_time_offer": "Nastavili jsme vám další slevu!",
+            "title": "Neomezené stahování PDF",
+            "total_due_today": "Celkem k úhradě:",
+            "upsell_benefits_1": "Dostupné offline",
+            "upsell_benefits_2": "Snadné sdílení s ostatními",
+            "upsell_benefits_3": "Možnost tisku",
+            "upsell_benefits_4": "Přehledné, úhledně naformátované a snadno čitelné"
+          }
+        }
+      },
+      "search": {
+        "components": {
+          "loader": {
+            "step_1": {
+              "carrier": {
+                "loadedDefaultText": "Zjištěno",
+                "text": "Operátor"
+              },
+              "city": {
+                "loadedText": "Lokalizována",
+                "text": "Město"
+              },
+              "connecting": "Zahajování hledání telefonu",
+              "country": {
+                "text": "Země"
+              },
+              "location": {
+                "loadedText": "Zjištěno",
+                "text": "Místo"
+              },
+              "searching": "Výsledky vyhledávání pro",
+              "type": {
+                "loadedText": "Zjištěno",
+                "text": "Typ"
+              }
+            },
+            "step_2": {
+              "cta": "Zjistit polohu",
+              "subtitle": "Vyhledávání dokončeno – teď máte přístup k informaci o poloze.",
+              "title": "Poloha zjištěna!"
+            }
+          },
+          "warning_dialog": {
+            "button_text": "Odhalit volajícího",
+            "description": "Přehled služby Mobitrace je připravený. Zjistěte, jaké veřejné informace jsou s tímto číslem spojené.",
+            "info_message": "Vaše vyhledávání informací o čísle {phoneNumber} je 100% bezpečné.",
+            "telephone": "(0-616) 32211",
+            "title": "UPOZORNĚNÍ:"
+          }
+        }
+      },
+      "search_complete": {
+        "components": {
+          "age_verification_dialog": {
+            "button_text": "Ano, je mi 18 nebo víc",
+            "description": "Tento přehled může obsahovat citlivý obsah a je určen výhradně pro dospělé. Abyste mohli pokračovat, musíte být starší 18 let.",
+            "info_message": "Pokud je vám méně než 18 let, <bold>opusťte tuto stránku.</bold>",
+            "title": "Je nutné ověření věku"
+          },
+          "customer_opinions_carousel": {
+            "opinion_1": {
+              "description": "Všimla jsem si, že moje dcera začala komunikovat s někým novým, a chtěla jsem se ujistit, že je všechno v pořádku. V aplikaci Mobitrace jsem si rychle ověřila, o koho se jedná. Někdy stačí jednoduché zpětné vyhledání a člověk může být v klidu.",
+              "rate": "4",
+              "timeAgo": "Před 4 dny",
+              "title": "Konečně trochu klidu",
+              "user": "Samantha Green"
+            },
+            "opinion_2": {
+              "description": "Nástroj je velmi přesný a poradil si s většinou čísel, která jsem hledal. V několika případech nebyly informace zcela aktuální, ale celkově mi Mobitrace poskytl přesně to, co jsem potřeboval. Je spolehlivý a snadno se používá.",
+              "rate": "4,5",
+              "timeAgo": "Před 1 týdnem",
+              "title": "Přesné výsledky, na které je spoleh",
+              "user": "Daniel Brooks"
+            },
+            "opinion_3": {
+              "description": "Rychle, spolehlivě a přesně! Mobitrace mě překvapil tím, jak rychle dává výsledky. Jsem se službou naprosto spokojená.",
+              "rate": "5",
+              "timeAgo": "Před 1 dnem",
+              "title": "Pohotově, snadno a trefně",
+              "user": "Olivia Carter"
+            },
+            "opinion_4": {
+              "description": "Mobitrace je teď jeden z mých nejoblíbenějších nástrojů na správu hovorů. Pomáhá mi zjistit, kdo se ve skutečnosti skrývá za neznámými čísly, což mi šetří čas, protože mám pod kontrolou, kdo se mi může dovolat.",
+              "rate": "5",
+              "timeAgo": "Před 2 týdny",
+              "title": "Pomáhá mi mít hovory pod kontrolou",
+              "user": "Matthew Lewis"
+            },
+            "opinion_5": {
+              "description": "Volalo mi neznámé číslo a nebyla jsem si jistá, jestli to mám řešit. Zkusila jsem Mobitrace a služba mi hned pomohla identifikovat volajícího. Teď ji používám pokaždé, když mi něco přijde podezřelé.",
+              "rate": "4,5",
+              "timeAgo": "Před 2 dny",
+              "title": "Teď už vždycky vím, kdo volá",
+              "user": "Sophia Turner"
+            },
+            "opinion_6": {
+              "description": "Dovádělo mě k šílenství, jak mi neustále někdo volal z neznámých čísel. Pomocí Mobitrace jsem konečně zjistil, kdo je za nimi. Díky možnosti podívat se na profil a historii volajícího mám hned jasno.",
+              "rate": "5",
+              "timeAgo": "Před 1 dnem",
+              "title": "Už žádné otravování se spamovými hovory",
+              "user": "Christopher Hall"
+            },
+            "opinion_7": {
+              "description": "Nejlepší nástroj, jaký jsem zatím vyzkoušela! Díky Mobitrace se už nemusím stresovat kvůli hovorům nebo SMSkám z neznámých čísel. Je to rychlé, snadné a dává mi to odpovědi, které potřebuji.",
+              "rate": "4",
+              "timeAgo": "Před 3 dny",
+              "title": "Nejlepší nástroj pro hovory z neznámých čísel",
+              "user": "Grace Mitchell"
+            },
+            "opinion_8": {
+              "description": "Služba Mobitrace mi pomohla zjistit, kdo mi volá z neznámého čísla. Dokonce mi zobrazila i jména a rodinné vazby. Informace nebyly ve všech případech dokonalé, ale celkově mi poskytly cenné poznatky, které jsem jinde nenašel.",
+              "rate": "4,5",
+              "timeAgo": "Před 2 dny",
+              "title": "Překvapivě podrobné informace",
+              "user": "Ethan Parker"
+            },
+            "rate": "4,5",
+            "reviews": "Na základě <bold>456 recenzí</bold>",
+            "title": "Vynikající"
+          },
+          "customer_say_about": {
+            "subtitle": "Děláme vše pro to, abychom vám poskytovali co nejlepší službu",
+            "title": "Co o nás říkají zákazníci"
+          },
+          "owner_information": {
+            "collecting_data_address": "Adresy",
+            "collecting_data_email": "E-mail nebo telefonní čísla",
+            "collecting_data_job": "Pracovní informace",
+            "collecting_data_online": "Online uživatelská jména",
+            "collecting_data_past": "Minulé vztahy",
+            "collecting_data_profiles": "Zapomenuté profily",
+            "collecting_data_title": "Shromažďování dat...",
+            "progress_bar_description": "Historie vašich hledání je zabezpečená a soukromá. Majitel čísla {phoneNumber} se o vašem hledání NEDOZVÍ.",
+            "progress_bar_percentage": "{percentage} %",
+            "subtitle": "Prosíme o trpělivost, než prohledáme miliardy záznamů.",
+            "title": "Načítání informací o majiteli čísla <bold></bold>"
+          }
+        }
+      },
+      "sign_up": {
+        "card_description": "Mobitrace je pokročilý digitální nástroj, který prohledává miliardy telefonních záznamů online. I když většina neznámých čísel pochází od spamových volajících nebo marketérů, informace v našich přehledech vás mohou šokovat.",
+        "card_title": "Důležité upozornění",
+        "email_placeholder": "Vaše e-mailová adresa",
+        "email_title": "E-mailová adresa",
+        "errors": {
+          "email_exists": "Tato e-mailová adresa už je zaregistrovaná. Zkuste se přihlásit nebo použijte jiný e-mail.",
+          "invalid_email": "Zadejte platný e-mail."
+        },
+        "form_title": "Pro získání přehledu zadejte svůj e-mail",
+        "latest_report": "Nejnovější přehled ze 3. března 2025",
+        "submit_button": "Pokračovat",
+        "title": "Výsledky jsou hotové!"
+      },
+      "thank_you": {
+        "account_link": "Přihlásit se do účtu",
+        "click_below_to_account_your_link": "Do svého účtu se dostanete kliknutím dole.",
+        "description": "Podrobnosti o objednávce a přihlašovací údaje k účtu jsme vám poslali na adresu {email}. Teď můžete přejít do svého účtu.",
+        "did_you_like_your_shopping_experience": "Vyhovoval vám průběh nákupu?",
+        "more_details_feedback": "Uvítáme vaši podrobnou zpětnou vazbu: <email>support@mobitrace.io</email>",
+        "no": "Ne",
+        "thank_you_for_your_feedback": "Děkujeme za zpětnou vazbu!",
+        "title": "Platba proběhla úspěšně.",
+        "we_ll_work_on_making_it_better": "Budeme se snažit něco s tím udělat.",
+        "yes": "Ano"
+      },
+      "upsell": {
+        "already_purchased": "Už zakoupeno",
+        "data_breach": {
+          "disclaimer": "Veškerá data pocházejí z komplexní databáze obsahující víc než 14 miliard záznamů z veřejně hlášených úniků dat. Odhalené informace identifikujeme a reportujeme, ale neposkytujeme přístup k citlivým údajům, jako jsou hesla nebo soukromé přihlašovací údaje.",
+          "purchase": "Přidat přehled uniklých dat",
+          "special_limited_time_offer": "Jakmile tuto stránku opustíte, tato speciální časově omezená nabídka vyprší.",
+          "title": "Přehled narušení bezpečnosti a uniklých dat",
+          "upsell_benefits_1": "Osobní identifikátory včetně uživatelských jmen, celých jmen a dat narození",
+          "upsell_benefits_2": "Uniklé kontaktní údaje včetně telefonních čísel, e-mailové adresy a fyzické adresy",
+          "upsell_benefits_3": "Profesní údaje a technická data jako IP adresy"
+        },
+        "limited_offer": "Omezená nabídka",
+        "pdf": {
+          "disclaimer": "Jedná se o jednorázový nákup. Kliknutím na tlačítko „Získat neomezený přístup k PDF“ se vám naúčtuje {price}.",
+          "purchase": "Získejte neomezený přístup k PDF",
+          "special_limited_time_offer": "Nastavili jsme vám další slevu!",
+          "title": "Neomezené stahování PDF",
+          "upsell_benefits_1": "Dostupné offline",
+          "upsell_benefits_2": "Snadné sdílení s ostatními",
+          "upsell_benefits_3": "Možnost tisku",
+          "upsell_benefits_4": "Přehledné, úhledně naformátované a snadno čitelné"
+        },
+        "processing": "Probíhá zpracování",
+        "sex_offenders": {
+          "disclaimer": "Ověření záznamů o sexuálních delikventech se provádí pouze na území USA. Ministerstvo spravedlnosti uvádí, že v celé zemi je evidováno přibližně 800 000 sexuálních delikventů a každoročně přibývají tisíce nových záznamů. V zájmu vlastního klidu si neznámé osoby ověřujte.",
+          "purchase": "Přidat prověření rejstříku sexuálních delikventů",
+          "purchase_terms": "Jedná se o jednorázový nákup za {price}. Přidáním tohoto přehledu autorizujete jednorázovou platbu vaším registrovaným způsobem platby. Nákup poskytuje přístup k jednomu přehledu v rámci tohoto rozsahu doplňkového prodeje.",
+          "special_limited_time_offer": "Časově omezená nabídka bezpečnostního prověření. Služba hledá pouze osoby evidované ve Spojených státech.",
+          "title": "Prověření rejstříku sexuálních delikventů",
+          "upsell_benefits_1": "Okamžité prohledání všech státních a federálních rejstříků",
+          "upsell_benefits_2": "Přístup k uceleným údajům o pachatelích z oficiálních zdrojů",
+          "upsell_benefits_3": "Ověření v reálném čase proti nejaktuálnějším datům z rejstříků"
+        },
+        "skip": "Přeskočit",
+        "total_due_today": "Celkem k úhradě:"
+      }
+    },
+    "settings": {
+      "billing": {
+        "activate_dialog": {
+          "action_form": "Zaplatit kartou",
+          "title": "Přidat způsob platby"
+        },
+        "active_date": "Aktivní do: {date}",
+        "active_state": "Aktivní",
+        "cancel_dialog": {
+          "cancel_cta": "Zrušit předplatné",
+          "canceling_cta": "Rušení...",
+          "close_cta": "Zavřít",
+          "description": "Zrušením předplatného ztratíte přístup ke všem funkcím a podpoře. Předplatné můžete kdykoli znovu aktivovat.",
+          "description_canceled": "Vaše předplatné bylo zrušeno.<br> Teď už se vám nebude nic účtovat.",
+          "done_cta": "Hotovo",
+          "title": "Potvrzení"
+        },
+        "cancel_subscription": "Zrušit předplatné",
+        "canceled_cta": "Obnovit předplatné",
+        "canceled_date": "Zrušeno dne: {date}",
+        "canceled_state": "Zrušeno",
+        "expired_cta": "Aktivovat předplatné",
+        "expired_date": "Platnost vypršela dne: {date}",
+        "expired_description": "Vaše členství vypršelo. Chcete-li pokračovat, aktivujte jej.",
+        "expired_state": "Vypršelo",
+        "month": "měsíc",
+        "next_billing_date": "Další fakturace: {date}",
+        "privacy_policy": "Zásady ochrany osobních údajů",
+        "started_on_date": "Zahájeno dne: {date}",
+        "subscription": "Předplatné",
+        "terms_and_conditions": "Obchodní podmínky",
+        "title": "Fakturace",
+        "total": "Celkem:"
+      },
+      "get_help": {
+        "title": "Získat pomoc"
+      },
+      "my_account": {
+        "change_password": {
+          "confirm_password": "Potvrďte heslo",
+          "current_password": "Aktuální heslo",
+          "new_password": "Nové heslo",
+          "title": "Změnit heslo"
+        },
+        "delete_cta": "Smazat účet",
+        "delete_dialog": {
+          "close_cta": "Zavřít",
+          "delete_cta": "Smazat účet",
+          "deleting_cta": "Mazání...",
+          "description": "Opravdu chcete smazat svůj účet? Upozorňujeme, že po potvrzení okamžitě ztratíte přístup do členské oblasti.",
+          "description_canceled": "Váš účet byl úspěšně smazán.",
+          "done_cta": "Hotovo",
+          "title": "Potvrzení"
+        },
+        "errors": {
+          "confirm_password_required": "Je vyžadováno potvrzení hesla",
+          "current_password_invalid": "Aktuální heslo je neplatné",
+          "current_password_required": "Je vyžadováno aktuální heslo",
+          "email_max_length": "E-mail musí mít méně než {maxLength} znaků.",
+          "email_required": "E-mail je povinný",
+          "email_taken": "E-mail již byl přijat",
+          "invalid_email": "Zadejte prosím platný e-mail.",
+          "name_invalid_characters": "Jméno nesmí obsahovat čísla.",
+          "name_invalid_special_characters": "Jméno nesmí obsahovat speciální znaky.",
+          "name_max_length": "Název musí mít méně než {maxLength} znaků.",
+          "name_required": "Jméno je povinné",
+          "new_password_must_differ_from_current_password": "Nové heslo se musí lišit od aktuálního hesla",
+          "new_password_required": "Nové heslo je nutné",
+          "password_max_length": "Heslo musí mít méně než {maxLength} znaků.",
+          "password_min_length": "Heslo musí mít alespoň 6 znaků.",
+          "passwords_must_match": "Hesla se musí shodovat"
+        },
+        "notifications": {
+          "notify_status_changes": "Upozornit mě na změnu stavu",
+          "notify_user_located": "Upozornit mě, jakmile bude uživatel lokalizován",
+          "title": "Oznámení"
+        },
+        "profile": {
+          "email": "E-mailová adresa",
+          "name": "Jméno a příjmení",
+          "title": "Podrobnosti profilu"
+        },
+        "submit_cta": "Uložit změny",
+        "success_title": "Účet byl aktualizován",
+        "title": "Obecné"
+      },
+      "title": "Nastavení"
+    },
+    "sex_offenders_search": {
+      "form": {
+        "city_placeholder": "Město",
+        "errors": {
+          "first_name_required": "Křestní jméno je povinné",
+          "last_name_required": "Příjmení je povinné"
+        },
+        "first_name_placeholder": "Jméno",
+        "last_name_placeholder": "Příjmení",
+        "state_placeholder": "Všechny státy",
+        "submit_button": "Zkontrolujte hned",
+        "title": "Provést kontrolu v registru sexuálních delikventů",
+        "zip_placeholder": "PSČ"
+      },
+      "loading": {
+        "subtitle": "Prosím, počkejte, než načteme údaje z národního registru.",
+        "title": "Kontrola registru sexuálních delikventů..."
+      },
+      "results": {
+        "back": "Zpět",
+        "continue": "Pokračovat",
+        "empty_title": "Nebyli nalezeni žádní pachatelé sexuálních trestných činů",
+        "results_found": "Nalezeno {count} výsledků",
+        "results_found_subtitle": "Vyberte tu, která vám nejlépe vyhovuje, a pokračujte.",
+        "search_again": "Vyhledat znovu"
+      },
+      "title": "Sexuální delikventi"
+    },
+    "sign_in": {
+      "description": "Zadáním svého e-mailu se přihlaste ke svému účtu",
+      "sign_up_link": "Zaregistrovat se",
+      "sign_up_prompt": "Nemáte účet?",
+      "title": "Přihlásit se"
+    },
+    "sign_up": {
+      "components": {
+        "sign_up_form": {
+          "continue_with_email": "Pokračovat s e-mailem",
+          "continue_with_facebook": "Pokračovat přes Facebook",
+          "continue_with_google": "Pokračovat přes Google",
+          "email_label": "E-mailová adresa",
+          "email_placeholder": "Vaše e-mailová adresa",
+          "errors": {
+            "email_exists": "Tato e-mailová adresa je již zaregistrována. Zkuste se prosím přihlásit nebo použijte jiný e-mail.",
+            "invalid_email": "Zadejte prosím platný e-mail."
+          },
+          "or": "nebo"
+        }
+      },
+      "title": "Zaregistrujte se a zjistěte přesnou polohu telefonu <brandColor>{phoneNumber}</brandColor>"
+    },
+    "status": {
+      "description": "Dole si můžete zkontrolovat průběh",
+      "detail_description": "Poloha zjištěna",
+      "error_fetching_address": "Chyba při načítání adresy",
+      "link_name": "Odkaz pro {name}",
+      "load_more_button": "Načíst další",
+      "loading_address": "Načítání adresy...",
+      "located_status": "Lokalizováno",
+      "no_locations_available": "Žádné požadavky",
+      "pending_description": "Čekání na to, až příjemce začne svou polohu sdílet",
+      "pending_status": "Nevyřízeno",
+      "ready_status": "Přehled vytvořen",
+      "rejected_description": "Vylepšete svou zprávu, aby si příjemce troufl povolit sdílení své polohy",
+      "rejected_status": "Zamítnuto",
+      "reverse_lookup_description": "Souhrn veřejných dat nalezených pro telefonní číslo",
+      "reverse_lookup_report_for": "Přehled zpětného vyhledání pro {phone}",
+      "title": "Centrum aktivit"
+    },
+    "success": {
+      "account_link": "Přihlásit se do účtu",
+      "click_below_to_account_your_link": "Do svého účtu se dostanete kliknutím dole.",
+      "description": "Podrobnosti o objednávce a přihlašovací údaje k účtu jsme vám poslali na adresu {email}. Teď můžete přejít do svého účtu.",
+      "did_you_like_your_shopping_experience": "Vyhovoval vám průběh nákupu?",
+      "more_details_feedback": "Uvítáme vaši podrobnou zpětnou vazbu: <email>support@mobitrace.io</email>",
+      "no": "Ne",
+      "thank_you_for_your_feedback": "Děkujeme za zpětnou vazbu!",
+      "title": "Platba proběhla úspěšně.",
+      "we_ll_work_on_making_it_better": "Budeme se snažit něco s tím udělat.",
+      "yes": "Ano"
+    },
+    "upsell": {
+      "cancel_button": "Ne, díky",
+      "description": "Spolehněte se na personalizovanou podporu 24 hodin denně, 7 dní v týdnu a špičkovou technickou pomoc – na jedno kliknutí.",
+      "footer_info": "Upozorňujeme, že v závislosti na vaší oblasti se může k celkové ceně nákupu přičíst prodejní daň ve výši {percentage}%.",
+      "order_details": "Podrobnosti objednávky:",
+      "products": {
+        "add_button": "Přidat",
+        "add_order_button": "Přidat za {price}",
+        "added_state": "Přidáno",
+        "details_button": "Podrobnosti",
+        "remove_button": "Odebrat",
+        "scan_pro": {
+          "description": "Seznamte se s veškerými možnostmi služby Mobitrace s pomocí našeho odborného týmu technické podpory. Prozkoumejte všechny funkce v akci a naučte se je co nejlépe využívat.",
+          "dialog": "<p>Naučte se využívat Mobitrace naplno díky personalizované podpoře našeho týmu odborníků. Objevte všechny funkce a vytěžte z našich služeb maximum.</p><ul><li><strong>Hladké sledování polohy.</strong>Snadno zjistěte polohu jiné osoby pomocí jednoduchého odkazu. Náš tým vás provede celým procesem a postará se o vyřešení všech technických detailů.</li><li><strong>Komplexní podpora profilování.</strong>Ve spolupráci s námi odhalíte všechny informace, které potřebujete. Od kontaktů až po profily na sociálních sítích – pomůžeme vám udělat si o hledané osobě ucelený obrázek.</li><li><strong>Najděte svůj ztracený nebo odcizený telefon.</strong>Pokud jste ztratili telefon, jsme tu, abychom vám pomohli. Naše pokročilé nástroje dokážou rychle lokalizovat vaše zařízení a zobrazit jeho přesnou polohu na mapě.</li><li><strong>Zajistěte si bezpečnost na internetu.</strong>Prohledáváme databáze, abychom zjistili, zda vaše telefonní číslo nebo e-mailová adresa nebyly ohroženy úniky dat třetích stran. Pomáháme vám tak být před kybernetickými hrozbami o krok napřed.</li></ul>",
+          "title": "ScanPRO"
+        },
+        "support_hotline": {
+          "description": "Nečekejte ve frontě na podporu! S Priority Tech Support získáte přednostní přístup k rychlé, individuální pomoci našich zkušených technických specialistů.",
+          "title": "Prioritní podpora 24/7"
+        }
+      },
+      "submit_button": "Přidat do objednávky",
+      "subtotal": "Mezisoučet",
+      "taxes": "Prodejní daň ({percentage}%)",
+      "title": "Využijte Mobitrace na maximum!",
+      "total": "Celkem"
+    }
+  },
+  "routes": {
+    "forgot_password": "zapomenuté-heslo",
+    "loader": "načítání",
+    "reset_password": "obnovení-hesla",
+    "sign_in": "přihlášení",
+    "sign_up": "registrace"
+  }
+}

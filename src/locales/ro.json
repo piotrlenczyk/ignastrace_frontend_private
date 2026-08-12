@@ -1,0 +1,1882 @@
+{
+  "common": {
+    "back": "Înapoi",
+    "close": "Închidere",
+    "close_menu": "Închidere meniu",
+    "copied_to_clipboard": "Copiat în clipboard",
+    "email_label": "Adresă de e-mail",
+    "errors": {
+      "email_exists": "Această adresă de e-mail este deja utilizată de un alt utilizator",
+      "rate_limit_error": "V-ați atins limita zilnică. Încercați din nou mâine.",
+      "rate_limit_error_title": "A fost atinsă limita",
+      "server_error": "Eroare a serverului",
+      "server_error_description": "A apărut o eroare în timpul procesării solicitării. Încercați din nou."
+    },
+    "login": "Conectare",
+    "logout": "Deconectare",
+    "open_menu": "Deschidere meniu",
+    "settings": "Setări",
+    "subscription": "Abonament"
+  },
+  "components": {
+    "country_selector": {
+      "no_results": "Codul de țară nu a fost găsit.",
+      "placeholder": "Selectează codul de țară...",
+      "search_placeholder": "Caută după țară sau cod..."
+    },
+    "forms": {
+      "change_email": {
+        "confirmation_email_sent_description": "Am trimis un e-mail de confirmare la noua adresă. Vă rugăm să confirmați modificarea.",
+        "confirmation_email_sent_title": "E-mail de confirmare trimis",
+        "current_email_label": "Adresă de e-mail actuală",
+        "current_password_label": "Pentru securitate, introduceți parola actuală",
+        "current_password_placeholder": "Introduceți parola actuală",
+        "errors": {
+          "current_password_required": "Parola actuală este obligatorie.",
+          "invalid_email": "Introduceți o adresă de e-mail validă."
+        },
+        "new_email_label": "Adresa nouă de e-mail",
+        "new_email_placeholder": "Introduceți noua adresă de e-mail",
+        "save_button": "Actualizare adresă de e-mail"
+      },
+      "change_password": {
+        "confirm_password_label": "Confirmați noua parolă",
+        "confirm_password_placeholder": "Confirmați noua parolă",
+        "current_password_label": "Parola actuală",
+        "current_password_placeholder": "Introduceți parola actuală",
+        "errors": {
+          "confirm_password_min_length": "Confirmați noua parolă cu cel puțin 6 caractere",
+          "current_password_required": "Este necesară parola curentă",
+          "new_password_min_length": "Noua parolă trebuie să conțină cel puțin 6 caractere",
+          "new_password_required": "Este necesară o parolă nouă",
+          "passwords_must_match": "Parolele trebuie să corespundă"
+        },
+        "new_password_label": "Parola nouă",
+        "new_password_placeholder": "Introduceți noua parolă",
+        "save_button": "Salvează modificările"
+      },
+      "delete_account": {
+        "cancel_button": "Anulare",
+        "confirm_button": "Da, ștergeți-mi contul",
+        "confirmation_message": "Contul dvs. a fost șters cu succes.",
+        "delete_account_button": "Ștergeți contul",
+        "description": "Această acțiune nu poate fi anulată. Asigură-te că dorești să continui.",
+        "dialog_description": "Această acțiune nu poate fi anulată. Vă va șterge definitiv contul și vă va elimina datele din serverele noastre.",
+        "dialog_title": "Nu aveți nicio îndoială?",
+        "title": "Șterge contul"
+      },
+      "edit_company": {
+        "add_social_network_button": "Adaugă o rețea de socializare",
+        "address_label": "Adresă",
+        "address_placeholder": "Introduceți adresa companiei",
+        "company_name_label": "Numele companiei",
+        "company_name_placeholder": "Introduceți numele companiei",
+        "errors": {
+          "company_name_required": "Numele companiei este obligatoriu",
+          "url_invalid": "Introduceți un URL valid"
+        },
+        "hide_address_map": "Ascundere hartă",
+        "horizontal_logo_alt_text": "Sigla orizontală a companiei",
+        "horizontal_logo_description": "Formate recomandate: JPEG, PNG. Max 5MB. 600x200px",
+        "horizontal_logo_label": "Siglă orizontală",
+        "opening_hours_label": "Program de lucru",
+        "opening_hours_placeholder": "De ex., luni-vineri: 9:00-17:00, sâmbătă: 10:00-14:00, duminică: închis",
+        "profile_url_placeholder": "URL profil",
+        "save_button": "Salvați modificările",
+        "show_address_map": "Afișează harta",
+        "social_networks_label": "Rețele sociale",
+        "squared_logo_alt_text": "Sigla pătrată a companiei",
+        "squared_logo_label": "Siglă pătrată",
+        "website_label": "Site web",
+        "website_placeholder": "https://www.exemplu.com"
+      },
+      "edit_profile": {
+        "description": "Actualizați-vă informațiile personale",
+        "errors": {
+          "first_name_required": "Prenumele este obligatoriu.",
+          "invalid_phone": "Numărul de telefon nu este valabil.",
+          "last_name_required": "Numele de familie este obligatoriu."
+        },
+        "first_name_label": "Prenume",
+        "first_name_placeholder": "Introduceți prenumele dvs",
+        "last_name_label": "Nume de familie",
+        "last_name_placeholder": "Introduceți numele dvs. de familie",
+        "phone_label": "Număr de telefon",
+        "phone_placeholder": "Introduceți numărul dvs. de telefon",
+        "privacy_label": "Confidențialitate",
+        "profile_picture_alt": "Fotografie de profil",
+        "profile_picture_label": "Fotografie de profil",
+        "public_email_label": "Vreau ca adresa mea de e-mail să fie vizibilă public pe profilul meu",
+        "public_phone_label": "Vreau ca numărul meu de telefon să fie vizibil public pe profilul meu",
+        "save_button": "Salvați modificările",
+        "title": "Editare profil",
+        "upload_description": "Formate recomandate: JPEG, PNG. Max 5MB. 400x400px",
+        "upload_picture": "Încărcați o fotografie nouă",
+        "whatsapp_label": "Am un cont de WhatsApp cu acest număr"
+      },
+      "forgot_password": {
+        "cancel_button": "Anulare",
+        "email_label": "Adresă de e-mail",
+        "email_placeholder": "Adresa de e-mail",
+        "errors": {
+          "invalid_email": "Introdu o adresă de e-mail validă."
+        },
+        "submit_button": "Trimitere parolă",
+        "subtitle": "Introdu-ți adresa de e-mail și îți vom trimite parola.",
+        "success": {
+          "done": "Gata",
+          "line_1": "V-am trimis parola la adresa",
+          "line_2": "Verificați-vă adresa de e-mail pentru a vă conecta.",
+          "title": "Parolă trimisă"
+        },
+        "title": "Ți-ai uitat parola?"
+      },
+      "reset_password": {
+        "confirm_password_label": "Confirmați noua parolă",
+        "confirm_password_placeholder": "Confirmați noua parolă",
+        "errors": {
+          "password_min_length": "Parola trebuie să conțină cel puțin 6 caractere.",
+          "passwords_do_not_match": "Parolele nu se potrivesc."
+        },
+        "new_password_label": "Parola nouă",
+        "new_password_placeholder": "Introduceți noua parolă",
+        "submit_button": "Resetare parolă"
+      },
+      "sign_in": {
+        "email_label": "Adresa de e-mail",
+        "email_placeholder": "Adresa de e-mail",
+        "errors": {
+          "account_not_found": "Nu v-am găsit contul Mobitrace.",
+          "invalid_credentials": "Adresa de e-mail și parola introduse nu corespund datelor noastre. Verificați acreditările și încercați din nou.",
+          "invalid_email": "Introduceți o adresă de e-mail validă.",
+          "password_min_length": "Parola trebuie să conțină cel puțin 6 caractere."
+        },
+        "forgot_password": "Ți-ai uitat parola?",
+        "or": "sau",
+        "password_label": "Parolă",
+        "password_placeholder": "Parola",
+        "submit_button": "Conectare",
+        "title": "Conectează-te la cont"
+      },
+      "stripe_form": {
+        "card_name_placeholder": "Numele de pe card",
+        "credit_card_label": "Card de credit",
+        "credit_card_placeholder": "1234 1234 1234 1234",
+        "cvc_placeholder": "CVC",
+        "errors": {
+          "apple_pay_not_available": "Apple Pay nu este acceptat",
+          "apple_pay_not_available_description": "Nu aveți activată această metodă de plată pentru acest dispozitiv sau browser. Alegeți o altă metodă de plată.",
+          "card_name_required": "Introduceți numele de pe card.",
+          "card_number_required": "Introduceți numărul cardului.",
+          "cvc_required": "Introduceți codul CVC.",
+          "expiration_date_required": "Introduceți data expirării.",
+          "google_pay_not_available": "Google Pay nu este acceptat",
+          "google_pay_not_available_description": "Nu aveți activată această metodă de plată pentru acest dispozitiv sau browser. Alegeți o altă metodă de plată.",
+          "name_invalid_characters": "Numele nu poate conține numere.",
+          "name_invalid_special_characters": "Numele nu poate conține caractere speciale.",
+          "stripe_generic_error": "Nu am reușit să vă autentificăm metoda de plată. Alegeți o altă metodă de plată și încercați din nou.",
+          "stripe_generic_error_title": "Eroare la plată",
+          "zip_code_invalid_format": "Introdu un cod poștal valid."
+        },
+        "expiration_date_placeholder": "LL/AA",
+        "zip_code_placeholder": "Cod poștal (opțional)"
+      }
+    },
+    "image_upload_input": {
+      "upload_button_text": "Încarcă o fotografie nouă",
+      "upload_description": "Formate recomandate: JPEG, PNG. Max 5MB. 400x400px",
+      "upload_label": "Fotografie de profil"
+    },
+    "phone_input": {
+      "errors": {
+        "invalid_phone": "Introduceți un număr de telefon valid."
+      },
+      "label": "Introdu numărul pe care dorești să-l localizezi",
+      "no_results": "Codul de țară nu a fost găsit.",
+      "phone_placeholder": "123456789",
+      "search_placeholder": "Caută după țară sau cod...",
+      "submit": "Localizare"
+    },
+    "settings_navigator": {
+      "change_email": {
+        "description": "Actualizați-vă adresa de e-mail",
+        "label": "Modifică adresa de e-mail"
+      },
+      "change_password": {
+        "description": "Actualizați parola contului",
+        "label": "Modifică parola"
+      },
+      "company_profile": {
+        "description": "Actualizați informațiile companiei dvs.",
+        "label": "Profilul companiei"
+      },
+      "delete_account": {
+        "description": "Șterge-ți contul și toate datele asociate",
+        "label": "Ștergeți contul"
+      },
+      "edit_profile": {
+        "description": "Actualizează-ți informațiile personale",
+        "label": "Editare profil"
+      },
+      "no_access": "Nu aveți acces la această secțiune. Acest conținut este exclusiv pentru utilizatorii profesioniști.",
+      "notifications": {
+        "description": "Gestionați-vă preferințele de notificare prin e-mail",
+        "label": "Notificări"
+      },
+      "subscription": {
+        "description": "Gestionați-vă planul de abonament",
+        "label": "Abonament"
+      },
+      "title": "Setări"
+    }
+  },
+  "consent": {
+    "accept": "De acord",
+    "decline": "Refuz",
+    "decline_accept": "Înapoi acasă",
+    "decline_description": "Pentru a utiliza serviciul nostru de mesagerie, mai ales pentru numere din SUA și Canada, avem nevoie de permisiunea ta. Fără ea, această funcție nu este disponibilă. Revino oricând pentru a continua.",
+    "decline_title": "Oops! Avem nevoie de consimțământul tău",
+    "description": "Pentru a-ți găsi telefonul, trebuie să îți trimitem un SMS. Te rugăm să confirmi că ești de acord să îl primești.",
+    "title": "Confirmare necesară"
+  },
+  "contest": {
+    "agree": "De acord",
+    "decline": "Refuz",
+    "description": "Confirm că numărul de telefon introdus este al meu și sunt de acord să primesc mesaje.",
+    "title": "Vrei să primești mesaje?"
+  },
+  "footer": {
+    "brand": "Mobitrace.io",
+    "description": "Localizează orice telefon mobil, rapid și ușor, cu Mobitrace.",
+    "links": {
+      "about_us": "Despre noi",
+      "cancel_subscription": "Anulare abonament",
+      "contact": "Contact",
+      "contacts": "Contacte",
+      "cookie_policy": "Politica privind cookie-urile",
+      "faqs": "Întrebări frecvente",
+      "home": "Acasă",
+      "location_number": "Localizare după număr",
+      "login": "Conectare",
+      "pricing": "Prețuri",
+      "privacy policy": "Politica de confidențialitate",
+      "reverse_lookup": "Căutare inversă",
+      "terms_and_conditions": "Termene și condiții"
+    },
+    "rights": "Toate drepturile rezervate."
+  },
+  "header": {
+    "about": "Despre",
+    "home": "Acasă",
+    "open_menu": "Deschide meniul",
+    "sign_in": "Conectează-te",
+    "sign_up": "Înscrie-te"
+  },
+  "language": {
+    "english": "English",
+    "spanish": "Español"
+  },
+  "navigation": {
+    "about_us": "Despre noi",
+    "contact": "Contact",
+    "dashboard": "Tablou de bord",
+    "faqs": "Întrebări frecvente",
+    "home": "Acasă",
+    "mobile_dialog_description": "Acest dialog conține linkurile de navigare principală",
+    "mobile_dialog_title": "Navigare principală",
+    "pricing": "Prețuri",
+    "settings": "Setări"
+  },
+  "pages": {
+    "about": {
+      "cards": {
+        "card_1": {
+          "description": "<p>La Mobitrace, facem ca urmărirea locației să fie simplă, fiabilă și sigură. Misiunea noastră este să vă ajutăm să păstrați legătura cu cei dragi sau cu angajații esențiali, folosind o tehnologie avansată pentru urmărirea în timp real a locației telefoanelor.</p>",
+          "title": "Misiunea noastră"
+        },
+        "card_2": {
+          "description": "<p>Mobitrace combină urmărirea telefoanelor cu servicii detaliate de informații publice:</p><ul> <li> Urmărirea telefoanelor: Trimiteți un mesaj text personalizat cu un link, permițându-le destinatarilor să-și împărtășească locația. Urmărirea este efectuată numai cu consimțământul explicit al destinatarului.</li><li> Căutare aprofundată de date: Accesați detaliile de contact, istoricul locației și multe altele.</li><li> Acoperire globală: Funcționează pe toate telefoanele, rețelele și în toate țările: localizați orice număr de telefon, oriunde.</li></ul>",
+          "title": "Ce oferim"
+        },
+        "card_3": {
+          "description": "<ul><li>Simplitate: Generați o adresă URL, trimiteți-o și urmăriți-o după ce a fost aprobată.</li><li> Siguranță și securitate: Toate urmăririle sunt consensuale și sigure.</li><li> Precizie în timp real: Primiți date de localizare actualizate și precise.</li></ul>",
+          "title": "De ce să alegeți Mobitrace"
+        },
+        "card_4": {
+          "description": "<p>Fie că sunteți un părinte îngrijorat sau un prieten atent, Mobitrace vă ajută să țineți legătura cu cei dragi. Vă mulțumim că ați ales Mobitrace, locul în care urmărirea și informațiile se îmbină pentru a vă menține la curent și în siguranță.</p>",
+          "title": "Alăturați-vă"
+        }
+      },
+      "description": "Bun venit la Mobitrace, serviciul dvs. de încredere pentru localizarea fără efort a telefoanelor mobile și accesarea informațiilor publice detaliate. Lucrăm cu cei mai importanți furnizori globali de date din SUA, Marea Britanie, Europa și nu numai, garantând căutări precise de telefoane și adrese pentru a vă menține la curent.",
+      "title": "Despre noi"
+    },
+    "cancellation": {
+      "form": {
+        "email_label": "Adresa de e-mail",
+        "error_not_found_description": "Verificați și încercați din nou",
+        "error_not_found_title": "Ups! Niciun cont nu se potrivește cu adresa de e-mail.",
+        "error_not_subscribed_title": "Nu v-ați abonat!",
+        "errors": {
+          "invalid_email": "Introduceți o adresă de e-mail validă."
+        },
+        "submit": "Anulare abonament",
+        "success_description": "De acum înainte nu vă vom mai taxa.",
+        "success_title": "V-ați dezabonat!"
+      },
+      "info_email": "Dacă nu vă amintiți ce e-mail ați folosit la înregistrare, căutați e-mailurile de la „mobitrace.io” în căsuța de e-mail. Dacă nu reușiți să le găsiți, contactați echipa de asistență pentru clienți <link>aici</link>.",
+      "info_user": "Totodată, vă puteți anula abonamentul conectându-vă la contul dvs., accesând fila „Abonament” și făcând clic pe „Anulare abonament”.",
+      "subtitle": "Anulați-vă cu ușurință abonamentul introducând adresa de e-mail utilizată la crearea contului.",
+      "title": "Anulare abonament"
+    },
+    "checkout": {
+      "action_form": "Obține locația",
+      "agree_description": "Continuând, îți exprimi acordul cu privire la plata sumei de {trialPrice} acum și ești de acord cu <terms>Termenii de utilizare</terms> și <privacy>Politica de confidențialitate</privacy>. Plata va apărea ca „mobitrace.io” pe extrasul de cont al cardului de credit. După 7 zile ți se va factura suma de {subscriptionPrice} la fiecare 4 săptămâni până la încheierea abonamentului. Poți anula oricând. Pentru eventuale întrebări, contactează-ne la support@mobitrace.io sau la numărul de telefon +1 360 525 2573",
+      "agree_description_24": "Prin continuarea plății, ești de acord să începi o perioadă de probă de 24 de ore la prețul de {trialPrice} astăzi. Dacă nu anulezi înainte de sfârșitul perioadei de probă, abonamentul tău se va reînnoi automat la prețul de {subscriptionPrice} la fiecare 4 săptămâni. Poți anula oricând. Continuând, accepți <terms>Termenii de utilizare</terms> și iei la cunoștință <privacy>Politica de confidențialitate</privacy>.",
+      "agree_description_reactivate": "Continuând, ești de acord să-ți reactivezi abonamentul și să-ți facturăm suma de {subscriptionPrice}. Plata va apărea ca „mobitrace.io” pe extrasul cardului de credit. Îți vom factura suma de {subscriptionPrice} la fiecare 4 săptămâni până la încheierea abonamentului. Poți anula oricând. Pentru eventuale întrebări, contactează-ne la support@mobitrace.io sau prin telefon la +1 360 525 2573",
+      "agree_description_subscription": "Continuând, sunteți de acord să vi se perceapă acum suma de {subscriptionPrice} și acceptați <terms>Termenii de utilizare</terms> și <privacy>Politica de confidențialitate</privacy>. Plata dvs. va apărea sub denumirea „mobitrace.io” pe extrasul de cont al cardului dvs. de credit. Veți fi taxat cu {subscriptionPrice} la fiecare 4 săptămâni până la încheierea abonamentului. Puteți anula abonamentul în orice moment. Pentru orice întrebări, ne puteți contacta la adresa support@mobitrace.io sau telefonic la +1 360 525 2573",
+      "back_description": "Dacă versiunea de încercare de 7 zile nu corespunde așteptărilor dvs., contactați-ne și vă vom rambursa integral suma plătită, fără complicații.",
+      "back_description_24": "Dacă serviciul nu te mulțumește pe deplin în perioada de încercare de 24 de ore, trebuie doar să ne anunți și îți vom restitui integral suma, fără nicio problemă.",
+      "back_title": "Banii înapoi",
+      "cancel_description": "Puteți anula oricând din tabloul de bord sau contactându-ne la <email>support@mobitrace.io</email>",
+      "cancel_title": "Anulați oricând",
+      "loading": "Vă procesăm plata...",
+      "title": "Dezvăluiți locația pentru",
+      "total": "Total datorat:",
+      "trust_100": "Plăți 100% securizate",
+      "trust_cancel": "Anulați oricând"
+    },
+    "contact": {
+      "contact_information": {
+        "company_description": "<strong>Statele Unite ale Americii</strong><br>800 N King Street Suite 304-1119<br>Wilmington, DE 19801 US</br></br><strong>Emiratele Arabe Unite</strong></br>Building A1, Dubai Digital Park</br>Dubai Silicon Oasis, Dubai</br>IFZA Business Park, DDP</br>Premises No. 5342-001</br>Emiratele Arabe Unite</br></br><strong>Irlanda</strong></br>40 Mespil Road</br>Dublin 4, Irlanda",
+        "company_title": "Locații",
+        "email_description": "support@mobitrace.io",
+        "email_title": "Adresa de e-mail",
+        "phone_description": "+1-360-525-2573",
+        "phone_title": "Telefon",
+        "title": "Informații de contact"
+      },
+      "contact_us": "Contactează-ne",
+      "form": {
+        "billing_question": "Întrebare despre facturare",
+        "email_label": "Adresa de e-mail",
+        "errors": {
+          "invalid_email": "Introdu o adresă de e-mail validă.",
+          "invalid_name_format": "Vă rugăm să introduceți un nume valid.",
+          "invalid_surname_format": "Vă rugăm să introduceți un nume de familie valid.",
+          "max_length": "Ai depășit limita de caractere.",
+          "message_max_length": "Mesajul nu poate depăși {maxLength} de caractere.",
+          "message_required": "Introduceți mesajul.",
+          "name_required": "Introduceți numele dvs.",
+          "surname_required": "Introdu numele de familie."
+        },
+        "message_label": "Mesajul",
+        "name_label": "Numele",
+        "other": "Altceva",
+        "subject_label": "Subiect",
+        "subject_placeholder": "Selectează",
+        "submit": "Trimitere mesaj",
+        "submitted": "Mesajul tău a fost trimis cu succes! Echipa noastră îți va răspunde în termen de 2 de ore.",
+        "submitted_title": "Mesajul a fost trimis",
+        "suggested_improvement": "Îmbunătățire sugerată",
+        "surname_label": "Numele de familie",
+        "technical_issue": "Problemă tehnică",
+        "title": "Contactați-ne"
+      },
+      "subtitle": "Aveți o întrebare, un feedback sau aveți nevoie de asistență?<br/> Ne-ar face plăcere să ne contactați!",
+      "title": "Suntem aici să vă ajutăm!"
+    },
+    "error": {
+      "body": "Încercați din nou mai târziu sau contactați asistența dacă problema persistă.",
+      "cta": "Înapoi Acasă",
+      "title": "Ups! Ceva nu a mers bine"
+    },
+    "find_by_link": {
+      "find_by_link": "Găsește după link",
+      "form": {
+        "errors": {
+          "max_length": "Limita maximă: 255 de caractere.",
+          "min_length": "Linkul trebuie să aibă cel puțin {n} caractere",
+          "required": "Linkul este necesar"
+        },
+        "linkLabel": "Denumiți-vă linkul",
+        "linkPlaceholder": "de ex., Link pentru whatsapp",
+        "submitButton": "Generați-mi linkul"
+      },
+      "steps": {
+        "step1": "Personalizați-vă linkul de urmărire",
+        "step2": "Distribuiți-l prin orice aplicație de mesagerie",
+        "step3": "Primiți notificări cu privire la stare",
+        "step4": "Vizualizați-i instantaneu locația după ce atinge linkul"
+      },
+      "title": "Creați-vă linkul personalizat"
+    },
+    "find_by_link_success": {
+      "body": "Asigură-te că împărtășești acest link cu persoana pe care dorești să o urmărești.",
+      "generateNewCTA": "Generați un link nou",
+      "statusCTA": "Verificați starea",
+      "subtitle": "Vedeți mai jos linkul dvs.",
+      "title": "Am reușit!"
+    },
+    "find_by_number_send_message": {
+      "CTA": "Trimitere",
+      "errors": {
+        "empty": "Acest câmp nu poate fi gol",
+        "max_length": "Textul este prea lung. Limita maximă este de {n} caractere."
+      },
+      "extra_info": {
+        "bullet_1": "Numele expeditorului va apărea ca „Mobitrace”",
+        "bullet_2": "Fiecare mesaj va include la final un link unic pe care destinatarul va trebui să facă clic."
+      },
+      "find_by_number": "Găsește după număr",
+      "label": "Mesaj",
+      "placeholder": "Introduceți mesajul aici.",
+      "title": "Căutăm locația pentru <brandColor>{phoneNumber}</brandColor>"
+    },
+    "find_by_number_send_message_success": {
+      "cta": "Verificați starea",
+      "description": "Mesajul tău a fost trimis la <strong>{phoneNumber} </strong>. Te vom anunța imediat ce telefonul este localizat.",
+      "title": "Am reușit!"
+    },
+    "forgot_password": {
+      "back_to_login": "Conectează-te",
+      "description": "Introduceți adresa de e-mail și vă vom trimite instrucțiuni pentru a vă reseta parola",
+      "remember_password": "Vă amintiți parola?",
+      "title": "Resetează parola"
+    },
+    "index": {
+      "faqs": {
+        "question_1": {
+          "answer": "Trebuie doar să introduceți numărul de telefon și, după ce destinatarul consimte să-și împărtășească locația, veți primi locația sa exactă.",
+          "question": "Cum pot localiza locația unei persoane după numărul de telefon?"
+        },
+        "question_2": {
+          "answer": "Da, geolocalizarea este legală, dar necesită consimțământul explicit al destinatarului pentru a-și împărtăși locația, respectând legile privind confidențialitatea.",
+          "question": "Este legal să geolocalizezi o terță parte?"
+        },
+        "question_3": {
+          "answer": "Nu este necesară instalarea niciunei aplicații sau software. Totul este gestionat de la distanță prin serviciul nostru.",
+          "question": "Trebuie să instalez o aplicație pentru a urmări un număr de telefon?"
+        },
+        "question_4": {
+          "answer": "Serviciul nostru acceptă toate tipurile de telefoane, de la smartphone-uri până la modele mai vechi, atât timp cât pot primi mesaje text.",
+          "question": "Ce tipuri de telefoane sunt acceptate?"
+        },
+        "question_5": {
+          "answer": "Da, serviciul nostru funcționează la nivel global, indiferent de locație sau rețea.",
+          "question": "Pot localiza un număr de telefon de oriunde din lume?"
+        },
+        "question_6": {
+          "answer": "Serviciul nostru oferă detalii precise despre locație, inclusiv adresa exactă, folosind tehnologie GPS avansată.",
+          "question": "Cât de precisă este geolocalizarea?"
+        },
+        "question_7": {
+          "answer": "Pur și simplu introdu numărul de telefon pe care dorești să îl investighezi, iar Mobitrace se va ocupa de restul. Sistemul nostru scanează mai multe baze de date pentru a descoperi orice informații disponibile legate de numărul respectiv. Deși multe căutări oferă rezultate instantanee, căutările mai detaliate pot dura puțin mai mult. Odată ce folosești instrumentul de căutare inversă a telefonului de la Mobitrace, vei vedea rapid cât de puternic și de eficient este.",
+          "question": "Cum funcționează căutarea inversă a numărului de telefon?"
+        },
+        "question_8": {
+          "answer": "Tehnologia de căutare inversă a numerelor de telefon de la Mobitrace este extrem de avansată. Când efectuezi o căutare, aceasta explorează o gamă largă de surse, inclusiv registre publice, directoare online și chiar puncte de date mai puțin vizibile. Dacă sunt găsite informații relevante, acestea vor fi afișate pentru tine. Reține că nu fiecare căutare poate oferi rezultate imediate, deoarece disponibilitatea depinde de datele accesibile pentru fiecare număr.",
+          "question": "Mobitrace oferă informații despre fiecare număr?"
+        },
+        "question_9": {
+          "answer": "Da, cu siguranță! Imaginează-ți că primești un apel de la cineva care pretinde că este din partea băncii, solicitându-ți PIN-ul pentru a opri o retragere suspectă sau că primești un mesaj în care ți se spune că ai câștigat un premiu și trebuie să dai clic pe un link pentru a-l revendica. Ambele situații pot duce la pierderi financiare sau la furtul de informații personale. Mobitrace te ajută să verifici cine se află cu adevărat în spatele unor numere necunoscute. O căutare inversă rapidă te poate avertiza cu privire la posibile escrocherii și îți poate proteja datele și finanțele.",
+          "question": "Poate Mobitrace să mă ajute să evit escrocheriile prin telefon și mesaje text?"
+        },
+        "title": "Întrebări frecvente"
+      },
+      "hero": {
+        "100": "100%",
+        "card_address": "29 Willow Street, Hackney Wick, Londra E9 5EN, Regatul Unit",
+        "card_date": "27 septembrie 2024, la 18:46",
+        "card_phone": "+44 633 123 456",
+        "card_title": "Am găsit locația!",
+        "confidential": "confidențial",
+        "iphone_alt": "un smartphone care afișează o hartă a Londrei cu un marker de locație",
+        "secure": "Securizat",
+        "ssl_encription": "Criptare SSL",
+        "subtitle": "Cu Mobitrace.io, puteți solicita locații telefonice în timp real prin SMS sau link. Urmărirea este efectuată numai cu consimțământul explicit al destinatarului.",
+        "title": "Localizați un telefon mobil"
+      },
+      "how_does_it_work": {
+        "step_1": {
+          "description": "Trebuie doar să introduci numărul de telefon pe care vrei să-l localizezi și să personalizezi mesajul SMS care va fi trimis destinatarului.",
+          "title": "Introduceți un număr de telefon"
+        },
+        "step_2": {
+          "description": "Mobitrace va trimite SMS-ul dvs. personalizat, solicitându-i destinatarului să-și împărtășească locația.",
+          "title": "Trimiteți o solicitare de locație"
+        },
+        "step_3": {
+          "description": "De îndată ce destinatarul își exprimă acordul, veți primi o notificare cu locația sa exactă, pe care o puteți vizualiza direct pe hartă în tabloul de bord.",
+          "title": "Primiți locația pe hartă"
+        },
+        "title": "Cum funcționează?"
+      },
+      "instant_locator": {
+        "subtitle": "Mobitrace este cea mai bună soluție pentru a afla locația sau datele oricărei persoane, doar cu ajutorul numărului de telefon.",
+        "title": "Localizați numărul <underlined>instantaneu!</underlined>"
+      },
+      "meta_description": "Localizează orice telefon mobil, rapid și ușor, cu Mobitrace.",
+      "meta_title": "Mobitrace.io - Găsește locația oricărui telefon, oriunde",
+      "og_description": "Localizează orice telefon mobil, rapid și ușor, cu Mobitrace.",
+      "og_image_alt": "Mobitrace.io - Găsește locația oricărui telefon, oriunde",
+      "og_title": "Mobitrace.io - Găsește locația oricărui telefon, oriunde",
+      "site_name": "Mobitrace",
+      "welcome_title": "Bun venit pe Mobitrace.io",
+      "why_choose": {
+        "reasons": {
+          "reason_1": {
+            "description": "Confidențialitatea dvs. este prioritatea noastră principală. Aveți siguranța că informațiile dvs. personale și istoricul de căutare sunt păstrate permanent sigure și confidențiale.",
+            "title": "Confidențialitate deplină, garantată"
+          },
+          "reason_2": {
+            "description": "Fără aplicații, fără software, fără complicații. Pur și simplu introduceți numărul de telefon, iar Mobitrace va începe să lucreze instantaneu.",
+            "title": "Nu este necesară instalarea"
+          },
+          "reason_3": {
+            "description": "De la cele mai recente telefoane iPhone și Android și până la telefoanele cu clapetă de pe vremuri: dacă poate primi mesaje, Mobitrace îl poate localiza. Acceptăm toate telefoanele și toți operatorii.",
+            "title": "Compatibil cu orice telefon și operator"
+          },
+          "reason_4": {
+            "description": "Mobitrace nu oferă doar coordonate, ci chiar adresa exactă. Profită de puterea tehnologiei GPS avansate pentru o precizie de neegalat.",
+            "title": "Acuratețe maximă"
+          },
+          "reason_5": {
+            "description": "Indiferent în ce parte a lumii v-ați afla dvs. sau telefonul țintă, Mobitrace funcționează fără probleme în întreaga lume.",
+            "title": "Acoperire globală"
+          }
+        },
+        "subtitle": "Un singur clic și zero efort pentru a găsi locația oricărei persoane în întreaga lume",
+        "title": "De ce să alegeți Mobitrace"
+      }
+    },
+    "legal": {
+      "cookie_policy": {
+        "content": "",
+        "title": "Politica privind modulele cookie"
+      },
+      "refund_policy": {
+        "content": "",
+        "title": "Politica de rambursare"
+      }
+    },
+    "loader": {
+      "step_1": {
+        "carrier": {
+          "loadedDefaultText": "Detectat",
+          "text": "Operator"
+        },
+        "city": {
+          "loadedText": "Localizat",
+          "text": "Oraș"
+        },
+        "connecting": "Ne conectăm la sateliți",
+        "country": {
+          "text": "Țară"
+        },
+        "database": {
+          "loadedText": "Accesat",
+          "text": "Bază de date"
+        },
+        "location": {
+          "loadedText": "Detectat",
+          "text": "Locație"
+        },
+        "searching": "Căutăm rezultate pentru"
+      },
+      "step_2": {
+        "cta": "Obține locația",
+        "subtitle": "Căutarea este completă și puteți accesa locația.",
+        "title": "Am găsit locația!"
+      }
+    },
+    "loader_complete": {
+      "title": "Înscrie-te pentru a obține locația exactă a <brandColor>{phoneNumber}</brandColor>"
+    },
+    "locate": {
+      "error": "Nu am reușit să preluăm adresa.",
+      "link_expired": "Linkul a expirat",
+      "link_expired_explain": "Acest link a fost deja accesat și nu mai este disponibil.",
+      "loading": "Încărcare...",
+      "not_supported": "Browserul dvs. nu acceptă geolocalizarea.",
+      "rejected": "Împărtășirea locației a fost refuzată.",
+      "thank_you": "Vă mulțumim!"
+    },
+    "memberArea": {
+      "navigation": {
+        "contact_us": "Contactează-ne",
+        "find_by_link": "Găsește după link",
+        "find_by_number": "Găsește după număr",
+        "find_by_phone_lookup": "Căutare telefon",
+        "my_activity": "Activitatea mea",
+        "notifications": "Notificări",
+        "phone_lookup": "Căutare telefon",
+        "settings": "Setări",
+        "sex_offenders_search": "Infractori sexuali",
+        "status": "Stare",
+        "tools_library": "Biblioteca de instrumente"
+      }
+    },
+    "not_found": {
+      "body": "Ceva nu a mers bine, încercați din nou.",
+      "cta": "Înapoi Acasă",
+      "title": "Pagina nu a fost găsită"
+    },
+    "notifications": {
+      "empty": {
+        "text": "În prezent nu aveți notificări.",
+        "title": "E cam liniște aici"
+      },
+      "link_accessed": "<strong>{notificationName}</strong> a fost accesat.",
+      "link_located": "Locația este acum disponibilă.",
+      "link_rejected": "Împărtășirea locației a fost respinsă.",
+      "load_more": "Încărcați mai multe",
+      "phone_located": "<strong>Localizarea pentru {phone}</strong> a fost obținută cu succes.",
+      "phone_rejected": "<strong> Localizarea pentru {phone} </strong> a fost respinsă.",
+      "title": "Notificări"
+    },
+    "onboarding": {
+      "navigation": {
+        "step_1": "Pasul 1",
+        "step_2": "Pasul 2",
+        "step_3": "Pasul 3"
+      }
+    },
+    "onboarding_step1": {
+      "body": "Pentru a localiza un număr de telefon, Mobitrace trimite un mesaj text anonim cu un link de localizare. Trebuie doar să trimiteți mesajul și să lăsați sistemul nostru să se ocupe de restul.",
+      "cta": "Continuare",
+      "title": "Trimiteți un link de urmărire"
+    },
+    "onboarding_step2": {
+      "body": "După ce destinatarul face clic pe link, accesați Istoricul locațiilor pentru a-i urmări deplasarea pe hartă în timp real.",
+      "cta": "Continuare",
+      "title": "Monitorizați în timp real"
+    },
+    "onboarding_step3": {
+      "body": "Cât timp aștepți ca destinatarul să deschidă mesajul, profită de celelalte caracteristici eficiente ale Mobitrace pentru a-ți îmbunătăți experiența de urmărire.",
+      "cta": "Începeți acum",
+      "title": "Explorați mai multe caracteristici"
+    },
+    "pricing": {
+      "cards": {
+        "subscription": {
+          "badge": "Abonament",
+          "cta": "Abonați-vă acum",
+          "description": "După încheierea perioadei de probă de 7 zile, {price} la fiecare 4 săptămâni. Poți anula oricând.",
+          "duration": "La fiecare 4 săptămâni",
+          "features": {
+            "feature_1": "Compatibil cu toate dispozitivele mobile",
+            "feature_2": "Solicitări nelimitate de urmărire a locației",
+            "feature_3": "Caracteristici premium, precum mesaje personalizate și localizare precisă",
+            "feature_4": "Asistență non-stop fără costuri suplimentare"
+          },
+          "new_features": {
+            "feature_1": "Compatibil cu toate dispozitivele mobile",
+            "feature_2": "Solicitări nelimitate de urmărire a locației",
+            "feature_3": "Descarcă rapoarte PDF profesionale fără costuri suplimentare",
+            "feature_4": "Rapoarte nelimitate de căutare inversă a numerelor de telefon cu detalii cuprinzătoare",
+            "feature_5": "Asistență non-stop fără costuri suplimentare"
+          }
+        },
+        "subscription_24": {
+          "badge": "Abonament",
+          "cta": "Abonează-te acum",
+          "description": "După ce se încheie perioada de probă de 24 de ore, apoi {price} la fiecare 4 săptămâni. Poți anula oricând.",
+          "duration": "La fiecare 4 săptămâni",
+          "features": {
+            "feature_1": "Compatibil cu toate dispozitivele mobile",
+            "feature_2": "Solicitări nelimitate de urmărire a locației",
+            "feature_3": "Descarcă rapoarte PDF profesionale fără costuri suplimentare",
+            "feature_4": "Rapoarte nelimitate de căutare inversă a numerelor de telefon cu detalii complete",
+            "feature_5": "Asistență non-stop fără costuri suplimentare"
+          },
+          "new_features": {
+            "feature_1": "Compatibil cu toate dispozitivele mobile",
+            "feature_2": "Solicitări nelimitate de urmărire a locației",
+            "feature_3": "Descarcă rapoarte PDF profesionale fără costuri suplimentare",
+            "feature_4": "Rapoarte nelimitate de căutare inversă a numerelor de telefon cu detalii complete",
+            "feature_5": "Asistență non-stop fără costuri suplimentare"
+          }
+        },
+        "title": "Prețuri",
+        "trial": {
+          "badge": "Perioadă versiune de încercare",
+          "cta": "Începeți versiunea de încercare",
+          "description": "Beneficiezi de acces nelimitat la toate funcțiile, fără niciun risc. Plata inițială îți oferă acces deplin timp de 7 zile, iar apoi ți se va percepe suma de {price} la fiecare 4 săptămâni. Poți anula abonamentul oricând.",
+          "duration": "Versiune de încercare de 7 zile",
+          "features": {
+            "feature_1": "Compatibil cu toate dispozitivele mobile",
+            "feature_2": "Acces deplin la toate caracteristicile timp de 7 zile",
+            "feature_3": "Fără angajamente pe termen lung, încearcă-l fără grijă"
+          },
+          "new_features": {
+            "feature_1": "Compatibil cu toate dispozitivele mobile",
+            "feature_2": "Acces deplin la toate caracteristicile timp de 7 zile",
+            "feature_3": "Acces la rapoarte detaliate de căutare inversă a numerelor de telefon",
+            "feature_4": "Fără angajamente pe termen lung, încearcă-l fără grijă",
+            "feature_5": "Posibilitatea de a descărca rapoartele în format PDF"
+          }
+        },
+        "trial_24": {
+          "badge": "Perioadă de încercare",
+          "cta": "Începe perioada de încercare",
+          "description": "Beneficiezi de acces nelimitat la toate funcțiile, fără niciun risc. Plata inițială îți oferă acces deplin timp de 24 de ore, iar apoi ți se va percepe suma de {price} la fiecare 4 săptămâni. Poți anula abonamentul oricând.",
+          "duration": "Perioadă de încercare de 24 de ore",
+          "features": {
+            "feature_1": "Compatibil cu toate dispozitivele mobile",
+            "feature_2": "Acces complet la toate caracteristicile timp de 24 de ore",
+            "feature_3": "Fără angajamente pe termen lung, încearcă-l fără grijă",
+            "feature_4": "Posibilitatea de a descărca rapoartele în format PDF"
+          },
+          "new_features": {
+            "feature_1": "Compatibil cu toate dispozitivele mobile",
+            "feature_2": "Acces complet la toate caracteristicile timp de 24 de ore",
+            "feature_3": "Acces la rapoarte detaliate de căutare inversă a numerelor de telefon",
+            "feature_4": "Fără angajamente pe termen lung, încearcă-l fără grijă",
+            "feature_5": "Posibilitatea de a descărca rapoartele în format PDF"
+          }
+        }
+      },
+      "special_offer": "Ofertă specială",
+      "subtitle": "Mobitrace își oferă serviciile prin intermediul unui plan de abonament lunar ușor de gestionat.",
+      "title": "Testează Mobitrace la prețul de <mark>doar {price}</mark> timp de 7 zile!",
+      "title_24": "Încearcă Mobitrace la prețul de <mark>doar {price}</mark> timp de 24 de ore!"
+    },
+    "reset_password": {
+      "back_to_login": "Conectează-te",
+      "description": "Introduceți noua parolă pentru a vă reseta contul",
+      "remember_password": "Vă amintiți parola?",
+      "title": "Resetează parola"
+    },
+    "reverse_lookup": {
+      "checkout": {
+        "action_form": "Obține raportul",
+        "back_description": "Dacă nu ești pe deplin mulțumit în perioada de probă de 7 zile, contactează-ne și îți vom rambursa integral suma plătită.",
+        "back_description_24": "Dacă serviciul nu te mulțumește pe deplin în perioada de încercare de 24 de ore, trebuie doar să ne anunți și îți vom restitui integral suma, fără nicio problemă.",
+        "back_title": "Rambursare",
+        "cancel_description": "Poți anula oricând din tabloul de bord sau contactându-ne la <email>support@mobitrace.io</email>",
+        "cancel_title": "Anulează oricând",
+        "title": "Deblochează raportul despre"
+      },
+      "components": {
+        "always_know_who_called": {
+          "step_1": {
+            "description": "Identifică orice denumire legală sau de firmă asociată numărului.",
+            "title": "Nume complet"
+          },
+          "step_2": {
+            "description": "Află posibilele adrese asociate numărului, atât din trecut, cât și din prezent.",
+            "title": "Adresa de domiciliu"
+          },
+          "step_3": {
+            "description": "Reia legătura cu familia îndepărtată sau cu rudele de mult pierdute.",
+            "title": "Membrii familiei"
+          },
+          "step_4": {
+            "description": "Găsește profiluri de social media pe toate platformele importante.",
+            "title": "Profiluri de social media"
+          },
+          "step_5": {
+            "description": "Vezi orice adrese de e-mail publice asociate.",
+            "title": "Adrese de e-mail"
+          },
+          "step_6": {
+            "description": "Verifică istoricul locațiilor disponibile public.",
+            "title": "Istoricul locațiilor"
+          },
+          "step_7": {
+            "description": "Adună informații din diverse surse online.",
+            "title": "Activitate web"
+          },
+          "subtitle": "Introducând un număr în funcția de căutare inversă Mobitrace, poți descoperi informațiile disponibile public asociate acelui număr.",
+          "title": "Află mereu cine te sună cu Mobitrace"
+        },
+        "as_seen_on": {
+          "title": "Menționat de"
+        },
+        "customer_carousel": {
+          "subtitle": "Facem tot posibilul să îți oferim cea mai bună experiență",
+          "title": "Ce spun clienții <br class='lg:hidden'/> despre noi"
+        },
+        "customer_opinions": {
+          "title": "Peste tot, oamenii descoperă necunoscutul"
+        },
+        "faqs": {
+          "question_1": {
+            "answer": "Tot ce trebuie să faci este să introduci numărul de telefon și, după ce destinatarul își dă acordul, vei primi locația sa exactă.",
+            "question": "Cum pot afla locația cuiva doar după numărul de telefon?"
+          },
+          "question_2": {
+            "answer": "Da, geolocalizarea este legală, dar necesită consimțământul explicit al destinatarului pentru a-și partaja locația, conform legilor privind protecția datelor.",
+            "question": "Este legal să urmărești locația unei alte persoane?"
+          },
+          "question_3": {
+            "answer": "Nu, nu este nevoie să instalezi nicio aplicație sau software. Totul se face de la distanță, prin serviciul nostru.",
+            "question": "Trebuie să instalez o aplicație ca să pot urmări un număr de telefon?"
+          },
+          "question_4": {
+            "answer": "Serviciul nostru funcționează pe orice tip de telefon, de la smartphone-uri până la modele mai vechi, atât timp cât pot primi mesaje text.",
+            "question": "Ce tipuri de telefoane sunt acceptate?"
+          },
+          "question_5": {
+            "answer": "Da, serviciul nostru funcționează la nivel global, indiferent de locație sau rețea.",
+            "question": "Pot urmări un număr de telefon oriunde în lume?"
+          },
+          "question_6": {
+            "answer": "Serviciul nostru oferă detalii precise despre locație, inclusiv adresa exactă, folosind tehnologie GPS avansată.",
+            "question": "Cât de precisă este geolocalizarea?"
+          },
+          "question_7": {
+            "answer": "Pur și simplu introdu numărul de telefon pe care dorești să îl investighezi, iar Mobitrace se va ocupa de restul. Sistemul nostru scanează mai multe baze de date pentru a descoperi orice informații disponibile legate de numărul respectiv. Deși multe căutări oferă rezultate instantanee, căutările mai detaliate pot dura puțin mai mult. Odată ce folosești instrumentul de căutare inversă a telefonului de la Mobitrace, vei vedea rapid cât de puternic și de eficient este.",
+            "question": "Cum funcționează căutarea inversă a numărului de telefon?"
+          },
+          "question_8": {
+            "answer": "Tehnologia de căutare inversă a numerelor de telefon de la Mobitrace este extrem de avansată. Când efectuezi o căutare, aceasta explorează o gamă largă de surse, inclusiv registre publice, directoare online și chiar puncte de date mai puțin vizibile. Dacă sunt găsite informații relevante, acestea vor fi afișate pentru tine. Reține că nu fiecare căutare poate oferi rezultate imediate, deoarece disponibilitatea depinde de datele accesibile pentru fiecare număr.",
+            "question": "Mobitrace oferă informații despre fiecare număr?"
+          },
+          "question_9": {
+            "answer": "Da, cu siguranță! Imaginează-ți că primești un apel de la cineva care pretinde că este din partea băncii, solicitându-ți PIN-ul pentru a opri o retragere suspectă sau că primești un mesaj în care ți se spune că ai câștigat un premiu și trebuie să dai clic pe un link pentru a-l revendica. Ambele situații pot duce la pierderi financiare sau la furtul de informații personale. Mobitrace te ajută să verifici cine se află cu adevărat în spatele unor numere necunoscute. O căutare inversă rapidă te poate avertiza cu privire la posibile escrocherii și îți poate proteja datele și finanțele.",
+            "question": "Poate Mobitrace să mă ajute să evit escrocheriile prin telefon și mesaje text?"
+          },
+          "title": "Întrebări frecvente"
+        },
+        "get_report": {
+          "cta": "Obține raportul",
+          "lookup_today": "Peste 99 de căutări inverse făcute azi",
+          "product": "Acces complet timp de 7 zile",
+          "product_24": "Acces deplin timp de 24 de ore",
+          "product_title": "Raport de căutare",
+          "secure": "100% securizat",
+          "title": "Obține acces la raportul tău!",
+          "trial_description": "Garanția satisfacției pe 30 de zile"
+        },
+        "hero": {
+          "100": "100%",
+          "card_address": "29 Willow Street, Hackney Wick, London E9 5EN, United Kingdom",
+          "card_date": "27 septembrie 2024 18:46",
+          "card_phone": "+44 633 123 456",
+          "card_title": "Locație găsită!",
+          "confidential": "confidențial",
+          "iphone_alt": "un smartphone care afișează o hartă a Londrei cu un indicator de locație",
+          "secure": "Securizat",
+          "ssl_encription": "Criptare SSL",
+          "subtitle": "Identifică instantaneu apelanții necunoscuți, descoperind nume complete, adrese, profiluri de social media și altele.",
+          "title": "<mark>Căutare</mark> <mark>inversă</mark> după numărul de telefon"
+        },
+        "instant_locator": {
+          "subtitle": "Mobitrace este cea mai bună soluție pentru a afla locația sau datele oricărei persoane, doar cu ajutorul numărului de telefon",
+          "title": "Caută acum orice număr de telefon!"
+        },
+        "latest_results": {
+          "result": {
+            "description": "Acum {time} minute"
+          },
+          "subtitle": "Iată câteva dintre cele mai recente rezultate ale serviciului nostru de căutare inversă a numărului de telefon",
+          "title": "Cele mai recente rezultate"
+        },
+        "limited_offer_tag": {
+          "limited_offer": "Ofertă limitată"
+        },
+        "phone_input": {
+          "errors": {
+            "invalid_phone": "Introdu un număr de telefon valid.",
+            "rate_limit_exceeded": "Ai depășit limita zilnică.",
+            "rate_limit_exceeded_title": "A fost atinsă limita"
+          },
+          "label": "Introdu numărul pe care vrei să îl cauți",
+          "no_results": "Codul de țară nu a fost găsit.",
+          "phone_placeholder": "123456789",
+          "search_placeholder": "Caută după țară sau cod...",
+          "submit": "Căutare"
+        },
+        "pricing": {
+          "cards": {
+            "subscription": {
+              "badge": "Abonament",
+              "cta": "Abonează-te acum",
+              "description": "După ce se termină perioada de probă de 7 zile, oferta se va reînnoi automat cu un abonament lunar. Poți anula abonamentul oricând, fără bătăi de cap.",
+              "duration": "Taxă lunară",
+              "features": {
+                "feature_1": "Compatibil cu toate dispozitivele mobile",
+                "feature_2": "Solicitări nelimitate de urmărire a locației",
+                "feature_3": "Descarcă rapoarte PDF profesionale fără costuri suplimentare",
+                "feature_4": "Rapoarte nelimitate de căutare inversă a numerelor de telefon cu detalii cuprinzătoare",
+                "feature_5": "Asistență non-stop fără costuri suplimentare"
+              }
+            },
+            "title": "Începe perioada de probă de 7 zile",
+            "trial": {
+              "badge": "Perioadă de probă",
+              "cta": "Începe perioada de probă",
+              "description": "Această plată inițială îți permite să accesezi toate funcțiile platformei Mobitrace, fără restricții, timp de 7 zile. Ulterior, se va aplica taxa de abonament de {price} pe lună.",
+              "duration": "Perioada de probă de 7 zile",
+              "features": {
+                "feature_1": "Compatibil cu toate dispozitivele mobile",
+                "feature_2": "Acces deplin la toate caracteristicile timp de 7 zile",
+                "feature_3": "Acces la rapoarte detaliate de căutare inversă a numerelor de telefon",
+                "feature_4": "Fără angajamente pe termen lung, încearcă-l fără grijă",
+                "feature_5": "Posibilitatea de a descărca rapoartele în format PDF"
+              }
+            }
+          },
+          "special_offer": "Ofertă specială",
+          "subtitle": "Mobitrace își oferă serviciile printr-un abonament lunar ușor de gestionat.",
+          "title": "Testează Mobitrace la prețul de <mark>doar {price}</mark> timp de 7 zile!"
+        },
+        "recent_reveals": {
+          "subtitle": "Iată câțiva dintre apelanții necunoscuți pe care i-am identificat recent.",
+          "title": "Informații obținute recent"
+        },
+        "report_ready": {
+          "description": "Raportul tău este gata!",
+          "download_report_button": "Descarcă PDF-ul",
+          "view_report_button": "Vezi raportul"
+        },
+        "summary_report_card": {
+          "caller_info": "Cu Mobitrace, nu va mai trebui să ghicești cine se ascunde în spatele unui număr necunoscut. Îți vom oferi date despre apelant, chiar și informații de care acesta nici nu știa că pot fi disponibile.",
+          "carrier": "Operator",
+          "continue": "Continuare",
+          "latest_report": "Cel mai recent raport până la data de 3 martie 2025",
+          "line_type": "Tip de conexiune",
+          "may_include": "Rezultatele pot include",
+          "result_1": "Numele complet și adresa proprietarului",
+          "result_2": "Conturi și profiluri de social media",
+          "result_3": "Fotografii și videoclipuri",
+          "result_4": "Activitatea online din trecut",
+          "result_5": "Adrese de e-mail",
+          "result_6": "Și multe altele!",
+          "timer_desktop": "<mark>Raportul</mark> tău va expira în",
+          "timer_mobile": "Raportul expiră în",
+          "title": "Raportul tău pentru <mark>{phoneNumber} </mark> este gata!",
+          "trusted_by": "Peste <span class='font-bold'>7 milioane</span> de persoane au încredere în noi"
+        },
+        "upsell_progress_steps": {
+          "access_report": "Accesează raportul",
+          "create_account": "Creează un cont",
+          "data_breach": "Încălcarea datelor",
+          "pdf_export": "Export PDF",
+          "sex_offenders": "Infractori sexuali"
+        },
+        "what_you_get": {
+          "item_1": "Caută orice număr de telefon, atât din trecut, cât și din prezent, și află informații despre proprietar",
+          "item_2": "Proprietarii numărului de telefon nu vor fi niciodată anunțați că le-ai căutat numărul.",
+          "item_3": "Baza noastră de date include întotdeauna cele mai recente informații.",
+          "item_4": "Mobitrace își creează rapoartele pe baza unor informații disponibile public pe internet.",
+          "item_title_1": "Căutări avansate de numere de telefon",
+          "item_title_2": "Confidențialitatea ta este garantată 100%",
+          "item_title_3": "Actualizat constant",
+          "item_title_4": "Căutare prin miliarde de înregistrări",
+          "title": "Iată ce primești"
+        },
+        "why_use": {
+          "phone_input_label": "Introdu numărul pe care vrei să-l cauți",
+          "reasons": {
+            "reason_1": {
+              "description": "Află care sunt apelanții necunoscuți și scapă de nesiguranță atunci când răspunzi la telefon.",
+              "title": "Vezi întotdeauna cine sună"
+            },
+            "reason_2": {
+              "description": "Mobitrace te poate ajuta să găsești contacte mai vechi sau pierdute, chiar și folosind numere de telefon vechi.",
+              "title": "Reiei legătura cu prieteni vechi"
+            },
+            "reason_3": {
+              "description": "Protejează-te verificând online identitatea celor cu care vorbești.",
+              "title": "Confirmi identități"
+            },
+            "reason_4": {
+              "description": "Apelurile frauduloase și colectorii de date sunt tot mai frecvenți. Mobitrace te poate ajuta să identifici infractorii fără să răspunzi la telefon.",
+              "title": "Identifici numerele suspecte"
+            },
+            "reason_5": {
+              "description": "Introdu-ți numărul în Mobitrace și vezi ce date personale sunt disponibile online și dacă există scurgeri de informații.",
+              "title": "Monitorizezi amprenta digitală"
+            }
+          },
+          "steps": {
+            "step_1": {
+              "description": "Protejează-te de apelanții frauduloși și de apelurile comerciale."
+            },
+            "step_2": {
+              "description": "Verifică trecutul unei persoane înainte să devină partenerul sau colegul tău de apartament."
+            },
+            "step_3": {
+              "description": "Află cine se ascunde în spatele apelurilor spam deranjante."
+            },
+            "step_4": {
+              "description": "Reia legătura cu prieteni vechi sau cu membri ai familiei."
+            },
+            "step_5": {
+              "description": "Identifică persoanele cu identități false pe aplicațiile de dating și chat."
+            }
+          },
+          "subtitle": "Fie că vrei să te protejezi în mediul digital sau să regăsești cunoștințe din trecut, suntem aici pentru tine.<br>Mobitrace te poate ajuta să:",
+          "title": "De ce să folosești căutarea inversă a numerelor de telefon",
+          "title_2": "Cazuri de utilizare suplimentare",
+          "title_badge": "OPȚIUNI SUPLIMENTARE"
+        }
+      },
+      "member_area": {
+        "phone_lookup": {
+          "daily_limit": "Limită: 5 căutări la fiecare 24 de ore.",
+          "label": "Dezvăluie ID-ul apelantul",
+          "phone_lookup": "Căutare telefon"
+        }
+      },
+      "report": {
+        "carrier_details": {
+          "info": "Această secțiune oferă informații despre operatorul de telefonie al persoanei respective, inclusiv detalii despre rețea și tipul de serviciu.",
+          "labels": {
+            "carrier": "Operator",
+            "international_format": "Format internațional",
+            "local_format": "Format local",
+            "location": "Locație",
+            "type": "Tip"
+          },
+          "line_types": {
+            "landline": "Telefon fix",
+            "mobile": "Mobil"
+          },
+          "title": "Detalii despre operator",
+          "title_empty": "Detalii despre operator"
+        },
+        "common": {
+          "no_data": "Nicio evidență disponibilă"
+        },
+        "data_breach_history": {
+          "alert_empty": "Această secțiune prezintă istoricul încălcărilor de date, detaliind orice incidente care au compromis informații sensibile. Include informații despre natura încălcărilor, datele afectate și măsurile luate pentru a trata și preveni apariția lor în viitor.",
+          "alert_success": "Această secțiune prezintă istoricul încălcărilor de date, detaliind orice incidente care au compromis informații sensibile. Include informații despre natura încălcărilor, datele afectate și măsurile luate pentru a trata și preveni apariția lor în viitor.",
+          "alert_title": "{count} încălcări de date",
+          "report": {
+            "breaches_found_for": "Încălcări constatate pentru",
+            "compromised_data": "Date compromise",
+            "data_breaches": "încălcări de date",
+            "data_types": {
+              "date_of_birth": "Data nașterii",
+              "education_levels": "Nivel de educație",
+              "email": "Adresă de e-mail",
+              "gender": "Gen",
+              "geo_location": "Locație geografică",
+              "name": "Nume",
+              "password": "Parolă",
+              "phone": "Număr de telefon",
+              "social_media_profiles": "Profiluri de social media",
+              "username": "Nume de utilizator"
+            },
+            "download_report_button": "Descarcă PDF-ul",
+            "title": "Istoricul încălcărilor de date"
+          },
+          "show_report": "Afișează raportul",
+          "title": "Istoricul încălcărilor de date",
+          "unlock_report": "Deblochează raportul"
+        },
+        "header": {
+          "button": "Descarcă PDF-ul",
+          "matches_found": "Potriviri găsite pentru",
+          "title": "Raport de căutare a numerelor de telefon",
+          "unlock_download_pdf": "Deblochează descărcarea PDF"
+        },
+        "looking_for_more_profiles_dialog": {
+          "description": "Acest proces poate dura câteva secunde — căutăm pe alte platforme",
+          "title": "Caut mai multe profiluri"
+        },
+        "phone_public_information": {
+          "info": "Această secțiune oferă un rezumat al informațiilor disponibile public asociate numărului de telefon al persoanei respective.",
+          "name": "Prenume:",
+          "source": "Sursă:",
+          "sources": {
+            "data_breach": "Încălcarea datelor",
+            "other": "Altceva",
+            "public_records": "Documente publice",
+            "social_media": "Rețele de socializare"
+          },
+          "title": "Informații publice pentru telefon",
+          "title_empty": "Nu există informații publice pentru telefon"
+        },
+        "photos": {
+          "info": "Această secțiune afișează posibile imagini ale proprietarului telefonului pentru a facilita identificarea vizuală, atunci când sunt disponibile.",
+          "other": "Altceva",
+          "title": "Fotografii",
+          "title_empty": "Nu s-au găsit fotografii"
+        },
+        "possible_addresses": {
+          "info": "Această secțiune enumeră posibilele adrese legate de persoană, care pot ajuta la identificarea locurilor de reședință sau a locațiilor anterioare.",
+          "labels": {
+            "city": "Oraș",
+            "country": "Țară",
+            "county": "Județ",
+            "latitude": "Latitudine",
+            "length_of_residence": "Durata rezidenței",
+            "longitude": "Longitudine",
+            "postal_code": "Cod poștal",
+            "state": "Stat",
+            "street": "Stradă"
+          },
+          "title": "Adrese posibile",
+          "title_empty": "Nu s-au găsit adrese",
+          "values": {
+            "years": "{count} ani"
+          }
+        },
+        "possible_contact_details": {
+          "info": "Această secțiune afișează adresele de e-mail asociate cu persoana respectivă, pentru a ajuta la verificarea informațiilor de contact.",
+          "labels": {
+            "associated_emails": "E-mailuri asociate",
+            "associated_numbers": "Numere asociate"
+          },
+          "title": "Date de contact posibile",
+          "title_empty": "Nu au fost găsite date de contact"
+        },
+        "possible_personal_details": {
+          "info": "Această secțiune prezintă posibile informații personale asociate cu persoana respectivă, contribuind la oferirea de informații suplimentare despre context.",
+          "labels": {
+            "children": "Copii",
+            "date_of_birth": "Data nașterii",
+            "gender": "Gen",
+            "household_size": "Mărimea gospodăriei",
+            "income": "Venituri",
+            "marital_status": "Starea civilă"
+          },
+          "title": "Date personale posibile",
+          "title_empty": "Nu au fost găsite detalii personale",
+          "values": {
+            "children": "Prezenți ({count})",
+            "divorced": "Divorţat",
+            "domestic_partnership": "Parteneriat civil",
+            "engaged": "Logodit",
+            "female": "Femeie",
+            "in_relationship": "Într-o relație",
+            "intersex": "Intersex",
+            "male": "Bărbat",
+            "married": "Căsătorit",
+            "no_children": "Nici unul",
+            "no_record_available": "Nicio evidență disponibilă",
+            "separated": "Separat",
+            "single": "Singur",
+            "widowed": "Văduv"
+          }
+        },
+        "possible_social_media_accounts": {
+          "expand_search": {
+            "more_platforms": "Accesează mai multe platforme cu un singur clic",
+            "title": "Extindeți căutarea",
+            "unlock_platforms": "Deblocați platformele"
+          },
+          "info": "Această secțiune prezintă posibile profiluri de socializare care ar putea fi legate de persoană, oferind informații despre prezența sa online.",
+          "labels": {
+            "id": "Carte de identitate",
+            "name": "Nume",
+            "opne_url": "Deschide pagina",
+            "source": "Sursă",
+            "url": "Adresă URL"
+          },
+          "network_not_found": "Nu s-a găsit",
+          "no_accounts_found": "Nu au fost găsite conturi pe niciuna dintre platformele verificate. Aceasta înseamnă că utilizatorul fie nu este înregistrat pe aceste rețele, fie folosește date care diferă de parametrii de căutare furnizați.",
+          "partial_result": {
+            "info": "Nu a fost găsit niciun cont pe unele platforme — aceasta înseamnă că utilizatorul fie nu este înregistrat pe acele rețele, fie folosește date care diferă de parametrii de căutare furnizați.",
+            "no_account_platforms": "Platforme fără cont găsit",
+            "title": "Rezultate căutare finalizate"
+          },
+          "sources": {
+            "behance": "Behance",
+            "facebook": "Facebook",
+            "github": "Github",
+            "gitlab": "Gitlab",
+            "google": "Google",
+            "instagram": "Instagram",
+            "kick": "Lovi cu piciorul",
+            "linkedin": "LinkedIn",
+            "pinterest": "Pinterest",
+            "reddit": "Reddit",
+            "snapchat": "Snapchat",
+            "telegram": "Telegramă",
+            "threads": "Fire de discuție",
+            "tiktok": "TikTok",
+            "tumblr": "Tumblr",
+            "twitch": "Pir",
+            "x": "X",
+            "youtube": "Youtube"
+          },
+          "title": "Conturi de rețele de socializare posibile",
+          "title_empty": "Nu au fost găsite conturi de rețele de socializare"
+        },
+        "potential_education": {
+          "info": "Această secțiune rezumă eventualele detalii privind studiile, inclusiv instituțiile de învățământ frecventate și calificările obținute.",
+          "title": "Studii posibile",
+          "title_empty": "Nu s-au găsit informații despre educație",
+          "values": {
+            "associate_degree": "Diplomă de studii postliceale",
+            "bachelor_degree": "Diplomă de licență",
+            "doctoral_degree": "Diplomă de doctorat",
+            "high_school": "Liceu",
+            "master_degree": "Diplomă de master",
+            "no_formal_education": "Fără educație formală",
+            "other": "Altceva",
+            "primary_school": "Școală primară",
+            "secondary_school": "Școală gimnazială",
+            "vocational_training": "Formare profesională"
+          }
+        },
+        "potential_professional_summary": {
+          "info": "Această secțiune evidențiază posibilele roluri din sectorul de activitate în care persoana respectivă ar putea avea experiență, pe baza datelor disponibile.",
+          "title": "Rezumat profesional posibil",
+          "title_empty": "Nu există rezumat profesional",
+          "values": {
+            "agriculture": "Agricultură",
+            "arts_and_entertainment": "Arte și divertisment",
+            "construction": "Construcții",
+            "education": "Educaţie",
+            "energy_and_utilities": "Energie și utilități",
+            "engineering": "Inginerie",
+            "finance": "Finanţe",
+            "government": "Guvern",
+            "healthcare": "Sănătate",
+            "hospitality": "Ospitalitate",
+            "information_technology": "Tehnologia informației",
+            "legal": "Juridic",
+            "logistics_and_supply_chain": "Logistică și lanț de aprovizionare",
+            "manufacturing": "Fabricație",
+            "marketing": "Marketing",
+            "media_and_communications": "Media și Comunicații",
+            "military": "Militar",
+            "non_profit": "Organizație non-profit",
+            "other": "Altceva",
+            "real_estate": "Imobiliare",
+            "retail": "Cu amănuntul",
+            "sales": "Vânzări",
+            "science": "Știinţă",
+            "skilled_trades": "Meserii calificate",
+            "telecommunications": "Telecomunicații",
+            "transportation": "Transport"
+          }
+        },
+        "profile_summary": {
+          "associated_emails": "E-mailuri asociate:",
+          "associated_locations": "Locații asociate:",
+          "associated_usernames": "Nume de utilizator asociate:",
+          "empty": "-",
+          "not_identified": "Neidentificat",
+          "possible_owners": "Proprietari posibili:",
+          "potential_date_of_birth": "Data potențială a nașterii:",
+          "title": "Rezumatul profilului"
+        },
+        "sex_offenders": {
+          "alert": "Verificările de antecedente pentru infractori sexuali sunt disponibile numai pentru evidențele din SUA. Această secțiune oferă informații despre orice evidență privind infractorii sexuali înregistrați, inclusiv detalii despre infracțiuni, starea actuală de înregistrare și locațiile asociate.",
+          "report": {
+            "address_information": {
+              "city": "Oraș",
+              "country": "Țară",
+              "county": "Județ",
+              "latitude": "Latitudine",
+              "length_of_residence": "Durata rezidenței",
+              "longitude": "Longitudine",
+              "postal_code": "Cod poștal",
+              "state": "Stat",
+              "street": "Stradă",
+              "title": "Locație"
+            },
+            "body_characteristics": {
+              "age": "Vârstă",
+              "ethnicity": "Etnie",
+              "eye_color": "Culoarea ochilor",
+              "hair_color": "Culoarea părului",
+              "height": "Înălțime",
+              "race": "Rasă",
+              "sex": "Sex",
+              "title": "Caracteristici corporale",
+              "weight": "Greutate"
+            },
+            "crime_information": {
+              "conviction_date": "Data condamnării",
+              "crime": "Infracțiune",
+              "jurisdiction": "Jurisdicție",
+              "no_information_available": "Nu sunt disponibile informații",
+              "registration_date": "Data înregistrării",
+              "risk_level": "Nivelul de risc",
+              "title": "Informații despre infracțiuni"
+            },
+            "distinctive_features": {
+              "back": "Spate",
+              "head": "Cap",
+              "left_arm": "Brațul stâng",
+              "left_hand": "Mâna stângă",
+              "left_leg": "Piciorul stâng",
+              "right_arm": "Brațul drept",
+              "right_hand": "Mâna dreaptă",
+              "right_leg": "Piciorul drept",
+              "title": "Semne / Cicatrici / Tatuaje",
+              "torso": "Trunchi"
+            },
+            "download_report_button": "Descarcă PDF-ul",
+            "new_search": "Căutare nouă",
+            "others_information": {
+              "is_absconded": "Este fugar?",
+              "is_predator": "Este infractor?",
+              "jurisdiction": "Jurisdicție",
+              "link": "Link",
+              "original_report": "Sursă originală",
+              "title": "Altceva",
+              "yes": "Da"
+            },
+            "personal_information": {
+              "date_of_birth": "Data nașterii",
+              "first_name": "Prenume",
+              "first_name_nicknames": "Prenume Porecle",
+              "last_name": "Nume de familie",
+              "middle_name": "Al doilea prenume",
+              "name": "Nume",
+              "title": "Informații personale"
+            },
+            "photos": {
+              "title": "Fotografii"
+            },
+            "records_found_for": "Înregistrări găsite pentru",
+            "title_profile": "Profilul infractorilor sexuali",
+            "values": {
+              "body_part": {
+                "back": "Înapoi",
+                "head": "Cap",
+                "left_arm": "Brațul stâng",
+                "left_hand": "Mâna stângă",
+                "left_leg": "Piciorul stâng",
+                "right_arm": "Brațul drept",
+                "right_hand": "Mâna dreaptă",
+                "right_leg": "Piciorul drept",
+                "torso": "Trunchi"
+              },
+              "ethnicity": {
+                "hispanic": "Latino-american",
+                "non_hispanic": "Non-hispanic",
+                "other": "Altceva"
+              },
+              "eye_color": {
+                "amber": "Arămii",
+                "blue": "Albastru",
+                "brown": "Căprui",
+                "gray": "Gri",
+                "green": "Verde",
+                "hazel": "Căprui-verzui",
+                "other": "Altceva",
+                "red": "Roșu",
+                "violet": "Violet"
+              },
+              "hair_color": {
+                "auburn": "Castaniu",
+                "bald": "Chel",
+                "black": "Brunet",
+                "blonde": "Blond",
+                "brown": "Șaten",
+                "chestnut": "Castaniu",
+                "dyed": "Vopsit",
+                "gray": "Gri",
+                "other": "Altceva",
+                "red": "Roșu",
+                "white": "Alb"
+              },
+              "race": {
+                "asian": "Asiatic",
+                "black_or_african_american": "Negru sau afro-american",
+                "mixed": "Rasă mixtă",
+                "native_american": "Nativ american",
+                "other": "Altceva",
+                "pacific_islander": "Persoană originară din insulele Pacificului",
+                "white": "Alb"
+              },
+              "risk_level": {
+                "high": "Ridicat",
+                "low": "Scăzut",
+                "medium": "Mediu"
+              },
+              "sex": {
+                "female": "Femeie",
+                "intersex": "Intersex",
+                "male": "Bărbat"
+              }
+            }
+          },
+          "title": "Verificarea antecedentelor infractorilor sexuali"
+        },
+        "sex_offenders_background_check": {
+          "alt_icon": "Infractori sexuali",
+          "info": "Verificările antecedentelor infractorilor sexuali sunt disponibile numai pentru evidențele din SUA. Această secțiune oferă informații despre orice evidență privind infractori sexuali înregistrați, inclusiv detalii despre infracțiuni, starea actuală de înregistrare și locațiile asociate.",
+          "show_report": "Afișează raportul",
+          "title": "Verificarea antecedentelor infractorilor sexuali",
+          "title_empty": "Nu s-au găsit antecedente de infractori sexuali",
+          "unlock_report": "Deblochează raportul"
+        },
+        "upsell": {
+          "data_breach_history": {
+            "cancel": "Anulează",
+            "compromise_isa_contact_details": "Compromite datele de contact, inclusiv numerele de telefon, adresele de e-mail și adresele fizice",
+            "disclaimer_info": "Toate datele provin dintr-o bază de date cuprinzătoare care conține peste 14 miliarde de înregistrări din raportări publice de încălcări ale securității datelor. Identificăm și raportăm informațiile expuse, dar nu oferim acces la date sensibile, cum ar fi parole sau acreditări private.",
+            "limited_offer": "Ofertă limitată",
+            "personal_identifiers": "Identificatori personali, inclusiv nume de utilizator, nume complete și date de naștere",
+            "processing_payment": "În curs de procesare",
+            "professional_information_and_technical_data": "Informații profesionale și date tehnice, cum ar fi adresele IP",
+            "purchase": "Cumpără",
+            "special_limited_time_offer": "Această ofertă specială, valabilă pentru o perioadă limitată, încetează când părăsești această pagină.",
+            "title": "Raport privind încălcarea și scurgerea de date",
+            "total_due_today": "Total datorat:"
+          },
+          "payment_message": {
+            "add_payment_details": "Adaugă detaliile de plată",
+            "agree_description_upsell": "Continuând, îți oferi consimțământul pentru o plată unică de {price} și ești de acord cu <terms>Termenii de utilizare</terms> și <privacy>Politica de confidențialitate</privacy>. Suma va apărea ca „mobitrace.io” pe extrasul tău de cont.",
+            "close": "Închidere",
+            "payment_error": "Plata nu a reușit",
+            "payment_error_description": "Actualizează-ți detaliile de plată",
+            "payment_retry_description": "Nu ți-am putut procesa cardul. Încearcă din nou.",
+            "payment_success": "Plata a fost efectuată cu succes",
+            "payment_success_description": "Îți mulțumim pentru achiziție! Este gata de utilizare.",
+            "skip": "Omite",
+            "try_again": "Încearcă din nou",
+            "update_payment_method": "Actualizează metoda de plată"
+          },
+          "sex_offenders": {
+            "cancel": "Anulează",
+            "comprehensive_data": "Acces la date cuprinzătoare despre infractori din surse oficiale",
+            "disclaimer_info": "Verificările antecedentelor infractorilor sexuali sunt valabile doar în SUA. Autoritățile raportează aproximativ 800.000 de infractori sexuali înregistrați la nivel național, cu mii de noi înregistrări anual. Verifică persoanele necunoscute pentru a-ți asigura liniștea.",
+            "instant_nationwide_search": "Verificare instantanee la nivel național în toate registrele de stat și federale",
+            "limited_offer": "Ofertă limitată",
+            "processing_payment": "În curs de procesare",
+            "purchase": "Cumpără",
+            "realtime_verification": "Verificare în timp real cu cele mai recente date din registru",
+            "special_limited_time_offer": "Ofertă limitată de verificare a siguranței. Serviciul caută doar persoane înregistrate în Statele Unite.",
+            "title": "Verificarea Registrului Infractorilor Sexuali",
+            "total_due_today": "Total datorat:"
+          },
+          "sex_offenders_search": {
+            "cancel": "Anulează",
+            "disclaimer_info": "Verificările antecedentelor infractorilor sexuali sunt disponibile doar în SUA. Departamentul de Justiție al SUA raportează aproximativ 800.000 de infractori sexuali înregistrați la nivel național, cu mii de noi înregistrări anual. Verifică persoanele necunoscute pentru liniștea ta.\n\nAceasta este o achiziție unică de {price}. Adăugând acest raport, autorizezi o plată unică prin metoda de plată înregistrată. Această achiziție oferă acces la un singur raport din această gamă de produse suplimentare.",
+            "instant_access": "Căutare instantanee la nivel național în toate registrele de stat și federale",
+            "processing_payment": "Se procesează...",
+            "purchase": "Cumpără",
+            "secure_one_time_payment": "Verificare în timp real cu cele mai recente date din registru",
+            "special_limited_time_offer": "Ofertă limitată de verificare a siguranței. Serviciul caută doar persoane înregistrate în Statele Unite.",
+            "title": "Verificarea în Registrul infractorilor sexuali",
+            "total_due_today": "Total datorat:",
+            "verified_source_data": "Acces la date cuprinzătoare despre infractori din surse oficiale"
+          },
+          "social_networks": {
+            "cancel": "Anula",
+            "disclaimer_info": "Această căutare acoperă doar principalele platforme sociale și informațiile contului vizibile public. Acoperirea poate varia în funcție de disponibilitatea platformei și a profilului.",
+            "limited_offer": "Ofertă limitată",
+            "matching_accounts": "Găsiți conturile corespondente într-un raport pe baza datelor disponibile public.",
+            "processing_payment": "Prelucrare",
+            "purchase": "Cumpărare",
+            "related_usernames_and_public_profile": "Identificați numele de utilizator și prezența în profilul public asociate",
+            "scan_10_major_social_platforms": "Scanează peste 10 platforme sociale importante pentru conturi relevante",
+            "special_limited_time_offer": "Această ofertă specială, limitată în timp, expiră în momentul în care părăsiți această pagină.",
+            "title": "Verificarea platformelor sociale",
+            "total_due_today": "Total datorat:"
+          },
+          "unlimited_pdf_downloads": {
+            "cancel": "Anulează",
+            "disclaimer_info": "Aceasta este o achiziție unică. Făcând clic pe „Obține PDF nelimitat” ți se va percepe suma de {price}.",
+            "limited_offer": "Ofertă limitată",
+            "processing_payment": "În curs de procesare",
+            "purchase": "Cumpără",
+            "special_limited_time_offer": "Am adăugat o reducere în plus special pentru tine!",
+            "title": "Descărcări PDF nelimitate",
+            "total_due_today": "Total datorat:",
+            "upsell_benefits_1": "Accesibil offline",
+            "upsell_benefits_2": "Ușor de distribuit altora",
+            "upsell_benefits_3": "Imprimabil la cerere",
+            "upsell_benefits_4": "Clar, frumos formatat și ușor de citit"
+          }
+        }
+      },
+      "search": {
+        "components": {
+          "loader": {
+            "step_1": {
+              "carrier": {
+                "loadedDefaultText": "Detectat",
+                "text": "Operator"
+              },
+              "city": {
+                "loadedText": "Localizat",
+                "text": "Oraș"
+              },
+              "connecting": "Se inițiază căutarea numărului de telefon",
+              "country": {
+                "text": "Țară"
+              },
+              "location": {
+                "loadedText": "Detectat",
+                "text": "Locație"
+              },
+              "searching": "Se caută rezultate pentru",
+              "type": {
+                "loadedText": "Detectat",
+                "text": "Tip"
+              }
+            },
+            "step_2": {
+              "cta": "Obține locația",
+              "subtitle": "Căutarea ta este completă, iar acum poți accesa locația.",
+              "title": "Am găsit locația!"
+            }
+          },
+          "warning_dialog": {
+            "button_text": "Dezvăluie apelantul",
+            "description": "Raportul tău Mobitrace este gata. Află ce informații publice sunt asociate cu acest număr.",
+            "info_message": "Căutarea ta pentru {phoneNumber} este 100% sigură și securizată.",
+            "telephone": "(0-616) 32211",
+            "title": "AVERTISMENT:"
+          }
+        }
+      },
+      "search_complete": {
+        "components": {
+          "age_verification_dialog": {
+            "button_text": "Da, am 18 ani sau mai mult",
+            "description": "Acest raport poate avea un conținut sensibil și este destinat exclusiv publicului adult. Trebuie să ai minim 18 ani pentru a continua.",
+            "info_message": "Dacă ai sub 18 ani, te rugăm să <bold>părăsești pagina acum.</bold>",
+            "title": "Verificarea vârstei este obligatorie"
+          },
+          "customer_opinions_carousel": {
+            "opinion_1": {
+              "description": "Am observat că fiica mea a început să discute cu o persoană nouă și voiam să mă conving că totul este sigur. Mobitrace mi-a oferit liniște sufletească, verificând rapid cine era persoana. Uneori, o simplă căutare inversă face diferența.",
+              "rate": "4",
+              "timeAgo": "Acum 4 zile",
+              "title": "În sfârșit, puțină liniște sufletească",
+              "user": "Samantha Green"
+            },
+            "opinion_2": {
+              "description": "Acest instrument este foarte precis și a funcționat pentru majoritatea numerelor pe care le-am căutat. În câteva cazuri, informațiile nu erau chiar la zi, dar, una peste alta, Mobitrace mi-a oferit exact ce îmi trebuia. Fiabil și ușor de folosit.",
+              "rate": "4.5",
+              "timeAgo": "Acum o săptămână",
+              "title": "Rezultate precise pe care mă pot baza",
+              "user": "Daniel Brooks"
+            },
+            "opinion_3": {
+              "description": "Rapid, fiabil și precis. Mobitrace m-a impresionat prin viteza cu care mi-a oferit rezultatele. Sunt extrem de mulțumită de acest serviciu.",
+              "rate": "5",
+              "timeAgo": "Acum o zi",
+              "title": "Rapid, ușor și exact",
+              "user": "Olivia Carter"
+            },
+            "opinion_4": {
+              "description": "Mobitrace a devenit unul dintre instrumentele mele preferate pentru gestionarea apelurilor. Mă ajută să-mi dau seama cine se află, de fapt, în spatele numerelor necunoscute, ceea ce economisește timp și îmi permite să controlez cine mă poate contacta.",
+              "rate": "5",
+              "timeAgo": "Acum 2 săptămâni",
+              "title": "Îmi oferă control asupra apelurilor",
+              "user": "Matthew Lewis"
+            },
+            "opinion_5": {
+              "description": "Primeam apeluri de la un număr pe care nu-l recunoșteam și nu știam dacă ar fi cazul să mă îngrijorez. Am încercat Mobitrace și m-a ajutat imediat să identific apelantul. Acum îl folosesc de fiecare dată când ceva pare suspect.",
+              "rate": "4.5",
+              "timeAgo": "Acum 2 zile",
+              "title": " Acum știu mereu cine mă sună",
+              "user": "Sophia Turner"
+            },
+            "opinion_6": {
+              "description": "Primeam apeluri spam non-stop și mă scotea din minți. Cu Mobitrace, am aflat în sfârșit cine se afla în spatele lor. Profilul și istoricul apelantului mi-au oferit claritatea de care aveam nevoie.",
+              "rate": "5",
+              "timeAgo": "Acum o zi",
+              "title": "Fără bătăi de cap din cauza apelurilor spam",
+              "user": "Christopher Hall"
+            },
+            "opinion_7": {
+              "description": "Cel mai bun instrument pe care l-am încercat până acum! Cu Mobitrace, nu mai trebuie să mă stresez din cauza apelurilor sau mesajelor necunoscute. Este rapid, ușor și îmi oferă răspunsurile de care am nevoie.",
+              "rate": "4",
+              "timeAgo": "Acum 3 zile",
+              "title": "Cel mai bun instrument pentru apeluri necunoscute",
+              "user": "Grace Mitchell"
+            },
+            "opinion_8": {
+              "description": "Mobitrace m-a ajutat să descopăr cine mă suna de pe un număr necunoscut. A afișat chiar și nume conexe și legături de familie. Informațiile nu au fost perfecte în fiecare caz, dar per total mi-au oferit informații valoroase pe care nu le-am putut găsi în altă parte.",
+              "rate": "4.5",
+              "timeAgo": "Acum 2 zile",
+              "title": "Informații surprinzător de detaliate",
+              "user": "Ethan Parker"
+            },
+            "rate": "4.5",
+            "reviews": "Pe baza a <bold>456 de recenzii</bold>",
+            "title": "Excelent"
+          },
+          "customer_say_about": {
+            "subtitle": "Facem tot ce ne stă în putință pentru a-ți oferi cea mai bună experiență",
+            "title": "Ce spun clienții despre noi"
+          },
+          "owner_information": {
+            "collecting_data_address": "Adrese",
+            "collecting_data_email": "E-mail sau numere de telefon",
+            "collecting_data_job": "Informații privind locul de muncă",
+            "collecting_data_online": "Nume de utilizator online",
+            "collecting_data_past": "Relații anterioare",
+            "collecting_data_profiles": "Profiluri uitate",
+            "collecting_data_title": "Se colectează datele…",
+            "progress_bar_description": "Istoricul căutărilor tale este securizat și privat. Proprietarul numărului {phoneNumber} NU va fi notificat cu privire la căutarea ta.",
+            "progress_bar_percentage": "{percentage}%",
+            "subtitle": "Te rugăm să ai puțină răbdare în timp ce căutăm în miliarde de înregistrări.",
+            "title": "Se preiau informațiile despre proprietar pentru <bold></bold>"
+          }
+        }
+      },
+      "sign_up": {
+        "card_description": "Mobitrace este un instrument digital avansat care caută prin miliarde de înregistrări telefonice online. Deși majoritatea numerelor necunoscute vin de la spammeri sau agenți comerciali, rapoartele noastre pot conține informații care te vor surprinde.",
+        "card_title": "Notificare importantă",
+        "email_placeholder": "Adresa de e-mail",
+        "email_title": "Adresă de e-mail",
+        "errors": {
+          "email_exists": "Această adresă de e-mail este deja înregistrată. Încearcă să te autentifici sau folosește o altă adresă de e-mail.",
+          "invalid_email": "Introdu o adresă de e-mail validă."
+        },
+        "form_title": "Introdu adresa de e-mail pentru a-ți primi raportul",
+        "latest_report": "Cel mai recent raport din data de 3 martie 2025",
+        "submit_button": "Continuare",
+        "title": "Rezultatele sunt gata!"
+      },
+      "thank_you": {
+        "account_link": "Accesează-ți contul",
+        "click_below_to_account_your_link": "Dă click mai jos pentru a-ți accesa contul!",
+        "description": "Ți-am trimis detaliile comenzii și datele de acces la cont la {email}. Îți poți accesa contul chiar acum",
+        "did_you_like_your_shopping_experience": "Ți-a plăcut experiența de cumpărături?",
+        "more_details_feedback": "Așteptăm cu nerăbdare feedbackul tău detaliat: <email> support@mobitrace.io </email>",
+        "no": "Nu",
+        "thank_you_for_your_feedback": "Îți mulțumim pentru feedback!",
+        "title": "Plata a fost efectuată cu succes!",
+        "we_ll_work_on_making_it_better": "Ne vom strădui să fim mai buni!",
+        "yes": "Da"
+      },
+      "upsell": {
+        "already_purchased": "Cumpărat deja",
+        "data_breach": {
+          "disclaimer": "Toate datele provin dintr-o bază de date completă de peste 14 miliarde de înregistrări din raportarea publică a încălcărilor de date. Identificăm și raportăm informațiile expuse, dar nu oferim acces la date confidențiale, cum ar fi parole sau date de conectare private.",
+          "purchase": "Adaugă raportul de încălcare a datelor",
+          "special_limited_time_offer": "Această ofertă specială, valabilă pentru o perioadă limitată, încetează când părăsești această pagină.",
+          "title": "Raport privind încălcarea și scurgerea de date",
+          "upsell_benefits_1": "Identificatori personali, inclusiv nume de utilizator, nume complete și date de naștere",
+          "upsell_benefits_2": "Compromite datele de contact, inclusiv numerele de telefon, adresele de e-mail și adresele fizice",
+          "upsell_benefits_3": "Informații profesionale și date tehnice, cum ar fi adresele IP"
+        },
+        "limited_offer": "Ofertă limitată",
+        "pdf": {
+          "disclaimer": "Aceasta este o achiziție unică. Făcând clic pe „Obține PDF nelimitat” ți se va percepe suma de {price}.",
+          "purchase": "Obține PDF nelimitat",
+          "special_limited_time_offer": "Am adăugat o reducere în plus special pentru tine!",
+          "title": "Descărcări PDF nelimitate",
+          "upsell_benefits_1": "Accesibil offline",
+          "upsell_benefits_2": "Ușor de distribuit altora",
+          "upsell_benefits_3": "Imprimabil la cerere",
+          "upsell_benefits_4": "Clar, frumos formatat și ușor de citit"
+        },
+        "processing": "În curs de procesare",
+        "sex_offenders": {
+          "disclaimer": "Verificările antecedentelor infractorilor sexuali sunt valabile doar în SUA. Autoritățile raportează aproximativ 800.000 de infractori sexuali înregistrați la nivel național, cu mii de noi înregistrări anual. Verifică persoanele necunoscute pentru a-ți asigura liniștea.",
+          "purchase": "Adaugă verificarea în Registrul infractorilor sexuali",
+          "purchase_terms": "Aceasta este o achiziție unică de {price}. Adăugând acest raport, autorizezi o plată unică prin metoda de plată înregistrată. Această achiziție oferă acces la un singur raport din această gamă de produse suplimentare.",
+          "special_limited_time_offer": "Ofertă limitată de verificare a siguranței. Serviciul caută doar persoane înregistrate în Statele Unite.",
+          "title": "Verificarea în Registrul infractorilor sexuali",
+          "upsell_benefits_1": "Căutare instantanee la nivel național în toate registrele de stat și federale",
+          "upsell_benefits_2": "Acces la date cuprinzătoare despre infractori din surse oficiale",
+          "upsell_benefits_3": "Verificare în timp real cu cele mai recente date din registru"
+        },
+        "skip": "Omite",
+        "total_due_today": "Total datorat:"
+      }
+    },
+    "settings": {
+      "billing": {
+        "activate_dialog": {
+          "action_form": "Plătiți cu cardul",
+          "title": "Adaugă o metodă de plată"
+        },
+        "active_date": "Activ până la: {date}",
+        "active_state": "Activ",
+        "cancel_dialog": {
+          "cancel_cta": "Anulare abonament",
+          "canceling_cta": "Se efectuează anularea...",
+          "close_cta": "Închidere",
+          "description": "Prin anularea abonamentului, veți pierde accesul la toate caracteristicile și la asistență. Puteți reactiva abonamentul oricând.",
+          "description_canceled": "Abonamentul dvs. a fost anulat.<br> Nu vă vom mai taxa de acum înainte.",
+          "done_cta": "Gata",
+          "title": "Confirmare"
+        },
+        "cancel_subscription": "Anulare abonament",
+        "canceled_cta": "Reactivați abonamentul",
+        "canceled_date": "Anulat la: {date}",
+        "canceled_state": "Anulat",
+        "expired_cta": "Activați abonamentul",
+        "expired_date": "Expirat la: {date}",
+        "expired_description": "V-a expirat abonamentul. Reactivați-l pentru a continua.",
+        "expired_state": "Expirat",
+        "month": "lună",
+        "next_billing_date": "Următoarea facturare: {date}",
+        "privacy_policy": "Politica de confidențialitate",
+        "started_on_date": "Început la {date}",
+        "subscription": "Abonament",
+        "terms_and_conditions": "Termene și condiții",
+        "title": "Facturare",
+        "total": "Total:"
+      },
+      "get_help": {
+        "title": "Obține ajutor"
+      },
+      "my_account": {
+        "change_password": {
+          "confirm_password": "Confirmă parola",
+          "current_password": "Parola actuală",
+          "new_password": "Parola nouă",
+          "title": "Modifică parola"
+        },
+        "delete_cta": "Șterge contul",
+        "delete_dialog": {
+          "close_cta": "Închidere",
+          "delete_cta": "Șterge-ți contul",
+          "deleting_cta": "Se efectuează ștergerea...",
+          "description": "Sigur vrei să-ți ștergi contul? Reține că, odată ce confirmi, vei pierde imediat accesul la zona pentru membri.",
+          "description_canceled": "Contul dvs. a fost șters cu succes.",
+          "done_cta": "Gata",
+          "title": "Confirmare"
+        },
+        "errors": {
+          "confirm_password_required": "Confirmarea parolei este obligatorie",
+          "current_password_invalid": "Parola actuală este nevalidă",
+          "current_password_required": "Parola actuală este obligatorie",
+          "email_max_length": "Adresa de e-mail trebuie să conțină mai puțin de {maxLength} caractere.",
+          "email_required": "Adresa de e-mail este obligatorie",
+          "email_taken": "E-mailul a fost deja preluat",
+          "invalid_email": "Introdu o adresă de e-mail validă.",
+          "name_invalid_characters": "Numele nu poate conține numere.",
+          "name_invalid_special_characters": "Numele nu poate conține caractere speciale.",
+          "name_max_length": "Numele trebuie să conțină mai puțin de {maxLength} caractere.",
+          "name_required": "Numele este obligatoriu",
+          "new_password_must_differ_from_current_password": "Parola nouă trebuie să fie diferită de parola actuală",
+          "new_password_required": "Este necesară o parolă nouă",
+          "password_max_length": "Parola trebuie să conțină mai puțin de {maxLength} caractere.",
+          "password_min_length": "Parola trebuie să conțină cel puțin 6 caractere.",
+          "passwords_must_match": "Parolele trebuie să corespundă"
+        },
+        "notifications": {
+          "notify_status_changes": "Anunțați-mă despre schimbarea stării",
+          "notify_user_located": "Anunțați-mă imediat ce utilizatorul este localizat",
+          "title": "Notificări"
+        },
+        "profile": {
+          "email": "Adresa de e-mail",
+          "name": "Prenume și nume de familie",
+          "title": "Detalii profil"
+        },
+        "submit_cta": "Salvează modificările",
+        "success_title": "Contul dvs. a fost actualizat",
+        "title": "General"
+      },
+      "title": "Setări"
+    },
+    "sex_offenders_search": {
+      "form": {
+        "city_placeholder": "Oraș",
+        "errors": {
+          "first_name_required": "Numele este obligatoriu",
+          "last_name_required": "Numele de familie este obligatoriu"
+        },
+        "first_name_placeholder": "Prenume",
+        "last_name_placeholder": "Nume de familie",
+        "state_placeholder": "Toate statele",
+        "submit_button": "Verifică acum",
+        "title": "Verifică registrul infractorilor sexuali",
+        "zip_placeholder": "Cod poștal"
+      },
+      "loading": {
+        "subtitle": "Vă rugăm să așteptați până când preluăm datele din registrul național.",
+        "title": "Verificarea registrului infractorilor sexuali..."
+      },
+      "results": {
+        "back": "Înapoi",
+        "continue": "Continuare",
+        "empty_title": "Nu s-au găsit infractori sexuali",
+        "results_found": "{count} rezultate găsite",
+        "results_found_subtitle": "Alegeți opțiunea care vi se potrivește cel mai bine pentru a continua.",
+        "search_again": "Caută din nou"
+      },
+      "title": "Infractori sexuali"
+    },
+    "sign_in": {
+      "description": "Introduceți adresa de e-mail pentru a vă conecta la contul dvs.",
+      "sign_up_link": "Înscriere",
+      "sign_up_prompt": "Nu aveți cont?",
+      "title": "Conectare"
+    },
+    "sign_up": {
+      "components": {
+        "sign_up_form": {
+          "continue_with_email": "Continuă cu adresa de e-mail",
+          "continue_with_facebook": "Continuă cu Facebook",
+          "continue_with_google": "Continuă cu Google",
+          "email_label": "Adresa de e-mail",
+          "email_placeholder": "Adresa de e-mail",
+          "errors": {
+            "email_exists": "Această adresă de e-mail este deja înregistrată. Încearcă să te conectezi sau folosește o altă adresă de e-mail.",
+            "invalid_email": "Introdu o adresă de e-mail validă."
+          },
+          "or": "sau"
+        }
+      },
+      "title": "Înscrie-te pentru a obține locația exactă a <brandColor>{phoneNumber}</brandColor>"
+    },
+    "status": {
+      "description": "Verifică progresul mai jos",
+      "detail_description": "Locație găsită",
+      "error_fetching_address": "Eroare la preluarea adresei",
+      "link_name": "Link pentru {name}",
+      "load_more_button": "Încărcați mai multe",
+      "loading_address": "Încărcare adresă...",
+      "located_status": "Localizat",
+      "no_locations_available": "Nu există solicitări de locație",
+      "pending_description": "Așteptăm ca destinatarul să-și împărtășească geolocalizarea",
+      "pending_status": "În așteptare",
+      "ready_status": "Raport creat",
+      "rejected_description": "Îmbunătățiți mesajul pentru a încuraja destinatarul să-și împărtășească locația",
+      "rejected_status": "Respins",
+      "reverse_lookup_description": "Rezumatul datelor publice găsite pentru numărul de telefon",
+      "reverse_lookup_report_for": "Raport de căutare inversă pentru {phone}",
+      "title": "Hub de activitate"
+    },
+    "success": {
+      "account_link": "Accesați-vă contul",
+      "click_below_to_account_your_link": "Faceți clic mai jos pentru a vă accesa contul!",
+      "description": "Ți-am trimis detaliile comenzii și datele de acces la cont la {email}. Îți poți accesa contul chiar acum",
+      "did_you_like_your_shopping_experience": "V-a plăcut experiența de cumpărături?",
+      "more_details_feedback": "Așteptăm cu nerăbdare feedbackul dvs. detaliat: <email> support@mobitrace.io </email>",
+      "no": "Nu",
+      "thank_you_for_your_feedback": "Vă mulțumim pentru feedback!",
+      "title": "Plata dvs. a fost efectuată cu succes!",
+      "we_ll_work_on_making_it_better": "Ne vom strădui s-o îmbunătățim!",
+      "yes": "Da"
+    },
+    "upsell": {
+      "cancel_button": "Nu, mulțumesc",
+      "description": "Beneficiați de asistență personalizată non-stop și de asistență tehnică de top, cu un singur clic.",
+      "footer_info": "Reține că, în funcție de regiunea în care te afli, este posibil să se adauge TVA de {percentage}% la totalul achiziției",
+      "order_details": "Detaliile comenzii",
+      "products": {
+        "add_button": "Adaugă",
+        "add_order_button": "Adaugă pentru {price}",
+        "added_state": "Adăugat",
+        "details_button": "Detalii",
+        "remove_button": "Eliminați",
+        "scan_pro": {
+          "description": "Descoperă toate aspectele Mobitrace cu ajutorul echipei noastre de asistență tehnică specializată. Explorează toate caracteristicile și află cum să profiți din plin de ele.",
+          "dialog": "<p> Profită la maximum de experiența cu Mobitrace utilizând asistență personalizată, pas cu pas, din partea echipei noastre de experți. Descoperă fiecare caracteristică și beneficiază de cea mai mare valoare de pe urma serviciilor noastre. </p> <ul> <li> <strong> Urmărire perfectă a locației. </strong> Urmărește cu ușurință locația unei persoane cu un singur link simplu. Echipa noastră te va îndruma pe parcursul întregului proces, pentru a ne asigura că fiecare detaliu tehnic este gestionat cu grijă. </li> <li> <strong> Asistență completă pentru profilare. </strong> Colaborează cu noi pentru a descoperi toate informațiile de care ai nevoie. De la contacte la profiluri de socializare, te ajutăm să obții o imagine completă a persoanei pe care o cauți. </li> <li> <strong> Găsește un telefon pierdut sau furat. </strong> Dacă ți-ai pierdut telefonul, te putem ajuta. Instrumentele noastre avansate îți pot localiza rapid dispozitivul și îi pot afișa poziția exactă pe hartă. </li> <li> <strong> Protejează-ți securitatea online. </strong> Scanăm bazele de date pentru a detecta dacă numărul tău de telefon sau adresa ta de e-mail au fost compromise de breșe de securitate ale terților, ajutându-te să rămâi cu un pas înaintea amenințărilor cibernetice. </li> </ul>",
+          "title": "ScanPRO"
+        },
+        "support_hotline": {
+          "description": "Nu aștepta la rând pentru a primi ajutor! Cu asistența tehnică prioritară, poți beneficia de asistență rapidă și personalizată din partea specialiștilor noștri tehnici calificați.",
+          "title": "Asistență prioritară non-stop"
+        }
+      },
+      "submit_button": "Adaugă la comandă",
+      "subtotal": "Subtotal",
+      "taxes": "TVA ({percentage}%)",
+      "title": "Profită la maximum de experiența cu Mobitrace!",
+      "total": "Total"
+    }
+  },
+  "routes": {
+    "forgot_password": "forgot-password",
+    "loader": "loader",
+    "reset_password": "reset-password",
+    "sign_in": "sign-in",
+    "sign_up": "sign-up"
+  }
+}

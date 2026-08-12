@@ -1,0 +1,112 @@
+name: Prod Release
+
+on:
+  release:
+    types:
+      - released
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency: ci-release
+
+env:
+  AWS_REGION: us-east-1
+  HELM_CHART_NAME: mobitrace-frontend
+  NEXT_TELEMETRY_DISABLED: 1
+  NEXT_PUBLIC_API_URL: https://mobitrace.io/api/v1
+  NEXT_PUBLIC_APP_URL: https://mobitrace.io
+  NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${{ secrets.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
+  NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: pk_live_51RULmDGC6OGucnjK0OfADkv3yCRP7yFLE4JNNBHrKEJiktnzUOQZyP1qPao4TOdDpk7Bvhb8DKNePHmTWIIXv0Hi00wAMjWI53
+  NEXT_PUBLIC_LEMON_STRIPE_PUBLISHABLE_KEY: pk_live_51TH7ROPgkjxrJtj4qC5uoi9VBCXdZLv0NEjgoWqXxcBSck19qlG8GgtAPAXSH1fjBrqVwz1L2gkXrCw0K9p9RmDf00d9QOhm5v
+  NEXT_PUBLIC_USE_LEMON_STRIPE: 1
+  NEXT_PUBLIC_GTM_ID: GTM-NSNTTK7P
+  NEXT_PUBLIC_LANGUAGES_VERSION: 2
+  NEXT_PUBLIC_CURRENCY_VERSION: 3
+  NEXT_PUBLIC_REQUEST_ZIP: true
+
+jobs:
+  initial:
+    name: Prepare image tag
+    uses: QR-CODE-App/devops-shared/.github/workflows/shared-generate-version.yaml@main
+    secrets: inherit
+    with:
+      environment: prod
+
+  build-docker-image:
+    name: Build and push docker image
+    runs-on: fmt-generic
+    needs:
+      - initial
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup nodejs
+        id: setup-nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - uses: azure/setup-helm@v4
+        id: helm-install
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver: kubernetes
+
+      - name: Build and push
+        id: build-image
+        run: |
+          docker buildx build -t ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ needs.initial.outputs.image-tag }} --platform linux/amd64 --push .
+
+      - name: Update job summary
+        run: printf "Docker image ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ needs.initial.outputs.image-tag }} was pushed successfully!" >> $GITHUB_STEP_SUMMARY
+
+      - name: Setup yq
+        uses: QR-CODE-App/devops-shared/.github/actions/setup-yq@main
+
+      - name: Update helm chart versions
+        working-directory: helm/${{ env.HELM_CHART_NAME }}
+        env:
+          HELM_TAG: ${{ needs.initial.outputs.chart-tag }}
+          IMAGE_TAG: ${{ needs.initial.outputs.image-tag }}
+        run: |
+          yq --inplace '.appVersion = env(IMAGE_TAG)' Chart.yaml
+          yq --inplace '.version = env(HELM_TAG)' Chart.yaml
+
+      - name: Helm lint
+        working-directory: helm/${{ env.HELM_CHART_NAME }}
+        env:
+          TAG: ${{ needs.initial.outputs.chart-tag }}
+        run: |
+          helm dependency build
+          rm -f Chart.lock
+          helm lint .
+
+      - name: Upload helm chart
+        working-directory: helm
+        run: |
+          helm package ${{ env.HELM_CHART_NAME }}
+          helm push ${{ env.HELM_CHART_NAME }}-${{ needs.initial.outputs.chart-tag }}.tgz oci://${{ steps.login-ecr.outputs.registry }}/
+
+      - name: Update job summary
+        run: echo "Helm chart version ${{ needs.initial.outputs.chart-tag }} was uploaded!" >> $GITHUB_STEP_SUMMARY

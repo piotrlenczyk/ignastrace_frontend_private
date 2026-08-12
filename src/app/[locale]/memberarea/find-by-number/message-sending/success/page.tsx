@@ -1,0 +1,70 @@
+import { redirect } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
+
+import { getFunnelPhone } from '@/actions/funnel-phone-number';
+import { auth } from '@/auth';
+import ProductLayout from '@/components/layouts/product-layout';
+import { Button } from '@/components/ui/button';
+import { ROUTES } from '@/constants/routes';
+import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
+import { usePhoneNumberFormatter } from '@/hooks/use-phone-number-formatter';
+import { Link } from '@/libs/i18n-routing';
+
+export default async function MessageSendingPage() {
+  const session = await auth();
+  const isAuthenticated = !!session;
+
+  if (!isAuthenticated) {
+    redirect(ROUTES.HOME);
+  }
+
+  const storedPhoneNumber = await getFunnelPhone();
+  const formattedNumber = usePhoneNumberFormatter(storedPhoneNumber);
+
+  const redirectUrl = await getSubscriptionRedirect({
+    routes: {
+      noSubscription: storedPhoneNumber ? ROUTES.CHECKOUT : ROUTES.HOME,
+      activeSubscription: storedPhoneNumber ? undefined : ROUTES.MEMBER.FIND_BY_NUMBER.HOME,
+      endedSubscription: ROUTES.MEMBER.SETTINGS.BILLING,
+    },
+  });
+
+  if (redirectUrl) {
+    redirect(redirectUrl);
+  }
+
+  const t = await getTranslations('pages.find_by_number_send_message_success');
+  const tFindByNumber = await getTranslations('pages.find_by_number_send_message');
+
+  const phoneNumber = t.rich('description', {
+    strong: () => <strong className="whitespace-nowrap font-bold">{formattedNumber.number}</strong>,
+    phoneNumber: () => formattedNumber.number,
+  });
+
+  return (
+    <ProductLayout>
+      <main className="flex flex-col px-4 lg:p-6">
+        <h1 className="h3 font-bold">{tFindByNumber('find_by_number')}</h1>
+        <div className="container-content flex flex-1 flex-col justify-center gap-8">
+          <div className="globe">
+            <div className="globe-map">
+            </div>
+          </div>
+          <div className="grid gap-2">
+            <h1 className="h3 text-center font-bold">
+              {t('title')}
+            </h1>
+            <p className="text-center">
+              {phoneNumber}
+            </p>
+          </div>
+          <Button size="lg" asChild>
+            <Link href={ROUTES.MEMBER.STATUS.HOME}>
+              {t('cta')}
+            </Link>
+          </Button>
+        </div>
+      </main>
+    </ProductLayout>
+  );
+}

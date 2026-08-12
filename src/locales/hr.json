@@ -1,0 +1,1882 @@
+{
+  "common": {
+    "back": "Natrag",
+    "close": "Zatvori",
+    "close_menu": "Zatvori izbornik",
+    "copied_to_clipboard": "Kopirano u međuspremnik",
+    "email_label": "E-mail adresa",
+    "errors": {
+      "email_exists": "Ovu e-mail adresu već koristi drugi korisnik",
+      "rate_limit_error": "Dosegli ste svoj dnevni limit. Pokušajte ponovno sutra.",
+      "rate_limit_error_title": "Dosegnuto ograničenje",
+      "server_error": "Pogreška poslužitelja",
+      "server_error_description": "Došlo je do pogreške prilikom obrade vašeg zahtjeva. Pokušajte ponovno."
+    },
+    "login": "Prijava",
+    "logout": "Odjava",
+    "open_menu": "Otvori izbornik",
+    "settings": "Postavke",
+    "subscription": "Pretplata"
+  },
+  "components": {
+    "country_selector": {
+      "no_results": "Pozivni broj zemlje nije pronađen.",
+      "placeholder": "Odaberite pozivni broj zemlje...",
+      "search_placeholder": "Pretraga po zemlji ili pozivnom broju..."
+    },
+    "forms": {
+      "change_email": {
+        "confirmation_email_sent_description": "Poslali smo e-mail s potvrdom na novu adresu. Molimo vas da potvrdite promjenu.",
+        "confirmation_email_sent_title": "E-mail s potvrdom poslan",
+        "current_email_label": "Trenutačni e-mail",
+        "current_password_label": "Radi sigurnosti unesite svoju trenutačnu lozinku",
+        "current_password_placeholder": "Unesite svoju trenutačnu lozinku",
+        "errors": {
+          "current_password_required": "Potrebna je trenutna lozinka.",
+          "invalid_email": "Unesite važeću e-adresu."
+        },
+        "new_email_label": "Novi e-mail:",
+        "new_email_placeholder": "Unesite novi e-mail",
+        "save_button": "Ažuriraj e-mail"
+      },
+      "change_password": {
+        "confirm_password_label": "Potvrdi novu lozinku",
+        "confirm_password_placeholder": "Potvrdite novu lozinku",
+        "current_password_label": "Trenutačna lozinka",
+        "current_password_placeholder": "Unesite trenutačnu lozinku",
+        "errors": {
+          "confirm_password_min_length": "Potvrdite novu lozinku s najmanje 6 znakova",
+          "current_password_required": "Potrebna je trenutna lozinka",
+          "new_password_min_length": "Nova lozinka mora imati najmanje 6 znakova",
+          "new_password_required": "Potrebna je nova lozinka",
+          "passwords_must_match": "Lozinke se moraju podudarati"
+        },
+        "new_password_label": "Nova lozinka",
+        "new_password_placeholder": "Unesite novu lozinku",
+        "save_button": "Spremi promjene"
+      },
+      "delete_account": {
+        "cancel_button": "Otkaži",
+        "confirm_button": "Da, izbriši moj račun",
+        "confirmation_message": "Vaš je račun uspješno izbrisan.",
+        "delete_account_button": "Izbriši račun",
+        "description": "Ova se radnja ne može poništiti. Molimo vas da budete sigurni u svoju odluku.",
+        "dialog_description": "Ova se radnja ne može poništiti. Ovime će se trajno izbrisati vaš račun i ukloniti vaši podaci s naših poslužitelja.",
+        "dialog_title": "Jeste li potpuno sigurni?",
+        "title": "Izbriši račun"
+      },
+      "edit_company": {
+        "add_social_network_button": "Dodaj društvenu mrežu",
+        "address_label": "Adresa",
+        "address_placeholder": "Unesite adresu tvrtke",
+        "company_name_label": "Naziv tvrtke",
+        "company_name_placeholder": "Unesite naziv tvrtke",
+        "errors": {
+          "company_name_required": "Naziv tvrtke je obavezan",
+          "url_invalid": "Molimo unesite valjani URL"
+        },
+        "hide_address_map": "Sakrij kartu",
+        "horizontal_logo_alt_text": "Horizontalni logo tvrtke",
+        "horizontal_logo_description": "Preporučeno: JPEG, PNG. Maks. 5 MB. 600 x 200 piksela",
+        "horizontal_logo_label": "Horizontalni logo",
+        "opening_hours_label": "Radno vrijeme",
+        "opening_hours_placeholder": "Npr., pon-pet: 9:00-17:00, sub: 10:00-14:00, ned: zatvoreno",
+        "profile_url_placeholder": "URL profila",
+        "save_button": "Spremi izmjene",
+        "show_address_map": "Prikaži kartu",
+        "social_networks_label": "Društvene mreže",
+        "squared_logo_alt_text": "Četvrtasti logo tvrtke",
+        "squared_logo_label": "Četvrtasti logo",
+        "website_label": "Web-mjesto",
+        "website_placeholder": "https://www.primjer.com"
+      },
+      "edit_profile": {
+        "description": "Ažurirajte svoje osobne podatke",
+        "errors": {
+          "first_name_required": "Ime je obavezno.",
+          "invalid_phone": "Broj telefona nije važeći.",
+          "last_name_required": "Prezime je obavezno."
+        },
+        "first_name_label": "Ime",
+        "first_name_placeholder": "Unesite svoje ime",
+        "last_name_label": "Prezime",
+        "last_name_placeholder": "Unesite svoje prezime",
+        "phone_label": "Broj telefona",
+        "phone_placeholder": "Unesite svoj broj telefona",
+        "privacy_label": "Privatnost",
+        "profile_picture_alt": "Profilna fotografija",
+        "profile_picture_label": "Profilna fotografija",
+        "public_email_label": "Neka moj e-mail bude javno vidljiv na mom profilu",
+        "public_phone_label": "Neka moj broj telefona bude javno vidljiv na mom profilu",
+        "save_button": "Spremi promjene",
+        "title": "Uredi profil",
+        "upload_description": "Preporučeno: JPEG, PNG. Maks. 5 MB. 400 x 400 piksela",
+        "upload_picture": "Prenesi novu fotografiju",
+        "whatsapp_label": "Imam WhatsApp račun s ovim brojem"
+      },
+      "forgot_password": {
+        "cancel_button": "Otkaži",
+        "email_label": "E-mail",
+        "email_placeholder": "Vaša e-mail adresa",
+        "errors": {
+          "invalid_email": "Molimo unesite važeću e-adresu."
+        },
+        "submit_button": "Pošalji lozinku",
+        "subtitle": "Unesite svoj e-mail i poslat ćemo vam lozinku",
+        "success": {
+          "done": "Gotovo",
+          "line_1": "Poslali smo vašu lozinku na adresu",
+          "line_2": "Za prijavu provjerite e-poštu.",
+          "title": "Lozinka je poslana"
+        },
+        "title": "Zaboravili ste lozinku?"
+      },
+      "reset_password": {
+        "confirm_password_label": "Potvrdi novu lozinku",
+        "confirm_password_placeholder": "Potvrdite svoju novu lozinku",
+        "errors": {
+          "password_min_length": "Lozinka mora imati najmanje 6 znakova.",
+          "passwords_do_not_match": "Lozinke se ne podudaraju."
+        },
+        "new_password_label": "Nova lozinka",
+        "new_password_placeholder": "Unesite novu lozinku",
+        "submit_button": "Resetiranje lozinke"
+      },
+      "sign_in": {
+        "email_label": "E-mail adresa",
+        "email_placeholder": "Vaša e-mail adresa",
+        "errors": {
+          "account_not_found": "Nismo mogli pronaći vaš Mobitrace račun.",
+          "invalid_credentials": "E-pošta i lozinka koje ste unijeli ne odgovaraju našim podacima. Molimo provjerite svoje vjerodajnice i pokušajte ponovno.",
+          "invalid_email": "Molimo unesite važeću e-adresu.",
+          "password_min_length": "Lozinka mora imati najmanje 6 znakova."
+        },
+        "forgot_password": "Zaboravili ste lozinku?",
+        "or": "ili",
+        "password_label": "Lozinka",
+        "password_placeholder": "Vaša lozinka",
+        "submit_button": "Prijava",
+        "title": "Prijavite se u svoj račun"
+      },
+      "stripe_form": {
+        "card_name_placeholder": "Ime na kartici",
+        "credit_card_label": "Kreditna kartica",
+        "credit_card_placeholder": "1234 1234 1234 1234",
+        "cvc_placeholder": "CVC",
+        "errors": {
+          "apple_pay_not_available": "Apple Pay nije podržan",
+          "apple_pay_not_available_description": "Nemate omogućen ovaj način plaćanja za ovaj uređaj ili preglednik. Odaberite drugi način plaćanja.",
+          "card_name_required": "Molimo unesite ime s kartice.",
+          "card_number_required": "Molimo unesite broj kartice.",
+          "cvc_required": "Molimo unesite CVC.",
+          "expiration_date_required": "Molimo unesite datum isteka.",
+          "google_pay_not_available": "Google Pay nije podržan",
+          "google_pay_not_available_description": "Nemate omogućen ovaj način plaćanja za ovaj uređaj ili preglednik. Odaberite drugi način plaćanja.",
+          "name_invalid_characters": "Ime ne može sadržavati brojeve.",
+          "name_invalid_special_characters": "Ime ne smije sadržavati posebne znakove.",
+          "stripe_generic_error": "Ne možemo potvrditi autentičnost tvog načina plaćanja. Odaberi drugi način plaćanja i pokušaj ponovno.",
+          "stripe_generic_error_title": "Pogreška pri plaćanju",
+          "zip_code_invalid_format": "Unesite važeći poštanski broj."
+        },
+        "expiration_date_placeholder": "MM/GG",
+        "zip_code_placeholder": "Poštanski broj (opcionalno)"
+      }
+    },
+    "image_upload_input": {
+      "upload_button_text": "Prenesi novu fotografiju",
+      "upload_description": "Preporučeno: JPEG, PNG. Maks. 5 MB. 400 x 400 piksela",
+      "upload_label": "Profilna fotografija"
+    },
+    "phone_input": {
+      "errors": {
+        "invalid_phone": "Molimo unesite važeći broj telefona."
+      },
+      "label": "Unesite broj koji želite pronaći",
+      "no_results": "Pozivni broj zemlje nije pronađen.",
+      "phone_placeholder": "123456789",
+      "search_placeholder": "Pretraga po zemlji ili pozivnom broju...",
+      "submit": "Lociraj"
+    },
+    "settings_navigator": {
+      "change_email": {
+        "description": "Ažurirajte svoju e-mail adresu",
+        "label": "Promjena e-maila"
+      },
+      "change_password": {
+        "description": "Ažurirajte lozinku svog računa",
+        "label": "Promjena lozinke"
+      },
+      "company_profile": {
+        "description": "Ažurirajte podatke o svojoj tvrtki",
+        "label": "Profil tvrtke"
+      },
+      "delete_account": {
+        "description": "Izbrišite svoj račun i sve povezane podatke",
+        "label": "Izbriši račun"
+      },
+      "edit_profile": {
+        "description": "Ažurirajte svoje osobne podatke",
+        "label": "Uredi profil"
+      },
+      "no_access": "Nemate pristup ovom odjeljku. Ovaj sadržaj je isključivo za profesionalne korisnike.",
+      "notifications": {
+        "description": "Upravljajte svojim postavkama za obavijesti e-mailom",
+        "label": "Obavijesti"
+      },
+      "subscription": {
+        "description": "Upravljajte svojim planom pretplate",
+        "label": "Pretplata"
+      },
+      "title": "Postavke"
+    }
+  },
+  "consent": {
+    "accept": "Slažem se",
+    "decline": "Odbij",
+    "decline_accept": "Natrag na početnu",
+    "decline_description": "Za korištenje naše usluge razmjene poruka - posebno za američke i kanadske brojeve - potrebno nam je vaše dopuštenje. Bez njega ova značajka nije dostupna. Vratite se bilo kada da biste nastavili.",
+    "decline_title": "Ups! Potreban nam je vaš pristanak",
+    "description": "Da bismo locirali vaš telefon, moramo vam poslati SMS. Potvrdite da ste suglasni s time da ga primite.",
+    "title": "Potrebna je potvrda"
+  },
+  "contest": {
+    "agree": "Slažem se",
+    "decline": "Odbij",
+    "description": "Potvrđujem da je uneseni broj telefona moj i pristajem na primanje poruka.",
+    "title": "Primanje poruka?"
+  },
+  "footer": {
+    "brand": "Mobitrace.io",
+    "description": "Locirajte bilo koji mobilni telefon — brzo i jednostavno uz Mobitrace.",
+    "links": {
+      "about_us": "O nama",
+      "cancel_subscription": "Otkaži pretplatu",
+      "contact": "Kontakt",
+      "contacts": "Kontakti",
+      "cookie_policy": "Pravila kolačića",
+      "faqs": "Česta pitanja",
+      "home": "Početna",
+      "location_number": "Lociranje po broju",
+      "login": "Prijava",
+      "pricing": "Cijene",
+      "privacy policy": "Pravila o privatnosti",
+      "reverse_lookup": "Obrnuto pretraživanje",
+      "terms_and_conditions": "Uvjeti i odredbe"
+    },
+    "rights": "Sva prava pridržana."
+  },
+  "header": {
+    "about": "O nama",
+    "home": "Početna",
+    "open_menu": "Otvori izbornik",
+    "sign_in": "Prijava",
+    "sign_up": "Registracija"
+  },
+  "language": {
+    "english": "English",
+    "spanish": "Español"
+  },
+  "navigation": {
+    "about_us": "O nama",
+    "contact": "Kontakt",
+    "dashboard": "Kontrolna ploča",
+    "faqs": "Česta pitanja",
+    "home": "Početna",
+    "mobile_dialog_description": "Ovaj dijalog sadrži glavne navigacijske poveznice",
+    "mobile_dialog_title": "Glavna navigacija",
+    "pricing": "Cijene",
+    "settings": "Postavke"
+  },
+  "pages": {
+    "about": {
+      "cards": {
+        "card_1": {
+          "description": "<p>Kod nas u Mobitraceu praćenje lokacije je jednostavno, pouzdano i sigurno. Naša je misija pomoći vam da ostanete povezani sa svojim voljenima ili ključnim osobljem, pomoću napredne tehnologije za praćenje lokacije telefona u stvarnom vremenu.</p>",
+          "title": "Naša misija"
+        },
+        "card_2": {
+          "description": "<p>Mobitrace kombinira praćenje telefona s detaljnim uslugama javnih informacija:</p><ul><li>Praćenje telefona: Pošaljite prilagođenu tekstovnu poruku s poveznicom, što primateljima omogućuje dijeljenje njihove lokacije. Praćenje se provodi samo uz izričitu suglasnost primatelja.</li><li>Dubinsko pretraživanje podataka: Pristupite kontaktnim podacima, povijesti lokacija i još mnogo čemu.</li><li>Globalni doseg: Funkcionira na svim telefonima, mrežama i zemljama – locirajte bilo koji telefonski broj, bilo gdje.</li></ul>",
+          "title": "Što nudimo"
+        },
+        "card_3": {
+          "description": "<ul><li>Jednostavnost: Generirajte URL, pošaljite ga i pratite nakon odobrenja.</li><li>Sigurnost i zaštita: Svo praćenje je uz pristanak i sigurno.</li><li>Točnost u stvarnom vremenu: Primajte ažurne i precizne podatke o lokaciji.</li></ul>",
+          "title": "Zašto odabrati Mobitrace"
+        },
+        "card_4": {
+          "description": "<p>Bilo da ste zabrinuti roditelj ili brižni prijatelj, Mobitrace je tu da vam pomogne da ostanete povezani s ljudima koji su vam najvažniji. Hvala vam što ste odabrali Mobitrace, gdje se praćenje i informacije spajaju kako biste uvijek bili informirani i sigurni.</p>",
+          "title": "Pridružite nam se"
+        }
+      },
+      "description": "Dobro došli u Mobitrace, vašu pouzdanu uslugu za jednostavno lociranje mobilnih telefona i pristup detaljnim javnim informacijama. Surađujemo s vodećim globalnim pružateljima podataka iz SAD-a, Ujedinjenog Kraljevstva, Europe i šire, osiguravajući točne pretrage telefona i adresa kako biste uvijek bili informirani i povezani.",
+      "title": "O nama"
+    },
+    "cancellation": {
+      "form": {
+        "email_label": "Vaša e-mail adresa",
+        "error_not_found_description": "Provjerite i pokušajte ponovno",
+        "error_not_found_title": "Ups! Nijedan račun ne odgovara toj e-mail adresi.",
+        "error_not_subscribed_title": "Niste pretplaćeni!",
+        "errors": {
+          "invalid_email": "Molimo unesite važeću e-adresu."
+        },
+        "submit": "Otkaži pretplatu",
+        "success_description": "Od sada vam se neće naplaćivati.",
+        "success_title": "Odjavljeni ste s pretplate!"
+      },
+      "info_email": "Ako se ne sjećate koji ste e-mail upotrijebili za registraciju, provjerite svoj pretinac pristigle pošte za e-mailove od \"mobitrace.io\". U suprotnom, kontaktirajte naš srdačni tim za korisničku podršku <link>ovdje</link>.",
+      "info_user": "Pretplatu možete otkazati i tako da se prijavite na svoj račun, otvorite karticu „Članstvo” i kliknete „Otkaži pretplatu”.",
+      "subtitle": "Jednostavno otkažite pretplatu unosom adrese e-pošte koja je upotrijebljena za izradu računa.",
+      "title": "Otkaži pretplatu"
+    },
+    "checkout": {
+      "action_form": "Dohvati lokaciju",
+      "agree_description": "Nastavkom pristajete na naplatu {trialPrice} sada i prihvaćate naše <terms>Uvjete korištenja</terms> i <privacy>Pravila o privatnosti</privacy>. Vaše plaćanje će se pojaviti kao \"mobitrace.io\" na izvodu vaše kreditne kartice. Nakon 7 dana naplaćivat će vam se {subscriptionPrice} svaka 4 tjedna do isteka pretplate. Otkazati možete u bilo kojem trenutku. Za sva pitanja možete nam se obratiti na support@mobitrace.io ili telefonom na +1 360 525 2573",
+      "agree_description_24": "Nastavkom plaćanja pristajete na pokretanje 24-satnog probnog razdoblja za {trialPrice} danas. Ako ne otkažete prije završetka probnog razdoblja, vaša pretplata će se automatski obnoviti po cijeni od {subscriptionPrice} svaka 4 tjedna. Možete otkazati u bilo kojem trenutku. Nastavkom također prihvaćate naše <terms>Uvjete korištenja</terms> i potvrđujete da ste upoznati s našim <privacy>Pravilima o privatnosti</privacy>.",
+      "agree_description_reactivate": "Nastavkom pristajete na ponovnu aktivaciju vaše pretplate i naplatu {subscriptionPrice} odmah. Vaše će se plaćanje pojaviti kao \"mobitrace.io\" na izvodu vaše kreditne kartice. Naplaćivat će vam se {subscriptionPrice} svaka 4 tjedna do isteka pretplate. Možete otkazati u bilo kojem trenutku. Za sva pitanja možete nas kontaktirati na support@mobitrace.io ili telefonom na +1 360 525 2573",
+      "agree_description_subscription": "Nastavkom korištenja pristajete na naplatu {subscriptionPrice} sada i prihvatite naše <terms>Uvjete korištenja</terms> i <privacy>Pravila o privatnosti</privacy>. Vaše će se plaćanje prikazati kao \"mobitrace.io\" na izvodu vaše kreditne kartice. Bit će vam naplaćeno {subscriptionPrice} svaka 4 tjedna do isteka pretplate. Pretplatu možete otkazati u bilo kojem trenutku. Za sva pitanja možete nas kontaktirati na support@mobitrace.io ili telefonom na +1 360 525 2573",
+      "back_description": "Ako niste u potpunosti zadovoljni unutar 7-dnevnog probnog razdoblja, samo nas obavijestite i rado ćemo vam vratiti puni iznos.",
+      "back_description_24": "Ako niste u potpunosti zadovoljni unutar 24-satnog probnog razdoblja, samo nas obavijestite i rado ćemo vam vratiti puni iznos.",
+      "back_title": "Povrat novca",
+      "cancel_description": "Možete otkazati u bilo kojem trenutku putem svoje kontrolne ploče ili tako da nas kontaktirate na <email>support@mobitrace.io</email>.",
+      "cancel_title": "Otkaži u bilo kojem trenutku",
+      "loading": "Obrada vašeg plaćanja…",
+      "title": "Otključaj lokaciju broja",
+      "total": "Ukupno za platiti:",
+      "trust_100": "100% sigurna plaćanja",
+      "trust_cancel": "Otkaži u bilo kojem trenutku"
+    },
+    "contact": {
+      "contact_information": {
+        "company_description": "<strong>Sjedinjene Američke Države</strong><br>800 N King Street, Suite 304-1119<br>Wilmington, DE 19801, SAD</br></br><strong>Ujedinjeni Arapski Emirati</strong></br>Building A1, Dubai Digital Park</br>Dubai Silicon Oasis, Dubai</br>IFZA Business Park, DDP</br>Premises No. 5342-001</br>Ujedinjeni Arapski Emirati</br></br><strong>Irska</strong></br>40 Mespil Road</br>Dublin 4, Irska",
+        "company_title": "Lokacije",
+        "email_description": "support@mobitrace.io",
+        "email_title": "E-mail",
+        "phone_description": "+1-360-525-2573",
+        "phone_title": "Telefon",
+        "title": "Podaci o kontaktu"
+      },
+      "contact_us": "Kontaktirajte nas",
+      "form": {
+        "billing_question": "Pitanje o naplati",
+        "email_label": "E-mail",
+        "errors": {
+          "invalid_email": "Molimo unesite važeću e-adresu.",
+          "invalid_name_format": "Unesite valjano ime.",
+          "invalid_surname_format": "Unesite valjano prezime.",
+          "max_length": "Premašili ste ograničenje broja znakova.",
+          "message_max_length": "Poruka ne može biti dulja od {maxLength} znakova.",
+          "message_required": "Molimo unesite svoju poruku.",
+          "name_required": "Molimo unesite svoje ime.",
+          "surname_required": "Unesite svoje prezime."
+        },
+        "message_label": "Poruka",
+        "name_label": "Ime",
+        "other": "Drugo",
+        "subject_label": "Predmet",
+        "subject_placeholder": "Odaberi",
+        "submit": "Pošalji poruku",
+        "submitted": "Vaša je poruka uspješno poslana! Naš će vam se tim javiti u roku od 2 sata.",
+        "submitted_title": "Poruka je poslana",
+        "suggested_improvement": "Predloženo poboljšanje",
+        "surname_label": "Prezime",
+        "technical_issue": "Tehnička poteškoća",
+        "title": "Obratite nam se"
+      },
+      "subtitle": "Imate li pitanja, povratne informacije ili vam je potrebna pomoć?<br/> Voljeli bismo čuti vaše mišljenje!",
+      "title": "Tu smo da pomognemo"
+    },
+    "error": {
+      "body": "Pokušajte ponovno kasnije ili se obratite podršci ako se problem nastavi.",
+      "cta": "Idi na početnu stranicu",
+      "title": "Ups! Nešto je pošlo po zlu"
+    },
+    "find_by_link": {
+      "find_by_link": "Pronađi po poveznici",
+      "form": {
+        "errors": {
+          "max_length": "Maksimalno ograničenje: 255 znakova.",
+          "min_length": "Poveznica mora sadržavati najmanje {n} znakova",
+          "required": "Link je potreban"
+        },
+        "linkLabel": "Dajte ime svojoj poveznici",
+        "linkPlaceholder": "npr. poveznica za WhatsApp",
+        "submitButton": "Generiraj moju poveznicu"
+      },
+      "steps": {
+        "step1": "Personalizirajte svoju poveznicu za praćenje",
+        "step2": "Podijelite je putem bilo koje aplikacije za poruke",
+        "step3": "Primite obavijest o statusu",
+        "step4": "Vidite njihovu lokaciju čim dodirnu poveznicu"
+      },
+      "title": "Izradite svoju prilagođenu poveznicu"
+    },
+    "find_by_link_success": {
+      "body": "Morate podijeliti ovu poveznicu s nekime koga želite pratiti.",
+      "generateNewCTA": "Generiraj novu poveznicu",
+      "statusCTA": "Provjeri status",
+      "subtitle": "Vaša je poveznica dolje u nastavku",
+      "title": "Uspješno"
+    },
+    "find_by_number_send_message": {
+      "CTA": "Pošalji",
+      "errors": {
+        "empty": "Ovo polje ne može biti prazno",
+        "max_length": "Tekst je predug. Maksimalni broj znakova je {n}."
+      },
+      "extra_info": {
+        "bullet_1": "Ime pošiljatelja prikazat će se kao „Mobitrace“.",
+        "bullet_2": "Svaka će poruka na kraju sadržavati jedinstvenu poveznicu na koju primatelj treba kliknuti."
+      },
+      "find_by_number": "Pronađi po broju",
+      "label": "Poruka",
+      "placeholder": "Unesite svoju poruku ovdje",
+      "title": "Traženje lokacije za <brandColor>{phoneNumber}</brandColor>"
+    },
+    "find_by_number_send_message_success": {
+      "cta": "Provjeri status",
+      "description": "Vaša je poruka  poslana na <strong>{phoneNumber}</strong>. Obavijestit ćemo vas čim lociramo telefon.",
+      "title": "Uspješno!"
+    },
+    "forgot_password": {
+      "back_to_login": "Prijava",
+      "description": "Unesite svoj e-mail i poslat ćemo vam upute za resetiranje lozinke.",
+      "remember_password": "Sjećate li se lozinke?",
+      "title": "Resetiranje lozinke"
+    },
+    "index": {
+      "faqs": {
+        "question_1": {
+          "answer": "Jednostavno unesete telefonski broj i nakon što primatelj pristane podijeliti svoju lokaciju, primit ćete njegovu točnu lokaciju.",
+          "question": "Kako mogu locirati nečiju lokaciju putem telefonskog broja?"
+        },
+        "question_2": {
+          "answer": "Da, geolociranje je legalno, ali zahtijeva izričitu suglasnost primatelja za dijeljenje lokacije, u skladu sa zakonima o privatnosti.",
+          "question": "Je li legalno geolocirati treću stranu?"
+        },
+        "question_3": {
+          "answer": "Ne, nije potrebna instalacija aplikacije niti softvera. Sve se rješava na daljinu putem naše usluge.",
+          "question": "Trebam li instalirati aplikaciju za praćenje telefonskog broja?"
+        },
+        "question_4": {
+          "answer": "Naša usluga podržava sve vrste telefona, od pametnih telefona do starijih modela, sve dok mogu primati tekstovne poruke.",
+          "question": "Koje su vrste telefona podržane?"
+        },
+        "question_5": {
+          "answer": "Da, naša usluga funkcionira globalno, bez obzira na lokaciju ili mrežu.",
+          "question": "Mogu li locirati telefonski broj bilo gdje u svijetu?"
+        },
+        "question_6": {
+          "answer": "Naša usluga pruža precizne podatke o lokaciji, uključujući točnu adresu, pomoću napredne GPS tehnologije.",
+          "question": "Koliko je točna geolokacija?"
+        },
+        "question_7": {
+          "answer": "Jednostavno unesite telefonski broj koji želite istražiti, a Mobitrace će se pobrinuti za ostalo. Naš sustav skenira razne baze podataka kako bi otkrio sve dostupne informacije povezane s tim brojem. Dok mnoga pretraživanja daju trenutne rezultate, detaljnije pretrage mogu potrajati malo dulje. Kad upotrijebite Mobitraceov alat za obrnuto pretraživanje telefona, brzo ćete vidjeti koliko je moćan i učinkovit.",
+          "question": "Kako funkcionira obrnuto pretraživanje telefonskog broja?"
+        },
+        "question_8": {
+          "answer": "Mobitraceova tehnologija obrnutog pretraživanja telefona vrlo je napredna. Kada pokrenete pretragu, on istražuje širok raspon izvora - uključujući javne zapise, online imenike, pa čak i manje vidljive podatkovne točke. Ako se pronađu relevantne informacije, one će vam se prikazati. Imajte na umu da ne može svaka pretraga dati trenutne rezultate, jer dostupnost ovisi o podacima koji su dostupni za svaki broj.",
+          "question": "Pruža li Mobitrace informacije o svakom broju?"
+        },
+        "question_9": {
+          "answer": "Da, definitivno! Zamislite da vas netko nazove i predstavi se kao vaša banka i zatraži vaš PIN kako bi se zaustavilo sumnjivo podizanje novca, ili primite poruku u kojoj piše da ste osvojili nagradu i da morate kliknuti na poveznicu da biste je preuzeli. Obje situacije mogu dovesti do financijskog gubitka ili krađe osobnih podataka. Mobitrace vam pomaže provjeriti tko se zapravo krije iza nepoznatih brojeva. Brzo obrnuto pretraživanje može vas upozoriti na potencijalne prijevare i zaštititi vaše podatke i financije.",
+          "question": "Može li mi Mobitrace pomoći da izbjegnem prijevare putem telefona i poruka?"
+        },
+        "title": "Česta pitanja"
+      },
+      "hero": {
+        "100": "100%",
+        "card_address": "29 Willow Street, Hackney Wick, London E9 5EN, Ujedinjeno Kraljevstvo",
+        "card_date": "27. rujna 2024. 18:46",
+        "card_phone": "+44 633 123 456",
+        "card_title": "Lokacija pronađena!",
+        "confidential": "povjerljivo",
+        "iphone_alt": "pametni telefon prikazuje kartu Londona s oznakom lokacije",
+        "secure": "Sigurno",
+        "ssl_encription": "SSL enkripcija",
+        "subtitle": "Pomoću platforme Mobitrace.io možete zatražiti lokacije telefona u stvarnom vremenu putem SMS-a ili poveznice. Praćenje se provodi samo uz izričitu suglasnost primatelja.",
+        "title": "Locirajte mobilni telefon"
+      },
+      "how_does_it_work": {
+        "step_1": {
+          "description": "Jednostavno unesite telefonski broj koji želite locirati i personalizirajte SMS poruku koja će se poslati primatelju.",
+          "title": "Unesite telefonski broj"
+        },
+        "step_2": {
+          "description": "Mobitrace će dostaviti vaš prilagođeni SMS, tražeći od primatelja da podijeli svoju lokaciju.",
+          "title": "Pošalji zahtjev za lokaciju"
+        },
+        "step_3": {
+          "description": "Čim primatelj pristane, primit ćete obavijest s njegovom točnom lokacijom, koju možete vidjeti izravno na karti na svojoj kontrolnoj ploči.",
+          "title": "Primite lokaciju na karti"
+        },
+        "title": "Kako to funkcionira?"
+      },
+      "instant_locator": {
+        "subtitle": "Mobitrace je ultimativno rješenje za otkrivanje nečije lokacije ili zapisa - jednostavnim korištenjem njihovog telefonskog broja.",
+        "title": "Locirajte broj <underlined>u trenu!</underlined>"
+      },
+      "meta_description": "Locirajte bilo koji mobilni telefon — brzo i jednostavno uz Mobitrace.",
+      "meta_title": "Mobitrace.io - Pronađite lokaciju bilo kojeg telefona, bilo gdje",
+      "og_description": "Locirajte bilo koji mobilni telefon — brzo i jednostavno uz Mobitrace.",
+      "og_image_alt": "Mobitrace.io - Pronađite lokaciju bilo kojeg telefona, bilo gdje",
+      "og_title": "Mobitrace.io - Pronađite lokaciju bilo kojeg telefona, bilo gdje",
+      "site_name": "Mobitrace",
+      "welcome_title": "Dobro došli u Mobitrace.io",
+      "why_choose": {
+        "reasons": {
+          "reason_1": {
+            "description": "Vaša privatnost nam je glavni prioritet. Budite mirni znajući da su vaši osobni podaci i aktivnosti pretraživanja uvijek sigurni i povjerljivi.",
+            "title": "Potpuna privatnost, zajamčeno"
+          },
+          "reason_2": {
+            "description": "Nema aplikacija, nema softvera, nema muke. Jednostavno unesite broj telefona i Mobitrace odmah počinje s radom.",
+            "title": "Nije potrebna instalacija"
+          },
+          "reason_3": {
+            "description": "Od najnovijih iPhonea i Androida do starih telefona na preklop — ako uređaj može primiti poruku, Mobitrace ga može locirati. Radimo sa svim telefonima i operaterima.",
+            "title": "Podržava sve telefone i operatere"
+          },
+          "reason_4": {
+            "description": "Mobitrace ne daje samo koordinate; on isporučuje točnu adresu. Iskoristite snagu napredne GPS tehnologije za neusporedivu točnost.",
+            "title": "Apsolutna preciznost"
+          },
+          "reason_5": {
+            "description": "Bez obzira na to gdje se u svijetu nalazite vi ili ciljani telefon, Mobitrace djeluje besprijekorno diljem svijeta.",
+            "title": "Globalni doseg"
+          }
+        },
+        "subtitle": "Jedan klik i nula napora za pronalaženje bilo čije lokacije diljem svijeta",
+        "title": "Zašto odabrati Mobitrace"
+      }
+    },
+    "legal": {
+      "cookie_policy": {
+        "content": "",
+        "title": "Pravila kolačića"
+      },
+      "refund_policy": {
+        "content": "",
+        "title": "Pravila o povratu novca"
+      }
+    },
+    "loader": {
+      "step_1": {
+        "carrier": {
+          "loadedDefaultText": "Otkriveno",
+          "text": "Operater"
+        },
+        "city": {
+          "loadedText": "Locirano",
+          "text": "Grad"
+        },
+        "connecting": "Povezivanje sa satelitima",
+        "country": {
+          "text": "Država"
+        },
+        "database": {
+          "loadedText": "Pristupljeno",
+          "text": "Baza podataka"
+        },
+        "location": {
+          "loadedText": "Otkriveno",
+          "text": "Mjesto"
+        },
+        "searching": "Pretraga rezultata na"
+      },
+      "step_2": {
+        "cta": "Nađi lokaciju",
+        "subtitle": "Vaša je pretraga gotova — sada ste spremni za pristup lokaciji.",
+        "title": "Lokacija pronađena!"
+      }
+    },
+    "loader_complete": {
+      "title": "Registrirajte se kako biste dobili točnu lokaciju za <brandColor>{phoneNumber}</brandColor>"
+    },
+    "locate": {
+      "error": "Nismo uspjeli dohvatiti adresu.",
+      "link_expired": "Poveznica je istekla",
+      "link_expired_explain": "Ovoj poveznici je već pristupljeno i više nije dostupna.",
+      "loading": "Učitavanje...",
+      "not_supported": "Vaš preglednik ne podržava geolokaciju.",
+      "rejected": "Dijeljenje lokacije je odbijeno.",
+      "thank_you": "Hvala vam"
+    },
+    "memberArea": {
+      "navigation": {
+        "contact_us": "Kontaktirajte nas",
+        "find_by_link": "Pronađi po poveznici",
+        "find_by_number": "Pronađi po broju",
+        "find_by_phone_lookup": "Pretraživanje telefona",
+        "my_activity": "Moja aktivnost",
+        "notifications": "Obavijesti",
+        "phone_lookup": "Pretraživanje telefona",
+        "settings": "Postavke",
+        "sex_offenders_search": "Seksualni prijestupnici",
+        "status": "Status",
+        "tools_library": "Biblioteka alata"
+      }
+    },
+    "not_found": {
+      "body": "Došlo je do pogreške. Pokušajte ponovno.",
+      "cta": "Idi na početnu stranicu",
+      "title": "Stranica nije pronađena"
+    },
+    "notifications": {
+      "empty": {
+        "text": "Trenutačno nemate obavijesti.",
+        "title": "Ovdje je mirno"
+      },
+      "link_accessed": "Pristupilo se do <strong>{notificationName}</strong>.",
+      "link_located": "Lokacija je sada dostupna.",
+      "link_rejected": "Dijeljenje lokacije je odbijeno.",
+      "load_more": "Učitaj više",
+      "phone_located": "<strong>Lokacija za {phone}</strong> uspješno je dobivena.",
+      "phone_rejected": "<strong>Lokacija za {phone}</strong> je odbijena.",
+      "title": "Obavijesti"
+    },
+    "onboarding": {
+      "navigation": {
+        "step_1": "Korak 1",
+        "step_2": "Korak 2",
+        "step_3": "Korak 3"
+      }
+    },
+    "onboarding_step1": {
+      "body": "Za lociranje telefonskog broja, Mobitrace šalje anonimni SMS s poveznicom za lociranje. Jednostavno pošaljite poruku i pustite naš sustav da obavi posao.",
+      "cta": "Nastavi",
+      "title": "Pošalji poveznicu za praćenje"
+    },
+    "onboarding_step2": {
+      "body": "Nakon što primatelj klikne na poveznicu, otvorite svoju Povijest lokacija kako biste pratili njegovo kretanje na karti u stvarnom vremenu.",
+      "cta": "Nastavi",
+      "title": "Prati u stvarnom vremenu"
+    },
+    "onboarding_step3": {
+      "body": "Dok čekate da primatelj otvori poruku, iskoristite druge moćne Mobitraceove značajke kako biste poboljšali svoje iskustvo praćenja.",
+      "cta": "Krenite",
+      "title": "Istražite više značajki"
+    },
+    "pricing": {
+      "cards": {
+        "subscription": {
+          "badge": "Pretplata",
+          "cta": "Pretplati se odmah",
+          "description": "Nakon što završi vaš probni period od 7 dana, {price} svaka 4 tjedna. Otkažite bilo kada.",
+          "duration": "Svaka 4 tjedna",
+          "features": {
+            "feature_1": "Podržava sve mobilne uređaje",
+            "feature_2": "Neograničeni zahtjevi za praćenje lokacije",
+            "feature_3": "Premium značajke poput prilagođenih poruka i točne lokacije",
+            "feature_4": "Podrška 24 sata dnevno 7 dana u tjednu bez dodatnih troškova"
+          },
+          "new_features": {
+            "feature_1": "Podržava sve mobilne uređaje",
+            "feature_2": "Neograničeni zahtjevi za praćenje lokacije",
+            "feature_3": "Preuzmite profesionalna izvješća u PDF formatu bez dodatnih troškova",
+            "feature_4": "Neograničeno obrnuto pretraživanje telefona sa sveobuhvatnim podacima",
+            "feature_5": "Podrška 24 sata dnevno 7 dana u tjednu bez dodatnih troškova"
+          }
+        },
+        "subscription_24": {
+          "badge": "Pretplata",
+          "cta": "Pretplati se odmah",
+          "description": "Kad završi vaše 24-satno probno razdoblje, {price} svaka 4 tjedna. Otkažite u bilo kojem trenutku.",
+          "duration": "Svaka 4 tjedna",
+          "features": {
+            "feature_1": "Podržava sve mobilne uređaje",
+            "feature_2": "Neograničeni zahtjevi za praćenje lokacije",
+            "feature_3": "Preuzmite profesionalna izvješća u PDF formatu bez dodatnih troškova",
+            "feature_4": "Neograničeno obrnuto pretraživanje telefona sa sveobuhvatnim podacima",
+            "feature_5": "Podrška 24 sata dnevno 7 dana u tjednu bez dodatnih troškova"
+          },
+          "new_features": {
+            "feature_1": "Podržava sve mobilne uređaje",
+            "feature_2": "Neograničeni zahtjevi za praćenje lokacije",
+            "feature_3": "Preuzmite profesionalna izvješća u PDF formatu bez dodatnih troškova",
+            "feature_4": "Neograničeno obrnuto pretraživanje telefona sa sveobuhvatnim podacima",
+            "feature_5": "Podrška 24 sata dnevno 7 dana u tjednu bez dodatnih troškova"
+          }
+        },
+        "title": "Cijene",
+        "trial": {
+          "badge": "Probno razdoblje",
+          "cta": "Započni probu",
+          "description": "Uživajte u neograničenom pristupu svim značajkama, bez rizika. Vaše početno plaćanje omogućuje potpuni pristup tijekom 7 dana, nakon čega će vam se naplaćivati {price} svaka 4 tjedna. Otkažite bilo kada.",
+          "duration": "7-dnevno probno razdoblje",
+          "features": {
+            "feature_1": "Podržava sve mobilne uređaje",
+            "feature_2": "Potpuni pristup svim značajkama tijekom 7 dana",
+            "feature_3": "Bez dugotrajne obveze za isprobavanje"
+          },
+          "new_features": {
+            "feature_1": "Podržava sve mobilne uređaje",
+            "feature_2": "Potpuni pristup svim značajkama tijekom 7 dana",
+            "feature_3": "Pristup detaljnim izvješćima o obrnutom pretraživanju telefona",
+            "feature_4": "Bez dugotrajne obveze za isprobavanje",
+            "feature_5": "Mogućnost preuzimanja izvješća u PDF formatu"
+          }
+        },
+        "trial_24": {
+          "badge": "Probno razdoblje",
+          "cta": "Započni probu",
+          "description": "Uživajte u neograničenom pristupu svim značajkama, bez rizika. Vaše početno plaćanje omogućuje puni pristup tijekom 24 sata, nakon čega će vam se naplaćivati {price} svaka 4 tjedna. Otkažite bilo kada.",
+          "duration": "24-satna proba",
+          "features": {
+            "feature_1": "Podržava sve mobilne uređaje",
+            "feature_2": "Potpuni pristup svim značajkama tijekom 24 sata",
+            "feature_3": "Bez dugotrajne obveze za isprobavanje",
+            "feature_4": "Mogućnost preuzimanja izvješća u PDF formatu"
+          },
+          "new_features": {
+            "feature_1": "Podržava sve mobilne uređaje",
+            "feature_2": "Potpuni pristup svim značajkama tijekom 24 sata",
+            "feature_3": "Pristup detaljnim izvješćima o obrnutom pretraživanju telefona",
+            "feature_4": "Bez dugotrajne obveze za isprobavanje",
+            "feature_5": "Mogućnost preuzimanja izvješća u PDF formatu"
+          }
+        }
+      },
+      "special_offer": "Posebna ponuda",
+      "subtitle": "Mobitrace nudi svoje usluge putem jednostavnog mjesečnog plana pretplate.",
+      "title": "Isprobajte Mobitraceove mogućnosti za <mark>samo {price}</mark> na 7 dana!",
+      "title_24": "Isprobajte Mobitrace za <mark>samo {price}</mark> na 24 sata!"
+    },
+    "reset_password": {
+      "back_to_login": "Prijava",
+      "description": "Unesite novu lozinku za resetiranje računa",
+      "remember_password": "Sjećate li se lozinke?",
+      "title": "Resetiranje lozinke"
+    },
+    "reverse_lookup": {
+      "checkout": {
+        "action_form": "Preuzmi izvješće",
+        "back_description": "Ako niste u potpunosti zadovoljni unutar 7-dnevnog probnog razdoblja, samo nas obavijestite i rado ćemo vam vratiti puni iznos.",
+        "back_description_24": "Ako niste u potpunosti zadovoljni unutar 24-satnog probnog razdoblja, samo nas obavijestite i rado ćemo vam vratiti puni iznos.",
+        "back_title": "Povrat novca",
+        "cancel_description": "Možete otkazati u bilo kojem trenutku putem svoje nadzorne ploče ili tako da nas kontaktirate na <email>support@mobitrace.io</email>.",
+        "cancel_title": "Otkaži u bilo kojem trenutku",
+        "title": "Otključaj izvješće za"
+      },
+      "components": {
+        "always_know_who_called": {
+          "step_1": {
+            "description": "Identificirajte sva pravna ili poslovna imena povezana s tim brojem.",
+            "title": "Puno ime"
+          },
+          "step_2": {
+            "description": "Saznajte potencijalne adrese povezane s tim brojem, i prošle i sadašnje.",
+            "title": "Kućna adresa"
+          },
+          "step_3": {
+            "description": "Ponovno se povežite s dalekim rođacima ili davno izgubljenom rodbinom.",
+            "title": "Članovi obitelji"
+          },
+          "step_4": {
+            "description": "Locirajte profile društvenih mreža na svim velikim platformama.",
+            "title": "Profili na društvenim mrežama"
+          },
+          "step_5": {
+            "description": "Pregledajte sve povezane javne e-mail adrese.",
+            "title": "E-mail adrese"
+          },
+          "step_6": {
+            "description": "Provjerite javno dostupnu povijest lokacija.",
+            "title": "Povijest lokacija"
+          },
+          "step_7": {
+            "description": "Prikupljajte informacije iz raznih izvora diljem interneta.",
+            "title": "Internetska aktivnost"
+          },
+          "subtitle": "Unosom broja u Mobitraceovo obrnuto pretraživanje telefona otkrit ćete javno dostupne informacije povezane s tim brojem.",
+          "title": "Uvijek znajte tko zove uz Mobitrace"
+        },
+        "as_seen_on": {
+          "title": "Kao što se vidi na"
+        },
+        "customer_carousel": {
+          "subtitle": "Dajemo sve od sebe da vam pružimo najbolje iskustvo ikad",
+          "title": "Što klijenti kažu <br class='lg:hidden'/> o nama"
+        },
+        "customer_opinions": {
+          "title": "Ljudi sa svih strana otkrivaju nepoznato"
+        },
+        "faqs": {
+          "question_1": {
+            "answer": "Jednostavno unesete telefonski broj i nakon što primatelj pristane podijeliti svoju lokaciju, primit ćete njegovu točnu lokaciju.",
+            "question": "Kako mogu pratiti nečiju lokaciju putem telefonskog broja?"
+          },
+          "question_2": {
+            "answer": "Da, geolociranje je legalno, ali zahtijeva izričitu suglasnost primatelja za dijeljenje lokacije, u skladu sa zakonima o privatnosti.",
+            "question": "Je li legalno geolocirati treću stranu?"
+          },
+          "question_3": {
+            "answer": "Ne, nije potrebna instalacija aplikacije niti softvera. Sve se rješava na daljinu putem naše usluge.",
+            "question": "Moram li instalirati aplikaciju za praćenje telefonskog broja?"
+          },
+          "question_4": {
+            "answer": "Naša usluga podržava sve vrste telefona, od pametnih telefona do starijih modela, sve dok mogu primati tekstovne poruke.",
+            "question": "Koje su vrste telefona podržane?"
+          },
+          "question_5": {
+            "answer": "Da, naša usluga funkcionira globalno, bez obzira na lokaciju ili mrežu.",
+            "question": "Mogu li pratiti telefonski broj bilo gdje u svijetu?"
+          },
+          "question_6": {
+            "answer": "Naša usluga pruža precizne podatke o lokaciji, uključujući točnu adresu, pomoću napredne GPS tehnologije.",
+            "question": "Koliko je točna geolokacija?"
+          },
+          "question_7": {
+            "answer": "Jednostavno unesite telefonski broj koji želite istražiti, a Mobitrace će se pobrinuti za ostalo. Naš sustav skenira više baza podataka kako bi otkrio sve dostupne informacije povezane s tim brojem. Dok mnoga pretraživanja daju trenutne rezultate, detaljnije pretrage mogu potrajati malo dulje. Kad upotrijebite Mobitraceov alat za obrnuto pretraživanje telefona, brzo ćete vidjeti koliko je moćan i učinkovit.",
+            "question": "Kako funkcionira obrnuto pretraživanje telefonskog broja?"
+          },
+          "question_8": {
+            "answer": "Mobitraceova tehnologija obrnutog pretraživanja telefona vrlo je napredna. Kada pokrenete pretragu, on istražuje širok raspon izvora - uključujući javne zapise, online imenike, pa čak i manje vidljive podatkovne točke. Ako se pronađu relevantne informacije, one će vam se prikazati. Imajte na umu da ne može svaka pretraga dati trenutne rezultate, jer dostupnost ovisi o podacima koji su dostupni za svaki broj.",
+            "question": "Pruža li Mobitrace informacije o svakom broju?"
+          },
+          "question_9": {
+            "answer": "Da, definitivno! Zamislite da vas netko nazove i predstavi se kao vaša banka i zatraži vaš PIN kako bi se zaustavilo sumnjivo podizanje novca, ili primite poruku u kojoj piše da ste osvojili nagradu i da morate kliknuti na poveznicu da biste je preuzeli. Obje situacije mogu dovesti do financijskog gubitka ili krađe osobnih podataka. Mobitrace vam pomaže provjeriti tko se zapravo krije iza nepoznatih brojeva. Brzo obrnuto pretraživanje može vas upozoriti na potencijalne prijevare i zaštititi vaše podatke i financije.",
+            "question": "Može li mi Mobitrace pomoći da izbjegnem prijevare putem telefona i poruka?"
+          },
+          "title": "Česta pitanja"
+        },
+        "get_report": {
+          "cta": "Preuzmi moje izvješće",
+          "lookup_today": "Danas je poduzeto više od 99 obrnutih pretraživanja",
+          "product": "7-dnevni potpuni pristup",
+          "product_24": "24-satni potpuni pristup",
+          "product_title": "Izvješće o pretraživanju",
+          "secure": "100% sigurno",
+          "title": "Ostvarite pristup svom izvješću!",
+          "trial_description": "30-dnevno jamstvo zadovoljstva"
+        },
+        "hero": {
+          "100": "100%",
+          "card_address": "29 Willow Street, Hackney Wick, London E9 5EN, Ujedinjeno Kraljevstvo",
+          "card_date": "27. rujna 2024. 18:46",
+          "card_phone": "+44 633 123 456",
+          "card_title": "Lokacija pronađena!",
+          "confidential": "povjerljivo",
+          "iphone_alt": "pametni telefon prikazuje kartu Londona s oznakom lokacije",
+          "secure": "Sigurno",
+          "ssl_encription": "SSL enkripcija",
+          "subtitle": "Identificirajte nepoznate pozivatelje u trenutku, uz otkrivanje punih imena, adresa, profila na društvenim mrežama i još mnogo toga.",
+          "title": "<mark>Obrnuto</mark> <mark>pretraživanje</mark> telefonskog broja"
+        },
+        "instant_locator": {
+          "subtitle": "Mobitrace je ultimativno rješenje za otkrivanje nečije lokacije ili zapisa - jednostavnim korištenjem njihovog telefonskog broja",
+          "title": "Potražite bilo koji telefonski broj odmah!"
+        },
+        "latest_results": {
+          "result": {
+            "description": "Prije {time} minute/a"
+          },
+          "subtitle": "Evo nekih od najnovijih rezultata naše usluge obrnutog pretraživanja telefonskog broja.",
+          "title": "Najnoviji rezultati"
+        },
+        "limited_offer_tag": {
+          "limited_offer": "Ograničena ponuda"
+        },
+        "phone_input": {
+          "errors": {
+            "invalid_phone": "Unesite valjani telefonski broj",
+            "rate_limit_exceeded": "Premašili ste svoju dnevnu kvotu.",
+            "rate_limit_exceeded_title": "Dosegnuto ograničenje"
+          },
+          "label": "Unesite broj koji želite potražiti",
+          "no_results": "Pozivni broj zemlje nije pronađen.",
+          "phone_placeholder": "123456789",
+          "search_placeholder": "Pretraga prema zemlji ili pozivnom broju...",
+          "submit": "Pretraživanje"
+        },
+        "pricing": {
+          "cards": {
+            "subscription": {
+              "badge": "Pretplata",
+              "cta": "Pretplati se odmah",
+              "description": "Nakon što završi vaše 7-dnevno probno razdoblje, ponuda će se automatski obnoviti na mjesečnu pretplatu. Pretplatu možete jednostavno otkazati u bilo kojem trenutku.",
+              "duration": "Mjesečna naknada",
+              "features": {
+                "feature_1": "Podržava sve mobilne uređaje",
+                "feature_2": "Neograničeni zahtjevi za praćenje lokacije",
+                "feature_3": "Preuzmite profesionalna izvješća u PDF formatu bez dodatnih troškova",
+                "feature_4": "Neograničeno obrnuto pretraživanje telefona sa sveobuhvatnim podacima",
+                "feature_5": "Podrška 24 sata dnevno 7 dana u tjednu bez dodatnih troškova"
+              }
+            },
+            "title": "Započnite svoju 7-dnevnu probu",
+            "trial": {
+              "badge": "Probno razdoblje",
+              "cta": "Započni probu",
+              "description": "S ovim početnim plaćanjem možete pristupati svim značajkama platforme Mobitrace bez ograničenja tijekom 7 dana. Nakon toga, primjenjuje se pretplata od {price} mjesečno.",
+              "duration": "7-dnevno probno razdoblje",
+              "features": {
+                "feature_1": "Podržava sve mobilne uređaje",
+                "feature_2": "Potpuni pristup svim značajkama tijekom 7 dana",
+                "feature_3": "Pristup detaljnim izvješćima o obrnutom pretraživanju telefona",
+                "feature_4": "Bez dugotrajne obveze za isprobavanje",
+                "feature_5": "Mogućnost preuzimanja izvješća u PDF formatu"
+              }
+            }
+          },
+          "special_offer": "Posebna ponuda",
+          "subtitle": "Mobitrace nudi svoje usluge putem jednostavnog mjesečnog plana pretplate.",
+          "title": "Isprobajte Mobitraceove mogućnosti za <mark>samo {price}</mark> na 7 dana!"
+        },
+        "recent_reveals": {
+          "subtitle": "Ovo su samo neki od nepoznatih pozivatelja koje smo nedavno identificirali.",
+          "title": "Nedavna otkrića"
+        },
+        "report_ready": {
+          "description": "Vaše izvješće je spremno!",
+          "download_report_button": "Preuzmi PDF",
+          "view_report_button": "Prikaz izvješća"
+        },
+        "summary_report_card": {
+          "caller_info": "Uz Mobitrace nećete morati nagađati tko se krije iza nepoznatog broja. Pružit ćemo vam podatke o pozivatelju, čak i informacije za koje oni ne znaju da su vam dostupne.",
+          "carrier": "Operater",
+          "continue": "Nastavi",
+          "latest_report": "Najnovije izvješće od 3. ožujka 2025.",
+          "line_type": "Vrsta linije",
+          "may_include": "Rezultati mogu uključivati",
+          "result_1": "Puno ime i adresa vlasnika",
+          "result_2": "Korisnička imena i profili na društvenim mrežama",
+          "result_3": "Fotografije i videozapisi",
+          "result_4": "Prošla internetska aktivnost",
+          "result_5": "E-mail adrese",
+          "result_6": "I puno više!",
+          "timer_desktop": "Vaše <mark>izvješće</mark> istječe za",
+          "timer_mobile": "Izvješće istječe za",
+          "title": "Vaše izvješće o broju <mark>{phoneNumber}</mark> je spremno!",
+          "trusted_by": "Uživa povjerenje više od <span class='font-bold'>7 milijuna</span> ljudi"
+        },
+        "upsell_progress_steps": {
+          "access_report": "Pristup izvješću",
+          "create_account": "Izradi račun",
+          "data_breach": "Povreda podataka",
+          "pdf_export": "Izvoz PDF-a",
+          "sex_offenders": "Seksualni prijestupnici"
+        },
+        "what_you_get": {
+          "item_1": "Pretražite bilo koji telefonski broj, i prošli i sadašnji, kako biste otkrili informacije o vlasniku",
+          "item_2": "Vlasnici telefonskog broja nikada neće biti obaviješteni o vašoj pretrazi.",
+          "item_3": "Naša baza podataka uvijek sadrži najnovije informacije.",
+          "item_4": "Mobitrace sastavlja svoja izvješća iz javno dostupnih informacija na internetu.",
+          "item_title_1": "Napredna pretraživanja telefona",
+          "item_title_2": "Vaša je privatnost 100 % zajamčena",
+          "item_title_3": "Konstantno ažuriranje",
+          "item_title_4": "Pretraga milijardi zapisa",
+          "title": "Dobivate sljedeće"
+        },
+        "why_use": {
+          "phone_input_label": "Unesite broj koji želite potražiti",
+          "reasons": {
+            "reason_1": {
+              "description": "Identificirajte nepoznate pozivatelje i uklonite nagađanje prilikom odgovaranja na poziv.",
+              "title": "Uvijek znate tko zove"
+            },
+            "reason_2": {
+              "description": "Mobitrace može pomoći u lociranju starijih ili izgubljenih veza, čak i sa starim telefonskim brojevima.",
+              "title": "Povežete se sa starim prijateljima"
+            },
+            "reason_3": {
+              "description": "Zaštitite se provjerom identiteta osoba s kojima razgovarate putem interneta.",
+              "title": "Provjerite identitete"
+            },
+            "reason_4": {
+              "description": "Sve je više prijevarnih poziva i strugača podataka. Mobitrace vam može pomoći u identificiranju zlonamjernih aktera bez potrebe za odgovaranjem na telefon.",
+              "title": "Identificirate sumnjive brojeve"
+            },
+            "reason_5": {
+              "description": "Unesite svoj broj u Mobitrace i provjerite koji su vaši osobni podaci dostupni te identificirajte potencijalna curenja podataka.",
+              "title": "Nadzirete svoj digitalni otisak"
+            }
+          },
+          "steps": {
+            "step_1": {
+              "description": "Zaštitite se od neželjenih pozivatelja i komercijalnih poziva."
+            },
+            "step_2": {
+              "description": "Provjerite prošlost potencijalnih partnera ili cimera."
+            },
+            "step_3": {
+              "description": "Saznajte tko stoji iza dosadnih neželjenih poziva."
+            },
+            "step_4": {
+              "description": "Ponovno se povežite sa starim prijateljima ili članovima obitelji."
+            },
+            "step_5": {
+              "description": "Identificirajte prijevare na aplikacijama za upoznavanje i razgovor."
+            }
+          },
+          "subtitle": "Bilo da tražite digitalnu zaštitu ili želite pronaći izgubljene veze, tu smo da vam pomognemo.<br>Mobitrace vam može pomoći da:",
+          "title": "Zašto koristiti obrnuto pretraživanje telefona",
+          "title_2": "Slučajevi dodatne upotrebe",
+          "title_badge": "DODATNO"
+        }
+      },
+      "member_area": {
+        "phone_lookup": {
+          "daily_limit": "Ograničenje: 5 pretraživanja svaka 24 sata.",
+          "label": "Otkrij ID pozivatelja",
+          "phone_lookup": "Pretraživanje telefona"
+        }
+      },
+      "report": {
+        "carrier_details": {
+          "info": "Ovaj odjeljak pruža informacije o telefonskom operateru osobe, uključujući podatke o mreži i vrsti usluge.",
+          "labels": {
+            "carrier": "Operater",
+            "international_format": "Međunarodni format",
+            "local_format": "Lokalni format",
+            "location": "Mjesto",
+            "type": "Vrsta"
+          },
+          "line_types": {
+            "landline": "Fiksni telefon",
+            "mobile": "Mobilni"
+          },
+          "title": "Podaci o operateru",
+          "title_empty": "Podaci o operateru"
+        },
+        "common": {
+          "no_data": "Nema dostupnih zapisa"
+        },
+        "data_breach_history": {
+          "alert_empty": "Ovaj odjeljak iznosi povijest povreda podataka, s detaljnim opisom svih incidenata koji su ugrozili osjetljive informacije. Uključuje informacije o prirodi povreda, pogođenim podacima i poduzetim mjerama za rješavanje i sprečavanje budućih slučajeva.",
+          "alert_success": "Ovaj odjeljak iznosi povijest povreda podataka, s detaljnim opisom svih incidenata koji su ugrozili osjetljive informacije. Uključuje informacije o prirodi povreda, pogođenim podacima i poduzetim mjerama za rješavanje i sprečavanje budućih slučajeva.",
+          "alert_title": "{count} povreda/e podataka",
+          "report": {
+            "breaches_found_for": "Pronađene povrede za",
+            "compromised_data": "Kompromitirani podaci",
+            "data_breaches": "povrede podataka",
+            "data_types": {
+              "date_of_birth": "Datum rođenja",
+              "education_levels": "Razina obrazovanja",
+              "email": "E-mail adresa",
+              "gender": "Spol",
+              "geo_location": "Geografska lokacija",
+              "name": "Ime",
+              "password": "Lozinka",
+              "phone": "Broj telefona",
+              "social_media_profiles": "Profili na društvenim mrežama",
+              "username": "Korisničko ime"
+            },
+            "download_report_button": "Preuzmi PDF",
+            "title": "Izvješće o povredi podataka"
+          },
+          "show_report": "Prikaži izvješće",
+          "title": "Povijest povreda podataka",
+          "unlock_report": "Otključaj izvješće"
+        },
+        "header": {
+          "button": "Preuzmi PDF",
+          "matches_found": "Pronađena podudaranja za",
+          "title": "Izvješće o pretraživanju telefona",
+          "unlock_download_pdf": "Otključaj Preuzmi PDF"
+        },
+        "looking_for_more_profiles_dialog": {
+          "description": "Ovo može potrajati nekoliko sekundi — pretražujemo dodatne platforme",
+          "title": "Traženje još profila"
+        },
+        "phone_public_information": {
+          "info": "Ovaj odjeljak pruža sažetak javno dostupnih informacija povezanih s telefonskim brojem osobe.",
+          "name": "Ime:",
+          "source": "Izvor:",
+          "sources": {
+            "data_breach": "Povreda podataka",
+            "other": "Drugo",
+            "public_records": "Javni zapisi",
+            "social_media": "Društvene mreže"
+          },
+          "title": "Javne informacije o telefonu",
+          "title_empty": "Nema javnih informacija o telefonu"
+        },
+        "photos": {
+          "info": "Ovaj odjeljak prikazuje moguće slike vlasnika telefona kako bi se olakšala vizualna identifikacija kad je to moguće.",
+          "other": "Drugo",
+          "title": "Fotografije",
+          "title_empty": "Nisu pronađene fotografije"
+        },
+        "possible_addresses": {
+          "info": "Ovaj odjeljak navodi moguće adrese povezane s osobom, što može pomoći u utvrđivanju mjesta boravišta ili prošlih lokacija.",
+          "labels": {
+            "city": "Grad",
+            "country": "Država",
+            "county": "Okrug",
+            "latitude": "Širina",
+            "length_of_residence": "Duljina boravka",
+            "longitude": "Dužina",
+            "postal_code": "Poštanski broj",
+            "state": "Država/pokrajina",
+            "street": "Ulica"
+          },
+          "title": "Moguće adrese",
+          "title_empty": "Nisu pronađene nikakve adrese",
+          "values": {
+            "years": "{count} godina"
+          }
+        },
+        "possible_contact_details": {
+          "info": "Ovaj odjeljak prikazuje e-mail adrese povezane s osobom radi lakše provjere kontaktnih podataka.",
+          "labels": {
+            "associated_emails": "Povezane e-mail adrese",
+            "associated_numbers": "Povezani brojevi"
+          },
+          "title": "Mogući kontaktni podaci",
+          "title_empty": "Nisu pronađeni kontaktni podaci"
+        },
+        "possible_personal_details": {
+          "info": "Ovaj odjeljak prikazuje moguće osobne podatke povezane s osobom, što pomaže u pružanju dodatnih uvida u njezinu pozadinu.",
+          "labels": {
+            "children": "Djeca",
+            "date_of_birth": "Datum rođenja",
+            "gender": "Spol",
+            "household_size": "Veličina kućanstva",
+            "income": "Prihod",
+            "marital_status": "Bračni status"
+          },
+          "title": "Mogući osobni podaci",
+          "title_empty": "Nisu pronađeni osobni podaci",
+          "values": {
+            "children": "Sadašnjost ({count})",
+            "divorced": "Razveden(a)",
+            "domestic_partnership": "Životno partnerstvo",
+            "engaged": "Zaručen(a)",
+            "female": "Žensko",
+            "in_relationship": "U vezi",
+            "intersex": "Međuspol",
+            "male": "Muško",
+            "married": "U braku",
+            "no_children": "Ništa",
+            "no_record_available": "Nema dostupnih zapisa",
+            "separated": "Rastavljen(a)",
+            "single": "Nije u vezi",
+            "widowed": "Udovac/ica"
+          }
+        },
+        "possible_social_media_accounts": {
+          "expand_search": {
+            "more_platforms": "Jednim klikom do više platformi",
+            "title": "Proširite svoju pretragu",
+            "unlock_platforms": "Otključaj platforme"
+          },
+          "info": "Ovaj odjeljak prikazuje moguće profile na društvenim mrežama koji mogu biti povezani s osobom, nudeći uvid u njezinu prisutnost na mreži.",
+          "labels": {
+            "id": "ID",
+            "name": "Korisničko ime",
+            "opne_url": "Otvori stranicu",
+            "source": "Izvor",
+            "url": "URL"
+          },
+          "network_not_found": "Nije pronađeno",
+          "no_accounts_found": "Ni na jednoj od provjerenih platformi nije pronađen nijedan račun. To znači da korisnik nije registriran na tim mrežema ili koristi podatke koji se razlikuju od danih parametara pretrage.",
+          "partial_result": {
+            "info": "Na nekim platformama nije pronađen nijedan račun — to znači da korisnik nije registriran na tim mrežema ili koristi podatke koji se razlikuju od danih parametara pretrage.",
+            "no_account_platforms": "Platforme bez pronađenih računa",
+            "title": "Rezultati pretrage gotovi"
+          },
+          "sources": {
+            "behance": "Behance",
+            "facebook": "Facebook",
+            "github": "Github",
+            "gitlab": "Gitlab",
+            "google": "Google",
+            "instagram": "Instagram",
+            "kick": "Kick",
+            "linkedin": "LinkedIn",
+            "pinterest": "Pinterest",
+            "reddit": "Reddit",
+            "snapchat": "Snapchat",
+            "telegram": "Telegram",
+            "threads": "Teme",
+            "tiktok": "Tiktok",
+            "tumblr": "Tumblr",
+            "twitch": "Twitch",
+            "x": "X",
+            "youtube": "Youtube"
+          },
+          "title": "Mogući računi na društvenim mrežama",
+          "title_empty": "Nisu pronađeni računi na društvenim mrežama"
+        },
+        "potential_education": {
+          "info": "Ovaj odjeljak sažima moguće podatke o obrazovanju, uključujući pohađane škole i stečene kvalifikacije.",
+          "title": "Moguće obrazovanje",
+          "title_empty": "Nije pronađeno obrazovanje",
+          "values": {
+            "associate_degree": "Diploma više škole",
+            "bachelor_degree": "Prvostupnička diploma",
+            "doctoral_degree": "Doktorat",
+            "high_school": "Srednja škola",
+            "master_degree": "Magisterij",
+            "no_formal_education": "Nema formalnog obrazovanja",
+            "other": "Drugo",
+            "primary_school": "Niži razredi osnovne škole",
+            "secondary_school": "Viši razredi osnovne škole",
+            "vocational_training": "Stručno osposobljavanje"
+          }
+        },
+        "potential_professional_summary": {
+          "info": "Ovaj odjeljak ističe moguće uloge u industriji u kojima osoba možda ima iskustva, na temelju dostupnih podataka.",
+          "title": "Mogući profesionalni sažetak",
+          "title_empty": "Nema profesionalnog sažetka",
+          "values": {
+            "agriculture": "Poljoprivreda",
+            "arts_and_entertainment": "Umjetnost i zabava",
+            "construction": "Građevinarstvo",
+            "education": "Obrazovanje",
+            "energy_and_utilities": "Energetika i komunalne usluge",
+            "engineering": "Inženjering",
+            "finance": "Financije",
+            "government": "Vlada",
+            "healthcare": "Zdravstvo",
+            "hospitality": "Ugostiteljstvo",
+            "information_technology": "Informacijske tehnologije",
+            "legal": "Pravo",
+            "logistics_and_supply_chain": "Logistika i opskrba",
+            "manufacturing": "Proizvodnja",
+            "marketing": "Marketing",
+            "media_and_communications": "Mediji i komunikacije",
+            "military": "Vojska",
+            "non_profit": "Neprofitne organizacije",
+            "other": "Drugo",
+            "real_estate": "Nekretnine",
+            "retail": "Maloprodaja",
+            "sales": "Prodaja",
+            "science": "Znanost",
+            "skilled_trades": "Zanati",
+            "telecommunications": "Telekomunikacije",
+            "transportation": "Promet"
+          }
+        },
+        "profile_summary": {
+          "associated_emails": "Povezane e-mail adrese:",
+          "associated_locations": "Povezane lokacije:",
+          "associated_usernames": "Povezana korisnička imena:",
+          "empty": "-",
+          "not_identified": "Nije utvrđeno",
+          "possible_owners": "Mogući vlasnici:",
+          "potential_date_of_birth": "Potencijalni datum rođenja:",
+          "title": "Sažetak profila"
+        },
+        "sex_offenders": {
+          "alert": "Provjere prošlosti seksualnih prijestupnika dostupne su samo za evidenciju u SAD-u. Ovaj odjeljak pruža informacije o svim registriranim evidencijama seksualnih prijestupnika, uključujući detalje o kaznenim djelima, trenutačni status registracije i povezane lokacije.",
+          "report": {
+            "address_information": {
+              "city": "Grad",
+              "country": "Država",
+              "county": "Okrug",
+              "latitude": "Širina",
+              "length_of_residence": "Duljina boravka",
+              "longitude": "Dužina",
+              "postal_code": "Poštanski broj",
+              "state": "Država/pokrajina",
+              "street": "Ulica",
+              "title": "Mjesto"
+            },
+            "body_characteristics": {
+              "age": "Dob",
+              "ethnicity": "Etnička pripadnost",
+              "eye_color": "Boja očiju",
+              "hair_color": "Boja kose",
+              "height": "Visina",
+              "race": "Rasa",
+              "sex": "Spol",
+              "title": "Tjelesne karakteristike",
+              "weight": "Težina"
+            },
+            "crime_information": {
+              "conviction_date": "Datum osude",
+              "crime": "Zločin",
+              "jurisdiction": "Jurisdikcija",
+              "no_information_available": "Nema dostupnih podataka",
+              "registration_date": "Datum registracije",
+              "risk_level": "Visina rizika",
+              "title": "Podaci o zločinu"
+            },
+            "distinctive_features": {
+              "back": "Natrag",
+              "head": "Glava",
+              "left_arm": "Lijeva ruka",
+              "left_hand": "Lijeva ruka",
+              "left_leg": "Lijeva noga",
+              "right_arm": "Desna ruka",
+              "right_hand": "Desna ruka",
+              "right_leg": "Desna noga",
+              "title": "Oznake / ožiljci / tetovaže",
+              "torso": "Torzo"
+            },
+            "download_report_button": "Preuzmi PDF",
+            "new_search": "Novo pretraživanje",
+            "others_information": {
+              "is_absconded": "Je li bjegunac?",
+              "is_predator": "Je li predator?",
+              "jurisdiction": "Jurisdikcija",
+              "link": "Poveznica",
+              "original_report": "Originalni izvor",
+              "title": "Drugo",
+              "yes": "Da"
+            },
+            "personal_information": {
+              "date_of_birth": "Datum rođenja",
+              "first_name": "Ime",
+              "first_name_nicknames": "Nadimci po imenu",
+              "last_name": "Prezime",
+              "middle_name": "Srednje ime",
+              "name": "Ime",
+              "title": "Osobni podaci"
+            },
+            "photos": {
+              "title": "Fotografije"
+            },
+            "records_found_for": "Pronađeni zapisi za",
+            "title_profile": "Profil seksualnih prijestupnika",
+            "values": {
+              "body_part": {
+                "back": "Natrag",
+                "head": "Glava",
+                "left_arm": "Lijeva ruka",
+                "left_hand": "Lijeva šaka",
+                "left_leg": "Lijeva noga",
+                "right_arm": "Desna ruka",
+                "right_hand": "Desna šaka",
+                "right_leg": "Desna noga",
+                "torso": "Torzo"
+              },
+              "ethnicity": {
+                "hispanic": "Hispanska",
+                "non_hispanic": "Ne-hispanska",
+                "other": "Drugo"
+              },
+              "eye_color": {
+                "amber": "Jantarne",
+                "blue": "Plave",
+                "brown": "Smeđe",
+                "gray": "Sive",
+                "green": "Zelene",
+                "hazel": "Lješnjak",
+                "other": "Drugo",
+                "red": "Crvene",
+                "violet": "Ljubičaste"
+              },
+              "hair_color": {
+                "auburn": "Crvenkastosmeđa",
+                "bald": "Ćelav",
+                "black": "Crna",
+                "blonde": "Plava",
+                "brown": "Smeđa",
+                "chestnut": "Kestenjasta",
+                "dyed": "Obojena",
+                "gray": "Sijeda",
+                "other": "Drugo",
+                "red": "Crvena",
+                "white": "Bijela"
+              },
+              "race": {
+                "asian": "Azijska",
+                "black_or_african_american": "Crna ili afro-američka",
+                "mixed": "Miješana",
+                "native_american": "Indijanska",
+                "other": "Drugo",
+                "pacific_islander": "Pacifičko otočka",
+                "white": "Bijela"
+              },
+              "risk_level": {
+                "high": "Visok",
+                "low": "Nizak",
+                "medium": "Srednji"
+              },
+              "sex": {
+                "female": "Žensko",
+                "intersex": "Međuspol",
+                "male": "Muško"
+              }
+            }
+          },
+          "title": "Provjera seksualnih prijestupnika"
+        },
+        "sex_offenders_background_check": {
+          "alt_icon": "Seksualni prijestupnici",
+          "info": "Provjere prošlosti seksualnih prijestupnika dostupne su samo za evidenciju u SAD-u. Ovaj odjeljak pruža informacije o svim registriranim evidencijama seksualnih prijestupnika, uključujući detalje o kaznenim djelima, trenutačni status registracije i povezane lokacije.",
+          "show_report": "Prikaži izvješće",
+          "title": "Provjera prošlosti seksualnih prijestupnika",
+          "title_empty": "Nije pronađena prošlost seksualnih prijestupnika",
+          "unlock_report": "Otključaj izvješće"
+        },
+        "upsell": {
+          "data_breach_history": {
+            "cancel": "Otkaži",
+            "compromise_isa_contact_details": "Kontaktni podaci, uključujući telefonske brojeve, e-mail adrese i fizičke adrese",
+            "disclaimer_info": "Svi se podaci dobavljaju iz sveobuhvatne baze podataka s više od 14 milijardi zapisa iz javnih prijava povreda podataka. Mi identificiramo i izvještavamo o izloženim informacijama, ali ne pružamo pristup osjetljivim podacima kao što su lozinke ili privatne vjerodajnice.",
+            "limited_offer": "Ograničena ponuda",
+            "personal_identifiers": "Osobni identifikatori uključujući korisnička imena, puna imena i datume rođenja",
+            "processing_payment": "Obrada",
+            "professional_information_and_technical_data": "Profesionalne informacije i tehnički podaci kao što su IP adrese",
+            "purchase": "Kupi",
+            "special_limited_time_offer": "Ova posebna vremenski ograničena ponuda istječe kad napustite ovu stranicu.",
+            "title": "Izvješće o povredi i curenju podataka",
+            "total_due_today": "Ukupno za plaćanje:"
+          },
+          "payment_message": {
+            "add_payment_details": "Dodaj podatke o plaćanju",
+            "agree_description_upsell": "Nastavkom pristajete na jednokratno plaćanje u iznosu od {price} i prihvaćate naše <terms>Uvjete korištenja</terms> i <privacy>Pravila o privatnosti</privacy> Naplata će se na vašem računu pojaviti kao „mobitrace.io“.",
+            "close": "Zatvori",
+            "payment_error": "Vaše je plaćanje bilo neuspješno",
+            "payment_error_description": "Ažurirajte svoje podatke za plaćanje",
+            "payment_retry_description": "Nismo mogli obraditi vašu karticu. Pokušajte ponovno.",
+            "payment_success": "Vaše je plaćanje bilo uspješno",
+            "payment_success_description": "Hvala vam na kupnji! Spremno je za korištenje.",
+            "skip": "Preskoči",
+            "try_again": "Pokušaj ponovno",
+            "update_payment_method": "Ažuriraj način plaćanja"
+          },
+          "sex_offenders": {
+            "cancel": "Otkaži",
+            "comprehensive_data": "Pristup sveobuhvatnim podacima o počiniteljima iz službenih izvora",
+            "disclaimer_info": "Provjere prošlosti seksualnih prijestupnika provode se samo unutar SAD-a. Ministarstvo pravosuđa navodi otprilike 800 000 registriranih seksualnih prijestupnika diljem zemlje s tisućama novih registracija godišnje. Provjerite nepoznate osobe radi svog mira.",
+            "instant_nationwide_search": "Trenutna provjera svih državnih i saveznih registara u zemlji",
+            "limited_offer": "Ograničena ponuda",
+            "processing_payment": "Obrada",
+            "purchase": "Kupi",
+            "realtime_verification": "Provjera u stvarnom vremenu na temelju najaktualnijih podataka iz registra",
+            "special_limited_time_offer": "Vremenski ograničena ponuda za sigurnosnu provjeru. Usluga pretražuje samo registrirane osobe u Sjedinjenim Državama.",
+            "title": "Provjera registra seksualnih prijestupnika",
+            "total_due_today": "Ukupno za plaćanje:"
+          },
+          "sex_offenders_search": {
+            "cancel": "Otkaži",
+            "disclaimer_info": "Provjere prošlosti seksualnih prijestupnika provode se samo unutar SAD-a. Ministarstvo pravosuđa SAD-a navodi otprilike 800 000 registriranih seksualnih prijestupnika diljem zemlje s tisućama novih registracija godišnje. Provjerite nepoznate osobe radi svog mira.\n\nOvo je jednokratna kupnja po cijeni od {price}. Dodavanjem ovog izvješća odobravate jednu naplatu svojim registriranim načinom plaćanja. Ova kupnja pruža pristup jednom izvješću unutar ovog raspona veće vrijednosti.",
+            "instant_access": "Trenutna pretraga svih državnih i saveznih registara u zemlji",
+            "processing_payment": "Obrada",
+            "purchase": "Kupi",
+            "secure_one_time_payment": "Provjera u stvarnom vremenu na temelju najaktualnijih podataka iz registra",
+            "special_limited_time_offer": "Vremenski ograničena ponuda za sigurnosnu provjeru. Usluga pretražuje samo registrirane osobe u Sjedinjenim Državama.",
+            "title": "Provjera registra seksualnih prijestupnika",
+            "total_due_today": "Ukupno za platiti:",
+            "verified_source_data": "Pristup sveobuhvatnim podacima o prijestupnicima iz službenih izvora"
+          },
+          "social_networks": {
+            "cancel": "Otkaži",
+            "disclaimer_info": "Ova pretraga pokriva samo velike društvene platforme i javno dostupne informacije o računima. Pokrivenost može varirati ovisno o dostupnosti platforme i profila.",
+            "limited_offer": "Ograničena ponuda",
+            "matching_accounts": "Pronađite odgovarajuće račune u izvješću koje se temelji na javno dostupnim podacima.",
+            "processing_payment": "Obrada",
+            "purchase": "Kupi",
+            "related_usernames_and_public_profile": "Identificirajte povezana korisnička imena i prisutnost na javnim profilima",
+            "scan_10_major_social_platforms": "Skenirajte više od 10 velikih društvenih platformi radi povezanih računa",
+            "special_limited_time_offer": "Ova posebna vremenski ograničena ponuda istječe kad napustite ovu stranicu",
+            "title": "Provjera društvenih platformi",
+            "total_due_today": "Ukupno za plaćanje:"
+          },
+          "unlimited_pdf_downloads": {
+            "cancel": "Otkaži",
+            "disclaimer_info": "Ovo je jednokratna kupnja. Klikom na „Neograničeni PDF-ovi“ naplatit će vam se {price}.",
+            "limited_offer": "Ograničena ponuda",
+            "processing_payment": "Obrada",
+            "purchase": "Kupi",
+            "special_limited_time_offer": "Primjenjuje se dodatni popust samo za vas!",
+            "title": "Neograničena preuzimanja PDF-ova",
+            "total_due_today": "Ukupno za platiti:",
+            "upsell_benefits_1": "Omogućen pristup i izvan mreže",
+            "upsell_benefits_2": "Jednostavno za dijeljenje s drugima",
+            "upsell_benefits_3": "Ispis na zahtjev",
+            "upsell_benefits_4": "Čisto, prekrasno formatirano i lako za čitanje"
+          }
+        }
+      },
+      "search": {
+        "components": {
+          "loader": {
+            "step_1": {
+              "carrier": {
+                "loadedDefaultText": "Otkriveno",
+                "text": "Operater"
+              },
+              "city": {
+                "loadedText": "Locirano",
+                "text": "Grad"
+              },
+              "connecting": "Započinje pretraživanje telefona",
+              "country": {
+                "text": "Država"
+              },
+              "location": {
+                "loadedText": "Otkriveno",
+                "text": "Mjesto"
+              },
+              "searching": "Pretraga rezultata na",
+              "type": {
+                "loadedText": "Otkriveno",
+                "text": "Vrsta"
+              }
+            },
+            "step_2": {
+              "cta": "Preuzmi lokaciju",
+              "subtitle": "Vaša je pretraga gotova — sada ste spremni za pristup lokaciji.",
+              "title": "Lokacija pronađena!"
+            }
+          },
+          "warning_dialog": {
+            "button_text": "Otkrij pozivatelja",
+            "description": "Vaše Mobitrace izvješće je spremno. Saznajte koje su javne informacije povezane s ovim brojem.",
+            "info_message": "Vaša pretraga broja {phoneNumber} je 100 % sigurna i zaštićena.",
+            "telephone": "(0-616) 32211",
+            "title": "UPOZORENJE:"
+          }
+        }
+      },
+      "search_complete": {
+        "components": {
+          "age_verification_dialog": {
+            "button_text": "Da, imam 18 godina ili više",
+            "description": "Ovo izvješće može sadržavati osjetljiv sadržaj i namijenjeno je samo odrasloj publici. Morate imati 18 ili više godina da biste nastavili.",
+            "info_message": "Ako imate manje od 18 godina, molimo vas da <bold>odmah izađete.</bold>",
+            "title": "Potrebna je provjera dobi"
+          },
+          "customer_opinions_carousel": {
+            "opinion_1": {
+              "description": "Primijetila sam da je moja kći počela razgovarati s nekim novim i htjela sam se uvjeriti da je sve sigurno. Mobitrace me umirio brzom provjerom tko je kontakt. Ponekad jednostavno obrnuto pretraživanje puno znači.",
+              "rate": "4",
+              "timeAgo": "prije 4 dana",
+              "title": "Napokon malo mira",
+              "user": "Samantha Green"
+            },
+            "opinion_2": {
+              "description": "Ovaj alat je vrlo točan i funkcionirao je za većinu brojeva koje sam tražio. U nekoliko slučajeva informacije nisu bile u potpunosti ažurne, ali općenito, Mobitrace mi je pružio upravo ono što mi je bilo potrebno. Pouzdan i jednostavan za korištenje.",
+              "rate": "4,5",
+              "timeAgo": "Prije 1 tjedan",
+              "title": "Točni rezultati na koje se mogu osloniti",
+              "user": "Daniel Brooks"
+            },
+            "opinion_3": {
+              "description": "Brzo, pouzdano i točno! Mobitrace me impresionirao brzinom kojom je pružio rezultate. Ne mogu biti zadovoljnija uslugom.",
+              "rate": "5",
+              "timeAgo": "prije 1 dan",
+              "title": "Brzo, jednostavno i precizno",
+              "user": "Olivia Carter"
+            },
+            "opinion_4": {
+              "description": "Mobitrace je postao jedan od mojih omiljenih alata za upravljanje pozivima. Pomaže mi da shvatim tko stoji iza nepoznatih brojeva, što mi štedi vrijeme i omogućuje mi kontrolu nad time tko me može dobiti.",
+              "rate": "5",
+              "timeAgo": "prije 2 tjedna",
+              "title": "Daje mi kontrolu nad mojim pozivima",
+              "user": "Matthew Lewis"
+            },
+            "opinion_5": {
+              "description": "Primala sam pozive s broja koji mi nije bio poznat i nisam bila sigurna trebam li se zabrinuti. Isprobala sam Mobitrace i odmah mi je pomogao da identificiram pozivatelja. Sada ga koristim kad god nešto izgleda sumnjivo.",
+              "rate": "4,5",
+              "timeAgo": "prije 2 dana",
+              "title": "Sad uvijek znam tko zove",
+              "user": "Sophia Turner"
+            },
+            "opinion_6": {
+              "description": "Neprestano sam primao neželjene pozive i to me izluđivalo. Uz Mobitrace, konačno sam shvatio tko stoji iza njih. Profil i povijest pozivatelja sve su mi razjasnili.",
+              "rate": "5",
+              "timeAgo": "prije 1 dan",
+              "title": "Nema više glavobolja zbog neželjenih poziva",
+              "user": "Christopher Hall"
+            },
+            "opinion_7": {
+              "description": "Najbolji alat koji sam dosad isprobala! S Mobitraceom se više ne moram brinuti zbog nepoznatih poziva ili poruka. Brz je, jednostavan i daje mi odgovore koji su mi potrebni.",
+              "rate": "4",
+              "timeAgo": "prije 3 dana",
+              "title": "Najbolji alat za nepoznate pozive",
+              "user": "Grace Mitchell"
+            },
+            "opinion_8": {
+              "description": "Mobitrace mi je pomogao otkriti tko me zove s nepoznatog broja. Čak je prikazao i povezana imena i obiteljske veze. Informacije nisu bile u potpunosti savršene, ali općenito su mi dale vrijedne uvide koje nisam mogao pronaći nigdje drugdje.",
+              "rate": "4,5",
+              "timeAgo": "prije 2 dana",
+              "title": "Iznenađujuće detaljne informacije",
+              "user": "Ethan Parker"
+            },
+            "rate": "4,5",
+            "reviews": "Na temelju <bold>456 recenzija</bold>",
+            "title": "Izvrsno"
+          },
+          "customer_say_about": {
+            "subtitle": "Dajemo sve od sebe da vam pružimo najbolje iskustvo ikad",
+            "title": "Što klijenti kažu o nama"
+          },
+          "owner_information": {
+            "collecting_data_address": "Adrese",
+            "collecting_data_email": "E-mail ili telefonski brojevi",
+            "collecting_data_job": "Informacije o poslu",
+            "collecting_data_online": "Korisnička imena na internetu",
+            "collecting_data_past": "Prošle veze",
+            "collecting_data_profiles": "Zaboravljeni profili",
+            "collecting_data_title": "Prikupljanje podataka...",
+            "progress_bar_description": "Vaša povijest pretraživanja je sigurna i privatna. Vlasnik broja {phoneNumber} NEĆE biti obaviješten o vašoj pretrazi.",
+            "progress_bar_percentage": "{percentage} %",
+            "subtitle": "Molimo vas za strpljenje dok istražujemo milijarde zapisa.",
+            "title": "Dohvaćanje podataka o vlasniku za <bold></bold>"
+          }
+        }
+      },
+      "sign_up": {
+        "card_description": "Mobitrace je napredni digitalni alat koji pretražuje milijarde telefonskih zapisa na internetu. Iako većina nepoznatih brojeva dolazi od neželjenih pozivatelja ili prodavača, naša izvješća mogu sadržavati informacije koje će vas šokirati.",
+        "card_title": "Važna obavijest",
+        "email_placeholder": "Vaša e-mail adresa",
+        "email_title": "E-mail adresa",
+        "errors": {
+          "email_exists": "Ova e-mail adresa već je registrirana. Pokušajte se prijaviti ili upotrijebite drugu e-mail adresu.",
+          "invalid_email": "Unesite važeći e-mail."
+        },
+        "form_title": "Unesite svoj e-mail da biste dobili svoje izvješće",
+        "latest_report": "Najnovije izvješće od 3. ožujka 2025.",
+        "submit_button": "Nastavi",
+        "title": "Rezultati su spremni!"
+      },
+      "thank_you": {
+        "account_link": "Pristupite svom računu",
+        "click_below_to_account_your_link": "Kliknite dolje za pristup svom računu!",
+        "description": "Poslali smo podatke o vašoj narudžbi i podatke za pristup računu na {email}. Sada možete pristupiti svom računu",
+        "did_you_like_your_shopping_experience": "Je li vam se svidjelo vaše iskustvo kupovine?",
+        "more_details_feedback": "Vaše detaljne povratne informacije su dobrodošle: <email>support@mobitrace.io</email>",
+        "no": "Ne",
+        "thank_you_for_your_feedback": "Hvala vam na povratnim informacijama!",
+        "title": "Vaše je plaćanje bilo uspješno!",
+        "we_ll_work_on_making_it_better": "Poradit ćemo na poboljšanju!",
+        "yes": "Da"
+      },
+      "upsell": {
+        "already_purchased": "Već kupljeno",
+        "data_breach": {
+          "disclaimer": "Svi se podaci dobavljaju iz sveobuhvatne baze podataka s više od 14 milijardi zapisa iz javnih prijava povreda podataka. Mi identificiramo i izvještavamo o izloženim informacijama, ali ne pružamo pristup osjetljivim podacima kao što su lozinke ili privatne vjerodajnice.",
+          "purchase": "Dodaj izvješće o povredi podataka",
+          "special_limited_time_offer": "Ova posebna vremenski ograničena ponuda istječe kad napustite ovu stranicu.",
+          "title": "Izvješće o povredi i curenju podataka",
+          "upsell_benefits_1": "Osobni identifikatori uključujući korisnička imena, puna imena i datume rođenja",
+          "upsell_benefits_2": "Kontaktni podaci, uključujući telefonske brojeve, e-mail adrese i fizičke adrese",
+          "upsell_benefits_3": "Profesionalne informacije i tehnički podaci kao što su IP adrese"
+        },
+        "limited_offer": "Ograničena ponuda",
+        "pdf": {
+          "disclaimer": "Ovo je jednokratna kupnja. Klikom na „Neograničeni PDF-ovi“ naplatit će vam se {price}.",
+          "purchase": "Neograničeni PDF-ovi",
+          "special_limited_time_offer": "Primjenjuje se dodatni popust samo za vas!",
+          "title": "Neograničena preuzimanja PDF-ova",
+          "upsell_benefits_1": "Omogućen pristup i izvan mreže",
+          "upsell_benefits_2": "Jednostavno za dijeljenje s drugima",
+          "upsell_benefits_3": "Ispis na zahtjev",
+          "upsell_benefits_4": "Čisto, prekrasno formatirano i lako za čitanje"
+        },
+        "processing": "Obrada",
+        "sex_offenders": {
+          "disclaimer": "Provjere prošlosti seksualnih prijestupnika provode se samo unutar SAD-a. Ministarstvo pravosuđa navodi otprilike 800 000 registriranih seksualnih prijestupnika diljem zemlje s tisućama novih registracija godišnje. Provjerite nepoznate osobe radi svog mira.",
+          "purchase": "Dodaj provjeru registra seksualnih prijestupnika",
+          "purchase_terms": "Ovo je jednokratna kupnja po cijeni od {price}. Dodavanjem ovog izvješća odobravate jednu naplatu svojim registriranim načinom plaćanja. Ova kupnja pruža pristup jednom izvješću unutar ovog raspona veće vrijednosti.",
+          "special_limited_time_offer": "Vremenski ograničena ponuda za sigurnosnu provjeru. Usluga pretražuje samo registrirane osobe u Sjedinjenim Državama.",
+          "title": "Provjera registra seksualnih prijestupnika",
+          "upsell_benefits_1": "Trenutna pretraga svih državnih i saveznih registara u zemlji",
+          "upsell_benefits_2": "Pristup sveobuhvatnim podacima o prijestupnicima iz službenih izvora",
+          "upsell_benefits_3": "Provjera u stvarnom vremenu na temelju najaktualnijih podataka iz registra"
+        },
+        "skip": "Preskoči",
+        "total_due_today": "Ukupno za platiti:"
+      }
+    },
+    "settings": {
+      "billing": {
+        "activate_dialog": {
+          "action_form": "Platite karticom",
+          "title": "Dodaj način plaćanja"
+        },
+        "active_date": "Aktivno do: {date}",
+        "active_state": "Aktivno",
+        "cancel_dialog": {
+          "cancel_cta": "Otkaži pretplatu",
+          "canceling_cta": "Otkazivanje...",
+          "close_cta": "Zatvori",
+          "description": "Otkazivanjem pretplate izgubit ćete pristup svim značajkama i podršci. Pretplatu možete ponovno aktivirati u bilo kojem trenutku.",
+          "description_canceled": "Vaša je pretplata otkazana.<br> Od sada vam se neće naplaćivati.",
+          "done_cta": "Gotovo",
+          "title": "Potvrda"
+        },
+        "cancel_subscription": "Otkaži pretplatu",
+        "canceled_cta": "Ponovno aktiviraj pretplatu",
+        "canceled_date": "Otkazano dana: {date}",
+        "canceled_state": "Otkazano",
+        "expired_cta": "Aktiviraj pretplatu",
+        "expired_date": "Datum isteka: {date}",
+        "expired_description": "Tvoje je članstvo isteklo. Aktiviraj ga za nastavak.",
+        "expired_state": "Isteklo",
+        "month": "mjesec",
+        "next_billing_date": "Sljedeća naplata: {date}",
+        "privacy_policy": "Pravila o privatnosti",
+        "started_on_date": "Datum početka: {date}",
+        "subscription": "Pretplata",
+        "terms_and_conditions": "Uvjeti i odredbe",
+        "title": "Naplata",
+        "total": "Ukupno:"
+      },
+      "get_help": {
+        "title": "Pomoć"
+      },
+      "my_account": {
+        "change_password": {
+          "confirm_password": "Potvrdite lozinku",
+          "current_password": "Trenutačna lozinka",
+          "new_password": "Nova lozinka",
+          "title": "Promjena lozinke"
+        },
+        "delete_cta": "Izbriši račun",
+        "delete_dialog": {
+          "close_cta": "Zatvori",
+          "delete_cta": "Izbriši račun",
+          "deleting_cta": "Brisanje...",
+          "description": "Jeste li sigurni da želite izbrisati svoj račun? Imaj na umu da ćeš nakon potvrde odmah izgubiti pristup području za članove.",
+          "description_canceled": "Vaš je račun uspješno izbrisan.",
+          "done_cta": "Gotovo",
+          "title": "Potvrda"
+        },
+        "errors": {
+          "confirm_password_required": "Potrebna je potvrda lozinke",
+          "current_password_invalid": "Trenutna lozinka nije važeća",
+          "current_password_required": "Potrebna je trenutna lozinka",
+          "email_max_length": "E-mail mora imati manje od {maxLength} znakova.",
+          "email_required": "E-pošta je obavezna",
+          "email_taken": "E-pošta je već zauzeta",
+          "invalid_email": "Molimo unesite važeću e-adresu.",
+          "name_invalid_characters": "Ime ne može sadržavati brojeve.",
+          "name_invalid_special_characters": "Ime ne smije sadržavati posebne znakove.",
+          "name_max_length": "Ime mora imati manje od {maxLength} znakova.",
+          "name_required": "Ime je obavezno",
+          "new_password_must_differ_from_current_password": "Nova lozinka mora se razlikovati od trenutačne lozinke",
+          "new_password_required": "Potrebna je nova lozinka",
+          "password_max_length": "Lozinka mora imati manje od {maxLength} znakova.",
+          "password_min_length": "Lozinka mora imati najmanje 6 znakova.",
+          "passwords_must_match": "Lozinke se moraju podudarati"
+        },
+        "notifications": {
+          "notify_status_changes": "Obavijesti me o promjeni statusa",
+          "notify_user_located": "Obavijesti me kada korisnik bude lociran",
+          "title": "Obavijesti"
+        },
+        "profile": {
+          "email": "E-mail adresa",
+          "name": "Ime i prezime",
+          "title": "Podaci profila"
+        },
+        "submit_cta": "Spremi promjene",
+        "success_title": "Vaš je račun ažuriran",
+        "title": "Opće"
+      },
+      "title": "Postavke"
+    },
+    "sex_offenders_search": {
+      "form": {
+        "city_placeholder": "Grad",
+        "errors": {
+          "first_name_required": "Ime je obavezno",
+          "last_name_required": "Prezime je obavezno"
+        },
+        "first_name_placeholder": "Ime",
+        "last_name_placeholder": "Prezime",
+        "state_placeholder": "Sve savezne države",
+        "submit_button": "Provjeri sada",
+        "title": "Provjera registra seksualnih prijestupnika",
+        "zip_placeholder": "Poštanski broj"
+      },
+      "loading": {
+        "subtitle": "Molimo pričekajte dok preuzimamo podatke iz nacionalnog registra.",
+        "title": "Provjera registra seksualnih prijestupnika..."
+      },
+      "results": {
+        "back": "Natrag",
+        "continue": "Nastavi",
+        "empty_title": "Nisu pronađeni seksualni prijestupnici",
+        "results_found": "Pronađeno: {count} rezultata",
+        "results_found_subtitle": "Za nastavak odaberite onu koja vam najbolje odgovara.",
+        "search_again": "Pretraži ponovno"
+      },
+      "title": "Seksualni prijestupnici"
+    },
+    "sign_in": {
+      "description": "Unesite svoj e-mail za prijavu u račun",
+      "sign_up_link": "Registracija",
+      "sign_up_prompt": "Nemate račun?",
+      "title": "Prijava"
+    },
+    "sign_up": {
+      "components": {
+        "sign_up_form": {
+          "continue_with_email": "Nastavite s e-mailom",
+          "continue_with_facebook": "Nastavi uz Facebook",
+          "continue_with_google": "Nastavi uz Google",
+          "email_label": "E-mail adresa",
+          "email_placeholder": "Vaša e-mail adresa",
+          "errors": {
+            "email_exists": "Ova adresa e-pošte je već registrirana. Pokušajte se prijaviti ili upotrijebite drugu adresu e-pošte.",
+            "invalid_email": "Molimo unesite važeću e-adresu."
+          },
+          "or": "ili"
+        }
+      },
+      "title": "Prijavite se kako biste dobili točnu lokaciju za <brandColor>{phoneNumber}</brandColor>"
+    },
+    "status": {
+      "description": "Provjerite napredak u nastavku",
+      "detail_description": "Lokacija pronađena",
+      "error_fetching_address": "Pogreška pri dohvaćanju adrese",
+      "link_name": "Poveznica za {name}",
+      "load_more_button": "Učitaj više",
+      "loading_address": "Učitavanje adrese...",
+      "located_status": "Locirano",
+      "no_locations_available": "Nema zahtjeva",
+      "pending_description": "Čekanje na primatelja da podijeli svoju geolokaciju",
+      "pending_status": "Na čekanju",
+      "ready_status": "Izvješće kreirano",
+      "rejected_description": "Poboljšajte svoju poruku kako biste potaknuli primatelja da podijeli svoju lokaciju",
+      "rejected_status": "Odbijeno",
+      "reverse_lookup_description": "Sažetak javnih podataka pronađenih za telefonski broj",
+      "reverse_lookup_report_for": "Izvješće o obrnutom pretraživanju za {phone}",
+      "title": "Centar aktivnosti"
+    },
+    "success": {
+      "account_link": "Pristupite svom računu",
+      "click_below_to_account_your_link": "Kliknite u nastavku za pristup svom računu!",
+      "description": "Poslali smo vaše podatke o narudžbi i podatke za pristup računu na {email}. Sada možete pristupiti svom računu",
+      "did_you_like_your_shopping_experience": "Je li vam se svidjelo vaše iskustvo kupovine?",
+      "more_details_feedback": "Vaše detaljne povratne informacije su dobrodošle: <email>support@mobitrace.io</email>",
+      "no": "Ne",
+      "thank_you_for_your_feedback": "Hvala vam na povratnim informacijama!",
+      "title": "Vaše je plaćanje bilo uspješno!",
+      "we_ll_work_on_making_it_better": "Poradit ćemo na poboljšanju!",
+      "yes": "Da"
+    },
+    "upsell": {
+      "cancel_button": "Ne, hvala",
+      "description": "Uživajte u personaliziranoj podršci i vrhunskoj tehničkoj pomoći uz samo jedan klik 24 sata dnevno 7 dana u tjednu.",
+      "footer_info": "Imajte na umu da, ovisno o vašoj regiji, vašem se ukupnom iznosu kupnje može dodati i {percentage} % poreza na promet",
+      "order_details": "Pojedinosti narudžbe:",
+      "products": {
+        "add_button": "Dodaj",
+        "add_order_button": "Dodaj za {price}",
+        "added_state": "Dodano",
+        "details_button": "Pojedinosti",
+        "remove_button": "Ukloni",
+        "scan_pro": {
+          "description": "Otkrijte svaki aspekt Mobitracea uz vodstvo našeg stručnog tima za tehničku podršku. Istražite sve značajke u akciji i naučite kako ih maksimalno iskoristiti.",
+          "dialog": "<p>Maksimalno iskoristite svoje iskustvo s Mobitraceom pomoću personalizirane podrške našeg stručnog tima koji je uz vas korak po korak. Otkrijte svaku značajku i izvucite najviše iz naših usluga.</p><ul><li><strong>Besprijekorno praćenje lokacije.</strong>Jednostavno pratite nečiju lokaciju pomoću jedne, izravne poveznice. Naš tim će vas voditi kroz cijeli postupak, pazeći da se svaki tehnički detalj obrađuje s pažnjom.</li><li><strong>Sveobuhvatna podrška za profiliranje.</strong>Udružite se s nama kako biste otkrili sve informacije koje su vam potrebne. Od kontakata do profila na društvenim mrežama, mi vam pomažemo da dobijete potpunu sliku o osobi koju tražite.</li><li><strong>Pronađite svoj izgubljeni ili ukradeni telefon.</strong>Ako vam je telefon nestao, mi ćemo vam pomoći. Naši napredni alati mogu brzo locirati vaš uređaj i prikazati njegovu točnu lokaciju na karti.</li><li><strong>Zaštitite svoju sigurnost na internetu.</strong>Skeniramo baze podataka kako bismo otkrili jesu li vaš telefonski broj ili e-mail kompromitirani od strane trećih strana, pomažući vam da budete korak ispred kibernetičkih prijetnji.</li></ul>",
+          "title": "ScanPRO"
+        },
+        "support_hotline": {
+          "description": "Ne čekajte na red za pomoć! Uz Prioritetnu tehničku podršku možete preskočiti red i primiti brzu pomoć jedan na jedan od naših vještih tehničkih stručnjaka.",
+          "title": "Prioritetna podrška 24 sata dnevno 7 dana u tjednu"
+        }
+      },
+      "submit_button": "Dodaj u narudžbu",
+      "subtotal": "Međuiznos",
+      "taxes": "Porez na promet ({percentage} %)",
+      "title": "Izvucite najbolje iz svog iskustva s Mobitraceom!",
+      "total": "Ukupno"
+    }
+  },
+  "routes": {
+    "forgot_password": "zaboravljena lozinka",
+    "loader": "učitavač",
+    "reset_password": "resetiranje lozinke",
+    "sign_in": "prijava",
+    "sign_up": "registracija"
+  }
+}

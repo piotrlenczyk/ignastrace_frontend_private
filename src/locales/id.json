@@ -1,0 +1,1882 @@
+{
+  "common": {
+    "back": "Kembali",
+    "close": "Tutup",
+    "close_menu": "Tutup Menu",
+    "copied_to_clipboard": "Disalin ke papan klip",
+    "email_label": "Alamat email",
+    "errors": {
+      "email_exists": "Email ini sudah digunakan oleh pengguna lain",
+      "rate_limit_error": "Anda telah mencapai batas harian. Silakan coba lagi besok.",
+      "rate_limit_error_title": "Batas tercapai",
+      "server_error": "Kesalahan Server",
+      "server_error_description": "Terjadi kesalahan saat memproses permintaan Anda. Silakan coba lagi."
+    },
+    "login": "Masuk",
+    "logout": "Keluar",
+    "open_menu": "Buka Menu",
+    "settings": "Pengaturan",
+    "subscription": "Berlangganan"
+  },
+  "components": {
+    "country_selector": {
+      "no_results": "Kode negara tidak ditemukan.",
+      "placeholder": "Pilih kode negara...",
+      "search_placeholder": "Cari berdasarkan negara atau kode..."
+    },
+    "forms": {
+      "change_email": {
+        "confirmation_email_sent_description": "Kami telah mengirim email konfirmasi ke alamat baru. Silakan konfirmasi perubahan tersebut.",
+        "confirmation_email_sent_title": "Email konfirmasi telah dikirim",
+        "current_email_label": "Email saat ini",
+        "current_password_label": "Demi keamanan, masukkan kata sandi Anda saat ini",
+        "current_password_placeholder": "Masukkan kata sandi Anda saat ini",
+        "errors": {
+          "current_password_required": "Kata sandi saat ini wajib diisi.",
+          "invalid_email": "Harap masukkan email yang valid."
+        },
+        "new_email_label": "Email baru",
+        "new_email_placeholder": "Masukkan email baru",
+        "save_button": "Perbarui email"
+      },
+      "change_password": {
+        "confirm_password_label": "Konfirmasi Kata Sandi Baru",
+        "confirm_password_placeholder": "Konfirmasi kata sandi baru Anda",
+        "current_password_label": "Kata Sandi Saat Ini",
+        "current_password_placeholder": "Masukkan kata sandi saat ini Anda",
+        "errors": {
+          "confirm_password_min_length": "Konfirmasi kata sandi baru Anda dengan minimal 6 karakter",
+          "current_password_required": "Kata sandi saat ini diperlukan",
+          "new_password_min_length": "Kata sandi baru harus minimal 6 karakter",
+          "new_password_required": "Kata sandi baru harus diisi",
+          "passwords_must_match": "Kata sandi harus cocok"
+        },
+        "new_password_label": "Kata Sandi Baru",
+        "new_password_placeholder": "Masukkan kata sandi baru Anda",
+        "save_button": "Simpan Perubahan"
+      },
+      "delete_account": {
+        "cancel_button": "Batal",
+        "confirm_button": "Ya, hapus akun saya",
+        "confirmation_message": "Akun Anda telah berhasil dihapus.",
+        "delete_account_button": "Hapus akun",
+        "description": "Tindakan ini tidak dapat dibatalkan. Pastikan keputusan Anda sudah tepat.",
+        "dialog_description": "Tindakan ini tidak dapat dibatalkan. Akun Anda akan dihapus secara permanen dan semua data akan dihapus dari server kami.",
+        "dialog_title": "Yakin?",
+        "title": "Hapus Akun"
+      },
+      "edit_company": {
+        "add_social_network_button": "Tambah media sosial",
+        "address_label": "Alamat",
+        "address_placeholder": "Masukkan alamat perusahaan",
+        "company_name_label": "Nama Perusahaan",
+        "company_name_placeholder": "Masukkan nama perusahaan",
+        "errors": {
+          "company_name_required": "Nama perusahaan wajib diisi",
+          "url_invalid": "Harap masukkan URL yang valid"
+        },
+        "hide_address_map": "Sembunyikan peta",
+        "horizontal_logo_alt_text": "Logo horizontal perusahaan",
+        "horizontal_logo_description": "Rekomendasi: JPEG, PNG. Maks 5MB. 600x200px",
+        "horizontal_logo_label": "Logo horizontal",
+        "opening_hours_label": "Jam Operasional",
+        "opening_hours_placeholder": "Contoh: Sen–Jum: 09.00–17.00, Sabtu: 10.00–14.00, Minggu: Tutup",
+        "profile_url_placeholder": "URL profil",
+        "save_button": "Simpan perubahan",
+        "show_address_map": "Tampilkan peta",
+        "social_networks_label": "Media sosial",
+        "squared_logo_alt_text": "Logo persegi perusahaan",
+        "squared_logo_label": "Logo persegi",
+        "website_label": "Situs web",
+        "website_placeholder": "https://www.example.com"
+      },
+      "edit_profile": {
+        "description": "Perbarui informasi pribadi Anda",
+        "errors": {
+          "first_name_required": "Nama depan wajib diisi.",
+          "invalid_phone": "Nomor telepon tidak valid.",
+          "last_name_required": "Nama belakang wajib diisi."
+        },
+        "first_name_label": "Nama Depan",
+        "first_name_placeholder": "Masukkan nama depan Anda",
+        "last_name_label": "Nama Belakang",
+        "last_name_placeholder": "Masukkan nama belakang Anda",
+        "phone_label": "Nomor Telepon",
+        "phone_placeholder": "Masukkan nomor telepon Anda",
+        "privacy_label": "Privasi",
+        "profile_picture_alt": "Foto profil",
+        "profile_picture_label": "Foto profil",
+        "public_email_label": "Tampilkan email saya secara publik di profil",
+        "public_phone_label": "Tampilkan nomor telepon saya secara publik di profil",
+        "save_button": "Simpan Perubahan",
+        "title": "Edit Profil",
+        "upload_description": "Rekomendasi: JPEG, PNG. Maksimal 5 MB. 400 x 400 px",
+        "upload_picture": "Unggah foto baru",
+        "whatsapp_label": "Saya memiliki akun WhatsApp dengan nomor ini"
+      },
+      "forgot_password": {
+        "cancel_button": "Batal",
+        "email_label": "Email",
+        "email_placeholder": "Alamat email Anda",
+        "errors": {
+          "invalid_email": "Harap masukkan email yang valid."
+        },
+        "submit_button": "Kirim kata sandi",
+        "subtitle": "Masukkan email Anda dan kami akan mengirimkan kata sandi Anda",
+        "success": {
+          "done": "Selesai",
+          "line_1": "Kami telah mengirimkan kata sandi Anda ke",
+          "line_2": "Silakan periksa email Anda untuk masuk.",
+          "title": "Kata Sandi Telah Dikirim"
+        },
+        "title": "Lupa kata sandi?"
+      },
+      "reset_password": {
+        "confirm_password_label": "Konfirmasi Kata Sandi Baru",
+        "confirm_password_placeholder": "Konfirmasi kata sandi baru Anda",
+        "errors": {
+          "password_min_length": "Kata sandi minimal harus terdiri dari 6 karakter.",
+          "passwords_do_not_match": "Kata sandi tidak cocok."
+        },
+        "new_password_label": "Kata Sandi Baru",
+        "new_password_placeholder": "Masukkan kata sandi baru Anda",
+        "submit_button": "Atur Ulang Kata Sandi"
+      },
+      "sign_in": {
+        "email_label": "Alamat email",
+        "email_placeholder": "Alamat email Anda",
+        "errors": {
+          "account_not_found": "Akun Mobitrace Anda tidak ditemukan.",
+          "invalid_credentials": "Email dan kata sandi yang Anda masukkan tidak cocok dengan data kami. Silakan periksa kembali dan coba lagi.",
+          "invalid_email": "Harap masukkan email yang valid.",
+          "password_min_length": "Kata sandi minimal harus terdiri dari 6 karakter."
+        },
+        "forgot_password": "Lupa kata sandi?",
+        "or": "atau",
+        "password_label": "Kata sandi",
+        "password_placeholder": "Kata sandi Anda",
+        "submit_button": "Masuk",
+        "title": "Masuk ke akun Anda"
+      },
+      "stripe_form": {
+        "card_name_placeholder": "Nama pada kartu",
+        "credit_card_label": "Kartu kredit",
+        "credit_card_placeholder": "1234 1234 1234 1234",
+        "cvc_placeholder": "CVC",
+        "errors": {
+          "apple_pay_not_available": "Apple Pay tidak didukung",
+          "apple_pay_not_available_description": "Metode pembayaran ini tidak diaktifkan untuk perangkat atau browser ini. Silakan pilih metode pembayaran lain.",
+          "card_name_required": "Harap masukkan nama pada kartu.",
+          "card_number_required": "Harap masukkan nomor kartu.",
+          "cvc_required": "Harap masukkan CVC.",
+          "expiration_date_required": "Harap masukkan tanggal kedaluwarsa.",
+          "google_pay_not_available": "Google Pay tidak didukung",
+          "google_pay_not_available_description": "Metode pembayaran ini tidak diaktifkan untuk perangkat atau browser ini. Silakan pilih metode pembayaran lain.",
+          "name_invalid_characters": "Nama tidak boleh mengandung angka.",
+          "name_invalid_special_characters": "Nama tidak boleh mengandung karakter khusus.",
+          "stripe_generic_error": "Kami tidak dapat mengautentikasi metode pembayaran Anda. Silakan pilih metode pembayaran lain dan coba lagi.",
+          "stripe_generic_error_title": "Kesalahan pembayaran",
+          "zip_code_invalid_format": "Silakan masukkan kode pos yang valid."
+        },
+        "expiration_date_placeholder": "BB/TT",
+        "zip_code_placeholder": "Kode Pos (Opsional)"
+      }
+    },
+    "image_upload_input": {
+      "upload_button_text": "Unggah foto baru",
+      "upload_description": "Rekomendasi: JPEG, PNG. Maksimal 5 MB. 400 x 400 px",
+      "upload_label": "Foto profil"
+    },
+    "phone_input": {
+      "errors": {
+        "invalid_phone": "Harap masukkan nomor telepon yang valid."
+      },
+      "label": "Masukkan nomor yang ingin Anda lacak",
+      "no_results": "Kode negara tidak ditemukan.",
+      "phone_placeholder": "123456789",
+      "search_placeholder": "Cari berdasarkan negara atau kode...",
+      "submit": "Lacak"
+    },
+    "settings_navigator": {
+      "change_email": {
+        "description": "Perbarui alamat email Anda",
+        "label": "Ubah Email"
+      },
+      "change_password": {
+        "description": "Perbarui kata sandi akun Anda",
+        "label": "Ubah Kata Sandi"
+      },
+      "company_profile": {
+        "description": "Perbarui informasi perusahaan Anda",
+        "label": "Profil Perusahaan"
+      },
+      "delete_account": {
+        "description": "Hapus akun Anda beserta semua data terkait",
+        "label": "Hapus Akun"
+      },
+      "edit_profile": {
+        "description": "Perbarui informasi pribadi Anda",
+        "label": "Edit Profil"
+      },
+      "no_access": "Anda tidak memiliki akses ke bagian ini. Konten ini khusus untuk pengguna profesional.",
+      "notifications": {
+        "description": "Kelola preferensi notifikasi email Anda",
+        "label": "Notifikasi"
+      },
+      "subscription": {
+        "description": "Kelola paket langganan Anda",
+        "label": "Berlangganan"
+      },
+      "title": "Pengaturan"
+    }
+  },
+  "consent": {
+    "accept": "Setuju",
+    "decline": "Tolak",
+    "decline_accept": "Kembali ke beranda",
+    "decline_description": "Untuk menggunakan layanan pesan kami—terutama untuk nomor AS dan Kanada—kami memerlukan izin Anda. Tanpa izin tersebut, fitur ini tidak akan tersedia. Silakan kembali kapan saja untuk melanjutkan.",
+    "decline_title": "Ups! Kami Membutuhkan Persetujuan Anda",
+    "description": "Untuk menemukan ponsel Anda, kami perlu mengirimkan SMS. Mohon konfirmasi bahwa Anda setuju untuk menerimanya.",
+    "title": "Konfirmasi diperlukan"
+  },
+  "contest": {
+    "agree": "Setuju",
+    "decline": "Tolak",
+    "description": "Saya mengonfirmasi bahwa nomor telepon yang dimasukkan adalah nomor telepon saya dan saya setuju untuk menerima pesan.",
+    "title": "Terima Pesan?"
+  },
+  "footer": {
+    "brand": "Mobitrace.io",
+    "description": "Lacak ponsel apa pun—cepat dan mudah dengan Mobitrace.",
+    "links": {
+      "about_us": "Tentang kami",
+      "cancel_subscription": "Batalkan Langganan",
+      "contact": "Kontak",
+      "contacts": "Kontak",
+      "cookie_policy": "Kebijakan Cookie",
+      "faqs": "Pertanyaan Umum",
+      "home": "Beranda",
+      "location_number": "Cari Lokasi via Nomor",
+      "login": "Masuk",
+      "pricing": "Harga",
+      "privacy policy": "Kebijakan privasi",
+      "reverse_lookup": "Pencarian Nomor Telepon",
+      "terms_and_conditions": "Syarat & Ketentuan"
+    },
+    "rights": "Hak cipta dilindungi undang-undang."
+  },
+  "header": {
+    "about": "Tentang",
+    "home": "Beranda",
+    "open_menu": "Buka Menu",
+    "sign_in": "Masuk",
+    "sign_up": "Daftar"
+  },
+  "language": {
+    "english": "English",
+    "spanish": "Español"
+  },
+  "navigation": {
+    "about_us": "Tentang kami",
+    "contact": "Kontak",
+    "dashboard": "Dasbor",
+    "faqs": "Pertanyaan Umum",
+    "home": "Beranda",
+    "mobile_dialog_description": "Dialog ini berisi tautan navigasi utama",
+    "mobile_dialog_title": "Navigasi utama",
+    "pricing": "Harga",
+    "settings": "Pengaturan"
+  },
+  "pages": {
+    "about": {
+      "cards": {
+        "card_1": {
+          "description": "<p>Di Mobitrace, kami membuat pelacakan lokasi menjadi sederhana, andal, dan aman. Misi kami adalah membantu Anda tetap terhubung dengan orang-orang terkasih atau pihak penting menggunakan teknologi canggih untuk pelacakan lokasi ponsel secara real-time.</p>",
+          "title": "Misi kami"
+        },
+        "card_2": {
+          "description": "<p>Mobitrace menggabungkan pelacakan ponsel dengan layanan informasi publik yang mendalam:</p><ul><li>Pelacakan Ponsel: Kirim SMS khusus dengan tautan, memungkinkan penerima membagikan lokasinya. Pelacakan hanya dilakukan dengan persetujuan tegas dari penerima.</li> <li>Pencarian Data Mendalam: Akses detail kontak, riwayat lokasi, dan lainnya.</li> <li>Jangkauan Global: Berfungsi di semua ponsel, jaringan, dan negara—lacak nomor ponsel apa pun, di mana pun berada.</li> </ul>",
+          "title": "Layanan yang Kami Tawarkan"
+        },
+        "card_3": {
+          "description": "<ul> <li>Sederhana: Buat tautan, kirimkan, dan lacak setelah disetujui.</li> <li>Aman & Terlindungi: Semua pelacakan dilakukan secara sukarela dan aman.</li> <li>Akurasi Real-Time: Terima data lokasi yang akurat dan terkini.</li> </ul>",
+          "title": "Mengapa Memilih Mobitrace"
+        },
+        "card_4": {
+          "description": "<p>Baik Anda orang tua yang peduli maupun teman yang perhatian, Mobitrace hadir untuk membantu Anda tetap terhubung dengan orang-orang tersayang. Terima kasih telah memilih Mobitrace—tempat pelacakan dan informasi yang terintegrasi untuk menjaga Anda tetap terinformasi dan merasa aman.</p>",
+          "title": "Bergabunglah bersama kami"
+        }
+      },
+      "description": "Selamat datang di Mobitrace, layanan tepercaya Anda untuk melacak ponsel secara mudah dan mengakses informasi publik yang lengkap. Kami bekerja sama dengan penyedia data terkemuka dari AS, Inggris, Eropa, dan wilayah lainnya, untuk memastikan hasil pencarian nomor dan alamat yang akurat demi menjaga Anda tetap terinformasi dan terhubung.",
+      "title": "Tentang kami"
+    },
+    "cancellation": {
+      "form": {
+        "email_label": "Alamat email Anda",
+        "error_not_found_description": "Silakan periksa dan coba lagi",
+        "error_not_found_title": "Ups! Tidak ada akun yang cocok dengan email tersebut.",
+        "error_not_subscribed_title": "Anda belum berlangganan!",
+        "errors": {
+          "invalid_email": "Harap masukkan alamat email yang valid."
+        },
+        "submit": "Batalkan langganan",
+        "success_description": "Anda tidak akan dikenakan biaya mulai sekarang.",
+        "success_title": "Langganan Anda telah dibatalkan!"
+      },
+      "info_email": "Jika Anda lupa email mana yang digunakan saat mendaftar, periksa kotak masuk Anda untuk email dari \"mobitrace.io\". Jika masih kesulitan, silakan hubungi tim dukungan pelanggan kami yang ramah <link>di sini</link>.",
+      "info_user": "Anda juga dapat membatalkan langganan dengan masuk ke akun Anda, buka tab \"Keanggotaan\", lalu klik \"Batalkan Langganan\".",
+      "subtitle": "Batalkan langganan Anda dengan mudah, cukup masukkan email yang Anda gunakan saat membuat akun.",
+      "title": "Batalkan Langganan"
+    },
+    "checkout": {
+      "action_form": "Dapatkan Lokasi",
+      "agree_description": "Dengan melanjutkan, Anda setuju untuk dikenakan biaya sebesar {trialPrice} sekarang dan menerima <terms>Ketentuan Penggunaan</terms> serta <privacy>Kebijakan Privasi</privacy> kami. Pembayaran Anda akan muncul dengan nama “mobitrace.io” di laporan kartu kredit Anda. Setelah 7 hari, Anda akan ditagih sebesar {subscriptionPrice} setiap 4 minggu hingga langganan berakhir. Anda dapat membatalkan kapan saja. Jika ada pertanyaan, hubungi kami di support@mobitrace.io atau melalui telepon di +1 360 525 2573",
+      "agree_description_24": "Dengan melanjutkan pembayaran, Anda setuju untuk memulai masa uji coba 24 jam seharga {trialPrice} mulai hari ini. Kecuali Anda membatalkan sebelum masa uji coba berakhir, langganan Anda akan otomatis diperpanjang seharga {subscriptionPrice} setiap 4 minggu. Anda dapat membatalkannya kapan saja. Dengan melanjutkan, Anda juga menyetujui <terms>Ketentuan Penggunaan</terms> kami dan mengakui <privacy>Kebijakan Privasi</privacy> kami.",
+      "agree_description_reactivate": "Dengan melanjutkan, Anda setuju untuk mengaktifkan kembali langganan Anda dan akan dikenakan biaya sebesar {subscriptionPrice} sekarang. Pembayaran Anda akan tercatat sebagai \"mobitrace.io\" pada laporan kartu kredit Anda. Anda akan ditagih sebesar {subscriptionPrice} setiap 4 minggu hingga langganan Anda dihentikan. Anda dapat membatalkan kapan saja. Untuk pertanyaan, silakan hubungi kami di support@mobitrace.io atau melalui telepon di +1 360 525 2573.",
+      "agree_description_subscription": "Dengan melanjutkan, Anda setuju untuk dikenakan biaya {subscriptionPrice} sekarang dan menyetujui <terms>Syarat dan Ketentuan</terms> serta <privacy>Kebijakan Privasi</privacy> kami. Pembayaran Anda akan tercantum sebagai \"mobitrace.io\" pada tagihan kartu kredit Anda. Anda akan dikenakan biay {subscriptionPrice} setiap 4 minggu hingga langganan Anda berakhir. Anda dapat membatalkan langganan kapan saja. Untuk pertanyaan apa pun, Anda dapat menghubungi kami di support@mobitrace.io atau melalui telepon di +1 360 525 2573",
+      "back_description": "Jika Anda merasa tidak puas setelah periode uji coba 7 hari, beri tahu kami dan kami akan memproses pengembalian dana penuh dengan senang hati.",
+      "back_description_24": "Jika Anda tidak sepenuhnya puas dalam masa uji coba 24 jam, cukup beri tahu kami dan kami akan memproses pengembalian dana penuh.",
+      "back_title": "Garansi Uang Kembali",
+      "cancel_description": "Anda dapat membatalkan kapan saja melalui dasbor Anda atau dengan menghubungi kami di <email>support@mobitrace.io</email>.",
+      "cancel_title": "Batalkan kapan saja",
+      "loading": "Sedang memproses pembayaran Anda...",
+      "title": "Buka akses lokasi dari",
+      "total": "Total yang harus dibayar:",
+      "trust_100": "Pembayaran 100% Aman",
+      "trust_cancel": "Batalkan kapan saja"
+    },
+    "contact": {
+      "contact_information": {
+        "company_description": "<strong>Amerika Serikat</strong><br>800 N King Street Suite 304-1119<br>Wilmington, DE 19801 AS</br></br><strong>Uni Emirat Arab</strong></br>Building A1, Dubai Digital Park</br>Dubai Silicon Oasis, Dubai</br>IFZA Business Park, DDP</br>Premises No. 5342-001</br>Uni Emirat Arab</br></br><strong>Irlandia</strong></br>40 Mespil Road</br>Dublin 4, Irlandia",
+        "company_title": "Lokasi",
+        "email_description": "support@mobitrace.io",
+        "email_title": "Email",
+        "phone_description": "+1-360-525-2573",
+        "phone_title": "Telepon",
+        "title": "Informasi kontak"
+      },
+      "contact_us": "Hubungi Kami",
+      "form": {
+        "billing_question": "Pertanyaan tentang Tagihan",
+        "email_label": "Email",
+        "errors": {
+          "invalid_email": "Harap masukkan email yang valid.",
+          "invalid_name_format": "Masukkan nama yang valid.",
+          "invalid_surname_format": "Masukkan nama keluarga yang valid.",
+          "max_length": "Kamu sudah melebihi batas karakter.",
+          "message_max_length": "Pesan tidak boleh melebihi {maxLength} karakter.",
+          "message_required": "Harap masukkan pesan Anda.",
+          "name_required": "Harap masukkan nama Anda.",
+          "surname_required": "Silakan masukkan nama belakang Anda."
+        },
+        "message_label": "Pesan",
+        "name_label": "Nama",
+        "other": "Lainnya",
+        "subject_label": "Subjek",
+        "subject_placeholder": "Pilih",
+        "submit": "Kirim Pesan",
+        "submitted": "Pesan Anda telah berhasil dikirim! Tim kami akan menghubungi Anda dalam 2 jam ke depan.",
+        "submitted_title": "Pesan dikirim",
+        "suggested_improvement": "Saran perbaikan",
+        "surname_label": "Nama belakang",
+        "technical_issue": "Masalah teknis",
+        "title": "Hubungi Kami"
+      },
+      "subtitle": "Ada pertanyaan, umpan balik, atau butuh bantuan?<br/> Kami dengan senang hati ingin mendengarnya!",
+      "title": "Kami siap membantu"
+    },
+    "error": {
+      "body": "Silakan coba lagi nanti atau hubungi dukungan jika masalah terus berlanjut.",
+      "cta": "Kembali ke Beranda",
+      "title": "Ups! Terjadi Kesalahan"
+    },
+    "find_by_link": {
+      "find_by_link": "Cari berdasarkan Tautan",
+      "form": {
+        "errors": {
+          "max_length": "Batas maksimum: 255 karakter.",
+          "min_length": "Tautan harus memiliki panjang minimal {n} karakter",
+          "required": "Tautan diperlukan"
+        },
+        "linkLabel": "Nama tautan Anda",
+        "linkPlaceholder": "mis., Tautan untuk WhatsApp",
+        "submitButton": "Buat tautan saya"
+      },
+      "steps": {
+        "step1": "Personalisasikan tautan pelacakan Anda",
+        "step2": "Bagikan melalui aplikasi pesan apa pun",
+        "step3": "Dapatkan notifikasi tentang statusnya",
+        "step4": "Lihat lokasi mereka secara instan setelah mereka mengetuk tautan"
+      },
+      "title": "Buat tautan khusus Anda"
+    },
+    "find_by_link_success": {
+      "body": "Pastikan untuk membagikan tautan ini kepada orang yang ingin Anda lacak.",
+      "generateNewCTA": "Buat tautan baru",
+      "statusCTA": "Periksa statusnya",
+      "subtitle": "Temukan tautan Anda di bawah ini",
+      "title": "Berhasil"
+    },
+    "find_by_number_send_message": {
+      "CTA": "Kirim",
+      "errors": {
+        "empty": "Bidang ini tidak boleh kosong",
+        "max_length": "Teks terlalu panjang. Batas maksimal {n} karakter."
+      },
+      "extra_info": {
+        "bullet_1": "Nama pengirim akan ditampilkan sebagai \"Mobitrace.\"",
+        "bullet_2": "Setiap pesan akan menyertakan tautan unik di akhir yang perlu diklik oleh penerima."
+      },
+      "find_by_number": "Cari berdasarkan Nomor",
+      "label": "Pesan",
+      "placeholder": "Masukkan pesan Anda di sini.",
+      "title": "Sedang mencari lokasi untuk <brandColor>{phoneNumber}</brandColor>"
+    },
+    "find_by_number_send_message_success": {
+      "cta": "Periksa status",
+      "description": "Pesan Anda telah dikirim ke <strong>{phoneNumber}</strong>. Kami akan memberi tahu Anda segera setelah lokasi ponsel ditemukan.",
+      "title": "Berhasil!"
+    },
+    "forgot_password": {
+      "back_to_login": "Masuk",
+      "description": "Masukkan email Anda dan kami akan mengirimkan instruksi untuk mengatur ulang kata sandi Anda",
+      "remember_password": "Ingat kata sandi Anda?",
+      "title": "Atur Ulang Kata Sandi"
+    },
+    "index": {
+      "faqs": {
+        "question_1": {
+          "answer": "Anda cukup memasukkan nomor telepon, dan setelah penerima menyetujui untuk membagikan lokasi mereka, Anda akan menerima lokasi mereka secara akurat.",
+          "question": "Bagaimana cara melacak lokasi seseorang melalui nomor telepon?"
+        },
+        "question_2": {
+          "answer": "Ya, pelacakan lokasi (geolokasi) itu legal, tetapi memerlukan persetujuan tegas dari penerima untuk membagikan lokasi mereka, sesuai dengan undang-undang privasi.",
+          "question": "Apakah legal melacak lokasi terhadap pihak ketiga?"
+        },
+        "question_3": {
+          "answer": "Tidak, Anda tidak perlu menginstal aplikasi atau perangkat lunak apa pun. Semua proses dilakukan secara jarak jauh melalui layanan kami.",
+          "question": "Apakah saya perlu menginstal aplikasi untuk melacak nomor telepon?"
+        },
+        "question_4": {
+          "answer": "Layanan kami mendukung semua jenis ponsel, dari smartphone hingga ponsel model jadul, selama masih bisa menerima SMS.",
+          "question": "Jenis ponsel apa saja yang didukung?"
+        },
+        "question_5": {
+          "answer": "Ya, layanan kami berfungsi secara global, tanpa tergantung lokasi atau jaringan.",
+          "question": "Bisakah saya melacak nomor telepon di seluruh dunia?"
+        },
+        "question_6": {
+          "answer": "Layanan kami menyediakan detail lokasi yang akurat, termasuk alamat lengkap, dengan memanfaatkan teknologi GPS yang canggih.",
+          "question": "Seberapa akurat pelacakan lokasi?"
+        },
+        "question_7": {
+          "answer": "Cukup masukkan nomor telepon yang ingin Anda selidiki, dan Mobitrace akan menanganinya. Sistem kami memindai beberapa basis data untuk menemukan informasi yang ada terkait dengan nomor tersebut. Meskipun banyak pencarian yang memberikan hasil secara instan, pencarian yang lebih detail mungkin membutuhkan waktu lebih lama. Setelah Anda menggunakan alat pencarian nomor telepon Mobitrace, Anda akan segera melihat betapa andal dan efektifnya alat ini.",
+          "question": "Bagaimana cara kerja Pencarian Nomor Telepon?"
+        },
+        "question_8": {
+          "answer": "Teknologi pencarian nomor telepon Mobitrace sangatlah canggih. Ketika Anda menjalankan pencarian, Mobitrace akan menjelajahi berbagai sumber, termasuk catatan publik, direktori online, dan bahkan titik data yang tidak begitu terlihat. Jika informasi yang relevan ditemukan, informasi tersebut akan diberikan kepada Anda. Perlu diketahui bahwa ada beberapa pencarian yang tidak dapat memberikan hasil secara langsung, karena ketersediaannya tergantung data yang dapat diakses untuk tiap nomor.",
+          "question": "Apakah Mobitrace menyediakan informasi untuk setiap nomor?"
+        },
+        "question_9": {
+          "answer": "Ya, tentu saja! Bayangkan jika Anda menerima telepon dari seseorang yang mengaku sebagai pihak bank, lalu meminta PIN Anda untuk menghentikan penarikan dana yang mencurigakan, atau menerima pesan singkat yang menyatakan bahwa Anda telah memenangkan hadiah dan harus mengklik tautan untuk mengklaimnya. Semua situasi ini dapat menyebabkan kerugian finansial atau pencurian informasi pribadi. Mobitrace membantu Anda memverifikasi identitas di balik nomor yang tidak dikenal. Pencarian nomor telepon yang cepat dapat memperingatkan Anda akan potensi penipuan dan melindungi data serta dana Anda.",
+          "question": "Dapatkah Mobitrace membantu saya menghindari penipuan melalui telepon dan SMS?"
+        },
+        "title": "Pertanyaan Umum"
+      },
+      "hero": {
+        "100": "100%",
+        "card_address": "29 Willow Street, Hackney Wick, London E9 5EN, United Kingdom",
+        "card_date": "27 Sep 2024 18.46",
+        "card_phone": "+44 633 123 456",
+        "card_title": "Lokasi ditemukan!",
+        "confidential": "rahasia",
+        "iphone_alt": "smarphone menampilkan peta London dengan penanda lokasi",
+        "secure": "Aman",
+        "ssl_encription": "Enkripsi SSL",
+        "subtitle": "Dengan Mobitrace.io, Anda dapat meminta lokasi ponsel secara real-time melalui SMS atau tautan. Pelacakan hanya dilakukan setelah penerima memberikan persetujuan secara tegas.",
+        "title": "Lacak ponsel"
+      },
+      "how_does_it_work": {
+        "step_1": {
+          "description": "Cukup masukkan nomor telepon yang ingin Anda lacak dan sesuaikan pesan SMS yang akan dikirimkan kepada penerima.",
+          "title": "Masukkan Nomor Telepon"
+        },
+        "step_2": {
+          "description": "Mobitrace akan mengirim SMS khusus dari Anda, meminta penerima untuk membagikan lokasinya.",
+          "title": "Kirim Permintaan Lokasi"
+        },
+        "step_3": {
+          "description": "Begitu penerima menyetujui, Anda akan menerima notifikasi dengan lokasi mereka yang akurat, dan dapat langsung melihatnya di peta melalui dasbor Anda.",
+          "title": "Terima Lokasi di Peta"
+        },
+        "title": "Bagaimana Cara Kerjanya?"
+      },
+      "instant_locator": {
+        "subtitle": "Mobitrace adalah solusi terbaik untuk menemukan lokasi atau data siapa pun—cukup menggunakan nomor telepon mereka",
+        "title": "Lacak Nomor <underlined>Sekarang Juga!</underlined>"
+      },
+      "meta_description": "Lacak ponsel apa pun—cepat dan mudah dengan Mobitrace.",
+      "meta_title": "Mobitrace.io–Temukan lokasi ponsel apa pun, di mana pun berada",
+      "og_description": "Lacak ponsel apa pun—cepat dan mudah dengan Mobitrace.",
+      "og_image_alt": "Mobitrace.io–Temukan lokasi ponsel apa pun, di mana pun berada",
+      "og_title": "Mobitrace.io – Temukan lokasi ponsel apa pun, di mana pun berada",
+      "site_name": "Mobitrace",
+      "welcome_title": "Selamat datang di Mobitrace.io",
+      "why_choose": {
+        "reasons": {
+          "reason_1": {
+            "description": "Privasi Anda adalah prioritas utama kami. Tenang, informasi pribadi dan aktivitas pencarian Anda selalu aman dan rahasia.",
+            "title": "Privasi Terjamin Sepenuhnya"
+          },
+          "reason_2": {
+            "description": "Tanpa aplikasi, tanpa perangkat lunak, tanpa repot. Cukup masukkan nomor telepon, dan Mobitrace langsung bekerja.",
+            "title": "Tidak Perlu Instalasi"
+          },
+          "reason_3": {
+            "description": "Dari iPhone dan Android terbaru hingga ponsel lipat jadul—selama bisa menerima SMS, Mobitrace dapat melacaknya. Kami mendukung semua jenis ponsel dan operator.",
+            "title": "Dukungan untuk Semua Jenis Ponsel & Operator"
+          },
+          "reason_4": {
+            "description": "Mobitrace tidak hanya memberikan koordinat, tetapi juga alamat lengkap. Manfaatkan kecanggihan teknologi GPS untuk akurasi yang tak tertandingi.",
+            "title": "Titik Akurat"
+          },
+          "reason_5": {
+            "description": "Di mana pun Anda atau ponsel target berada, Mobitrace tetap berfungsi dengan lancar di seluruh dunia.",
+            "title": "Jangkauan Global"
+          }
+        },
+        "subtitle": "Sekali klik, tak perlu repot—temukan lokasi siapa pun di seluruh dunia",
+        "title": "Mengapa Memilih Mobitrace"
+      }
+    },
+    "legal": {
+      "cookie_policy": {
+        "content": "",
+        "title": "Kebijakan Cookie"
+      },
+      "refund_policy": {
+        "content": "",
+        "title": "Kebijakan Pengembalian Dana"
+      }
+    },
+    "loader": {
+      "step_1": {
+        "carrier": {
+          "loadedDefaultText": "Terdeteksi",
+          "text": "Operator"
+        },
+        "city": {
+          "loadedText": "Ditemukan",
+          "text": "Kota"
+        },
+        "connecting": "Menghubungkan ke satelit",
+        "country": {
+          "text": "Negara"
+        },
+        "database": {
+          "loadedText": "Diakses",
+          "text": "Basis Data"
+        },
+        "location": {
+          "loadedText": "Terdeteksi",
+          "text": "Lokasi"
+        },
+        "searching": "Mencari hasil untuk"
+      },
+      "step_2": {
+        "cta": "Dapatkan Lokasi",
+        "subtitle": "Pencarian Anda selesai—Anda siap mengakses lokasi sekarang.",
+        "title": "Lokasi ditemukan!"
+      }
+    },
+    "loader_complete": {
+      "title": "Daftar untuk mendapatkan lokasi akurat dari <brandColor>{phoneNumber}</brandColor>"
+    },
+    "locate": {
+      "error": "Alamat tidak dapat diambil.",
+      "link_expired": "Tautan kedaluwarsa",
+      "link_expired_explain": "Tautan ini sudah diakses dan tidak lagi tersedia.",
+      "loading": "Memuat...",
+      "not_supported": "Browser Anda tidak mendukung fitur pelacakan lokasi.",
+      "rejected": "Berbagi lokasi telah ditolak.",
+      "thank_you": "Terima kasih!"
+    },
+    "memberArea": {
+      "navigation": {
+        "contact_us": "Hubungi Kami",
+        "find_by_link": "Cari berdasarkan Tautan",
+        "find_by_number": "Cari berdasarkan Nomor",
+        "find_by_phone_lookup": "Pencarian Telepon",
+        "my_activity": "Aktivitas Saya",
+        "notifications": "Notifikasi",
+        "phone_lookup": "Pencarian Telepon",
+        "settings": "Pengaturan",
+        "sex_offenders_search": "Pelaku Kejahatan Seksual",
+        "status": "Status",
+        "tools_library": "Perpustakaan Alat"
+      }
+    },
+    "not_found": {
+      "body": "Terjadi kesalahan, silakan coba lagi.",
+      "cta": "Kembali ke Beranda",
+      "title": "Halaman tidak ditemukan"
+    },
+    "notifications": {
+      "empty": {
+        "text": "Saat ini Anda tidak memiliki notifikasi.",
+        "title": "Masih sepi di sini"
+      },
+      "link_accessed": "<strong>{notificationName}</strong> telah diakses.",
+      "link_located": "Lokasi kini tersedia.",
+      "link_rejected": "Berbagi lokasi ditolak.",
+      "load_more": "Muat lebih banyak",
+      "phone_located": "<strong>Lokasi untuk {phone}</strong> berhasil diperoleh.",
+      "phone_rejected": "<strong>Lokasi untuk {phone}</strong> ditolak.",
+      "title": "Notifikasi"
+    },
+    "onboarding": {
+      "navigation": {
+        "step_1": "Langkah 1",
+        "step_2": "Langkah 2",
+        "step_3": "Langkah 3"
+      }
+    },
+    "onboarding_step1": {
+      "body": "Untuk melacak nomor ponsel, Mobitrace akan mengirim SMS secara anonim yang berisi tautan pelacakan. Cukup kirimkan pesan tersebut dan biarkan sistem kami bekerja.",
+      "cta": "Lanjutkan",
+      "title": "Kirim Tautan Pelacakan"
+    },
+    "onboarding_step2": {
+      "body": "Setelah penerima mengklik tautan, buka Riwayat Lokasi Anda untuk melacak pergerakan mereka di peta secara real-time.",
+      "cta": "Lanjutkan",
+      "title": "Pantau Secara Real-Time"
+    },
+    "onboarding_step3": {
+      "body": "Sambil menunggu penerima membuka pesan, manfaatkan fitur unggulan Mobitrace lainnya untuk meningkatkan pengalaman pelacakan Anda.",
+      "cta": "Mulai sekarang",
+      "title": "Jelajahi Fitur Lainnya"
+    },
+    "pricing": {
+      "cards": {
+        "subscription": {
+          "badge": "Berlangganan",
+          "cta": "Berlangganan sekarang",
+          "description": "Setelah masa percobaan 7 hari Anda berakhir, Anda akan dikenakan biaya {price} setiap 4 minggu. Batalkan kapan saja.",
+          "duration": "Setiap 4 minggu",
+          "features": {
+            "feature_1": "Dukungan di semua perangkat seluler",
+            "feature_2": "Permintaan pelacakan lokasi tanpa batas",
+            "feature_3": "Fitur premium seperti pesan khusus & pelacakan lokasi akurat",
+            "feature_4": "Dukungan 24/7 tanpa biaya tambahan"
+          },
+          "new_features": {
+            "feature_1": "Dukungan di semua perangkat seluler",
+            "feature_2": "Permintaan pelacakan lokasi tanpa batas",
+            "feature_3": "Unduh laporan PDF profesional tanpa biaya tambahan",
+            "feature_4": "Laporan pencarian nomor telepon tanpa batas dengan detail yang komprehensif",
+            "feature_5": "Dukungan 24/7 tanpa biaya tambahan"
+          }
+        },
+        "subscription_24": {
+          "badge": "Langganan",
+          "cta": "Langganan sekarang",
+          "description": "Setelah masa uji coba 24 jam berakhir, maka {price} setiap 4 minggu. Batalkan kapan saja.",
+          "duration": "Setiap 4 minggu",
+          "features": {
+            "feature_1": "Mendukung semua perangkat seluler",
+            "feature_2": "Permintaan pelacakan lokasi tanpa batas",
+            "feature_3": "Unduh laporan PDF profesional tanpa biaya tambahan",
+            "feature_4": "Laporan pencarian identitas nomor telepon tanpa batas dengan detail lengkap",
+            "feature_5": "Dukungan 24/7 tanpa biaya tambahan"
+          },
+          "new_features": {
+            "feature_1": "Mendukung semua perangkat seluler",
+            "feature_2": "Permintaan pelacakan lokasi tanpa batas",
+            "feature_3": "Unduh laporan PDF profesional tanpa biaya tambahan",
+            "feature_4": "Laporan pencarian identitas nomor telepon tanpa batas dengan detail lengkap",
+            "feature_5": "Dukungan 24/7 tanpa biaya tambahan"
+          }
+        },
+        "title": "Harga",
+        "trial": {
+          "badge": "Masa uji coba",
+          "cta": "Mulai uji coba",
+          "description": "Nikmati akses tanpa batas ke semua fitur tanpa risiko. Pembayaran awal Anda memberikan akses penuh selama 7 hari, setelah itu Anda akan dikenakan biaya seharga {price} setiap 4 minggu. Batalkan kapan saja.",
+          "duration": "Uji coba 7 hari",
+          "features": {
+            "feature_1": "Dukungan di semua perangkat seluler",
+            "feature_2": "Akses penuh ke semua fitur selama 7 hari",
+            "feature_3": "Coba dulu, tanpa harus berkomitmen jangka panjang"
+          },
+          "new_features": {
+            "feature_1": "Dukungan di semua perangkat seluler",
+            "feature_2": "Akses penuh ke semua fitur selama 7 hari",
+            "feature_3": "Akses ke laporan pencarian nomor telepon yang terperinci",
+            "feature_4": "Coba dulu, tanpa harus berkomitmen jangka panjang",
+            "feature_5": "Kemampuan untuk mengunduh laporan dalam format PDF"
+          }
+        },
+        "trial_24": {
+          "badge": "Masa uji coba",
+          "cta": "Mulai uji coba",
+          "description": "Nikmati akses tanpa batas ke semua fitur tanpa risiko. Pembayaran awal Anda memberikan akses penuh selama 24 jam, setelah itu Anda akan dikenakan biaya {price} setiap 4 minggu. Batalkan kapan saja.",
+          "duration": "Uji Coba 24 Jam",
+          "features": {
+            "feature_1": "Mendukung semua perangkat seluler",
+            "feature_2": "Akses penuh ke semua fitur selama 24 jam",
+            "feature_3": "Coba dulu, tanpa harus berkomitmen jangka panjang",
+            "feature_4": "Dapat mengunduh laporan dalam format PDF"
+          },
+          "new_features": {
+            "feature_1": "Mendukung semua perangkat seluler",
+            "feature_2": "Akses penuh ke semua fitur selama 24 jam",
+            "feature_3": "Akses laporan lengkap hasil pencarian balik nomor telepon",
+            "feature_4": "Coba dulu, tanpa harus berkomitmen jangka panjang",
+            "feature_5": "Dapat mengunduh laporan dalam format PDF"
+          }
+        }
+      },
+      "special_offer": "Penawaran Spesial",
+      "subtitle": "Mobitrace menawarkan layanannya melalui paket langganan bulanan yang mudah dikelola.",
+      "title": "Coba kemampuan Mobitrace dengan <mark>hanya {price}</mark> selama 7 hari!",
+      "title_24": "Coba Mobitrace hanya dengan <mark>{price}</mark> selama 24 jam!"
+    },
+    "reset_password": {
+      "back_to_login": "Masuk",
+      "description": "Masukkan kata sandi baru untuk mengatur ulang akun Anda",
+      "remember_password": "Ingat kata sandi Anda?",
+      "title": "Atur Ulang Kata Sandi"
+    },
+    "reverse_lookup": {
+      "checkout": {
+        "action_form": "Dapatkan laporan",
+        "back_description": "Jika Anda merasa tidak puas setelah periode uji coba 7 hari, beri tahu kami dan kami akan memproses pengembalian dana penuh dengan senang hati.",
+        "back_description_24": "Jika Anda tidak sepenuhnya puas dalam masa uji coba 24 jam, cukup beri tahu kami dan kami akan memproses pengembalian dana penuh.",
+        "back_title": "Garansi Uang Kembali",
+        "cancel_description": "Anda dapat membatalkan kapan saja melalui dasbor Anda atau dengan menghubungi kami di <email>support@mobitrace.io</email>.",
+        "cancel_title": "Batalkan kapan saja",
+        "title": "Dapatkan laporan"
+      },
+      "components": {
+        "always_know_who_called": {
+          "step_1": {
+            "description": "Mengidentifikasi nama pribadi atau nama perusahaan yang terkait dengan nomor tersebut.",
+            "title": "Nama Lengkap"
+          },
+          "step_2": {
+            "description": "Mencari tahu alamat yang mungkin terhubung dengan nomor ini, baik yang lama maupun yang baru.",
+            "title": "Alamat Rumah"
+          },
+          "step_3": {
+            "description": "Menghubungkan kembali kerabat jauh atau kerabat yang sudah lama tidak bertemu.",
+            "title": "Anggota Keluarga"
+          },
+          "step_4": {
+            "description": "Menemukan profil media sosial di semua platform besar.",
+            "title": "Profil Media Sosial"
+          },
+          "step_5": {
+            "description": "Melihat alamat email publik yang terkait.",
+            "title": "Alamat Email"
+          },
+          "step_6": {
+            "description": "Memeriksa riwayat lokasi yang tersedia untuk umum.",
+            "title": "Riwayat Lokasi"
+          },
+          "step_7": {
+            "description": "Mengumpulkan informasi dari berbagai sumber di internet.",
+            "title": "Aktivitas Web"
+          },
+          "subtitle": "Dengan memasukkan nomor ke dalam pencarian nomor telepon Mobitrace, Anda akan menemukan informasi terkait nomor tersebut yang tersedia untuk umum.",
+          "title": "Selalu tahu identitas penelepon dengan Mobitrace"
+        },
+        "as_seen_on": {
+          "title": "Pernah ditampilkan di"
+        },
+        "customer_carousel": {
+          "subtitle": "Kami berusaha semaksimal mungkin untuk memberikan pengalaman terbaik kepada Anda",
+          "title": "Testimoni <br class='lg:hidden'/> dari pelanggan kami"
+        },
+        "customer_opinions": {
+          "title": "Semua Orang Kini Mulai Mengungkap yang Tersembunyi"
+        },
+        "faqs": {
+          "question_1": {
+            "answer": "Anda cukup memasukkan nomor telepon, dan setelah penerima menyetujui untuk membagikan lokasi mereka, Anda akan menerima lokasi mereka secara akurat.",
+            "question": "Bagaimana cara melacak lokasi seseorang melalui nomor telepon?"
+          },
+          "question_2": {
+            "answer": "Ya, pelacakan lokasi (geolokasi) bersifat legal, tetapi memerlukan persetujuan tegas dari penerima untuk membagikan lokasi mereka, sesuai dengan undang-undang privasi.",
+            "question": "Apakah pelacakan lokasi pihak ketiga legal di mata hukum?"
+          },
+          "question_3": {
+            "answer": "Tidak, Anda tidak perlu menginstal aplikasi atau perangkat lunak apa pun. Semua proses dilakukan secara jarak jauh melalui layanan kami.",
+            "question": "Apakah saya perlu menginstal aplikasi untuk melacak nomor telepon?"
+          },
+          "question_4": {
+            "answer": "Layanan kami mendukung semua jenis ponsel, dari smartphone hingga ponsel model jadul, selama masih bisa menerima SMS.",
+            "question": "Jenis ponsel apa saja yang didukung?"
+          },
+          "question_5": {
+            "answer": "Ya, layanan kami berfungsi secara global, terlepas dari lokasi atau jaringannya.",
+            "question": "Bisakah saya melacak nomor telepon di seluruh dunia?"
+          },
+          "question_6": {
+            "answer": "Layanan kami menyediakan detail lokasi yang akurat, termasuk alamat lengkap, dengan memanfaatkan teknologi GPS yang canggih.",
+            "question": "Seberapa akurat pelacakan lokasi ini?"
+          },
+          "question_7": {
+            "answer": "Cukup masukkan nomor telepon yang ingin Anda selidiki, dan Mobitrace akan menanganinya. Sistem kami memindai beberapa basis data untuk menemukan informasi yang ada terkait dengan nomor tersebut. Meskipun banyak pencarian yang memberikan hasil secara instan, pencarian yang lebih detail mungkin membutuhkan waktu lebih lama. Setelah Anda menggunakan alat pencarian nomor telepon Mobitrace, Anda akan segera melihat betapa andal dan efektifnya alat ini.",
+            "question": "Bagaimana cara kerja Pencarian Nomor Telepon?"
+          },
+          "question_8": {
+            "answer": "Teknologi pencarian nomor telepon Mobitrace sangatlah canggih. Ketika Anda menjalankan pencarian, Mobitrace akan menjelajahi berbagai sumber, termasuk catatan publik, direktori online, dan bahkan titik data yang tidak begitu terlihat. Jika informasi yang relevan ditemukan, informasi tersebut akan diberikan kepada Anda. Perlu diketahui bahwa ada beberapa pencarian yang tidak dapat memberikan hasil secara langsung, karena ketersediaannya tergantung data yang dapat diakses untuk tiap nomor.",
+            "question": "Apakah Mobitrace menyediakan informasi untuk setiap nomor?"
+          },
+          "question_9": {
+            "answer": "Ya, tentu saja! Bayangkan jika Anda menerima telepon dari seseorang yang mengaku sebagai pihak bank, lalu meminta PIN Anda untuk menghentikan penarikan dana yang mencurigakan, atau menerima pesan singkat yang menyatakan bahwa Anda telah memenangkan hadiah dan harus mengklik tautan untuk mengklaimnya. Semua situasi ini dapat menyebabkan kerugian finansial atau pencurian informasi pribadi. Mobitrace membantu Anda memverifikasi identitas di balik nomor yang tidak dikenal. Pencarian nomor telepon yang cepat dapat memperingatkan Anda akan potensi penipuan dan melindungi data serta dana Anda.",
+            "question": "Dapatkah Mobitrace membantu saya menghindari penipuan melalui telepon dan SMS?"
+          },
+          "title": "Pertanyaan Umum"
+        },
+        "get_report": {
+          "cta": "Lihat Laporan Saya",
+          "lookup_today": "Lebih dari 99 pencarian nomor telepon dilakukan hari ini",
+          "product": "Akses penuh 7 hari",
+          "product_24": "Akses Penuh 24 Jam",
+          "product_title": "Laporan Pencarian",
+          "secure": "100% Aman",
+          "title": "Dapatkan Akses ke Laporan Anda!",
+          "trial_description": "Jaminan kepuasan 30 hari"
+        },
+        "hero": {
+          "100": "100%",
+          "card_address": "29 Willow Street, Hackney Wick, London E9 5EN, United Kingdom",
+          "card_date": "27 Sep. 2024   18.46",
+          "card_phone": "+44 633 123 456",
+          "card_title": "Lokasi ditemukan!",
+          "confidential": "rahasia",
+          "iphone_alt": "smarphone menampilkan peta London dengan penanda lokasi",
+          "secure": "Aman",
+          "ssl_encription": "Enkripsi SSL",
+          "subtitle": "Identifikasi penelepon tak dikenal dalam sekejap, ungkap nama lengkap, alamat, profil media sosialnya, dan masih banyak lagi.",
+          "title": "<mark>Pencarian</mark> <mark>Nomor Telepon</mark>"
+        },
+        "instant_locator": {
+          "subtitle": "Mobitrace adalah solusi terbaik untuk menemukan lokasi maupun data milik siapa pun—cukup dengan nomor telepon mereka",
+          "title": "Temukan Semua Nomor Telepon Sekarang Juga!"
+        },
+        "latest_results": {
+          "result": {
+            "description": "{time} menit yang lalu"
+          },
+          "subtitle": "Berikut adalah beberapa hasil terbaru dari layanan pencarian nomor telepon kami.",
+          "title": "Hasil Terbaru"
+        },
+        "limited_offer_tag": {
+          "limited_offer": "Penawaran terbatas"
+        },
+        "phone_input": {
+          "errors": {
+            "invalid_phone": "Harap masukkan nomor telepon yang valid.",
+            "rate_limit_exceeded": "Anda telah melampaui kuota harian Anda.",
+            "rate_limit_exceeded_title": "Batas tercapai"
+          },
+          "label": "Masukkan nomor yang ingin Anda cari",
+          "no_results": "Kode negara tidak ditemukan.",
+          "phone_placeholder": "123456789",
+          "search_placeholder": "Cari berdasarkan negara atau kode...",
+          "submit": "Cari"
+        },
+        "pricing": {
+          "cards": {
+            "subscription": {
+              "badge": "Berlangganan",
+              "cta": "Berlangganan sekarang",
+              "description": "Setelah masa uji coba 7 hari berakhir, penawaran akan otomatis diperpanjang menjadi langganan bulanan. Anda dapat membatalkan langganan kapan saja dengan mudah.",
+              "duration": "Biaya bulanan",
+              "features": {
+                "feature_1": "Dukungan di semua perangkat seluler",
+                "feature_2": "Permintaan pelacakan lokasi tanpa batas",
+                "feature_3": "Unduh laporan PDF profesional tanpa biaya tambahan",
+                "feature_4": "Laporan pencarian balik nomor telepon tanpa batas dengan detail lengkap",
+                "feature_5": "Dukungan 24/7 tanpa biaya tambahan"
+              }
+            },
+            "title": "Mulai Uji Coba 7 Hari Anda",
+            "trial": {
+              "badge": "Masa uji coba",
+              "cta": "Mulai uji coba",
+              "description": "Dengan pembayaran awal ini, Anda dapat mengakses semua fitur platform Mobitrace tanpa batas selama 7 hari. Setelah itu, biaya langganan sebesar {price} per bulan akan berlaku.",
+              "duration": "Uji coba 7 hari",
+              "features": {
+                "feature_1": "Dukungan di semua perangkat seluler",
+                "feature_2": "Akses penuh ke semua fitur selama 7 hari",
+                "feature_3": "Akses laporan lengkap hasil pencarian balik nomor telepon",
+                "feature_4": "Coba dulu, tanpa harus berkomitmen jangka panjang",
+                "feature_5": "Kemampuan untuk mengunduh laporan dalam format PDF"
+              }
+            }
+          },
+          "special_offer": "Penawaran Spesial",
+          "subtitle": "Mobitrace menawarkan layanannya melalui paket langganan bulanan yang mudah dikelola.",
+          "title": "Coba kemampuan Mobitrace dengan <mark>hanya {price}</mark> selama 7 hari!"
+        },
+        "recent_reveals": {
+          "subtitle": "Berikut adalah beberapa penelepon tak dikenal yang kami identifikasi baru-baru ini.",
+          "title": "Temuan Terbaru"
+        },
+        "report_ready": {
+          "description": "Laporan Anda sudah siap!",
+          "download_report_button": "Unduh PDF",
+          "view_report_button": "Lihat Laporan"
+        },
+        "summary_report_card": {
+          "caller_info": "Dengan Mobitrace, Anda tidak perlu menebak-nebak siapa si penelepon tak dikenal. Kami akan memberikan Anda data terkait si penelepon, bahkan informasi yang tidak mereka ketahui pun tersedia untuk Anda.",
+          "carrier": "Operator",
+          "continue": "Lanjutkan",
+          "latest_report": "Laporan terbaru per 3 Maret 2025",
+          "line_type": "Tipe Saluran",
+          "may_include": "Hasil dapat mencakup",
+          "result_1": "Nama dan alamat lengkap pemilik",
+          "result_2": "Nama dan profil Media Sosial",
+          "result_3": "Foto & Video",
+          "result_4": "Aktivitas Online Lampau",
+          "result_5": "Alamat Email",
+          "result_6": "Dan Masih Banyak Lagi!",
+          "timer_desktop": "<mark>Laporan</mark> Anda akan kedaluwarsa dalam",
+          "timer_mobile": "Laporan kedaluwarsa dalam",
+          "title": "Laporan Anda mengenai <mark>{phoneNumber}</mark> sudah siap!",
+          "trusted_by": "Dipercaya oleh lebih dari <span class='font-bold'>7 juta</span> orang"
+        },
+        "upsell_progress_steps": {
+          "access_report": "Laporan Akses",
+          "create_account": "Buat Akun",
+          "data_breach": "Kebocoran Data",
+          "pdf_export": "Ekspor PDF",
+          "sex_offenders": "Pelaku Kejahatan Seksual"
+        },
+        "what_you_get": {
+          "item_1": "Cari semua nomor telepon, baik yang lama maupun yang baru, untuk mengungkapkan informasi tentang pemiliknya",
+          "item_2": "Pemilik nomor telepon tidak akan pernah diberi tahu bahwa Anda mencarinya",
+          "item_3": "Basis data kami selalu berisi informasi terbaru.",
+          "item_4": "Mobitrace menyusun laporannya dari informasi yang tersedia untuk umum di situs web.",
+          "item_title_1": "Pencarian Nomor Telepon Canggih",
+          "item_title_2": "Privasi Anda 100% Terjamin",
+          "item_title_3": "Terus Diperbarui",
+          "item_title_4": "Menyisir Miliaran Data",
+          "title": "Ini yang Anda dapatkan"
+        },
+        "why_use": {
+          "phone_input_label": "Masukkan nomor yang ingin Anda cari",
+          "reasons": {
+            "reason_1": {
+              "description": "Kenali siapa yang menelepon dan hilangkan rasa ragu saat menjawab panggilan.",
+              "title": "Selalu Tahu Siapa yang Menelepon"
+            },
+            "reason_2": {
+              "description": "Mobitrace dapat membantu menemukan kembali koneksi lama atau yang sudah hilang, bahkan dari nomor lama.",
+              "title": "Terhubung kembali dengan teman lama"
+            },
+            "reason_3": {
+              "description": "Lindungi diri Anda dengan memverifikasi identitas orang yang Anda ajak bicara di dunia maya.",
+              "title": "Verifikasi Identitas"
+            },
+            "reason_4": {
+              "description": "Panggilan penipuan dan pencuri data sedang meningkat. Mobitrace dapat membantu Anda mengidentifikasi pelaku kejahatan tanpa harus menjawab telepon Anda.",
+              "title": "Identifikasi Nomor yang Mencurigakan"
+            },
+            "reason_5": {
+              "description": "Masukkan nomor Anda ke Mobitrace dan periksa data pribadi Anda yang tersedia dan identifikasi potensi kebocoran data.",
+              "title": "Pantau Jejak Digital Anda"
+            }
+          },
+          "steps": {
+            "step_1": {
+              "description": "Melindungi diri Anda dari panggilan penipuan dan promosi."
+            },
+            "step_2": {
+              "description": "Melakukan pemeriksaan latar belakang untuk calon pasangan atau teman serumah."
+            },
+            "step_3": {
+              "description": "Mencari tahu identitas pelaku panggilan spam yang mengganggu."
+            },
+            "step_4": {
+              "description": "Menghubungkan kembali dengan teman lama atau anggota keluarga."
+            },
+            "step_5": {
+              "description": "Mengidentifikasi penipu di aplikasi kencan dan chat."
+            }
+          },
+          "subtitle": "Entah Anda ingin melindungi diri secara digital atau menemukan kembali koneksi yang hilang, kami siap membantu.<br>Dengan Mobitrace, Anda bisa:",
+          "title": "Mengapa Pencarian Nomor Telepon?",
+          "title_2": "Kasus Penggunaan Lain",
+          "title_badge": "LAINNYA"
+        }
+      },
+      "member_area": {
+        "phone_lookup": {
+          "daily_limit": "Batas: 5 pencarian setiap 24 jam.",
+          "label": "Ungkap ID Penelepon",
+          "phone_lookup": "Pencarian Telepon"
+        }
+      },
+      "report": {
+        "carrier_details": {
+          "info": "Bagian ini memberikan informasi tentang operator telepon individu, termasuk detail jaringan dan jenis layanan.",
+          "labels": {
+            "carrier": "Operator",
+            "international_format": "Format Internasional",
+            "local_format": "Format Lokal",
+            "location": "Lokasi",
+            "type": "Jenis"
+          },
+          "line_types": {
+            "landline": "Telepon rumah",
+            "mobile": "Seluler"
+          },
+          "title": "Detail operator",
+          "title_empty": "Detail operator"
+        },
+        "common": {
+          "no_data": "Tidak ada data"
+        },
+        "data_breach_history": {
+          "alert_empty": "Bagian ini menguraikan riwayat kebocoran data, merinci setiap insiden yang telah membahayakan informasi sensitif. Bagian ini mencakup informasi tentang sifat kebocoran, data yang terdampak, dan langkah-langkah yang diambil untuk mengatasi dan mencegah kejadian serupa di masa mendatang.",
+          "alert_success": "Bagian ini menguraikan riwayat kebocoran data, merinci setiap insiden yang telah membahayakan informasi sensitif. Bagian ini mencakup informasi tentang sifat kebocoran, data yang terdampak, dan langkah-langkah yang diambil untuk mengatasi dan mencegah kejadian serupa di masa mendatang.",
+          "alert_title": "{count} Kebocoran Data",
+          "report": {
+            "breaches_found_for": "Kebocoran ditemukan untuk",
+            "compromised_data": "Data yang terdampak",
+            "data_breaches": "kebocoran data",
+            "data_types": {
+              "date_of_birth": "Tanggal lahir",
+              "education_levels": "Tingkat pendidikan",
+              "email": "Alamat email",
+              "gender": "Jenis kelamin",
+              "geo_location": "Lokasi geografis",
+              "name": "Nama",
+              "password": "Kata sandi",
+              "phone": "Nomor telepon",
+              "social_media_profiles": "Profil media sosial",
+              "username": "Nama pengguna"
+            },
+            "download_report_button": "Unduh PDF",
+            "title": "Laporan Pelanggaran Data"
+          },
+          "show_report": "Tampilkan Laporan",
+          "title": "Riwayat kebocoran data",
+          "unlock_report": "Buka Kunci Laporan"
+        },
+        "header": {
+          "button": "Unduh PDF",
+          "matches_found": "Kecocokan ditemukan untuk",
+          "title": "Laporan Pencarian Telepon",
+          "unlock_download_pdf": "Buka Akses Unduhan PDF"
+        },
+        "looking_for_more_profiles_dialog": {
+          "description": "Mungkin memerlukan beberapa detik—kami sedang mencari di lebih banyak platform",
+          "title": "Mencari lebih banyak profil"
+        },
+        "phone_public_information": {
+          "info": "Bagian ini berisi ringkasan informasi yang tersedia untuk umum yang terkait dengan nomor telepon individu.",
+          "name": "Nama:",
+          "source": "Sumber:",
+          "sources": {
+            "data_breach": "Kebocoran Data",
+            "other": "Lainnya",
+            "public_records": "Catatan Publik",
+            "social_media": "Media Sosial"
+          },
+          "title": "Informasi publik telepon",
+          "title_empty": "Tidak ada informasi publik telepon"
+        },
+        "photos": {
+          "info": "Bagian ini menampilkan kemungkinan gambar pemilik ponsel untuk membantu identifikasi visual jika tersedia.",
+          "other": "Lainnya",
+          "title": "Foto",
+          "title_empty": "Tidak ada foto yang ditemukan"
+        },
+        "possible_addresses": {
+          "info": "Bagian ini mencantumkan kemungkinan alamat yang terhubung dengan individu tersebut, yang dapat membantu mengidentifikasi tempat tinggal atau lokasi sebelumnya.",
+          "labels": {
+            "city": "Kota",
+            "country": "Negara",
+            "county": "Daerah",
+            "latitude": "Garis Lintang",
+            "length_of_residence": "Lama Tinggal",
+            "longitude": "Garis Bujur",
+            "postal_code": "Kode Pos",
+            "state": "Negara Bagian",
+            "street": "Jalan"
+          },
+          "title": "Kemungkinan alamat",
+          "title_empty": "Tidak ada alamat yang ditemukan",
+          "values": {
+            "years": "{count} tahun"
+          }
+        },
+        "possible_contact_details": {
+          "info": "Bagian ini menunjukkan alamat email yang terhubung dengan individu untuk membantu memverifikasi informasi kontak.",
+          "labels": {
+            "associated_emails": "Email Terkait",
+            "associated_numbers": "Nomor Terkait"
+          },
+          "title": "Kemungkinan detail kontak",
+          "title_empty": "Tidak ada detail kontak yang ditemukan"
+        },
+        "possible_personal_details": {
+          "info": "Bagian ini menunjukkan kemungkinan informasi pribadi yang terkait dengan individu, membantu memberikan wawasan latar belakang tambahan.",
+          "labels": {
+            "children": "Anak-anak",
+            "date_of_birth": "Tanggal Lahir",
+            "gender": "Jenis Kelamin",
+            "household_size": "Ukuran Rumah Tangga",
+            "income": "Penghasilan",
+            "marital_status": "Status Perkawinan"
+          },
+          "title": "Kemungkinan detail pribadi",
+          "title_empty": "Tidak ada detail pribadi yang ditemukan",
+          "values": {
+            "children": "Saat Ini ({count})",
+            "divorced": "Cerai",
+            "domestic_partnership": "Kemitraan Domestik",
+            "engaged": "Bertunangan",
+            "female": "Wanita",
+            "in_relationship": "Menjalin Hubungan",
+            "intersex": "Interseks",
+            "male": "Pria",
+            "married": "Menikah",
+            "no_children": "Tidak ada",
+            "no_record_available": "Tidak ada catatan yang tersedia",
+            "separated": "Berpisah",
+            "single": "Lajang",
+            "widowed": "Janda"
+          }
+        },
+        "possible_social_media_accounts": {
+          "expand_search": {
+            "more_platforms": "Akses lebih banyak platform hanya dengan sekali klik",
+            "title": "Perluas pencarian Anda",
+            "unlock_platforms": "Buka akses ke lebih banyak platform"
+          },
+          "info": "Bagian ini menampilkan kemungkinan profil media sosial yang terhubung dengan orang tersebut, sehingga Anda bisa melihat gambaran tentang jejak online mereka.",
+          "labels": {
+            "id": "ID",
+            "name": "Nama pengguna",
+            "opne_url": "Buka halaman",
+            "source": "Sumber",
+            "url": "URL"
+          },
+          "network_not_found": "Tidak ditemukan",
+          "no_accounts_found": "Tidak ada akun yang ditemukan di platform mana pun yang telah diperiksa. Artinya, pengguna mungkin tidak terdaftar di platform tersebut atau menggunakan data yang berbeda dari parameter pencarian yang Anda masukkan.",
+          "partial_result": {
+            "info": "Tidak ada akun yang ditemukan di beberapa platform. Artinya, pengguna mungkin tidak terdaftar di platform tersebut atau menggunakan data yang berbeda dari parameter pencarian yang Anda masukkan.",
+            "no_account_platforms": "Platform yang ditemukan tanpa akun terkait",
+            "title": "Hasil Pencarian Lengkap"
+          },
+          "sources": {
+            "behance": "Behance",
+            "facebook": "Facebook",
+            "github": "GitHub",
+            "gitlab": "Gitlab",
+            "google": "Google",
+            "instagram": "Instagram",
+            "kick": "Kick",
+            "linkedin": "LinkedIn",
+            "pinterest": "Pinterest",
+            "reddit": "Reddit",
+            "snapchat": "Snapchat",
+            "telegram": "Telegram",
+            "threads": "Threads",
+            "tiktok": "TikTok",
+            "tumblr": "Tumblr",
+            "twitch": "Twitch",
+            "x": "X",
+            "youtube": "YouTube"
+          },
+          "title": "Kemungkinan akun media sosial",
+          "title_empty": "Tidak ada akun media sosial yang ditemukan"
+        },
+        "potential_education": {
+          "info": "Bagian ini merangkum kemungkinan informasi pendidikan, termasuk sekolah yang pernah diikuti dan kualifikasi yang diperoleh.",
+          "title": "Kemungkinan pendidikan",
+          "title_empty": "Pendidikan tidak ditemukan",
+          "values": {
+            "associate_degree": "Gelar Diploma",
+            "bachelor_degree": "Gelar Sarjana",
+            "doctoral_degree": "Gelar Doktor",
+            "high_school": "SMA",
+            "master_degree": "Gelar Magister",
+            "no_formal_education": "Tidak ada pendidikan formal",
+            "other": "Lainnya",
+            "primary_school": "SD",
+            "secondary_school": "SMP",
+            "vocational_training": "Pelatihan vokasi"
+          }
+        },
+        "potential_professional_summary": {
+          "info": "Bagian ini menyoroti kemungkinan peran atau bidang industri yang pernah digeluti oleh individu tersebut, berdasarkan data yang tersedia.",
+          "title": "Kemungkinan ringkasan profesional",
+          "title_empty": "Tidak ada ringkasan profesi",
+          "values": {
+            "agriculture": "Pertanian",
+            "arts_and_entertainment": "Seni dan Hiburan",
+            "construction": "Konstruksi",
+            "education": "Pendidikan",
+            "energy_and_utilities": "Energi dan Utilitas",
+            "engineering": "Teknik",
+            "finance": "Keuangan",
+            "government": "Pemerintahan",
+            "healthcare": "Layanan Kesehatan",
+            "hospitality": "Horeka",
+            "information_technology": "Teknologi Informasi",
+            "legal": "Legal",
+            "logistics_and_supply_chain": "Logistik dan Rantai Pasokan",
+            "manufacturing": "Manufaktur",
+            "marketing": "Pemasaran",
+            "media_and_communications": "Media dan Komunikasi",
+            "military": "Militer",
+            "non_profit": "Nirlaba",
+            "other": "Lainnya",
+            "real_estate": "Real Estat",
+            "retail": "Ritel",
+            "sales": "Penjualan",
+            "science": "Sains",
+            "skilled_trades": "Perdagangan Terampil",
+            "telecommunications": "Telekomunikasi",
+            "transportation": "Transportasi"
+          }
+        },
+        "profile_summary": {
+          "associated_emails": "Email Terkait:",
+          "associated_locations": "Lokasi Terkait:",
+          "associated_usernames": "Nama Pengguna Terkait:",
+          "empty": "-",
+          "not_identified": "Tidak Teridentifikasi",
+          "possible_owners": "Kemungkinan Pemilik:",
+          "potential_date_of_birth": "Kemungkinan Tanggal Lahir:",
+          "title": "Ringkasan profil"
+        },
+        "sex_offenders": {
+          "alert": "Pemeriksaan latar belakang pelaku kejahatan seksual hanya tersedia untuk data di AS. Bagian ini menyediakan informasi mengenai data pelaku kejahatan seksual yang terdaftar, termasuk detail pelanggaran, status pendaftaran saat ini, dan lokasi terkait.",
+          "report": {
+            "address_information": {
+              "city": "Kota",
+              "country": "Negara",
+              "county": "Daerah",
+              "latitude": "Garis Lintang",
+              "length_of_residence": "Lama Tinggal",
+              "longitude": "Garis Bujur",
+              "postal_code": "Kode Pos",
+              "state": "Negara Bagian",
+              "street": "Jalan",
+              "title": "Lokasi"
+            },
+            "body_characteristics": {
+              "age": "Usia",
+              "ethnicity": "Etnis",
+              "eye_color": "Warna Mata",
+              "hair_color": "Warna Rambut",
+              "height": "Tinggi",
+              "race": "Ras",
+              "sex": "Jenis Kelamin",
+              "title": "Karakteristik tubuh",
+              "weight": "Berat Badan"
+            },
+            "crime_information": {
+              "conviction_date": "Tanggal Hukuman",
+              "crime": "Kejahatan",
+              "jurisdiction": "Yurisdiksi",
+              "no_information_available": "Informasi tidak tersedia",
+              "registration_date": "Tanggal Pencatatan",
+              "risk_level": "Tingkat Risiko",
+              "title": "Informasi kejahatan"
+            },
+            "distinctive_features": {
+              "back": "Punggung",
+              "head": "Kepala",
+              "left_arm": "Lengan Kiri",
+              "left_hand": "Tangan Kiri",
+              "left_leg": "Kaki Kiri",
+              "right_arm": "Lengan Kanan",
+              "right_hand": "Tangan Kanan",
+              "right_leg": "Kaki Kanan",
+              "title": "Tanda / Bekas Luka / Tato",
+              "torso": "Torso"
+            },
+            "download_report_button": "Unduh PDF",
+            "new_search": "Pencarian Baru",
+            "others_information": {
+              "is_absconded": "Apakah Buronan?",
+              "is_predator": "Apakah Predator?",
+              "jurisdiction": "Yurisdiksi",
+              "link": "Tautan",
+              "original_report": "Sumber Asli",
+              "title": "Lainnya",
+              "yes": "Ya"
+            },
+            "personal_information": {
+              "date_of_birth": "Tanggal Lahir",
+              "first_name": "Nama Depan",
+              "first_name_nicknames": "Nama Depan Nama Panggilan",
+              "last_name": "Nama Belakang",
+              "middle_name": "Nama Tengah",
+              "name": "Nama",
+              "title": "Informasi pribadi"
+            },
+            "photos": {
+              "title": "Foto"
+            },
+            "records_found_for": "Catatan yang ditemukan untuk",
+            "title_profile": "Profil Pelaku Kejahatan Seksual",
+            "values": {
+              "body_part": {
+                "back": "Punggung",
+                "head": "Kepala",
+                "left_arm": "Lengan Kiri",
+                "left_hand": "Tangan Kiri",
+                "left_leg": "Kaki Kiri",
+                "right_arm": "Lengan Kanan",
+                "right_hand": "Tangan Kanan",
+                "right_leg": "Kaki Kanan",
+                "torso": "Torso"
+              },
+              "ethnicity": {
+                "hispanic": "Hispanik",
+                "non_hispanic": "Non-Hispanik",
+                "other": "Lainnya"
+              },
+              "eye_color": {
+                "amber": "Amber",
+                "blue": "Biru",
+                "brown": "Cokelat",
+                "gray": "Abu-abu",
+                "green": "Hijau",
+                "hazel": "Hazel",
+                "other": "Lainnya",
+                "red": "Merah",
+                "violet": "Ungu"
+              },
+              "hair_color": {
+                "auburn": "Pirang",
+                "bald": "Botak",
+                "black": "Hitam",
+                "blonde": "Pirang",
+                "brown": "Cokelat",
+                "chestnut": "Kastanye",
+                "dyed": "Diwarnai",
+                "gray": "Abu-abu",
+                "other": "Lainnya",
+                "red": "Merah",
+                "white": "Putih"
+              },
+              "race": {
+                "asian": "Asia",
+                "black_or_african_american": "Kulit Hitam atau Afrika-Amerika",
+                "mixed": "Campur",
+                "native_american": "Penduduk Asli Amerika",
+                "other": "Lainnya",
+                "pacific_islander": "Penduduk Kepulauan Pasifik",
+                "white": "Kulit Putih"
+              },
+              "risk_level": {
+                "high": "Tinggi",
+                "low": "Rendah",
+                "medium": "Sedang"
+              },
+              "sex": {
+                "female": "Wanita",
+                "intersex": "Interseks",
+                "male": "Pria"
+              }
+            }
+          },
+          "title": "Pemeriksaan latar belakang pelaku kejahatan seksual"
+        },
+        "sex_offenders_background_check": {
+          "alt_icon": "Pelaku Kejahatan Seksual",
+          "info": "Pemeriksaan latar belakang pelaku kejahatan seksual hanya tersedia untuk data di AS. Bagian ini menyediakan informasi mengenai data pelaku kejahatan seksual yang terdaftar, termasuk detail pelanggaran, status pendaftaran saat ini, dan lokasi terkait.",
+          "show_report": "Tampilkan Laporan",
+          "title": "Pemeriksaan latar belakang pelaku kejahatan seksual",
+          "title_empty": "Latar belakang pelaku kejahatan seksual tidak ditemukan",
+          "unlock_report": "Buka Kunci Laporan"
+        },
+        "upsell": {
+          "data_breach_history": {
+            "cancel": "Batal",
+            "compromise_isa_contact_details": "Kemungkinan detail kontak, termasuk nomor telepon, email, dan alamat fisik.",
+            "disclaimer_info": "Semua data bersumber dari basis data komprehensif yang mencakup lebih dari 14 miliar arsip dari kebocoran data yang dilaporkan ke publik. Kami mengidentifikasi dan melaporkan informasi yang terekspos, tetapi tidak memberikan akses ke data sensitif seperti kata sandi atau kredensial pribadi.",
+            "limited_offer": "Penawaran terbatas",
+            "personal_identifiers": "Tanda pengenal pribadi termasuk nama pengguna, nama lengkap, dan tanggal lahir",
+            "processing_payment": "Memproses",
+            "professional_information_and_technical_data": "Informasi profesional dan data teknis seperti alamat IP",
+            "purchase": "Beli",
+            "special_limited_time_offer": "Penawaran khusus dengan waktu terbatas ini berakhir ketika Anda meninggalkan halaman ini.",
+            "title": "Laporan Pelanggaran & Kebocoran Data",
+            "total_due_today": "Total yang harus dibayar:"
+          },
+          "payment_message": {
+            "add_payment_details": "Tambah detail pembayaran",
+            "agree_description_upsell": "Dengan melanjutkan, Anda menyetujui pembayaran satu kali sebesar {price} serta menyetujui <terms>Ketentuan Penggunaan</terms> serta <privacy>Kebijakan Privasi</privacy> kami. Biaya akan muncul sebagai “mobitrace.io” pada laporan tagihan Anda.",
+            "close": "Tutup",
+            "payment_error": "Pembayaran Anda tidak berhasil",
+            "payment_error_description": "Perbarui detail pembayaran Anda",
+            "payment_retry_description": "Kami tidak dapat memproses kartu Anda. Silakan coba lagi.",
+            "payment_success": "Pembayaran Anda berhasil",
+            "payment_success_description": "Terima kasih telah membeli! Pembelian Anda siap digunakan.",
+            "skip": "Lewati",
+            "try_again": "Coba Lagi",
+            "update_payment_method": "Perbarui metode pembayaran"
+          },
+          "sex_offenders": {
+            "cancel": "Batal",
+            "comprehensive_data": "Akses terhadap data pelaku yang komprehensif dari sumber resmi",
+            "disclaimer_info": "Pemeriksaan latar belakang pelaku kejahatan seksual hanya tersedia di AS. Departemen Kehakiman melaporkan sekitar 800.000 pelaku kejahatan seksual terdaftar di seluruh negeri dengan ribuan entri baru setiap tahunnya. Verifikasi orang tak dikenal agar Anda lebih tenang.",
+            "instant_nationwide_search": "Pemeriksaan nasional instan di seluruh negara bagian dan federal",
+            "limited_offer": "Penawaran terbatas",
+            "processing_payment": "Memproses",
+            "purchase": "Beli",
+            "realtime_verification": "Verifikasi real time terhadap data pelaku terkini",
+            "special_limited_time_offer": "Penawaran verifikasi keamanan dengan waktu terbatas. Layanan ini hanya mencari individu yang terdaftar di Amerika Serikat.",
+            "title": "Pemeriksaan Daftar Pelaku Kejahatan Seksual",
+            "total_due_today": "Total yang harus dibayar:"
+          },
+          "sex_offenders_search": {
+            "cancel": "Batal",
+            "disclaimer_info": "Pemeriksaan latar belakang pelaku kejahatan seksual hanya berlaku di wilayah AS. Departemen Kehakiman AS melaporkan sekitar 800.000 pelaku kejahatan seksual terdaftar di seluruh negeri dengan ribuan pendaftaran baru setiap tahunnya. Verifikasi identitas orang yang tidak dikenal demi ketenangan pikiran Anda.\n\nIni adalah pembelian satu kali sebesar {price}. Dengan menambahkan laporan ini, Anda mengizinkan satu kali penagihan ke metode pembayaran yang terdaftar. Pembelian ini memberi Anda akses ke satu laporan dalam penawaran tambahan ini.",
+            "instant_access": "Pencarian instan berskala nasional di seluruh daftar negara bagian dan federal.",
+            "processing_payment": "Sedang diproses",
+            "purchase": "Beli",
+            "secure_one_time_payment": "Verifikasi secara real-time menggunakan data daftar terbaru",
+            "special_limited_time_offer": "Penawaran verifikasi keamanan dalam waktu terbatas. Layanan ini hanya melakukan pencarian terhadap individu yang terdaftar di Amerika Serikat.",
+            "title": "Pemeriksaan Daftar Pelaku Kejahatan Seksual",
+            "total_due_today": "Total yang harus dibayar:",
+            "verified_source_data": "Akses ke data pelanggar yang komprehensif dari sumber-sumber resmi."
+          },
+          "social_networks": {
+            "cancel": "Batal",
+            "disclaimer_info": "Pencarian ini hanya mencakup platform media sosial utama dan informasi akun yang tersedia untuk publik. Hasil dapat berbeda-beda tergantung pada platform dan ketersediaan profil.",
+            "limited_offer": "Penawaran terbatas",
+            "matching_accounts": "Temukan akun yang cocok dalam laporan berdasarkan data yang tersedia secara publik.",
+            "processing_payment": "Sedang diproses",
+            "purchase": "Beli",
+            "related_usernames_and_public_profile": "Identifikasi nama pengguna terkait dan keberadaan profil publik",
+            "scan_10_major_social_platforms": "Telusuri lebih dari 10 platform media sosial utama untuk menemukan akun terkait",
+            "special_limited_time_offer": "Penawaran spesial ini akan berakhir saat Anda meninggalkan halaman ini",
+            "title": "Pemeriksaan Platform Media Sosial",
+            "total_due_today": "Total yang harus dibayar:"
+          },
+          "unlimited_pdf_downloads": {
+            "cancel": "Batal",
+            "disclaimer_info": "Ini adalah pembelian satu kali. Dengan mengklik \"Dapatkan PDF tanpa batas\", Anda akan dikenai biaya seharga {price}.",
+            "limited_offer": "Penawaran terbatas",
+            "processing_payment": "Memproses",
+            "purchase": "Beli",
+            "special_limited_time_offer": "Diskon tambahan telah diterapkan hanya untuk Anda!",
+            "title": "Unduhan PDF Tanpa Batas",
+            "total_due_today": "Total yang harus dibayar:",
+            "upsell_benefits_1": "Dapat diakses secara offline",
+            "upsell_benefits_2": "Mudah untuk dibagikan dengan orang lain",
+            "upsell_benefits_3": "Dapat dicetak sesuai permintaan",
+            "upsell_benefits_4": "Jelas, tertata rapi, dan mudah dibaca"
+          }
+        }
+      },
+      "search": {
+        "components": {
+          "loader": {
+            "step_1": {
+              "carrier": {
+                "loadedDefaultText": "Terdeteksi",
+                "text": "Operator"
+              },
+              "city": {
+                "loadedText": "Ditemukan",
+                "text": "Kota"
+              },
+              "connecting": "Memulai pencarian nomor telepon",
+              "country": {
+                "text": "Negara"
+              },
+              "location": {
+                "loadedText": "Terdeteksi",
+                "text": "Lokasi"
+              },
+              "searching": "Mencari hasil untuk",
+              "type": {
+                "loadedText": "Terdeteksi",
+                "text": "Jenis"
+              }
+            },
+            "step_2": {
+              "cta": "Dapatkan Lokasi",
+              "subtitle": "Pencarian Anda selesai—Anda siap mengakses lokasi sekarang.",
+              "title": "Lokasi ditemukan!"
+            }
+          },
+          "warning_dialog": {
+            "button_text": "Ungkap Penelepon",
+            "description": "Laporan Mobitrace Anda sudah siap. Cari tahu informasi publik apa saja yang terkait dengan nomor ini.",
+            "info_message": "Pencarian Anda untuk {phoneNumber} 100% aman dan terjamin.",
+            "telephone": "(0-616) 32211",
+            "title": "PERINGATAN:"
+          }
+        }
+      },
+      "search_complete": {
+        "components": {
+          "age_verification_dialog": {
+            "button_text": "Ya, saya berusia 18 tahun atau lebih",
+            "description": "Laporan ini mungkin berisi konten sensitif dan hanya ditujukan untuk pelanggan dewasa. Anda harus berusia 18 tahun atau lebih untuk melanjutkan.",
+            "info_message": "Jika Anda berusia di bawah 18 tahun, silakan <bold>keluar sekarang.</bold>",
+            "title": "Memerlukan verifikasi usia"
+          },
+          "customer_opinions_carousel": {
+            "opinion_1": {
+              "description": "Tampaknya putri saya mulai berinteraksi dengan orang baru dan saya ingin memastikan bahwa semuanya aman. Mobitrace menghilangkan kekhawatiran saya dengan memeriksa siapa kontak tersebut. Terkadang, pencarian nomor telepon sederhana dapat sangat membantu.",
+              "rate": "4",
+              "timeAgo": "4 hari yang lalu",
+              "title": "Akhirnya, lega juga",
+              "user": "Samantha Green"
+            },
+            "opinion_2": {
+              "description": "Alat ini sangat akurat dan dapat menemukan sebagian besar nomor yang saya cari. Dalam beberapa kasus, informasinya agak lawas. Namun, secara umum, Mobitrace menjawab kebutuhan saya dengan fiturnya yang andal dan mudah digunakan.",
+              "rate": "4.5",
+              "timeAgo": "1 minggu yang lalu",
+              "title": "Hasil akurat yang dapat saya andalkan",
+              "user": "Daniel Brooks"
+            },
+            "opinion_3": {
+              "description": "Cepat, andal, dan akurat! Saya terkesan dengan kecepatan Mobitrace dalam memberikan hasil. Layanannya sungguh memuaskan.",
+              "rate": "5",
+              "timeAgo": "1 hari yang lalu",
+              "title": "Cepat, mudah, dan tepat sasaran",
+              "user": "Olivia Carter"
+            },
+            "opinion_4": {
+              "description": "Mobitrace telah menjadi salah satu alat favorit saya untuk mengelola panggilan. Alat ini membantu saya mengetahui identitas di balik nomor tak dikenal, yang menghemat waktu dan membantu saya mengontrol siapa saja yang dapat menghubungi saya.",
+              "rate": "5",
+              "timeAgo": "2 minggu yang lalu",
+              "title": "Memberi saya kendali atas panggilan saya",
+              "user": "Matthew Lewis"
+            },
+            "opinion_5": {
+              "description": "Saya menerima panggilan dari nomor tak dikenal dan ragu apakah saya perlu khawatir. Saya mencoba Mobitrace, dan aplikasi ini langsung membantu saya mengidentifikasi si penelepon. Kini saya menggunakannya setiap kali ada yang mencurigakan.",
+              "rate": "4.5",
+              "timeAgo": "2 hari yang lalu",
+              "title": "Sekarang saya selalu tahu siapa yang menelepon",
+              "user": "Sophia Turner"
+            },
+            "opinion_6": {
+              "description": "Saya terus-menerus menerima panggilan spam dan ini membuat saya kesal. Dengan Mobitrace, saya akhirnya tahu siapa dalangnya. Melihat profil dan riwayat penelepon memberi saya kejelasan yang saya butuhkan.",
+              "rate": "5",
+              "timeAgo": "1 hari yang lalu",
+              "title": "Tak perlu pusing menghadapi panggilan spam",
+              "user": "Christopher Hall"
+            },
+            "opinion_7": {
+              "description": "Alat terbaik yang pernah saya coba sejauh ini! Dengan Mobitrace, saya tidak perlu lagi khawatir tentang panggilan atau SMS tak dikenal. Cepat, mudah, dan memberikan jawaban yang saya butuhkan.",
+              "rate": "4",
+              "timeAgo": "3 hari yang lalu",
+              "title": "Solusi terbaik untuk panggilan tidak dikenal",
+              "user": "Grace Mitchell"
+            },
+            "opinion_8": {
+              "description": "Mobitrace membantu saya mengetahui siapa di balik nomor tak dikenal yang menelepon saya. Bahkan, aplikasi ini menampilkan nama-nama kerabat dan hubungan keluarga. Informasinya memang tidak selalu sempurna, tetapi secara keseluruhan, aplikasi ini memberi saya wawasan berharga yang tidak bisa saya temukan di tempat lain.",
+              "rate": "4.5",
+              "timeAgo": "2 hari yang lalu",
+              "title": "Informasi yang sangat detail",
+              "user": "Ethan Parker"
+            },
+            "rate": "4.5",
+            "reviews": "Berdasarkan <bold>456 ulasan</bold>",
+            "title": "Luar biasa"
+          },
+          "customer_say_about": {
+            "subtitle": "Kami berusaha semaksimal mungkin untuk memberikan pengalaman terbaik kepada Anda",
+            "title": "Testimoni dari pelanggan kami"
+          },
+          "owner_information": {
+            "collecting_data_address": "Alamat",
+            "collecting_data_email": "Email atau Nomor Telepon",
+            "collecting_data_job": "Informasi Pekerjaan",
+            "collecting_data_online": "Nama Pengguna Online",
+            "collecting_data_past": "Relasi di Masa Lalu",
+            "collecting_data_profiles": "Jejak Profil Lama",
+            "collecting_data_title": "Mengumpulkan Data...",
+            "progress_bar_description": "Riwayat pencarian Anda aman dan bersifat pribadi. Pemilik {phoneNumber} TIDAK akan diberi tahu tentang pencarian Anda.",
+            "progress_bar_percentage": "{percentage}%",
+            "subtitle": "Mohon bersabar saat kami memeriksa miliaran data.",
+            "title": "Mengambil Informasi Pemilik <bold></bold>"
+          }
+        }
+      },
+      "sign_up": {
+        "card_description": "Mobitrace adalah alat digital canggih yang mencari miliaran data telepon secara online. Meskipun sebagian besar nomor tak dikenal berasal dari penelepon spam atau telemarketer, laporan kami mungkin berisi informasi yang akan mengejutkan Anda.",
+        "card_title": "Pemberitahuan Penting",
+        "email_placeholder": "Alamat email Anda",
+        "email_title": "Alamat email",
+        "errors": {
+          "email_exists": "Alamat email ini sudah terdaftar. Silakan masuk atau gunakan email lain.",
+          "invalid_email": "Harap masukkan email yang valid."
+        },
+        "form_title": "Masukkan email Anda untuk mendapatkan laporan",
+        "latest_report": "Laporan terbaru per 3 Maret 2025",
+        "submit_button": "Lanjutkan",
+        "title": "Hasilnya sudah siap!"
+      },
+      "thank_you": {
+        "account_link": "Akses akun Anda",
+        "click_below_to_account_your_link": "Klik di bawah ini untuk mengakses akun Anda!",
+        "description": "Kami telah mengirim detail pesanan dan kredensial akun Anda ke {email}. Kini Anda dapat mengakses akun Anda",
+        "did_you_like_your_shopping_experience": "Puas dengan pengalaman belanja Anda?",
+        "more_details_feedback": "Kami sangat menghargai umpan balik mendetail Anda: <email>support@mobitrace.io</email>",
+        "no": "Tidak",
+        "thank_you_for_your_feedback": "Terima kasih atas umpan balik Anda!",
+        "title": "Pembayaran Anda berhasil!",
+        "we_ll_work_on_making_it_better": "Kami akan berusaha membuatnya lebih baik!",
+        "yes": "Ya"
+      },
+      "upsell": {
+        "already_purchased": "Sudah dibeli",
+        "data_breach": {
+          "disclaimer": "Semua data berasal dari basis data komprehensif yang berisi lebih dari 14 miliar catatan dari pelanggaran data yang dilaporkan secara publik. Kami mengidentifikasi dan melaporkan informasi yang terekspos, tetapi tidak memberikan akses ke data sensitif seperti kata sandi atau kredensial pribadi.",
+          "purchase": "Tambah Laporan Kebocoran Data",
+          "special_limited_time_offer": "Penawaran khusus ini berlaku terbatas dan akan berakhir saat Anda meninggalkan halaman ini.",
+          "title": "Laporan Pelanggaran & Kebocoran Data",
+          "upsell_benefits_1": "Pengenal pribadi, termasuk nama pengguna, nama lengkap, dan tanggal lahir",
+          "upsell_benefits_2": "Detail kontak yang ikut terekspos, termasuk nomor telepon, email, dan alamat fisik.",
+          "upsell_benefits_3": "Informasi profesional dan data teknis seperti alamat IP"
+        },
+        "limited_offer": "Penawaran terbatas",
+        "pdf": {
+          "disclaimer": "Ini adalah pembelian satu kali. Dengan mengklik \"Dapatkan PDF tanpa batas\", Anda akan dikenai biaya seharga {price}.",
+          "purchase": "Dapatkan PDF Tanpa Batas",
+          "special_limited_time_offer": "Diskon tambahan telah diterapkan khusus untuk Anda!",
+          "title": "Unduhan PDF Tanpa Batas",
+          "upsell_benefits_1": "Dapat diakses secara offline",
+          "upsell_benefits_2": "Mudah untuk dibagikan dengan orang lain",
+          "upsell_benefits_3": "Dapat dicetak sesuai permintaan",
+          "upsell_benefits_4": "Jelas, tertata rapi, dan mudah dibaca"
+        },
+        "processing": "Sedang diproses",
+        "sex_offenders": {
+          "disclaimer": "Pemeriksaan latar belakang pelanggar kejahatan seksual hanya berlaku di wilayah AS. Lembaga peradilan melaporkan sekitar 800.000 pelanggar yang terdaftar secara nasional, dengan ribuan pendaftaran baru setiap tahunnya. Verifikasi orang yang belum Anda kenal demi ketenangan Anda.",
+          "purchase": "Tambah Pemeriksaan Daftar Pelanggar Seksual",
+          "purchase_terms": "Ini adalah pembelian satu kali sebesar {price}. Dengan menambahkan laporan ini, Anda mengizinkan satu kali penagihan ke metode pembayaran yang terdaftar. Pembelian ini memberi Anda akses ke satu laporan dalam penawaran tambahan ini.",
+          "special_limited_time_offer": "Penawaran verifikasi keamanan dalam waktu terbatas. Layanan ini hanya melakukan pencarian terhadap individu yang terdaftar di Amerika Serikat.",
+          "title": "Pemeriksaan Daftar Pelaku Kejahatan Seksual",
+          "upsell_benefits_1": "Pencarian instan berskala nasional di seluruh daftar negara bagian dan federal.",
+          "upsell_benefits_2": "Akses ke data pelanggar yang komprehensif dari sumber-sumber resmi.",
+          "upsell_benefits_3": "Verifikasi secara real-time menggunakan data daftar terbaru"
+        },
+        "skip": "Lewati",
+        "total_due_today": "Total yang harus dibayar:"
+      }
+    },
+    "settings": {
+      "billing": {
+        "activate_dialog": {
+          "action_form": "Bayar dengan kartu",
+          "title": "Tambah Metode Pembayaran"
+        },
+        "active_date": "Aktif hingga: {date}",
+        "active_state": "Aktif",
+        "cancel_dialog": {
+          "cancel_cta": "Batalkan Langganan",
+          "canceling_cta": "Membatalkan...",
+          "close_cta": "Tutup",
+          "description": "Dengan membatalkan langganan, Anda akan kehilangan akses ke semua fitur dan dukungan. Anda dapat mengaktifkan kembali langganan kapan saja.",
+          "description_canceled": "Langganan Anda telah dibatalkan.<br> Anda tidak akan dikenakan biaya lagi.",
+          "done_cta": "Selesai",
+          "title": "Konfirmasi"
+        },
+        "cancel_subscription": "Batalkan Langganan",
+        "canceled_cta": "Aktifkan Kembali Langganan",
+        "canceled_date": "Dibatalkan pada: {date}",
+        "canceled_state": "Dibatalkan",
+        "expired_cta": "Aktifkan Langganan",
+        "expired_date": "Kedaluwarsa pada: {date}",
+        "expired_description": "Keanggotaan Anda telah kedaluwarsa. Silakan aktifkan kembali untuk melanjutkan.",
+        "expired_state": "Kedaluwarsa",
+        "month": "bulan",
+        "next_billing_date": "Penagihan berikutnya: {date}",
+        "privacy_policy": "Kebijakan Privasi",
+        "started_on_date": "Dimulai pada {date}",
+        "subscription": "Langganan",
+        "terms_and_conditions": "Syarat dan Ketentuan",
+        "title": "Penagihan",
+        "total": "Total:"
+      },
+      "get_help": {
+        "title": "Dapatkan Bantuan"
+      },
+      "my_account": {
+        "change_password": {
+          "confirm_password": "Konfirmasikan Kata Sandi",
+          "current_password": "Kata Sandi Saat Ini",
+          "new_password": "Kata Sandi Baru",
+          "title": "Ubah Kata Sandi"
+        },
+        "delete_cta": "Hapus Akun",
+        "delete_dialog": {
+          "close_cta": "Tutup",
+          "delete_cta": "Hapus akun",
+          "deleting_cta": "Menghapus...",
+          "description": "Yakin ingin menghapus akun Anda? Harap perhatikan bahwa setelah mengonfirmasi, Anda akan segera kehilangan akses ke area anggota.",
+          "description_canceled": "Akun Anda berhasil dihapus.",
+          "done_cta": "Selesai",
+          "title": "Konfirmasi"
+        },
+        "errors": {
+          "confirm_password_required": "Kata sandi konfirmasi wajib diisi",
+          "current_password_invalid": "Kata sandi saat ini tidak valid",
+          "current_password_required": "Kata sandi saat ini harus diisi",
+          "email_max_length": "Email harus memiliki kurang dari {maxLength} karakter.",
+          "email_required": "Email wajib diisi",
+          "email_taken": "Email sudah digunakan",
+          "invalid_email": "Harap masukkan email yang valid.",
+          "name_invalid_characters": "Nama tidak boleh mengandung angka.",
+          "name_invalid_special_characters": "Nama tidak boleh mengandung karakter khusus.",
+          "name_max_length": "Nama harus kurang dari {maxLength} karakter.",
+          "name_required": "Nama wajib diisi",
+          "new_password_must_differ_from_current_password": "Kata sandi baru harus berbeda dari kata sandi saat ini",
+          "new_password_required": "Kata sandi baru harus diisi",
+          "password_max_length": "Kata sandi harus kurang dari {maxLength} karakter.",
+          "password_min_length": "Kata sandi minimal harus terdiri dari 6 karakter.",
+          "passwords_must_match": "Kata sandi harus cocok"
+        },
+        "notifications": {
+          "notify_status_changes": "Beri tahu saya jika ada perubahan status",
+          "notify_user_located": "Beri tahu saya saat pengguna ditemukan",
+          "title": "Notifikasi"
+        },
+        "profile": {
+          "email": "Alamat email",
+          "name": "Nama depan dan nama belakang",
+          "title": "Detail Profil"
+        },
+        "submit_cta": "Simpan Perubahan",
+        "success_title": "Akun Anda telah diperbarui",
+        "title": "Umum"
+      },
+      "title": "Pengaturan"
+    },
+    "sex_offenders_search": {
+      "form": {
+        "city_placeholder": "Kota",
+        "errors": {
+          "first_name_required": "Nama depan wajib diisi",
+          "last_name_required": "Nama belakang wajib diisi"
+        },
+        "first_name_placeholder": "Nama Depan",
+        "last_name_placeholder": "Nama Belakang",
+        "state_placeholder": "Semua negara bagian",
+        "submit_button": "Cek Sekarang",
+        "title": "Lakukan Pemeriksaan Daftar Pelaku Kejahatan Seksual",
+        "zip_placeholder": "Kode Pos"
+      },
+      "loading": {
+        "subtitle": "Mohon tunggu sebentar sementara kami mengambil data dari daftar nasional.",
+        "title": "Memeriksa Daftar Pelaku Kejahatan Seksual..."
+      },
+      "results": {
+        "back": "Punggung",
+        "continue": "Lanjutkan",
+        "empty_title": "Tidak ditemukan pelaku kejahatan seksual",
+        "results_found": "{count} hasil ditemukan",
+        "results_found_subtitle": "Pilih yang paling sesuai untuk melanjutkan.",
+        "search_again": "Cari Lagi"
+      },
+      "title": "Pelaku Kejahatan Seksual"
+    },
+    "sign_in": {
+      "description": "Masukkan email Anda untuk masuk ke akun Anda",
+      "sign_up_link": "Daftar",
+      "sign_up_prompt": "Tidak punya akun?",
+      "title": "Masuk"
+    },
+    "sign_up": {
+      "components": {
+        "sign_up_form": {
+          "continue_with_email": "Lanjutkan dengan Email",
+          "continue_with_facebook": "Lanjutkan dengan Facebook",
+          "continue_with_google": "Lanjutkan dengan Google",
+          "email_label": "Alamat email",
+          "email_placeholder": "Alamat email Anda",
+          "errors": {
+            "email_exists": "Alamat email ini sudah terdaftar. Silakan masuk atau gunakan email lain.",
+            "invalid_email": "Harap masukkan email yang valid."
+          },
+          "or": "atau"
+        }
+      },
+      "title": "Daftar untuk mendapatkan lokasi akurat dari <brandColor>{phoneNumber}</brandColor>"
+    },
+    "status": {
+      "description": "Periksa kemajuan di bawah ini",
+      "detail_description": "Lokasi ditemukan",
+      "error_fetching_address": "Gagal mengambil alamat",
+      "link_name": "Tautan untuk {name}",
+      "load_more_button": "Muat Lebih Banyak",
+      "loading_address": "Memuat alamat...",
+      "located_status": "Ditemukan",
+      "no_locations_available": "Tidak Ada Permintaan",
+      "pending_description": "Menunggu penerima membagikan pelacakan lokasinya",
+      "pending_status": "Menunggu",
+      "ready_status": "Laporan dibuat",
+      "rejected_description": "Tingkatkan pesan Anda untuk mendorong penerima membagikan lokasinya",
+      "rejected_status": "Ditolak",
+      "reverse_lookup_description": "Ringkasan data publik yang ditemukan untuk nomor telepon",
+      "reverse_lookup_report_for": "Laporan pencarian nomor telepon untuk {phone}",
+      "title": "Pusat Aktivitas"
+    },
+    "success": {
+      "account_link": "Akses akun Anda",
+      "click_below_to_account_your_link": "Klik di bawah ini untuk mengakses Akun Anda!",
+      "description": "Kami telah mengirim detail pesanan dan kredensial akun Anda ke {email}. Kini Anda dapat mengakses akun Anda",
+      "did_you_like_your_shopping_experience": "Puas dengan pengalaman belanja Anda?",
+      "more_details_feedback": "Kami sangat menghargai umpan balik Anda secara detail: <email>support@mobitrace.io</email>",
+      "no": "Tidak",
+      "thank_you_for_your_feedback": "Terima kasih atas umpan balik Anda!",
+      "title": "Pembayaran Anda berhasil!",
+      "we_ll_work_on_making_it_better": "Kami akan berusaha membuatnya lebih baik!",
+      "yes": "Ya"
+    },
+    "upsell": {
+      "cancel_button": "Tidak, terima kasih",
+      "description": "Nikmati dukungan personal 24/7 dan bantuan teknis terbaik, cukup sekali klik.",
+      "footer_info": "Harap diperhatikan, bergantung pada wilayah Anda, Pajak Penjualan sebesar {percentage}% mungkin akan ditambahkan ke total pembelian Anda",
+      "order_details": "Detail pesanan:",
+      "products": {
+        "add_button": "Tambah",
+        "add_order_button": "Tambah untuk {price}",
+        "added_state": "Ditambahkan",
+        "details_button": "Detail",
+        "remove_button": "Hapus",
+        "scan_pro": {
+          "description": "Temukan setiap aspek Mobitrace dengan panduan dari tim dukungan teknis ahli kami. Jelajahi semua fitur secara langsung dan pelajari cara memanfaatkannya sebaik mungkin.",
+          "dialog": "<p>Maksimalkan pengalaman Anda dengan Mobitrace melalui bantuan personal dan bertahap dari tim ahli kami. Pelajari setiap fitur dan dapatkan manfaat terbaik dari layanan kami.</p><ul><li><strong>Pelacakan Lokasi yang Mulus.</strong>Lacak lokasi seseorang dengan mudah hanya melalui satu tautan sederhana. Tim kami akan memandu Anda selama proses berlangsung, memastikan setiap detail teknis ditangani dengan baik.</li><li><strong>Dukungan Profil Lengkap.</strong>Bersama kami, temukan seluruh informasi yang Anda perlukan. Mulai dari kontak hingga profil media sosial, kami membantu Anda mendapatkan gambaran menyeluruh tentang orang yang Anda cari.</li><li><strong>Temukan Ponsel yang Hilang atau Dicuri.</strong>Jika ponsel Anda hilang, kami siap membantu. Alat canggih kami dapat segera melacak perangkat Anda dan menampilkan posisinya secara tepat di peta.</li><li><strong>Lindungi Keamanan Online Anda.</strong>Kami memindai basis data untuk mendeteksi apakah nomor ponsel atau email Anda telah bocor akibat pelanggaran data pihak ketiga, membantu Anda tetap selangkah lebih maju dari ancaman siber.</li></ul>",
+          "title": "ScanPRO"
+        },
+        "support_hotline": {
+          "description": "Tak perlu antre untuk mendapatkan bantuan! Dengan Dukungan Teknis Prioritas, Anda bisa langsung dilayani dan mendapatkan bantuan cepat secara personal dari spesialis teknis kami yang berpengalaman.",
+          "title": "Dukungan Prioritas 24/7"
+        }
+      },
+      "submit_button": "Tambahkan ke Pesanan",
+      "subtotal": "Subtotal",
+      "taxes": "Pajak Penjualan ({percentage}%)",
+      "title": "Maksimalkan Pengalaman Anda di Mobitrace!",
+      "total": "Total"
+    }
+  },
+  "routes": {
+    "forgot_password": "forgot-password",
+    "loader": "loader",
+    "reset_password": "reset-password",
+    "sign_in": "sign-in",
+    "sign_up": "sign-up"
+  }
+}

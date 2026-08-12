@@ -1,0 +1,62 @@
+export const CURRENCIES_DATA = {
+  usd: { code: 'usd', symbol: '$', version: 1 },
+  eur: { code: 'eur', symbol: '€', version: 1 },
+  gbp: { code: 'gbp', symbol: '£', version: 1 },
+  cad: { code: 'cad', symbol: '$', version: 1 },
+  aud: { code: 'aud', symbol: '$', version: 1 },
+  mxn: { code: 'mxn', symbol: '$', version: 1 },
+  brl: { code: 'brl', symbol: 'R$', version: 1 },
+  aed: { code: 'aed', symbol: 'AED', version: 2 },
+  nzd: { code: 'nzd', symbol: 'NZ$', version: 2 },
+  php: { code: 'php', symbol: '₱', version: 2 },
+  sar: { code: 'sar', symbol: 'SR', version: 2 },
+  sgd: { code: 'sgd', symbol: 'S$', version: 2 },
+  zar: { code: 'zar', symbol: 'R', version: 1 },
+  dkk: { code: 'dkk', symbol: 'kr', version: 2 },
+  huf: { code: 'huf', symbol: 'Ft', version: 2 },
+  idr: { code: 'idr', symbol: 'Rp', version: 2 },
+  myr: { code: 'myr', symbol: 'RM', version: 2 },
+  nok: { code: 'nok', symbol: 'kr', version: 2 },
+  try: { code: 'try', symbol: '₺', version: 2 },
+  ron: { code: 'ron', symbol: 'lei', version: 2 },
+  bnd: { code: 'bnd', symbol: 'B$', version: 3 },
+  bwp: { code: 'bwp', symbol: 'P', version: 3 },
+  chf: { code: 'chf', symbol: 'CHF', version: 3 },
+  clp: { code: 'clp', symbol: 'Ch$', version: 3 },
+  cny: { code: 'cny', symbol: '¥', version: 3 },
+  cop: { code: 'cop', symbol: 'Col$', version: 3 },
+  czk: { code: 'czk', symbol: 'Kč', version: 3 },
+  hkd: { code: 'hkd', symbol: 'HK$', version: 3 },
+  ils: { code: 'ils', symbol: '₪', version: 3 },
+  inr: { code: 'inr', symbol: '₹', version: 3 },
+  isk: { code: 'isk', symbol: 'ISK', version: 3 },
+  jpy: { code: 'jpy', symbol: '¥', version: 3 },
+  krw: { code: 'krw', symbol: '₩', version: 3 },
+  kzt: { code: 'kzt', symbol: '₸', version: 3 },
+  lkr: { code: 'lkr', symbol: 'Rs', version: 3 },
+  mur: { code: 'mur', symbol: 'MUR', version: 3 },
+  npr: { code: 'npr', symbol: 'रु', version: 3 },
+  pen: { code: 'pen', symbol: 'S/.', version: 3 },
+  pkr: { code: 'pkr', symbol: 'PRe', version: 3 },
+  pln: { code: 'pln', symbol: 'zł', version: 3 },
+  qar: { code: 'qar', symbol: 'QR', version: 3 },
+  rub: { code: 'rub', symbol: '₽', version: 3 },
+  sek: { code: 'sek', symbol: 'kr', version: 3 },
+  thb: { code: 'thb', symbol: '฿', version: 3 },
+  ttd: { code: 'ttd', symbol: 'TT$', version: 3 },
+  twd: { code: 'twd', symbol: 'NT$', version: 3 },
+  tzs: { code: 'tzs', symbol: 'T Sh', version: 3 },
+  vnd: { code: 'vnd', symbol: '₫', version: 3 },
+} as const;
+
+const CURRENCY_VERSION = Number(process.env.NEXT_PUBLIC_CURRENCY_VERSION || '1');
+
+export const AVAILABLE_CURRENCIES_DATA = Object.fromEntries(
+  Object.entries(CURRENCIES_DATA).filter(([_, data]) => data.version <= CURRENCY_VERSION),
+) as typeof CURRENCIES_DATA;
+
+export const CURRENCIES = Object.keys(AVAILABLE_CURRENCIES_DATA) as Array<keyof typeof AVAILABLE_CURRENCIES_DATA>;
+
+export const DEFAULT_CURRENCY = 'usd';
+
+export type Currency = keyof typeof AVAILABLE_CURRENCIES_DATA;

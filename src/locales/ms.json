@@ -1,0 +1,1882 @@
+{
+  "common": {
+    "back": "Kembali",
+    "close": "Tutup",
+    "close_menu": "Tutup Menu",
+    "copied_to_clipboard": "Disalin ke papan klip",
+    "email_label": "Alamat e-mel",
+    "errors": {
+      "email_exists": "E-mel ini sudah digunakan oleh pengguna lain",
+      "rate_limit_error": "Anda telah mencapai had harian anda. Sila cuba lagi esok.",
+      "rate_limit_error_title": "Had dicapai",
+      "server_error": "Ralat Pelayan",
+      "server_error_description": "Ralat berlaku semasa memproses permintaan anda. Sila cuba lagi."
+    },
+    "login": "Log Masuk",
+    "logout": "Log Keluar",
+    "open_menu": "Buka Menu",
+    "settings": "Tetapan",
+    "subscription": "Langganan"
+  },
+  "components": {
+    "country_selector": {
+      "no_results": "Kod negara tidak ditemui.",
+      "placeholder": "Pilih kod negara...",
+      "search_placeholder": "Cari mengikut negara atau kod..."
+    },
+    "forms": {
+      "change_email": {
+        "confirmation_email_sent_description": "Kami telah menghantar satu e-mel pengesahan kepada alamat baharu. Sila sahkan perubahan ini.",
+        "confirmation_email_sent_title": "Sahkan penghantaran e-mel",
+        "current_email_label": "E-mel semasa",
+        "current_password_label": "Untuk keselamatan, masukkan kata laluan semasa anda",
+        "current_password_placeholder": "Masukkan kata laluan semasa anda",
+        "errors": {
+          "current_password_required": "Kata laluan semasa diperlukan.",
+          "invalid_email": "Masukkan e-mel yang sah."
+        },
+        "new_email_label": "E-mel baharu",
+        "new_email_placeholder": "Masukkan e-mel baharu",
+        "save_button": "Kemas kini e-mel"
+      },
+      "change_password": {
+        "confirm_password_label": "Sahkan Kata Laluan Baharu",
+        "confirm_password_placeholder": "Sahkan kata laluan baharu anda",
+        "current_password_label": "Kata Laluan Semasa",
+        "current_password_placeholder": "Masukkan kata laluan semasa anda",
+        "errors": {
+          "confirm_password_min_length": "Sahkan kata laluan baharu dengan sekurang-kurangnya 6 aksara",
+          "current_password_required": "Kata laluan semasa diperlukan",
+          "new_password_min_length": "Kata laluan baharu mestilah sekurang-kurangnya 6 aksara",
+          "new_password_required": "Kata laluan baharu diperlukan",
+          "passwords_must_match": "Kata laluan mesti sepadan"
+        },
+        "new_password_label": "Kata Laluan Baharu",
+        "new_password_placeholder": "Masukkan kata laluan baharu anda",
+        "save_button": "Simpan Perubahan"
+      },
+      "delete_account": {
+        "cancel_button": "Batal",
+        "confirm_button": "Ya, padam akaun saya",
+        "confirmation_message": "Akaun anda telah berjaya dipadam.",
+        "delete_account_button": "Padam akaun",
+        "description": "Tindakan ini tidak boleh ditarik balik. Sila pastikan keputusan anda.",
+        "dialog_description": "Tindakan ini tidak boleh ditarik balik. Ini akan memadamkan akaun anda secara kekal dan membuang data anda dari pelayan kami.",
+        "dialog_title": "Adakah anda pasti?",
+        "title": "Padam Akaun"
+      },
+      "edit_company": {
+        "add_social_network_button": "Tambah rangkaian sosial",
+        "address_label": "Alamat",
+        "address_placeholder": "Masukkan alamat syarikat",
+        "company_name_label": "Nama Syarikat",
+        "company_name_placeholder": "Masukkan nama syarikat",
+        "errors": {
+          "company_name_required": "Nama syarikat diperlukan",
+          "url_invalid": "Sila masukkan URL yang sah"
+        },
+        "hide_address_map": "Sembunyikan peta",
+        "horizontal_logo_alt_text": "Logo mendatar syarikat",
+        "horizontal_logo_description": "Disyorkan: JPEG, PNG. Maksimum 5MB. 600x200px",
+        "horizontal_logo_label": "Logo mendatar",
+        "opening_hours_label": "Waktu Operasi",
+        "opening_hours_placeholder": "Cth., Isn-Jum: 9PG-5PTG, Sab: 10PG-2PTG, Aha: Tutup",
+        "profile_url_placeholder": "URL Profil",
+        "save_button": "Simpan perubahan",
+        "show_address_map": "Paparkan peta",
+        "social_networks_label": "Rangkaian sosial",
+        "squared_logo_alt_text": "Logo petak syarikat",
+        "squared_logo_label": "Logo petak",
+        "website_label": "Laman web",
+        "website_placeholder": "https://www.contoh.com"
+      },
+      "edit_profile": {
+        "description": "Kemas kini maklumat peribadi anda",
+        "errors": {
+          "first_name_required": "Nama pertama diperlukan.",
+          "invalid_phone": "Nombor telefon tidak sah.",
+          "last_name_required": "Nama keluarga diperlukan."
+        },
+        "first_name_label": "Nama Pertama",
+        "first_name_placeholder": "Masukkan nama pertama anda",
+        "last_name_label": "Nama Keluarga",
+        "last_name_placeholder": "Masukkan nama keluarga anda",
+        "phone_label": "Nombor Telefon",
+        "phone_placeholder": "Masukkan nombor telefon anda",
+        "privacy_label": "Privasi",
+        "profile_picture_alt": "Foto profil",
+        "profile_picture_label": "Foto profil",
+        "public_email_label": "Paparkan e-mel saya secara awam pada profil saya",
+        "public_phone_label": "Paparkan nombor telefon saya secara awam pada profil saya",
+        "save_button": "Simpan Perubahan",
+        "title": "Edit Profil",
+        "upload_description": "Disyorkan: JPEG, PNG. Maksimum 5MB. 400x400px",
+        "upload_picture": "Muat naik foto baharu",
+        "whatsapp_label": "Saya ada akaun WhatsApp dengan nombor ini"
+      },
+      "forgot_password": {
+        "cancel_button": "Batal",
+        "email_label": "E-mel",
+        "email_placeholder": "Alamat e-mel anda",
+        "errors": {
+          "invalid_email": "Sila masukkan e-mel yang sah."
+        },
+        "submit_button": "Hantar kata laluan",
+        "subtitle": "Masukkan e-mel anda dan kami akan menghantar kata laluan anda",
+        "success": {
+          "done": "Selesai",
+          "line_1": "Kami telah menghantar kata laluan anda kepada",
+          "line_2": "Sila semak e-mel anda untuk log masuk.",
+          "title": "Kata laluan dihantar"
+        },
+        "title": "Terlupa kata laluan anda?"
+      },
+      "reset_password": {
+        "confirm_password_label": "Sahkan Kata Laluan Baharu",
+        "confirm_password_placeholder": "Sahkan kata laluan baharu anda",
+        "errors": {
+          "password_min_length": "Kata laluan mestilah sekurang-kurangnya 6 aksara.",
+          "passwords_do_not_match": "Kata laluan tidak sepadan."
+        },
+        "new_password_label": "Kata Laluan Baharu",
+        "new_password_placeholder": "Masukkan kata laluan baharu anda",
+        "submit_button": "Tetapkan Semula Kata Laluan"
+      },
+      "sign_in": {
+        "email_label": "Alamat e-mel",
+        "email_placeholder": "Alamat e-mel anda",
+        "errors": {
+          "account_not_found": "Tidak menemui akaun Mobitrace anda.",
+          "invalid_credentials": "E-mel dan kata laluan yang anda masukkan tidak sepadan dengan rekod kami. Sila semak kelayakan anda dan cuba lagi.",
+          "invalid_email": "Sila masukkan e-mel yang sah.",
+          "password_min_length": "Kata laluan mestilah sekurang-kurangnya 6 aksara."
+        },
+        "forgot_password": "Terlupa kata laluan anda?",
+        "or": "atau",
+        "password_label": "Kata laluan",
+        "password_placeholder": "Kata laluan anda",
+        "submit_button": "Log masuk",
+        "title": "Log masuk ke akaun anda"
+      },
+      "stripe_form": {
+        "card_name_placeholder": "Nama pada kad",
+        "credit_card_label": "Kad kredit",
+        "credit_card_placeholder": "1234 1234 1234 1234",
+        "cvc_placeholder": "CVC",
+        "errors": {
+          "apple_pay_not_available": "Apple Pay tidak disokong",
+          "apple_pay_not_available_description": "Anda tidak mendayakan kaedah pembayaran ini untuk peranti atau pelayar anda. Sila pilih kaedah pembayaran yang lain.",
+          "card_name_required": "Sila masukkan nama pada kad.",
+          "card_number_required": "Sila masukkan nombor kad.",
+          "cvc_required": "Sila masukkan CVC.",
+          "expiration_date_required": "Sila masukkan tarikh luput.",
+          "google_pay_not_available": "Google Pay tidak disokong",
+          "google_pay_not_available_description": "Anda tidak mendayakan kaedah pembayaran ini untuk peranti atau pelayar anda. Sila pilih kaedah pembayaran yang lain.",
+          "name_invalid_characters": "Nama tidak boleh mengandungi nombor.",
+          "name_invalid_special_characters": "Nama tidak boleh mengandungi aksara khas.",
+          "stripe_generic_error": "Kami tidak dapat mengesahkan kaedah pembayaran anda. Sila pilih kaedah pembayaran yang lain dan cuba lagi.",
+          "stripe_generic_error_title": "Ralat pembayaran",
+          "zip_code_invalid_format": "Sila masukkan kod ZIP yang sah."
+        },
+        "expiration_date_placeholder": "BB/TT",
+        "zip_code_placeholder": "Poskod (Tidak Wajib)"
+      }
+    },
+    "image_upload_input": {
+      "upload_button_text": "Muat naik foto baharu",
+      "upload_description": "Disyorkan: JPEG, PNG. Maksimum 5MB. 400x400px",
+      "upload_label": "Foto profil"
+    },
+    "phone_input": {
+      "errors": {
+        "invalid_phone": "Sila masukkan nombor telefon yang sah."
+      },
+      "label": "Masukkan nombor yang anda mahu jejak",
+      "no_results": "Kod negara tidak ditemui.",
+      "phone_placeholder": "123456789",
+      "search_placeholder": "Cari mengikut negara atau kod...",
+      "submit": "Jejak"
+    },
+    "settings_navigator": {
+      "change_email": {
+        "description": "Kemas kini alamat e-mel anda",
+        "label": "Tukar E-mel"
+      },
+      "change_password": {
+        "description": "Kemas kini kata laluan akaun anda",
+        "label": "Tukar Kata Laluan"
+      },
+      "company_profile": {
+        "description": "Kemas kini maklumat syarikat anda",
+        "label": "Profil Syarikat"
+      },
+      "delete_account": {
+        "description": "Padamkan akaun anda dan semua data berkaitan",
+        "label": "Padam Akaun"
+      },
+      "edit_profile": {
+        "description": "Kemas kini maklumat peribadi anda",
+        "label": "Edit Profil"
+      },
+      "no_access": "Anda tiada akses kepada bahagian ini. Kandungan ini adalah eksklusif untuk pengguna profesional.",
+      "notifications": {
+        "description": "Uruskan pilihan pemberitahuan e-mel anda",
+        "label": "Pemberitahuan"
+      },
+      "subscription": {
+        "description": "Uruskan pelan langganan anda",
+        "label": "Langganan"
+      },
+      "title": "Tetapan"
+    }
+  },
+  "consent": {
+    "accept": "Setuju",
+    "decline": "Tolak",
+    "decline_accept": "Kembali ke utama",
+    "decline_description": "Untuk menggunakan perkhidmatan pemesejan kami - terutamanya untuk nombor A.S. dan Kanada - kami memerlukan kebenaran anda. Tanpanya, ciri ini tidak tersedia. Kembali pada bila-bila masa untuk meneruskan.",
+    "decline_title": "Maaf! Kami Memerlukan Persetujuan Anda",
+    "description": "Untuk mencari telefon anda, kami perlu menghantar SMS kepada anda. Sila sahkan bahawa anda bersetuju untuk menerimanya.",
+    "title": "Pengesahan diperlukan"
+  },
+  "contest": {
+    "agree": "Setuju",
+    "decline": "Tolak",
+    "description": "Saya mengesahkan nombor telefon yang dimasukkan adalah milik saya dan saya bersetuju untuk menerima mesej.",
+    "title": "Terima Mesej?"
+  },
+  "footer": {
+    "brand": "Mobitrace.io",
+    "description": "Jejak apa jua nombor telefon — cepat dan mudah dengan Mobitrace.",
+    "links": {
+      "about_us": "Tentang kami",
+      "cancel_subscription": "Batalkan Langganan",
+      "contact": "Hubungi",
+      "contacts": "Hubungi",
+      "cookie_policy": "Dasar Kuki",
+      "faqs": "Soalan Lazim",
+      "home": "Utama",
+      "location_number": "Lokasi berdasarkan Nombor",
+      "login": "Log Masuk",
+      "pricing": "Harga",
+      "privacy policy": "Dasar Privasi",
+      "reverse_lookup": "Carian Terbalik",
+      "terms_and_conditions": "Terma & Syarat"
+    },
+    "rights": "Semua hak cipta terpelihara."
+  },
+  "header": {
+    "about": "Perihal",
+    "home": "Utama",
+    "open_menu": "Buka Menu",
+    "sign_in": "Daftar Masuk",
+    "sign_up": "Daftar"
+  },
+  "language": {
+    "english": "English",
+    "spanish": "Español"
+  },
+  "navigation": {
+    "about_us": "Tentang kami",
+    "contact": "Hubungi",
+    "dashboard": "Papan pemuka",
+    "faqs": "Soalan Lazim",
+    "home": "Utama",
+    "mobile_dialog_description": "Dialog ini mengandungi pautan navigasi utama",
+    "mobile_dialog_title": "Navigasi utama",
+    "pricing": "Harga",
+    "settings": "Tetapan"
+  },
+  "pages": {
+    "about": {
+      "cards": {
+        "card_1": {
+          "description": "<p>Di Mobitrace, kami menjadikan menjejak lokasi mudah, boleh dipercayai dan selamat. Misi kami adalah untuk membantu anda kekal terhubung dengan orang tersayang atau penting, menggunakan teknologi canggih untuk menjejak lokasi telefon masa nyata.</p>",
+          "title": "Misi kami"
+        },
+        "card_2": {
+          "description": "<p>Mobitrace menggabungkan penjejakan nombor dengan perkhidmatan maklumat awam yang terperinci:</p><ul><li>Penjejakan Nombor: Hantar mesej teks tersuai menggunakan pautan, membolehkan penerima untuk berkongsi lokasi mereka. Penjejakan dilaksanakan hanya dengan persetujuan nyata penerima.</li><li>Carian Data Mendalam: Akses butiran hubungan, sejarah lokasi dan banyak lagi.</li><li>Capaian Global: Berfungsi pada semua telefon, rangkaian dan negara—jejak apa-apa nombor telefon, di mana jua.</li></ul>",
+          "title": "Nilai Kami Tawarkan"
+        },
+        "card_3": {
+          "description": "<ul><li>Ringkas: Jana URL, hantar dan jejak setelah diluluskan.</li><li>Keselamatan & Perlindungan: Semua penjejakan mendapat persetujuan dan selamat.</li><li>Ketepatan Masa Nyata: Terima data lokasi yang tepat dan terkini.</li></ul>",
+          "title": "Mengapa Pilih Mobitrace"
+        },
+        "card_4": {
+          "description": "<p>Sama ada anda seorang ibu bapa yang penyayang atau rakan yang bimbang, Mobitrace sedia membantu anda kekal terhubung dengan orang yang paling penting. Terima kasih kerana memilih Mobitrace—tempat penjejakan dan maklumat untuk memastikan anda sedia maklum dan selamat.</p>",
+          "title": "Sertai kami"
+        }
+      },
+      "description": "Selamat datang ke Mobitrace, perkhidmatan yang dipercayai untuk mengesan nombor telefon mudah alih dan mengakses maklumat awam yang terperinci. Kami bekerja dengan penyedia data global terkemuka dari AS, UK, Eropah dan seluruh dunia, menjamin carian telefon dan alamat yang tepat bagi memastikan anda terus sedia maklum dan terhubung.",
+      "title": "Tentang kami"
+    },
+    "cancellation": {
+      "form": {
+        "email_label": "Alamat e-mel anda",
+        "error_not_found_description": "Sila semak dan cuba lagi",
+        "error_not_found_title": "Alamak! Tiada akaun yang sepadan dengan e-mel ini.",
+        "error_not_subscribed_title": "Anda tidak melanggan!",
+        "errors": {
+          "invalid_email": "Sila masukkan e-mel yang sah."
+        },
+        "submit": "Batalkan langganan",
+        "success_description": "Anda tidak akan dicaj mulai sekarang.",
+        "success_title": "Anda telah berhenti melanggan!"
+      },
+      "info_email": "Jika anda tidak ingat e-mel yang anda gunakan untuk mendaftar, semak peti masuk anda untuk mencari e-mel daripada \"mobitrace.io\". Jika tidak, hubungi sokongan pelanggan kami di <link>di sini</link>.",
+      "info_user": "Anda juga boleh membatalkan langganan anda dengan mendaftar masuk ke akaun anda, pergi ke tab \"Keahlian\" dan klik \"Batalkan Langganan\".",
+      "subtitle": "Batalkan langganan anda dengan mudah dengan memasukkan e-mel yang digunakan untuk mencipta akaun anda.",
+      "title": "Batalkan Langganan"
+    },
+    "checkout": {
+      "action_form": "Dapatkan Lokasi",
+      "agree_description": "Dengan meneruskan, anda bersetuju untuk dicaj {trialPrice} sekarang dan menerima <terms>Terma Penggunaan</terms> dan <privacy>Dasar Privasi</privacy> kami. Pembayaran anda akan muncul sebagai \"mobitrace.io\" dalam penyata kad kredit anda. Selepas 7 hari anda akan dibilkan {subscriptionPrice} setiap 4 minggu sehingga langganan anda tamat. Anda boleh membatalkan pada bila-bila masa. Untuk sebarang pertanyaan, anda boleh menghubungi kami di support@mobitrace.io atau melalui telefon di +1 360 525 2573",
+      "agree_description_24": "Dengan meneruskan pembayaran, anda bersetuju untuk memulakan percubaan 24 jam untuk {trialPrice} hari ini. Melainkan anda membatalkan sebelum tamat tempoh percubaan, langganan anda akan diperbaharui secara automatik pada {subscriptionPrice} setiap 4 minggu. Anda boleh membatalkan pada bila-bila masa. Dengan meneruskan, anda juga menerima <terms>Terma Penggunaan</terms> kami dan mengakui <privacy>Dasar Privasi</privacy> kami.",
+      "agree_description_reactivate": "Dengan meneruskan, anda bersetuju untuk mengaktifkan semula langganan anda dan akan dicaj {subscriptionPrice} sekarang. Pembayaran anda akan muncul sebagai \"mobitrace.io\" pada penyata kad kredit anda. Anda akan dibilkan {subscriptionPrice} setiap 4 minggu sehingga langganan anda tamat. Anda boleh membatalkan pada bila-bila masa. Untuk sebarang pertanyaan, anda boleh menghubungi kami di support@mobitrace.io atau melalui telefon di +1 360 525 2573",
+      "agree_description_subscription": "Dengan meneruskan, anda bersetuju untuk dikenakan bayaran {subscriptionPrice} sekarang dan terima <terms>Syarat penggunaan</terms> dan <privacy>Dasar Privasi</privacy> kami. Pembayaran anda akan dipaparkan sebagai \"mobitrace.io\" pada penyata kad kredit anda. Anda akan dibilkan {subscriptionPrice} setiap 4 minggu sehingga langganan anda tamat. Anda boleh membatalkan pada bila-bila masa. Untuk sebarang pertanyaan, anda boleh menghubungi kami di support@mobitrace.io atau melalui telefon di +1 360 525 2573",
+      "back_description": "Jika anda tidak berpuas hati sepenuhnya dalam tempoh percubaan 7 hari, hanya maklumkan kami dan kami akan memproses bayaran balik penuh.",
+      "back_description_24": "Jika anda tidak berpuas hati dalam tempoh percubaan 24 jam, maklumkan kepada kami dan kami akan memproses bayaran balik penuh dengan segera.",
+      "back_title": "Pemulangan Wang",
+      "cancel_description": "Anda boleh membatalkan pada bila-bila masa dari papan pemuka anda atau dengan menghubungi kami di <email>support@mobitrace.io</email>.",
+      "cancel_title": "Batalkan bila-bila masa",
+      "loading": "Memproses pembayaran anda...",
+      "title": "Buka kunci lokasi",
+      "total": "Jumlah tertunggak:",
+      "trust_100": "100%Pembayaran Selamat",
+      "trust_cancel": "Batalkan bila-bila masa"
+    },
+    "contact": {
+      "contact_information": {
+        "company_description": "<strong>Amerika Syarikat</strong><br>800 N King Street Suite 304-1119<br>Wilmington, DE 19801 US</br></br><strong>Emiriah Arab Bersatu</strong></br>Bangunan A1, Dubai Digital Park</br>Dubai Silicon Oasis, Dubai</br>IFZA Business Park, DDP</br>Premis No. 5342-001</br>Emiriah Arab Bersatu</br></br><strong>Ireland</strong></br>40 Mespil Road</br>Dublin 4, Ireland",
+        "company_title": "Lokasi",
+        "email_description": "support@mobitrace.io",
+        "email_title": "E-mel",
+        "phone_description": "+1-360-525-2573",
+        "phone_title": "Telefon",
+        "title": "Maklumat hubungan"
+      },
+      "contact_us": "Hubungi Kami",
+      "form": {
+        "billing_question": "Soalan pengebilan",
+        "email_label": "E-mel",
+        "errors": {
+          "invalid_email": "Sila masukkan e-mel yang sah.",
+          "invalid_name_format": "Sila masukkan nama yang sah.",
+          "invalid_surname_format": "Sila masukkan nama keluarga yang sah.",
+          "max_length": "Anda telah melebihi had aksara.",
+          "message_max_length": "Mesej tidak boleh melebihi {maxLength} aksara.",
+          "message_required": "Sila masukkan mesej anda.",
+          "name_required": "Sila masukkan nama anda.",
+          "surname_required": "Sila masukkan nama keluarga anda."
+        },
+        "message_label": "Mesej",
+        "name_label": "Nama",
+        "other": "Lain-lain",
+        "subject_label": "Subjek",
+        "subject_placeholder": "Pilih",
+        "submit": "Hantar Mesej",
+        "submitted": "Mesej anda telah berjaya dihantar! Pasukan kami akan menghubungi anda dalam tempoh 2 jam.",
+        "submitted_title": "Mesej dihantar",
+        "suggested_improvement": "Cadangan penambahbaikan",
+        "surname_label": "Nama Keluarga",
+        "technical_issue": "Isu teknikal",
+        "title": "Hubungi kami"
+      },
+      "subtitle": "Ada soalan, maklum balas atau perlukan bantuan?<br/> Kami suka mendengar daripada anda!",
+      "title": "Kami sedia membantu"
+    },
+    "error": {
+      "body": "Sila cuba lagi kemudian, atau hubungi sokongan jika masalah berterusan.",
+      "cta": "Ke Utama",
+      "title": "Alamak! Sesuatu Tidak Kena Berlaku"
+    },
+    "find_by_link": {
+      "find_by_link": "Cari melalui Pautan",
+      "form": {
+        "errors": {
+          "max_length": "Had maksimum: 255 aksara.",
+          "min_length": "Panjang pautan hendaklah sekurang-kurangnya {n} aksara",
+          "required": "Pautan diperlukan"
+        },
+        "linkLabel": "Namakan pautan anda",
+        "linkPlaceholder": "cth. Pautan untuk whatsapp",
+        "submitButton": "Jana pautan saya"
+      },
+      "steps": {
+        "step1": "Peribadikan pautan penjejakan anda",
+        "step2": "Kongsi melalui sebarang app mesej",
+        "step3": "Dapatkan makluman mengenai status",
+        "step4": "Lihat lokasi mereka serta-merta setelah mereka menekan pautan"
+      },
+      "title": "Cipta pautan tersuai anda"
+    },
+    "find_by_link_success": {
+      "body": "Pastikan anda berkongsi pautan ini dengan seseorang yang anda mahu jejak.",
+      "generateNewCTA": "Jana pautan baharu",
+      "statusCTA": "Semak status",
+      "subtitle": "Dapatkan pautan anda di bawah",
+      "title": "Berjaya"
+    },
+    "find_by_number_send_message": {
+      "CTA": "Hantar",
+      "errors": {
+        "empty": "Medan ini tidak boleh kosong",
+        "max_length": "Teks terlalu panjang. Had maksimum {n} aksara."
+      },
+      "extra_info": {
+        "bullet_1": "Nama penghantar akan muncul sebagai “Mobitrace.”",
+        "bullet_2": "Setiap mesej akan mempunyai satu pautan unik yang perlu diklik oleh penerima."
+      },
+      "find_by_number": "Cari melalui Nombor",
+      "label": "Mesej",
+      "placeholder": "Masukkan mesej anda di sini.",
+      "title": "Mencari lokasi untuk <brandColor>{phoneNumber}</brandColor>"
+    },
+    "find_by_number_send_message_success": {
+      "cta": "Semak status",
+      "description": "Mesej anda telah dihantar kepada <strong>{phoneNumber}</strong>. Kami akan maklumkan anda sebaik sahaja nombor ini dijejak.",
+      "title": "Berjaya!"
+    },
+    "forgot_password": {
+      "back_to_login": "Log Masuk",
+      "description": "Masukkan e-mel anda, dan kami akan hantar arahan untuk menetapkan semula kata laluan anda",
+      "remember_password": "Ingat kata laluan anda?",
+      "title": "Tetapkan Semula Kata Laluan"
+    },
+    "index": {
+      "faqs": {
+        "question_1": {
+          "answer": "Anda cuma masukkan nombor telefon, dan setelah penerima bersetuju untuk berkongsi lokasi mereka, anda akan menerima lokasi tepat mereka.",
+          "question": "Bagaimanakah saya menjejak lokasi seseorang melalui nombor telefon?"
+        },
+        "question_2": {
+          "answer": "Ya, geolokasi adalah sah di sisi undang-undang, tetapi ia memerlukan persetujuan nyata penerima untuk berkongsi lokasi mereka, mematuhi undang-undang privasi.",
+          "question": "Adakah sah dari segi undang-undang untuk menjejak lokasi pihak ketiga?"
+        },
+        "question_3": {
+          "answer": "Tidak, tiada pemasangan aplikasi atau perisian diperlukan. Segala-galanya dikendalikan dari jauh melalui perkhidmatan kami.",
+          "question": "Adakah saya perlu memasang aplikasi untuk menjejak nombor telefon?"
+        },
+        "question_4": {
+          "answer": "Perkhidmatan kami menyokong semua jenis telefon, daripada telefon pintar kepada model lebih lama, selagi ia boleh menerima mesej teks.",
+          "question": "Apakah jenis telefon yang disokong?"
+        },
+        "question_5": {
+          "answer": "Ya, perkhidmatan kami berfungsi secara global, tanpa mengira lokasi atau rangkaian.",
+          "question": "Bolehkah saya menjejak nombor telefon di mana-mana sahaja di dunia?"
+        },
+        "question_6": {
+          "answer": "Perkhidmatan kami menyediakan butiran lokasi yang tepat, termasuk alamat yang tepat, menggunakan teknologi GPS canggih.",
+          "question": "Sejauh manakah ketepatan geolokasi?"
+        },
+        "question_7": {
+          "answer": "Hanya masukkan nombor telefon yang ingin anda siasat dan Mobitrace akan mengendalikan selebihnya. Sistem kami mengimbas berbilang pangkalan data untuk mendedahkan sebarang maklumat tersedia yang dipautkan kepada nombor tersebut. Walaupun banyak carian mengembalikan hasil segera, carian yang lebih terperinci mungkin mengambil masa lebih lama. Sebaik sahaja anda menggunakan alat carian telefon terbalik Mobitrace, anda akan melihat dengan cepat kehebatan dan keberkesanan alat tersebut.",
+          "question": "Bagaimanakah Carian Nombor Telefon Terbalik berfungsi?"
+        },
+        "question_8": {
+          "answer": "Teknologi carian telefon terbalik Mobitrace sangat canggih. Apabila anda melakukan carian, proses ini akan meneroka pelbagai sumber — termasuk rekod awam, direktori dalam talian dan juga titik data yang kurang kelihatan. Jika maklumat berkaitan ditemukan, maklumat akan dipaparkan untuk anda. Sila ambil perhatian bahawa bukan setiap carian boleh memberikan hasil serta-merta, kerana ketersediaan bergantung pada data yang boleh diakses untuk setiap nombor.",
+          "question": "Adakah Mobitrace memberikan maklumat tentang setiap nombor?"
+        },
+        "question_9": {
+          "answer": "Ya, sudah tentu! Bayangkan menerima panggilan daripada seseorang yang mendakwa sebagai bank anda, meminta PIN untuk menghentikan pengeluaran mencurigakan atau menerima teks yang mengatakan anda telah memenangi hadiah dan mesti mengklik pautan untuk menuntutnya. Kedua-dua situasi boleh menyebabkan kerugian kewangan atau maklumat peribadi dicuri. Mobitrace membantu anda mengesahkan individu sebenar di sebalik nombor tidak dikenali. Carian terbalik pantas boleh memaklumkan anda tentang kemungkinan penipuan dan melindungi data serta kewangan anda.",
+          "question": "Bolehkah Mobitrace membantu saya mengelakkan penipuan telefon dan mesej teks?"
+        },
+        "title": "Soalan Lazim"
+      },
+      "hero": {
+        "100": "100%",
+        "card_address": "29 Willow Street, Hackney Wick, London E9 5EN, United Kingdom",
+        "card_date": "27 Sep 2024   18:46",
+        "card_phone": "+44 633 123 456",
+        "card_title": "Lokasi ditemui!",
+        "confidential": "Sulit",
+        "iphone_alt": "telefon pintar memaparkan peta London dengan penanda lokasi",
+        "secure": "Selamat",
+        "ssl_encription": "Penyulitan SSL",
+        "subtitle": "Dengan Mobitrace.io, anda boleh meminta lokasi telefon masa nyata melalui SMS atau pautan. Penjejakan dilakukan hanya dengan persetujuan nyata penerima.",
+        "title": "Jejak lokasi nombor telefon"
+      },
+      "how_does_it_work": {
+        "step_1": {
+          "description": "Hanya masukkan nombor telefon yang anda ingin jejak dan peribadikan mesej SMS yang akan dihantar kepada penerima.",
+          "title": "Masukkan Nombor Telefon"
+        },
+        "step_2": {
+          "description": "Mobitrace akan menghantar SMS tersuai anda, meminta penerima untuk berkongsi lokasi mereka.",
+          "title": "Hantar permintaan lokasi"
+        },
+        "step_3": {
+          "description": "Sebaik sahaja penerima bersetuju, anda akan menerima satu pemberitahuan dengan lokasi tepat mereka, yang anda boleh lihat secara langsung di atas peta pada papan pemuka anda.",
+          "title": "Terima Lokasi di atas peta"
+        },
+        "title": "Bagaimanakah Ia Berfungsi?"
+      },
+      "instant_locator": {
+        "subtitle": "Mobitrace ialah penyelesaian terunggul untuk menemui lokasi atau rekod sesiapa sahaja - hanya dengan menggunakan nombor telefon mereka",
+        "title": "Jejak Nombor Dengan <underlined>Serta-Merta</underlined>"
+      },
+      "meta_description": "Jejak apa jua nombor telefon — cepat dan mudah dengan Mobitrace.",
+      "meta_title": "Mobitrace.io - Cari lokasi apa jua nombor, di mana-mana sahaja",
+      "og_description": "Jejak apa jua nombor telefon — cepat dan mudah dengan Mobitrace.",
+      "og_image_alt": "Mobitrace.io - Cari lokasi apa jua nombor, di mana sahaja",
+      "og_title": "Mobitrace.io - Cari lokasi apa jua nombor, di mana-mana sahaja",
+      "site_name": "Mobitrace",
+      "welcome_title": "Selamat datang ke Mobitrace.io",
+      "why_choose": {
+        "reasons": {
+          "reason_1": {
+            "description": "Privasi anda ialah keutamaan kami. Yakinlah bahawa maklumat peribadi dan aktiviti carian anda sentiasa selamat dan sulit.",
+            "title": "Privasi Sepenuhnya, Dijamin"
+          },
+          "reason_2": {
+            "description": "Tanpa aplikasi, tanpa perisian, tanpa kerumitan. Hanya masukkan nombor telefon, dan Mobitrace akan berfungsi dengan serta-merta.",
+            "title": "Tiada Pemasangan Diperlukan"
+          },
+          "reason_3": {
+            "description": "Daripada iPhone dan Android terkini kepada telefon lipat lama—jika ia boleh menerima teks, Mobitrace boleh menjejakinya. Kami bekerja dengan semua telefon dan pembawa rangkaian.",
+            "title": "Menyokong Setiap Telefon & Pembawa"
+          },
+          "reason_4": {
+            "description": "Mobitrace bukan sahaja memberikan koordinat; ia menyampaikan alamat yang tepat. Manfaatkan kuasa teknologi GPS canggih untuk mendapat ketepatan yang tiada tandingan.",
+            "title": "Ketepatan Lokasi Pin"
+          },
+          "reason_5": {
+            "description": "Tidak kira di mana anda atau telefon sasaran berada, Mobitrace berfungsi dengan lancar di seluruh dunia.",
+            "title": "Capaian Global"
+          }
+        },
+        "subtitle": "Satu klik dan tiada usaha diperlukan untuk mencari lokasi sesiapa sahaja di seluruh dunia",
+        "title": "Mengapa Pilih Mobitrace"
+      }
+    },
+    "legal": {
+      "cookie_policy": {
+        "content": "",
+        "title": "Dasar Kuki"
+      },
+      "refund_policy": {
+        "content": "",
+        "title": "Dasar Bayaran Balik"
+      }
+    },
+    "loader": {
+      "step_1": {
+        "carrier": {
+          "loadedDefaultText": "Dikesan",
+          "text": "Pembekal"
+        },
+        "city": {
+          "loadedText": "Dijejak",
+          "text": "Bandar"
+        },
+        "connecting": "Menyambung kepada satelit",
+        "country": {
+          "text": "Negara"
+        },
+        "database": {
+          "loadedText": "Diakses",
+          "text": "Pangkalan data"
+        },
+        "location": {
+          "loadedText": "Dikesan",
+          "text": "Lokasi"
+        },
+        "searching": "Mencari hasil untuk"
+      },
+      "step_2": {
+        "cta": "Dapatkan Lokasi",
+        "subtitle": "Carian anda telah selesai — anda sudah bersedia untuk mengakses lokasi sekarang.",
+        "title": "Lokasi ditemui!"
+      }
+    },
+    "loader_complete": {
+      "title": "Daftar untuk mendapatkan lokasi tepat <brandColor>{phoneNumber}</brandColor>"
+    },
+    "locate": {
+      "error": "Tidak dapat mencapai alamat.",
+      "link_expired": "Pautan telah luput",
+      "link_expired_explain": "Pautan ini sudah pun diakses dan tidak lagi tersedia.",
+      "loading": "Memuat...",
+      "not_supported": "Pelayar anda tidak menyokong geolokasi.",
+      "rejected": "Perkongsian lokasi telah ditolak.",
+      "thank_you": "Terima kasih!"
+    },
+    "memberArea": {
+      "navigation": {
+        "contact_us": "Hubungi Kami",
+        "find_by_link": "Cari melalui Pautan",
+        "find_by_number": "Cari melalui Nombor",
+        "find_by_phone_lookup": "Carian Terbalik",
+        "my_activity": "Aktiviti Saya",
+        "notifications": "Pemberitahuan",
+        "phone_lookup": "Carian Telefon",
+        "settings": "Tetapan",
+        "sex_offenders_search": "Pesalah Seks",
+        "status": "Status",
+        "tools_library": "Pustaka Alat"
+      }
+    },
+    "not_found": {
+      "body": "Sesuatu tidak kena berlaku, sila cuba lagi.",
+      "cta": "Ke Utama",
+      "title": "Halaman tidak ditemui"
+    },
+    "notifications": {
+      "empty": {
+        "text": "Anda tiada pemberitahuan pada masa ini.",
+        "title": "Sunyi di sini"
+      },
+      "link_accessed": "<strong>{notificationName}</strong> telah diakses.",
+      "link_located": "Lokasi kini tersedia.",
+      "link_rejected": "Perkongsian lokasi telah ditolak.",
+      "load_more": "Muat lagi",
+      "phone_located": "<strong>Lokasi untuk {phone}</strong> berjaya diperolehi.",
+      "phone_rejected": "<strong>Lokasi untuk {phone}</strong> ditolak.",
+      "title": "Pemberitahuan"
+    },
+    "onboarding": {
+      "navigation": {
+        "step_1": "Langkah 1",
+        "step_2": "Langkah 2",
+        "step_3": "Langkah 3"
+      }
+    },
+    "onboarding_step1": {
+      "body": "Untuk menjejak nombor telefon, Mobitrace akan menghantar satu teks tanpa nama dengan pautan tempatan. Hantar sahaja mesej dan benarkan sistem kami melakukan kerja.",
+      "cta": "Teruskan",
+      "title": "Hantar Pautan Penjejakan"
+    },
+    "onboarding_step2": {
+      "body": "Setelah penerima mengklik pautan, pergi ke Sejarah Lokasi anda untuk menjejak pergerakan mereka di atas peta pada masa nyata.",
+      "cta": "Teruskan",
+      "title": "Pantau pada Masa Nyata"
+    },
+    "onboarding_step3": {
+      "body": "Sementara menunggu penerima untuk membuka mesej, manfaatkan ciri-ciri berkuasa Mobitrace yang lain untuk meningkatkan pengalaman menjejak anda.",
+      "cta": "Mulakan sekarang",
+      "title": "Terokai Lagi Banyak Ciri"
+    },
+    "pricing": {
+      "cards": {
+        "subscription": {
+          "badge": "Langganan",
+          "cta": "Langgan sekarang",
+          "description": "Sebaik sahaja tempoh percubaan 7 hari anda tamat, anda akan dicaj {price} setiap 4 minggu. Batalkan pada bila-bila masa.",
+          "duration": "Setiap 4 minggu",
+          "features": {
+            "feature_1": "Menyokong semua peranti mudah alih",
+            "feature_2": "Permintaan menjejak lokasi tanpa had",
+            "feature_3": "Ciri-ciri premium seperti mesej tersuai & lokasi tepat",
+            "feature_4": "Sokongan 24/7 tanpa kos tambahan"
+          },
+          "new_features": {
+            "feature_1": "Menyokong semua peranti mudah alih",
+            "feature_2": "Permintaan menjejak lokasi tanpa had",
+            "feature_3": "Muat turun laporan PDF profesional tanpa caj tambahan",
+            "feature_4": "Laporan carian telefon terbalik tanpa had dengan butiran komprehensif",
+            "feature_5": "Sokongan 24/7 tanpa kos tambahan"
+          }
+        },
+        "subscription_24": {
+          "badge": "Langganan",
+          "cta": "Langgan sekarang",
+          "description": "Sebaik sahaja tempoh percubaan 24 jam anda tamat, anda akan dicaj {price} setiap 4 minggu. Batalkan pada bila-bila masa.",
+          "duration": "Setiap 4 minggu",
+          "features": {
+            "feature_1": "Menyokong semua peranti mudah alih",
+            "feature_2": "Permintaan menjejak lokasi tanpa had",
+            "feature_3": "Muat turun laporan PDF profesional tanpa caj tambahan",
+            "feature_4": "Laporan carian nombor telefon tanpa had dengan butiran terperinci",
+            "feature_5": "Sokongan 24/7 tanpa sebarang caj tambahan"
+          },
+          "new_features": {
+            "feature_1": "Menyokong semua peranti mudah alih",
+            "feature_2": "Permintaan menjejak lokasi tanpa had",
+            "feature_3": "Muat turun laporan PDF profesional tanpa caj tambahan",
+            "feature_4": "Laporan semakan nombor telefon tanpa had dengan maklumat terperinci",
+            "feature_5": "Sokongan 24/7 tanpa sebarang kos tambahan"
+          }
+        },
+        "title": "Harga",
+        "trial": {
+          "badge": "Tempoh percubaan",
+          "cta": "Mulakan percubaan",
+          "description": "Nikmati akses tanpa had kepada semua ciri, tanpa risiko. Pembayaran awal anda memberikan akses penuh selama 7 hari, kemudian anda akan dicaj {price} setiap 4 minggu. Batalkan pada bila-bila masa.",
+          "duration": "Percubaan 7 hari",
+          "features": {
+            "feature_1": "Menyokong semua peranti mudah alih",
+            "feature_2": "Akses penuh kepada semua ciri selama 7 hari",
+            "feature_3": "Tiada komitmen jangka panjang untuk mencuba"
+          },
+          "new_features": {
+            "feature_1": "Menyokong semua peranti mudah alih",
+            "feature_2": "Akses penuh kepada semua ciri selama 7 hari",
+            "feature_3": "Akses kepada laporan carian telefon terbalik terperinci",
+            "feature_4": "Tiada komitmen jangka panjang untuk mencuba",
+            "feature_5": "Keupayaan untuk memuat turun laporan sebagai PDF"
+          }
+        },
+        "trial_24": {
+          "badge": "Tempoh percubaan",
+          "cta": "Mulakan percubaan",
+          "description": "Nikmati akses tanpa had kepada semua ciri, tanpa risiko. Pembayaran awal anda memberikan akses penuh selama 24 jam, kemudian anda akan dikenakan bayaran {price} setiap 4 minggu. Batal pada bila-bila masa.",
+          "duration": "Percubaan 24 Jam",
+          "features": {
+            "feature_1": "Menyokong semua peranti mudah alih",
+            "feature_2": "Akses penuh kepada semua ciri selama 24 jam",
+            "feature_3": "Tiada komitmen jangka panjang untuk mencuba",
+            "feature_4": "Keupayaan untuk memuat turun laporan sebagai PDF"
+          },
+          "new_features": {
+            "feature_1": "Menyokong semua peranti mudah alih",
+            "feature_2": "Akses penuh kepada semua ciri selama 24 jam",
+            "feature_3": "Akses kepada laporan carian nombor telefon terperinci",
+            "feature_4": "Tiada komitmen jangka panjang untuk mencuba",
+            "feature_5": "Keupayaan untuk memuat turun laporan sebagai PDF"
+          }
+        }
+      },
+      "special_offer": "Tawaran Istimewa",
+      "subtitle": "Mobitrace menawarkan perkhidmatannya melalui pelan langganan bulanan yang mudah diuruskan.",
+      "title": "Cuba keupayaan Mobitrace pada harga <mark>{price} sahaja</mark> selama 7 hari!",
+      "title_24": "Cuba Mobitrace untuk <mark>{price} sahaja</mark> selama 24 jam!"
+    },
+    "reset_password": {
+      "back_to_login": "Log Masuk",
+      "description": "Masukkan kata laluan baharu anda untuk menetapkan semula akaun anda",
+      "remember_password": "Ingat kata laluan anda?",
+      "title": "Tetapkan Semula Kata Laluan"
+    },
+    "reverse_lookup": {
+      "checkout": {
+        "action_form": "Dapatkan laporan",
+        "back_description": "Jika anda tidak berpuas hati sepenuhnya dalam tempoh percubaan 7 hari, hanya maklumkan kami dan kami akan memproses bayaran balik penuh.",
+        "back_description_24": "Jika anda tidak berpuas hati dalam tempoh percubaan 24 jam, maklumkan kepada kami dan kami akan memproses bayaran balik penuh dengan segera.",
+        "back_title": "Pemulangan Wang",
+        "cancel_description": "Anda boleh membatalkan pada bila-bila masa dari papan pemuka anda atau dengan menghubungi kami pada <email>support@mobitrace.io</email>.",
+        "cancel_title": "Batalkan pada bila-bila masa",
+        "title": "Buka kunci lokasi"
+      },
+      "components": {
+        "always_know_who_called": {
+          "step_1": {
+            "description": "Kenal pasti mana-mana undang-undang atau nama syarikat yang dikaitkan dengan nombor tersebut.",
+            "title": "Nama Penuh"
+          },
+          "step_2": {
+            "description": "Ketahui alamat berpotensi yang dikaitkan dengan nombor tersebut, dahulu dan sekarang.",
+            "title": "Alamat Rumah"
+          },
+          "step_3": {
+            "description": "Berhubung semula dengan ahli keluarga yang jauh atau saudara yang telah lama hilang.",
+            "title": "Ahli Keluarga"
+          },
+          "step_4": {
+            "description": "Cari profil media sosial pada semua platform utama.",
+            "title": "Profil Media Sosial"
+          },
+          "step_5": {
+            "description": "Lihat sebarang alamat e-mel awam yang berkaitan.",
+            "title": "Alamat E-mel"
+          },
+          "step_6": {
+            "description": "Semak sejarah lokasi yang tersedia secara umum.",
+            "title": "Sejarah Lokasi"
+          },
+          "step_7": {
+            "description": "Kumpulkan maklumat daripada pelbagai sumber di seluruh internet.",
+            "title": "Aktiviti Web"
+          },
+          "subtitle": "Dengan memasukkan nombor ke dalam carian telefon terbalik Mobitrace, anda akan menemukan maklumat yang tersedia secara umum yang dikaitkan dengan nombor tersebut.",
+          "title": "Sentiasa tahu siapa yang menelefon dengan Mobitrace"
+        },
+        "as_seen_on": {
+          "title": "Seperti yang dilihat pada"
+        },
+        "customer_carousel": {
+          "subtitle": "Kami melakukan yang terbaik untuk memberi anda pengalaman terbaik",
+          "title": "Apakah yang pelanggan <br class='lg:hidden'/> katakan tentang kami"
+        },
+        "customer_opinions": {
+          "title": "Orang Di Seluruh Dunia Membongkarkan Nombor Yang Tidak Dikenali"
+        },
+        "faqs": {
+          "question_1": {
+            "answer": "Anda cuma perlu masukkan nombor telefon dan setelah penerima memberikan kebenaran untuk berkongsi lokasi mereka, anda akan menerima lokasi tepat mereka.",
+            "question": "Bagaimanakah cara menjejaki lokasi seseorang melalui nombor telefon?"
+          },
+          "question_2": {
+            "answer": "Ya, geolokasi adalah sah di sisi undang-undang, tetapi memerlukan kebenaran jelas penerima untuk berkongsi lokasi mereka, selaras dengan undang-undang privasi.",
+            "question": "Adakah sah dari segi undang-undang untuk menjejak lokasi pihak ketiga?"
+          },
+          "question_3": {
+            "answer": "Tidak, tiada pemasangan aplikasi atau perisian diperlukan. Semuanya dikendalikan dari jauh melalui perkhidmatan kami.",
+            "question": "Adakah saya perlu memasang aplikasi untuk menjejak nombor telefon?"
+          },
+          "question_4": {
+            "answer": "Perkhidmatan kami menyokong semua jenis telefon, daripada telefon pintar kepada model lebih lama, selagi telefon boleh menerima mesej teks.",
+            "question": "Apakah jenis telefon yang disokong?"
+          },
+          "question_5": {
+            "answer": "Ya, perkhidmatan kami berfungsi secara global, tanpa mengira lokasi atau rangkaian.",
+            "question": "Bolehkah saya menjejaki nombor telefon di mana-mana sahaja di dunia?"
+          },
+          "question_6": {
+            "answer": "Perkhidmatan kami menyediakan butiran lokasi yang tepat, termasuk alamat sebenar, menggunakan teknologi GPS canggih.",
+            "question": "Sejauh manakah ketepatan geolokasi?"
+          },
+          "question_7": {
+            "answer": "Hanya masukkan nombor telefon yang ingin anda siasat dan Mobitrace akan mengendalikan selebihnya. Sistem kami mengimbas berbilang pangkalan data untuk mendedahkan sebarang maklumat tersedia yang dipautkan kepada nombor tersebut. Walaupun banyak carian mengembalikan hasil segera, carian yang lebih terperinci mungkin mengambil masa lebih lama. Sebaik sahaja anda menggunakan alat carian telefon terbalik Mobitrace, anda akan melihat dengan cepat kehebatan dan keberkesanan alat tersebut.",
+            "question": "Bagaimanakah Carian Nombor Telefon Terbalik berfungsi?"
+          },
+          "question_8": {
+            "answer": "Teknologi carian telefon terbalik Mobitrace sangat canggih. Apabila anda melakukan carian, proses ini akan meneroka pelbagai sumber — termasuk rekod awam, direktori dalam talian dan juga titik data yang kurang kelihatan. Jika maklumat berkaitan ditemukan, maklumat akan dipaparkan untuk anda. Sila ambil perhatian bahawa bukan setiap carian boleh memberikan hasil serta-merta, kerana ketersediaan bergantung pada data yang boleh diakses untuk setiap nombor.",
+            "question": "Adakah Mobitrace memberikan maklumat tentang setiap nombor?"
+          },
+          "question_9": {
+            "answer": "Ya, sudah tentu! Bayangkan menerima panggilan daripada seseorang yang mendakwa sebagai bank anda, meminta PIN untuk menghentikan pengeluaran mencurigakan atau menerima teks yang mengatakan anda telah memenangi hadiah dan mesti mengklik pautan untuk menuntutnya. Kedua-dua situasi boleh menyebabkan kerugian kewangan atau maklumat peribadi dicuri. Mobitrace membantu anda mengesahkan individu sebenar di sebalik nombor tidak dikenali. Carian terbalik pantas boleh memaklumkan anda tentang kemungkinan penipuan dan melindungi data serta kewangan anda.",
+            "question": "Bolehkah Mobitrace membantu saya mengelakkan penipuan telefon dan mesej teks?"
+          },
+          "title": "Soalan Lazim"
+        },
+        "get_report": {
+          "cta": "Dapatkan Laporan Saya",
+          "lookup_today": "Lebih 99 carian terbalik dilakukan hari ini",
+          "product": "Akses penuh 7 hari",
+          "product_24": "Akses penuh 24 Jam",
+          "product_title": "Laporan Carian",
+          "secure": "100% Selamat",
+          "title": "Dapatkan Akses kepada Laporan Anda!",
+          "trial_description": "Jaminan kepuasan 30 hari"
+        },
+        "hero": {
+          "100": "100%",
+          "card_address": "29 Willow Street, Hackney Wick, London E9 5EN, United Kingdom",
+          "card_date": "27 Sep 2024   18:46",
+          "card_phone": "+60 12 345 6789",
+          "card_title": "Lokasi ditemukan!",
+          "confidential": "sulit",
+          "iphone_alt": "telefon pintar memaparkan peta London dengan penanda lokasi",
+          "secure": "Selamat",
+          "ssl_encription": "Penyulitan SSL",
+          "subtitle": "Kenal pasti pemanggil yang tidak dikenali serta-merta, mendedahkan nama penuh, alamat, profil media sosial dan banyak lagi.",
+          "title": "<mark>Carian</mark> Nombor Telefon <mark>Terbalik</mark>"
+        },
+        "instant_locator": {
+          "subtitle": "Mobitrace ialah penyelesaian terunggul untuk menemukan lokasi atau rekod sesiapa sahaja - hanya dengan menggunakan nombor telefon mereka",
+          "title": "Cari Sebarang Nombor Telefon Sekarang!"
+        },
+        "latest_results": {
+          "result": {
+            "description": "{time} minit yang lalu"
+          },
+          "subtitle": "Berikut ialah beberapa hasil terkini daripada perkhidmatan carian telefon terbalik kami.",
+          "title": "Hasil Terkini"
+        },
+        "limited_offer_tag": {
+          "limited_offer": "Tawaran terhad"
+        },
+        "phone_input": {
+          "errors": {
+            "invalid_phone": "Sila masukkan nombor telefon yang sah.",
+            "rate_limit_exceeded": "Anda telah melebihi kuota harian anda.",
+            "rate_limit_exceeded_title": "Had dicapai"
+          },
+          "label": "Masukkan nombor yang anda mahu cari",
+          "no_results": "Kod negara tidak ditemukan.",
+          "phone_placeholder": "123456789",
+          "search_placeholder": "Cari mengikut negara atau kod...",
+          "submit": "Carian"
+        },
+        "pricing": {
+          "cards": {
+            "subscription": {
+              "badge": "Langganan",
+              "cta": "Langgan Sekarang",
+              "description": "Setelah tempoh percubaan 7 hari anda tamat, tawaran ini akan diperbaharui secara automatik kepada langganan bulanan. Anda boleh membatalkan langganan anda pada bila-bila masa dengan mudah.",
+              "duration": "Yuran bulanan",
+              "features": {
+                "feature_1": "Menyokong semua peranti mudah alih",
+                "feature_2": "Permintaan menjejak lokasi tanpa had",
+                "feature_3": "Muat turun laporan PDF profesional tanpa caj tambahan",
+                "feature_4": "Laporan semakan nombor telefon tanpa had dengan maklumat terperinci",
+                "feature_5": "Sokongan 24/7 tanpa kos tambahan"
+              }
+            },
+            "title": "Mulakan Percubaan 7 Hari Anda",
+            "trial": {
+              "badge": "Tempoh percubaan",
+              "cta": "Mulakan Percubaan",
+              "description": "Dengan pembayaran awal ini, anda boleh mengakses semua ciri platform Mobitrace tanpa had selama 7 hari. Selepas itu, yuran langganan sebanyak {price} setiap bulan akan dikenakan.",
+              "duration": "Percubaan 7 hari",
+              "features": {
+                "feature_1": "Menyokong semua peranti mudah alih",
+                "feature_2": "Akses penuh kepada semua ciri selama 7 hari",
+                "feature_3": "Akses kepada laporan semakan nombor telefon terperinci",
+                "feature_4": "Tiada komitmen jangka panjang untuk mencuba",
+                "feature_5": "Keupayaan untuk memuat turun laporan sebagai PDF"
+              }
+            }
+          },
+          "special_offer": "Tawaran Istimewa",
+          "subtitle": "Mobitrace menawarkan perkhidmatannya melalui pelan langganan bulanan yang mudah diuruskan.",
+          "title": "Cuba keupayaan Mobitrace pada harga <mark>{price} sahaja</mark> selama 7 hari!"
+        },
+        "recent_reveals": {
+          "subtitle": "Berikut ialah beberapa pemanggil tidak dikenali yang telah kami kenal pasti baru-baru ini.",
+          "title": "Pendedahan Terkini"
+        },
+        "report_ready": {
+          "description": "Laporan anda sudah sedia!",
+          "download_report_button": "Muat turun PDF",
+          "view_report_button": "Lihat Laporan"
+        },
+        "summary_report_card": {
+          "caller_info": "Dengan Mobitrace, anda tidak perlu meneka lagi individu di sebalik nombor yang tidak dikenali. Kami akan memberi anda data tentang pemanggil, termasuk maklumat yang mereka tidak tahu tersedia untuk anda.",
+          "carrier": "Pembekal",
+          "continue": "Teruskan",
+          "latest_report": "Laporan terkini setakat 3 Mac 2025",
+          "line_type": "Jenis Talian",
+          "may_include": "Hasil mungkin termasuk",
+          "result_1": "Nama penuh dan alamat pemilik",
+          "result_2": "Pemegang dan Profil Media Sosial",
+          "result_3": "Foto & Video",
+          "result_4": "Aktiviti Dalam Talian Lampau",
+          "result_5": "Alamat E-mel",
+          "result_6": "Dan Banyak Lagi!",
+          "timer_desktop": "<mark>Laporan</mark> anda akan tamat tempoh dalam masa",
+          "timer_mobile": "Laporan tamat tempoh dalam masa",
+          "title": "Laporan anda tentang <mark>{phoneNumber}</mark> sudah sedia!",
+          "trusted_by": "Diyakini oleh lebih <span class='font-bold'>7 juta</span> orang"
+        },
+        "upsell_progress_steps": {
+          "access_report": "Laporan Akses",
+          "create_account": "Cipta Akaun",
+          "data_breach": "Pelanggaran Data",
+          "pdf_export": "Eksport PDF",
+          "sex_offenders": "Pesalah Seks"
+        },
+        "what_you_get": {
+          "item_1": "Cari mana-mana nombor telefon, dahulu dan sekarang, untuk mendedahkan maklumat mengenai pemiliknya",
+          "item_2": "Pemilik nombor telefon tidak akan dimaklumkan tentang carian anda.",
+          "item_3": "Pangkalan data kami sentiasa mengandungi maklumat yang paling terkini.",
+          "item_4": "Mobitrace menyusun laporannya daripada maklumat yang tersedia secara umum di seluruh web.",
+          "item_title_1": "Carian Telefon Lanjutan",
+          "item_title_2": "Privasi Anda Dijamin 100%",
+          "item_title_3": "Sentiasa Dikemas kini",
+          "item_title_4": "Mencari Berbilion Rekod",
+          "title": "Anda akan mendapat"
+        },
+        "why_use": {
+          "phone_input_label": "Masukkan nombor yang anda mahu cari",
+          "reasons": {
+            "reason_1": {
+              "description": "Kenal pasti pemanggil yang tidak dikenali dan tanpa perlu meneka lagi semasa menjawab telefon anda.",
+              "title": "Sentiasa Tahu Siapa yang Menelefon"
+            },
+            "reason_2": {
+              "description": "Mobitrace boleh membantu untuk mencari hubungan lama atau terputus, walaupun dengan nombor telefon lama.",
+              "title": "Berhubung semula dengan rakan lama"
+            },
+            "reason_3": {
+              "description": "Pastikan diri anda dilindungi dengan mengesahkan identiti orang yang anda bercakap dalam talian.",
+              "title": "Sahkan Identiti"
+            },
+            "reason_4": {
+              "description": "Panggilan penipuan dan penggodam data semakin meningkat. Mobitrace boleh membantu anda mengenal pasti individu yang berniat jahat tanpa perlu menjawab telefon anda.",
+              "title": "Kenal Pasti Nombor Mencurigakan"
+            },
+            "reason_5": {
+              "description": "Masukkan nombor anda dalam Mobitrace dan semak data peribadi anda yang tersedia dan kenal pasti potensi kebocoran data.",
+              "title": "Pantau Jejak Digital Anda"
+            }
+          },
+          "steps": {
+            "step_1": {
+              "description": "Lindungi diri anda daripada panggilan penipuan dan panggilan komersial."
+            },
+            "step_2": {
+              "description": "Lakukan pemeriksaan latar belakang pada bakal pasangan atau rakan sebilik."
+            },
+            "step_3": {
+              "description": "Ketahui siapa di sebalik panggilan spam yang mengganggu."
+            },
+            "step_4": {
+              "description": "Berhubung semula dengan rakan lama atau ahli keluarga."
+            },
+            "step_5": {
+              "description": "Kenal pasti individu palsu di aplikasi janji temu dan sembang."
+            }
+          },
+          "subtitle": "Sama ada anda mahu melindungi diri anda secara digital atau mencari hubungan yang terputus, kami sedia membantu.<br>Mobitrace boleh membantu anda:",
+          "title": "Sebab Gunakan Carian Telefon Terbalik",
+          "title_2": "Kes Penggunaan Tambahan",
+          "title_badge": "TAMBAHAN"
+        }
+      },
+      "member_area": {
+        "phone_lookup": {
+          "daily_limit": "Had: 5 carian setiap 24 jam.",
+          "label": "Dedahkan ID Pemanggil",
+          "phone_lookup": "Carian Terbalik"
+        }
+      },
+      "report": {
+        "carrier_details": {
+          "info": "Bahagian ini menyediakan maklumat tentang pembawa telefon individu, termasuk butiran rangkaian dan jenis perkhidmatan.",
+          "labels": {
+            "carrier": "Pembekal",
+            "international_format": "Format Antarabangsa",
+            "local_format": "Format Tempatan",
+            "location": "Lokasi",
+            "type": "Jenis"
+          },
+          "line_types": {
+            "landline": "Talian tetap",
+            "mobile": "Mudah alih"
+          },
+          "title": "Butiran pembawa",
+          "title_empty": "Butiran pembawa"
+        },
+        "common": {
+          "no_data": "Tiada rekod tersedia"
+        },
+        "data_breach_history": {
+          "alert_empty": "Bahagian ini menggariskan sejarah pelanggaran data, memperincikan sebarang insiden yang telah menjejaskan maklumat sensitif. Perkara ini termasuk maklumat tentang sifat pelanggaran, data yang terjejas dan langkah-langkah yang diambil untuk menangani serta mencegah kejadian pada masa hadapan.",
+          "alert_success": "Bahagian ini menggariskan sejarah pelanggaran data, memperincikan sebarang insiden yang telah menjejaskan maklumat sensitif. Perkara ini termasuk maklumat tentang sifat pelanggaran, data yang terjejas dan langkah-langkah yang diambil untuk menangani serta mencegah kejadian pada masa hadapan.",
+          "alert_title": "{count} Pelanggaran Data",
+          "report": {
+            "breaches_found_for": "Pelanggaran ditemui untuk",
+            "compromised_data": "Data terjejas",
+            "data_breaches": "pelanggaran data",
+            "data_types": {
+              "date_of_birth": "Tarikh Lahir",
+              "education_levels": "Tahap pendidikan",
+              "email": "Alamat e-mel",
+              "gender": "Jantina",
+              "geo_location": "Lokasi geografi",
+              "name": "Nama",
+              "password": "Kata laluan",
+              "phone": "Nombor telefon",
+              "social_media_profiles": "Profil media sosial",
+              "username": "Nama pengguna"
+            },
+            "download_report_button": "Muat turun PDF",
+            "title": "Sejarah pelanggaran data"
+          },
+          "show_report": "Tunjukkan Laporan",
+          "title": "Sejarah pelanggaran data",
+          "unlock_report": "Buka Kunci Laporan"
+        },
+        "header": {
+          "button": "Muat turun PDF",
+          "matches_found": "Padanan ditemukan untuk",
+          "title": "Laporan Carian Telefon",
+          "unlock_download_pdf": "Buka Muat turun PDF"
+        },
+        "looking_for_more_profiles_dialog": {
+          "description": "Ini mungkin mengambil masa beberapa saat — kami sedang mencari merentasi platform tambahan",
+          "title": "Mencari lebih banyak profil"
+        },
+        "phone_public_information": {
+          "info": "Bahagian ini menyediakan ringkasan maklumat yang tersedia secara umum yang dipautkan ke nombor telefon individu.",
+          "name": "Nama:",
+          "source": "Sumber:",
+          "sources": {
+            "data_breach": "Pelanggaran Data",
+            "other": "Lain-lain",
+            "public_records": "Rekod Awam",
+            "social_media": "Media Sosial"
+          },
+          "title": "Maklumat umum telefon",
+          "title_empty": "Tiada maklumat umum telefon"
+        },
+        "photos": {
+          "info": "Bahagian ini memaparkan kemungkinan imej pemilik telefon untuk membantu dengan pengecaman visual apabila tersedia.",
+          "other": "Lain-lain",
+          "title": "Foto",
+          "title_empty": "Tiada foto ditemukan"
+        },
+        "possible_addresses": {
+          "info": "Bahagian ini menyenaraikan kemungkinan alamat yang berkaitan kepada individu tersebut, yang boleh membantu mengenal pasti tempat kediaman atau lokasi lalu.",
+          "labels": {
+            "city": "Bandar",
+            "country": "Negara",
+            "county": "Daerah",
+            "latitude": "Latitud",
+            "length_of_residence": "Tempoh Kediaman",
+            "longitude": "Longitud",
+            "postal_code": "Poskod",
+            "state": "Negeri",
+            "street": "Jalan"
+          },
+          "title": "Alamat berkemungkinan",
+          "title_empty": "Tiada alamat ditemukan",
+          "values": {
+            "years": "{count} tahun"
+          }
+        },
+        "possible_contact_details": {
+          "info": "Bahagian ini menunjukkan alamat e-mel yang dipautkan kepada individu bagi membantu untuk mengesahkan maklumat hubungan.",
+          "labels": {
+            "associated_emails": "E-mel Berkaitan",
+            "associated_numbers": "Nombor Berkaitan"
+          },
+          "title": "Butiran hubungan berkemungkinan",
+          "title_empty": "Tiada butiran hubungan ditemukan"
+        },
+        "possible_personal_details": {
+          "info": "Bahagian ini menunjukkan maklumat peribadi yang mungkin berkaitan dengan individu tersebut, membantu memberikan cerapan latar belakang tambahan.",
+          "labels": {
+            "children": "Anak",
+            "date_of_birth": "Tarikh Lahir",
+            "gender": "Jantina",
+            "household_size": "Saiz Isi Rumah",
+            "income": "Pendapatan",
+            "marital_status": "Status Perkahwinan"
+          },
+          "title": "Butiran peribadi berkemungkinan",
+          "title_empty": "Tiada butiran peribadi ditemukan",
+          "values": {
+            "children": "Semasa ({count})",
+            "divorced": "Bercerai",
+            "domestic_partnership": "Perkongsian Domestik",
+            "engaged": "Bertunang",
+            "female": "Perempuan",
+            "in_relationship": "Dalam Hubungan",
+            "intersex": "Interseks",
+            "male": "Lelaki",
+            "married": "Sudah berkahwin",
+            "no_children": "Tiada",
+            "no_record_available": "Tiada rekod tersedia",
+            "separated": "Berpisah",
+            "single": "Bujang",
+            "widowed": "Janda/Balu"
+          }
+        },
+        "possible_social_media_accounts": {
+          "expand_search": {
+            "more_platforms": "Akses lebih banyak platform dengan satu klik",
+            "title": "Luaskan carian anda",
+            "unlock_platforms": "Buka kunci platform"
+          },
+          "info": "Bahagian ini menunjukkan kemungkinan profil media sosial yang mungkin dipautkan kepada individu tersebut, menawarkan cerapan tentang kehadiran dalam talian mereka.",
+          "labels": {
+            "id": "ID",
+            "name": "Nama",
+            "opne_url": "Buka halaman",
+            "source": "Sumber",
+            "url": "URL"
+          },
+          "network_not_found": "Tidak ditemui",
+          "no_accounts_found": "Tiada akaun ditemui pada mana-mana platform yang disemak. Ini bermakna pengguna sama ada tidak berdaftar di rangkaian ini atau menggunakan data yang berbeza daripada parameter carian yang disediakan.",
+          "partial_result": {
+            "info": "Tiada akaun ditemui pada sesetengah platform — ini bermakna pengguna sama ada tidak berdaftar pada rangkaian tersebut atau menggunakan data yang berbeza daripada parameter carian yang disediakan.",
+            "no_account_platforms": "Platform tanpa akaun ditemui",
+            "title": "Hasil Carian Selesai"
+          },
+          "sources": {
+            "behance": "Behance",
+            "facebook": "Facebook",
+            "github": "Github",
+            "gitlab": "Gitlab",
+            "google": "Google",
+            "instagram": "Instagram",
+            "kick": "Tendang",
+            "linkedin": "LinkedIn",
+            "pinterest": "Pinterest",
+            "reddit": "Reddit",
+            "snapchat": "Snapchat",
+            "telegram": "Telegram",
+            "threads": "Benang",
+            "tiktok": "Tiktok",
+            "tumblr": "Tumblr",
+            "twitch": "Twitch",
+            "x": "X",
+            "youtube": "Youtube"
+          },
+          "title": "Akaun media sosial berkemungkinan",
+          "title_empty": "Tiada akaun media sosial ditemukan"
+        },
+        "potential_education": {
+          "info": "Bahagian ini meringkaskan butiran pendidikan yang mungkin, termasuk sekolah yang pernah dihadiri dan kelayakan yang diperoleh.",
+          "title": "Pendidikan yang mungkin",
+          "title_empty": "Tiada pendidikan ditemukan",
+          "values": {
+            "associate_degree": "Ijazah Bersekutu",
+            "bachelor_degree": "Ijazah Sarjana Muda",
+            "doctoral_degree": "Ijazah Kedoktoran",
+            "high_school": "Sekolah tinggi",
+            "master_degree": "Ijazah Sarjana",
+            "no_formal_education": "Tiada pendidikan formal",
+            "other": "Lain-lain",
+            "primary_school": "Sekolah rendah",
+            "secondary_school": "Sekolah menengah",
+            "vocational_training": "Latihan vokasional"
+          }
+        },
+        "potential_professional_summary": {
+          "info": "Bahagian ini menyerlahkan peranan industri yang mungkin pernah diceburi oleh individu, berdasarkan data yang tersedia.",
+          "title": "Ringkasan profesional yang berkemungkinan",
+          "title_empty": "Tiada ringkasan profesional",
+          "values": {
+            "agriculture": "Pertanian",
+            "arts_and_entertainment": "Seni dan Hiburan",
+            "construction": "Pembinaan",
+            "education": "Pendidikan",
+            "energy_and_utilities": "Tenaga dan Utiliti",
+            "engineering": "Kejuruteraan",
+            "finance": "Kewangan",
+            "government": "Kerajaan",
+            "healthcare": "Penjagaan kesihatan",
+            "hospitality": "Hospitaliti",
+            "information_technology": "Teknologi Maklumat",
+            "legal": "Undang-undang",
+            "logistics_and_supply_chain": "Logistik dan Rantaian Bekalan",
+            "manufacturing": "Pembuatan",
+            "marketing": "Pemasaran",
+            "media_and_communications": "Media dan Komunikasi",
+            "military": "Tentera",
+            "non_profit": "Bukan Untung",
+            "other": "Lain-lain",
+            "real_estate": "Hartanah",
+            "retail": "Runcit",
+            "sales": "Jualan",
+            "science": "Sains",
+            "skilled_trades": "Perdagangan Mahir",
+            "telecommunications": "Telekomunikasi",
+            "transportation": "Pengangkutan"
+          }
+        },
+        "profile_summary": {
+          "associated_emails": "E-mel Berkaitan:",
+          "associated_locations": "Lokasi Berkaitan:",
+          "associated_usernames": "Nama Pengguna Berkaitan:",
+          "empty": "-",
+          "not_identified": "Tidak Dikenal Pasti",
+          "possible_owners": "Pemilik Berkemungkinan:",
+          "potential_date_of_birth": "Kemungkinan Tarikh Lahir:",
+          "title": "Ringkasan profil"
+        },
+        "sex_offenders": {
+          "alert": "Pemeriksaan latar belakang pesalah seks tersedia untuk rekod A.S. sahaja. Bahagian ini menyediakan maklumat tentang mana-mana rekod pesalah seks berdaftar, termasuk butiran kesalahan, status pendaftaran semasa dan lokasi yang berkaitan.",
+          "report": {
+            "address_information": {
+              "city": "Bandar",
+              "country": "Negara",
+              "county": "Daerah",
+              "latitude": "Latitud",
+              "length_of_residence": "Tempoh Kediaman",
+              "longitude": "Longitud",
+              "postal_code": "Poskod",
+              "state": "Negeri",
+              "street": "Jalan",
+              "title": "Lokasi"
+            },
+            "body_characteristics": {
+              "age": "Umur",
+              "ethnicity": "Etnik",
+              "eye_color": "Warna Mata",
+              "hair_color": "Warna Rambut",
+              "height": "Ketinggian",
+              "race": "Kaum",
+              "sex": "Jantina",
+              "title": "Ciri fizikal",
+              "weight": "Berat badan"
+            },
+            "crime_information": {
+              "conviction_date": "Tarikh Sabitan",
+              "crime": "Jenayah",
+              "jurisdiction": "Bidang kuasa",
+              "no_information_available": "Tiada maklumat tersedia",
+              "registration_date": "Tarikh Pendaftaran",
+              "risk_level": "Tahap Risiko",
+              "title": "Maklumat jenayah"
+            },
+            "distinctive_features": {
+              "back": "Belakang",
+              "head": "Kepala",
+              "left_arm": "Lengan Kiri",
+              "left_hand": "Tangan Kiri",
+              "left_leg": "Kaki Kiri",
+              "right_arm": "Lengan Kanan",
+              "right_hand": "Tangan Kanan",
+              "right_leg": "Kaki Kanan",
+              "title": "Tanda / Parut / Tatu",
+              "torso": "Badan"
+            },
+            "download_report_button": "Muat turun PDF",
+            "new_search": "Carian Baharu",
+            "others_information": {
+              "is_absconded": "Seorang Pelarian?",
+              "is_predator": "Seorang Pemangsa?",
+              "jurisdiction": "Bidang kuasa",
+              "link": "Pautan",
+              "original_report": "Sumber Asal",
+              "title": "Lain-lain",
+              "yes": "Ya"
+            },
+            "personal_information": {
+              "date_of_birth": "Tarikh Lahir",
+              "first_name": "Nama Pertama",
+              "first_name_nicknames": "Nama Panggilan Nama Pertama",
+              "last_name": "Nama Keluarga",
+              "middle_name": "Nama Tengah",
+              "name": "Nama",
+              "title": "Maklumat peribadi"
+            },
+            "photos": {
+              "title": "Foto"
+            },
+            "records_found_for": "Rekod ditemui untuk",
+            "title_profile": "Profil Pesalah Seks",
+            "values": {
+              "body_part": {
+                "back": "Belakang",
+                "head": "Kepala",
+                "left_arm": "Lengan Kiri",
+                "left_hand": "Tangan Kiri",
+                "left_leg": "Kaki Kiri",
+                "right_arm": "Lengan Kanan",
+                "right_hand": "Tangan Kanan",
+                "right_leg": "Kaki Kanan",
+                "torso": "Badan"
+              },
+              "ethnicity": {
+                "hispanic": "Hispanik",
+                "non_hispanic": "Bukan Hispanik",
+                "other": "Lain-lain"
+              },
+              "eye_color": {
+                "amber": "Ambar",
+                "blue": "Biru",
+                "brown": "Coklat",
+                "gray": "Kelabu",
+                "green": "Hijau",
+                "hazel": "Perang",
+                "other": "Lain-lain",
+                "red": "Merah",
+                "violet": "Ungu lembayung"
+              },
+              "hair_color": {
+                "auburn": "Coklat kemerah-merahan",
+                "bald": "Botak",
+                "black": "Hitam",
+                "blonde": "Perang muda",
+                "brown": "Coklat",
+                "chestnut": "Perang kemerahan",
+                "dyed": "Diwarnakan",
+                "gray": "Kelabu",
+                "other": "Lain-lain",
+                "red": "Merah",
+                "white": "Putih"
+              },
+              "race": {
+                "asian": "Orang Asia",
+                "black_or_african_american": "Orang Kulit Hitam atau Afrika Amerika",
+                "mixed": "Kacukan",
+                "native_american": "Orang Asli Amerika",
+                "other": "Lain-lain",
+                "pacific_islander": "Penduduk Pulau Pasifik",
+                "white": "Orang Putih"
+              },
+              "risk_level": {
+                "high": "Tinggi",
+                "low": "Rendah",
+                "medium": "Sederhana"
+              },
+              "sex": {
+                "female": "Perempuan",
+                "intersex": "Interseks",
+                "male": "Lelaki"
+              }
+            }
+          },
+          "title": "Pemeriksaan latar belakang pesalah seks"
+        },
+        "sex_offenders_background_check": {
+          "alt_icon": "Pesalah Seks",
+          "info": "Pemeriksaan latar belakang pesalah seks tersedia untuk rekod A.S. sahaja. Bahagian ini menyediakan maklumat tentang mana-mana rekod pesalah seks berdaftar, termasuk butiran kesalahan, status pendaftaran semasa dan lokasi yang berkaitan.",
+          "show_report": "Tunjukkan Laporan",
+          "title": "Pemeriksaan latar belakang pesalah seks",
+          "title_empty": "Tiada latar belakang pesalah seks ditemukan",
+          "unlock_report": "Buka Kunci Laporan"
+        },
+        "upsell": {
+          "data_breach_history": {
+            "cancel": "Batal",
+            "compromise_isa_contact_details": "Pendedahan butiran hubungan, termasuk nombor telefon, e-mel dan alamat fizikal",
+            "disclaimer_info": "Semua data diperoleh daripada pangkalan data yang komprehensif untuk lebih 14 bilion rekod daripada pelanggaran data yang dilaporkan secara terbuka. Kami mengenal pasti dan melaporkan maklumat yang terdedah tetapi tidak memberikan akses kepada data sensitif seperti kata laluan atau bukti kelayakan peribadi.",
+            "limited_offer": "Tawaran terhad",
+            "personal_identifiers": "Pengecam peribadi termasuk nama pengguna, nama penuh dan tarikh lahir",
+            "processing_payment": "Sedang Diproses",
+            "professional_information_and_technical_data": "Maklumat profesional dan data teknikal seperti alamat IP",
+            "purchase": "Beli",
+            "special_limited_time_offer": "Tawaran masa terhad khas ini tamat tempoh apabila anda meninggalkan halaman ini.",
+            "title": "Laporan Pelanggaran & Kebocoran Data",
+            "total_due_today": "Jumlah tertunggak:"
+          },
+          "payment_message": {
+            "add_payment_details": "Tambah butiran pembayaran",
+            "agree_description_upsell": "Dengan meneruskan, anda bersetuju dengan pembayaran sekali sahaja sebanyak {price} dan bersetuju dengan <terms>Terma Penggunaan</terms> dan <privacy>Dasar Privasi</privacy>. Caj akan dipaparkan sebagai “mobitrace.io” pada penyata bil anda.",
+            "close": "Tutup",
+            "payment_error": "Pembayaran anda tidak berjaya",
+            "payment_error_description": "Sila kemas kini butiran pembayaran anda",
+            "payment_retry_description": "Kami tidak dapat memproses kad anda. Sila cuba lagi.",
+            "payment_success": "Pembayaran anda telah berjaya",
+            "payment_success_description": "Terima kasih atas pembelian anda! Perkhidmatan sedia untuk digunakan.",
+            "skip": "Langkau",
+            "try_again": "Cuba Lagi",
+            "update_payment_method": "Kemas kini kaedah pembayaran"
+          },
+          "sex_offenders": {
+            "cancel": "Batal",
+            "comprehensive_data": "Akses kepada data pesalah yang komprehensif daripada sumber sumber rasmi",
+            "disclaimer_info": "Pemeriksaan latar belakang pesalah seks hanya di dalam AS sahaja. Jabatan Kehakiman melaporkan kira-kira 800,000 pesalah seks berdaftar di seluruh negara dengan beribu-ribu pendaftaran baharu setiap tahun. Sahkan orang yang tidak dikenali untuk ketenangan anda.",
+            "instant_nationwide_search": "Semakan segera seluruh negara merentas semua pendaftaran negeri dan persekutuan",
+            "limited_offer": "Tawaran terhad",
+            "processing_payment": "Sedang Diproses",
+            "purchase": "Beli",
+            "realtime_verification": "Pengesahan masa nyata terhadap data pendaftaran terkini",
+            "special_limited_time_offer": "Tawaran pengesahan keselamatan masa terhad. Perkhidmatan hanya mencari individu berdaftar di Amerika Syarikat.",
+            "title": "Semakan Pendaftaran Pesalah Seks",
+            "total_due_today": "Jumlah tertunggak:"
+          },
+          "sex_offenders_search": {
+            "cancel": "Batal",
+            "disclaimer_info": "Semakan latar belakang pesalah seksual adalah terhad kepada Amerika Syarikat sahaja. Jabatan Kehakiman AS melaporkan kira-kira 800,000 pesalah seksual berdaftar di seluruh negara dengan ribuan pendaftaran baharu setiap tahun. Sahkan individu yang tidak dikenali demi ketenangan fikiran anda.\n\nIni adalah pembelian sekali sahaja sebanyak {price}. Dengan menambah laporan ini, anda memberi kebenaran untuk satu caj ke kaedah pembayaran anda yang tersimpan. Pembelian ini memberikan akses kepada satu laporan dalam julat jualan tambahan ini.",
+            "instant_access": "Carian segera di seluruh negara merentas semua daftar negeri dan persekutuan",
+            "processing_payment": "Sedang Diproses",
+            "purchase": "Beli",
+            "secure_one_time_payment": "Pengesahan masa nyata terhadap data pendaftaran terkini",
+            "special_limited_time_offer": "Tawaran pengesahan keselamatan masa terhad. Perkhidmatan ini hanya mencari individu yang berdaftar di Amerika Syarikat.",
+            "title": "Semakan Pendaftaran Pesalah Seks",
+            "total_due_today": "Jumlah tertunggak:",
+            "verified_source_data": "Akses kepada data pesalah yang komprehensif daripada sumber rasmi"
+          },
+          "social_networks": {
+            "cancel": "Batal",
+            "disclaimer_info": "Carian ini hanya meliputi platform sosial utama dan maklumat akaun yang boleh dilihat secara umum. Liputan mungkin berbeza-beza bergantung pada ketersediaan platform dan profil.",
+            "limited_offer": "Tawaran terhad",
+            "matching_accounts": "Cari akaun yang sepadan dalam laporan berdasarkan data yang tersedia secara umum.",
+            "processing_payment": "Pemprosesan",
+            "purchase": "Pembelian",
+            "related_usernames_and_public_profile": "Kenal pasti nama pengguna yang berkaitan dan kehadiran profil awam",
+            "scan_10_major_social_platforms": "Imbas 10+ platform sosial utama untuk akaun berkaitan",
+            "special_limited_time_offer": "Tawaran istimewa masa terhad ini tamat tempoh apabila anda meninggalkan halaman ini",
+            "title": "Semakan Platform Sosial",
+            "total_due_today": "Jumlah tertunggak:"
+          },
+          "unlimited_pdf_downloads": {
+            "cancel": "Batal",
+            "disclaimer_info": "Ini adalah pembelian sekali sahaja. Dengan mengklik \"Dapatkan PDF tanpa had\" anda akan dikenakan caj {price}.",
+            "limited_offer": "Tawaran terhad",
+            "processing_payment": "Sedang Diproses",
+            "purchase": "Beli",
+            "special_limited_time_offer": "Diskaun tambahan telah digunakan hanya untuk anda!",
+            "title": "Muat Turun PDF tanpa had",
+            "total_due_today": "Jumlah tertunggak:",
+            "upsell_benefits_1": "Boleh diakses di luar talian",
+            "upsell_benefits_2": "Mudah untuk berkongsi dengan orang lain",
+            "upsell_benefits_3": "Boleh dicetak atas permintaan",
+            "upsell_benefits_4": "Jelas, diformat dengan cantik, dan mudah dibaca"
+          }
+        }
+      },
+      "search": {
+        "components": {
+          "loader": {
+            "step_1": {
+              "carrier": {
+                "loadedDefaultText": "Dikesan",
+                "text": "Pembekal"
+              },
+              "city": {
+                "loadedText": "Dijejak",
+                "text": "Bandar"
+              },
+              "connecting": "Memulakan carian telefon",
+              "country": {
+                "text": "Negara"
+              },
+              "location": {
+                "loadedText": "Dikesan",
+                "text": "Lokasi"
+              },
+              "searching": "Mencari hasil untuk",
+              "type": {
+                "loadedText": "Dikesan",
+                "text": "Jenis"
+              }
+            },
+            "step_2": {
+              "cta": "Dapatkan Lokasi",
+              "subtitle": "Carian anda telah selesai — anda sudah bersedia untuk mengakses lokasi sekarang.",
+              "title": "Lokasi ditemukan!"
+            }
+          },
+          "warning_dialog": {
+            "button_text": "Dedahkan Pemanggil",
+            "description": "Laporan Mobitrace anda sudah siap. Ketahui maklumat awam yang dikaitkan dengan nombor ini.",
+            "info_message": "Carian anda untuk {phoneNumber} adalah 100% selamat dan terjamin.",
+            "telephone": "(0-616) 32211",
+            "title": "AMARAN:"
+          }
+        }
+      },
+      "search_complete": {
+        "components": {
+          "age_verification_dialog": {
+            "button_text": "Ya, saya berumur 18 tahun ke atas",
+            "description": "Laporan ini mungkin mengandungi kandungan sensitif dan hanya untuk tontonan individu dewasa. Anda mesti berumur 18 tahun ke atas untuk meneruskan.",
+            "info_message": "Jika anda berumur di bawah 18 tahun, sila <bold>keluar sekarang.</bold>",
+            "title": "Pengesahan umur diperlukan"
+          },
+          "customer_opinions_carousel": {
+            "opinion_1": {
+              "description": "Saya perasan anak perempuan saya mula berkenalan dengan orang baharu dan saya ingin memastikan semuanya selamat. Mobitrace memberi saya ketenangan jiwa dengan menyemak secara pantas kenalan itu. Kadangkala carian terbalik mudah ialah penyelesaiannya.",
+              "rate": "4",
+              "timeAgo": "4 hari yang lalu",
+              "title": "Akhirnya, sedikit ketenangan fikiran",
+              "user": "Samantha Green"
+            },
+            "opinion_2": {
+              "description": "Alat ini sangat tepat dan boleh digunakan untuk kebanyakan nombor yang saya cari. Dalam beberapa kes, maklumat tidak dikemaskinikan sepenuhnya, tetapi secara keseluruhan, Mobitrace memberi saya maklumat yang saya perlukan. Boleh dipercayai dan mudah digunakan.",
+              "rate": "4.5",
+              "timeAgo": "1 minggu yang lalu",
+              "title": "Keputusan tepat yang boleh saya harapkan",
+              "user": "Daniel Brooks"
+            },
+            "opinion_3": {
+              "description": "Pantas, boleh dipercayai dan tepat! Mobitrace mengagumkan saya dengan kepantasan hasil yang diberikan. Saya sangat suka perkhidmatan ini.",
+              "rate": "5",
+              "timeAgo": "1 hari yang lalu",
+              "title": "Cepat, mudah dan tepat",
+              "user": "Olivia Carter"
+            },
+            "opinion_4": {
+              "description": "Mobitrace telah menjadi salah satu alat kegemaran saya untuk mengurus panggilan. Platform ini membantu saya mengetahui individu sebenar di sebalik nombor yang tidak dikenali, menjimatkan masa dan membolehkan saya mengawal individu yang boleh menghubungi saya.",
+              "rate": "5",
+              "timeAgo": "2 minggu yang lalu",
+              "title": "Memberi saya kawalan ke atas panggilan saya",
+              "user": "Matthew Lewis"
+            },
+            "opinion_5": {
+              "description": "Saya menerima panggilan daripada nombor yang tidak dikenali dan tidak pasti jika saya perlu berasa risau. Saya mencuba Mobitrace dan platform ini membantu saya mengenal pasti pemanggil dengan segera. Sekarang saya menggunakannya apabila terdapat sesuatu yang mencurigakan.",
+              "rate": "4.5",
+              "timeAgo": "2 hari lepas",
+              "title": "Sekarang saya sentiasa tahu siapa yang menelefon",
+              "user": "Sophia Turner"
+            },
+            "opinion_6": {
+              "description": "Saya selalu dapat panggilan spam tanpa henti dan ia membuatkan saya serabut. Dengan Mobitrace, saya akhirnya mengetahui individu di sebalik panggilan tersebut. Melihat profil dan sejarah pemanggil memberi saya kejelasan yang saya perlukan.",
+              "rate": "5",
+              "timeAgo": "1 hari yang lalu",
+              "title": "Tiada lagi sakit kepala panggilan spam",
+              "user": "Christopher Hall"
+            },
+            "opinion_7": {
+              "description": "Alat terbaik yang telah saya cuba setakat ini! Dengan Mobitrace, saya tidak perlu berasa tertekan tentang panggilan atau teks yang tidak diketahui lagi. Platform ini cepat, mudah dan memberi saya jawapan yang saya perlukan.",
+              "rate": "4",
+              "timeAgo": "3 hari yang lalu",
+              "title": "Alat terbaik untuk panggilan yang tidak diketahui",
+              "user": "Grace Mitchell"
+            },
+            "opinion_8": {
+              "description": "Mobitrace membantu saya mendedahkan individu yang menghubungi saya daripada nombor yang tidak dikenali. Platform ini juga menunjukkan nama yang berkaitan dan pautan keluarga. Maklumat tidaklah sempurna dalam setiap kes, tetapi secara keseluruhan Mobitrace memberi saya cerapan berharga yang tidak dapat saya temukan di tempat lain.",
+              "rate": "4.5",
+              "timeAgo": "2 hari yang lalu",
+              "title": "Maklumat terperinci yang mengejutkan",
+              "user": "Ethan Parker"
+            },
+            "rate": "4.5",
+            "reviews": "Berdasarkan <bold>456 ulasan</bold>",
+            "title": "Cemerlang"
+          },
+          "customer_say_about": {
+            "subtitle": "Kami melakukan yang terbaik untuk memberi anda pengalaman terbaik",
+            "title": "Apa kata pelanggan tentang kami"
+          },
+          "owner_information": {
+            "collecting_data_address": "Alamat",
+            "collecting_data_email": "E-mel atau Nombor Telefon",
+            "collecting_data_job": "Maklumat Pekerjaan",
+            "collecting_data_online": "Nama Pengguna Dalam Talian",
+            "collecting_data_past": "Hubungan Lampau",
+            "collecting_data_profiles": "Profil yang Dilupakan",
+            "collecting_data_title": "Mengumpul Data...",
+            "progress_bar_description": "Sejarah carian anda adalah selamat dan peribadi. Pemilik {phoneNumber} TIDAK akan dimaklumkan tentang carian anda.",
+            "progress_bar_percentage": "{percentage}%",
+            "subtitle": "Harap bersabar sementara kami menyemak berbilion rekod.",
+            "title": "Mendapatkan Maklumat Pemilik <bold></bold>"
+          }
+        }
+      },
+      "sign_up": {
+        "card_description": "Mobitrace ialah alat digital canggih yang mencari berbilion rekod telefon dalam talian. Walaupun kebanyakan nombor yang tidak dikenali datang daripada pemanggil spam atau pemasar, laporan kami mungkin mengandungi maklumat yang mengejutkan.",
+        "card_title": "Notis Penting",
+        "email_placeholder": "Alamat e-mel anda",
+        "email_title": "Alamat e-mel",
+        "errors": {
+          "email_exists": "Alamat e-mel anda sudah didaftarkan. Sila cuba daftar masuk atau gunakan e-mel lain.",
+          "invalid_email": "Sila masukkan e-mel yang sah."
+        },
+        "form_title": "Masukkan e-mel anda untuk mendapatkan laporan anda",
+        "latest_report": "Laporan terkini setakat 3 Mac 2025",
+        "submit_button": "Teruskan",
+        "title": "Hasil sudah sedia!"
+      },
+      "thank_you": {
+        "account_link": "Akses akaun anda",
+        "click_below_to_account_your_link": "Klik di bawah untuk mengakses akaun anda!",
+        "description": "Kami telah menghantar butiran pesanan dan kelayakan akaun anda kepada {email}. Anda boleh mengakses akaun anda sekarang",
+        "did_you_like_your_shopping_experience": "Adakah anda menyukai pengalaman membeli anda?",
+        "more_details_feedback": "Kami mengalu-alukan maklum balas terperinci anda: <email>support@mobitrace.io</email>",
+        "no": "Tidak",
+        "thank_you_for_your_feedback": "Terima kasih atas maklum balas anda!",
+        "title": "Pembayaran anda telah berjaya!",
+        "we_ll_work_on_making_it_better": "Kami akan berusaha untuk memperbaiki prestasi kami!",
+        "yes": "Ya"
+      },
+      "upsell": {
+        "already_purchased": "Sudah dibeli",
+        "data_breach": {
+          "disclaimer": "Semua data diperoleh daripada pangkalan data komprehensif yang mengandungi lebih 14 bilion rekod daripada pelanggaran data yang dilaporkan secara terbuka. Kami mengenal pasti dan melaporkan maklumat yang terdedah tetapi tidak memberikan akses kepada data sensitif seperti kata laluan atau maklumat peribadi yang sulit.",
+          "purchase": "Tambah Laporan Pelanggaran Data",
+          "special_limited_time_offer": "Tawaran masa terhad khas ini tamat tempoh apabila anda meninggalkan halaman ini.",
+          "title": "Laporan Pelanggaran & Kebocoran Data",
+          "upsell_benefits_1": "Pengecam peribadi termasuk nama pengguna, nama penuh dan tarikh lahir",
+          "upsell_benefits_2": "Pendedahan butiran hubungan, termasuk nombor telefon, e-mel dan alamat fizikal",
+          "upsell_benefits_3": "Maklumat profesional dan data teknikal seperti alamat IP"
+        },
+        "limited_offer": "Tawaran terhad",
+        "pdf": {
+          "disclaimer": "Ini adalah pembelian sekali sahaja. Dengan mengklik \"Dapatkan PDF tanpa had\" anda akan dikenakan caj {price}.",
+          "purchase": "Dapatkan PDF Tanpa Had",
+          "special_limited_time_offer": "Diskaun tambahan telah digunakan hanya untuk anda!",
+          "title": "Muat Turun PDF Tanpa Had",
+          "upsell_benefits_1": "Boleh diakses di luar talian",
+          "upsell_benefits_2": "Mudah untuk berkongsi dengan orang lain",
+          "upsell_benefits_3": "Boleh dicetak atas permintaan",
+          "upsell_benefits_4": "Jelas, diformat dengan cantik, dan mudah dibaca"
+        },
+        "processing": "Sedang Diproses",
+        "sex_offenders": {
+          "disclaimer": "Pemeriksaan latar belakang pesalah seks hanya tersedia di AS sahaja. Jabatan Kehakiman melaporkan kira-kira 800,000 pesalah seks berdaftar di seluruh negara dengan beribu-ribu pendaftaran baharu setiap tahun. Sahkan individu yang tidak dikenali untuk ketenangan fikiran anda.",
+          "purchase": "Tambah Semakan Pendaftaran Pesalah Seks",
+          "purchase_terms": "Ini adalah pembelian sekali sahaja sebanyak {price}. Dengan menambah laporan ini, anda memberi kebenaran untuk caj tunggal ke kaedah pembayaran anda. Pembelian ini memberikan akses kepada satu laporan dalam julat jualan tambahan ini.",
+          "special_limited_time_offer": "Tawaran pengesahan keselamatan masa terhad. Perkhidmatan ini hanya mencari individu yang berdaftar di Amerika Syarikat.",
+          "title": "Semakan Pendaftaran Pesalah Seks",
+          "upsell_benefits_1": "Carian segera di seluruh negara merentas semua daftar negeri dan persekutuan",
+          "upsell_benefits_2": "Akses kepada data pesalah yang komprehensif daripada sumber rasmi",
+          "upsell_benefits_3": "Pengesahan masa nyata terhadap data pendaftaran terkini"
+        },
+        "skip": "Langkau",
+        "total_due_today": "Jumlah tertunggak:"
+      }
+    },
+    "settings": {
+      "billing": {
+        "activate_dialog": {
+          "action_form": "Bayar dengan kad",
+          "title": "Tambah Kaedah Pembayaran"
+        },
+        "active_date": "Aktif sehingga: {date}",
+        "active_state": "Aktif",
+        "cancel_dialog": {
+          "cancel_cta": "Batalkan Langganan",
+          "canceling_cta": "Membatalkan...",
+          "close_cta": "Tutup",
+          "description": "Dengan membatalkan langganan, anda akan kehilangan akses kepada semua ciri dan sokongan. Anda boleh mengaktifkan semula langganan anda pada bila-bila masa.",
+          "description_canceled": "Langganan anda telah dibatalkan.<br> Anda tidak akan dicaj mulai sekarang.",
+          "done_cta": "Selesai",
+          "title": "Pengesahan"
+        },
+        "cancel_subscription": "Batalkan Langganan",
+        "canceled_cta": "Aktifkan Semula Langganan",
+        "canceled_date": "Dibatalkan pada: {date}",
+        "canceled_state": "Dibatalkan",
+        "expired_cta": "Aktifkan Langganan",
+        "expired_date": "Tamat tempoh pada: {date}",
+        "expired_description": "Keahlian anda telah luput. Sila aktifkan semula untuk meneruskan.",
+        "expired_state": "Luput",
+        "month": "bulan",
+        "next_billing_date": "Pengebilan seterusnya: {date}",
+        "privacy_policy": "Dasar Privasi",
+        "started_on_date": "Bermula pada: {date}",
+        "subscription": "Langganan",
+        "terms_and_conditions": "Terma dan Syarat",
+        "title": "Pengebilan",
+        "total": "Jumlah:"
+      },
+      "get_help": {
+        "title": "Dapatkan Bantuan"
+      },
+      "my_account": {
+        "change_password": {
+          "confirm_password": "Sahkan Kata Laluan",
+          "current_password": "Kata Laluan Semasa",
+          "new_password": "Kata Laluan Baharu",
+          "title": "Tukar Kata Laluan"
+        },
+        "delete_cta": "Padam Akaun",
+        "delete_dialog": {
+          "close_cta": "Tutup",
+          "delete_cta": "Padam akaun",
+          "deleting_cta": "Memadam...",
+          "description": "Adakah anda pasti anda mahu memadamkan akaun anda? Sila ambil perhatian bahawa selepas mengesahkan, anda akan kehilangan akses kepada halaman keahlian serta-merta.",
+          "description_canceled": "Akaun anda telah berjaya dipadamkan.",
+          "done_cta": "Selesai",
+          "title": "Pengesahan"
+        },
+        "errors": {
+          "confirm_password_required": "Sahkan kata laluan diperlukan",
+          "current_password_invalid": "Kata laluan semasa tidak sah",
+          "current_password_required": "Kata laluan semasa diperlukan",
+          "email_max_length": "E-mel mestilah kurang daripada {maxLength} aksara.",
+          "email_required": "E-mel diperlukan",
+          "email_taken": "E-mel telah pun diambil",
+          "invalid_email": "Sila masukkan e-mel yang sah.",
+          "name_invalid_characters": "Nama tidak boleh mengandungi nombor.",
+          "name_invalid_special_characters": "Nama tidak boleh mengandungi aksara khas.",
+          "name_max_length": "Nama mestilah kurang daripada {maxLength} aksara.",
+          "name_required": "Nama diperlukan",
+          "new_password_must_differ_from_current_password": "Kata laluan mesti berbeza daripada kata laluan semasa",
+          "new_password_required": "Kata laluan baharu diperlukan",
+          "password_max_length": "Kata laluan mestilah kurang daripada {maxLength} aksara.",
+          "password_min_length": "Kata laluan mestilah sekurang-kurangnya 6 aksara.",
+          "passwords_must_match": "Kata laluan mesti sepadan"
+        },
+        "notifications": {
+          "notify_status_changes": "Maklumkan saya tentang perubahan status",
+          "notify_user_located": "Maklumkan saya setelah pengguna dijejak",
+          "title": "Pemberitahuan"
+        },
+        "profile": {
+          "email": "Alamat e-mel",
+          "name": "Nama pertama dan nama keluarga",
+          "title": "Butiran Profil"
+        },
+        "submit_cta": "Simpan Perubahan",
+        "success_title": "Akaun anda telah dikemas kini",
+        "title": "Umum"
+      },
+      "title": "Tetapan"
+    },
+    "sex_offenders_search": {
+      "form": {
+        "city_placeholder": "Bandar",
+        "errors": {
+          "first_name_required": "Nama pertama diperlukan",
+          "last_name_required": "Nama keluarga diperlukan"
+        },
+        "first_name_placeholder": "Nama Pertama",
+        "last_name_placeholder": "Nama Keluarga",
+        "state_placeholder": "Semua negeri",
+        "submit_button": "Semak Sekarang",
+        "title": "Jalankan Semakan Pendaftaran Pesalah Seks",
+        "zip_placeholder": "Poskod"
+      },
+      "loading": {
+        "subtitle": "Sila tunggu sementara kami mengambil data daripada pejabat pendaftaran negara.",
+        "title": "Menyemak Daftar Pesalah Seks..."
+      },
+      "results": {
+        "back": "Belakang",
+        "continue": "Teruskan",
+        "empty_title": "Tiada pesalah seks ditemui",
+        "results_found": "{count} hasil ditemui",
+        "results_found_subtitle": "Pilih yang paling sesuai untuk meneruskan.",
+        "search_again": "Cari Semula"
+      },
+      "title": "Pesalah Seks"
+    },
+    "sign_in": {
+      "description": "Masukkan e-mel anda untuk mendaftar masuk ke akaun anda",
+      "sign_up_link": "Daftar",
+      "sign_up_prompt": "Tiada akaun?",
+      "title": "Daftar Masuk"
+    },
+    "sign_up": {
+      "components": {
+        "sign_up_form": {
+          "continue_with_email": "Teruskan dengan E-mel",
+          "continue_with_facebook": "Teruskan dengan Facebook",
+          "continue_with_google": "Teruskan dengan Google",
+          "email_label": "Alamat e-mel",
+          "email_placeholder": "Alamat e-mel anda",
+          "errors": {
+            "email_exists": "Alamat e-mel anda sudah didaftarkan. Sila cuba daftar masuk atau gunakan e-mel lain.",
+            "invalid_email": "Sila masukkan e-mel yang sah."
+          },
+          "or": "atau"
+        }
+      },
+      "title": "Daftar untuk mendapatkan lokasi tepat <brandColor>{phoneNumber}</brandColor>"
+    },
+    "status": {
+      "description": "Semak kemajuan di bawah",
+      "detail_description": "Lokasi ditemui",
+      "error_fetching_address": "Ralat mencapai alamat",
+      "link_name": "Pautan untuk {name}",
+      "load_more_button": "Muat Lagi",
+      "loading_address": "Memuatkan alamat...",
+      "located_status": "Dijejak",
+      "no_locations_available": "Tiada Permintaan Lokasi",
+      "pending_description": "Menunggu penerima untuk berkongsi geolokasi mereka",
+      "pending_status": "Menunggu",
+      "ready_status": "Laporan dibuat",
+      "rejected_description": "Perbaiki mesej anda untuk menggalakkan penerima berkongsi lokasi mereka",
+      "rejected_status": "Ditolak",
+      "reverse_lookup_description": "Ringkasan data awam ditemukan untuk nombor telefon",
+      "reverse_lookup_report_for": "Laporan carian terbalik untuk {phone}",
+      "title": "Hab Aktiviti"
+    },
+    "success": {
+      "account_link": "Akses akaun anda",
+      "click_below_to_account_your_link": "Klik di bawah untuk mengakses akaun anda!",
+      "description": "Kami telah menghantar butiran pesanan dan kelayakan akaun anda kepada {email}. Anda boleh mengakses akaun anda sekarang",
+      "did_you_like_your_shopping_experience": "Adakah anda menyukai pengalaman membeli anda?",
+      "more_details_feedback": "Kami mengalu-alukan maklum balas terperinci anda: <email>support@mobitrace.io</email>",
+      "no": "Tidak",
+      "thank_you_for_your_feedback": "Terima kasih atas maklum balas anda!",
+      "title": "Pembayaran anda telah berjaya!",
+      "we_ll_work_on_making_it_better": "Kami akan berusaha untuk memperbaiki prestasi kami!",
+      "yes": "Ya"
+    },
+    "upsell": {
+      "cancel_button": "Tidak, Terima kasih",
+      "description": "Nikmati sokongan peribadi 24/7 dan bantuan teknikal yang cemerlang, hanya dalam satu klik.",
+      "footer_info": "Sila ambil perhatian bahawa bergantung pada rantau anda, {percentage}% Cukai Jualan mungkin ditambah kepada jumlah pembelian anda",
+      "order_details": "Butiran pesanan:",
+      "products": {
+        "add_button": "Tambah",
+        "add_order_button": "Tambah pada harga {price}",
+        "added_state": "Ditambah",
+        "details_button": "Butiran",
+        "remove_button": "Buang",
+        "scan_pro": {
+          "description": "Terokai setiap aspek Mobitrace dengan bimbingan pasukan sokongan teknikal pakar kami. Lihat semua fungsi ciri-ciri ini dan ketahui cara untuk memanfaatkannya.",
+          "dialog": "<p>Maksimumkan pengalaman anda dengan Mobitrace melalui sokongan peribadi daripada pasukan pakar kami dalam setiap langkah. Terokai setiap ciri dan dapatkan nilai terbaik daripada perkhidmatan kami.</p><ul><li><strong>Penjejakan Lokasi Lancar.</strong>Jejak lokasi seseorang dengan mudah melalui satu pautan ringkas. Pasukan kami akan membimbing anda sepanjang proses ini, memastikan setiap butiran teknikal dikendalikan dengan teliti.</li><li><strong>Sokongan Pemprofilan Menyeluruh.</strong>Bekerjasama dengan kami untuk mendapatkan semua maklumat yang anda perlukan. Daripada kenalan kepada profil media sosial, kami akan bantu anda mendapatkan gambaran penuh tentang individu yang anda cari.</li><li><strong>Cari Telefon yang Hilang atau Dicuri.</strong>Jika telefon anda hilang, kami sedia membantu. Alat canggih kami boleh menjejak peranti anda dengan pantas dan memaparkan lokasinya dengan tepat di atas peta.</li><li><strong>Lindungi Keselamatan Dalam Talian Anda.</strong>Kami mengimbas pelbagai pangkalan data untuk mengesan nombor telefon atau e-mel anda yang telah diceroboh oleh pelanggaran pihak ketiga, membantu anda kekal selangkah di hadapan ancaman siber.</li></ul>",
+          "title": "ScanPRO"
+        },
+        "support_hotline": {
+          "description": "Tidak perlu tunggu untuk mendapatkan bantuan! Dengan Keutamaan Sokongan Teknikal, anda boleh melangkau giliran dan menerima bantuan perseorangan yang cepat daripada pakar teknikal kami.",
+          "title": "Keutamaan Sokongan 24/7"
+        }
+      },
+      "submit_button": "Tambah ke Pesanan",
+      "subtotal": "Subjumlah",
+      "taxes": "Cukai Jualan ({percentage}%)",
+      "title": "Maksimumkan Pengalaman Mobitrace Anda!",
+      "total": "Jumlah"
+    }
+  },
+  "routes": {
+    "forgot_password": "forgot-password",
+    "loader": "loader",
+    "reset_password": "reset-password",
+    "sign_in": "sign-in",
+    "sign_up": "sign-up"
+  }
+}

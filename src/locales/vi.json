@@ -1,0 +1,1882 @@
+{
+  "common": {
+    "back": "Quay lại",
+    "close": "Đóng",
+    "close_menu": "Đóng Menu",
+    "copied_to_clipboard": "Sao chép vào bảng nhớ tạm",
+    "email_label": "Địa chỉ email",
+    "errors": {
+      "email_exists": "Email này đã được người dùng khác sử dụng",
+      "rate_limit_error": "Bạn đã đạt giới hạn hằng ngày. Vui lòng thử lại vào ngày mai.",
+      "rate_limit_error_title": "Đã đạt đến giới hạn",
+      "server_error": "Lỗi máy chủ",
+      "server_error_description": "Đã xảy ra lỗi khi xử lý yêu cầu của bạn. Vui lòng thử lại."
+    },
+    "login": "Đăng nhập",
+    "logout": "Đăng xuất",
+    "open_menu": "Mở Menu",
+    "settings": "Cài đặt",
+    "subscription": "Đăng ký"
+  },
+  "components": {
+    "country_selector": {
+      "no_results": "Không tìm thấy mã quốc gia.",
+      "placeholder": "Chọn mã quốc gia...",
+      "search_placeholder": "Tìm theo quốc gia hoặc mã..."
+    },
+    "forms": {
+      "change_email": {
+        "confirmation_email_sent_description": "Chúng tôi đã gửi email xác nhận đến địa chỉ mới. Vui lòng xác nhận thay đổi.",
+        "confirmation_email_sent_title": "Đã gửi email xác nhận",
+        "current_email_label": "Email hiện tại",
+        "current_password_label": "Vì lý do bảo mật, hãy nhập mật khẩu hiện tại của bạn",
+        "current_password_placeholder": "Nhập mật khẩu hiện tại của bạn",
+        "errors": {
+          "current_password_required": "Bắt buộc phải nhập mật khẩu hiện tại.",
+          "invalid_email": "Nhập email hợp lệ."
+        },
+        "new_email_label": "Email mới",
+        "new_email_placeholder": "Nhập email mới",
+        "save_button": "Cập nhật email"
+      },
+      "change_password": {
+        "confirm_password_label": "Xác nhận mật khẩu mới",
+        "confirm_password_placeholder": "Xác nhận mật khẩu mới của bạn",
+        "current_password_label": "Mật khẩu hiện tại",
+        "current_password_placeholder": "Nhập mật khẩu hiện tại của bạn",
+        "errors": {
+          "confirm_password_min_length": "Xác nhận mật khẩu mới với ít nhất 6 ký tự",
+          "current_password_required": "Mật khẩu hiện tại là bắt buộc",
+          "new_password_min_length": "Mật khẩu mới phải có ít nhất 6 ký tự",
+          "new_password_required": "Phải có mật khẩu mới",
+          "passwords_must_match": "Mật khẩu phải trùng khớp"
+        },
+        "new_password_label": "Mật khẩu mới",
+        "new_password_placeholder": "Nhập mật khẩu mới của bạn",
+        "save_button": "Lưu thay đổi"
+      },
+      "delete_account": {
+        "cancel_button": "Hủy",
+        "confirm_button": "Có, hãy xóa tài khoản của tôi",
+        "confirmation_message": "Tài khoản của bạn đã được xóa thành công.",
+        "delete_account_button": "Xóa tài khoản",
+        "description": "Không thể hoàn tác hành động này. Hãy chắc chắn về quyết định của bạn.",
+        "dialog_description": "Không thể hoàn tác hành động này. Hành động này sẽ xóa vĩnh viễn tài khoản và dữ liệu của bạn khỏi máy chủ của chúng tôi.",
+        "dialog_title": "Bạn có chắc chắn không?",
+        "title": "Xóa tài khoản"
+      },
+      "edit_company": {
+        "add_social_network_button": "Thêm mạng xã hội",
+        "address_label": "Địa chỉ",
+        "address_placeholder": "Nhập địa chỉ công ty",
+        "company_name_label": "Tên công ty",
+        "company_name_placeholder": "Nhập tên công ty",
+        "errors": {
+          "company_name_required": "Bắt buộc phải nhập tên công ty",
+          "url_invalid": "Vui lòng nhập một URL hợp lệ"
+        },
+        "hide_address_map": "Ẩn bản đồ",
+        "horizontal_logo_alt_text": "Logo ngang của công ty",
+        "horizontal_logo_description": "Khuyến nghị: JPEG, PNG. Tối đa 5MB. 600x200px",
+        "horizontal_logo_label": "Logo ngang",
+        "opening_hours_label": "Giờ hoạt động",
+        "opening_hours_placeholder": "Ví dụ: Thứ 2-Thứ 6: 9:00-17:00, Thứ 7: 10:00-14:00, Chủ nhật: Đóng cửa",
+        "profile_url_placeholder": "URL hồ sơ",
+        "save_button": "Lưu thay đổi",
+        "show_address_map": "Hiện bản đồ",
+        "social_networks_label": "Mạng xã hội",
+        "squared_logo_alt_text": "Logo vuông của công ty",
+        "squared_logo_label": "Logo vuông",
+        "website_label": "Trang web",
+        "website_placeholder": "https://www.example.com"
+      },
+      "edit_profile": {
+        "description": "Cập nhật thông tin cá nhân",
+        "errors": {
+          "first_name_required": "Bắt buộc phải nhập tên.",
+          "invalid_phone": "Số điện thoại không hợp lệ.",
+          "last_name_required": "Bắt buộc phải nhập họ."
+        },
+        "first_name_label": "Tên",
+        "first_name_placeholder": "Nhập tên của bạn",
+        "last_name_label": "Họ",
+        "last_name_placeholder": "Nhập họ của bạn",
+        "phone_label": "Số điện thoại",
+        "phone_placeholder": "Nhập số điện thoại của bạn",
+        "privacy_label": "Quyền riêng tư",
+        "profile_picture_alt": "Ảnh hồ sơ",
+        "profile_picture_label": "Ảnh hồ sơ",
+        "public_email_label": "Hiển thị công khai email của tôi trên hồ sơ",
+        "public_phone_label": "Hiển thị công khai số điện thoại của tôi trên hồ sơ",
+        "save_button": "Lưu thay đổi",
+        "title": "Sửa hồ sơ",
+        "upload_description": "Khuyến nghị: JPEG, PNG. Tối đa 5MB. 400x400 pixel",
+        "upload_picture": "Tải lên ảnh mới",
+        "whatsapp_label": "Tôi có tài khoản WhatsApp với số này"
+      },
+      "forgot_password": {
+        "cancel_button": "Hủy",
+        "email_label": "Email",
+        "email_placeholder": "Địa chỉ email của bạn",
+        "errors": {
+          "invalid_email": "Vui lòng nhập email hợp lệ."
+        },
+        "submit_button": "Gửi mật khẩu",
+        "subtitle": "Nhập email của bạn và chúng tôi sẽ gửi mật khẩu cho bạn",
+        "success": {
+          "done": "Xong",
+          "line_1": "Chúng tôi đã gửi mật khẩu của bạn đến",
+          "line_2": "Vui lòng kiểm tra email của bạn để đăng nhập.",
+          "title": "Đã gửi mật khẩu"
+        },
+        "title": "Quên mật khẩu?"
+      },
+      "reset_password": {
+        "confirm_password_label": "Xác nhận mật khẩu mới",
+        "confirm_password_placeholder": "Xác nhận mật khẩu mới của bạn",
+        "errors": {
+          "password_min_length": "Mật khẩu phải có ít nhất 6 ký tự.",
+          "passwords_do_not_match": "Mật khẩu không trùng khớp."
+        },
+        "new_password_label": "Mật khẩu mới",
+        "new_password_placeholder": "Nhập mật khẩu mới của bạn",
+        "submit_button": "Đặt lại mật khẩu"
+      },
+      "sign_in": {
+        "email_label": "Địa chỉ email",
+        "email_placeholder": "Địa chỉ email của bạn",
+        "errors": {
+          "account_not_found": "Không tìm thấy tài khoản Mobitrace của bạn.",
+          "invalid_credentials": "Email và mật khẩu bạn nhập không khớp với hồ sơ của chúng tôi. Vui lòng kiểm tra thông tin đăng nhập của bạn và thử lại.",
+          "invalid_email": "Vui lòng nhập một email hợp lệ.",
+          "password_min_length": "Mật khẩu phải có ít nhất 6 ký tự."
+        },
+        "forgot_password": "Quên mật khẩu?",
+        "or": "hoặc",
+        "password_label": "Mật khẩu",
+        "password_placeholder": "Mật khẩu của bạn",
+        "submit_button": "Đăng nhập",
+        "title": "Đăng nhập vào\ntài khoản của bạn"
+      },
+      "stripe_form": {
+        "card_name_placeholder": "Tên trên thẻ",
+        "credit_card_label": "Thẻ tín dụng",
+        "credit_card_placeholder": "1234 1234 1234 1234",
+        "cvc_placeholder": "CVC",
+        "errors": {
+          "apple_pay_not_available": "Không hỗ trợ Apple Pay",
+          "apple_pay_not_available_description": "Bạn chưa bật phương thức thanh toán này cho thiết bị hoặc trình duyệt này. Vui lòng chọn một phương thức thanh toán khác.",
+          "card_name_required": "Vui lòng nhập tên trên thẻ.",
+          "card_number_required": "Vui lòng nhập số thẻ.",
+          "cvc_required": "Vui lòng nhập CVC.",
+          "expiration_date_required": "Vui lòng nhập ngày hết hạn.",
+          "google_pay_not_available": "Không hỗ trợ Google Pay",
+          "google_pay_not_available_description": "Bạn chưa bật phương thức thanh toán này cho thiết bị hoặc trình duyệt này. Vui lòng chọn một phương thức thanh toán khác.",
+          "name_invalid_characters": "Tên không được chứa số.",
+          "name_invalid_special_characters": "Tên không được chứa ký tự đặc biệt.",
+          "stripe_generic_error": "Chúng tôi không thể xác thực phương thức thanh toán của bạn. Vui lòng chọn phương thức thanh toán khác và thử lại.",
+          "stripe_generic_error_title": "Lỗi thanh toán",
+          "zip_code_invalid_format": "Vui lòng nhập mã ZIP hợp lệ."
+        },
+        "expiration_date_placeholder": "MM/YY",
+        "zip_code_placeholder": "Mã ZIP (Tùy chọn)"
+      }
+    },
+    "image_upload_input": {
+      "upload_button_text": "Tải lên ảnh mới",
+      "upload_description": "Khuyến nghị: JPEG, PNG. Tối đa 5MB. 400x400 pixel",
+      "upload_label": "Ảnh hồ sơ"
+    },
+    "phone_input": {
+      "errors": {
+        "invalid_phone": "Vui lòng nhập một số điện thoại hợp lệ."
+      },
+      "label": "Nhập số bạn muốn tìm kiếm",
+      "no_results": "Không tìm thấy mã quốc gia.",
+      "phone_placeholder": "123456789",
+      "search_placeholder": "Tìm theo quốc gia hoặc mã...",
+      "submit": "Định vị"
+    },
+    "settings_navigator": {
+      "change_email": {
+        "description": "Cập nhật địa chỉ email",
+        "label": "Đổi email"
+      },
+      "change_password": {
+        "description": "Cập nhật mật khẩu tài khoản",
+        "label": "Đổi mật khẩu"
+      },
+      "company_profile": {
+        "description": "Cập nhật thông tin công ty của bạn",
+        "label": "Hồ sơ công ty"
+      },
+      "delete_account": {
+        "description": "Xóa tài khoản và tất cả dữ liệu được liên kết",
+        "label": "Xóa tài khoản"
+      },
+      "edit_profile": {
+        "description": "Cập nhật thông tin cá nhân",
+        "label": "Sửa hồ sơ"
+      },
+      "no_access": "Bạn không có quyền vào phần này. Nội dụng này dành riêng cho người dùng chuyên nghiệp.",
+      "notifications": {
+        "description": "Quản lý tùy chọn thông báo email của bạn",
+        "label": "Thông báo"
+      },
+      "subscription": {
+        "description": "Quản lý gói đăng ký của bạn",
+        "label": "Đăng ký"
+      },
+      "title": "Cài đặt"
+    }
+  },
+  "consent": {
+    "accept": "Đồng ý",
+    "decline": "Từ chối",
+    "decline_accept": "Trở về trang chủ",
+    "decline_description": "Để sử dụng dịch vụ nhắn tin của chúng tôi - đặc biệt là đối với số điện thoại tại Hoa Kỳ và Canada - chúng tôi cần sự cho phép của bạn. Nếu không có sự cho phép, tính năng này sẽ không sử dụng được. Vui lòng quay lại bất cứ lúc nào để tiếp tục.",
+    "decline_title": "Ôi không! Chúng tôi cần sự đồng ý của bạn",
+    "description": "Để định vị điện thoại của bạn, chúng tôi cần gửi cho bạn tin nhắn SMS. Vui lòng xác nhận bạn đồng ý nhận tin nhắn.",
+    "title": "Yêu cầu xác nhận"
+  },
+  "contest": {
+    "agree": "Đồng ý",
+    "decline": "Từ chối",
+    "description": "Tôi xác nhận số điện thoại đã nhập là của tôi và tôi đồng ý nhận tin nhắn.",
+    "title": "Nhận tin nhắn?"
+  },
+  "footer": {
+    "brand": "Mobitrace.io",
+    "description": "Định vị mọi điện thoại di động — nhanh chóng và dễ dàng với Mobitrace.",
+    "links": {
+      "about_us": "Giới thiệu về chúng tôi",
+      "cancel_subscription": "Hủy đăng ký",
+      "contact": "Liên lạc",
+      "contacts": "Liên lạc",
+      "cookie_policy": "Chính sách cookie",
+      "faqs": "Câu hỏi thường gặp",
+      "home": "Trang chủ",
+      "location_number": "Định vị Vị trí bằng Số",
+      "login": "Đăng nhập",
+      "pricing": "Giá",
+      "privacy policy": "Chính sách quyền riêng tư",
+      "reverse_lookup": "Tra cứu ngược",
+      "terms_and_conditions": "Điều khoản và điều kiện"
+    },
+    "rights": "Bảo lưu mọi quyền."
+  },
+  "header": {
+    "about": "Giới thiệu",
+    "home": "Trang chủ",
+    "open_menu": "Mở Menu",
+    "sign_in": "Đăng nhập",
+    "sign_up": "Đăng ký"
+  },
+  "language": {
+    "english": "English",
+    "spanish": "Español"
+  },
+  "navigation": {
+    "about_us": "Giới thiệu về chúng tôi",
+    "contact": "Liên lạc",
+    "dashboard": "Bảng điều khiển",
+    "faqs": "Câu hỏi thường gặp",
+    "home": "Trang chủ",
+    "mobile_dialog_description": "Hộp thoại này chứa liên kết điều hướng chính",
+    "mobile_dialog_title": "Điều hướng chính",
+    "pricing": "Giá",
+    "settings": "Cài đặt"
+  },
+  "pages": {
+    "about": {
+      "cards": {
+        "card_1": {
+          "description": "<p>Tại Mobitrace, chúng tôi giúp việc theo dõi vị trí trở nên đơn giản, đáng tin cậy và an toàn. Sứ mệnh của chúng tôi là giúp bạn giữ liên lạc với những người thân yêu hoặc nhân sự quan trọng, sử dụng công nghệ tiên tiến để theo dõi vị trí điện thoại theo thời gian thực.</p>",
+          "title": "Sứ mệnh của chúng tôi"
+        },
+        "card_2": {
+          "description": "<p>Mobitrace kết hợp theo dõi điện thoại với các dịch vụ thông tin công khai chi tiết: </p> <ul> <li>Theo dõi điện thoại: Gửi tin nhắn văn bản tùy chỉnh có liên kết, cho phép người nhận chia sẻ vị trí của họ. Việc theo dõi chỉ được thực hiện khi có sự đồng ý rõ ràng từ người nhận.</li> <li>Tìm kiếm dữ liệu sâu: Truy cập thông tin liên lạc, lịch sử vị trí và nhiều thông tin khác.</li> <li>Phạm vi toàn cầu: Hoạt động trên mọi điện thoại, mạng và quốc gia—xác định vị trí bất kỳ số điện thoại nào, ở bất kỳ đâu.</li> </ul>",
+          "title": "Dịch vụ chúng tôi cung cấp"
+        },
+        "card_3": {
+          "description": "<ul><li>Đơn giản: Tạo URL, gửi đi và theo dõi sau khi được chấp thuận.</li><li>An toàn và Bảo mật: Mọi hoạt động theo dõi đều được thực hiện trên cơ sở đồng thuận và an toàn.</li><li>Độ chính xác theo thời gian thực: Nhận dữ liệu vị trí chính xác, luôn được cập nhật mới nhất.</li></ul>",
+          "title": "Vì sao nên chọn Mobitrace"
+        },
+        "card_4": {
+          "description": "<p>Cho dù bạn là cha mẹ có mối lo hay bạn bè chu đáo, Mobitrace luôn ở đây để giúp bạn kết nối với những người quan trọng nhất. Cảm ơn bạn đã chọn Mobitrace—nơi khả năng theo dõi và thông tin kết hợp với nhau để giúp bạn được cập nhật và an toàn.</p>",
+          "title": "Tham gia cùng chúng tôi"
+        }
+      },
+      "description": "Chào mừng đến với Mobitrace, dịch vụ đáng tin cậy giúp bạn dễ dàng định vị điện thoại di động và truy cập thông tin công khai chi tiết. Chúng tôi làm việc với các nhà cung cấp dữ liệu toàn cầu hàng đầu từ Hoa Kỳ, Vương quốc Anh, châu Âu, v.v., nhằm đảm bảo tra cứu số điện thoại và địa chỉ chính xác để giúp bạn luôn được cập nhật và kết nối.",
+      "title": "Giới thiệu về chúng tôi"
+    },
+    "cancellation": {
+      "form": {
+        "email_label": "Địa chỉ email của bạn",
+        "error_not_found_description": "Vui lòng kiểm tra và thử lại",
+        "error_not_found_title": "Ôi không! Không có tài khoản khớp với email.",
+        "error_not_subscribed_title": "Bạn chưa đăng ký!",
+        "errors": {
+          "invalid_email": "Vui lòng nhập một email hợp lệ."
+        },
+        "submit": "Hủy đăng ký",
+        "success_description": "Bạn sẽ không bị tính phí kể từ bây giờ.",
+        "success_title": "Bạn đã hủy đăng ký!"
+      },
+      "info_email": "Nếu bạn không nhớ đã dùng email nào để đăng ký, hãy kiểm tra hộp thư đến để tìm email từ \"mobitrace.io\". Nếu không, hãy liên lạc với bộ phận hỗ trợ khách hàng thân thiện của chúng tôi tại <link>đây</link>.",
+      "info_user": "Bạn cũng có thể hủy đăng ký bằng cách đăng nhập vào tài khoản của mình, chuyển đến tab \"Thành viên\" và nhấp vào \"Hủy đăng ký\".",
+      "subtitle": "Dễ dàng hủy đăng ký bằng cách nhập email được sử dụng để tạo tài khoản của bạn.",
+      "title": "Hủy đăng ký"
+    },
+    "checkout": {
+      "action_form": "Lấy vị trí",
+      "agree_description": "Bằng cách tiếp tục, bạn đồng ý trả mức phí {trialPrice} ngay bây giờ và chấp nhận <terms>Điều khoản sử dụng</terms> và <privacy>Chính sách quyền riêng tư</privacy> của chúng tôi. Khoản thanh toán của bạn sẽ xuất hiện dưới tên \"mobitrace.io\" trên bảng sao kê thẻ tín dụng của bạn. Sau 7 ngày, bạn sẽ bị tính phí {subscriptionPrice} mỗi 4 tuần cho đến khi gói đăng ký của bạn kết thúc. Bạn có thể hủy bất cứ lúc nào. Nếu có bất kỳ thắc mắc nào, bạn có thể liên hệ với chúng tôi qua support@mobitrace.io hoặc qua số điện thoại +1 360 525 2573",
+      "agree_description_24": "Bằng cách tiến hành thanh toán, bạn đồng ý bắt đầu dùng thử 24 giờ với giá {trialPrice} ngay hôm nay. Trừ khi bạn hủy trước khi thời gian dùng thử kết thúc, gói đăng ký của bạn sẽ tự động gia hạn với giá {subscriptionPrice} mỗi 4 tuần. Bạn có thể hủy bất cứ lúc nào. Khi tiếp tục, bạn cũng chấp nhận <terms>Điều khoản sử dụng</terms> và xác nhận rằng bạn đã đọc <privacy>Chính sách quyền riêng tư</privacy> của chúng tôi.",
+      "agree_description_reactivate": "Bằng cách tiếp tục, bạn đồng ý kích hoạt lại gói đăng ký và trả phí {subscriptionPrice} ngay bây giờ. Khoản thanh toán của bạn sẽ xuất hiện dưới tên \"mobitrace.io\" trên bảng sao kê thẻ tín dụng của bạn. Bạn sẽ bị tính phí {subscriptionPrice} mỗi 4 tuần cho đến khi gói đăng ký của bạn kết thúc. Bạn có thể hủy bất cứ lúc nào. Nếu có bất kỳ thắc mắc nào, bạn có thể liên hệ với chúng tôi qua support@mobitrace.io hoặc qua số điện thoại +1 360 525 2573",
+      "agree_description_subscription": "Bằng cách tiếp tục, bạn đồng ý bị tính phí {subscriptionPrice}. Hãy nhấp vào đây và chấp nhận <terms>Điều khoản sử dụng</terms> và <privacy>Chính sách bảo mật</privacy> của chúng tôi. Khoản thanh toán của bạn sẽ hiển thị là \"mobitrace.io\" trên sao kê thẻ tín dụng của bạn. Bạn sẽ bị tính phí {subscriptionPrice}. Cứ 4 tuần một lần cho đến khi gói đăng ký của bạn kết thúc. Bạn có thể hủy bất cứ lúc nào. Nếu có bất kỳ thắc mắc nào, bạn có thể liên hệ với chúng tôi qua email support@mobitrace.io hoặc qua điện thoại +1 360 525 2573.",
+      "back_description": "Nếu bạn không hoàn toàn hài lòng trong thời gian dùng thử 7 ngày, chỉ cần cho chúng tôi biết và chúng tôi sẽ xử lý hoàn tiền đầy đủ.",
+      "back_description_24": "Nếu bạn chưa hoàn toàn hài lòng trong thời gian dùng thử 24 giờ, chỉ cần cho chúng tôi biết và chúng tôi sẽ xử lý hoàn tiền đầy đủ.",
+      "back_title": "Hoàn tiền",
+      "cancel_description": "Bạn có thể hủy bất kỳ lúc nào từ bảng điều khiển của mình hoặc bằng cách liên hệ với chúng tôi qua <email>support@mobitrace.io</email>.",
+      "cancel_title": "Hủy bất cứ lúc nào",
+      "loading": "Đang xử lý thanh toán của bạn...",
+      "title": "Mở khóa vị trí của",
+      "total": "Tổng số tiền phải trả:",
+      "trust_100": "Thanh toán an toàn 100%",
+      "trust_cancel": "Hủy bất cứ lúc nào"
+    },
+    "contact": {
+      "contact_information": {
+        "company_description": "<strong>Hoa Kỳ</strong><br>800 N King Street Suite 304-1119<br>Wilmington, DE 19801 Hoa Kỳ</br></br><strong>Các Tiểu vương quốc Ả Rập Thống nhất</strong></br>Tòa nhà A1, Dubai Digital Park</br>Khu công nghệ Dubai Silicon Oasis, Dubai</br>IFZA Business Park, DDP</br>Cơ sở số 5342-001</br>Các Tiểu vương quốc Ả Rập Thống nhất</br></br><strong>Ai-len</strong></br>40 Mespil Road</br>Dublin 4, Ai-len",
+        "company_title": "Địa chỉ",
+        "email_description": "support@mobitrace.io",
+        "email_title": "Email",
+        "phone_description": "+1-360-525-2573",
+        "phone_title": "Điện thoại",
+        "title": "Thông tin liên lạc"
+      },
+      "contact_us": "Liên hệ với chúng tôi",
+      "form": {
+        "billing_question": "Câu hỏi về thanh toán",
+        "email_label": "Email",
+        "errors": {
+          "invalid_email": "Vui lòng nhập email hợp lệ.",
+          "invalid_name_format": "Vui lòng Nhập tên hợp lệ.",
+          "invalid_surname_format": "Vui lòng nhập họ hợp lệ.",
+          "max_length": "Bạn đã vượt quá giới hạn ký tự.",
+          "message_max_length": "Tin nhắn không được vượt quá {maxLength} ký tự.",
+          "message_required": "Vui lòng nhập tin nhắn của bạn.",
+          "name_required": "Vui lòng nhập tên của bạn.",
+          "surname_required": "Vui lòng nhập họ của bạn."
+        },
+        "message_label": "Tin nhắn",
+        "name_label": "Tên",
+        "other": "Khác",
+        "subject_label": "Chủ thể",
+        "subject_placeholder": "Chọn",
+        "submit": "Gửi tin nhắn",
+        "submitted": "Tin nhắn của bạn đã được gửi thành công! Đội ngũ của chúng tôi sẽ liên lạc lại với bạn trong vòng 2 giờ tới.",
+        "submitted_title": "Tin nhắn đã gửi",
+        "suggested_improvement": "Đề xuất cải thiện",
+        "surname_label": "Họ",
+        "technical_issue": "Vấn đề kỹ thuật",
+        "title": "Liên lạc"
+      },
+      "subtitle": "Bạn có câu hỏi, ý kiến phản hồi hoặc cần hỗ trợ?<br/> Chúng tôi rất muốn lắng nghe bạn chia sẻ!",
+      "title": "Chúng tôi sẵn sàng giúp đỡ"
+    },
+    "error": {
+      "body": "Vui lòng thử lại sau hoặc liên lạc với bộ phận hỗ trợ nếu sự cố vẫn tiếp diễn.",
+      "cta": "Về Trang chủ",
+      "title": "Ôi không! Đã xảy ra lỗi"
+    },
+    "find_by_link": {
+      "find_by_link": "Tìm theo liên kết",
+      "form": {
+        "errors": {
+          "max_length": "Giới hạn tối đa: 255 ký tự.",
+          "min_length": "Liên kết phải dài tối thiểu {n} ký tự",
+          "required": "Phải có liên kết"
+        },
+        "linkLabel": "Đặt tên cho liên kết của bạn",
+        "linkPlaceholder": "ví dụ: Liên kết cho WhatsApp",
+        "submitButton": "Tạo liên kết của tôi"
+      },
+      "steps": {
+        "step1": "Cá nhân hóa liên kết theo dõi",
+        "step2": "Chia sẻ qua bất kỳ ứng dụng nhắn tin nào",
+        "step3": "Nhận thông báo về trạng thái",
+        "step4": "Xem ngay vị trí của họ khi họ chạm vào liên kết"
+      },
+      "title": "Tạo liên kết tùy chỉnh của bạn"
+    },
+    "find_by_link_success": {
+      "body": "Đảm bảo chia sẻ liên kết này với người mà bạn muốn theo dõi.",
+      "generateNewCTA": "Tạo liên kết mới",
+      "statusCTA": "Kiểm tra trạng thái",
+      "subtitle": "Tìm liên kết của bạn bên dưới",
+      "title": "Thành công"
+    },
+    "find_by_number_send_message": {
+      "CTA": "Gửi",
+      "errors": {
+        "empty": "Không được để trống trường này",
+        "max_length": "Văn bản quá dài. Giới hạn tối đa {n} ký tự."
+      },
+      "extra_info": {
+        "bullet_1": "Tên người gửi sẽ xuất hiện dưới dạng \"Mobitrace\".",
+        "bullet_2": "Mỗi tin nhắn sẽ bao gồm một liên kết duy nhất ở cuối mà người nhận cần nhấp vào."
+      },
+      "find_by_number": "Tìm số của tôi",
+      "label": "Tin nhắn",
+      "placeholder": "Nhập tin nhắn của bạn vào đây.",
+      "title": "Đang tìm vị trí của <brandColor>{phoneNumber}</brandColor>"
+    },
+    "find_by_number_send_message_success": {
+      "cta": "Kiểm tra trạng thái",
+      "description": "Tin nhắn của bạn đã được gửi đến <strong>{phoneNumber}</strong>. Chúng tôi sẽ thông báo cho bạn ngay khi định vị được điện thoại.",
+      "title": "Thành công!"
+    },
+    "forgot_password": {
+      "back_to_login": "Đăng nhập",
+      "description": "Nhập email của bạn và chúng tôi sẽ gửi hướng dẫn để đặt lại mật khẩu",
+      "remember_password": "Bạn còn nhớ mật khẩu không?",
+      "title": "Đặt lại mật khẩu"
+    },
+    "index": {
+      "faqs": {
+        "question_1": {
+          "answer": "Bạn chỉ cần nhập số điện thoại và sau khi người nhận đồng ý chia sẻ vị trí, bạn sẽ nhận được vị trí chính xác của họ.",
+          "question": "Tôi định vị ai đó bằng số điện thoại như thế nào?"
+        },
+        "question_2": {
+          "answer": "Có, việc xác định vị trí địa lý là hợp pháp, nhưng cần có sự đồng ý rõ ràng của người nhận để chia sẻ vị trí của họ, tuân thủ luật về quyền riêng tư.",
+          "question": "Xác định vị trí địa lý bên thứ ba có hợp pháp không?"
+        },
+        "question_3": {
+          "answer": "Không, không cần cài đặt ứng dụng hoặc phần mềm. Mọi thứ đều được xử lý từ xa thông qua dịch vụ của chúng tôi.",
+          "question": "Tôi có cần cài đặt ứng dụng để theo dõi số điện thoại không?"
+        },
+        "question_4": {
+          "answer": "Dịch vụ của chúng tôi hỗ trợ mọi loại điện thoại, từ điện thoại thông minh đến các mẫu điện thoại cũ, miễn là điện thoại có thể nhận được tin nhắn văn bản.",
+          "question": "Những loại điện thoại nào được hỗ trợ?"
+        },
+        "question_5": {
+          "answer": "Có, dịch vụ của chúng tôi hoạt động trên toàn cầu, bất kể vị trí hoặc mạng.",
+          "question": "Tôi có thể tìm được số điện thoại ở mọi nơi trên thế giới không?"
+        },
+        "question_6": {
+          "answer": "Dịch vụ của chúng tôi cung cấp chi tiết vị trí chính xác, bao gồm địa chỉ chính xác, bằng cách sử dụng công nghệ GPS tiên tiến.",
+          "question": "Xác định vị trí địa lý chính xác ra sao?"
+        },
+        "question_7": {
+          "answer": "Chỉ cần nhập số điện thoại bạn muốn điều tra và để Mobitrace lo phần còn lại. Hệ thống của chúng tôi sẽ quét nhiều cơ sở dữ liệu để khám phá mọi thông tin có sẵn được liên kết với số đó. Mặc dù nhiều tra cứu trả lại kết quả tức thì nhưng quá trình tìm kiếm chi tiết hơn có thể lâu hơn một chút. Sau khi bạn sử dụng công cụ tra cứu ngược điện thoại của Mobitrace, bạn sẽ nhanh chóng nhận thấy sức mạnh và sự hiệu quả của công cụ.",
+          "question": "Tra cứu ngược số điện thoại hoạt động như thế nào?"
+        },
+        "question_8": {
+          "answer": "Công nghệ tra cứu ngược điện thoại của Mobitrace cực kỳ tiên tiến. Khi bạn chạy một tác vụ tìm kiếm, công cụ sẽ khám phá nhiều loại nguồn — bao gồm hồ sơ công khai, thư mục trực tuyến và thậm chí là điểm dữ liệu ít hiển thị. Nếu tìm thấy thông tin liên quan, công cụ sẽ hiển thị thông tin cho bạn. Vui lòng lưu ý rằng không phải tìm kiếm nào cũng đều cho kết quả ngay lập tức vì tính sẵn có phụ thuộc vào dữ liệu có thể truy cập được của từng số.",
+          "question": "Mobitrace có cung cấp thông tin về mọi số không?"
+        },
+        "question_9": {
+          "answer": "Có chứ! Hãy tưởng tượng bạn nhận được cuộc gọi từ ai đó nhận là nhân viên ngân hàng, yêu cầu bạn cung cấp mã PIN để dừng hoạt động rút tiền khả nghi, hay bạn nhận được tin nhắn nói rằng bạn đã thắng giải thưởng và phải nhấp vào liên kết để nhận giải. Cả hai tình huống đều có thể dẫn đến tổn thất tài chính và thông tin cá nhân bị đánh cắp. Mobitrace giúp bạn xác minh người thực sự đứng sau số lạ. Thao tác tra cứu ngược nhanh có thể cảnh báo bạn về hành vi lừa đảo tiềm ẩn và bảo vệ dữ liệu cũng như tài chính của bạn.",
+          "question": "Mobitrace có thể giúp tôi tránh cuộc gọi và tin nhắn làm phiền không?"
+        },
+        "title": "Câu hỏi thường gặp"
+      },
+      "hero": {
+        "100": "100%",
+        "card_address": "29 Willow Street, Hackney Wick, London E9 5EN, United Kingdom",
+        "card_date": "27/09/2024   18:46",
+        "card_phone": "+44 633 123 456",
+        "card_title": "Phát hiện vị trí!",
+        "confidential": "bảo mật",
+        "iphone_alt": "điện thoại thông minh hiển thị bản đồ London với điểm đánh dấu vị trí",
+        "secure": "An toàn",
+        "ssl_encription": "Mã hóa SSL",
+        "subtitle": "Với Mobitrace.io, bạn có thể yêu cầu vị trí điện thoại theo thời gian thực qua SMS hoặc liên kết. Việc theo dõi chỉ được thực hiện khi có sự đồng ý rõ ràng từ người nhận.",
+        "title": "Định vị\nđiện thoại di động"
+      },
+      "how_does_it_work": {
+        "step_1": {
+          "description": "Chỉ cần nhập số điện thoại bạn muốn tìm và cá nhân hóa tin nhắn SMS sẽ được gửi đến người nhận.",
+          "title": "Nhập một số điện thoại"
+        },
+        "step_2": {
+          "description": "Mobitrace sẽ gửi tin nhắn SMS tùy chỉnh cho bạn, yêu cầu người nhận chia sẻ vị trí của họ.",
+          "title": "Gửi yêu cầu vị trí"
+        },
+        "step_3": {
+          "description": "Ngay sau khi người nhận đồng ý, bạn sẽ nhận được thông báo về vị trí chính xác của họ. Bạn có thể xem vị trí trực tiếp trên bản đồ trong bảng điều khiển của mình.",
+          "title": "Nhận Vị trí trên bản đồ"
+        },
+        "title": "Cách thức hoạt động?"
+      },
+      "instant_locator": {
+        "subtitle": "Mobitrace là giải pháp tối ưu để phát hiện vị trí hoặc hồ sơ của\nbất kỳ ai - chỉ bằng cách sử dụng số điện thoại của họ",
+        "title": "Định vị số <underlined>tức thì!</underlined>"
+      },
+      "meta_description": "Định vị mọi điện thoại di động — nhanh chóng và dễ dàng với Mobitrace.",
+      "meta_title": "Mobitrace.io - Tìm vị trí của mọi điện thoại, mọi nơi",
+      "og_description": "Định vị mọi điện thoại di động — nhanh chóng và dễ dàng với Mobitrace.",
+      "og_image_alt": "Mobitrace.io - Tìm vị trí của mọi điện thoại, mọi nơi",
+      "og_title": "Mobitrace.io - Tìm vị trí của mọi điện thoại, mọi nơi",
+      "site_name": "Mobitrace",
+      "welcome_title": "Chào mừng bạn đến với Mobitrace.io",
+      "why_choose": {
+        "reasons": {
+          "reason_1": {
+            "description": "Quyền riêng tư của bạn là ưu tiên hàng đầu của chúng tôi. Hãy yên tâm vì thông tin cá nhân và hoạt động tìm kiếm của bạn luôn được bảo mật và an toàn.",
+            "title": "Hoàn toàn riêng tư, bảo đảm"
+          },
+          "reason_2": {
+            "description": "Không cần ứng dụng, không cần phần mềm, không rắc rối. Chỉ cần nhập số điện thoại và Mobitrace sẽ hoạt động ngay lập tức.",
+            "title": "Không cần cài đặt"
+          },
+          "reason_3": {
+            "description": "Từ iPhone và Android mới nhất đến điện thoại nắp gập cũ—nếu điện thoại có thể nhận được tin nhắn, Mobitrace có thể định vị được. Chúng tôi làm việc với tất cả các loại điện thoại và nhà mạng.",
+            "title": "Hỗ trợ mọi điện thoại và nhà mạng"
+          },
+          "reason_4": {
+            "description": "Mobitrace không chỉ cung cấp tọa độ; trang này còn cung cấp địa chỉ chính xác. Tận dụng sức mạnh của công nghệ GPS tiên tiến để có độ chính xác vô song.",
+            "title": "Xác định chính xác"
+          },
+          "reason_5": {
+            "description": "Dù bạn hoặc điện thoại mục tiêu ở đâu trên thế giới, Mobitrace đều hoạt động trơn tru trên toàn cầu.",
+            "title": "Tìm kiếm toàn cầu"
+          }
+        },
+        "subtitle": "Chỉ cần một lần nhấp chuột và không cần nỗ lực để tìm vị trí của bất kỳ ai trên toàn thế giới",
+        "title": "Vì sao nên chọn Mobitrace"
+      }
+    },
+    "legal": {
+      "cookie_policy": {
+        "content": "",
+        "title": "Chính sách Cookie"
+      },
+      "refund_policy": {
+        "content": "",
+        "title": "Chính sách hoàn tiền"
+      }
+    },
+    "loader": {
+      "step_1": {
+        "carrier": {
+          "loadedDefaultText": "Đã phát hiện",
+          "text": "Nhà mạng"
+        },
+        "city": {
+          "loadedText": "Đã định vị",
+          "text": "Thành phố"
+        },
+        "connecting": "Đang kết nối với vệ tinh",
+        "country": {
+          "text": "Quốc gia"
+        },
+        "database": {
+          "loadedText": "Đã truy cập",
+          "text": "Cơ sở dữ liệu"
+        },
+        "location": {
+          "loadedText": "Đã phát hiện",
+          "text": "Vị trí"
+        },
+        "searching": "Kết quả tìm kiếm cho"
+      },
+      "step_2": {
+        "cta": "Lấy vị trí",
+        "subtitle": "Tìm kiếm của bạn đã hoàn tất — bạn đã sẵn sàng truy cập vị trí ngay bây giờ.",
+        "title": "Phát hiện vị trí!"
+      }
+    },
+    "loader_complete": {
+      "title": "Đăng ký để biết vị trí chính xác của <brandColor>{phoneNumber}</brandColor>"
+    },
+    "locate": {
+      "error": "Không thể truy xuất địa chỉ.",
+      "link_expired": "Liên kết đã hết hạn",
+      "link_expired_explain": "Liên kết này đã được truy cập và không còn khả dụng nữa.",
+      "loading": "Đang tải...",
+      "not_supported": "Trình duyệt của bạn không hỗ trợ vị trí địa lý.",
+      "rejected": "Chia sẻ vị trí đã bị từ chối.",
+      "thank_you": "Cảm ơn bạn!"
+    },
+    "memberArea": {
+      "navigation": {
+        "contact_us": "Liên hệ với chúng tôi",
+        "find_by_link": "Tìm theo liên kết",
+        "find_by_number": "Tìm số của tôi",
+        "find_by_phone_lookup": "Tra cứu điện thoại",
+        "my_activity": "Hoạt động của tôi",
+        "notifications": "Thông báo",
+        "phone_lookup": "Tra cứu số điện thoại",
+        "settings": "Cài đặt",
+        "sex_offenders_search": "Tội phạm tình dục",
+        "status": "Trạng thái",
+        "tools_library": "Thư viện công cụ"
+      }
+    },
+    "not_found": {
+      "body": "Đã xảy ra lỗi, vui lòng thử lại.",
+      "cta": "Về Trang chủ",
+      "title": "Không tìm thấy trang"
+    },
+    "notifications": {
+      "empty": {
+        "text": "Hiện tại bạn không có thông báo nào.",
+        "title": "Ở đây yên tĩnh quá"
+      },
+      "link_accessed": "Đã truy cập <strong>{notificationName}</strong>.",
+      "link_located": "Vị trí hiện đã có sẵn.",
+      "link_rejected": "Chia sẻ vị trí đã bị từ chối.",
+      "load_more": "Tải thêm",
+      "phone_located": "Đã lấy thành công <strong>vị trí của {phone}</strong>.",
+      "phone_rejected": "<strong>Vị trí của {phone}</strong> bị từ chối.",
+      "title": "Thông báo"
+    },
+    "onboarding": {
+      "navigation": {
+        "step_1": "Bước 1",
+        "step_2": "Bước 2",
+        "step_3": "Bước 3"
+      }
+    },
+    "onboarding_step1": {
+      "body": "Để định vị số điện thoại, Mobitrace sẽ gửi một tin nhắn ẩn danh với liên kết cục bộ hóa. Chỉ cần gửi tin nhắn và hệ thống của chúng tôi sẽ thực hiện công việc.",
+      "cta": "Tiếp tục",
+      "title": "Gửi Liên kết theo dõi"
+    },
+    "onboarding_step2": {
+      "body": "Khi người nhận nhấp vào liên kết, hãy đi đến Lịch sử vị trí để theo dõi chuyển động của họ trên bản đồ theo thời gian thực.",
+      "cta": "Tiếp tục",
+      "title": "Giám sát theo thời gian thực"
+    },
+    "onboarding_step3": {
+      "body": "Trong khi chờ người nhận mở tin nhắn, hãy tận dụng các tính năng mạnh mẽ khác của Mobitrace để nâng cao trải nghiệm theo dõi của bạn.",
+      "cta": "Bắt đầu ngay",
+      "title": "Khám phá tính năng khác"
+    },
+    "pricing": {
+      "cards": {
+        "subscription": {
+          "badge": "Đăng ký",
+          "cta": "Đăng ký ngay",
+          "description": "Khi thời gian dùng thử 7 ngày kết thúc, bạn sẽ bị tính phí {price} mỗi 4 tuần. Hủy bất cứ lúc nào.",
+          "duration": "Cứ 4 tuần một lần",
+          "features": {
+            "feature_1": "Hỗ trợ tất cả thiết bị di động",
+            "feature_2": "Yêu cầu theo dõi vị trí không giới hạn",
+            "feature_3": "Các tính năng cao cấp như tin nhắn tùy chỉnh và vị trí chính xác",
+            "feature_4": "Hỗ trợ 24/7 không phụ phí"
+          },
+          "new_features": {
+            "feature_1": "Hỗ trợ tất cả thiết bị di động",
+            "feature_2": "Yêu cầu theo dõi vị trí không giới hạn",
+            "feature_3": "Tải xuống báo cáo PDF chuyên nghiệp không có phí bổ sung",
+            "feature_4": "Báo cáo tra cứu ngược điện thoại không giới hạn với chi tiết toàn diện",
+            "feature_5": "Hỗ trợ 24/7 không phụ phí"
+          }
+        },
+        "subscription_24": {
+          "badge": "Gói đăng ký",
+          "cta": "Đăng ký ngay",
+          "description": "Sau khi kết thúc 24 giờ dùng thử, bạn sẽ bị tính phí {price} mỗi 4 tuần. Hủy bất cứ lúc nào.",
+          "duration": "Cứ 4 tuần một lần",
+          "features": {
+            "feature_1": "Hỗ trợ trên tất cả thiết bị di động",
+            "feature_2": "Yêu cầu theo dõi vị trí không giới hạn",
+            "feature_3": "Tải xuống báo cáo PDF chuyên nghiệp mà không mất thêm phí",
+            "feature_4": "Báo cáo tra cứu ngược điện thoại không giới hạn với chi tiết toàn diện",
+            "feature_5": "Hỗ trợ 24/7 không phụ phí"
+          },
+          "new_features": {
+            "feature_1": "Hỗ trợ trên tất cả thiết bị di động",
+            "feature_2": "Yêu cầu theo dõi vị trí không giới hạn",
+            "feature_3": "Tải xuống báo cáo PDF chuyên nghiệp mà không mất thêm phí",
+            "feature_4": "Báo cáo tra cứu ngược điện thoại không giới hạn với chi tiết toàn diện",
+            "feature_5": "Hỗ trợ 24/7 không phụ phí"
+          }
+        },
+        "title": "Giá",
+        "trial": {
+          "badge": "Thời gian dùng thử",
+          "cta": "Bắt đầu dùng thử",
+          "description": "Tận hưởng quyền truy cập không giới hạn vào tất cả các tính năng, không rủi ro. Khoản thanh toán ban đầu của bạn cung cấp toàn quyền truy cập trong 7 ngày, sau đó bạn sẽ bị tính phí {price} mỗi 4 tuần. Hủy bất cứ lúc nào.",
+          "duration": "Dùng thử 7 ngày",
+          "features": {
+            "feature_1": "Hỗ trợ tất cả thiết bị di động",
+            "feature_2": "Truy cập đầy đủ vào tất cả các tính năng trong 7 ngày",
+            "feature_3": "Không cần cam kết lâu dài để dùng thử"
+          },
+          "new_features": {
+            "feature_1": "Hỗ trợ tất cả thiết bị di động",
+            "feature_2": "Truy cập đầy đủ vào tất cả các tính năng trong 7 ngày",
+            "feature_3": "Truy cập vào báo cáo chi tiết tra cứu ngược điện thoại",
+            "feature_4": "Không cần cam kết lâu dài để dùng thử",
+            "feature_5": "Khả năng tải xuống báo cáo dưới dạng PDF"
+          }
+        },
+        "trial_24": {
+          "badge": "Thời gian dùng thử",
+          "cta": "Bắt đầu dùng thử",
+          "description": "Tận hưởng quyền truy cập không giới hạn vào tất cả các tính năng, không rủi ro. Khoản thanh toán ban đầu của bạn cung cấp toàn quyền truy cập trong 24 giờ, sau đó bạn sẽ bị tính phí {price} mỗi 4 tuần. Hủy bất cứ lúc nào.",
+          "duration": "Dùng thử 24 giờ",
+          "features": {
+            "feature_1": "Hỗ trợ trên tất cả thiết bị di động",
+            "feature_2": "Truy cập đầy đủ vào tất cả các tính năng trong 24 giờ",
+            "feature_3": "Không cần cam kết lâu dài để dùng thử",
+            "feature_4": "Khả năng tải xuống báo cáo dưới dạng PDF"
+          },
+          "new_features": {
+            "feature_1": "Hỗ trợ trên tất cả thiết bị di động",
+            "feature_2": "Truy cập đầy đủ vào tất cả các tính năng trong 24 giờ",
+            "feature_3": "Truy cập vào báo cáo tra cứu ngược điện thoại chi tiết",
+            "feature_4": "Không cần cam kết lâu dài để dùng thử",
+            "feature_5": "Khả năng tải xuống báo cáo dưới dạng PDF"
+          }
+        }
+      },
+      "special_offer": "Ưu đãi đặc biệt",
+      "subtitle": "Mobitrace cung cấp dịch vụ của mình thông qua gói đăng ký hằng tháng dễ quản lý.",
+      "title": "Dùng thử các tính năng của Mobitrace với giá <mark>chỉ {price}</mark> trong 7 ngày!",
+      "title_24": "Dùng thử Mobitrace với giá <mark>chỉ {price}</mark> trong 24 giờ!"
+    },
+    "reset_password": {
+      "back_to_login": "Đăng nhập",
+      "description": "Nhập mật khẩu mới để đặt lại tài khoản của bạn",
+      "remember_password": "Bạn còn nhớ mật khẩu không?",
+      "title": "Đặt lại mật khẩu"
+    },
+    "reverse_lookup": {
+      "checkout": {
+        "action_form": "Tải báo cáo",
+        "back_description": "Nếu bạn không hoàn toàn hài lòng trong vòng 7 ngày dùng thử, chỉ cần nói với chúng tôi và chúng tôi rất vui lòng hoàn lại đầy đủ tiền cho bạn.",
+        "back_description_24": "Nếu bạn chưa hoàn toàn hài lòng trong thời gian dùng thử 24 giờ, chỉ cần cho chúng tôi biết và chúng tôi sẽ xử lý hoàn tiền đầy đủ.",
+        "back_title": "Hoàn tiền",
+        "cancel_description": "Bạn có thể hủy bất kỳ lúc nào từ bảng điều khiển hoặc bằng cách liên lạc với chúng tôi qua <email>support@mobitrace.io</email>.",
+        "cancel_title": "Hủy bất cứ lúc nào",
+        "title": "Mở khóa báo cáo của"
+      },
+      "components": {
+        "always_know_who_called": {
+          "step_1": {
+            "description": "Xác định mọi tên pháp lý hoặc công ty được liên kết với số.",
+            "title": "Họ tên"
+          },
+          "step_2": {
+            "description": "Tìm hiểu về địa chỉ có thể được kết nối với số, cả trước đây và hiện tại.",
+            "title": "Địa chỉ nhà"
+          },
+          "step_3": {
+            "description": "Kết nối lại với thành viên gia đình ở xa hoặc người thân đã lâu không liên lạc.",
+            "title": "Thành viên gia đình"
+          },
+          "step_4": {
+            "description": "Định vị hồ sơ mạng xã hội trên tất cả các nền tảng chính.",
+            "title": "Hồ sơ mạng xã hội"
+          },
+          "step_5": {
+            "description": "Xem mọi địa chỉ email công khai được liên kết.",
+            "title": "Địa chỉ email"
+          },
+          "step_6": {
+            "description": "Kiểm tra lịch sử vị trí có sẵn công khai.",
+            "title": "Lịch sử vị trí"
+          },
+          "step_7": {
+            "description": "Thu thập thông tin từ các nguồn khác nhau khắp internet.",
+            "title": "Hoạt động trên mạng"
+          },
+          "subtitle": "Khi nhập số vào công cụ tra cứu ngược điện thoại của Mobitrace, bạn sẽ khám phá thông tin có sẵn công khai được liên kết với số đó.",
+          "title": "Luôn biết ai là người gọi với Mobitrace"
+        },
+        "as_seen_on": {
+          "title": "Như trên"
+        },
+        "customer_carousel": {
+          "subtitle": "Chúng tôi nỗ lực cung cấp cho bạn trải nghiệm tốt nhất từng có",
+          "title": "Khách hàng nói gì <br class='lg:hidden'/> về chúng tôi"
+        },
+        "customer_opinions": {
+          "title": "Mọi người ở khắp nơi đang khám phá những điều họ chưa biết"
+        },
+        "faqs": {
+          "question_1": {
+            "answer": "Bạn chỉ cần nhập số điện thoại và sau khi người nhận đồng ý chia sẻ vị trí, bạn sẽ nhận được vị trí chính xác của họ.",
+            "question": "Tôi theo dõi vị trí của ai đó bằng số điện thoại như thế nào?"
+          },
+          "question_2": {
+            "answer": "Có, việc xác định vị trí địa lý là hợp pháp, nhưng cần có sự đồng ý rõ ràng của người nhận để chia sẻ vị trí của họ, tuân thủ luật về quyền riêng tư.",
+            "question": "Định vị địa lý bên thứ ba có hợp pháp không?"
+          },
+          "question_3": {
+            "answer": "Không, không cần cài đặt ứng dụng hoặc phần mềm. Mọi thứ đều được xử lý từ xa thông qua dịch vụ của chúng tôi.",
+            "question": "Tôi có cần cài đặt ứng dụng để theo dõi số điện thoại không?"
+          },
+          "question_4": {
+            "answer": "Dịch vụ của chúng tôi hỗ trợ tất cả các loại điện thoại, từ điện thoại thông minh đến các mẫu điện thoại cũ, miễn là điện thoại có thể nhận được tin nhắn văn bản.",
+            "question": "Những loại điện thoại nào được hỗ trợ?"
+          },
+          "question_5": {
+            "answer": "Có, dịch vụ của chúng tôi hoạt động toàn cầu, bất kể vị trí hoặc mạng.",
+            "question": "Tôi có thể theo dõi số điện thoại bất cứ đâu trên thế giới không?"
+          },
+          "question_6": {
+            "answer": "Dịch vụ của chúng tôi cung cấp chi tiết vị trí chính xác, bao gồm địa chỉ chính xác, bằng cách sử dụng công nghệ GPS tiên tiến.",
+            "question": "Vị trí địa lý chính xác như thế nào?"
+          },
+          "question_7": {
+            "answer": "Chỉ cần nhập số điện thoại bạn muốn điều tra và để Mobitrace lo phần còn lại. Hệ thống của chúng tôi sẽ quét nhiều cơ sở dữ liệu để khám phá mọi thông tin có sẵn được liên kết với số đó. Mặc dù nhiều tra cứu trả lại kết quả tức thì nhưng quá trình tìm kiếm chi tiết hơn có thể lâu hơn một chút. Sau khi bạn sử dụng công cụ tra cứu ngược điện thoại của Mobitrace, bạn sẽ nhanh chóng nhận thấy sức mạnh và sự hiệu quả của công cụ.",
+            "question": "Tra cứu ngược số điện thoại hoạt động như thế nào?"
+          },
+          "question_8": {
+            "answer": "Công nghệ tra cứu ngược điện thoại của Mobitrace cực kỳ tiên tiến. Khi bạn chạy một tác vụ tìm kiếm, công cụ sẽ khám phá nhiều loại nguồn — bao gồm hồ sơ công khai, thư mục trực tuyến và thậm chí là điểm dữ liệu ít hiển thị. Nếu tìm thấy thông tin liên quan, công cụ sẽ hiển thị thông tin cho bạn. Vui lòng lưu ý rằng không phải tìm kiếm nào cũng đều cho kết quả ngay lập tức vì tính sẵn có phụ thuộc vào dữ liệu có thể truy cập được của từng số.",
+            "question": "Mobitrace có cung cấp thông tin về mọi số không?"
+          },
+          "question_9": {
+            "answer": "Có chứ! Hãy tưởng tượng bạn nhận được cuộc gọi từ ai đó nhận là nhân viên ngân hàng, yêu cầu bạn cung cấp mã PIN để dừng hoạt động rút tiền khả nghi, hay bạn nhận được tin nhắn nói rằng bạn đã thắng giải thưởng và phải nhấp vào liên kết để nhận giải. Cả hai tình huống đều có thể dẫn đến tổn thất tài chính và thông tin cá nhân bị đánh cắp. Mobitrace giúp bạn xác minh người thực sự đứng sau số lạ. Thao tác tra cứu ngược nhanh có thể cảnh báo bạn về hành vi lừa đảo tiềm ẩn và bảo vệ dữ liệu cũng như tài chính của bạn.",
+            "question": "Mobitrace có thể giúp tôi tránh cuộc gọi và tin nhắn làm phiền không?"
+          },
+          "title": "Câu hỏi thường gặp"
+        },
+        "get_report": {
+          "cta": "Tải báo cáo của tôi",
+          "lookup_today": "Đã tra cứu ngược 99 lần hôm nay",
+          "product": "Toàn quyền truy cập 7 ngày",
+          "product_24": "Toàn quyền truy cập trong 24 giờ",
+          "product_title": "Báo cáo tra cứu",
+          "secure": "An toàn 100%",
+          "title": "Truy cập báo cáo của bạn!",
+          "trial_description": "Đảm bảo sự hài lòng trong 30 ngày"
+        },
+        "hero": {
+          "100": "100%",
+          "card_address": "29 Willow Street, Hackney Wick, London E9 5EN, United Kingdom",
+          "card_date": "27/09/2024   18:46",
+          "card_phone": "+44 633 123 456",
+          "card_title": "Phát hiện vị trí!",
+          "confidential": "bảo mật",
+          "iphone_alt": "điện thoại thông minh hiển thị bản đồ London với điểm đánh dấu vị trí",
+          "secure": "An toàn",
+          "ssl_encription": "Mã hóa SSL",
+          "subtitle": "Xác định tức thì người gọi không xác định, khám phá họ tên, địa chỉ, hồ sơ mạng xã hội, v.v..",
+          "title": "<mark>Tra cứu ngược</mark> số điện thoại<mark></mark>"
+        },
+        "instant_locator": {
+          "subtitle": "Mobitrace là giải pháp tối ưu để khám phá vị trí hoặc hồ sơ của\nbất kỳ ai - chỉ bằng cách sử dụng số điện thoại của họ",
+          "title": "Tra cứu số bất kỳ ngay bây giờ!"
+        },
+        "latest_results": {
+          "result": {
+            "description": "{time} phút trước"
+          },
+          "subtitle": "Đây là một số kết quả mới nhất từ dịch vụ tra cứu ngược điện thoại.",
+          "title": "Kết quả mới nhất"
+        },
+        "limited_offer_tag": {
+          "limited_offer": "Ưu đãi giới hạn"
+        },
+        "phone_input": {
+          "errors": {
+            "invalid_phone": "Vui lòng nhập một số điện thoại hợp lệ.",
+            "rate_limit_exceeded": "Bạn đã vượt quá hạn mức hằng ngày.",
+            "rate_limit_exceeded_title": "Đã đạt đến giới hạn"
+          },
+          "label": "Nhập số bạn muốn tra cứu",
+          "no_results": "Không tìm thấy mã quốc gia.",
+          "phone_placeholder": "123456789",
+          "search_placeholder": "Tìm theo quốc gia hoặc mã...",
+          "submit": "Tra cứu"
+        },
+        "pricing": {
+          "cards": {
+            "subscription": {
+              "badge": "Đăng ký",
+              "cta": "Đăng ký ngay",
+              "description": "Sau khi hết thời gian dùng thử 7 ngày, ưu đãi sẽ tự động gia hạn thành đăng ký hằng tháng. Bạn có thể dễ dàng hủy đăng ký bất kỳ lúc nào.",
+              "duration": "Phí hằng tháng",
+              "features": {
+                "feature_1": "Hỗ trợ trên tất cả thiết bị di động",
+                "feature_2": "Yêu cầu theo dõi vị trí không giới hạn",
+                "feature_3": "Tải xuống báo cáo PDF chuyên nghiệp mà không mất thêm phí",
+                "feature_4": "Báo cáo tra cứu ngược điện thoại không giới hạn với chi tiết toàn diện",
+                "feature_5": "Hỗ trợ 24/7 không phụ phí"
+              }
+            },
+            "title": "Bắt đầu dùng thử 7 ngày",
+            "trial": {
+              "badge": "Thời gian dùng thử",
+              "cta": "Bắt đầu dùng thử",
+              "description": "Với khoản thanh toán ban đầu này, bạn có thể truy cập không giới hạn tất cả các tính năng nền tảng của Mobitrace trong 7 ngày. Sau đó, phí đăng ký là {price} mỗi tháng sẽ được áp dụng.",
+              "duration": "Dùng thử 7 ngày",
+              "features": {
+                "feature_1": "Hỗ trợ trên tất cả thiết bị di động",
+                "feature_2": "Toàn quyền truy cập tất cả tính năng trong 7 ngày",
+                "feature_3": "Truy cập vào báo cáo tra cứu ngược điện thoại chi tiết",
+                "feature_4": "Không cần cam kết lâu dài để dùng thử",
+                "feature_5": "Khả năng tải xuống báo cáo dưới dạng PDF"
+              }
+            }
+          },
+          "special_offer": "Ưu đãi đặc biệt",
+          "subtitle": "Mobitrace cung cấp dịch vụ của mình thông qua gói đăng ký hằng tháng dễ quản lý.",
+          "title": "Dùng thử các tính năng của Mobitrace với giá <mark>chỉ {price}</mark> trong 7 ngày!"
+        },
+        "recent_reveals": {
+          "subtitle": "Đây chỉ là một vài người gọi không xác định chúng tôi xác định được gần đây.",
+          "title": "Tiết lộ gần đây"
+        },
+        "report_ready": {
+          "description": "Báo cáo của bạn đã sẵn sàng!",
+          "download_report_button": "Tải xuống PDF",
+          "view_report_button": "Xem báo cáo"
+        },
+        "summary_report_card": {
+          "caller_info": "Với Mobitrace, bạn sẽ không cần phải đoán đằng sau số không xác định là ai. Chúng tôi sẽ cung cấp cho bạn dữ liệu về người gọi, kể cả thông tin họ không biết là có sẵn cho bạn.",
+          "carrier": "Nhà mạng",
+          "continue": "Tiếp tục",
+          "latest_report": "Báo cáo mới nhất tính đến ngày 3 tháng 3 năm 2025",
+          "line_type": "Loại đường dây",
+          "may_include": "Kết quả có thể bao gồm",
+          "result_1": "Họ tên và địa chỉ của chủ sở hữu",
+          "result_2": "Hồ sơ và tên người dùng mạng xã hội",
+          "result_3": "Ảnh và Video",
+          "result_4": "Hoạt động trực tuyến trước đây",
+          "result_5": "Địa chỉ email",
+          "result_6": "Và nhiều thông tin khác!",
+          "timer_desktop": "<mark>Báo cáo</mark> của bạn sẽ hết hạn sau",
+          "timer_mobile": "Báo cáo hết hạn sau",
+          "title": "Báo cáo về <mark>{phoneNumber}</mark> đã sẵn sàng!",
+          "trusted_by": "Được hơn <span class='font-bold'>7 triệu</span> người tin tưởng"
+        },
+        "upsell_progress_steps": {
+          "access_report": "Báo cáo truy cập",
+          "create_account": "Tạo tài khoản",
+          "data_breach": "Xâm phạm dữ liệu",
+          "pdf_export": "Xuất PDF",
+          "sex_offenders": "Tội phạm tình dục"
+        },
+        "what_you_get": {
+          "item_1": "Tìm kiếm bất kỳ số điện thoại nào, cả trước đây và hiện tại để tiết lộ thông tin của chủ sở hữu",
+          "item_2": "Chủ sở hữu của số điện thoại sẽ không bao giờ được báo về việc tìm kiếm của bạn.",
+          "item_3": "Cơ sở dữ liệu của chúng tôi luôn bao gồm thông tin được cập nhật mới nhất.",
+          "item_4": "Mobitrace soạn báo cáo từ thông tin có sẵn công khai khắp mạng.",
+          "item_title_1": "Tra cứu điện thoại tiên tiến",
+          "item_title_2": "Hoàn toàn đảm bảo quyền riêng tư của bạn",
+          "item_title_3": "Cập nhật liên tục",
+          "item_title_4": "Tìm kiếm hàng tỷ hồ sơ",
+          "title": "Đây là điều bạn sẽ nhận được"
+        },
+        "why_use": {
+          "phone_input_label": "Nhập số bạn muốn tra cứu",
+          "reasons": {
+            "reason_1": {
+              "description": "Xác định người gọi không xác định và loại bỏ sự phỏng đoán khi nhận cuộc gọi điện thoại.",
+              "title": "Luôn biết ai là người gọi"
+            },
+            "reason_2": {
+              "description": "Mobitrace có thể giúp định vị kết nối cũ hoặc thất lạc, kể cả với số điện thoại cũ.",
+              "title": "Kết nối lại với bạn cũ"
+            },
+            "reason_3": {
+              "description": "Tự bào vệ bản thân bằng cách xác minh danh tính của người bạn trò chuyện trực tuyến.",
+              "title": "Xác minh danh tính"
+            },
+            "reason_4": {
+              "description": "Cuộc gọi lừa đảo và hoạt động khai thác dữ liệu đang gia tăng. Mobitrace có thể giúp bạn xác định kẻ xấu mà không cần trả lời điện thoại.",
+              "title": "Xác định số khả nghi"
+            },
+            "reason_5": {
+              "description": "Nhập số của bạn vào Mobitrace và kiểm tra xem dữ liệu cá nhân nào của bạn có sẵn và xác định rò rỉ dữ liệu tiềm ẩn.",
+              "title": "Giám sát dấu ấn kỹ thuật số của bạn"
+            }
+          },
+          "steps": {
+            "step_1": {
+              "description": "Bảo vệ bản thân trước người gọi lừa đảo và cuộc gọi tiếp thị."
+            },
+            "step_2": {
+              "description": "Thực hiện kiểm tra lý lịch của các đối tác hoặc bạn cùng phòng tiềm năng."
+            },
+            "step_3": {
+              "description": "Tìm hiểu xem ai ở đằng sau những cuộc gọi làm phiền rắc rối."
+            },
+            "step_4": {
+              "description": "Kết nối lại với bạn cũ hoặc thành viên gia đình."
+            },
+            "step_5": {
+              "description": "Xác định người giả mạo danh tính trên ứng dụng trò chuyện và hẹn hò."
+            }
+          },
+          "subtitle": "Dù bạn đang tìm cách bảo vệ bản thân bằng phương pháp kỹ thuật số hay tìm kết nối thất lạc, chúng tôi đều giúp được.<br>Mobitrace có thể giúp bạn:",
+          "title": "Vì sao nên sử dụng tra cứu ngược điện thoại",
+          "title_2": "Trường hợp sử dụng bổ sung",
+          "title_badge": "PHỤ"
+        }
+      },
+      "member_area": {
+        "phone_lookup": {
+          "daily_limit": "Giới hạn: 5 lần tra cứu mỗi 24 giờ.",
+          "label": "Tiết lộ ID người gọi",
+          "phone_lookup": "Tra cứu điện thoại"
+        }
+      },
+      "report": {
+        "carrier_details": {
+          "info": "Phần này cung cấp thông tin về nhà mạng điện thoại của cá nhân, bao gồm thông tin chi tiết về mạng và loại dịch vụ.",
+          "labels": {
+            "carrier": "Nhà mạng",
+            "international_format": "Định dạng quốc tế",
+            "local_format": "Định dạng địa phương",
+            "location": "Vị trí",
+            "type": "Kiểu"
+          },
+          "line_types": {
+            "landline": "Điện thoại cố định",
+            "mobile": "Di động"
+          },
+          "title": "Chi tiết nhà mạng",
+          "title_empty": "Chi tiết nhà mạng"
+        },
+        "common": {
+          "no_data": "Không có hồ sơ"
+        },
+        "data_breach_history": {
+          "alert_empty": "Phần này trình bày lịch sử xâm phạm dữ liệu, nêu chi tiết mọi sự cố xâm phạm thông tin nhạy cảm, bao gồm thông tin về bản chất của hành vi xâm phạm, dữ liệu bị ảnh hưởng, và những biện pháp được thực hiện để giải quyết và ngăn chặn hành vi xảy ra trong tương lai.",
+          "alert_success": "Phần này trình bày lịch sử xâm phạm dữ liệu, nêu chi tiết mọi sự cố xâm phạm thông tin nhạy cảm, bao gồm thông tin về bản chất của hành vi xâm phạm, dữ liệu bị ảnh hưởng, và những biện pháp được thực hiện để giải quyết và ngăn chặn hành vi xảy ra trong tương lai.",
+          "alert_title": "{count} Trường hợp xâm phạm dữ liệu",
+          "report": {
+            "breaches_found_for": "Trường hợp xâm phạm được tìm thấy cho",
+            "compromised_data": "Dữ liệu bị xâm phạm",
+            "data_breaches": "xâm phạm dữ liệu",
+            "data_types": {
+              "date_of_birth": "Ngày sinh",
+              "education_levels": "Trình độ học vấn",
+              "email": "Địa chỉ email",
+              "gender": "Giới tính",
+              "geo_location": "Vị trí địa lý",
+              "name": "Tên",
+              "password": "Mật khẩu",
+              "phone": "Số điện thoại",
+              "social_media_profiles": "Hồ sơ mạng xã hội",
+              "username": "Tên người dùng"
+            },
+            "download_report_button": "Tải xuống PDF",
+            "title": "Lịch sử xâm phạm dữ liệu"
+          },
+          "show_report": "Hiện báo cáo",
+          "title": "Lịch sử xâm phạm dữ liệu",
+          "unlock_report": "Mở khóa báo cáo"
+        },
+        "header": {
+          "button": "Tải xuống PDF",
+          "matches_found": "Kết quả trùng khớp cho",
+          "title": "Báo cáo tra cứu số điện thoại",
+          "unlock_download_pdf": "Mở khóa Tải xuống PDF"
+        },
+        "looking_for_more_profiles_dialog": {
+          "description": "Quá trình này có thể mất vài giây — chúng tôi đang tìm kiếm trên các nền tảng khác.",
+          "title": "Đang tìm thêm hồ sơ"
+        },
+        "phone_public_information": {
+          "info": "Phần này cung cấp tóm tắt về thông tin có sẵn công khai được liên kết với số điện thoại của cá nhân.",
+          "name": "Tên:",
+          "source": "Nguồn:",
+          "sources": {
+            "data_breach": "Vi phạm dữ liệu",
+            "other": "Khác",
+            "public_records": "Hồ sơ công khai",
+            "social_media": "Phương tiện truyền thông xã hội"
+          },
+          "title": "Thông tin điện thoại công khai",
+          "title_empty": "Không có thông tin điện thoại công khai"
+        },
+        "photos": {
+          "info": "Phần này hiển thị hình ảnh có thể thuộc về chủ sở hữu điện thoại để hỗ trợ nhận dạng trực quan khi có thể.",
+          "other": "Khác",
+          "title": "Ảnh",
+          "title_empty": "Không tìm thấy ảnh"
+        },
+        "possible_addresses": {
+          "info": "Phần này liệt kê các địa chỉ có thể có liên quan đến cá nhân đó, giúp xác định nơi cư trú hoặc các địa điểm trước đây.",
+          "labels": {
+            "city": "Thành phố",
+            "country": "Quốc gia",
+            "county": "Hạt",
+            "latitude": "Vĩ độ",
+            "length_of_residence": "Thời gian cư trú",
+            "longitude": "Kinh độ",
+            "postal_code": "Mã bưu điện",
+            "state": "Tiểu bang",
+            "street": "Đường"
+          },
+          "title": "Địa chỉ có thể có",
+          "title_empty": "Không tìm thấy địa chỉ",
+          "values": {
+            "years": "{count} năm"
+          }
+        },
+        "possible_contact_details": {
+          "info": "Phần này hiển thị các địa chỉ email được liên kết với cá nhân để giúp xác minh thông tin liên lạc.",
+          "labels": {
+            "associated_emails": "Email được liên kết",
+            "associated_numbers": "Số được liên kết"
+          },
+          "title": "Chi tiết liên lạc tiềm năng",
+          "title_empty": "Không tìm thấy chi tiết liên lạc"
+        },
+        "possible_personal_details": {
+          "info": "Phần này hiển thị thông tin cá nhân có thể có liên quan đến cá nhân đó, giúp cung cấp thêm thông tin chuyên sâu về lý lịch.",
+          "labels": {
+            "children": "Trẻ em",
+            "date_of_birth": "Ngày sinh",
+            "gender": "Giới tính",
+            "household_size": "Quy mô hộ gia đình",
+            "income": "Thu nhập",
+            "marital_status": "Trạng thái hôn nhân"
+          },
+          "title": "Thông tin cá nhân có thể có",
+          "title_empty": "Không tìm thấy chi tiết cá nhân",
+          "values": {
+            "children": "Hiện tại ({count})",
+            "divorced": "Đã ly hôn",
+            "domestic_partnership": "Quan hệ gia đình",
+            "engaged": "Đã đính hôn",
+            "female": "Nữ",
+            "in_relationship": "Đang trong mối quan hệ",
+            "intersex": "Liên giới tính",
+            "male": "Nam",
+            "married": "Đã kết hôn",
+            "no_children": "Không có",
+            "no_record_available": "Không có hồ sơ",
+            "separated": "Đã ly thân",
+            "single": "Độc thân",
+            "widowed": "Góa bụa"
+          }
+        },
+        "possible_social_media_accounts": {
+          "expand_search": {
+            "more_platforms": "Truy cập nhiều nền tảng hơn chỉ với một cú nhấp chuột",
+            "title": "Mở rộng tìm kiếm của bạn",
+            "unlock_platforms": "Mở khóa các nền tảng"
+          },
+          "info": "Phần này hiển thị các hồ sơ mạng xã hội có thể được liên kết với cá nhân đó, giúp cung cấp thông tin chuyên sâu về hoạt động trực tuyến của họ.",
+          "labels": {
+            "id": "Mã định danh",
+            "name": "Tên",
+            "opne_url": "Mở trang",
+            "source": "Nguồn",
+            "url": "URL"
+          },
+          "network_not_found": "Không tìm thấy",
+          "no_accounts_found": "Không tìm thấy tài khoản nào trên bất kỳ nền tảng nào đã được kiểm tra. Điều này có nghĩa là người dùng hoặc chưa đăng ký trên các mạng này, hoặc sử dụng dữ liệu khác với các tham số tìm kiếm đã cung cấp.",
+          "partial_result": {
+            "info": "Không tìm thấy tài khoản trên một số nền tảng — điều này có nghĩa là người dùng hoặc chưa đăng ký trên các mạng đó, hoặc sử dụng dữ liệu khác với các tham số tìm kiếm được cung cấp.",
+            "no_account_platforms": "Các nền tảng không tìm thấy tài khoản",
+            "title": "Kết quả tìm kiếm hoàn tất"
+          },
+          "sources": {
+            "behance": "Behance",
+            "facebook": "Facebook",
+            "github": "Github",
+            "gitlab": "Gitlab",
+            "google": "Google",
+            "instagram": "Instagram",
+            "kick": "Đá",
+            "linkedin": "LinkedIn",
+            "pinterest": "Pinterest",
+            "reddit": "Reddit",
+            "snapchat": "Snapchat",
+            "telegram": "Telegram",
+            "threads": "Các sợi chỉ",
+            "tiktok": "TikTok",
+            "tumblr": "Tumblr",
+            "twitch": "Twitch",
+            "x": "X",
+            "youtube": "YouTube"
+          },
+          "title": "Tài khoản mạng xã hội có thể có",
+          "title_empty": "Không tìm thấy tài khoản mạng xã hội"
+        },
+        "potential_education": {
+          "info": "Phần này tóm tắt các thông tin chi tiết về trình độ học vấn, bao gồm các trường từng theo học và các bằng cấp đã đạt được.",
+          "title": "Trình độ học vấn có thể có",
+          "title_empty": "Không tìm thấy thông tin học vấn",
+          "values": {
+            "associate_degree": "Bằng cao đẳng liên kết",
+            "bachelor_degree": "Bằng cử nhân",
+            "doctoral_degree": "Bằng tiến sĩ",
+            "high_school": "Trung học phổ thông",
+            "master_degree": "Bằng thạc sĩ",
+            "no_formal_education": "Không có giáo dục chính quy",
+            "other": "Khác",
+            "primary_school": "Tiểu học",
+            "secondary_school": "Trung học cơ sở",
+            "vocational_training": "Trường dạy nghề"
+          }
+        },
+        "potential_professional_summary": {
+          "info": "Phần này nêu bật các vị trí công việc mà cá nhân đó có thể có kinh nghiệm, dựa trên dữ liệu có sẵn.",
+          "title": "Tóm tắt nghề nghiệp có thể có",
+          "title_empty": "Không có tóm tắt nghề nghiệp",
+          "values": {
+            "agriculture": "Nông nghiệp",
+            "arts_and_entertainment": "Nghệ thuật và Giải trí",
+            "construction": "Xây dựng",
+            "education": "Giáo dục",
+            "energy_and_utilities": "Năng lượng và Tiện ích",
+            "engineering": "Kỹ thuật",
+            "finance": "Tài chính",
+            "government": "Chính phủ",
+            "healthcare": "Chăm sóc sức khỏe",
+            "hospitality": "Khách sạn",
+            "information_technology": "Công nghệ thông tin",
+            "legal": "Luật",
+            "logistics_and_supply_chain": "Logistics và Chuỗi cung ứng",
+            "manufacturing": "Sản xuất",
+            "marketing": "Tiếp thị",
+            "media_and_communications": "Truyền thông",
+            "military": "Quân đội",
+            "non_profit": "Phi lợi nhuận",
+            "other": "Khác",
+            "real_estate": "Bất động sản",
+            "retail": "Bán lẻ",
+            "sales": "Bán hàng",
+            "science": "Khoa học",
+            "skilled_trades": "Nghề thủ công tay nghề cao",
+            "telecommunications": "Viễn thông",
+            "transportation": "Vận tải"
+          }
+        },
+        "profile_summary": {
+          "associated_emails": "Email được liên kết:",
+          "associated_locations": "Vị trí được liên kết:",
+          "associated_usernames": "Tên người dùng được liên kết:",
+          "empty": "-",
+          "not_identified": "Không xác định",
+          "possible_owners": "Chủ sở hữu tiềm năng:",
+          "potential_date_of_birth": "Ngày sinh tiềm năng:",
+          "title": "Tóm tắt hồ sơ"
+        },
+        "sex_offenders": {
+          "alert": "Việc kiểm tra lý lịch tội phạm tình dục chỉ áp dụng cho hồ sơ tại Hoa Kỳ. Phần này cung cấp thông tin về bất kỳ hồ sơ tội phạm tình dục nào đã đăng ký, bao gồm chi tiết về hành vi phạm tội, tình trạng đăng ký hiện tại và vị trí được liên kết.",
+          "report": {
+            "address_information": {
+              "city": "Thành phố",
+              "country": "Quốc gia",
+              "county": "Hạt",
+              "latitude": "Vĩ độ",
+              "length_of_residence": "Thời gian cư trú",
+              "longitude": "Kinh độ",
+              "postal_code": "Mã bưu chính",
+              "state": "Tiểu bang",
+              "street": "Đường",
+              "title": "Vị trí"
+            },
+            "body_characteristics": {
+              "age": "Tuổi",
+              "ethnicity": "Dân tộc",
+              "eye_color": "Màu mắt",
+              "hair_color": "Màu tóc",
+              "height": "Chiều cao",
+              "race": "Chủng tộc",
+              "sex": "Giới tính",
+              "title": "Đặc điểm cơ thể",
+              "weight": "Cân nặng"
+            },
+            "crime_information": {
+              "conviction_date": "Ngày kết án",
+              "crime": "Tội phạm",
+              "jurisdiction": "Khu vực tài phán",
+              "no_information_available": "Không có thông tin nào có sẵn",
+              "registration_date": "Ngày đăng ký",
+              "risk_level": "Mức độ rủi ro",
+              "title": "Thông tin tội phạm"
+            },
+            "distinctive_features": {
+              "back": "Lưng",
+              "head": "Đầu",
+              "left_arm": "Cánh tay trái",
+              "left_hand": "Bàn tay trái",
+              "left_leg": "Chân trái",
+              "right_arm": "Cánh tay phải",
+              "right_hand": "Bàn tay phải",
+              "right_leg": "Chân phải",
+              "title": "Dấu vết / Sẹo / Hình xăm",
+              "torso": "Thân mình"
+            },
+            "download_report_button": "Tải xuống PDF",
+            "new_search": "Tìm kiếm mới",
+            "others_information": {
+              "is_absconded": "Có phải là tội phạm bỏ trốn không?",
+              "is_predator": "Có phải là kẻ săn mồi tình dục không?",
+              "jurisdiction": "Khu vực tài phán",
+              "link": "Liên kết",
+              "original_report": "Nguồn gốc",
+              "title": "Khác",
+              "yes": "Có"
+            },
+            "personal_information": {
+              "date_of_birth": "Ngày sinh",
+              "first_name": "Tên",
+              "first_name_nicknames": "Biệt danh Tên",
+              "last_name": "Họ",
+              "middle_name": "Tên đệm",
+              "name": "Họ tên",
+              "title": "Thông tin cá nhân"
+            },
+            "photos": {
+              "title": "Ảnh"
+            },
+            "records_found_for": "Hồ sơ được tìm thấy cho",
+            "title_profile": "Hồ sơ tội phạm tình dục",
+            "values": {
+              "body_part": {
+                "back": "Lưng",
+                "head": "Đầu",
+                "left_arm": "Cánh tay trái",
+                "left_hand": "Bàn tay trái",
+                "left_leg": "Chân trái",
+                "right_arm": "Cánh tay phải",
+                "right_hand": "Bàn tay phải",
+                "right_leg": "Chân phải",
+                "torso": "Thân mình"
+              },
+              "ethnicity": {
+                "hispanic": "Người gốc Tây Ban Nha",
+                "non_hispanic": "Không phải người gốc Tây Ban Nha",
+                "other": "Khác"
+              },
+              "eye_color": {
+                "amber": "Vàng cam",
+                "blue": "Xanh dương",
+                "brown": "Nâu",
+                "gray": "Xám",
+                "green": "Xanh lá",
+                "hazel": "Nâu hạt phỉ",
+                "other": "Khác",
+                "red": "Đỏ",
+                "violet": "Tím"
+              },
+              "hair_color": {
+                "auburn": "Nâu đỏ",
+                "bald": "Hói",
+                "black": "Đen",
+                "blonde": "Vàng",
+                "brown": "Nâu",
+                "chestnut": "Nâu hạt dẻ",
+                "dyed": "Nhuộm",
+                "gray": "Xám",
+                "other": "Khác",
+                "red": "Đỏ",
+                "white": "Trắng"
+              },
+              "race": {
+                "asian": "Người châu Á",
+                "black_or_african_american": "Người da đen hoặc người Mỹ gốc Phi",
+                "mixed": "Lai",
+                "native_american": "Người Mỹ bản địa",
+                "other": "Khác",
+                "pacific_islander": "Người dân đảo Thái Bình Dương",
+                "white": "Trắng"
+              },
+              "risk_level": {
+                "high": "Cao",
+                "low": "Thấp",
+                "medium": "Trung bình"
+              },
+              "sex": {
+                "female": "Nữ",
+                "intersex": "Liên giới tính",
+                "male": "Nam"
+              }
+            }
+          },
+          "title": "Kiểm tra lý lịch tội phạm tình dục"
+        },
+        "sex_offenders_background_check": {
+          "alt_icon": "Tội phạm tình dục",
+          "info": "Việc kiểm tra lý lịch tội phạm tình dục chỉ áp dụng cho hồ sơ tại Hoa Kỳ. Phần này cung cấp thông tin về bất kỳ hồ sơ tội phạm tình dục nào đã đăng ký, bao gồm chi tiết về hành vi phạm tội, tình trạng đăng ký hiện tại và vị trí được liên kết.",
+          "show_report": "Hiện báo cáo",
+          "title": "Kiểm tra lý lịch tội phạm tình dục",
+          "title_empty": "Không tìm thấy lý lịch tội phạm tình dục",
+          "unlock_report": "Mở khóa báo cáo"
+        },
+        "upsell": {
+          "data_breach_history": {
+            "cancel": "Hủy",
+            "compromise_isa_contact_details": "Thông tin liên lạc bị xâm phạm, bao gồm số điện thoại, email và địa chỉ thực tế",
+            "disclaimer_info": "Tất cả dữ liệu được lấy từ cơ sở dữ liệu toàn diện với hơn 14 tỷ hồ sơ từ các vụ xâm nhập dữ liệu được báo cáo công khai. Chúng tôi xác định và báo cáo về thông tin bị lộ nhưng không cung cấp quyền truy cập vào dữ liệu nhạy cảm như mật khẩu hoặc thông tin đăng nhập cá nhân.",
+            "limited_offer": "Ưu đãi giới hạn",
+            "personal_identifiers": "Ký hiệu nhận dạng cá nhân bao gồm tên người dùng, họ tên và ngày sinh",
+            "processing_payment": "Đang xử lý",
+            "professional_information_and_technical_data": "Thông tin chuyên môn và dữ liệu kỹ thuật như địa chỉ IP",
+            "purchase": "Mua",
+            "special_limited_time_offer": "Ưu đãi đặc biệt có thời hạn này sẽ hết hạn khi bạn rời khỏi trang này.",
+            "title": "Báo cáo xâm nhập và rò rỉ dữ liệu",
+            "total_due_today": "Tổng số tiền phải trả:"
+          },
+          "payment_message": {
+            "add_payment_details": "Thêm thông tin thanh toán",
+            "agree_description_upsell": "Bằng cách tiếp tục, bạn đồng ý với khoản thanh toán một lần có giá {price} và đồng ý với <terms>Điều khoản sử dụng</terms> và <privacy>Chính sách quyền riêng tư</privacy> của chúng tôi. Khoản phí sẽ xuất hiện dưới tên \"mobitrace.io\" trên bảng sao kê thanh toán của bạn.",
+            "close": "Đóng",
+            "payment_error": "Thanh toán của bạn không thành công",
+            "payment_error_description": "Vui lòng cập nhật thông tin thanh toán của bạn",
+            "payment_retry_description": "Chúng tôi không thể xử lý thẻ của bạn. Vui lòng thử lại.",
+            "payment_success": "Bạn đã thanh toán thành công",
+            "payment_success_description": "Cảm ơn bạn đã mua hàng! Sản phẩm đã sẵn sàng để sử dụng.",
+            "skip": "Bỏ qua",
+            "try_again": "Thử lại",
+            "update_payment_method": "Cập nhật phương thức thanh toán"
+          },
+          "sex_offenders": {
+            "cancel": "Hủy",
+            "comprehensive_data": "Truy cập vào dữ liệu toàn diện về tội phạm từ các nguồn chính thức",
+            "disclaimer_info": "Việc kiểm tra lý lịch tội phạm tình dục chỉ được thực hiện trong phạm vi Hoa Kỳ. Bộ Tư pháp báo cáo có khoảng 800.000 tội phạm tình dục đã đăng ký trên toàn quốc, với hàng ngàn trường hợp mới được ghi nhận mỗi năm. Hãy xác minh danh tính người lạ để bạn an tâm.",
+            "instant_nationwide_search": "Kiểm tra tức thì trên toàn quốc tại tất cả các cơ quan đăng ký của tiểu bang và liên bang",
+            "limited_offer": "Ưu đãi giới hạn",
+            "processing_payment": "Đang xử lý",
+            "purchase": "Mua",
+            "realtime_verification": "Xác minh thời gian thực so với dữ liệu đăng ký mới nhất",
+            "special_limited_time_offer": "Ưu đãi xác minh an toàn có thời hạn. Dịch vụ chỉ tìm kiếm những cá nhân đã đăng ký tại Hoa Kỳ.",
+            "title": "Kiểm tra sổ đăng ký tội phạm tình dục",
+            "total_due_today": "Tổng số tiền phải trả:"
+          },
+          "sex_offenders_search": {
+            "cancel": "Hủy",
+            "disclaimer_info": "Việc kiểm tra lý lịch tội phạm tình dục chỉ áp dụng trong phạm vi Hoa Kỳ. Bộ Tư pháp Hoa Kỳ báo cáo có khoảng 800.000 tội phạm tình dục đã đăng ký trên toàn quốc với hàng nghìn lượt đăng ký mới hàng năm. Hãy xác minh những người không quen biết để bạn được an tâm.\n\nĐây là giao dịch mua một lần với giá {price}. Bằng cách thêm báo cáo này, bạn cho phép một khoản phí duy nhất được tính vào phương thức thanh toán đã lưu của bạn. Giao dịch mua này cung cấp quyền truy cập vào một báo cáo trong phạm vi bán thêm này.",
+            "instant_access": "Tìm kiếm tức thì trên toàn quốc qua tất cả các cơ sở dữ liệu của tiểu bang và liên bang",
+            "processing_payment": "Đang xử lý",
+            "purchase": "Mua",
+            "secure_one_time_payment": "Xác minh theo thời gian thực so với dữ liệu đăng ký mới nhất",
+            "special_limited_time_offer": "Ưu đãi xác minh an toàn có thời hạn. Dịch vụ chỉ tìm kiếm những cá nhân đã đăng ký tại Hoa Kỳ.",
+            "title": "Kiểm tra sổ đăng ký tội phạm tình dục",
+            "total_due_today": "Tổng số tiền phải trả:",
+            "verified_source_data": "Truy cập vào dữ liệu toàn diện về tội phạm từ các nguồn chính thức"
+          },
+          "social_networks": {
+            "cancel": "Hủy bỏ",
+            "disclaimer_info": "Tìm kiếm này chỉ bao gồm các nền tảng mạng xã hội chính và thông tin tài khoản hiển thị công khai. Phạm vi tìm kiếm có thể khác nhau tùy thuộc vào nền tảng và tính khả dụng của hồ sơ.",
+            "limited_offer": "Ưu đãi có hạn",
+            "matching_accounts": "Tìm các tài khoản phù hợp trong báo cáo dựa trên dữ liệu công khai.",
+            "processing_payment": "Xử lý",
+            "purchase": "Mua",
+            "related_usernames_and_public_profile": "Xác định tên người dùng liên quan và sự hiện diện trên hồ sơ công khai.",
+            "scan_10_major_social_platforms": "Quét hơn 10 nền tảng mạng xã hội lớn để tìm các tài khoản liên quan.",
+            "special_limited_time_offer": "Ưu đãi đặc biệt có thời hạn này sẽ hết hạn khi bạn rời khỏi trang này.",
+            "title": "Kiểm tra các nền tảng mạng xã hội",
+            "total_due_today": "Tổng số tiền phải trả:"
+          },
+          "unlimited_pdf_downloads": {
+            "cancel": "Hủy",
+            "disclaimer_info": "Đây là giao dịch mua một lần. Bằng cách nhấp vào \"Nhận PDF không giới hạn\", bạn sẽ bị tính phí {price}.",
+            "limited_offer": "Ưu đãi giới hạn",
+            "processing_payment": "Đang xử lý",
+            "purchase": "Mua",
+            "special_limited_time_offer": "Chiết khấu bổ sung đã được áp dụng riêng cho bạn!",
+            "title": "Tải xuống PDF không giới hạn",
+            "total_due_today": "Tổng số tiền phải trả:",
+            "upsell_benefits_1": "Có thể truy cập ngoại tuyến",
+            "upsell_benefits_2": "Dễ dàng chia sẻ với người khác",
+            "upsell_benefits_3": "Có thể in theo yêu cầu",
+            "upsell_benefits_4": "Rõ ràng, định dạng đẹp mắt và dễ đọc"
+          }
+        }
+      },
+      "search": {
+        "components": {
+          "loader": {
+            "step_1": {
+              "carrier": {
+                "loadedDefaultText": "Đã phát hiện",
+                "text": "Nhà mạng"
+              },
+              "city": {
+                "loadedText": "Đã định vị",
+                "text": "Thành phố"
+              },
+              "connecting": "Đang khởi tạo tìm điện thoại",
+              "country": {
+                "text": "Quốc gia"
+              },
+              "location": {
+                "loadedText": "Đã phát hiện",
+                "text": "Vị trí"
+              },
+              "searching": "Kết quả tìm kiếm cho",
+              "type": {
+                "loadedText": "Đã phát hiện",
+                "text": "Loại"
+              }
+            },
+            "step_2": {
+              "cta": "Lấy vị trí",
+              "subtitle": "Tìm kiếm hoàn tất — bạn đã sẵn sàng truy cập vị trí ngay bây giờ.",
+              "title": "Phát hiện vị trí!"
+            }
+          },
+          "warning_dialog": {
+            "button_text": "Tiết lộ người gọi",
+            "description": "Báo cáo Mobitrace của bạn đã sẵn sàng. Hãy tìm hiểu các thông tin công khai liên quan đến số điện thoại này.",
+            "info_message": "Hoạt động tìm kiếm {phoneNumber} của bạn hoàn toàn an toàn và bảo mật.",
+            "telephone": "(0-616) 32211",
+            "title": "CẢNH BÁO:"
+          }
+        }
+      },
+      "search_complete": {
+        "components": {
+          "age_verification_dialog": {
+            "button_text": "Đúng, tôi từ 18 tuổi trở lên",
+            "description": "Báo cáo này có thể chứa nội dung nhạy cảm và chỉ dành cho đối tượng trưởng thành. Bạn phải từ 18 tuổi trở lên để tiếp tục.",
+            "info_message": "Nếu bạn dưới 18 tuổi, vui lòng <bold>thoát ngay.</bold>",
+            "title": "Yêu cầu xác minh tuổi"
+          },
+          "customer_opinions_carousel": {
+            "opinion_1": {
+              "description": "Tôi nhận thấy con gái tôi bắt đầu nói chuyện với người lạ, và tôi muốn chắc chắn mọi thứ an toàn. Mobitrace giúp tôi an tâm bằng cách nhanh chóng kiểm tra người đó là ai. Đôi khi, thao tác tra cứu ngược đơn giản lại tạo ra nhiều khác biệt.",
+              "rate": "4",
+              "timeAgo": "4 ngày trước",
+              "title": "Cuối cùng cũng cảm thấy yên tâm",
+              "user": "Samantha Green"
+            },
+            "opinion_2": {
+              "description": "Công cụ này rất chính xác và hoạt động với hầu hết các số tôi tra cứu. Trong một vài trường hợp, thông tin không được cập nhật đầy đủ, nhưng nhìn chung, Mobitrace cho tôi đúng thứ tôi cần. Đáng tin cậy và dễ sử dụng.",
+              "rate": "4.5",
+              "timeAgo": "1 tuần trước",
+              "title": "Kết quả chính xác đáng tin cậy",
+              "user": "Daniel Brooks"
+            },
+            "opinion_3": {
+              "description": "Nhanh chóng, đáng tin cậy và chính xác! Mobitrace gây ấn tượng với tôi về tốc độ cung cấp kết quả. Tôi hết sức hài lòng với dịch vụ.",
+              "rate": "5",
+              "timeAgo": "1 ngày trước",
+              "title": "Nhanh chóng, dễ dàng và chính xác",
+              "user": "Olivia Carter"
+            },
+            "opinion_4": {
+              "description": "Mobitrace đã trở thành một trong những công cụ yêu thích của tôi để quản lý cuộc gọi. Công cụ giúp tôi biết ai thực sự ở sau số không xác định, tiết kiệm thời gian cho tôi và giúp tôi kiểm soát ai có thể liên lạc với tôi",
+              "rate": "5",
+              "timeAgo": "2 tuần trước",
+              "title": "Giúp tôi quản lý các cuộc gọi của mình",
+              "user": "Matthew Lewis"
+            },
+            "opinion_5": {
+              "description": "Tôi nhận được cuộc gọi từ số tôi không nhận ra và không chắc tôi có nên lo lắng hay không. Tôi thử xài Mobitrace và công cụ ngay lập tức giúp tôi nhận diện người gọi. Bây giờ, tôi sử dụng công cụ bất cứ khi nào có gì đó khả nghi.",
+              "rate": "4.5",
+              "timeAgo": "2 ngày trước",
+              "title": "Bây giờ tôi luôn biết rõ ai đang gọi",
+              "user": "Sophia Turner"
+            },
+            "opinion_6": {
+              "description": "Tôi liên tục nhận được cuộc gọi làm phiền và chúng khiến tôi phát điên. Với Mobitrace, cuối cùng, tôi cũng biết ai sở hữu những số đó. Nhìn thấy hồ sơ và lịch sử của người gọi cho tôi sự minh bạch mà tôi cần.",
+              "rate": "5",
+              "timeAgo": "1 ngày trước",
+              "title": "Không còn đau đầu vì các cuộc gọi làm phiền",
+              "user": "Christopher Hall"
+            },
+            "opinion_7": {
+              "description": "Công cụ tốt nhất tôi từng thử cho đến nay! Với Mobitrace, tôi không phải căng thẳng về cuộc gọi hay tin nhắn không xác định nữa. Công cụ nhanh, dễ sử dụng và cho tôi đáp án tôi cần.",
+              "rate": "4",
+              "timeAgo": "3 ngày trước",
+              "title": "Công cụ tốt nhất cho các cuộc gọi không xác định",
+              "user": "Grace Mitchell"
+            },
+            "opinion_8": {
+              "description": "Mobitrace giúp tôi khám phá ai đang gọi cho tôi từ một số không xác định. Công cụ thậm chí còn cho tôi thấy tên và liên kết gia đình liên quan. Thông tin không hoàn hảo trong mọi trường hợp, nhưng nhìn chung, công cụ cho tôi thông tin chuyên sâu có giá trị mà tôi không thể tìm thấy ở đâu khác.",
+              "rate": "4.5",
+              "timeAgo": "2 ngày trước",
+              "title": "Thông tin chi tiết đến mức bất ngờ",
+              "user": "Ethan Parker"
+            },
+            "rate": "4.5",
+            "reviews": "Dựa trên <bold>456 đánh giá</bold>",
+            "title": "Xuất sắc"
+          },
+          "customer_say_about": {
+            "subtitle": "Chúng tôi nỗ lực để cung cấp cho bạn trải nghiệm tốt nhất từng có",
+            "title": "Khách hàng nói gì về chúng tôi"
+          },
+          "owner_information": {
+            "collecting_data_address": "Địa chỉ",
+            "collecting_data_email": "Email hoặc Số điện thoại",
+            "collecting_data_job": "Thông tin việc làm",
+            "collecting_data_online": "Tên người dùng trực tuyến",
+            "collecting_data_past": "Mối quan hệ trước đây",
+            "collecting_data_profiles": "Hồ sơ bị quên",
+            "collecting_data_title": "Đang thu thập dữ liệu...",
+            "progress_bar_description": "Lịch sử tìm kiếm của bạn được bảo mật và riêng tư. Chủ sở hữu của {phoneNumber} sẽ KHÔNG được thông báo về hoạt động tìm kiếm của bạn.",
+            "progress_bar_percentage": "{percentage}%",
+            "subtitle": "Hãy kiên nhẫn tìm kiếm qua hàng tỷ hồ sơ.",
+            "title": "Đang truy xuất thông tin chủ sở hữu <bold></bold>"
+          }
+        }
+      },
+      "sign_up": {
+        "card_description": "Mobitrace là công cụ kỹ thuật số nâng cao dùng để tìm hàng tỷ hồ sơ điện thoại trực tuyến. Mặc dù hầu hết số không xác định là của người gọi làm phiền hoặc nhân viên tiếp thị, nhưng báo cáo của chúng tôi có thể chứa thông tin làm bạn ngạc nhiên.",
+        "card_title": "Thông báo quan trọng",
+        "email_placeholder": "Địa chỉ email của bạn",
+        "email_title": "Địa chỉ email",
+        "errors": {
+          "email_exists": "Địa chỉ email này đã được đăng ký. Vui lòng thử đăng nhập hoặc sử dụng một email khác.",
+          "invalid_email": "Vui lòng nhập một email hợp lệ."
+        },
+        "form_title": "Nhập email của bạn để tải báo cáo",
+        "latest_report": "Báo cáo mới nhất từ 03/03/2025",
+        "submit_button": "Tiếp tục",
+        "title": "Kết quả đã sẵn sàng!"
+      },
+      "thank_you": {
+        "account_link": "Truy cập tài khoản của bạn",
+        "click_below_to_account_your_link": "Nhấp vào bên dưới để truy cập tài khoản của bạn!",
+        "description": "Chúng tôi đã gửi chi tiết đơn hàng và thông tin đăng nhập tài khoản của bạn đến {email}. Bạn có thể truy cập tài khoản của mình ngay bây giờ",
+        "did_you_like_your_shopping_experience": "Bạn có thích trải nghiệm mua sắm của mình không?",
+        "more_details_feedback": "Chúng tôi hoan nghênh phản hồi chi tiết từ bạn: <email>support@mobitrace.io</email>",
+        "no": "Không",
+        "thank_you_for_your_feedback": "Cảm ơn bạn đã phản hồi!",
+        "title": "Bạn đã thanh toán thành công!",
+        "we_ll_work_on_making_it_better": "Chúng tôi sẽ cố gắng cải thiện ứng dụng!",
+        "yes": "Có"
+      },
+      "upsell": {
+        "already_purchased": "Đã mua",
+        "data_breach": {
+          "disclaimer": "Tất cả dữ liệu được lấy từ cơ sở dữ liệu toàn diện với hơn 14 tỷ hồ sơ từ các vụ xâm nhập dữ liệu được báo cáo công khai. Chúng tôi xác định và báo cáo về thông tin bị lộ nhưng không cung cấp quyền truy cập vào dữ liệu nhạy cảm như mật khẩu hoặc thông tin đăng nhập cá nhân.",
+          "purchase": "Thêm báo cáo xâm phạm dữ liệu",
+          "special_limited_time_offer": "Ưu đãi đặc biệt có thời hạn này sẽ hết hạn khi bạn rời khỏi trang này.",
+          "title": "Báo cáo xâm phạm và rò rỉ dữ liệu",
+          "upsell_benefits_1": "Ký hiệu nhận dạng cá nhân bao gồm tên người dùng, họ tên và ngày sinh",
+          "upsell_benefits_2": "Thông tin liên lạc bị xâm phạm, bao gồm số điện thoại, email và địa chỉ thực tế",
+          "upsell_benefits_3": "Thông tin chuyên môn và dữ liệu kỹ thuật như địa chỉ IP"
+        },
+        "limited_offer": "Ưu đãi giới hạn",
+        "pdf": {
+          "disclaimer": "Đây là giao dịch mua một lần. Bằng cách nhấp vào \"Nhận PDF không giới hạn\", bạn sẽ bị tính phí {price}.",
+          "purchase": "Nhận PDF không giới hạn",
+          "special_limited_time_offer": "Chiết khấu bổ sung đã được áp dụng riêng cho bạn!",
+          "title": "Tải xuống PDF không giới hạn",
+          "upsell_benefits_1": "Có thể truy cập ngoại tuyến",
+          "upsell_benefits_2": "Dễ dàng chia sẻ với người khác",
+          "upsell_benefits_3": "Có thể in theo yêu cầu",
+          "upsell_benefits_4": "Rõ ràng, định dạng đẹp mắt và dễ đọc"
+        },
+        "processing": "Đang xử lý",
+        "sex_offenders": {
+          "disclaimer": "Việc kiểm tra lý lịch tội phạm tình dục chỉ được thực hiện trong phạm vi Hoa Kỳ. Bộ Tư pháp báo cáo có khoảng 800.000 tội phạm tình dục đã đăng ký trên toàn quốc, với hàng ngàn trường hợp mới được ghi nhận mỗi năm. Hãy xác minh danh tính người lạ để bạn an tâm.",
+          "purchase": "Thêm Kiểm Tra Sổ Đăng Ký Tội Phạm Tình Dục",
+          "purchase_terms": "Đây là giao dịch mua một lần với giá {price}. Bằng cách thêm báo cáo này, bạn cho phép một khoản phí duy nhất được tính vào phương thức thanh toán đã lưu của bạn. Giao dịch mua này cung cấp quyền truy cập vào một báo cáo trong phạm vi bán thêm này.",
+          "special_limited_time_offer": "Ưu đãi xác minh an toàn có thời hạn. Dịch vụ chỉ tìm kiếm những cá nhân đã đăng ký tại Hoa Kỳ.",
+          "title": "Kiểm tra sổ đăng ký tội phạm tình dục",
+          "upsell_benefits_1": "Tìm kiếm tức thì trên toàn quốc qua tất cả các cơ sở dữ liệu của tiểu bang và liên bang",
+          "upsell_benefits_2": "Truy cập vào dữ liệu toàn diện về tội phạm từ các nguồn chính thức",
+          "upsell_benefits_3": "Xác minh theo thời gian thực so với dữ liệu đăng ký mới nhất"
+        },
+        "skip": "Bỏ qua",
+        "total_due_today": "Tổng số tiền phải trả:"
+      }
+    },
+    "settings": {
+      "billing": {
+        "activate_dialog": {
+          "action_form": "Thanh toán bằng thẻ",
+          "title": "Thêm phương thức thanh toán"
+        },
+        "active_date": "Hoạt động đến: {date}",
+        "active_state": "Đã đăng ký",
+        "cancel_dialog": {
+          "cancel_cta": "Hủy đăng ký",
+          "canceling_cta": "Đang hủy...",
+          "close_cta": "Đóng",
+          "description": "Với việc hủy đăng ký, bạn sẽ mất quyền truy cập vào tất cả các tính năng và hỗ trợ. Bạn có thể kích hoạt lại đăng ký bất kỳ lúc nào.",
+          "description_canceled": "Đăng ký của bạn đã bị hủy.<br> Bạn sẽ không bị tính phí từ bây giờ.",
+          "done_cta": "Xong",
+          "title": "Xác nhận"
+        },
+        "cancel_subscription": "Hủy đăng ký",
+        "canceled_cta": "Kích hoạt lại đăng ký",
+        "canceled_date": "Đã hủy vào: {date}",
+        "canceled_state": "Đã hủy",
+        "expired_cta": "Kích hoạt đăng ký",
+        "expired_date": "Hết hạn vào: {date}",
+        "expired_description": "Tư cách thành viên của bạn đã hết hạn. Vui lòng kích hoạt lại để tiếp tục.",
+        "expired_state": "Hết hạn",
+        "month": "tháng",
+        "next_billing_date": "Lần thanh toán tiếp theo: {date}",
+        "privacy_policy": "Chính sách quyền riêng tư",
+        "started_on_date": "Bắt đầu vào {date}",
+        "subscription": "Gói đăng ký",
+        "terms_and_conditions": "Điều khoản và điều kiện",
+        "title": "Thanh toán",
+        "total": "Tổng cộng:"
+      },
+      "get_help": {
+        "title": "Nhận trợ giúp"
+      },
+      "my_account": {
+        "change_password": {
+          "confirm_password": "Xác nhận mật khẩu",
+          "current_password": "Mật khẩu hiện tại",
+          "new_password": "Mật khẩu mới",
+          "title": "Đổi mật khẩu"
+        },
+        "delete_cta": "Xóa tài khoản",
+        "delete_dialog": {
+          "close_cta": "Đóng",
+          "delete_cta": "Xóa tài khoản",
+          "deleting_cta": "Đang xóa...",
+          "description": "Bạn có chắc chắn muốn xóa tài khoản của mình không? Vui lòng lưu ý rằng khi xác nhận, bạn sẽ ngay lập tức mất quyền truy cập vào khu vực thành viên.",
+          "description_canceled": "Tài khoản của bạn đã được xóa thành công.",
+          "done_cta": "Xong",
+          "title": "Xác nhận"
+        },
+        "errors": {
+          "confirm_password_required": "Bắt buộc phải nhập mật khẩu xác nhận",
+          "current_password_invalid": "Mật khẩu hiện tại không hợp lệ",
+          "current_password_required": "Bắt buộc phải nhập mật khẩu hiện tại",
+          "email_max_length": "Email không được dài quá {maxLength} ký tự.",
+          "email_required": "Bắt buộc phải nhập email",
+          "email_taken": "Email đã được sử dụng",
+          "invalid_email": "Vui lòng nhập email hợp lệ.",
+          "name_invalid_characters": "Tên không được chứa số.",
+          "name_invalid_special_characters": "Tên không được chứa ký tự đặc biệt.",
+          "name_max_length": "Tên không được dài quá {maxLength} ký tự.",
+          "name_required": "Bắt buộc phải nhập tên",
+          "new_password_must_differ_from_current_password": "Mật khẩu mới phải khác với mật khẩu hiện tại",
+          "new_password_required": "Cần có mật khẩu mới",
+          "password_max_length": "Mật khẩu không được dài quá {maxLength} ký tự.",
+          "password_min_length": "Mật khẩu phải có ít nhất 6 ký tự.",
+          "passwords_must_match": "Mật khẩu phải trùng khớp"
+        },
+        "notifications": {
+          "notify_status_changes": "Thông báo cho tôi khi trạng thái thay đổi",
+          "notify_user_located": "Thông báo cho tôi khi định vị được người dùng",
+          "title": "Thông báo"
+        },
+        "profile": {
+          "email": "Địa chỉ email",
+          "name": "Họ tên",
+          "title": "Chi tiết hồ sơ"
+        },
+        "submit_cta": "Lưu thay đổi",
+        "success_title": "Tài khoản của bạn đa được cập nhật",
+        "title": "Thông tin chung"
+      },
+      "title": "Cài đặt"
+    },
+    "sex_offenders_search": {
+      "form": {
+        "city_placeholder": "Thành phố",
+        "errors": {
+          "first_name_required": "Tên là bắt buộc",
+          "last_name_required": "Cần phải có họ"
+        },
+        "first_name_placeholder": "Tên",
+        "last_name_placeholder": "Họ",
+        "state_placeholder": "Tất cả tiểu bang",
+        "submit_button": "Kiểm tra ngay",
+        "title": "Kiểm tra danh sách tội phạm tình dục",
+        "zip_placeholder": "Mã bưu chính"
+      },
+      "loading": {
+        "subtitle": "Vui lòng chờ trong khi chúng tôi truy xuất dữ liệu từ hệ thống đăng ký quốc gia.",
+        "title": "Kiểm tra danh sách tội phạm tình dục..."
+      },
+      "results": {
+        "back": "Lưng",
+        "continue": "Tiếp tục",
+        "empty_title": "Không tìm thấy tội phạm tình dục nào.",
+        "results_found": "Tìm thấy {count} kết quả",
+        "results_found_subtitle": "Hãy chọn phương án phù hợp nhất để tiếp tục.",
+        "search_again": "Tìm kiếm lại"
+      },
+      "title": "Tội phạm tình dục"
+    },
+    "sign_in": {
+      "description": "Nhập email của bạn để đăng nhập vào tài khoản",
+      "sign_up_link": "Đăng ký",
+      "sign_up_prompt": "Không có tài khoản?",
+      "title": "Đăng nhập"
+    },
+    "sign_up": {
+      "components": {
+        "sign_up_form": {
+          "continue_with_email": "Tiếp tục với Email",
+          "continue_with_facebook": "Tiếp tục với Facebook",
+          "continue_with_google": "Tiếp tục với Google",
+          "email_label": "Địa chỉ email",
+          "email_placeholder": "Địa chỉ email của bạn",
+          "errors": {
+            "email_exists": "Địa chỉ email này đã được đăng ký. Vui lòng thử đăng nhập hoặc sử dụng email khác.",
+            "invalid_email": "Vui lòng nhập email hợp lệ."
+          },
+          "or": "hoặc"
+        }
+      },
+      "title": "Đăng ký để biết vị trí chính xác của <brandColor>{phoneNumber}</brandColor>"
+    },
+    "status": {
+      "description": "Kiểm tra tiến độ bên dưới",
+      "detail_description": "Phát hiện vị trí",
+      "error_fetching_address": "Lỗi tìm nạp địa chỉ",
+      "link_name": "Liên kết cho {name}",
+      "load_more_button": "Tải thêm",
+      "loading_address": "Đang tải địa chỉ...",
+      "located_status": "Đã định vị",
+      "no_locations_available": "Không có yêu cầu",
+      "pending_description": "Đang chờ người nhận chia sẻ vị trí địa lý của họ",
+      "pending_status": "Đang chờ xử lý",
+      "ready_status": "Báo cáo đã được tạo",
+      "rejected_description": "Cải thiện tin nhắn của bạn để khuyến khích người nhận chia sẻ vị trí của họ",
+      "rejected_status": "Bị từ chối",
+      "reverse_lookup_description": "Tóm tắt dữ liệu công khai phát hiện được cho số điện thoại",
+      "reverse_lookup_report_for": "Báo cáo tra cứu ngược cho {phone}",
+      "title": "Trung tâm hoạt động"
+    },
+    "success": {
+      "account_link": "Truy cập tài khoản của bạn",
+      "click_below_to_account_your_link": "Nhấp vào bên dưới để truy cập tài khoản của bạn!",
+      "description": "Chúng tôi đã gửi chi tiết đơn hàng và thông tin đăng nhập tài khoản của bạn đến {email}. Bạn có thể truy cập tài khoản của mình ngay bây giờ",
+      "did_you_like_your_shopping_experience": "Bạn có thích trải nghiệm mua sắm của mình không?",
+      "more_details_feedback": "Chúng tôi hoan nghênh phản hồi chi tiết của bạn: <email>support@mobitrace.io</email>",
+      "no": "Không",
+      "thank_you_for_your_feedback": "Cảm ơn bạn đã phản hồi!",
+      "title": "Bạn đã thanh toán thành công",
+      "we_ll_work_on_making_it_better": "Chúng tôi sẽ cố gắng cải thiện dịch vụ!",
+      "yes": "Có"
+    },
+    "upsell": {
+      "cancel_button": "Không, cảm ơn",
+      "description": "Tận hưởng dịch vụ hỗ trợ cá nhân 24/7 và hỗ trợ kỹ thuật hàng đầu chỉ với một lần nhấp chuột.",
+      "footer_info": "Vui lòng lưu ý rằng, tùy thuộc vào khu vực của bạn, Thuế bán hàng {percentage}% có thể được cộng vào tổng số tiền cho đơn hàng của bạn",
+      "order_details": "Chi tiết đơn hàng:",
+      "products": {
+        "add_button": "Thêm",
+        "add_order_button": "Thêm với giá {price}",
+        "added_state": "Đã thêm",
+        "details_button": "Chi tiết",
+        "remove_button": "Xóa",
+        "scan_pro": {
+          "description": "Khám phá mọi khía cạnh của Mobitrace với sự hướng dẫn của đội chuyên gia hỗ trợ kỹ thuật của chúng tôi. Khám phá tất cả các tính năng đang hoạt động và tìm hiểu cách tận dụng tối đa.",
+          "dialog": "<p>Tăng tối đa trải nghiệm của bạn với Mobitrace bằng hỗ trợ từng bước, cá nhân hóa từ đội ngũ chuyên gia của chúng tôi. Khám phá mọi tính năng và nhận được nhiều giá trị nhất từ các dịch vụ của chúng tôi.</p><ul><li><strong>Theo dõi vị trí trơn tru.</strong>Dễ dàng theo dõi vị trí của ai đó bằng một liên kết duy nhất, dễ sử dụng. Đội ngũ của chúng tôi sẽ hướng dẫn bạn đi qua toàn bộ quá trình, đảm bảo mọi chi tiết kỹ thuật được xử lý cẩn thận.<li></li><strong>Hỗ trợ tạo hồ sơ toàn diện.<strong>Hợp tác với chúng tôi để khám phá tất cả thông tin bạn cần. Từ hồ sơ liên lạc đến mạng xã hội, chúng tôi giúp bạn có được toàn bộ thông tin về cá nhân bạn đang tìm.<li></li><strong>Tìm điện thoại bị mất hoặc bị đánh cắp.</strong>Nếu điện thoại của bạn bị mất, chúng tôi sẵn sàng giúp đỡ. Các công cụ tiên tiến của chúng tôi có thể nhanh chóng định vị thiết bị và hiển thị vị trí chính xác trên bản đồ.<li></li></strong>Bảo vệ tính bảo mật trực tuyến của bạn.</strong>Chúng tôi quét cơ sở dữ liệu để phát hiện xem số điện thoại hoặc email của bạn có bị bên thứ ba xâm nhập hay không, giúp bạn đón đầu các mối đe dọa trên mạng.</li></ul>",
+          "title": "ScanPRO"
+        },
+        "support_hotline": {
+          "description": "Đừng xếp hàng chờ trợ giúp! Với Hỗ trợ kỹ thuật ưu tiên, bạn có thể nhanh chóng nhận được sự hỗ trợ trực tiếp từ các chuyên gia kỹ thuật lành nghề của chúng tôi.",
+          "title": "Hỗ trợ ưu tiên 24/7"
+        }
+      },
+      "submit_button": "Thêm vào đơn hàng",
+      "subtotal": "Tổng từng phần",
+      "taxes": "Thuế bán hàng ({percentage}%)",
+      "title": "Tăng tối đa trải nghiệm Mobitrace của bạn!",
+      "total": "Tổng cộng"
+    }
+  },
+  "routes": {
+    "forgot_password": "forgot-password",
+    "loader": "loader",
+    "reset_password": "reset-password",
+    "sign_in": "sign-in",
+    "sign_up": "sign-up"
+  }
+}

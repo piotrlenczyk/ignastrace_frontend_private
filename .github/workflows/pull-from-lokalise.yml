@@ -1,0 +1,59 @@
+name: Pull from Lokalise
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Once per day at midnight
+  workflow_dispatch:
+
+# Add permissions needed for creating pull requests
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Download translations
+        uses: lokalise/lokalise-pull-action@v3.8.0
+        with:
+          api_token: ${{ secrets.LOKALISE_API_TOKEN }}
+          project_id: ${{ vars.LOKALISE_PROJECT_ID }}
+          async_mode: true
+          base_lang: en
+          file_format: json
+          translations_path: |
+            src/locales
+          additional_params: |
+            --placeholder-format=icu
+            --replace-breaks=false
+            --indentation=2sp
+            --json-unescaped-slashes=true
+
+      - name: Discard EN file changes
+        run: git checkout HEAD -- src/locales/en.json
+
+      - name: Create Pull Request
+        id: create-pr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: 'chore: update translations from Lokalise'
+          branch: lokalise-update/translations-${{ github.run_id }}
+          title: 'Update translations from Lokalise'
+          body: 'Latest translations fetched from Lokalise.'
+          base: main
+
+      - name: Send a Slack notification
+        if: steps.create-pr.outputs.pull-request-number != ''
+        uses: slackapi/slack-github-action@v2.1.0
+        with:
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+          webhook-type: incoming-webhook
+          payload: |
+            text: "Mobitrace Frontend: New translations PR created from Lokalise :parachute: <${{ steps.create-pr.outputs.pull-request-url }}|View PR #${{ steps.create-pr.outputs.pull-request-number }}>"

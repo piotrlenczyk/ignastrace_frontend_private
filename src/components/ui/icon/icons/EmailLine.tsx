@@ -1,0 +1,22 @@
+/* eslint-disable simple-import-sort/imports  */
+/* eslint-disable import/newline-after-import  */
+import { cn } from '@/libs/utils';
+import { type IconProps, sizes } from '../iconDefinition';
+export const IconEmailLine = ({
+  className,
+  color = 'currentColor',
+  size = 'fontSize',
+  ...props
+}: IconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={sizes[size]}
+    height={sizes[size]}
+    viewBox="0 0 24 24"
+    fill={color}
+    className={cn('inline-block shrink-0', className)}
+    {...props}
+  >
+    <path d="M19.25 4H4.75C3.235 4 2 5.235 2 6.75V17.25C2 18.765 3.235 20 4.75 20H19.25C20.765 20 22 18.765 22 17.25V6.75C22 5.235 20.765 4 19.25 4ZM4.75 5.5H19.25C19.94 5.5 20.5 6.06 20.5 6.75V7.725L12 12.635L3.5 7.725V6.75C3.5 6.06 4.06 5.5 4.75 5.5ZM19.25 18.5H4.75C4.06 18.5 3.5 17.94 3.5 17.25V9.46L12 14.37L20.5 9.46V17.25C20.5 17.94 19.94 18.5 19.25 18.5Z" />
+  </svg>
+);

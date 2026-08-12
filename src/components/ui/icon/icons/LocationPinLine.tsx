@@ -1,0 +1,29 @@
+/* eslint-disable simple-import-sort/imports  */
+/* eslint-disable import/newline-after-import  */
+import { cn } from '@/libs/utils';
+import { type IconProps, sizes } from '../iconDefinition';
+export const IconLocationPinLine = ({
+  className,
+  color = 'currentColor',
+  size = 'fontSize',
+  ...props
+}: IconProps) => (
+  <svg
+    width={sizes[size]}
+    height={sizes[size]}
+    viewBox="0 0 24 24"
+    fill={color}
+    xmlns="http://www.w3.org/2000/svg"
+    className={cn('inline-block shrink-0', className)}
+    {...props}
+  >
+    <g id="location-pin">
+      <path
+        id="Vector"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M11.04 21.345C11.28 21.63 11.63 21.795 12 21.795C12.37 21.795 12.72 21.63 12.96 21.345L18.145 15.12C19.34 13.685 20 11.865 20 10C20 5.59 16.41 2 12 2C7.59 2 4 5.59 4 10C4 11.87 4.66 13.685 5.855 15.12L11.04 21.345ZM5.5 10C5.5 6.415 8.415 3.5 12 3.5C15.585 3.5 18.5 6.415 18.5 10C18.5 11.52 17.965 12.995 16.995 14.16L12 20.155L7.005 14.16C6.035 12.995 5.5 11.515 5.5 10ZM8.5 10C8.5 11.93 10.07 13.5 12 13.5C13.93 13.5 15.5 11.93 15.5 10C15.5 8.07 13.93 6.5 12 6.5C10.07 6.5 8.5 8.07 8.5 10ZM10 10C10 8.895 10.895 8 12 8C13.105 8 14 8.895 14 10C14 11.105 13.105 12 12 12C10.895 12 10 11.105 10 10Z"
+      />
+    </g>
+  </svg>
+);

@@ -1,0 +1,1882 @@
+{
+  "common": {
+    "back": "Geri",
+    "close": "Kapat",
+    "close_menu": "Menüyü Kapat",
+    "copied_to_clipboard": "Panoya kopyalandı",
+    "email_label": "E-posta adresi",
+    "errors": {
+      "email_exists": "Bu e-posta zaten başka bir kullanıcı tarafından kullanılıyor",
+      "rate_limit_error": "Günlük limitinize ulaştınız. Lütfen yarın tekrar deneyin.",
+      "rate_limit_error_title": "Sınıra ulaşıldı",
+      "server_error": "Sunucu Hatası",
+      "server_error_description": "İsteğiniz işleme alınırken bir hata oluştu. Lütfen tekrar deneyin."
+    },
+    "login": "Oturum Aç",
+    "logout": "Oturumu Kapat",
+    "open_menu": "Menüyü Aç",
+    "settings": "Ayarlar",
+    "subscription": "Abonelik"
+  },
+  "components": {
+    "country_selector": {
+      "no_results": "Ülke kodu bulunamadı.",
+      "placeholder": "Ülke kodunu seçin...",
+      "search_placeholder": "Ülkeye veya koda göre arayın..."
+    },
+    "forms": {
+      "change_email": {
+        "confirmation_email_sent_description": "Yeni adrese bir onay e-postası gönderdik. Lütfen değişikliği onaylayın.",
+        "confirmation_email_sent_title": "Onay e-postası gönderildi",
+        "current_email_label": "Mevcut e-posta",
+        "current_password_label": "Güvenliğiniz için mevcut parolanızı girin",
+        "current_password_placeholder": "Mevcut parolanızı girin",
+        "errors": {
+          "current_password_required": "Mevcut parola gereklidir.",
+          "invalid_email": "Geçerli bir e-posta girin."
+        },
+        "new_email_label": "Yeni e-posta",
+        "new_email_placeholder": "Yeni e-postayı girin",
+        "save_button": "E-postayı güncelle"
+      },
+      "change_password": {
+        "confirm_password_label": "Yeni Parolayı Onaylayın",
+        "confirm_password_placeholder": "Yeni parolanızı onaylayın",
+        "current_password_label": "Mevcut Parola",
+        "current_password_placeholder": "Mevcut parolanızı girin",
+        "errors": {
+          "confirm_password_min_length": "En az 6 karakterden oluşan yeni parolayı onaylayın",
+          "current_password_required": "Geçerli parola gereklidir",
+          "new_password_min_length": "Yeni parola en az 6 karakterden oluşmalıdır",
+          "new_password_required": "Yeni parola zorunludur",
+          "passwords_must_match": "Parolalar eşleşmelidir"
+        },
+        "new_password_label": "Yeni Parola",
+        "new_password_placeholder": "Yeni parolanızı girin",
+        "save_button": "Değişiklikleri Kaydet"
+      },
+      "delete_account": {
+        "cancel_button": "İptal et",
+        "confirm_button": "Evet, hesabım silinsin",
+        "confirmation_message": "Hesabınız başarıyla silindi.",
+        "delete_account_button": "Hesabı sil",
+        "description": "Bu işlem geri alınamaz. Yalnızca kararınızdan eminseniz devam edin.",
+        "dialog_description": "Bu işlem geri alınamaz. Bu işlem, hesabınızı kalıcı olarak silecek ve verilerinizi sunucularımızdan kaldıracaktır.",
+        "dialog_title": "Kesinlikle emin misiniz?",
+        "title": "Hesabı Sil"
+      },
+      "edit_company": {
+        "add_social_network_button": "Sosyal ağ ekle",
+        "address_label": "Adres",
+        "address_placeholder": "Şirket adresini girin",
+        "company_name_label": "Şirket Adı",
+        "company_name_placeholder": "Şirket adını girin",
+        "errors": {
+          "company_name_required": "Şirket adı gereklidir",
+          "url_invalid": "Lütfen geçerli bir URL girin"
+        },
+        "hide_address_map": "Haritayı gizle",
+        "horizontal_logo_alt_text": "Şirketin yatay logosu",
+        "horizontal_logo_description": "Önerilen: JPEG, PNG. Maks. 5MB. 600x200px",
+        "horizontal_logo_label": "Yatay logo",
+        "opening_hours_label": "Çalışma Saatleri",
+        "opening_hours_placeholder": "Ör., Pzt-Cum: 09:00-17:00, Cmt: 10:00-14:00, Paz: Kapalı",
+        "profile_url_placeholder": "Profil URL'si",
+        "save_button": "Değişiklikleri kaydet",
+        "show_address_map": "Haritayı göster",
+        "social_networks_label": "Sosyal ağlar",
+        "squared_logo_alt_text": "Şirketin kare logosu",
+        "squared_logo_label": "Kare logo",
+        "website_label": "Web Sitesi",
+        "website_placeholder": "https://www.ornek.com"
+      },
+      "edit_profile": {
+        "description": "Kişisel bilgilerinizi güncelleyin",
+        "errors": {
+          "first_name_required": "Ad gereklidir.",
+          "invalid_phone": "Telefon numarası geçersiz.",
+          "last_name_required": "Soyadı gereklidir."
+        },
+        "first_name_label": "Ad",
+        "first_name_placeholder": "Adınızı girin",
+        "last_name_label": "Soyadı",
+        "last_name_placeholder": "Soyadınızı girin",
+        "phone_label": "Telefon Numarası",
+        "phone_placeholder": "Telefon numaranızı girin",
+        "privacy_label": "Gizlilik",
+        "profile_picture_alt": "Profil fotoğrafı",
+        "profile_picture_label": "Profil fotoğrafı",
+        "public_email_label": "E-postamı profilimde herkes için görünür yap",
+        "public_phone_label": "Telefon numaramı profilimde herkes için görünür yap",
+        "save_button": "Değişiklikleri Kaydet",
+        "title": "Profili Düzenleyin",
+        "upload_description": "Önerilen: JPEG, PNG. Maks. 5MB. 400x400px",
+        "upload_picture": "Yeni fotoğraf yükleyin",
+        "whatsapp_label": "Bu numarayla bir WhatsApp hesabım var"
+      },
+      "forgot_password": {
+        "cancel_button": "İptal et",
+        "email_label": "E-posta",
+        "email_placeholder": "E-posta adresiniz",
+        "errors": {
+          "invalid_email": "Lütfen geçerli bir e-posta girin."
+        },
+        "submit_button": "Parolayı gönder",
+        "subtitle": "E-postanızı girin, parolanızı gönderelim",
+        "success": {
+          "done": "Bitti",
+          "line_1": "Parolanızı şuraya gönderdik:",
+          "line_2": "Oturum açmak için lütfen e-postanızı kontrol edin.",
+          "title": "Parola gönderildi"
+        },
+        "title": "Parolanızı mı unuttunuz?"
+      },
+      "reset_password": {
+        "confirm_password_label": "Yeni Parolayı Onaylayın",
+        "confirm_password_placeholder": "Yeni parolanızı onaylayın",
+        "errors": {
+          "password_min_length": "Parola en az 6 karakterden oluşmalıdır.",
+          "passwords_do_not_match": "Parolalar eşleşmiyor."
+        },
+        "new_password_label": "Yeni Parola",
+        "new_password_placeholder": "Yeni parolanızı girin",
+        "submit_button": "Parolayı Sıfırla"
+      },
+      "sign_in": {
+        "email_label": "E-posta adresi",
+        "email_placeholder": "E-posta adresiniz",
+        "errors": {
+          "account_not_found": "Mobitrace hesabınızı bulamadık.",
+          "invalid_credentials": "Girdiğiniz e-posta ve parola, kayıtlarımızla eşleşmiyor. Lütfen oturum açma bilgilerinizi kontrol edip tekrar deneyin.",
+          "invalid_email": "Lütfen geçerli bir e-posta girin.",
+          "password_min_length": "Parola en az 6 karakterden oluşmalıdır."
+        },
+        "forgot_password": "Parolanızı mı unuttunuz?",
+        "or": "veya",
+        "password_label": "Parola",
+        "password_placeholder": "Parolanız",
+        "submit_button": "Oturum aç",
+        "title": "Hesabınızda oturum açın"
+      },
+      "stripe_form": {
+        "card_name_placeholder": "Kartın üzerindeki isim",
+        "credit_card_label": "Kredi kartı",
+        "credit_card_placeholder": "1234 1234 1234 1234",
+        "cvc_placeholder": "CVC",
+        "errors": {
+          "apple_pay_not_available": "Apple Pay desteklenmiyor",
+          "apple_pay_not_available_description": "Bu cihaz ya da tarayıcı için bu ödeme yöntemi etkinleştirilmemiş. Lütfen farklı bir ödeme yöntemi seçin.",
+          "card_name_required": "Lütfen kartın üzerindeki ismi girin.",
+          "card_number_required": "Lütfen kart numarasını girin.",
+          "cvc_required": "Lütfen CVC'yi girin.",
+          "expiration_date_required": "Lütfen son kullanma tarihini girin.",
+          "google_pay_not_available": "Google Pay desteklenmiyor",
+          "google_pay_not_available_description": "Bu cihaz ya da tarayıcı için bu ödeme yöntemi etkinleştirilmemiş. Lütfen farklı bir ödeme yöntemi seçin.",
+          "name_invalid_characters": "Ad, sayı içeremez.",
+          "name_invalid_special_characters": "İsim özel karakterler içeremez.",
+          "stripe_generic_error": "Ödeme yönteminizi doğrulayamıyoruz. Lütfen farklı bir ödeme yöntemi seçip tekrar deneyin.",
+          "stripe_generic_error_title": "Ödeme hatası",
+          "zip_code_invalid_format": "Lütfen geçerli bir ZIP kodu girin."
+        },
+        "expiration_date_placeholder": "AA/YY",
+        "zip_code_placeholder": "Posta Kodu (İsteğe bağlı)"
+      }
+    },
+    "image_upload_input": {
+      "upload_button_text": "Yeni fotoğraf yükle",
+      "upload_description": "Önerilen: JPEG, PNG. Maks. 5MB. 400x400px",
+      "upload_label": "Profil fotoğrafı"
+    },
+    "phone_input": {
+      "errors": {
+        "invalid_phone": "Lütfen geçerli bir telefon numarası girin."
+      },
+      "label": "Bulmak istediğiniz numarayı girin",
+      "no_results": "Ülke kodu bulunamadı.",
+      "phone_placeholder": "123456789",
+      "search_placeholder": "Ülkeye veya koda göre arayın...",
+      "submit": "Konumunu bul"
+    },
+    "settings_navigator": {
+      "change_email": {
+        "description": "E-posta adresinizi güncelleyin",
+        "label": "E-postayı Değiştirin"
+      },
+      "change_password": {
+        "description": "Hesap parolanızı güncelleyin",
+        "label": "Parolayı Değiştirin"
+      },
+      "company_profile": {
+        "description": "Şirket bilgilerinizi güncelleyin",
+        "label": "Şirket Profili"
+      },
+      "delete_account": {
+        "description": "Hesabınızı ve ilişkili tüm verileri silin",
+        "label": "Hesabı Sil"
+      },
+      "edit_profile": {
+        "description": "Kişisel bilgilerinizi güncelleyin",
+        "label": "Profili Düzenleyin"
+      },
+      "no_access": "Bu bölüme erişiminiz yok. Bu içerik yalnızca profesyonel kullanıcılara yöneliktir.",
+      "notifications": {
+        "description": "E-posta bildirim tercihlerinizi yönetin",
+        "label": "Bildirimler"
+      },
+      "subscription": {
+        "description": "Abonelik planınızı yönetin",
+        "label": "Abonelik"
+      },
+      "title": "Ayarlar"
+    }
+  },
+  "consent": {
+    "accept": "Kabul ediyorum",
+    "decline": "Reddet",
+    "decline_accept": "Ana sayfaya dön",
+    "decline_description": "Mesajlaşma hizmetimizi kullanabilmeniz için (özellikle ABD ve Kanada numaraları) izninize ihtiyacımız var. İzniniz olmadan bu özellik kullanılamaz. Devam etmek için istediğiniz zaman geri dönebilirsiniz.",
+    "decline_title": "Onayınız Gerekiyor",
+    "description": "Telefonunuzu bulabilmek için size bir SMS göndermemiz gerekiyor. Lütfen SMS almayı kabul ettiğinizi onaylayın.",
+    "title": "Onay gerekiyor"
+  },
+  "contest": {
+    "agree": "Kabul ediyorum",
+    "decline": "Reddet",
+    "description": "Girilen telefon numarasının bana ait olduğunu onaylıyorum ve mesaj almayı kabul ediyorum.",
+    "title": "Mesaj Almak İster misiniz?"
+  },
+  "footer": {
+    "brand": "Mobitrace.io",
+    "description": "Mobitrace ile istediğiniz cep telefonunun konumunu hızlı ve kolay bir şekilde öğrenin.",
+    "links": {
+      "about_us": "Hakkımızda",
+      "cancel_subscription": "Aboneliği İptal Et",
+      "contact": "İletişim",
+      "contacts": "İletişim Bilgileri",
+      "cookie_policy": "Çerez Politikası",
+      "faqs": "SSS",
+      "home": "Ana Sayfa",
+      "location_number": "Numaradan Konum",
+      "login": "Oturum Aç",
+      "pricing": "Fiyatlandırma",
+      "privacy policy": "Gizlilik Politikası",
+      "reverse_lookup": "Numara Sorgulama",
+      "terms_and_conditions": "Hüküm ve Koşullar"
+    },
+    "rights": "Tüm hakları saklıdır."
+  },
+  "header": {
+    "about": "Hakkında",
+    "home": "Ana Sayfa",
+    "open_menu": "Menüyü Aç",
+    "sign_in": "Giriş Yap",
+    "sign_up": "Kaydol"
+  },
+  "language": {
+    "english": "English",
+    "spanish": "Español"
+  },
+  "navigation": {
+    "about_us": "Hakkımızda",
+    "contact": "İletişim",
+    "dashboard": "Kontrol Paneli",
+    "faqs": "SSS",
+    "home": "Ana Sayfa",
+    "mobile_dialog_description": "Bu iletişim kutusu, ana gezinti bağlantılarını içermektedir",
+    "mobile_dialog_title": "Ana gezinti",
+    "pricing": "Fiyatlandırma",
+    "settings": "Ayarlar"
+  },
+  "pages": {
+    "about": {
+      "cards": {
+        "card_1": {
+          "description": "<p>Mobitrace olarak konum takibini basit, güvenli ve güvenilir hâle getiriyoruz. Misyonumuz, gerçek zamanlı telefon konum takibi için gelişmiş teknolojileri kullanarak sevdikleriniz ya da önemli çalışanlarınızla bağlantıda kalmanıza yardımcı olmak.</p>",
+          "title": "Misyonumuz"
+        },
+        "card_2": {
+          "description": "<p>Mobitrace, telefon takibini detaylı genel bilgi hizmetleriyle bir araya getirir:</p><ul><li>Telefon Takibi: Alıcıların konumlarını paylaşmalarına imkân vermek için bağlantıyla özel bir metin mesajı gönderin.</li><li>Derin Veri Arama: İletişim bilgilerine, konum geçmişine ve çok daha fazlasına erişin.</li><li>Küresel Kapsam: Tüm telefonlarda, şebekelerde ve ülkelerde çalışır; dilediğiniz yerden dilediğiniz telefon numarasının konumunu öğrenebilirsiniz.</li></ul>",
+          "title": "Ne sunuyoruz?"
+        },
+        "card_3": {
+          "description": "<ul><li>Kolaylık: Bir URL oluşturun, gönderin ve onaylandıktan sonra takibe başlayın.</li><li>Güvenlik: Tüm takip işlemleri izne dayalıdır ve güvenlidir.</li><li>Gerçek Zamanlı Hassasiyet: Güncel, kesin konum verilerine ulaşın.</li></ul>",
+          "title": "Neden Mobitrace'i seçmelisiniz?"
+        },
+        "card_4": {
+          "description": "<p>İster çocuğu için endişelenen bir ebeveyn ister arkadaşını merak eden bir dost olun, Mobitrace sizin için en önemli kişilerle bağlantıda kalmanıza yardımcı olur. Takip özellikleri ve detaylı bilgilerin sizi olan bitenden haberdar etmek ve güvende tutmak için kullanıldığı Mobitrace'i seçtiğiniz için teşekkür ederiz.</p>",
+          "title": "Bize katılın"
+        }
+      },
+      "description": "Cep telefonlarının konumunu kolayca bulmak ve detaylı genel bilgilere ulaşmak için güvenilir hizmet sağlayıcınız Mobitrace'e hoş geldiniz. ABD, Birleşik Krallık, Avrupa ve diğer bölgelerdeki en iyi küresel veri sağlayıcılarla çalışıyor, olan bitenden haberdar olmanız ve bağlantıda kalmanız için doğru telefon ve adres aramaları sağlıyoruz.",
+      "title": "Hakkımızda"
+    },
+    "cancellation": {
+      "form": {
+        "email_label": "E-posta adresiniz",
+        "error_not_found_description": "Lütfen kontrol edip tekrar deneyin",
+        "error_not_found_title": "Hay aksi! E-posta ile eşleşen hesap yok.",
+        "error_not_subscribed_title": "Abone değilsiniz!",
+        "errors": {
+          "invalid_email": "Lütfen geçerli bir e-posta girin."
+        },
+        "submit": "Aboneliği iptal et",
+        "success_description": "Bundan sonra sizden ücret alınmayacaktır.",
+        "success_title": "Abonelikten ayrıldınız!"
+      },
+      "info_email": "Kaydolmak için hangi e-postayı kullandığınızı hatırlamıyorsanız gelen kutunuzda \"mobitrace.io\"dan gelen e-postalara bakın. Yine de bulamazsanız <link>buradan</link> müşteri destek ekibimize ulaşın.",
+      "info_user": "Hesabınızda oturum açtıktan sonra \"Üyelik\" sekmesine gidip \"Aboneliği İptal Et\" seçeneğine tıklayarak da aboneliğinizi iptal edebilirsiniz.",
+      "subtitle": "Hesabınızı oluşturmak için kullandığınız e-postayı girerek aboneliğinizi kolayca iptal edebilirsiniz.",
+      "title": "Aboneliği İptal Edin"
+    },
+    "checkout": {
+      "action_form": "Konumu öğren",
+      "agree_description": "Devam ederek şimdi sizden {trialPrice} tahsil edilmesini ve <terms>Kullanım Şartlarımızı</terms> ve <privacy> Gizlilik Politikamızı </privacy> kabul etmiş olursunuz. Ödemeniz kredi kartı ekstrenizde \"mobitrace.io\" olarak görünecektir. 7 günün ardından, aboneliğiniz sona erene kadar her 4 haftada bir sizden {subscriptionPrice} tahsil edilecektir. Aboneliğinizi dilediğiniz zaman iptal edebilirsiniz. Sorularınız için support@mobitrace.io adresinden ya da +1 360 525 2573 numaralı telefondan bize ulaşabilirsiniz.",
+      "agree_description_24": "Ödemeye devam ederek bugün {trialPrice} karşılığında 24 saatlik deneme süresini başlatmayı kabul etmiş olursunuz. Deneme süresinin bitiminden önce iptal etmediğiniz takdirde aboneliğiniz her 4 haftada bir {subscriptionPrice} karşılığında otomatik olarak yenilenecektir. İstediğiniz zaman iptal edebilirsiniz. Devam ederek <terms>Kullanım Şartlarımızı</terms> kabul etmiş ve <privacy>Gizlilik Politikamızı</privacy> onaylamış olursunuz.",
+      "agree_description_reactivate": "Devam ederek aboneliğinizi yeniden etkinleştirmeyi ve şimdi sizden {subscriptionPrice} tahsil edilmesini kabul etmiş olursunuz. Ödemeniz kredi kartı ekstrenizde \"mobitrace.io\" olarak görünecektir. Aboneliğiniz sona erene dek her 4 haftada bir sizden {subscriptionPrice} tahsil edilecektir. Aboneliğinizi dilediğiniz zaman iptal edebilirsiniz. Sorularınız için support@mobitrace.io adresinden ya da +1 360 525 2573 numaralı telefondan bize ulaşabilirsiniz.",
+      "agree_description_subscription": "Devam ederek, {subscriptionPrice} adresinden hemen ücretlendirilmeyi kabul etmiş ve <terms>Kullanım Koşullarımızı</terms> ile <privacy>Gizlilik Politikamızı</privacy> onaylamış olursunuz. Ödemeniz, kredi kartı ekstrenizde \"mobitrace.io\" olarak görünecektir. Aboneliğiniz sona erene kadar her 4 haftada bir {subscriptionPrice} adresinden ücretlendirileceksiniz. İstediğiniz zaman iptal edebilirsiniz. Herhangi bir sorunuz için support@mobitrace.io adresinden veya +1 360 525 2573 numaralı telefondan bize ulaşabilirsiniz.",
+      "back_description": "Eğer 7 günlük deneme süresi içinde tam olarak memnun kalmazsanız, sadece bize bildirin ve biz de memnuniyetle paranızın tamamını iade edelim.",
+      "back_description_24": "24 saatlik deneme süresi içinde tam olarak memnun kalmazsanız bize bildirmeniz yeterlidir. Böyle bir durumda tam para iadesi yapmaktan mutluluk duyarız.",
+      "back_title": "Para İadesi",
+      "cancel_description": "Kontrol panelinizden ya da <email>support@mobitrace.io</email> adresinden bize ulaşarak istediğiniz zaman iptal edebilirsiniz.",
+      "cancel_title": "Dilediğiniz zaman iptal edin",
+      "loading": "Ödemeniz işleme alınıyor…",
+      "title": "Konumunu öğrenin:",
+      "total": "Ödenecek toplam:",
+      "trust_100": "%100 Güvenli Ödeme",
+      "trust_cancel": "Dilediğiniz zaman iptal edin"
+    },
+    "contact": {
+      "contact_information": {
+        "company_description": "<strong>Amerika Birleşik Devletleri</strong><br>800 N King Street Suite 304-1119<br>Wilmington, DE 19801 ABD</br></br><strong>Birleşik Arap Emirlikleri</strong></br>Building A1, Dubai Digital Park</br>Dubai Silicon Oasis, Dubai</br>IFZA Business Park, DDP</br>Premises No. 5342-001</br>Birleşik Arap Emirlikleri</br></br><strong>İrlanda</strong></br>40 Mespil Road</br>Dublin 4, İrlanda",
+        "company_title": "Konumlar",
+        "email_description": "support@mobitrace.io",
+        "email_title": "E-posta",
+        "phone_description": "+1-360-525-2573",
+        "phone_title": "Telefon",
+        "title": "İletişim bilgileri"
+      },
+      "contact_us": "Bize Ulaşın",
+      "form": {
+        "billing_question": "Fatura sorusu",
+        "email_label": "E-posta",
+        "errors": {
+          "invalid_email": "Lütfen geçerli bir e-posta girin.",
+          "invalid_name_format": "Lütfen geçerli bir ad girin.",
+          "invalid_surname_format": "Lütfen geçerli bir soyadı girin.",
+          "max_length": "Karakter sınırını aştınız.",
+          "message_max_length": "Mesaj {maxLength} karakterden uzun olamaz.",
+          "message_required": "Lütfen mesajınızı girin.",
+          "name_required": "Lütfen adınızı girin.",
+          "surname_required": "Lütfen soyadınızı girin."
+        },
+        "message_label": "Mesaj",
+        "name_label": "Ad",
+        "other": "Diğer",
+        "subject_label": "Konu",
+        "subject_placeholder": "Seç",
+        "submit": "Mesajı Gönder",
+        "submitted": "Mesajınız başarıyla gönderildi! Ekibimiz önümüzdeki 2 saat içinde sizinle iletişime geçecektir. ",
+        "submitted_title": "Mesaj gönderildi",
+        "suggested_improvement": "İyileştirme önerisi",
+        "surname_label": "Soyadı",
+        "technical_issue": "Teknik sorun",
+        "title": "Bize ulaşın"
+      },
+      "subtitle": "Sorunuz, geri bildiriminiz veya yardıma ihtiyacınız mı var?<br/> Bize ulaşabilirsiniz!",
+      "title": "Yardımcı olmak için buradayız"
+    },
+    "error": {
+      "body": "Lütfen daha sonra tekrar deneyin ya da sorun devam ederse destek ekibine ulaşın.",
+      "cta": "Ana Sayfaya Git",
+      "title": "Hay Aksi! Bir Hata Oluştu"
+    },
+    "find_by_link": {
+      "find_by_link": "Bağlantıyla Bul",
+      "form": {
+        "errors": {
+          "max_length": "Maks. limit: 255 karakter.",
+          "min_length": "Bağlantı en az {n} karakter uzunluğunda olmalıdır",
+          "required": "Bağlantı gereklidir"
+        },
+        "linkLabel": "Bağlantınıza isim verin",
+        "linkPlaceholder": "ör. Whatsapp için bağlantı",
+        "submitButton": "Bağlantımı oluştur"
+      },
+      "steps": {
+        "step1": "Takip bağlantınızı kişiselleştirin",
+        "step2": "İstediğiniz mesajlaşma uygulaması üzerinden paylaşın",
+        "step3": "Durumu hakkında bildirim alın",
+        "step4": "İlgili kişi bağlantıya dokunduktan sonra konumunu görüntüleyin"
+      },
+      "title": "Özel bağlantınızı oluşturun"
+    },
+    "find_by_link_success": {
+      "body": "Bu bağlantıyı, takip etmek istediğiniz kişiyle paylaştığınızdan emin olun.",
+      "generateNewCTA": "Yeni bağlantı oluştur",
+      "statusCTA": "Durumu kontrol et",
+      "subtitle": "Bağlantınızı aşağıda bulabilirsiniz",
+      "title": "İşlem başarılı"
+    },
+    "find_by_number_send_message": {
+      "CTA": "Gönder",
+      "errors": {
+        "empty": "Bu alan boş bırakılamaz",
+        "max_length": "Metin çok uzun. Maksimum limit {n} karakterdir."
+      },
+      "extra_info": {
+        "bullet_1": "Gönderenin adı \"Mobitrace\" olarak görünecektir.",
+        "bullet_2": "Her mesaj, alıcının tıklaması gereken özel bir bağlantı içerecektir."
+      },
+      "find_by_number": "Numarayla Bul",
+      "label": "Mesaj",
+      "placeholder": "Mesajınızı buraya girin.",
+      "title": "<brandColor>{phoneNumber}</brandColor> için konum aranıyor"
+    },
+    "find_by_number_send_message_success": {
+      "cta": "Durumu kontrol et",
+      "description": "Mesajınız <strong>{phoneNumber}</strong> numaralı telefona gönderildi. Telefonun konumu bulunur bulunmaz size haber vereceğiz.",
+      "title": "İşlem başarılı!"
+    },
+    "forgot_password": {
+      "back_to_login": "Oturum Aç",
+      "description": "E-postanızı girin, parolanızı sıfırlamak için izlemeniz gereken talimatları gönderelim",
+      "remember_password": "Parolanızı mı unuttunuz?",
+      "title": "Parolayı Sıfırla"
+    },
+    "index": {
+      "faqs": {
+        "question_1": {
+          "answer": "Siz telefon numarasını girdikten sonra ilgili kişi konumunu paylaşmaya onay verirse tam konumunu öğrenebilirsiniz.",
+          "question": "Telefon numarasıyla birinin konumunu nasıl öğrenebilirim?"
+        },
+        "question_2": {
+          "answer": "Evet, coğrafi konum belirleme yasaldır ancak gizlilik yasaları uyarınca ilgili kişinin konumunu paylaşmak için açık onay gerekir.",
+          "question": "Üçüncü bir tarafın coğrafi konumunu öğrenmek yasal mı?"
+        },
+        "question_3": {
+          "answer": "Hayır, herhangi bir uygulama veya yazılım yüklenmesi gerekmez. Her şey hizmetimiz aracılığıyla uzaktan halledilir.",
+          "question": "Bir telefon numarasını takip etmek için uygulama yüklemem gerekiyor mu?"
+        },
+        "question_4": {
+          "answer": "Hizmetimiz, kısa mesaj alabildikleri sürece akıllı telefonlardan eski modellere kadar tüm telefon türlerini destekler.",
+          "question": "Ne tür telefonlar destekleniyor?"
+        },
+        "question_5": {
+          "answer": "Evet, hizmetimiz konum veya operatörden bağımsız olarak dünya çapında çalışır.",
+          "question": "Dünyanın herhangi bir yerindeki telefon numarasının konumunu öğrenebilir miyim?"
+        },
+        "question_6": {
+          "answer": "Hizmetimiz, gelişmiş GPS teknolojisini kullanarak tam adres de dâhil olmak üzere kesin konum bilgilerini sağlar.",
+          "question": "Coğrafi konum ne kadar doğru?"
+        },
+        "question_7": {
+          "answer": "Araştırmak istediğiniz telefon numarasını girin ve gerisini Mobitrace'e bırakın. Sistemimiz, bu numarayla ilgili mevcut tüm bilgilere ulaşmak için farklı veri tabanlarını tarar. Çoğu sorgulama anında sonuç verse de daha ayrıntılı aramalar biraz daha uzun sürebilir. Mobitrace'in numara sorgulama aracını kullandığınızda ne kadar güçlü ve etkili olduğunu hemen göreceksiniz.",
+          "question": "Telefon Numarası Sorgulama nasıl çalışıyor?"
+        },
+        "question_8": {
+          "answer": "Mobitrace'in ters telefon arama teknolojisi son derece gelişmiştir. Bir arama yaptığınızda, kamu kayıtları, çevrimiçi dizinler ve hatta daha az görünür veri noktaları da dahil olmak üzere çok çeşitli kaynakları araştırır. İlgili bilgi bulunursa, sizin için görüntülenecektir. Kullanılabilirlik her numara için erişilebilir verilere bağlı olduğundan, her aramanın anında sonuç vermeyebileceğini lütfen unutmayın.",
+          "question": "Mobitrace her numara hakkında bilgi veriyor mu?"
+        },
+        "question_9": {
+          "answer": "Evet, kesinlikle! Bankanızdan aradığını söyleyen ve şüpheli bir çekim işlemini durdurmak için şifrenizi isteyen birinden telefon aldığınızı ya da bir ödül kazandığınızı ve ödülünüzü talep etmek için bir bağlantıya tıklamanız gerektiğini söyleyen bir mesaj aldığınızı düşünün. Her iki durum da maddi kayba veya kişisel bilgilerinizin çalınmasına yol açabilir. Mobitrace, bilmediğiniz numaraların arkasında kimin olduğunu doğrulamanıza yardımcı olur. Hızlı bir numara sorgulama, sizi olası dolandırıcılıklara karşı uyarabilir ve verilerinizi ve finansal varlıklarınızı koruyabilir.",
+          "question": "Mobitrace telefon ve mesaj dolandırıcılıklarından kaçınmama yardımcı olabilir mi?"
+        },
+        "title": "SSS"
+      },
+      "hero": {
+        "100": "100%",
+        "card_address": "29 Willow Street, Hackney Wick, Londra E9 5EN, Birleşik Krallık",
+        "card_date": "27 Eyl 2024   18:46",
+        "card_phone": "+44 633 123 456",
+        "card_title": "Konum bulundu!",
+        "confidential": "gizli",
+        "iphone_alt": "konum işaretçisiyle Londra haritasını gösteren bir akıllı telefon",
+        "secure": "Güvenli",
+        "ssl_encription": "SSL şifreleme",
+        "subtitle": "Mobitrace.io ile SMS ya da bağlantı üzerinden gerçek zamanlı telefon konumlarını isteyebilirsiniz. Takip yalnızca alıcının açık izni üzerine gerçekleştirilir.",
+        "title": "Bir cep telefonunun konumunu öğrenin"
+      },
+      "how_does_it_work": {
+        "step_1": {
+          "description": "Konumunu öğrenmek istediğiniz telefon numarasını girin ve alıcıya gönderilecek SMS mesajını kişiselleştirin.",
+          "title": "Bir telefon numarası girin"
+        },
+        "step_2": {
+          "description": "Mobitrace, özel SMS'inizi göndererek alıcıdan konumunu paylaşmasını ister.",
+          "title": "Konum isteği gönderin"
+        },
+        "step_3": {
+          "description": "Alıcı kabul ettikten sonra onun tam konumunu içeren bir bildirim alır, doğrudan kontrol panelinizdeki haritada konumunu görüntüleyebilirsiniz.",
+          "title": "Haritada konumu görün"
+        },
+        "title": "Nasıl çalışır?"
+      },
+      "instant_locator": {
+        "subtitle": "Mobitrace, yalnızca telefon numarasını kullanarak herhangi birinin konumunu veya kayıtlarını bulmak için en pratik çözümdür.",
+        "title": "<underlined>Hemen</underlined> Numaranın Konumunu Öğrenin!"
+      },
+      "meta_description": "Mobitrace ile istediğiniz cep telefonunun konumunu hızlı ve kolay bir şekilde öğrenin.",
+      "meta_title": "Mobitrace.io - Dilediğiniz yerden dilediğiniz telefonun konumunu öğrenin",
+      "og_description": "Mobitrace ile istediğiniz cep telefonunun konumunu hızlı ve kolay bir şekilde öğrenin.",
+      "og_image_alt": "Mobitrace.io - Dilediğiniz yerden dilediğiniz telefonun konumunu öğrenin",
+      "og_title": "Mobitrace.io - Dilediğiniz yerden dilediğiniz telefonun konumunu öğrenin",
+      "site_name": "Mobitrace",
+      "welcome_title": "Mobitrace.io'ya hoş geldiniz",
+      "why_choose": {
+        "reasons": {
+          "reason_1": {
+            "description": "Gizliliğiniz en büyük önceliğimizdir. İçiniz rahat olsun çünkü kişisel bilgiler ve arama aktivitesi her zaman güvende ve gizli tutulur.",
+            "title": "Tam Gizlilik Garantisi"
+          },
+          "reason_2": {
+            "description": "Uygulama yok, yazılım yok, uğraşmak yok. Siz sadece telefon numarasını girin, Mobitrace hemen işe koyulsun.",
+            "title": "Kurulum Gerekmez"
+          },
+          "reason_3": {
+            "description": "En yeni iPhone ve Android telefonlardan eski kapaklı telefonlara, bir telefon mesaj alabiliyorsa Mobitrace o telefonun konumunu bulabilir. Tüm telefonlar ve operatörleri destekliyoruz.",
+            "title": "Tüm Telefonlar ve Operatörler İçin Destek"
+          },
+          "reason_4": {
+            "description": "Mobitrace yalnızca koordinatları vermekle kalmaz, tam adresi de iletir. Rakipsiz hassasiyet için gelişmiş GPS teknolojisinin gücünden faydalanın.",
+            "title": "Nokta Atışı Hassasiyet"
+          },
+          "reason_5": {
+            "description": "Nerede olduğunuz ya da hedef telefonun nerede olduğu fark etmeksizin Mobitrace tüm dünya çapında hizmet verir.",
+            "title": "Küresel Kapsam"
+          }
+        },
+        "subtitle": "Dünya çapında herhangi birinin konumunu öğrenmek için tek tıklama ve sıfır uğraş",
+        "title": "Neden Mobitrace'i seçmelisiniz?"
+      }
+    },
+    "legal": {
+      "cookie_policy": {
+        "content": "",
+        "title": "Çerez Politikası"
+      },
+      "refund_policy": {
+        "content": "",
+        "title": "İade Politikası"
+      }
+    },
+    "loader": {
+      "step_1": {
+        "carrier": {
+          "loadedDefaultText": "Tespit edildi",
+          "text": "Operatör"
+        },
+        "city": {
+          "loadedText": "Konum bulundu",
+          "text": "Şehir"
+        },
+        "connecting": "Uydulara bağlanılıyor",
+        "country": {
+          "text": "Ülke"
+        },
+        "database": {
+          "loadedText": "Erişildi",
+          "text": "Veri Tabanı"
+        },
+        "location": {
+          "loadedText": "Tespit edildi",
+          "text": "Konum"
+        },
+        "searching": "Sonuçlar aranıyor"
+      },
+      "step_2": {
+        "cta": "Konumu Öğren",
+        "subtitle": "Aramanız tamamlandı, artık konuma erişebilirsiniz.",
+        "title": "Konum bulundu!"
+      }
+    },
+    "loader_complete": {
+      "title": "<brandColor>{phoneNumber}</brandColor> numaralı telefonun tam konumunu öğrenmek için kaydolun"
+    },
+    "locate": {
+      "error": "Adres alınamadı.",
+      "link_expired": "Bağlantının süresi dolmuş",
+      "link_expired_explain": "Bu bağlantıya zaten erişilmiş ya da bu bağlantı artık kullanılamıyor.",
+      "loading": "Yükleniyor...",
+      "not_supported": "Tarayıcınız coğrafi konumu desteklemiyor.",
+      "rejected": "Konum paylaşımı reddedildi.",
+      "thank_you": "Teşekkür ederiz!"
+    },
+    "memberArea": {
+      "navigation": {
+        "contact_us": "Bize Ulaşın",
+        "find_by_link": "Bağlantıyla Bul",
+        "find_by_number": "Numarayla Bul",
+        "find_by_phone_lookup": "Numara Sorgulama",
+        "my_activity": "Etkinliğim",
+        "notifications": "Bildirimler",
+        "phone_lookup": "Numara Sorgulama",
+        "settings": "Ayarlar",
+        "sex_offenders_search": "Cinsel Suçlular",
+        "status": "Durum",
+        "tools_library": "Araç Kitaplığı"
+      }
+    },
+    "not_found": {
+      "body": "Bir hata oluştu, lütfen tekrar deneyin.",
+      "cta": "Ana Sayfaya Git",
+      "title": "Sayfa bulunamadı"
+    },
+    "notifications": {
+      "empty": {
+        "text": "Şu anda hiç bildiriminiz yok.",
+        "title": "Burası biraz sessiz"
+      },
+      "link_accessed": "<strong>{notificationName}</strong> erişildi.",
+      "link_located": "Konum artık kullanılabilir.",
+      "link_rejected": "Konum paylaşımı reddedildi.",
+      "load_more": "Daha fazla yükle",
+      "phone_located": "<strong>{phone} için konum</strong> başarıyla alındı.",
+      "phone_rejected": "<strong>{phone} için konum</strong> reddedildi.",
+      "title": "Bildirimler"
+    },
+    "onboarding": {
+      "navigation": {
+        "step_1": "1. Adım",
+        "step_2": "2. Adım",
+        "step_3": "3. Adım"
+      }
+    },
+    "onboarding_step1": {
+      "body": "Mobitrace, bir telefon numarasının konumunu bulmak için konum bağlantısını içeren anonim bir mesaj gönderir. Mesajı gönderin, gerisini sistemimize bırakın.",
+      "cta": "Devam et",
+      "title": "Takip Bağlantısını Gönderin"
+    },
+    "onboarding_step2": {
+      "body": "Alıcı bağlantıya tıkladıktan sonra alıcının hareketlerini haritada gerçek zamanlı olarak izlemek için Konum Geçmişi bölümüne gidin.",
+      "cta": "Devam et",
+      "title": "Gerçek Zamanlı Olarak İzleyin"
+    },
+    "onboarding_step3": {
+      "body": "Alıcının mesajı açmasını beklerken takip deneyiminizi bir üst seviyeye taşımak için Mobitrace'in diğer güçlü özelliklerinden faydalanın.",
+      "cta": "Hemen başla",
+      "title": "Daha Fazla Özelliği Keşfedin"
+    },
+    "pricing": {
+      "cards": {
+        "subscription": {
+          "badge": "Abonelik",
+          "cta": "Hemen abone ol",
+          "description": "7 günlük deneme süreniz bittikten sonra her 4 haftada bir {price} karşılığında devam eder. İstediğiniz zaman iptal edebilirsiniz.",
+          "duration": "Her 4 haftada bir",
+          "features": {
+            "feature_1": "Tüm mobil cihazlar için destek",
+            "feature_2": "Sınırsız konum takibi isteği",
+            "feature_3": "Özel mesajlar ve tam konum gibi premium özellikler",
+            "feature_4": "Ek ücret olmaksızın 7/24 destek"
+          },
+          "new_features": {
+            "feature_1": "Tüm mobil cihazlar için destek",
+            "feature_2": "Sınırsız konum takibi isteği",
+            "feature_3": "Profesyonel PDF raporlarını hiçbir ek ücret ödemeden indirin",
+            "feature_4": "Kapsamlı ayrıntılara sahip sınırsız ters telefon arama raporları",
+            "feature_5": "Ek ücret olmaksızın 7/24 destek"
+          }
+        },
+        "subscription_24": {
+          "badge": "Abonelik",
+          "cta": "Hemen abone ol",
+          "description": "24 saatlik deneme süresinin ardından her 4 haftada bir {price} tahsil edilecektir. İstediğiniz zaman iptal edebilirsiniz.",
+          "duration": "Her 4 haftada bir",
+          "features": {
+            "feature_1": "Tüm mobil cihazlar için destek",
+            "feature_2": "Sınırsız konum takibi isteği",
+            "feature_3": "Ek ücret olmaksızın profesyonel rapor PDF'lerini indirme",
+            "feature_4": "Kapsamlı detaylarla sınırsız numara sorgulama raporu",
+            "feature_5": "Ek ücret olmaksızın 7/24 destek"
+          },
+          "new_features": {
+            "feature_1": "Tüm mobil cihazlar için destek",
+            "feature_2": "Sınırsız konum takibi isteği",
+            "feature_3": "Ek ücret olmaksızın profesyonel rapor PDF'lerini indirme",
+            "feature_4": "Kapsamlı detaylarla sınırsız numara sorgulama raporu",
+            "feature_5": "Ek ücret olmaksızın 7/24 destek"
+          }
+        },
+        "title": "Fiyatlandırma",
+        "trial": {
+          "badge": "Deneme süresi",
+          "cta": "Denemeyi başlat",
+          "description": "Tüm özelliklere sınırsız erişimin keyfini hiçbir risk olmadan çıkarın. İlk ödemenizle birlikte 7 gün boyunca tam erişime sahip olacaksınız, ardından her 4 haftada bir {price} tutarında ücret tahsil edilecek. İstediğiniz zaman iptal edebilirsiniz.",
+          "duration": "7 günlük deneme",
+          "features": {
+            "feature_1": "Tüm mobil cihazlar için destek",
+            "feature_2": "7 gün boyunca tüm özelliklere sınırsız erişim",
+            "feature_3": "Denemek için uzun taahhütlere gerek yok"
+          },
+          "new_features": {
+            "feature_1": "Tüm mobil cihazlar için destek",
+            "feature_2": "7 gün boyunca tüm özelliklere sınırsız erişim",
+            "feature_3": "Detaylı ters telefon arama raporlarına erişim",
+            "feature_4": "Denemek için uzun taahhütlere gerek yok",
+            "feature_5": "Raporları PDF olarak indirme olanağı"
+          }
+        },
+        "trial_24": {
+          "badge": "Deneme süresi",
+          "cta": "Denemeyi başlat",
+          "description": "Tüm özelliklere sınırsız erişimin keyfini hiçbir risk olmadan çıkarın. İlk ödemenizle birlikte 24 saat boyunca tam erişime sahip olacaksınız, ardından her 4 haftada bir {price} tutarında ücret tahsil edilecek. İstediğiniz zaman iptal edebilirsiniz.",
+          "duration": "24 Saatlik Deneme",
+          "features": {
+            "feature_1": "Tüm mobil cihazlar için destek",
+            "feature_2": "Tüm özelliklere 24 saat boyunca tam erişim",
+            "feature_3": "Denemek için uzun taahhütlere gerek yok",
+            "feature_4": "Raporları PDF olarak indirme olanağı"
+          },
+          "new_features": {
+            "feature_1": "Tüm mobil cihazlar için destek",
+            "feature_2": "Tüm özelliklere 24 saat boyunca tam erişim",
+            "feature_3": "Detaylı numara sorgulama raporlarına erişim",
+            "feature_4": "Denemek için uzun taahhütlere gerek yok",
+            "feature_5": "Raporları PDF olarak indirme olanağı"
+          }
+        }
+      },
+      "special_offer": "Özel Teklif",
+      "subtitle": "Mobitrace hizmetleri, kolayca yönetebileceğiniz aylık abonelik planı üzerinden sunulmaktadır.",
+      "title": "Mobitrace'in özelliklerini 7 gün boyunca <mark>yalnızca {price}</mark> karşılığında deneyin!",
+      "title_24": "Mobitrace'i <mark>sadece {price}</mark> karşılığında 24 saat boyunca deneyin!"
+    },
+    "reset_password": {
+      "back_to_login": "Oturum Aç",
+      "description": "Hesabınızı sıfırlamak için yeni parolanızı girin",
+      "remember_password": "Parolanızı mı unuttunuz?",
+      "title": "Parolayı Sıfırla"
+    },
+    "reverse_lookup": {
+      "checkout": {
+        "action_form": "Raporu al",
+        "back_description": "7 günlük deneme süresi içinde üründen memnun kalmazsanız bize bildirmeniz yeterlidir, tam iade yapmaktan mutluluk duyarız.",
+        "back_description_24": "24 saatlik deneme süresi içinde tam olarak memnun kalmazsanız bize bildirmeniz yeterlidir. Böyle bir durumda tam para iadesi yapmaktan mutluluk duyarız.",
+        "back_title": "Para İadesi",
+        "cancel_description": "Kontrol panelinizden ya da <email>support@mobitrace.io</email> adresinden bize ulaşarak istediğiniz zaman iptal edebilirsiniz.",
+        "cancel_title": "Dilediğiniz zaman iptal edin",
+        "title": "Raporun kilidini açın:"
+      },
+      "components": {
+        "always_know_who_called": {
+          "step_1": {
+            "description": "Numarayla ilişkili yasal adı veya şirket adlarını tespit edin.",
+            "title": "Tam Ad"
+          },
+          "step_2": {
+            "description": "Numarayla ilişkili geçmiş ve güncel potansiyel adresleri öğrenin.",
+            "title": "Ev Adresi"
+          },
+          "step_3": {
+            "description": "Uzaktaki aile üyelerinizle veya uzun zamandır görüşmediğiniz akrabalarınızla yeniden bağlantı kurun.",
+            "title": "Aile Üyeleri"
+          },
+          "step_4": {
+            "description": "Başlıca tüm platformlardaki sosyal medya profillerini bulun.",
+            "title": "Sosyal Medya Profilleri"
+          },
+          "step_5": {
+            "description": "Numarayla ilişkili açık e-posta adreslerini görüntüleyin.",
+            "title": "E-posta Adresleri"
+          },
+          "step_6": {
+            "description": "Herkese açık konum geçmişini inceleyin.",
+            "title": "Konum Geçmişi"
+          },
+          "step_7": {
+            "description": "İnternetteki çeşitli kaynaklardan bilgi toplayın.",
+            "title": "Web Etkinliği"
+          },
+          "subtitle": "Mobitrace'in numara sorgulama sistemine bir numara girerek o numarayla ilgili herkese açık bilgilere erişebilirsiniz.",
+          "title": "Mobitrace ile kimin aradığını her zaman bilin"
+        },
+        "as_seen_on": {
+          "title": "Medyada biz"
+        },
+        "customer_carousel": {
+          "subtitle": "Size mümkün olan en iyi deneyimi sunmak için elimizden gelenin en iyisini yapıyoruz.",
+          "title": "Kullanıcılarımızın <br class='lg:hidden'/> yorumları"
+        },
+        "customer_opinions": {
+          "title": "Dünyanın Dört Bir Yanından İnsanlar Şüphelerini Gideriyor"
+        },
+        "faqs": {
+          "question_1": {
+            "answer": "Siz telefon numarasını girdikten sonra ilgili kişi konumunu paylaşmaya onay verirse tam konumunu öğrenebilirsiniz.",
+            "question": "Birinin konumunu telefon numarasıyla nasıl tespit edebilirim?"
+          },
+          "question_2": {
+            "answer": "Evet, coğrafi konum belirleme yasaldır ancak gizlilik yasaları uyarınca ilgili kişinin konumunu paylaşmak için açık onay gerekir.",
+            "question": "Üçüncü bir tarafın coğrafi konumunu öğrenmek yasal mı?"
+          },
+          "question_3": {
+            "answer": "Hayır, herhangi bir uygulama veya yazılım yüklenmesi gerekmez. Her şey hizmetimiz aracılığıyla uzaktan halledilir.",
+            "question": "Bir telefon numarasını takip etmek için uygulama yüklemem gerekiyor mu?"
+          },
+          "question_4": {
+            "answer": "Hizmetimiz, kısa mesaj alabildikleri sürece akıllı telefonlardan eski modellere kadar tüm telefon türlerini destekler.",
+            "question": "Ne tür telefonlar destekleniyor?"
+          },
+          "question_5": {
+            "answer": "Evet, hizmetimiz konum veya operatörden bağımsız olarak dünya çapında çalışır.",
+            "question": "Dünyanın herhangi bir yerindeki telefon numarasını takip edebilir miyim?"
+          },
+          "question_6": {
+            "answer": "Hizmetimiz, gelişmiş GPS teknolojisini kullanarak tam adres de dâhil olmak üzere kesin konum bilgilerini sağlar.",
+            "question": "Coğrafi konum ne kadar doğru?"
+          },
+          "question_7": {
+            "answer": "Araştırmak istediğiniz telefon numarasını girin ve gerisini Mobitrace'e bırakın. Sistemimiz, bu numarayla ilgili mevcut tüm bilgilere ulaşmak için farklı veri tabanlarını tarar. Çoğu sorgulama anında sonuç verse de daha ayrıntılı aramalar biraz daha uzun sürebilir. Mobitrace'in numara sorgulama aracını kullandığınızda ne kadar güçlü ve etkili olduğunu hemen göreceksiniz.",
+            "question": "Telefon Numarası Sorgulama nasıl çalışıyor?"
+          },
+          "question_8": {
+            "answer": "Mobitrace'in numara sorgulama teknolojisi son derece gelişmiştir. Bir arama yaptığınızda kamu kayıtları, çevrimiçi dizinler ve hatta daha az görünür veri noktaları dâhil olmak üzere çeşitli kaynakları araştırır. İlgili bilgi bulunursa sizin için görüntülenir. Hizmet her numara için erişilebilir verilere dayalı olduğundan her aramanın anında sonuç vermeyebileceğini lütfen unutmayın.",
+            "question": "Mobitrace her numara hakkında bilgi veriyor mu?"
+          },
+          "question_9": {
+            "answer": "Evet, kesinlikle! Bankanızdan aradığını söyleyen ve şüpheli bir çekim işlemini durdurmak için şifrenizi isteyen birinden telefon aldığınızı ya da bir ödül kazandığınızı ve ödülünüzü talep etmek için bir bağlantıya tıklamanız gerektiğini söyleyen bir mesaj aldığınızı düşünün. Her iki durum da maddi kayba veya kişisel bilgilerinizin çalınmasına yol açabilir. Mobitrace, bilmediğiniz numaraların arkasında kimin olduğunu doğrulamanıza yardımcı olur. Hızlı bir numara sorgulama, sizi olası dolandırıcılıklara karşı uyarabilir ve verilerinizi ve finansal varlıklarınızı koruyabilir.",
+            "question": "Mobitrace telefon ve mesaj dolandırıcılıklarından kaçınmama yardımcı olabilir mi?"
+          },
+          "title": "SSS"
+        },
+        "get_report": {
+          "cta": "Raporu Al",
+          "lookup_today": "Bugün 99'dan fazla sorgulama yapıldı",
+          "product": "7 günlük tam erişim",
+          "product_24": "24 saatlik tam erişim",
+          "product_title": "Sorgulama Raporu",
+          "secure": "%100 Güvenli",
+          "title": "Raporunuzu Alın!",
+          "trial_description": "30 gün memnuniyet garantisi"
+        },
+        "hero": {
+          "100": "%100",
+          "card_address": "29 Willow Street, Hackney Wick, Londra E9 5EN, Birleşik Krallık",
+          "card_date": "27 Eyl 2024   18.46",
+          "card_phone": "+44 633 123 456",
+          "card_title": "Konum bulundu!",
+          "confidential": "gizli",
+          "iphone_alt": "konum işaretçisiyle Londra haritasını gösteren bir akıllı telefon",
+          "secure": "Güvenli",
+          "ssl_encription": "SSL şifreleme",
+          "subtitle": "Bilinmeyen numaraları anında tespit edin; numara sahiplerinin tam adlarını, adreslerini, sosyal medya profillerini ve daha fazlasını öğrenin.",
+          "title": "<mark></mark>Telefon Numarası <mark>Sorgulama</mark>"
+        },
+        "instant_locator": {
+          "subtitle": "Mobitrace, yalnızca telefon numarasını kullanarak herhangi birinin konumunu veya kayıtlarını bulmak için en pratik çözümdür.",
+          "title": "İstediğiniz Numarayı Hemen Sorgulayın!"
+        },
+        "latest_results": {
+          "result": {
+            "description": "{time} dakika önce"
+          },
+          "subtitle": "İşte numara sorgulama hizmetimizden alınan sonuçlardan bazıları.",
+          "title": "Yeni Sonuçlar"
+        },
+        "limited_offer_tag": {
+          "limited_offer": "Sınırlı süre için geçerli teklif"
+        },
+        "phone_input": {
+          "errors": {
+            "invalid_phone": "Lütfen geçerli bir telefon numarası girin.",
+            "rate_limit_exceeded": "Günlük kotanızı aştınız.",
+            "rate_limit_exceeded_title": "Sınıra ulaşıldı"
+          },
+          "label": "Sorgulamak istediğiniz numarayı girin",
+          "no_results": "Ülke kodu bulunamadı.",
+          "phone_placeholder": "123456789",
+          "search_placeholder": "Ülkeye veya koda göre arayın...",
+          "submit": "Sorgula"
+        },
+        "pricing": {
+          "cards": {
+            "subscription": {
+              "badge": "Abonelik",
+              "cta": "Hemen abone ol",
+              "description": "7 günlük deneme süreniz sona erdiğinde teklif otomatik bir biçimde aylık abonelik olarak yenilenecektir. Aboneliğinizi dilediğiniz zaman kolayca iptal edebilirsiniz.",
+              "duration": "Aylık ücret",
+              "features": {
+                "feature_1": "Tüm mobil cihazlar için destek",
+                "feature_2": "Sınırsız konum takibi isteği",
+                "feature_3": "Ek ücret olmaksızın profesyonel rapor PDF'lerini indirme",
+                "feature_4": "Kapsamlı detaylarla sınırsız numara sorgulama raporu",
+                "feature_5": "Ek ücret olmaksızın 7/24 destek"
+              }
+            },
+            "title": "7 Günlük Denemeyi Başlatın",
+            "trial": {
+              "badge": "Deneme süresi",
+              "cta": "Denemeyi başlat",
+              "description": "Bu ilk ödemeyle birlikte Mobitrace'in tüm platform özelliklerine 7 gün boyunca hiçbir kısıtlama olmadan erişebilirsiniz. Ardından aylık {price} abonelik ücreti uygulanır.",
+              "duration": "7 günlük deneme",
+              "features": {
+                "feature_1": "Tüm mobil cihazlar için destek",
+                "feature_2": "7 gün boyunca tüm özelliklere tam erişim",
+                "feature_3": "Detaylı numara sorgulama raporlarına erişim",
+                "feature_4": "Denemek için uzun taahhütlere gerek yok",
+                "feature_5": "Raporları PDF olarak indirme olanağı"
+              }
+            }
+          },
+          "special_offer": "Özel Teklif",
+          "subtitle": "Mobitrace hizmetleri, kolayca yönetebileceğiniz aylık abonelik planıyla sunulmaktadır.",
+          "title": "Mobitrace'in özelliklerini 7 gün boyunca <mark>yalnızca {price}</mark> karşılığında deneyin!"
+        },
+        "recent_reveals": {
+          "subtitle": "İşte yakın zamanda tespit ettiğimiz bilinmeyen numaralardan yalnızca birkaçı.",
+          "title": "Son Tespit Ettiklerimiz"
+        },
+        "report_ready": {
+          "description": "Raporunuz hazır!",
+          "download_report_button": "PDF'yi indir",
+          "view_report_button": "Raporu Görüntüle"
+        },
+        "summary_report_card": {
+          "caller_info": "Mobitrace ile artık bilinmeyen numaraların kime ait olduğunu tahmin etmenize gerek yok. Arayan kişi hakkında, arayan kişinin erişebildiğinizi bile bilmediği bilgiler gibi veriler sağlayacağız.",
+          "carrier": "Operatör",
+          "continue": "Devam et",
+          "latest_report": "3 Mart 2025 tarihli en son rapor",
+          "line_type": "Hat Türü",
+          "may_include": "Sonuçlar şunları içerebilir:",
+          "result_1": "Numara Sahibinin Tam Adı ve Adresi",
+          "result_2": "Sosyal Medyadaki Kullanıcı Adları ve Profilleri",
+          "result_3": "Fotoğraflar ve Videolar",
+          "result_4": "Çevrimiçi Etkinlik Geçmişi",
+          "result_5": "E-posta Adresleri",
+          "result_6": "Ve Çok Daha Fazlası!",
+          "timer_desktop": "<mark>Raporunuzun</mark> süresi doluyor:",
+          "timer_mobile": "Raporunuzun sona ermesine",
+          "title": "<mark>{phoneNumber}</mark> için raporunuz hazır!",
+          "trusted_by": "<span class='font-bold'>7 milyondan fazla</span> kişinin tercihi"
+        },
+        "upsell_progress_steps": {
+          "access_report": "Rapor Erişimi",
+          "create_account": "Hesap Oluşturma",
+          "data_breach": "Veri İhlali",
+          "pdf_export": "PDF Dışa Aktarma",
+          "sex_offenders": "Cinsel Suçlular"
+        },
+        "what_you_get": {
+          "item_1": "İster eski ister yeni olsun, numaraları sorgulayarak numara sahibine ait bilgileri öğrenin.",
+          "item_2": "Sorgulamanız numara sahiplerine asla bildirilmez.",
+          "item_3": "Veri tabanımızda her zaman en güncel bilgiler yer alır.",
+          "item_4": "Mobitrace, raporları internetteki herkese açık bilgilerden derler.",
+          "item_title_1": "Gelişmiş Numara Sorgulama",
+          "item_title_2": "%100 Gizlilik Garantisi",
+          "item_title_3": "Her Zaman Güncel",
+          "item_title_4": "İncelenen Milyarlarca Kayıt",
+          "title": "Avantajlar"
+        },
+        "why_use": {
+          "phone_input_label": "Sorgulamak istediğiniz numarayı girin",
+          "reasons": {
+            "reason_1": {
+              "description": "Bilinmeyen numaları tespit ederek tahmin yürütmeye elveda deyin.",
+              "title": "Kimin Aradığını Her Zaman Bilin"
+            },
+            "reason_2": {
+              "description": "Mobitrace, geçmiş telefon numaralarıyla bile eski veya kaybettiğiniz bağlantıları bulmanıza yardımcı olabilir.",
+              "title": "Eski Arkadaşlarınızla Tekrar İletişime Geçin"
+            },
+            "reason_3": {
+              "description": "İnternette konuştuğunuz kişilerin kimliklerini doğrulayarak güvende kalın.",
+              "title": "Kimlikleri Doğrulayın"
+            },
+            "reason_4": {
+              "description": "Bilgilerinizi çalmak isteyen kişilerin sayısı her geçen gün artıyor. Mobitrace, daha aramayı cevaplamadan kötü niyetli kişileri belirlemenize yardımcı olabilir.",
+              "title": "Şüpheli Numaraları Tespit Edin"
+            },
+            "reason_5": {
+              "description": "Mobitrace'e numaranızı girerek hangi kişisel verilerinizin erişilebilir olduğunu görün ve olası veri sızıntılarını tespit edin.",
+              "title": "Dijital Ayak İzinizi Takip Edin"
+            }
+          },
+          "steps": {
+            "step_1": {
+              "description": "Kendinizi dolandırıcılar ve pazarlamacılardan koruyun."
+            },
+            "step_2": {
+              "description": "İlişki yaşamaya veya eve çıkmaya düşündüğünüz biri hakkında bilgi edinin."
+            },
+            "step_3": {
+              "description": "Sürekli gelen rahatsız edici aramaların arkasındaki isimleri öğrenin."
+            },
+            "step_4": {
+              "description": "Eski arkadaşlarınızla veya aile üyelerinizle tekrar iletişime geçin."
+            },
+            "step_5": {
+              "description": "Arkadaşlık ve sohbet uygulamalarındaki sahte kullanıcıları tespit edin."
+            }
+          },
+          "subtitle": "Dijital dünyada kendinizi korumanıza veya eski bağlantılarınızı bulmanıza yardımcı oluyoruz.<br>Mobitrace ile:",
+          "title": "Neden Numara Sorgulamayı Kullanmalısınız?",
+          "title_2": "Diğer Kullanımlar",
+          "title_badge": "EKSTRALAR"
+        }
+      },
+      "member_area": {
+        "phone_lookup": {
+          "daily_limit": "Limit: 24 saatte 5 sorgulama.",
+          "label": "Arayan Kimliğini Göster",
+          "phone_lookup": "Numara Sorgulama"
+        }
+      },
+      "report": {
+        "carrier_details": {
+          "info": "Bu bölüm, ağ ayrıntıları ve hizmet türü dâhil olmak üzere kişinin telefon operatörü hakkında bilgi sağlar.",
+          "labels": {
+            "carrier": "Operatör",
+            "international_format": "Uluslararası Format",
+            "local_format": "Yerel Format",
+            "location": "Konum",
+            "type": "Tür"
+          },
+          "line_types": {
+            "landline": "Sabit hat",
+            "mobile": "Mobil"
+          },
+          "title": "Operatör detayları",
+          "title_empty": "Operatör detayları"
+        },
+        "common": {
+          "no_data": "Kayıt bulunamadı"
+        },
+        "data_breach_history": {
+          "alert_empty": "Bu bölüm, hassas bilgileri tehlikeye atan tüm olayları ayrıntılı olarak açıklayarak veri ihlallerinin geçmişini özetlemektedir. İhlallerin niteliği, etkilenen veriler ve gelecekte bu tür ihlalleri ortadan kaldırmak ve önlemek için alınan tedbirler hakkında bilgiler içermektedir.",
+          "alert_success": "Bu bölüm, hassas bilgileri tehlikeye atan tüm olayları ayrıntılı olarak açıklayarak veri ihlallerinin geçmişini özetlemektedir. İhlallerin niteliği, etkilenen veriler ve gelecekte bu tür ihlalleri ele almak ve önlemek için alınan önlemler hakkında bilgiler içermektedir.",
+          "alert_title": "{count} Veri İhlali",
+          "report": {
+            "breaches_found_for": "İhlaller bulundu:",
+            "compromised_data": "Gizliliği ihlal edilmiş veriler",
+            "data_breaches": "veri ihlali",
+            "data_types": {
+              "date_of_birth": "Doğum tarihi",
+              "education_levels": "Eğitim seviyesi",
+              "email": "E-posta adresi",
+              "gender": "Cinsiyet",
+              "geo_location": "Coğrafi konum",
+              "name": "Ad",
+              "password": "Parola",
+              "phone": "Telefon numarası",
+              "social_media_profiles": "Sosyal medya profilleri",
+              "username": "Kullanıcı adı"
+            },
+            "download_report_button": "PDF'yi indir",
+            "title": "Veri ihlali geçmişi"
+          },
+          "show_report": "Raporu göster",
+          "title": "Veri ihlali geçmişi",
+          "unlock_report": "Raporun Kilidini Aç"
+        },
+        "header": {
+          "button": "PDF'yi indir",
+          "matches_found": "Şu numara için eşleşmeler bulundu:",
+          "title": "Telefon Sorgulama Raporu",
+          "unlock_download_pdf": "PDF'yi İndirmek İçin Kilidi Aç"
+        },
+        "looking_for_more_profiles_dialog": {
+          "description": "Bu işlem birkaç saniye sürebilir; ek platformlarda arama yapıyoruz.",
+          "title": "Daha fazla profil arıyorum."
+        },
+        "phone_public_information": {
+          "info": "Bu bölümde, kişinin telefon numarasıyla ilgili genel bilgilerin özeti sunulmaktadır.",
+          "name": "İsim:",
+          "source": "Kaynak:",
+          "sources": {
+            "data_breach": "Veri İhlali",
+            "other": "Diğer",
+            "public_records": "Kamu Kayıtları",
+            "social_media": "Sosyal Medya"
+          },
+          "title": "Numarayla ilgili genel bilgiler",
+          "title_empty": "Numarayla ilgili genel bilgi yok"
+        },
+        "photos": {
+          "info": "Bu bölüm, görsel tanımlamaya yardımcı olmak için mümkün olduğunda telefon sahibinin olası görüntülerini görüntüler.",
+          "other": "Diğer",
+          "title": "Fotoğraflar",
+          "title_empty": "Fotoğraf bulunamadı"
+        },
+        "possible_addresses": {
+          "info": "Bu bölüm, kişinin ikamet ettiği yerleri veya geçmişteki konumlarını tespit etmeye yardımcı olabilecek, kişiyle bağlantılı olası adresleri listeler.",
+          "labels": {
+            "city": "Şehir",
+            "country": "Ülke",
+            "county": "İlçe",
+            "latitude": "Enlem",
+            "length_of_residence": "İkamet Süresi",
+            "longitude": "Boylam",
+            "postal_code": "Posta Kodu",
+            "state": "Eyalet/İl",
+            "street": "Sokak/Cadde"
+          },
+          "title": "Olası adresler",
+          "title_empty": "Adres bulunamadı",
+          "values": {
+            "years": "{count} yıl"
+          }
+        },
+        "possible_contact_details": {
+          "info": "Bu bölüm, iletişim bilgilerini doğrulamaya yardımcı olmak için kişiyle bağlantılı e-posta adreslerini gösterir.",
+          "labels": {
+            "associated_emails": "İlişkili E-postalar",
+            "associated_numbers": "İlişkili Numaralar"
+          },
+          "title": "Olası iletişim bilgileri",
+          "title_empty": "İletişim bilgisi bulunamadı"
+        },
+        "possible_personal_details": {
+          "info": "Bu bölüm, ek bilgiler edinilmesine yardımcı olmak için kişiyle ilişkili olası kişisel bilgileri gösterir.",
+          "labels": {
+            "children": "Çocuklar",
+            "date_of_birth": "Doğum Tarihi",
+            "gender": "Cinsiyet",
+            "household_size": "Hane Büyüklüğü",
+            "income": "Gelir",
+            "marital_status": "Medeni Durum"
+          },
+          "title": "Olası kişisel bilgiler",
+          "title_empty": "Kişisel bilgi bulunamadı",
+          "values": {
+            "children": "Var ({count})",
+            "divorced": "Boşanmış",
+            "domestic_partnership": "Evlilik Ortaklığı",
+            "engaged": "Nişanlı",
+            "female": "Kadın",
+            "in_relationship": "İlişkisi Var",
+            "intersex": "İnterseks",
+            "male": "Erkek",
+            "married": "Evli",
+            "no_children": "Hiçbiri",
+            "no_record_available": "Kayıt bulunamadı",
+            "separated": "Ayrılmış",
+            "single": "Bekar",
+            "widowed": "Dul"
+          }
+        },
+        "possible_social_media_accounts": {
+          "expand_search": {
+            "more_platforms": "Tek bir tıklamayla daha fazla platforma erişin",
+            "title": "Aramanızı genişletin",
+            "unlock_platforms": "Platformların kilidini açın"
+          },
+          "info": "Bu bölüm, kişinin çevrimiçi varlığına ilişkin fikir veren, kişiyle bağlantılı olabilecek olası sosyal medya profillerini gösterir.",
+          "labels": {
+            "id": "Kimlik",
+            "name": "Ad",
+            "opne_url": "Sayfayı aç",
+            "source": "Kaynak",
+            "url": "URL"
+          },
+          "network_not_found": "Bulunamadı",
+          "no_accounts_found": "Kontrol edilen platformların hiçbirinde hesap bulunamadı. Bu, kullanıcının bu ağlara kayıtlı olmadığı veya sağlanan arama parametrelerinden farklı veriler kullandığı anlamına gelir.",
+          "partial_result": {
+            "info": "Bazı platformlarda hesap bulunamadı; bu, kullanıcının söz konusu ağlara kayıtlı olmadığı veya sağlanan arama parametrelerinden farklı veriler kullandığı anlamına gelir.",
+            "no_account_platforms": "Hesabı bulunmayan platformlar",
+            "title": "Arama Sonuçları Tamamlandı"
+          },
+          "sources": {
+            "behance": "Behance",
+            "facebook": "Facebook",
+            "github": "Github",
+            "gitlab": "Gitlab",
+            "google": "Google",
+            "instagram": "Instagram",
+            "kick": "Tekme atmak",
+            "linkedin": "LinkedIn",
+            "pinterest": "Pinterest",
+            "reddit": "Reddit",
+            "snapchat": "Snapchat",
+            "telegram": "Telgraf",
+            "threads": "Konular",
+            "tiktok": "TikTok",
+            "tumblr": "Tumblr",
+            "twitch": "Seğirme",
+            "x": "X",
+            "youtube": "YouTube"
+          },
+          "title": "Olası sosyal medya hesapları",
+          "title_empty": "Sosyal medya hesabı bulunamadı"
+        },
+        "potential_education": {
+          "info": "Bu bölüm, kişinin eğitim gördüğü okullar ve edindiği yeterlilikler dâhil olmak üzere olası eğitim geçmişini özetler.",
+          "title": "Olası eğitim",
+          "title_empty": "Hiçbir eğitim bulunamadı",
+          "values": {
+            "associate_degree": "Ön lisans",
+            "bachelor_degree": "Lisans",
+            "doctoral_degree": "Doktora derecesi",
+            "high_school": "Lise",
+            "master_degree": "Yüksek lisans",
+            "no_formal_education": "Resmi bir eğitim yok",
+            "other": "Diğer",
+            "primary_school": "İlkokul",
+            "secondary_school": "Ortaokul",
+            "vocational_training": "Mesleki eğitim"
+          }
+        },
+        "potential_professional_summary": {
+          "info": "Bu bölüm, mevcut verilere dayalı olarak kişinin deneyim sahibi olabileceği olası sektör rollerini vurgular.",
+          "title": "Olası mesleki bilgilerin özeti",
+          "title_empty": "Profesyonel bilgilerin özeti yok",
+          "values": {
+            "agriculture": "Tarım",
+            "arts_and_entertainment": "Sanat ve Eğlence",
+            "construction": "Yapı",
+            "education": "Eğitim",
+            "energy_and_utilities": "Enerji ve Kamu Hizmetleri",
+            "engineering": "Mühendislik",
+            "finance": "Finans",
+            "government": "Devlet",
+            "healthcare": "Sağlık hizmeti",
+            "hospitality": "Misafirperverlik",
+            "information_technology": "Bilgi Teknolojisi",
+            "legal": "Yasal",
+            "logistics_and_supply_chain": "Lojistik ve Tedarik Zinciri",
+            "manufacturing": "Üretme",
+            "marketing": "Pazarlama",
+            "media_and_communications": "Medya ve İletişim",
+            "military": "Askeri",
+            "non_profit": "Kâr Amacı Gütmeyen",
+            "other": "Diğer",
+            "real_estate": "Gayrimenkul",
+            "retail": "Perakende",
+            "sales": "Satış",
+            "science": "Bilim",
+            "skilled_trades": "Nitelikli Meslekler",
+            "telecommunications": "Telekomünikasyon",
+            "transportation": "Toplu taşıma"
+          }
+        },
+        "profile_summary": {
+          "associated_emails": "İlişkili E-postalar:",
+          "associated_locations": "İlişkili Konumlar:",
+          "associated_usernames": "İlişkili Kullanıcı Adları:",
+          "empty": "-",
+          "not_identified": "Veri bulunamadı",
+          "possible_owners": "Olası Sahipler:",
+          "potential_date_of_birth": "Olası Doğum Tarihi:",
+          "title": "Profil özeti"
+        },
+        "sex_offenders": {
+          "alert": "Cinsel suçlu geçmiş kontrolleri yalnızca ABD kayıtları için geçerlidir. Bu bölüm; suçların ayrıntıları, mevcut kayıt durumu ve ilgili konumlar dâhil olmak üzere kayıtlı tüm cinsel suçluların kayıtları hakkında bilgi sağlar.",
+          "report": {
+            "address_information": {
+              "city": "Şehir",
+              "country": "Ülke",
+              "county": "İlçe",
+              "latitude": "Enlem",
+              "length_of_residence": "İkamet Süresi",
+              "longitude": "Boylam",
+              "postal_code": "Posta Kodu",
+              "state": "Eyalet/İl",
+              "street": "Sokak/Cadde",
+              "title": "Konum"
+            },
+            "body_characteristics": {
+              "age": "Yaş",
+              "ethnicity": "Etnik Köken",
+              "eye_color": "Göz Rengi",
+              "hair_color": "Saç Rengi",
+              "height": "Boy",
+              "race": "Irk",
+              "sex": "Cinsiyet",
+              "title": "Vücut özellikleri",
+              "weight": "Kilo"
+            },
+            "crime_information": {
+              "conviction_date": "Mahkûmiyet Tarihi",
+              "crime": "Suç",
+              "jurisdiction": "Yargı Bölgesi",
+              "no_information_available": "Hiçbir bilgi mevcut değil",
+              "registration_date": "Kayıt Tarihi",
+              "risk_level": "Risk Seviyesi",
+              "title": "Suç bilgileri"
+            },
+            "distinctive_features": {
+              "back": "Sırt",
+              "head": "Kafa",
+              "left_arm": "Sol Kol",
+              "left_hand": "Sol El",
+              "left_leg": "Sol Bacak",
+              "right_arm": "Sağ Kol",
+              "right_hand": "Sağ El",
+              "right_leg": "Sağ Bacak",
+              "title": "İzler / Yara İzleri / Dövmeler",
+              "torso": "Gövde"
+            },
+            "download_report_button": "PDF'yi indir",
+            "new_search": "Yeni Arama",
+            "others_information": {
+              "is_absconded": "Kaçak mı?",
+              "is_predator": "Cinsel saldırgan mı?",
+              "jurisdiction": "Yargı Bölgesi",
+              "link": "Bağlantı",
+              "original_report": "Orijinal Kaynak",
+              "title": "Diğer",
+              "yes": "Evet"
+            },
+            "personal_information": {
+              "date_of_birth": "Doğum Tarihi",
+              "first_name": "Ad",
+              "first_name_nicknames": "Takma İsimleri",
+              "last_name": "Soyadı",
+              "middle_name": "İkinci Ad",
+              "name": "Ad",
+              "title": "Kişisel bilgiler"
+            },
+            "photos": {
+              "title": "Fotoğraflar"
+            },
+            "records_found_for": "Kayıtlar bulundu:",
+            "title_profile": "Cinsel Suçlu Profili",
+            "values": {
+              "body_part": {
+                "back": "Sırt",
+                "head": "Kafa",
+                "left_arm": "Sol Kol",
+                "left_hand": "Sol El",
+                "left_leg": "Sol Bacak",
+                "right_arm": "Sağ Kol",
+                "right_hand": "Sağ El",
+                "right_leg": "Sağ Bacak",
+                "torso": "Gövde"
+              },
+              "ethnicity": {
+                "hispanic": "İspanyol",
+                "non_hispanic": "İspanyol olmayan",
+                "other": "Diğer"
+              },
+              "eye_color": {
+                "amber": "Kehribar",
+                "blue": "Mavi",
+                "brown": "Kahverengi",
+                "gray": "Gri",
+                "green": "Yeşil",
+                "hazel": "Fındık",
+                "other": "Diğer",
+                "red": "Kırmızı",
+                "violet": "Menekşe"
+              },
+              "hair_color": {
+                "auburn": "Kestane rengi",
+                "bald": "Kel",
+                "black": "Siyah",
+                "blonde": "Sarışın",
+                "brown": "Kahverengi",
+                "chestnut": "Kestane",
+                "dyed": "Boyalı",
+                "gray": "Gri",
+                "other": "Diğer",
+                "red": "Kırmızı",
+                "white": "Beyaz"
+              },
+              "race": {
+                "asian": "Asya",
+                "black_or_african_american": "Siyahi veya Afrika Kökenli Amerikalı",
+                "mixed": "Melez",
+                "native_american": "Amerikan Yerlisi",
+                "other": "Diğer",
+                "pacific_islander": "Pasifik Adalı",
+                "white": "Beyaz"
+              },
+              "risk_level": {
+                "high": "Yüksek",
+                "low": "Düşük",
+                "medium": "Orta"
+              },
+              "sex": {
+                "female": "Kadın",
+                "intersex": "İnterseks",
+                "male": "Erkek"
+              }
+            }
+          },
+          "title": "Cinsel suçlu geçmiş kontrolü"
+        },
+        "sex_offenders_background_check": {
+          "alt_icon": "Cinsel Suçlular",
+          "info": "Cinsel suçlu geçmiş kontrolleri yalnızca ABD kayıtları için geçerlidir. Bu bölüm; suçların ayrıntıları, mevcut kayıt durumu ve ilgili konumlar dâhil olmak üzere kayıtlı tüm cinsel suçluların kayıtları hakkında bilgi sağlar.",
+          "show_report": "Raporu göster",
+          "title": "Cinsel suçlu geçmiş kontrolü",
+          "title_empty": "Cinsel suçlu geçmişi bulunamadı",
+          "unlock_report": "Raporun Kilidini Aç"
+        },
+        "upsell": {
+          "data_breach_history": {
+            "cancel": "İptal Et",
+            "compromise_isa_contact_details": "Telefon numaraları, e-posta ve fiziksel adresler dâhil olmak üzere gizliliği ihlal edilmiş iletişim bilgileri",
+            "disclaimer_info": "Tüm veriler, herkese açık veri ihlallerini bildiren 14 milyardan fazla kaydın yer aldığı kapsamlı bir veri tabanından elde edilmektedir. Açığa çıkan bilgileri tespit edip raporluyoruz ancak parolalar veya özel kimlik bilgileri gibi hassas verilere erişim sağlamıyoruz.",
+            "limited_offer": "Sınırlı süre için geçerli teklif",
+            "personal_identifiers": "Kullanıcı adları, tam adlar ve doğum tarihleri dâhil olmak üzere kişisel tanımlayıcılar",
+            "processing_payment": "İşleniyor",
+            "professional_information_and_technical_data": "IP adresleri gibi profesyonel bilgiler ve teknik veriler",
+            "purchase": "Satın Al",
+            "special_limited_time_offer": "Sınırlı bir süre için geçerli bu özel teklif, bu sayfadan ayrıldığınızda sona erecektir.",
+            "title": "Veri İhlali ve Sızıntısı Raporu",
+            "total_due_today": "Toplam ödeme:"
+          },
+          "payment_message": {
+            "add_payment_details": "Ödeme bilgilerini ekleyin",
+            "agree_description_upsell": "Devam ederek {price} tutarındaki tek seferlik ödemeye onay vermiş ve <terms>Kullanım Şartlarımızı</terms> ve <privacy>Gizlilik Politikamızı</privacy> kabul etmiş olursunuz. Ödeme, fatura ekstrenizde \"mobitrace.io\" olarak görünecektir.",
+            "close": "Kapat",
+            "payment_error": "Ödemeniz başarısız oldu",
+            "payment_error_description": "Lütfen ödeme bilgilerinizi güncelleyin",
+            "payment_retry_description": "Kartınızı işleme alamadık. Lütfen tekrar deneyin.",
+            "payment_success": "Ödemeniz başarıyla alındı",
+            "payment_success_description": "Satın aldığınız için teşekkürler! Kullanıma hazır.",
+            "skip": "Atla",
+            "try_again": "Tekrar Dene",
+            "update_payment_method": "Ödeme yöntemini güncelle"
+          },
+          "sex_offenders": {
+            "cancel": "İptal Et",
+            "comprehensive_data": "Resmi kaynaklardan kapsamlı suçlu verilerine erişim",
+            "disclaimer_info": "Cinsel suçluların geçmiş kontrolleri yalnızca ABD içinde yapılır. Adalet Bakanlığı ülke çapında yaklaşık 800.000 kayıtlı cinsel suçlu olduğunu ve her yıl binlerce yeni kayıt yapıldığını bildirmektedir. İçinizin rahat etmesi için bilinmeyen kişileri doğrulayın.",
+            "instant_nationwide_search": "Tüm eyalet ve federal kayıtlarda anında ülke çapında kontrol",
+            "limited_offer": "Sınırlı süre için geçerli teklif",
+            "processing_payment": "İşleniyor",
+            "purchase": "Satın Al",
+            "realtime_verification": "En güncel kayıt verilerine göre gerçek zamanlı doğrulama",
+            "special_limited_time_offer": "Sınırlı süre için geçerli güvenlik doğrulama teklifi. Hizmet yalnızca Amerika Birleşik Devletleri'nde kayıtlı kişileri aramaktadır.",
+            "title": "Cinsel Suçlu Kayıt Kontrolü",
+            "total_due_today": "Toplam ödeme:"
+          },
+          "sex_offenders_search": {
+            "cancel": "İptal Et",
+            "disclaimer_info": "Cinsel suç geçmişi kontrolleri yalnızca ABD için geçerlidir. ABD Adalet Bakanlığı, ülke genelinde yaklaşık 800.000 kayıtlı cinsel suç faili bulunduğunu ve her yıl binlerce yeni kaydın yapıldığını bildirmektedir. Gönlünüz rahat olsun diye tanımadığınız kişileri doğrulayın.\n\nBu, {price}tutarında tek seferlik bir satın alma işlemidir. Bu raporu ekleyerek kayıtlı ödeme yönteminizden tek seferlik bir ücret tahsil edilmesine izin vermiş olursunuz. Bu satın alma işlemi, bu ek satış aralığındaki bir rapora erişim sağlar.",
+            "instant_access": "Tüm eyalet kayıtları ve federal kayıtlarda anında ülke çapında arama",
+            "processing_payment": "İşleniyor",
+            "purchase": "Satın Al",
+            "secure_one_time_payment": "En güncel kayıt verilerine göre gerçek zamanlı doğrulama",
+            "special_limited_time_offer": "Sınırlı bir süre için geçerli güvenlik doğrulama teklifi. Hizmet yalnızca Amerika Birleşik Devletleri'nde kayıtlı kişileri aramaktadır.",
+            "title": "Cinsel Suçlu Kayıt Kontrolü",
+            "total_due_today": "Ödenecek toplam:",
+            "verified_source_data": "Resmî kaynaklardan kapsamlı suçlu verilerine erişim"
+          },
+          "social_networks": {
+            "cancel": "İptal etmek",
+            "disclaimer_info": "Bu arama yalnızca büyük sosyal medya platformlarını ve herkese açık hesap bilgilerini kapsar. Kapsam, platforma ve profil kullanılabilirliğine bağlı olarak değişebilir.",
+            "limited_offer": "Sınırlı sayıda teklif",
+            "matching_accounts": "Herkese açık verilere dayalı bir raporda eşleşen hesapları bulun.",
+            "processing_payment": "İşleme",
+            "purchase": "Satın almak",
+            "related_usernames_and_public_profile": "İlgili kullanıcı adlarını ve herkese açık profil varlığını belirleyin.",
+            "scan_10_major_social_platforms": "İlgili hesaplar için 10'dan fazla büyük sosyal medya platformunu tarayın.",
+            "special_limited_time_offer": "Bu özel ve sınırlı süreli teklif, bu sayfadan ayrıldığınızda sona erecektir.",
+            "title": "Sosyal Platformlar Kontrolü",
+            "total_due_today": "Toplam ödeme:"
+          },
+          "unlimited_pdf_downloads": {
+            "cancel": "İptal Et",
+            "disclaimer_info": "Bu, tek seferlik bir satın alma işlemidir. \"Sınırsız PDF Al\" seçeneğine tıkladığınızda sizden {price} tahsil edilecektir.",
+            "limited_offer": "Sınırlı süre için geçerli teklif",
+            "processing_payment": "İşleniyor",
+            "purchase": "Satın Al",
+            "special_limited_time_offer": "Sadece size özel ek indirim uygulandı!",
+            "title": "Sınırsız PDF İndirme",
+            "total_due_today": "Ödenecek toplam:",
+            "upsell_benefits_1": "Çevrimdışı erişilebilir",
+            "upsell_benefits_2": "Başkalarıyla kolayca paylaşılabilir",
+            "upsell_benefits_3": "İstendiğinde yazdırılabilir",
+            "upsell_benefits_4": "Net ve güzel format, kolay okuma olanağı"
+          }
+        }
+      },
+      "search": {
+        "components": {
+          "loader": {
+            "step_1": {
+              "carrier": {
+                "loadedDefaultText": "Tespit edildi",
+                "text": "Operatör"
+              },
+              "city": {
+                "loadedText": "Bulundu",
+                "text": "Şehir"
+              },
+              "connecting": "Numara sorgulama başlatılıyor",
+              "country": {
+                "text": "Ülke"
+              },
+              "location": {
+                "loadedText": "Tespit edildi",
+                "text": "Konum"
+              },
+              "searching": "Sonuçlar aranıyor",
+              "type": {
+                "loadedText": "Tespit edildi",
+                "text": "Tür"
+              }
+            },
+            "step_2": {
+              "cta": "Konumu Öğren",
+              "subtitle": "Aramanız tamamlandı, artık konuma erişebilirsiniz.",
+              "title": "Konum bulundu!"
+            }
+          },
+          "warning_dialog": {
+            "button_text": "Arayanı Göster",
+            "description": "Mobitrace raporunuz hazır. Bu numarayla ilişkili, herkese açık bilgileri öğrenin.",
+            "info_message": "{phoneNumber} için yaptığınız arama %100 güvenlidir.",
+            "telephone": "(0-616) 32211",
+            "title": "UYARI:"
+          }
+        }
+      },
+      "search_complete": {
+        "components": {
+          "age_verification_dialog": {
+            "button_text": "Evet, 18 yaşında veya daha büyüğüm",
+            "description": "Bu rapor, hassas içerik barındırıyor olabilir ve yalnızca yetişkinlere yöneliktir. Devam etmek için 18 yaşında veya daha büyük olmalısınız.",
+            "info_message": "18 yaşından küçükseniz lütfen <bold>çıkış yapın</bold>.",
+            "title": "Yaş doğrulaması gerekiyor"
+          },
+          "customer_opinions_carousel": {
+            "opinion_1": {
+              "description": "Kızımın yeni biriyle konuşmaya başladığını fark ettim ve her şeyin güvenli olduğundan emin olmak istedim. Mobitrace, iletişim kuran kişinin kim olduğunu hızlıca kontrol ederek bana gönül rahatlığı sağladı. Bazen basit bir ters arama bile her şeyi değiştirebilir.",
+              "rate": "4",
+              "timeAgo": "4 gün önce",
+              "title": "Sonunda biraz gönül rahatlığı",
+              "user": "Samantha Green"
+            },
+            "opinion_2": {
+              "description": "Bu araç oldukça doğru sonuçlar veriyor ve aradığım kişi bilgilerinin çoğunda çalıştı. Birkaç tanesinde  bilgiler tam olarak güncel değildi ancak genel olarak Mobitrace ihtiyaçlarımı tamamen karşıladı. Güvenilir ve kullanımı kolay.",
+              "rate": "4.5",
+              "timeAgo": "1 hafta önce",
+              "title": "Güvenebildiğim doğru sonuçlar",
+              "user": "Daniel Brooks"
+            },
+            "opinion_3": {
+              "description": "Hızlı, güvenilir ve doğru! Mobitrace, sonuç sunma hızıyla beni etkiledi. Hizmetten daha memnun olamazdım.",
+              "rate": "5",
+              "timeAgo": "1 gün önce",
+              "title": "Hızlı, kolay ve isabetli",
+              "user": "Olivia Carter"
+            },
+            "opinion_4": {
+              "description": "Mobitrace, aramaları yönetmek için en sevdiğim araçlardan biri haline geldi. Bilinmeyen numaraların arkasında kimin olduğunu anlamama yardımcı oluyor. Bu da bana zaman kazandırıyor ve bana ulaşabilecek kişileri kontrol edebilmemi sağlıyor.",
+              "rate": "5",
+              "timeAgo": "2 hafta önce",
+              "title": "Aramalarımı kontrol edebiliyorum",
+              "user": "Matthew Lewis"
+            },
+            "opinion_5": {
+              "description": "Tanımadığım bir numaradan aramalar alıyordum ve endişelenmem gerekip gerekmediğinden emin değildim. Mobitrace'i denedim ve arayanı hemen tespit etmemi sağladı. Artık şüpheli görünen bir şey gördüğümde kullanıyorum.",
+              "rate": "4.5",
+              "timeAgo": "2 gün önce",
+              "title": " Artık kimin aradığını her zaman biliyorum",
+              "user": "Sophia Turner"
+            },
+            "opinion_6": {
+              "description": "Durmadan spam aramalar alıyordum ve bu beni çileden çıkarıyordu. Mobitrace sayesinde sonunda bunların arkasında kimin olduğunu buldum. Arayanın profilini ve geçmişini görmek bana ihtiyacım olan netliği sağladı.",
+              "rate": "5",
+              "timeAgo": "1 gün önce",
+              "title": "Artık istenmeyen aramalar yok",
+              "user": "Christopher Hall"
+            },
+            "opinion_7": {
+              "description": "Şimdiye kadar denediğim en iyi araç! Mobitrace sayesinde artık bilinmeyen aramalar veya mesajlar konusunda endişelenmeme gerek yok. Hızlı, kolay ve ihtiyacım olan cevapları veriyor.",
+              "rate": "4",
+              "timeAgo": "3 gün önce",
+              "title": "Bilinmeyen aramalar için en iyi araç",
+              "user": "Grace Mitchell"
+            },
+            "opinion_8": {
+              "description": "Mobitrace, beni bilinmeyen numaradan kimin aradığını bulmama yardımcı oldu. Hatta ilgili isimleri ve aile bağlantılarını bile gösterdi. Her durumda bilgiler mükemmel değildi ama genel olarak başka hiçbir yerde bulamadığım değerli bilgiler sağladı.",
+              "rate": "4.5",
+              "timeAgo": "2 gün önce",
+              "title": "Şaşırtıcı derecede ayrıntılı bilgiler",
+              "user": "Ethan Parker"
+            },
+            "rate": "4.5",
+            "reviews": "<bold>456 değerlendirmeye</bold> göre",
+            "title": "Mükemmel"
+          },
+          "customer_say_about": {
+            "subtitle": "Size mümkün olan en iyi deneyimi sunmak için elimizden gelenin en iyisini yapıyoruz.",
+            "title": "Kullanıcılarımızın yorumları"
+          },
+          "owner_information": {
+            "collecting_data_address": "Adresler",
+            "collecting_data_email": "E-posta veya Telefon Numaraları",
+            "collecting_data_job": "İş Bilgileri",
+            "collecting_data_online": "Kullanıcı Adları",
+            "collecting_data_past": "Önceki İlişkiler",
+            "collecting_data_profiles": "Unutulmuş Profiller",
+            "collecting_data_title": "Veriler Toplanıyor...",
+            "progress_bar_description": "Arama geçmişiniz güvende ve gizlidir. {phoneNumber} numaralı telefonun sahibi, yaptığınız arama hakkında BİLGİLENDİRİLMEYECEKTİR.",
+            "progress_bar_percentage": "%{percentage}",
+            "subtitle": "Milyarlarca kaydı inceliyoruz, lütfen bekleyin.",
+            "title": "<bold></bold> İçin Kullanıcı Bilgileri Alınıyor"
+          }
+        }
+      },
+      "sign_up": {
+        "card_description": "Mobitrace, milyarlarca telefon kaydını çevrimiçi olarak arayan gelişmiş bir dijital araçtır. Bilinmeyen numaraların çoğu pazarlama veya bilgi hırsızlığı için kullanılıyor olsa da raporlarımız sizi şaşırtacak bilgiler içerebilir.",
+        "card_title": "Önemli Uyarı",
+        "email_placeholder": "E-posta adresiniz",
+        "email_title": "E-posta adresi",
+        "errors": {
+          "email_exists": "Bu e-posta adresi zaten kayıtlı. Lütfen oturum açın ya da farklı bir e-posta kullanın.",
+          "invalid_email": "Lütfen geçerli bir e-posta girin."
+        },
+        "form_title": "Raporunuzu almak için e-posta adresinizi girin",
+        "latest_report": "3 Mart 2025 tarihli en son rapor",
+        "submit_button": "Devam et",
+        "title": "Sonuçlar hazır!"
+      },
+      "thank_you": {
+        "account_link": "Hesabınıza erişin",
+        "click_below_to_account_your_link": "Hesabınıza erişmek için aşağıya tıklayın!",
+        "description": "Siparişinizin ayrıntılarını ve hesap kimlik bilgilerinizi {email} adresine gönderdik. Artık hesabınıza erişebilirsiniz.",
+        "did_you_like_your_shopping_experience": "Alışveriş deneyiminizden memnun kaldınız mı?",
+        "more_details_feedback": "Detaylı geri bildiriminiz bizim için çok önemli: <email>support@mobitrace.io</email>",
+        "no": "Hayır",
+        "thank_you_for_your_feedback": "Geri bildiriminiz için teşekkür ederiz!",
+        "title": "Ödemeniz başarıyla alındı!",
+        "we_ll_work_on_making_it_better": "Kendimizi geliştirmek için çalışacağız!",
+        "yes": "Evet"
+      },
+      "upsell": {
+        "already_purchased": "Zaten satın alındı",
+        "data_breach": {
+          "disclaimer": "Tüm veriler, herkese açık veri ihlallerini bildiren 14 milyardan fazla kaydın yer aldığı kapsamlı bir veri tabanından elde edilmektedir. Açığa çıkan bilgileri tespit edip raporluyoruz ancak parolalar veya özel kimlik bilgileri gibi hassas verilere erişim sağlamıyoruz.",
+          "purchase": "Veri İhlali Raporunu Ekle",
+          "special_limited_time_offer": "Sınırlı bir süre için geçerli olan bu özel teklif, bu sayfadan ayrıldığınızda sona erecektir.",
+          "title": "Veri İhlali ve Sızıntısı Raporu",
+          "upsell_benefits_1": "Kullanıcı adları, tam adlar ve doğum tarihleri dâhil olmak üzere kişisel tanımlayıcılar",
+          "upsell_benefits_2": "Telefon numaraları, e-posta ve fiziksel adresler dâhil olmak üzere gizliliği ihlal edilmiş iletişim bilgileri",
+          "upsell_benefits_3": "IP adresleri gibi profesyonel bilgiler ve teknik veriler"
+        },
+        "limited_offer": "Sınırlı süre için geçerli teklif",
+        "pdf": {
+          "disclaimer": "Bu, tek seferlik bir satın alma işlemidir. \"Sınırsız PDF Al\" seçeneğine tıkladığınızda sizden {price} tahsil edilecektir.",
+          "purchase": "Sınırsız PDF Al",
+          "special_limited_time_offer": "Sadece size özel ek indirim uygulandı!",
+          "title": "Sınırsız PDF İndirme",
+          "upsell_benefits_1": "Çevrimdışı erişilebilir",
+          "upsell_benefits_2": "Başkalarıyla kolayca paylaşılabilir",
+          "upsell_benefits_3": "İstendiğinde yazdırılabilir",
+          "upsell_benefits_4": "Net ve güzel format, kolay okuma olanağı"
+        },
+        "processing": "İşleniyor",
+        "sex_offenders": {
+          "disclaimer": "Cinsel suçluların geçmiş kontrolleri yalnızca ABD içinde yapılır. Adalet Bakanlığı ülke çapında yaklaşık 800.000 kayıtlı cinsel suçlu olduğunu ve her yıl binlerce yeni kayıt yapıldığını bildirmektedir. İçinizin rahat etmesi için bilinmeyen kişileri doğrulayın.",
+          "purchase": "Cinsel Suçlu Kayıt Kontrolü Ekle",
+          "purchase_terms": "Bu, {price} tutarında tek seferlik bir satın alma işlemidir. Bu raporu ekleyerek kayıtlı ödeme yönteminizden tek seferlik bir ücret tahsil edilmesine izin vermiş olursunuz. Bu satın alma işlemi, bu ek satış aralığındaki bir rapora erişim sağlar.",
+          "special_limited_time_offer": "Sınırlı bir süre için geçerli güvenlik doğrulama teklifi. Hizmet yalnızca Amerika Birleşik Devletleri'nde kayıtlı kişileri aramaktadır.",
+          "title": "Cinsel Suçlu Kayıt Kontrolü",
+          "upsell_benefits_1": "Tüm eyalet kayıtları ve federal kayıtlarda anında ülke çapında arama",
+          "upsell_benefits_2": "Resmî kaynaklardan kapsamlı suçlu verilerine erişim",
+          "upsell_benefits_3": "En güncel kayıt verilerine göre gerçek zamanlı doğrulama"
+        },
+        "skip": "Atla",
+        "total_due_today": "Ödenecek toplam:"
+      }
+    },
+    "settings": {
+      "billing": {
+        "activate_dialog": {
+          "action_form": "Kart ile öde",
+          "title": "Ödeme Yöntemi Ekleyin"
+        },
+        "active_date": "Şu tarihe kadar aktif: {date}",
+        "active_state": "Aktif",
+        "cancel_dialog": {
+          "cancel_cta": "Aboneliği İptal Et",
+          "canceling_cta": "İptal ediliyor...",
+          "close_cta": "Kapat",
+          "description": "Aboneliğinizi iptal ederseniz tüm özelliklere ve desteğe erişiminizi kaybedeceksiniz. Dilediğiniz zaman aboneliğinizi yeniden etkinleştirebilirsiniz.",
+          "description_canceled": "Aboneliğiniz iptal edildi.<br> Bundan sonra sizden ücret alınmayacaktır.",
+          "done_cta": "Bitti",
+          "title": "Onay"
+        },
+        "cancel_subscription": "Aboneliği İptal Et",
+        "canceled_cta": "Aboneliği Yeniden Etkinleştir",
+        "canceled_date": "Şu tarihte iptal edildi: {date}",
+        "canceled_state": "İptal edildi",
+        "expired_cta": "Aboneliği Etkinleştir",
+        "expired_date": "Şu tarihte süresi doldu: {date}",
+        "expired_description": "Aboneliğinizin süresi doldu. Devam etmek için lütfen yeniden etkinleştirin.",
+        "expired_state": "Süresi doldu",
+        "month": "ay",
+        "next_billing_date": "Sonraki faturalandırma: {date}",
+        "privacy_policy": "Gizlilik Politikası",
+        "started_on_date": "Şu tarihte başladı: {date}",
+        "subscription": "Abonelik",
+        "terms_and_conditions": "Hüküm ve Koşullar",
+        "title": "Faturalandırma",
+        "total": "Toplam:"
+      },
+      "get_help": {
+        "title": "Yardım Alın"
+      },
+      "my_account": {
+        "change_password": {
+          "confirm_password": "Parolayı Onaylayın",
+          "current_password": "Mevcut Parola",
+          "new_password": "Yeni Parola",
+          "title": "Parolayı Değiştirin"
+        },
+        "delete_cta": "Hesabı Sil",
+        "delete_dialog": {
+          "close_cta": "Kapat",
+          "delete_cta": "Hesabı sil",
+          "deleting_cta": "Siliniyor...",
+          "description": "Hesabınızı silmek istediğinizden emin misiniz? Onayladıktan sonra üye bölümüne erişiminizi hemen kaybedeceğinizi lütfen unutmayın.",
+          "description_canceled": "Hesabınız başarıyla silindi.",
+          "done_cta": "Bitti",
+          "title": "Onay"
+        },
+        "errors": {
+          "confirm_password_required": "Parola onayı gereklidir",
+          "current_password_invalid": "Mevcut parola geçersiz",
+          "current_password_required": "Mevcut parola gereklidir",
+          "email_max_length": "E-posta en fazla {maxLength} karakter olmalıdır.",
+          "email_required": "E-posta gereklidir",
+          "email_taken": "E-posta çoktan alındı",
+          "invalid_email": "Lütfen geçerli bir e-posta girin.",
+          "name_invalid_characters": "Ad, sayı içeremez.",
+          "name_invalid_special_characters": "İsim özel karakterler içeremez.",
+          "name_max_length": "Ad en fazla {maxLength} karakter olmalıdır.",
+          "name_required": "Ad gereklidir",
+          "new_password_must_differ_from_current_password": "Yeni parola, mevcut paroladan farklı olmalıdır",
+          "new_password_required": "Yeni parola zorunludur",
+          "password_max_length": "Parola en fazla {maxLength} karakter olmalıdır.",
+          "password_min_length": "Parola en az 6 karakterden oluşmalıdır.",
+          "passwords_must_match": "Parolalar eşleşmelidir"
+        },
+        "notifications": {
+          "notify_status_changes": "Durum değişikliği olduğunda bana haber ver",
+          "notify_user_located": "Kullanıcının konumu bulunduğunda bana haber ver",
+          "title": "Bildirimler"
+        },
+        "profile": {
+          "email": "E-posta adresi",
+          "name": "Ad ve soyadı",
+          "title": "Profil Bilgileri"
+        },
+        "submit_cta": "Değişiklikleri Kaydet",
+        "success_title": "Hesabınız güncellendi",
+        "title": "Genel"
+      },
+      "title": "Ayarlar"
+    },
+    "sex_offenders_search": {
+      "form": {
+        "city_placeholder": "Şehir",
+        "errors": {
+          "first_name_required": "Ad alanı zorunludur",
+          "last_name_required": "Soyadı zorunludur"
+        },
+        "first_name_placeholder": "Ad",
+        "last_name_placeholder": "Soyadı",
+        "state_placeholder": "Tüm eyaletler",
+        "submit_button": "Şimdi Kontrol Edin",
+        "title": "Cinsel Suçlu Kayıtları Kontrolü Yapın",
+        "zip_placeholder": "Posta Kodu"
+      },
+      "loading": {
+        "subtitle": "Ulusal kayıt sisteminden verileri alırken lütfen bekleyin.",
+        "title": "Cinsel Suçlular Sicilini kontrol etmek..."
+      },
+      "results": {
+        "back": "Sırt",
+        "continue": "Devam et",
+        "empty_title": "Cinsel suçlu bulunamadı",
+        "results_found": "{count} sonuç bulundu",
+        "results_found_subtitle": "Devam etmek için size en uygun olanı seçin.",
+        "search_again": "Tekrar Ara"
+      },
+      "title": "Cinsel Suçlular"
+    },
+    "sign_in": {
+      "description": "Hesabınızda oturum açmak için e-postanızı girin",
+      "sign_up_link": "Kaydol",
+      "sign_up_prompt": "Hesabınız yok mu?",
+      "title": "Giriş Yapın"
+    },
+    "sign_up": {
+      "components": {
+        "sign_up_form": {
+          "continue_with_email": "E-posta ile Devam Et",
+          "continue_with_facebook": "Facebook ile Devam Et",
+          "continue_with_google": "Google ile Devam Et",
+          "email_label": "E-posta adresi",
+          "email_placeholder": "E-posta adresiniz",
+          "errors": {
+            "email_exists": "Bu e-posta adresi zaten kaydolmuş. Lütfen oturum açın ya da farklı bir e-posta kullanın.",
+            "invalid_email": "Lütfen geçerli bir e-posta girin."
+          },
+          "or": "veya"
+        }
+      },
+      "title": "<brandColor>{phoneNumber}</brandColor> numaralı telefonun tam konumunu öğrenmek için kaydolun"
+    },
+    "status": {
+      "description": "İlerleme durumunu aşağıda bulabilirsiniz",
+      "detail_description": "Konum bulundu",
+      "error_fetching_address": "Adres alınırken hata",
+      "link_name": "{name} için bağlantı",
+      "load_more_button": "Daha Fazla Yükle",
+      "loading_address": "Adres yükleniyor...",
+      "located_status": "Konum bulundu",
+      "no_locations_available": "İstek Yok",
+      "pending_description": "Alıcının coğrafi konumunu paylaşması bekleniyor",
+      "pending_status": "Beklemede",
+      "ready_status": "Rapor oluşturuldu",
+      "rejected_description": "Alıcıyı konumunu paylaşmaya teşvik etmek için mesajınızı değiştirin",
+      "rejected_status": "Reddedildi",
+      "reverse_lookup_description": "Telefon numarası için bulunan herkse açık verilerin özeti",
+      "reverse_lookup_report_for": "{phone} için numara sorgulama raporu",
+      "title": "Etkinlik Merkezi"
+    },
+    "success": {
+      "account_link": "Hesabınıza erişin",
+      "click_below_to_account_your_link": "Hesabınıza erişmek için aşağıya tıklayın!",
+      "description": "Siparişinizin ayrıntılarını ve hesap kimlik bilgilerinizi {email} adresine gönderdik. Artık hesabınıza erişebilirsiniz.",
+      "did_you_like_your_shopping_experience": "Alışveriş deneyiminizden memnun kaldınız mı?",
+      "more_details_feedback": "Detaylı geri bildiriminiz bizim için çok önemli: <email>support@mobitrace.io</email>",
+      "no": "Hayır",
+      "thank_you_for_your_feedback": "Geri bildiriminiz için teşekkür ederiz!",
+      "title": "Ödemeniz başarıyla alındı!",
+      "we_ll_work_on_making_it_better": "Kendimizi geliştirmek için çalışacağız!",
+      "yes": "Evet"
+    },
+    "upsell": {
+      "cancel_button": "Hayır, Teşekkürler",
+      "description": "Tek bir tıklamayla 7/24 kişiselleştirilmiş yardım ve üst düzey teknik desteğin keyfini çıkarın.",
+      "footer_info": "Bölgenize bağlı olarak toplam satın alma bedeline %{percentage} Satış Vergisi eklenebileceğini lütfen unutmayın",
+      "order_details": "Sipariş bilgileri:",
+      "products": {
+        "add_button": "Ekle",
+        "add_order_button": "{price} karşılığında ekle",
+        "added_state": "Eklendi",
+        "details_button": "Ayrıntılar",
+        "remove_button": "Kaldır",
+        "scan_pro": {
+          "description": "Uzman teknik destek ekibimizin rehberliğiyle Mobitrace'in tüm özelliklerini öğrenin. Tüm özellikleri iş başında görün ve onlardan en iyi şekilde nasıl faydalanabileceğinizi öğrenin.",
+          "dialog": "<p>Uzman ekibimizden kişiye özel, adım adım destek alarak Mobitrace deneyiminizi maksimuma çıkarın. Her özelliği keşfedin ve hizmetlerimizden en iyi şekilde faydalanın.</p><ul><li><strong>Sorunsuz Konum Takibi.</strong>Tek bir bağlantı ile istediğiniz kişinin konumunu kolayca takip edin. Ekibimiz tüm süreç boyunca size yol gösterecek, her teknik detayın özenle ele alınmasını sağlayacaktır.</li><li><strong>Kapsamlı Profil Desteği.</strong>İhtiyaç duyduğunuz tüm bilgileri edinmek için bizimle çalışın. İletişim bilgilerinden sosyal medya profillerine, aradığınız kişinin tüm bilgilerini öğrenmenize yardımcı oluyoruz.</li><li><strong>Kaybolan veya Çalınan Telefonunuzu Bulun.</strong>Telefonunuz kaybolursa size yardımcı olabiliriz. Gelişmiş araçlarımız, cihazınızın konumunu hızla tespit edebilir ve tam konumunu haritada gösterebilir.</li><li><strong>İnternette Güvende Kalın.</strong>Telefon numaranız ya da e-posta adresinizin üçüncü taraf veri ihlallerinde çalınıp çalınmadığını belirlemek üzere veri tabanlarında tarama yapıyor, siber tehditlerden korunmanıza yardımcı oluyoruz.</li></ul>",
+          "title": "ScanPRO"
+        },
+        "support_hotline": {
+          "description": "Yardım almak için sırada beklemeyin! Öncelikli Teknik Destek ile sıranın önüne geçin ve yetenekli teknik uzmanlarımızdan hızlı, bire bir yardım alın.",
+          "title": "7/24 Öncelikli Destek"
+        }
+      },
+      "submit_button": "Siparişe Ekle",
+      "subtotal": "Ara Toplam",
+      "taxes": "Satış Vergisi (%{percentage})",
+      "title": "Mobitrace Deneyiminizi Maksimuma Çıkarın!",
+      "total": "Toplam"
+    }
+  },
+  "routes": {
+    "forgot_password": "forgot-password",
+    "loader": "loader",
+    "reset_password": "reset-password",
+    "sign_in": "sign-in",
+    "sign_up": "sign-up"
+  }
+}

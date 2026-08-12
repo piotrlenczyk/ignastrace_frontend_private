@@ -1,0 +1,1882 @@
+{
+  "common": {
+    "back": "Tillbaka",
+    "close": "Stäng",
+    "close_menu": "Stäng meny",
+    "copied_to_clipboard": "Kopierad till urklipp",
+    "email_label": "E-postadress",
+    "errors": {
+      "email_exists": "Den här e-postadressen används redan av en annan användare",
+      "rate_limit_error": "Du har nått din dagliga gräns. Försök igen i morgon.",
+      "rate_limit_error_title": "Gränsen har nåtts",
+      "server_error": "Serverfel",
+      "server_error_description": "Ett fel inträffade vid behandlingen av din begäran. Försök igen."
+    },
+    "login": "Logga in",
+    "logout": "Logga ut",
+    "open_menu": "Öppna meny",
+    "settings": "Inställningar",
+    "subscription": "Prenumeration"
+  },
+  "components": {
+    "country_selector": {
+      "no_results": "Landskoden hittades inte.",
+      "placeholder": "Välj landskod ...",
+      "search_placeholder": "Sök baserat på land eller kod ..."
+    },
+    "forms": {
+      "change_email": {
+        "confirmation_email_sent_description": "Vi har skickat en bekräftelse via e-post till den nya adressen. Bekräfta ändringen.",
+        "confirmation_email_sent_title": "Bekräftelse via e-post har skickats",
+        "current_email_label": "Nuvarande e-postadress",
+        "current_password_label": "Av säkerhetsskäl behöver du ange ditt nuvarande lösenord",
+        "current_password_placeholder": "Ange ditt nuvarande lösenord",
+        "errors": {
+          "current_password_required": "Du måste ange det aktuella lösenordet",
+          "invalid_email": "Ange en giltig e-postadress."
+        },
+        "new_email_label": "Ny e-postadress",
+        "new_email_placeholder": "Ange den nya e-postadressen",
+        "save_button": "Uppdatera e-postadress"
+      },
+      "change_password": {
+        "confirm_password_label": "Bekräfta det nya lösenordet",
+        "confirm_password_placeholder": "Bekräfta ditt nya lösenord",
+        "current_password_label": "Nuvarande lösenord",
+        "current_password_placeholder": "Ange ditt nuvarande lösenord",
+        "errors": {
+          "confirm_password_min_length": "Bekräfta det nya lösenordet med minst 6 tecken",
+          "current_password_required": "Aktuellt lösenord krävs",
+          "new_password_min_length": "Det nya lösenordet måste innehålla minst 6 tecken",
+          "new_password_required": "Nytt lösenord krävs",
+          "passwords_must_match": "Lösenorden måste stämma överens"
+        },
+        "new_password_label": "Nytt lösenord",
+        "new_password_placeholder": "Ange ditt nya lösenord",
+        "save_button": "Spara ändringar"
+      },
+      "delete_account": {
+        "cancel_button": "Avbryt",
+        "confirm_button": "Ja, radera mitt konto",
+        "confirmation_message": "Ditt konto har raderats.",
+        "delete_account_button": "Radera konto",
+        "description": "Det går inte att ångra den här åtgärden, så se till att du är säker på ditt beslut.",
+        "dialog_description": "Den här åtgärden kan inte ångras. Detta kommer att radera ditt konto och din data från våra servrar permanent.",
+        "dialog_title": "Är du helt säker?",
+        "title": "Radera konto"
+      },
+      "edit_company": {
+        "add_social_network_button": "Lägg till socialt nätverk",
+        "address_label": "Adress",
+        "address_placeholder": "Ange företagets adress",
+        "company_name_label": "Företagets namn",
+        "company_name_placeholder": "Ange företagets namn",
+        "errors": {
+          "company_name_required": "Du måste ange företagets namn",
+          "url_invalid": "Ange en giltig webbadress"
+        },
+        "hide_address_map": "Dölj kartan",
+        "horizontal_logo_alt_text": "Företagets horisontella logotyp",
+        "horizontal_logo_description": "Rekommenderas: JPEG, PNG. Max 5 MB. 600 x 200 px",
+        "horizontal_logo_label": "Horisontell logotyp",
+        "opening_hours_label": "Öppettider",
+        "opening_hours_placeholder": "T.ex. mån–fre: 9–17, lör: 10–14, sön: stängt",
+        "profile_url_placeholder": "Webbadress till profil",
+        "save_button": "Spara ändringar",
+        "show_address_map": "Visa kartan",
+        "social_networks_label": "Sociala nätverk",
+        "squared_logo_alt_text": "Företagets fyrkantiga logotyp",
+        "squared_logo_label": "Fyrkantig logotyp",
+        "website_label": "Webbplats",
+        "website_placeholder": "https://www.example.com"
+      },
+      "edit_profile": {
+        "description": "Uppdatera din personliga information",
+        "errors": {
+          "first_name_required": "Du måste ange förnamn.",
+          "invalid_phone": "Telefonnumret är ogiltigt.",
+          "last_name_required": "Du måste ange efternamn."
+        },
+        "first_name_label": "Förnamn",
+        "first_name_placeholder": "Ange ditt förnamn",
+        "last_name_label": "Efternamn",
+        "last_name_placeholder": "Ange ditt efternamn",
+        "phone_label": "Telefonnummer",
+        "phone_placeholder": "Ange ditt telefonnummer",
+        "privacy_label": "Integritet",
+        "profile_picture_alt": "Profilfoto",
+        "profile_picture_label": "Profilfoto",
+        "public_email_label": "Gör min e-postadress offentligt synlig på min profil",
+        "public_phone_label": "Gör mitt telefonnummer offentligt synligt på min profil",
+        "save_button": "Spara ändringar",
+        "title": "Redigera profil",
+        "upload_description": "Rekommenderas: JPEG, PNG. Max 5 MB. 400 x 400 px",
+        "upload_picture": "Ladda upp nytt foto",
+        "whatsapp_label": "Jag har ett WhatsApp-konto med det här numret"
+      },
+      "forgot_password": {
+        "cancel_button": "Avbryt",
+        "email_label": "E-post",
+        "email_placeholder": "Din e-postadress",
+        "errors": {
+          "invalid_email": "Ange en giltig e-postadress."
+        },
+        "submit_button": "Skicka lösenord",
+        "subtitle": "Ange din e-postadress så skickar vi ditt lösenord.",
+        "success": {
+          "done": "Klart",
+          "line_1": "Vi har skickat ditt lösenord till",
+          "line_2": "Kolla din e-post för att logga in.",
+          "title": "Lösenordet har skickats"
+        },
+        "title": "Har du glömt ditt lösenord?"
+      },
+      "reset_password": {
+        "confirm_password_label": "Bekräfta det nya lösenordet",
+        "confirm_password_placeholder": "Bekräfta ditt nya lösenord",
+        "errors": {
+          "password_min_length": "Lösenordet måste innehålla minst 6 tecken.",
+          "passwords_do_not_match": "Lösenorden stämmer inte överens."
+        },
+        "new_password_label": "Nytt lösenord",
+        "new_password_placeholder": "Ange ditt nya lösenord",
+        "submit_button": "Återställ lösenordet"
+      },
+      "sign_in": {
+        "email_label": "E-postadress",
+        "email_placeholder": "Din e-postadress",
+        "errors": {
+          "account_not_found": "Det gick inte att hitta ditt Mobitrace-konto.",
+          "invalid_credentials": "E-postadressen och lösenordet du angav stämmer inte överens med våra uppgifter. Kontrollera dina inloggningsuppgifter och försök igen.",
+          "invalid_email": "Ange en giltig e-postadress.",
+          "password_min_length": "Lösenordet måste innehålla minst 6 tecken."
+        },
+        "forgot_password": "Har du glömt ditt lösenord?",
+        "or": "eller",
+        "password_label": "Lösenord",
+        "password_placeholder": "Ditt lösenord",
+        "submit_button": "Logga in",
+        "title": "Logga in på ditt konto"
+      },
+      "stripe_form": {
+        "card_name_placeholder": "Namn på kort",
+        "credit_card_label": "Kort",
+        "credit_card_placeholder": "1234 1234 1234 1234",
+        "cvc_placeholder": "CVC",
+        "errors": {
+          "apple_pay_not_available": "Apple Pay stöds inte",
+          "apple_pay_not_available_description": "Du har inte aktiverat den här betalningsmetoden för den här enheten eller webbläsaren. Välj en annan betalningsmetod.",
+          "card_name_required": "Ange det namn som står på kortet.",
+          "card_number_required": "Ange kortnumret.",
+          "cvc_required": "Obligatoriskt.",
+          "expiration_date_required": "Obligatoriskt.",
+          "google_pay_not_available": "Google Pay stöds inte",
+          "google_pay_not_available_description": "Du har inte aktiverat den här betalningsmetoden för den här enheten eller webbläsaren. Välj en annan betalningsmetod.",
+          "name_invalid_characters": "Namnet får inte innehålla siffror.",
+          "name_invalid_special_characters": "Namnet får inte innehålla specialtecken.",
+          "stripe_generic_error": "Vi kan inte autentisera din betalningsmetod. Välj en annan betalningsmetod och försök igen.",
+          "stripe_generic_error_title": "Fel vid betalning",
+          "zip_code_invalid_format": "Ange ett giltigt postnummer."
+        },
+        "expiration_date_placeholder": "MM/ÅÅ",
+        "zip_code_placeholder": "Postnummer (valfritt)"
+      }
+    },
+    "image_upload_input": {
+      "upload_button_text": "Ladda upp nytt foto",
+      "upload_description": "Rekommenderas: JPEG, PNG. Max 5 MB. 400 x 400 px",
+      "upload_label": "Profilfoto"
+    },
+    "phone_input": {
+      "errors": {
+        "invalid_phone": "Ange ett giltigt telefonnummer."
+      },
+      "label": "Ange det nummer som du vill lokalisera",
+      "no_results": "Landskoden hittades inte.",
+      "phone_placeholder": "123456789",
+      "search_placeholder": "Sök baserat på land eller kod ...",
+      "submit": "Lokalisera"
+    },
+    "settings_navigator": {
+      "change_email": {
+        "description": "Uppdatera din e-postadress",
+        "label": "Ändra e-postadress"
+      },
+      "change_password": {
+        "description": "Uppdatera lösenordet för ditt konto",
+        "label": "Ändra lösenord"
+      },
+      "company_profile": {
+        "description": "Uppdatera din företagsinformation",
+        "label": "Företagets profil"
+      },
+      "delete_account": {
+        "description": "Radera ditt konto och all tillhörande data",
+        "label": "Radera konto"
+      },
+      "edit_profile": {
+        "description": "Uppdatera din personliga information",
+        "label": "Redigera profil"
+      },
+      "no_access": "Du har inte tillgång till detta avsnitt. Detta innehåll är exklusivt för professionella användare.",
+      "notifications": {
+        "description": "Hantera dina inställningar för e-postaviseringar",
+        "label": "Aviseringar"
+      },
+      "subscription": {
+        "description": "Hantera din prenumeration",
+        "label": "Prenumeration"
+      },
+      "title": "Inställningar"
+    }
+  },
+  "consent": {
+    "accept": "Instämmer",
+    "decline": "Avvisa",
+    "decline_accept": "Tillbaka till startsidan",
+    "decline_description": "För att använda vår meddelandetjänst – särskilt för amerikanska och kanadensiska nummer – behöver vi ditt tillstånd. Utan det är den här funktionen inte tillgänglig. Kom tillbaka när som helst för att fortsätta.",
+    "decline_title": "Hoppsan! Vi behöver ditt samtycke",
+    "description": "För att hitta din telefon behöver vi skicka ett SMS till dig. Bekräfta att du samtycker till att ta emot det.",
+    "title": "Bekräftelse krävs"
+  },
+  "contest": {
+    "agree": "Instämmer",
+    "decline": "Avvisa",
+    "description": "Jag bekräftar att det angivna telefonnumret är mitt och jag samtycker till att ta emot meddelanden.",
+    "title": "Ta emot meddelanden?"
+  },
+  "footer": {
+    "brand": "Mobitrace.io",
+    "description": "Lokalisera vilken telefon som helst – snabbt och enkelt med Mobitrace.",
+    "links": {
+      "about_us": "Om oss",
+      "cancel_subscription": "Säg upp prenumeration",
+      "contact": "Kontakt",
+      "contacts": "Kontakt",
+      "cookie_policy": "Cookiepolicy",
+      "faqs": "Vanliga frågor",
+      "home": "Startsida",
+      "location_number": "Lokalisera via telefonnummer",
+      "login": "Logga in",
+      "pricing": "Priser",
+      "privacy policy": "Integritetspolicy",
+      "reverse_lookup": "Omvänd sökning",
+      "terms_and_conditions": "Villkor"
+    },
+    "rights": "Med ensamrätt."
+  },
+  "header": {
+    "about": "Om",
+    "home": "Startsida",
+    "open_menu": "Öppna meny",
+    "sign_in": "Logga in",
+    "sign_up": "Registrera dig"
+  },
+  "language": {
+    "english": "English",
+    "spanish": "Español"
+  },
+  "navigation": {
+    "about_us": "Om oss",
+    "contact": "Kontakt",
+    "dashboard": "Instrumentpanel",
+    "faqs": "Vanliga frågor",
+    "home": "Startsida",
+    "mobile_dialog_description": "Den här dialogrutan innehåller de viktigaste navigeringslänkarna",
+    "mobile_dialog_title": "Huvudnavigering",
+    "pricing": "Priser",
+    "settings": "Inställningar"
+  },
+  "pages": {
+    "about": {
+      "cards": {
+        "card_1": {
+          "description": "<p>På Mobitrace gör vi platsspårning enkelt, pålitligt och säkert. Vårt uppdrag är att hjälpa dig hålla kontakten med nära och kära eller viktig personal med hjälp av avancerad teknik för platsspårning i realtid via telefon.</p>",
+          "title": "Vårt uppdrag"
+        },
+        "card_2": {
+          "description": "<p>Mobitrace kombinerar telefonspårning med detaljerad offentlig information:</p><ul><li>Telefonspårning: Skicka ett anpassat textmeddelande med länk som gör det möjligt för mottagaren att dela sin plats. Spårning utförs endast med mottagarens uttryckliga samtycke.</li><li>Djupgående datasökning: Få åtkomst till kontaktuppgifter, platshistorik och mer.</li><li>Global räckvidd: Fungerar på alla telefoner, nätverk och i alla länder – lokalisera vilken telefon som helst, var som helst.</li></ul>",
+          "title": "Vad vi erbjuder"
+        },
+        "card_3": {
+          "description": "<ul><li>Enkelhet: Generera en webbadress, skicka den och spåra när du har fått godkännande.</li><li>Säkerhet och trygghet: All spårning är säker och samtyckesbaserad.</li><li>Exakt realtidsinformation: Få uppdaterad, exakt platsdata.</li></ul>",
+          "title": "Varför ska du välja Mobitrace?"
+        },
+        "card_4": {
+          "description": "<p>Oavsett om du är en orolig förälder eller en omtänksam vän finns Mobitrace här för att hjälpa dig att hålla kontakten med dina nära och kära. Tack för att du valde Mobitrace – där spårning och information möts för att hålla dig informerad och trygg.</p>",
+          "title": "Bli en av oss"
+        }
+      },
+      "description": "Välkommen till Mobitrace, din pålitliga tjänst för att enkelt lokalisera mobiltelefoner och få tillgång till detaljerad offentlig information. Vi arbetar med de främsta globala dataleverantörerna från USA, Förenade kungariket, Europa och andra delar av världen för att erbjuda korrekta telefon- och adressökningar så att du kan få den information du behöver och hålla kontakten.",
+      "title": "Om oss"
+    },
+    "cancellation": {
+      "form": {
+        "email_label": "Din e-postadress",
+        "error_not_found_description": "Kontrollera uppgifterna och försök igen",
+        "error_not_found_title": "Inget konto matchar e-postadressen.",
+        "error_not_subscribed_title": "Du är inte prenumerant.",
+        "errors": {
+          "invalid_email": "Ange en giltig e-postadress."
+        },
+        "submit": "Säg upp prenumeration",
+        "success_description": "Du kommer inte att debiteras från och med nu.",
+        "success_title": "Du har sagt upp prenumerationen."
+      },
+      "info_email": "Om du inte kommer ihåg vilken e-postadress du använde för att registrera dig kan du leta efter e-postmeddelanden från mobitrace.io i din inkorg. Du kan också kontakta vårt supportteam <link>här</link>.",
+      "info_user": "Du kan också säga upp din prenumeration genom att logga in på ditt konto, gå till fliken Medlemskap och klicka på Säg upp prenumeration.",
+      "subtitle": "Du kan enkelt säga upp din prenumeration genom att ange den e-postadress du använde för att skapa ditt konto.",
+      "title": "Säg upp prenumeration"
+    },
+    "checkout": {
+      "action_form": "Hämta plats",
+      "agree_description": "Genom att fortsätta godkänner du att debiteras {trialPrice} nu och godkänner våra <terms>användarvillkor</terms> och vår <privacy>integritetspolicy</privacy>. Din betalning kommer att visas som ”mobitrace.io” på ditt kontoutdrag. Efter 7 dagar debiteras du {subscriptionPrice} var fjärde vecka tills prenumerationen upphör. Du kan säga upp prenumerationen när som helst. Om du har några frågor kan du kontakta oss på support@mobitrace.io eller per telefon på +1 360 525 2573.",
+      "agree_description_24": "Genom att genomföra betalningen samtycker du till att starta en 24-timmars provperiod för {trialPrice} i dag. Om du inte säger upp prenumerationen innan provperioden avslutas kommer din prenumeration automatiskt att förnyas för {subscriptionPrice} var 4:e vecka. Du kan säga upp prenumerationen när som helst. Genom att fortsätta godkänner du även våra <terms>användarvillkor</terms> och bekräftar att du har läst vår <privacy>integritetspolicy</privacy>.",
+      "agree_description_reactivate": "Genom att fortsätta samtycker du till att återaktivera din prenumeration och debiteras {subscriptionPrice} nu. Din betalning kommer att visas som \"mobitrace.io\" på ditt kontoutdrag. Du debiteras {subscriptionPrice} var fjärde vecka tills prenumerationen upphör. Du kan säga upp prenumerationen när som helst. Om du har några frågor kan du kontakta oss på support@mobitrace.io eller per telefon på +1 360 525 2573.",
+      "agree_description_subscription": "Genom att fortsätta samtycker du till att debiteras {subscriptionPrice} nu och godkänner våra <terms>användarvillkor</terms> och <privacy>vår integritetspolicy</privacy>. Din betalning kommer att visas som ”mobitrace.io” på ditt kreditkortsutdrag. Du kommer att debiteras {subscriptionPrice} var fjärde vecka tills ditt abonnemang upphör. Du kan säga upp abonnemanget när som helst. Vid frågor kan du kontakta oss på support@mobitrace.io eller per telefon på +1 360 525 2573",
+      "back_description": "Om du inte är helt nöjd inom den 7-dagars provperioden, meddela oss bara så kommer vi att behandla en fullständig återbetalning.",
+      "back_description_24": "Om du inte är helt nöjd inom provperioden på 24 timmar behöver du bara säga till så ordnar vi gärna en full återbetalning.",
+      "back_title": "Pengarna tillbaka",
+      "cancel_description": "Du kan säga upp prenumerationen när som helst från instrumentpanelen eller genom att kontakta oss på <email>support@mobitrace.io</email>.",
+      "cancel_title": "Säg upp när som helst",
+      "loading": "Betalningen behandlas ...",
+      "title": "Få åtkomst till platsen för",
+      "total": "Totalt att betala:",
+      "trust_100": "100 % säkra betalningar",
+      "trust_cancel": "Säg upp när som helst"
+    },
+    "contact": {
+      "contact_information": {
+        "company_description": "<strong>Förenta staterna</strong><br>800 N King Street Suite 304-1119<br>Wilmington, DE 19801 US</br></br><strong>Förenade arabemiraten</strong></br>Building A1, Dubai Digital Park</br>Dubai Silicon Oasis, Dubai</br>IFZA Business Park, DDP</br>Premises No. 5342-001</br>Förenade arabemiraten</br></br><strong>Irland</strong></br>40 Mespil Road</br>Dublin 4, Irland",
+        "company_title": "Platser",
+        "email_description": "support@mobitrace.io",
+        "email_title": "E-post",
+        "phone_description": "+1-360-525-2573",
+        "phone_title": "Telefon",
+        "title": "Kontaktuppgifter"
+      },
+      "contact_us": "Kontakta oss",
+      "form": {
+        "billing_question": "Fråga om fakturering",
+        "email_label": "E-post",
+        "errors": {
+          "invalid_email": "Ange en giltig e-postadress.",
+          "invalid_name_format": "Vänligen ange ett giltigt namn.",
+          "invalid_surname_format": "Vänligen ange ett giltigt efternamn.",
+          "max_length": "Du har överskridit teckengränsen.",
+          "message_max_length": "Meddelandet får inte överstiga {maxLength} tecken.",
+          "message_required": "Ange ditt meddelande.",
+          "name_required": "Ange ditt namn.",
+          "surname_required": "Ange ditt efternamn."
+        },
+        "message_label": "Meddelande",
+        "name_label": "Namn",
+        "other": "Annat",
+        "subject_label": "Ämne",
+        "subject_placeholder": "Välj",
+        "submit": "Skicka meddelande",
+        "submitted": "Ditt meddelande har skickats! Vårt team kommer att kontakta dig inom de närmaste 2 timmarna.",
+        "submitted_title": "Meddelandet har skickats",
+        "suggested_improvement": "Förslag till förbättring",
+        "surname_label": "Efternamn",
+        "technical_issue": "Tekniskt problem",
+        "title": "Kontakta oss"
+      },
+      "subtitle": "Har du en fråga, feedback eller behöver du hjälp?<br/> Hör gärna av dig!",
+      "title": "Vi hjälper dig gärna"
+    },
+    "error": {
+      "body": "Försök igen senare, eller kontakta supporten om problemet kvarstår.",
+      "cta": "Till startsidan",
+      "title": "Något gick fel."
+    },
+    "find_by_link": {
+      "find_by_link": "Hitta med länk",
+      "form": {
+        "errors": {
+          "max_length": "Maxgräns: 255 tecken.",
+          "min_length": "Länken ska vara minst {n} tecken lång",
+          "required": "Länk krävs"
+        },
+        "linkLabel": "Namnge din länk",
+        "linkPlaceholder": "t.ex. länk för WhatsApp",
+        "submitButton": "Generera min länk"
+      },
+      "steps": {
+        "step1": "Anpassa din spårningslänk",
+        "step2": "Dela den via valfri meddelandeapp",
+        "step3": "Få statusmeddelanden",
+        "step4": "Se platsen direkt när mottagaren trycker på länken"
+      },
+      "title": "Skapa din anpassade länk"
+    },
+    "find_by_link_success": {
+      "body": "Se till att dela den här länken med någon som du vill spåra.",
+      "generateNewCTA": "Generera ny länk",
+      "statusCTA": "Kontrollera statusen",
+      "subtitle": "Hitta din länk nedan",
+      "title": "Klart"
+    },
+    "find_by_number_send_message": {
+      "CTA": "Skicka",
+      "errors": {
+        "empty": "Detta fält får inte vara tomt",
+        "max_length": "Texten är för lång. Maxgräns {n} tecken."
+      },
+      "extra_info": {
+        "bullet_1": "Avsändarens namn kommer att visas som ”Mobitrace”.",
+        "bullet_2": "Varje meddelande kommer att innehålla en unik länk i slutet som mottagaren måste klicka på."
+      },
+      "find_by_number": "Hitta med telefonnummer",
+      "label": "Meddelande",
+      "placeholder": "Skriv ditt meddelande här.",
+      "title": "Söker efter plats för <brandColor>{phoneNumber}</brandColor>"
+    },
+    "find_by_number_send_message_success": {
+      "cta": "Kontrollera statusen",
+      "description": "Ditt meddelande har skickats till <strong>{phoneNumber}</strong>. Vi meddelar dig så fort telefonen har lokaliserats.",
+      "title": "Klart!"
+    },
+    "forgot_password": {
+      "back_to_login": "Logga in",
+      "description": "Ange din e-postadress så skickar vi instruktioner för att återställa ditt lösenord",
+      "remember_password": "Kommer du ihåg ditt lösenord?",
+      "title": "Återställ lösenordet"
+    },
+    "index": {
+      "faqs": {
+        "question_1": {
+          "answer": "Du anger bara telefonnumret, och när mottagaren samtycker till att dela sin plats får du veta exakt var hen befinner sig.",
+          "question": "Hur lokaliserar jag en person med hjälp av ett telefonnummer?"
+        },
+        "question_2": {
+          "answer": "Ja, geolokalisering är lagligt, men det kräver mottagarens uttryckliga samtycke för att dela deras plats och följa integritetslagar.",
+          "question": "Är det lagligt att geolokalisera en tredje part?"
+        },
+        "question_3": {
+          "answer": "Nej, ingen app eller programvaruinstallation krävs. Allt hanteras på distans via vår tjänst.",
+          "question": "Behöver jag installera en app för att spåra ett telefonnummer?"
+        },
+        "question_4": {
+          "answer": "Vår tjänst stöder alla typer av telefoner, från smartphones till äldre modeller, så länge de kan ta emot sms.",
+          "question": "Vilka typer av telefoner stöds?"
+        },
+        "question_5": {
+          "answer": "Ja, vår tjänst fungerar globalt, oavsett plats eller nätverk.",
+          "question": "Kan jag lokalisera ett telefonnummer var som helst i världen?"
+        },
+        "question_6": {
+          "answer": "Vår tjänst tillhandahåller exakta platsuppgifter, inklusive den exakta adressen, med hjälp av avancerad GPS-teknik.",
+          "question": "Hur exakt är geolokalisering?"
+        },
+        "question_7": {
+          "answer": "Ange bara det telefonnummer du vill undersöka, så sköter Mobitrace resten. Vårt system skannar flera databaser för att hitta all tillgänglig information som är kopplad till numret. Många sökningar ger resultat direkt, men mer detaljerade sökningar kan ta lite längre tid. När du använder Mobitraces verktyg för omvänd telefonsökning märker du snabbt hur kraftfullt och effektivt det är.",
+          "question": "Hur fungerar omvänd telefonsökning?"
+        },
+        "question_8": {
+          "answer": "Mobitraces teknik för omvänd telefonsökning är mycket avancerad. När du gör en sökning granskas många olika källor, bland annat offentliga register, databaser på nätet och även mindre synliga datapunkter. Om relevant information hittas får du se den. Observera att alla sökningar inte ger omedelbara resultat, eftersom det beror på vilka uppgifter som finns tillgängliga för respektive telefonnummer.",
+          "question": "Ger Mobitrace information om alla telefonnummer?"
+        },
+        "question_9": {
+          "answer": "Ja, absolut! Tänk dig att du får ett samtal från någon som påstår sig vara från banken och ber om din PIN-kod för att stoppa ett misstänkt uttag – eller ett sms där det står att du har vunnit ett pris och måste klicka på en länk för att hämta det. Båda situationerna kan leda till ekonomisk förlust eller stulna personuppgifter. Mobitrace hjälper dig att verifiera vem som verkligen står bakom okända nummer. En snabb omvänd sökning kan varna dig för potentiella bedrägerier och skydda dina uppgifter och din ekonomi.",
+          "question": "Kan Mobitrace hjälpa mig att undvika telefon- och sms-bedrägerier?"
+        },
+        "title": "Vanliga frågor"
+      },
+      "hero": {
+        "100": "100%",
+        "card_address": "29 Willow Street, Hackney Wick, London E9 5EN, Förenade kungariket",
+        "card_date": "27 sep 2024   18:46",
+        "card_phone": "+44 633 123 456",
+        "card_title": "Platsen har hittats!",
+        "confidential": "konfidentiellt",
+        "iphone_alt": "smartphone som visar en karta över London med en platsmarkör",
+        "secure": "Säkert",
+        "ssl_encription": "SSL-kryptering",
+        "subtitle": "Med Mobitrace.io kan du begära telefonlokalisering i realtid via sms eller länk. Spårning utförs endast med mottagarens uttryckliga samtycke.",
+        "title": "Lokalisera en mobiltelefon"
+      },
+      "how_does_it_work": {
+        "step_1": {
+          "description": "Ange bara telefonnumret som du vill lokalisera och anpassa det sms-meddelande som skickas till mottagaren.",
+          "title": "Ange ett telefonnummer"
+        },
+        "step_2": {
+          "description": "Mobitrace skickar ditt anpassade sms och ber mottagaren att dela sin plats.",
+          "title": "Skicka en platsförfrågan"
+        },
+        "step_3": {
+          "description": "Så snart mottagaren samtycker får du ett meddelande med hens exakta plats, som du kan se direkt på kartan i din instrumentpanel.",
+          "title": "Se platsen på kartan"
+        },
+        "title": "Hur fungerar det?"
+      },
+      "instant_locator": {
+        "subtitle": "Mobitrace är den ultimata lösningen för att ta reda på någons plats eller uppgifter med hjälp av deras telefonnummer.",
+        "title": "Lokalisera telefonnumret <underlined>på ett ögonblick!</underlined>"
+      },
+      "meta_description": "Lokalisera vilken telefon som helst – snabbt och enkelt med Mobitrace.",
+      "meta_title": "Mobitrace.io – Lokalisera vilken telefon som helst, var som helst",
+      "og_description": "Lokalisera vilken telefon som helst – snabbt och enkelt med Mobitrace.",
+      "og_image_alt": "Mobitrace.io – Lokalisera vilken telefon som helst, var som helst",
+      "og_title": "Mobitrace.io – Lokalisera vilken telefon som helst, var som helst",
+      "site_name": "Mobitrace",
+      "welcome_title": "Välkommen till Mobitrace.io",
+      "why_choose": {
+        "reasons": {
+          "reason_1": {
+            "description": "Din integritet är vår högsta prioritet. Du kan känna dig trygg med att dina personliga uppgifter och dina sökaktiviteter alltid är säkra och konfidentiella.",
+            "title": "Garanterad fullständig integritet"
+          },
+          "reason_2": {
+            "description": "Inga appar, ingen mjukvara, inget krångel. Ange bara telefonnumret så sätter Mobitrace igång direkt.",
+            "title": "Ingen installation krävs"
+          },
+          "reason_3": {
+            "description": "Från de senaste iPhone- och Android-telefonerna till klassiska flipptelefoner – om den kan ta emot ett sms kan Mobitrace hitta den. Vi arbetar med alla telefoner och operatörer.",
+            "title": "Stöd för alla telefoner och operatörer"
+          },
+          "reason_4": {
+            "description": "Mobitrace ger dig inte bara koordinater – du får den exakta adressen. Utnyttja kraften i avancerad GPS-teknik för oöverträffad exakthet.",
+            "title": "Enastående precision"
+          },
+          "reason_5": {
+            "description": "Oavsett var i världen du eller måltelefonen är fungerar Mobitrace sömlöst över hela världen.",
+            "title": "Global räckvidd"
+          }
+        },
+        "subtitle": "Lokalisera enkelt vem som helst i världen med ett enda klick",
+        "title": "Varför ska du välja Mobitrace?"
+      }
+    },
+    "legal": {
+      "cookie_policy": {
+        "content": "",
+        "title": "Cookiepolicy"
+      },
+      "refund_policy": {
+        "content": "",
+        "title": "Återbetalningspolicy"
+      }
+    },
+    "loader": {
+      "step_1": {
+        "carrier": {
+          "loadedDefaultText": "Identifierad",
+          "text": "Operatör"
+        },
+        "city": {
+          "loadedText": "Lokaliserad",
+          "text": "Stad"
+        },
+        "connecting": "Ansluter till satelliter",
+        "country": {
+          "text": "Land"
+        },
+        "database": {
+          "loadedText": "Åtkomst",
+          "text": "Databas"
+        },
+        "location": {
+          "loadedText": "Identifierad",
+          "text": "Plats"
+        },
+        "searching": "Sökresultat för"
+      },
+      "step_2": {
+        "cta": "Hämta plats",
+        "subtitle": "Din sökning är klar – nu kan du komma åt platsen.",
+        "title": "Platsen har hittats!"
+      }
+    },
+    "loader_complete": {
+      "title": "Registrera dig för att få exakt plats för <brandColor>{phoneNumber}</brandColor>"
+    },
+    "locate": {
+      "error": "Adressen kunde inte hämtas.",
+      "link_expired": "Länken har upphört att gälla",
+      "link_expired_explain": "Den här länken har redan använts och är inte längre tillgänglig.",
+      "loading": "Läser in ...",
+      "not_supported": "Din webbläsare stöder inte geolokalisering.",
+      "rejected": "Platsdelning har avvisats.",
+      "thank_you": "Tack!"
+    },
+    "memberArea": {
+      "navigation": {
+        "contact_us": "Kontakta oss",
+        "find_by_link": "Hitta med länk",
+        "find_by_number": "Hitta med telefonnummer",
+        "find_by_phone_lookup": "Telefonsökning",
+        "my_activity": "Min aktivitet",
+        "notifications": "Aviseringar",
+        "phone_lookup": "Telefonsökning",
+        "settings": "Inställningar",
+        "sex_offenders_search": "Sexualförbrytare",
+        "status": "Status",
+        "tools_library": "Verktygsbibliotek"
+      }
+    },
+    "not_found": {
+      "body": "Något gick fel. Försök igen.",
+      "cta": "Till startsidan",
+      "title": "Sidan hittades inte"
+    },
+    "notifications": {
+      "empty": {
+        "text": "Du har inga aviseringar för närvarande.",
+        "title": "Det är lugnt här"
+      },
+      "link_accessed": "<strong>{notificationName}</strong> öppnades.",
+      "link_located": "Platsen är nu tillgänglig.",
+      "link_rejected": "Platsdelning avvisades.",
+      "load_more": "Läs in fler",
+      "phone_located": "<strong>Platsen för {phone}</strong> har hämtats.",
+      "phone_rejected": "<strong>Lokalisering av {phone}</strong> avvisades.",
+      "title": "Aviseringar"
+    },
+    "onboarding": {
+      "navigation": {
+        "step_1": "Steg 1",
+        "step_2": "Steg 2",
+        "step_3": "Steg 3"
+      }
+    },
+    "onboarding_step1": {
+      "body": "För att hitta ett telefonnummer skickar Mobitrace ett anonymt sms med en lokaliseringslänk. Skicka bara meddelandet och låt vårt system göra jobbet.",
+      "cta": "Fortsätt",
+      "title": "Skicka en spårningslänk"
+    },
+    "onboarding_step2": {
+      "body": "När mottagaren klickar på länken går du till din platshistorik för att spåra hens rörelser på kartan i realtid.",
+      "cta": "Fortsätt",
+      "title": "Håll koll i realtid"
+    },
+    "onboarding_step3": {
+      "body": "Medan du väntar på att mottagaren ska öppna meddelandet kan du använda andra kraftfulla Mobitrace-funktioner för att optimera din spårningsupplevelse.",
+      "cta": "Starta nu",
+      "title": "Utforska fler funktioner"
+    },
+    "pricing": {
+      "cards": {
+        "subscription": {
+          "badge": "Prenumeration",
+          "cta": "Prenumerera nu",
+          "description": "När din 7-dagars provperiod är slut debiteras du {price} var 4:e vecka. Säg upp prenumerationen när som helst.",
+          "duration": "Var fjärde vecka",
+          "features": {
+            "feature_1": "Stöd för alla mobila enheter",
+            "feature_2": "Obegränsade förfrågningar om platsspårning",
+            "feature_3": "Premiumfunktioner som anpassade meddelanden och exakt platsinformation",
+            "feature_4": "Support dygnet runt utan extra kostnad"
+          },
+          "new_features": {
+            "feature_1": "Stöd för alla mobila enheter",
+            "feature_2": "Obegränsade förfrågningar om platsspårning",
+            "feature_3": "Ladda ner professionella PDF-rapporter utan extra kostnad",
+            "feature_4": "Obegränsade rapporter för omvänd telefonsökning med omfattande uppgifter",
+            "feature_5": "Support dygnet runt utan extra kostnad"
+          }
+        },
+        "subscription_24": {
+          "badge": "Prenumeration",
+          "cta": "Prenumerera nu",
+          "description": "När din 24-timmars provperiod är slut betalar du {price} var 4:e vecka. Avsluta när du vill.",
+          "duration": "Var fjärde vecka",
+          "features": {
+            "feature_1": "Stöd för alla mobila enheter",
+            "feature_2": "Obegränsade förfrågningar om platsspårning",
+            "feature_3": "Ladda ner professionella PDF-rapporter utan extra kostnad",
+            "feature_4": "Obegränsade rapporter för omvänd telefonsökning med omfattande uppgifter",
+            "feature_5": "Support dygnet runt utan extra kostnad"
+          },
+          "new_features": {
+            "feature_1": "Stöd för alla mobila enheter",
+            "feature_2": "Obegränsade förfrågningar om platsspårning",
+            "feature_3": "Ladda ner professionella PDF-rapporter utan extra kostnad",
+            "feature_4": "Obegränsade rapporter för omvänd telefonsökning med omfattande uppgifter",
+            "feature_5": "Support dygnet runt utan extra kostnad"
+          }
+        },
+        "title": "Priser",
+        "trial": {
+          "badge": "Provperiod",
+          "cta": "Starta provperiod",
+          "description": "Få obegränsad åtkomst till alla funktioner, helt riskfritt. Din första betalning ger dig full åtkomst i 7 dagar, därefter debiteras du {price} var fjärde vecka. Du kan säga upp prenumerationen när som helst.",
+          "duration": "7-dagars provperiod",
+          "features": {
+            "feature_1": "Stöd för alla mobila enheter",
+            "feature_2": "Full tillgång till alla funktioner i 7 dagar",
+            "feature_3": "Testa utan långsiktigt åtagande"
+          },
+          "new_features": {
+            "feature_1": "Stöd för alla mobila enheter",
+            "feature_2": "Full tillgång till alla funktioner i 7 dagar",
+            "feature_3": "Tillgång till detaljerade rapporter för omvänd telefonsökning",
+            "feature_4": "Testa utan långsiktigt åtagande",
+            "feature_5": "Möjlighet att ladda ner rapporter som PDF-filer"
+          }
+        },
+        "trial_24": {
+          "badge": "Provperiod",
+          "cta": "Starta provperiod",
+          "description": "Få obegränsad åtkomst till alla funktioner, helt riskfritt. Din första betalning ger dig full åtkomst i 24 timmar, därefter debiteras du {price} var fjärde vecka. Du kan säga upp prenumerationen när som helst.",
+          "duration": "24 timmars provperiod",
+          "features": {
+            "feature_1": "Stöd för alla mobila enheter",
+            "feature_2": "Full åtkomst till alla funktioner i 24 timmar",
+            "feature_3": "Testa utan långsiktigt åtagande",
+            "feature_4": "Möjlighet att ladda ner rapporter som PDF-filer"
+          },
+          "new_features": {
+            "feature_1": "Stöd för alla mobila enheter",
+            "feature_2": "Full åtkomst till alla funktioner i 24 timmar",
+            "feature_3": "Tillgång till detaljerade rapporter för omvänd telefonsökning",
+            "feature_4": "Testa utan långsiktigt åtagande",
+            "feature_5": "Möjlighet att ladda ner rapporter som PDF-filer"
+          }
+        }
+      },
+      "special_offer": "Specialerbjudande",
+      "subtitle": "Mobitrace erbjuder sina tjänster genom en lätthanterlig månadsprenumeration.",
+      "title": "Testa Mobitraces funktioner för <mark>endast {price}</mark> i 7 dagar!",
+      "title_24": "Prova Mobitrace för <mark>bara {price}</mark> i 24 timmar!"
+    },
+    "reset_password": {
+      "back_to_login": "Logga in",
+      "description": "Ange ditt nya lösenord för att återställa ditt konto",
+      "remember_password": "Kommer du ihåg ditt lösenord?",
+      "title": "Återställ lösenordet"
+    },
+    "reverse_lookup": {
+      "checkout": {
+        "action_form": "Hämta rapport",
+        "back_description": "Om du inte är helt nöjd inom den 7-dagars provperioden, meddela oss bara så kommer vi att behandla en fullständig återbetalning.",
+        "back_description_24": "Om du inte är helt nöjd inom provperioden på 24 timmar behöver du bara säga till så ordnar vi gärna en full återbetalning.",
+        "back_title": "Pengarna tillbaka",
+        "cancel_description": "Du kan säga upp prenumerationen när som helst från instrumentpanelen eller genom att kontakta oss på <email>support@mobitrace.io</email>.",
+        "cancel_title": "Säg upp när som helst",
+        "title": "Få åtkomst till rapporten för"
+      },
+      "components": {
+        "always_know_who_called": {
+          "step_1": {
+            "description": "Identifiera eventuella juridiska namn eller företagsnamn som är kopplade till telefonnumret.",
+            "title": "Fullständigt namn"
+          },
+          "step_2": {
+            "description": "Hitta eventuella adresser som är kopplade till numret, både tidigare och nuvarande adresser.",
+            "title": "Hemadress"
+          },
+          "step_3": {
+            "description": "Ta upp kontakten med avlägsna familjemedlemmar eller sedan länge försvunna släktingar.",
+            "title": "Familjemedlemmar"
+          },
+          "step_4": {
+            "description": "Hitta profiler på sociala medier på alla stora plattformar.",
+            "title": "Profiler på sociala medier"
+          },
+          "step_5": {
+            "description": "Se alla tillhörande offentliga e-postadresser.",
+            "title": "E-postadresser"
+          },
+          "step_6": {
+            "description": "Kontrollera offentligt tillgänglig platshistorik",
+            "title": "Platshistorik"
+          },
+          "step_7": {
+            "description": "Samla information från olika källor på internet",
+            "title": "Webbaktivitet"
+          },
+          "subtitle": "När du anger ett telefonnummer i Mobitraces omvända sökning med telefonnummer ser du all offentligt tillgänglig information kopplad till numret.",
+          "title": "Du vet alltid vem som ringer med Mobitrace"
+        },
+        "as_seen_on": {
+          "title": "Känt från"
+        },
+        "customer_carousel": {
+          "subtitle": "Vi gör vårt bäst för att ge dig den bästa upplevelsen",
+          "title": "Det här säger kunderna <br class='lg:hidden'/> om oss"
+        },
+        "customer_opinions": {
+          "title": "Människor överallt upptäcker det okända"
+        },
+        "faqs": {
+          "question_1": {
+            "answer": "Du anger bara telefonnumret, och när mottagaren samtycker till att dela sin plats får du veta exakt var hen befinner sig.",
+            "question": "Hur spårar jag en person med hjälp av ett telefonnummer?"
+          },
+          "question_2": {
+            "answer": "Ja, geolokalisering är lagligt, men det kräver mottagarens uttryckliga samtycke för att dela deras plats och följa integritetslagar.",
+            "question": "Är det lagligt att geolokalisera en tredje part?"
+          },
+          "question_3": {
+            "answer": "Nej, det krävs ingen app eller programvaruinstallation. Allt hanteras på distans via vår tjänst.",
+            "question": "Behöver jag installera en app för att spåra ett telefonnummer?"
+          },
+          "question_4": {
+            "answer": "Vår tjänst stöder alla typer av telefoner, från smartphones till äldre modeller, så länge de kan ta emot textmeddelanden.",
+            "question": "Vilka typer av telefoner stöds?"
+          },
+          "question_5": {
+            "answer": "Ja. Vår tjänst fungerar globalt, oavsett plats och nätverk.",
+            "question": "Kan jag spåra ett telefonnummer var som helst i världen?"
+          },
+          "question_6": {
+            "answer": "Vår tjänst tillhandahåller exakta platsuppgifter, inklusive den exakta adressen, med hjälp av avancerad GPS-teknik.",
+            "question": "Hur exakt är geolokalisering?"
+          },
+          "question_7": {
+            "answer": "Ange bara det telefonnummer som du vill undersöka, så sköter Mobitrace resten. Vårt system skannar flera databaser för att hitta all tillgänglig information som är kopplad till numret. Många sökningar ger resultat direkt, men mer detaljerade sökningar kan ta lite längre tid. När du använder Mobitraces verktyg för omvänd telefonsökning märker du snabbt hur kraftfullt och effektivt det är.",
+            "question": "Hur fungerar omvänd telefonsökning?"
+          },
+          "question_8": {
+            "answer": "Mobitraces teknik för omvänd telefonsökning är mycket avancerad. När du gör en sökning granskas många olika källor, bland annat offentliga register, databaser på nätet och även mindre synliga datapunkter. Om relevant information hittas får du se den. Observera att alla sökningar inte ger omedelbara resultat, eftersom det beror på vilka uppgifter som finns tillgängliga för respektive telefonnummer.",
+            "question": "Ger Mobitrace information om alla telefonnummer?"
+          },
+          "question_9": {
+            "answer": "Ja, absolut! Tänk dig att du får ett samtal från någon som påstår sig vara från banken och ber om din PIN-kod för att stoppa ett misstänkt uttag – eller ett sms där det står att du har vunnit ett pris och måste klicka på en länk för att hämta det. Båda situationerna kan leda till ekonomisk förlust eller stulna personuppgifter. Mobitrace hjälper dig att verifiera vem som verkligen står bakom okända nummer. En snabb omvänd nummersökning kan varna dig för potentiella bedrägerier och skydda dina uppgifter och din ekonomi.",
+            "question": "Kan Mobitrace hjälpa mig att undvika telefon- och sms-bedrägerier?"
+          },
+          "title": "Vanliga frågor"
+        },
+        "get_report": {
+          "cta": "Hämta rapporten",
+          "lookup_today": "Över 99 omvända sökningar har gjorts i dag",
+          "product": "Fullständig åtkomst i sju dagar",
+          "product_24": "Full åtkomst i 24 timmar",
+          "product_title": "Sökrapport",
+          "secure": "100 % säkert",
+          "title": "Få åtkomst till din rapport!",
+          "trial_description": "30 dagars nöjdhetsgaranti"
+        },
+        "hero": {
+          "100": "100 %",
+          "card_address": "29 Willow Street, Hackney Wick, London E9 5EN, Storbritannien",
+          "card_date": "27 sep 2024   18:46",
+          "card_phone": "+44 633 123 456",
+          "card_title": "Platsen har hittats!",
+          "confidential": "konfidentiellt",
+          "iphone_alt": "smartphone som visar en karta över London med en platsmarkör",
+          "secure": "Säkert",
+          "ssl_encription": "SSL-kryptering",
+          "subtitle": "Identifiera okända uppringare direkt och se fullständiga namn, adresser, profiler på sociala medier och mer.",
+          "title": "<mark>Omvänd</mark> sökning med <mark>telefonnummer</mark>"
+        },
+        "instant_locator": {
+          "subtitle": "Mobitrace är den ultimata lösningen för att ta reda på någons plats eller uppgifter med hjälp av deras telefonnummer.",
+          "title": "Sök efter valfritt telefonnummer nu!"
+        },
+        "latest_results": {
+          "result": {
+            "description": "{time} minuter sedan"
+          },
+          "subtitle": "Här är några av de senaste resultaten från vår tjänst för omvänd telefonsökning.",
+          "title": "Senaste resultat"
+        },
+        "limited_offer_tag": {
+          "limited_offer": "Begränsat erbjudande"
+        },
+        "phone_input": {
+          "errors": {
+            "invalid_phone": "Ange ett giltigt telefonnummer.",
+            "rate_limit_exceeded": "Du har överskridit din dagliga kvot.",
+            "rate_limit_exceeded_title": "Gränsen har nåtts"
+          },
+          "label": "Ange det nummer som du vill söka efter",
+          "no_results": "Landskoden hittades inte.",
+          "phone_placeholder": "123456789",
+          "search_placeholder": "Sök baserat på land eller kod ...",
+          "submit": "Sök"
+        },
+        "pricing": {
+          "cards": {
+            "subscription": {
+              "badge": "Prenumeration",
+              "cta": "Prenumerera nu",
+              "description": "När din 7-dagars provperiod är slut kommer erbjudandet automatiskt att förnyas till en månatlig prenumeration. Du kan enkelt säga upp prenumerationen när som helst.",
+              "duration": "Månadsavgift",
+              "features": {
+                "feature_1": "Stöd för alla mobila enheter",
+                "feature_2": "Obegränsade förfrågningar om platsspårning",
+                "feature_3": "Ladda ner professionella PDF-rapporter utan extra kostnad",
+                "feature_4": "Obegränsade rapporter för omvänd telefonsökning med omfattande uppgifter",
+                "feature_5": "Support dygnet runt utan extra kostnad"
+              }
+            },
+            "title": "Starta din 7-dagars provperiod",
+            "trial": {
+              "badge": "Provperiod",
+              "cta": "Starta provperiod",
+              "description": "Med den första betalningen får du tillgång till alla Mobitraces plattformsfunktioner utan begränsningar i 7 dagar. Därefter tillämpas abonnemangsavgiften på {price} per månad.",
+              "duration": "7-dagars provperiod",
+              "features": {
+                "feature_1": "Stöd för alla mobila enheter",
+                "feature_2": "Full tillgång till alla funktioner i 7 dagar",
+                "feature_3": "Tillgång till detaljerade rapporter för omvänd telefonsökning",
+                "feature_4": "Testa utan långsiktigt åtagande",
+                "feature_5": "Möjlighet att ladda ner rapporter som PDF-filer"
+              }
+            }
+          },
+          "special_offer": "Specialerbjudande",
+          "subtitle": "Mobitrace erbjuder sina tjänster genom en lätthanterlig månadsprenumeration.",
+          "title": "Testa Mobitraces funktioner för <mark>endast {price}</mark> i 7 dagar!"
+        },
+        "recent_reveals": {
+          "subtitle": "Här är ett litet urval av de okända nummer vi har identifierat nyligen.",
+          "title": "Senaste identifieringar"
+        },
+        "report_ready": {
+          "description": "Din rapport är klar!",
+          "download_report_button": "Ladda ner PDF",
+          "view_report_button": "Visa rapport"
+        },
+        "summary_report_card": {
+          "caller_info": "Med Mobitrace behöver du inte gissa vem som ringer från ett okänt nummer. Vi ger dig information om uppringaren som de inte ens visste var tillgänglig för dig.",
+          "carrier": "Operatör",
+          "continue": "Fortsätt",
+          "latest_report": "Senaste rapporten från 3 mars 2025",
+          "line_type": "Telefonityp",
+          "may_include": "Resultatet kan omfatta följande",
+          "result_1": "Ägarens fullständiga namn och adress",
+          "result_2": "Användarnamn och profiler på sociala medier",
+          "result_3": "Foton och videor",
+          "result_4": "Tidigare onlineaktivitet",
+          "result_5": "E-postadresser",
+          "result_6": "Och mycket mer!",
+          "timer_desktop": "<mark>Rapporten</mark> upphör att gälla om",
+          "timer_mobile": "Rapporten upphör att gälla",
+          "title": "Rapporten om <mark>{phoneNumber}</mark> är klar!",
+          "trusted_by": "Över <span class='font-bold'>7 miljoner</span> användare"
+        },
+        "upsell_progress_steps": {
+          "access_report": "Hämta rapport",
+          "create_account": "Skapa konto",
+          "data_breach": "Dataintrång",
+          "pdf_export": "PDF-export",
+          "sex_offenders": "Sexualförbrytare"
+        },
+        "what_you_get": {
+          "item_1": "Sök efter valfritt telefonnummer, både tidigare och nuvarande, för att hitta information om ägaren",
+          "item_2": "Ägarna av telefonnumren informeras aldrig om din sökning.",
+          "item_3": "Vår databas innehåller alltid den mest aktuella informationen.",
+          "item_4": "Mobitrace sammanställer rapporterna utifrån offentligt tillgänglig information på nätet.",
+          "item_title_1": "Avancerade telefonsökningar",
+          "item_title_2": "Din integritet garanteras till 100 %",
+          "item_title_3": "Alltid uppdaterad",
+          "item_title_4": "Söker igenom miljarder poster",
+          "title": "Du får det här"
+        },
+        "why_use": {
+          "phone_input_label": "Ange det nummer som du vill söka efter",
+          "reasons": {
+            "reason_1": {
+              "description": "Identifiera okända uppringare så att du slipper gissa vem det är när du svarar i telefonen.",
+              "title": "Du vet alltid vem som ringer"
+            },
+            "reason_2": {
+              "description": "Mobitrace kan hjälpa dig att hitta personer som du har tappat kontakten med, även med gamla telefonnummer.",
+              "title": "Ta upp kontakten med gamla vänner"
+            },
+            "reason_3": {
+              "description": "Skydda dig genom att verifiera identiteten hos personer som du pratar med på nätet.",
+              "title": "Verifiera identiteter"
+            },
+            "reason_4": {
+              "description": "Bedrägerisamtal och datainsamlare blir allt vanligare. Mobitrace kan hjälpa dig att identifiera oseriösa aktörer utan att du behöver svara i telefon.",
+              "title": "Identifiera misstänksamma telefonnummer"
+            },
+            "reason_5": {
+              "description": "Ange ditt telefonnummer i Mobitrace för att se vilka personuppgifter som finns tillgängliga om dig och identifiera eventuella dataläckor.",
+              "title": "Håll koll på ditt digitala fotavtryck"
+            }
+          },
+          "steps": {
+            "step_1": {
+              "description": "Skydda dig mot oönskade samtal och försäljare."
+            },
+            "step_2": {
+              "description": "Gör bakgrundskontroller på potentiella partner eller rumskamrater."
+            },
+            "step_3": {
+              "description": "Ta reda på vem som ligger bakom irriterande, oönskade samtal."
+            },
+            "step_4": {
+              "description": "Ta upp kontakten med gamla vänner eller familjemedlemmar."
+            },
+            "step_5": {
+              "description": "Identifiera falska profiler på dejting- och chattappar."
+            }
+          },
+          "subtitle": "Oavsett om du vill skydda dig digitalt eller hitta gamla bekanta finns vi här för att hjälpa dig.<br>Mobitrace hjälper dig med följande:",
+          "title": "Varför ska du använda omvänd telefonsökning?",
+          "title_2": "Fler användarfall",
+          "title_badge": "TILLÄGG"
+        }
+      },
+      "member_area": {
+        "phone_lookup": {
+          "daily_limit": "Gräns: 5 sökningar var 24:e timme.",
+          "label": "Visa uppringarens telefonnummer",
+          "phone_lookup": "Telefonsökning"
+        }
+      },
+      "report": {
+        "carrier_details": {
+          "info": "Det här avsnittet innehåller information om individens telefonoperatör, inklusive nätverksinformation och typ av tjänst.",
+          "labels": {
+            "carrier": "Operatör",
+            "international_format": "Internationellt format",
+            "local_format": "Lokalt format",
+            "location": "Plats",
+            "type": "Typ"
+          },
+          "line_types": {
+            "landline": "Fast telefon",
+            "mobile": "Mobil"
+          },
+          "title": "Operatörsuppgifter",
+          "title_empty": "Operatörsuppgifter"
+        },
+        "common": {
+          "no_data": "Ingen information tillgänglig"
+        },
+        "data_breach_history": {
+          "alert_empty": "Det här avsnittet beskriver historiken över dataintrång och specificerar eventuella incidenter som har äventyrat känslig information. Det innehåller information om dataintrångens art, vilka uppgifter som påverkats och vilka åtgärder som vidtagits för att hantera och förhindra framtida händelser.",
+          "alert_success": "Det här avsnittet beskriver historiken över dataintrång och specificerar eventuella incidenter som har äventyrat känslig information. Det innehåller information om dataintrångens art, vilka uppgifter som påverkats och vilka åtgärder som vidtagits för att hantera och förhindra framtida händelser.",
+          "alert_title": "{count} dataintrång",
+          "report": {
+            "breaches_found_for": "Intrång konstaterade för",
+            "compromised_data": "Äventyrade data",
+            "data_breaches": "dataintrång",
+            "data_types": {
+              "date_of_birth": "Födelsedatum",
+              "education_levels": "Utbildningsnivå",
+              "email": "E-postadress",
+              "gender": "Kön",
+              "geo_location": "Geografisk plats",
+              "name": "Namn",
+              "password": "Lösenord",
+              "phone": "Telefonnummer",
+              "social_media_profiles": "Profiler på sociala medier",
+              "username": "Användarnamn"
+            },
+            "download_report_button": "Ladda ner PDF",
+            "title": "Historik över dataintrång"
+          },
+          "show_report": "Visa rapport",
+          "title": "Historik över dataintrång",
+          "unlock_report": "Lås upp rapport"
+        },
+        "header": {
+          "button": "Ladda ner PDF",
+          "matches_found": "Träffar funna för",
+          "title": "Rapport om telefonsökning",
+          "unlock_download_pdf": "Lås upp nerladdning av PDF"
+        },
+        "looking_for_more_profiles_dialog": {
+          "description": "Det här kan ta några sekunder – vi söker på flera plattformar",
+          "title": "Letar efter fler profiler"
+        },
+        "phone_public_information": {
+          "info": "Det här avsnittet innehåller en sammanfattning av offentligt tillgänglig information kopplad till individens telefonnummer.",
+          "name": "Namn:",
+          "source": "Källa:",
+          "sources": {
+            "data_breach": "Dataintrång",
+            "other": "Annat",
+            "public_records": "Offentliga register",
+            "social_media": "Sociala medier"
+          },
+          "title": "Offentlig information till telefonnummer",
+          "title_empty": "Ingen offentlig information till telefonnummer"
+        },
+        "photos": {
+          "info": "Det här avsnittet visar möjliga bilder av telefonens ägare när sådana finns tillgängliga för att underlätta visuell identifiering.",
+          "other": "Annat",
+          "title": "Foton",
+          "title_empty": "Inga foton hittades"
+        },
+        "possible_addresses": {
+          "info": "Det här avsnittet visar möjliga adresser kopplade till individen, vilket kan hjälpa till att identifiera hemvister eller tidigare platser.",
+          "labels": {
+            "city": "Stad",
+            "country": "Land",
+            "county": "Land",
+            "latitude": "Latitud",
+            "length_of_residence": "Varaktighet på bosättning",
+            "longitude": "Longitud",
+            "postal_code": "Postnummer",
+            "state": "Delstat/provins",
+            "street": "Gatuadress"
+          },
+          "title": "Möjliga adresser",
+          "title_empty": "Inga adresser hittades",
+          "values": {
+            "years": "{count} år"
+          }
+        },
+        "possible_contact_details": {
+          "info": "Det här avsnittet visar e-postadresser kopplade till individen för att verifiera kontaktinformationen.",
+          "labels": {
+            "associated_emails": "Associerade e-postadresser",
+            "associated_numbers": "Associerade nummer"
+          },
+          "title": "Möjliga kontaktuppgifter",
+          "title_empty": "Inga kontaktuppgifter hittades"
+        },
+        "possible_personal_details": {
+          "info": "Det här avsnittet visar eventuell personlig information kopplad till individen, vilket hjälper till att ge ytterligare bakgrundsinsikter.",
+          "labels": {
+            "children": "Barn",
+            "date_of_birth": "Födelsedatum",
+            "gender": "Kön",
+            "household_size": "Hushållsstorlek",
+            "income": "Inkomst",
+            "marital_status": "Civilstånd"
+          },
+          "title": "Möjliga personuppgifter",
+          "title_empty": "Inga personuppgifter hittades",
+          "values": {
+            "children": "Närvarande ({count})",
+            "divorced": "Skild",
+            "domestic_partnership": "Registrerat partnerskap",
+            "engaged": "Förlovad",
+            "female": "Kvinna",
+            "in_relationship": "I en relation",
+            "intersex": "Intersexuell",
+            "male": "Man",
+            "married": "Gift",
+            "no_children": "Ingen",
+            "no_record_available": "Ingen information tillgänglig",
+            "separated": "Separerad",
+            "single": "Singel",
+            "widowed": "Änka/änkling"
+          }
+        },
+        "possible_social_media_accounts": {
+          "expand_search": {
+            "more_platforms": "Få tillgång till fler plattformar med ett enda klick",
+            "title": "Utöka din sökning",
+            "unlock_platforms": "Lås upp plattformar"
+          },
+          "info": "Det här avsnittet visar eventuella profiler på sociala medier som kan vara kopplade till individen, vilket ger insikter i hens onlinenärvaro.",
+          "labels": {
+            "id": "ID",
+            "name": "Namn",
+            "opne_url": "Öppna sidan",
+            "source": "Källa",
+            "url": "Webbadress"
+          },
+          "network_not_found": "Hittades inte",
+          "no_accounts_found": "Inga konton hittades på någon av de kontrollerade plattformarna. Det betyder att användaren antingen inte är registrerad på dessa nätverk, eller använder data som skiljer sig från de angivna sökparametrarna.",
+          "partial_result": {
+            "info": "Inget konto hittades på vissa plattformar – det betyder att användaren antingen inte är registrerad på dessa nätverk eller använder data som skiljer sig från de angivna sökparametrarna.",
+            "no_account_platforms": "Plattformar utan konto hittat",
+            "title": "Sökresultat slutförda"
+          },
+          "sources": {
+            "behance": "Behance",
+            "facebook": "Facebook",
+            "github": "Github",
+            "gitlab": "Gitlab",
+            "google": "Google",
+            "instagram": "Instagram",
+            "kick": "Sparka",
+            "linkedin": "LinkedIn",
+            "pinterest": "Pinterest",
+            "reddit": "Reddit",
+            "snapchat": "Snapchat",
+            "telegram": "Telegram",
+            "threads": "Trådar",
+            "tiktok": "Tiktok",
+            "tumblr": "Tumblr",
+            "twitch": "Rycka",
+            "x": "X",
+            "youtube": "Youtube"
+          },
+          "title": "Möjliga konton på sociala medier",
+          "title_empty": "Inga konton på sociala medier hittades"
+        },
+        "potential_education": {
+          "info": "Det här avsnittet sammanfattar möjliga utbildningsuppgifter, inklusive skolor som individen har gått på och kvalifikationer som hen har uppnått.",
+          "title": "Möjlig utbildning",
+          "title_empty": "Ingen utbildning hittades",
+          "values": {
+            "associate_degree": "Utbildning",
+            "bachelor_degree": "Kandidatexamen",
+            "doctoral_degree": "Doktorsexamen",
+            "high_school": "Gymnasieexamen",
+            "master_degree": "Masterexamen",
+            "no_formal_education": "Ingen formell utbildning",
+            "other": "Annat",
+            "primary_school": "Låg- och mellanstadiet",
+            "secondary_school": "Högstadiet och gymnasiet",
+            "vocational_training": "Yrkesutbildning"
+          }
+        },
+        "potential_professional_summary": {
+          "info": "Detta avsnitt belyser möjliga yrkesroller som individen kan ha erfarenhet av, baserat på tillgängliga data.",
+          "title": "Möjlig sammanfattning av yrkesliv",
+          "title_empty": "Ingen sammanfattning av yrkesliv",
+          "values": {
+            "agriculture": "Lantbruk",
+            "arts_and_entertainment": "Konst och underhållning",
+            "construction": "Byggnation",
+            "education": "Utbildning",
+            "energy_and_utilities": "Energi och allmännyttiga tjänster",
+            "engineering": "Teknik",
+            "finance": "Finans",
+            "government": "Regering",
+            "healthcare": "Sjukvård och hälsa",
+            "hospitality": "Hotell och restaurang",
+            "information_technology": "Informationsteknik",
+            "legal": "Juridik",
+            "logistics_and_supply_chain": "Logistik och leverans",
+            "manufacturing": "Tillverkning",
+            "marketing": "Marknadsföring",
+            "media_and_communications": "Media och kommunikation",
+            "military": "Militär",
+            "non_profit": "Ideell organisation",
+            "other": "Annat",
+            "real_estate": "Fastighet",
+            "retail": "Detaljhandel",
+            "sales": "Försäljning",
+            "science": "Vetenskap",
+            "skilled_trades": "Hantverk",
+            "telecommunications": "Telekommunikation",
+            "transportation": "Transport"
+          }
+        },
+        "profile_summary": {
+          "associated_emails": "Associerade e-postadresser:",
+          "associated_locations": "Associerade platser:",
+          "associated_usernames": "Associerade användarnamn:",
+          "empty": "–",
+          "not_identified": "Inte identifierad",
+          "possible_owners": "Möjliga ägare:",
+          "potential_date_of_birth": "Potentiellt födelsedatum:",
+          "title": "Profilsammanfattning"
+        },
+        "sex_offenders": {
+          "alert": "Bakgrundskontroller av sexualförbrytare är endast tillgängliga för amerikanska register. Det här avsnittet innehåller information om alla registrerade sexualförbrytare, inklusive detaljer om brott, aktuell registreringsstatus och tillhörande platser.",
+          "report": {
+            "address_information": {
+              "city": "Stad",
+              "country": "Land",
+              "county": "Land",
+              "latitude": "Latitud",
+              "length_of_residence": "Varaktighet för bosättning",
+              "longitude": "Longitud",
+              "postal_code": "Postnummer",
+              "state": "Delstat/provins",
+              "street": "Gatuadress",
+              "title": "Plats"
+            },
+            "body_characteristics": {
+              "age": "Ålder",
+              "ethnicity": "Kulturell tillhörighet",
+              "eye_color": "Ögonfärg",
+              "hair_color": "Hårfärg",
+              "height": "Längd",
+              "race": "Etnisk tillhörighet",
+              "sex": "Kön",
+              "title": "Kroppsegenskaper",
+              "weight": "Vikt"
+            },
+            "crime_information": {
+              "conviction_date": "Datum för dom",
+              "crime": "Brott",
+              "jurisdiction": "Jurisdiktion",
+              "no_information_available": "Ingen information tillgänglig",
+              "registration_date": "Registreringsdatum",
+              "risk_level": "Risknivå",
+              "title": "Brottsinformation"
+            },
+            "distinctive_features": {
+              "back": "Rygg",
+              "head": "Huvud",
+              "left_arm": "Vänster arm",
+              "left_hand": "Vänster hand",
+              "left_leg": "Vänster ben",
+              "right_arm": "Höger arm",
+              "right_hand": "Höger hand",
+              "right_leg": "Höger ben",
+              "title": "Märken/ärr/tatueringar",
+              "torso": "Överkropp"
+            },
+            "download_report_button": "Ladda ner PDF",
+            "new_search": "Ny sökning",
+            "others_information": {
+              "is_absconded": "Är rymling?",
+              "is_predator": "Är förövare?",
+              "jurisdiction": "Jurisdiktion",
+              "link": "Länk",
+              "original_report": "Ursprunglig källa",
+              "title": "Annat",
+              "yes": "Ja"
+            },
+            "personal_information": {
+              "date_of_birth": "Födelsedatum",
+              "first_name": "Förnamn",
+              "first_name_nicknames": "Smeknamn på förnamn",
+              "last_name": "Efternamn",
+              "middle_name": "Mellannamn",
+              "name": "Namn",
+              "title": "Personlig information"
+            },
+            "photos": {
+              "title": "Foton"
+            },
+            "records_found_for": "Uppgifter hittade för",
+            "title_profile": "Sexualförbrytarprofil",
+            "values": {
+              "body_part": {
+                "back": "Rygg",
+                "head": "Huvud",
+                "left_arm": "Vänster arm",
+                "left_hand": "Vänster hand",
+                "left_leg": "Vänster ben",
+                "right_arm": "Höger arm",
+                "right_hand": "Höger hand",
+                "right_leg": "Höger ben",
+                "torso": "Överkropp"
+              },
+              "ethnicity": {
+                "hispanic": "Spansktalande",
+                "non_hispanic": "Icke-spansktalande",
+                "other": "Annat"
+              },
+              "eye_color": {
+                "amber": "Bärnsten",
+                "blue": "Blå",
+                "brown": "Brun",
+                "gray": "Grå",
+                "green": "Grön",
+                "hazel": "Grönbrun",
+                "other": "Annat",
+                "red": "Röd",
+                "violet": "Violett"
+              },
+              "hair_color": {
+                "auburn": "Rödbrun",
+                "bald": "Skallig",
+                "black": "Svart",
+                "blonde": "Blond",
+                "brown": "Brun",
+                "chestnut": "Ljusbrun",
+                "dyed": "Färgad",
+                "gray": "Grå",
+                "other": "Annat",
+                "red": "Röd",
+                "white": "Vit"
+              },
+              "race": {
+                "asian": "Asiatisk",
+                "black_or_african_american": "Svart eller afroamerikan",
+                "mixed": "Blandad",
+                "native_american": "Amerikansk ursprungsbefolkning",
+                "other": "Annat",
+                "pacific_islander": "Stillahavsöbo",
+                "white": "Vit"
+              },
+              "risk_level": {
+                "high": "Hög",
+                "low": "Låg",
+                "medium": "Medel"
+              },
+              "sex": {
+                "female": "Kvinna",
+                "intersex": "Intersexuell",
+                "male": "Man"
+              }
+            }
+          },
+          "title": "Bakgrundskontroll av sexualförbrytare"
+        },
+        "sex_offenders_background_check": {
+          "alt_icon": "Sexualförbrytare",
+          "info": "Bakgrundskontroller av sexualförbrytare är endast tillgängliga för amerikanska register. Det här avsnittet innehåller information om alla registrerade sexualförbrytare, inklusive detaljer om brott, aktuell registreringsstatus och tillhörande platser.",
+          "show_report": "Visa rapport",
+          "title": "Bakgrundskontroll av sexualförbrytare",
+          "title_empty": "Inga sexualförbrytare hittades i bakgrundskontrollen",
+          "unlock_report": "Lås upp rapport"
+        },
+        "upsell": {
+          "data_breach_history": {
+            "cancel": "Avbryt",
+            "compromise_isa_contact_details": "Komprometterade kontaktuppgifter, inklusive telefonnummer, e-postadresser och fysiska adresser",
+            "disclaimer_info": "All data kommer från en omfattande databas med över 14 miljarder poster från offentligt rapporterade dataintrång. Vi identifierar och rapporterar exponerad information men ger inte tillgång till känsliga uppgifter som lösenord eller privata inloggningsuppgifter.",
+            "limited_offer": "Begränsat erbjudande",
+            "personal_identifiers": "Personliga identifierare inklusive användarnamn, fullständiga namn och födelsedatum",
+            "processing_payment": "Bearbetar",
+            "professional_information_and_technical_data": "Professionell information och tekniska data såsom IP-adresser",
+            "purchase": "Köp",
+            "special_limited_time_offer": "Detta tidsbegränsade specialerbjudande upphör att gälla när du lämnar den här sidan.",
+            "title": "Rapport om dataintrång och läckor",
+            "total_due_today": "Totalt förfallna:"
+          },
+          "payment_message": {
+            "add_payment_details": "Ange betalningsuppgifter",
+            "agree_description_upsell": "Genom att fortsätta samtycker du till en engångsbetalning på {price} och godkänner våra <terms>användarvillkor</terms> och vår <privacy>integritetspolicy</privacy>. Debiteringen kommer att visas som \"mobitrace.io\" på din faktura.",
+            "close": "Stäng",
+            "payment_error": "Din betalning misslyckades",
+            "payment_error_description": "Uppdatera dina betalningsuppgifter",
+            "payment_retry_description": "Vi kunde inte behandla ditt kort. Försök igen.",
+            "payment_success": "Betalningen genomfördes",
+            "payment_success_description": "Tack för ditt köp! Tjänsten är redo att användas.",
+            "skip": "Hoppa över",
+            "try_again": "Försök igen",
+            "update_payment_method": "Uppdatera betalningsmetod"
+          },
+          "sex_offenders": {
+            "cancel": "Avbryt",
+            "comprehensive_data": "Tillgång till omfattande data om förövare från officiella källor",
+            "disclaimer_info": "Bakgrundskontroller av sexualförbrytare görs endast inom USA. Justitiedepartementet rapporterar cirka 800 000 registrerade sexualförbrytare över hela landet med tusentals nya registreringar årligen. Verifiera okända personer för din sinnesro.",
+            "instant_nationwide_search": "Omedelbar landsomfattande kontroll över alla statliga och federala register",
+            "limited_offer": "Begränsat erbjudande",
+            "processing_payment": "Bearbetar",
+            "purchase": "Köp",
+            "realtime_verification": "Verifiering i realtid mot de senaste registerdata",
+            "special_limited_time_offer": "Tidsbegränsat erbjudande om säkerhetsverifiering. Tjänsten söker endast efter registrerade personer i USA.",
+            "title": "Kontroll av register över sexförbrytare",
+            "total_due_today": "Totalt förfallna:"
+          },
+          "sex_offenders_search": {
+            "cancel": "Avbryt",
+            "disclaimer_info": "Bakgrundskontroller av sexualförbrytare görs endast inom USA. USA:s justitiedepartement rapporterar om cirka 800 000 registrerade sexualförbrytare i hela landet, med tusentals nya registreringar årligen. Verifiera okända personer för din egen sinnesro.\n\nDetta är ett engångsköp på {price}. Genom att lägga till den här rapporten godkänner du en enda debitering till din registrerade betalningsmetod. Detta köp ger åtkomst till en rapport inom detta merförsäljningsintervall.",
+            "instant_access": "Omedelbar rikstäckande sökning i alla statliga och federala register",
+            "processing_payment": "Bearbetar",
+            "purchase": "Köp",
+            "secure_one_time_payment": "Verifiering i realtid mot aktuella registerdata",
+            "special_limited_time_offer": "Tidsbegränsat erbjudande om säkerhetsverifiering. Tjänsten söker endast efter registrerade personer i USA.",
+            "title": "Kontroll av sexualförbrytarregister",
+            "total_due_today": "Totalt att betala:",
+            "verified_source_data": "Tillgång till omfattande data om förbrytare från officiella källor"
+          },
+          "social_networks": {
+            "cancel": "Avboka",
+            "disclaimer_info": "Denna sökning täcker endast större sociala plattformar och offentligt synlig kontoinformation. Täckningen kan variera beroende på plattform och profilens tillgänglighet.",
+            "limited_offer": "Begränsat erbjudande",
+            "matching_accounts": "Hitta matchande konton i en rapport baserad på offentligt tillgängliga data.",
+            "processing_payment": "Bearbetning",
+            "purchase": "Köpa",
+            "related_usernames_and_public_profile": "Identifiera relaterade användarnamn och närvaro i offentlig profil",
+            "scan_10_major_social_platforms": "Skanna 10+ stora sociala plattformar för relaterade konton",
+            "special_limited_time_offer": "Detta tidsbegränsade specialerbjudande upphör när du lämnar den här sidan",
+            "title": "Kontroll av sociala plattformar",
+            "total_due_today": "Totalt förfallna:"
+          },
+          "unlimited_pdf_downloads": {
+            "cancel": "Avbryt",
+            "disclaimer_info": "Detta är ett engångsköp. Genom att klicka på Få obegränsade PDF:er debiteras du {price}.",
+            "limited_offer": "Begränsat erbjudande",
+            "processing_payment": "Bearbetar",
+            "purchase": "Köp",
+            "special_limited_time_offer": "Ytterligare rabatt har tillämpats bara för dig!",
+            "title": "Obegränsade PDF-nerladdningar",
+            "total_due_today": "Totalt att betala:",
+            "upsell_benefits_1": "Tillgängliga offline",
+            "upsell_benefits_2": "Lätta att dela med andra",
+            "upsell_benefits_3": "Utskrivbara",
+            "upsell_benefits_4": "Tydliga, vackert formaterade och lättlästa"
+          }
+        }
+      },
+      "search": {
+        "components": {
+          "loader": {
+            "step_1": {
+              "carrier": {
+                "loadedDefaultText": "Identifierad",
+                "text": "Operatör"
+              },
+              "city": {
+                "loadedText": "Lokaliserad",
+                "text": "Stad"
+              },
+              "connecting": "Startar telefonsökning",
+              "country": {
+                "text": "Land"
+              },
+              "location": {
+                "loadedText": "Identifierad",
+                "text": "Plats"
+              },
+              "searching": "Sökresultat för",
+              "type": {
+                "loadedText": "Identifierad",
+                "text": "Typ"
+              }
+            },
+            "step_2": {
+              "cta": "Hämta plats",
+              "subtitle": "Din sökning är klar – nu kan du komma åt platsen.",
+              "title": "Platsen har hittats!"
+            }
+          },
+          "warning_dialog": {
+            "button_text": "Visa uppringaren",
+            "description": "Din Mobitrace-rapport är klar. Ta reda på vilken offentlig information som är kopplad till det här numret.",
+            "info_message": "Din sökning på {phoneNumber} är 100 % säker.",
+            "telephone": "(0-616) 32211",
+            "title": "VARNING!"
+          }
+        }
+      },
+      "search_complete": {
+        "components": {
+          "age_verification_dialog": {
+            "button_text": "Ja, jag är minst 18 år",
+            "description": "Den här rapporten kan innehålla känsligt innehåll och är endast avsedd för vuxna. Du måste vara minst 18 år för att fortsätta.",
+            "info_message": "Om du är under 18 år ska du <bold>avsluta nu.</bold>",
+            "title": "Åldersverifiering krävs"
+          },
+          "customer_opinions_carousel": {
+            "opinion_1": {
+              "description": "Jag upptäckte att min dotter hade börjat prata med någon ny och jag ville vara säker på att allt var säkert. Mobitrace lugnade mig genom att snabbt kolla upp vem kontakten var. Ibland gör en enkel omvänd sökning stor skillnad.",
+              "rate": "4",
+              "timeAgo": "4 dagar sedan",
+              "title": "Äntligen lite sinnesro",
+              "user": "Samantha Green"
+            },
+            "opinion_2": {
+              "description": "Verktyget är väldigt exakt och fungerade för de flesta nummer jag kollade upp. I några fall var inte informationen helt uppdaterad, men överlag gav Mobitrace mig precis vad jag behövde. Pålitlig och lätt att använda.",
+              "rate": "4.5",
+              "timeAgo": "1 vecka sedan",
+              "title": "Noggranna resultat jag kan lita på",
+              "user": "Daniel Brooks"
+            },
+            "opinion_3": {
+              "description": "Snabbt, pålitligt och exakt! Mobitrace imponerade på mig med hur snabbt det gav resultat. Jag kunde inte vara mer nöjd med tjänsten.",
+              "rate": "5",
+              "timeAgo": "1 dag sedan",
+              "title": "Snabbt, enkelt och korrekt",
+              "user": "Olivia Carter"
+            },
+            "opinion_4": {
+              "description": "Mobitrace har blivit ett av mina favoritverktyg för att hantera samtal. Det hjälper mig ta reda på vem som faktiskt ligger bakom okända nummer, vilket sparar mig tid och låter mig ha kontroll över vem som kan nå mig.",
+              "rate": "5",
+              "timeAgo": "2 veckor sedan",
+              "title": "Ger mig kontroll över mina samtal",
+              "user": "Matthew Lewis"
+            },
+            "opinion_5": {
+              "description": "Jag fick flera samtal från ett nummer jag inte kände igen och var inte säker på om jag skulle vara orolig. Jag provade Mobitrace och det identifierade genast uppringaren. Nu använder jag det så fort något verkar misstänksamt.",
+              "rate": "4.5",
+              "timeAgo": "För 2 dagar sedan",
+              "title": " Nu vet jag alltid vem som ringer",
+              "user": "Sophia Turner"
+            },
+            "opinion_6": {
+              "description": "Jag fick spamsamtal oavbrutet och det gjorde mig galen. Med Mobitrace fick jag äntligen reda på vem som låg bakom dem. Att se uppringarens profil och historik gav mig den förståelse jag behövde.",
+              "rate": "5",
+              "timeAgo": "1 dag sedan",
+              "title": "Inga fler jobbiga spamsamtal",
+              "user": "Christopher Hall"
+            },
+            "opinion_7": {
+              "description": "Det bästa verktyget jag har provat hittills! Med Mobitrace behöver jag inte längre stressa över okända samtal eller sms. Det är snabbt, enkelt och ger mig de svar jag behöver.",
+              "rate": "4",
+              "timeAgo": "3 dagar sedan",
+              "title": "Det bästa verktyget för okända samtal",
+              "user": "Grace Mitchell"
+            },
+            "opinion_8": {
+              "description": "Mobitrace hjälpte mig att upptäcka vem som ringde mig från ett okänt nummer. Det visade till och med relaterade namn och familjeband. Informationen var inte perfekt i varje fall, men överlag gav det mig värdefulla insikter som jag inte kunde hitta någon annanstans.",
+              "rate": "4.5",
+              "timeAgo": "2 dagar sedan",
+              "title": "Förvånansvärt detaljerad information",
+              "user": "Ethan Parker"
+            },
+            "rate": "4.5",
+            "reviews": "Baserat på <bold>456 recensioner</bold>",
+            "title": "Utmärkt"
+          },
+          "customer_say_about": {
+            "subtitle": "Vi gör vårt bäst för att ge dig den bästa upplevelsen",
+            "title": "Det här säger våra kunder om oss"
+          },
+          "owner_information": {
+            "collecting_data_address": "Adresser",
+            "collecting_data_email": "E-postadress och telefonnummer",
+            "collecting_data_job": "Arbetsinformation",
+            "collecting_data_online": "Användarnamn online",
+            "collecting_data_past": "Tidigare relationer",
+            "collecting_data_profiles": "Bortglömda profiler",
+            "collecting_data_title": "Samlar in data …",
+            "progress_bar_description": "Din sökhistorik är säker och privat. Ägaren av {phoneNumber} kommer INTE informeras om din sökning.",
+            "progress_bar_percentage": "{percentage} %",
+            "subtitle": "Det tar en liten stund att söka igenom miljarder poster.",
+            "title": "Hämtar ägarinformation för <bold></bold>"
+          }
+        }
+      },
+      "sign_up": {
+        "card_description": "Mobitrace är ett avancerat digitalt verktyg som söker igenom miljarder telefonnummer online. De flesta okända nummer är till telefonförsäljare, men våra rapporter kan innehålla information som överraskar dig.",
+        "card_title": "Viktigt meddelande",
+        "email_placeholder": "Din e-postadress",
+        "email_title": "E-postadress",
+        "errors": {
+          "email_exists": "Den här e-postadressen är redan registrerad. Försök att logga in eller använd en annan e-postadress.",
+          "invalid_email": "Ange en giltig e-postadress."
+        },
+        "form_title": "Ange din e-postadress för att få rapporten",
+        "latest_report": "Senaste rapporten per den 3 mars 2025",
+        "submit_button": "Fortsätt",
+        "title": "Resultatet är klart!"
+      },
+      "thank_you": {
+        "account_link": "Gå till ditt konto",
+        "click_below_to_account_your_link": "Klicka nedan för att komma åt ditt konto!",
+        "description": "Vi har skickat dina beställningsuppgifter och kontouppgifter till {email}. Nu kan du komma åt ditt konto.",
+        "did_you_like_your_shopping_experience": "Tyckte du om din köpupplevelse?",
+        "more_details_feedback": "Vi tar gärna emot detaljerad feedback: <email>support@mobitrace.io</email>",
+        "no": "Nej",
+        "thank_you_for_your_feedback": "Tack för din feedback!",
+        "title": "Betalningen genomfördes!",
+        "we_ll_work_on_making_it_better": "Vi ska jobba på att bli ännu bättre.",
+        "yes": "Ja"
+      },
+      "upsell": {
+        "already_purchased": "Redan köpt",
+        "data_breach": {
+          "disclaimer": "All data kommer från en omfattande databas med över 14 miljarder poster från offentligt rapporterade dataintrång. Vi identifierar och rapporterar exponerad information men ger inte tillgång till känsliga uppgifter som lösenord eller privata användaruppgifter.",
+          "purchase": "Lägg till rapport om dataintrång",
+          "special_limited_time_offer": "Detta tidsbegränsade specialerbjudande upphör att gälla när du lämnar den här sidan.",
+          "title": "Rapport om dataintrång och läckor",
+          "upsell_benefits_1": "Personliga identifierare inklusive användarnamn, fullständiga namn och födelsedatum",
+          "upsell_benefits_2": "Komprometterade kontaktuppgifter, inklusive telefonnummer, e-postadresser och fysiska adresser",
+          "upsell_benefits_3": "Yrkesrelaterad information och tekniska data såsom IP-adresser"
+        },
+        "limited_offer": "Begränsat erbjudande",
+        "pdf": {
+          "disclaimer": "Detta är ett engångsköp. Genom att klicka på Få obegränsade PDF:er debiteras du {price}.",
+          "purchase": "Få obegränsade PDF:er",
+          "special_limited_time_offer": "Ytterligare rabatt har tillämpats bara för dig!",
+          "title": "Obegränsade PDF-nerladdningar",
+          "upsell_benefits_1": "Tillgängliga offline",
+          "upsell_benefits_2": "Lätta att dela med andra",
+          "upsell_benefits_3": "Utskrivbara",
+          "upsell_benefits_4": "Tydliga, vackert formaterade och lättlästa"
+        },
+        "processing": "Bearbetar",
+        "sex_offenders": {
+          "disclaimer": "Bakgrundskontroller av sexualförbrytare görs endast inom USA. Rättsväsendet rapporterar cirka 800 000 registrerade sexualförbrytare över hela landet med tusentals nya registreringar årligen. Verifiera okända personer för din sinnesro.",
+          "purchase": "Lägg till kontroll av sexualförbrytarregister",
+          "purchase_terms": "Detta är ett engångsköp på {price}. Genom att lägga till den här rapporten godkänner du en enda debitering till din registrerade betalningsmetod. Detta köp ger åtkomst till en rapport inom detta merförsäljningsintervall.",
+          "special_limited_time_offer": "Tidsbegränsat erbjudande om säkerhetsverifiering. Tjänsten söker endast efter registrerade personer i USA.",
+          "title": "Kontroll av sexualförbrytarregister",
+          "upsell_benefits_1": "Omedelbar rikstäckande sökning i alla statliga och federala register",
+          "upsell_benefits_2": "Tillgång till omfattande data om förbrytare från officiella källor",
+          "upsell_benefits_3": "Verifiering i realtid mot aktuella registerdata"
+        },
+        "skip": "Hoppa över",
+        "total_due_today": "Totalt att betala:"
+      }
+    },
+    "settings": {
+      "billing": {
+        "activate_dialog": {
+          "action_form": "Betala med kort",
+          "title": "Lägg till betalningsmetod"
+        },
+        "active_date": "Aktiv till den {date}",
+        "active_state": "Aktiv",
+        "cancel_dialog": {
+          "cancel_cta": "Säg upp prenumeration",
+          "canceling_cta": "Säger upp ...",
+          "close_cta": "Stäng",
+          "description": "Om du säger upp din prenumeration förlorar du tillgång till alla funktioner och all support. Du kan när som helst återaktivera din prenumeration.",
+          "description_canceled": "Din prenumeration har sagts upp.<br> Du kommer inte att debiteras från och med nu.",
+          "done_cta": "Klart",
+          "title": "Bekräftelse"
+        },
+        "cancel_subscription": "Säg upp prenumeration",
+        "canceled_cta": "Återaktivera prenumeration",
+        "canceled_date": "Sades upp den {date}",
+        "canceled_state": "Uppsagd",
+        "expired_cta": "Aktivera prenumeration",
+        "expired_date": "Gick ut den {date}",
+        "expired_description": "Ditt medlemskap har gått ut. Återaktivera det för att fortsätta.",
+        "expired_state": "Utgången",
+        "month": "månad",
+        "next_billing_date": "Nästa fakturering: {date}",
+        "privacy_policy": "Integritetspolicy",
+        "started_on_date": "Startdatum: {date}",
+        "subscription": "Prenumeration",
+        "terms_and_conditions": "Villkor",
+        "title": "Fakturering",
+        "total": "Totalt:"
+      },
+      "get_help": {
+        "title": "Få hjälp"
+      },
+      "my_account": {
+        "change_password": {
+          "confirm_password": "Bekräfta lösenordet",
+          "current_password": "Nuvarande lösenord",
+          "new_password": "Nytt lösenord",
+          "title": "Ändra lösenord"
+        },
+        "delete_cta": "Radera konto",
+        "delete_dialog": {
+          "close_cta": "Stäng",
+          "delete_cta": "Radera konto",
+          "deleting_cta": "Raderar ...",
+          "description": "Är du säker på att du vill radera ditt konto? Tänk på att du omedelbart förlorar åtkomst till medlemsområdet när du bekräftar.",
+          "description_canceled": "Ditt konto har raderats.",
+          "done_cta": "Klart",
+          "title": "Bekräftelse"
+        },
+        "errors": {
+          "confirm_password_required": "Du måste bekräfta lösenordet",
+          "current_password_invalid": "Det aktuella lösenordet är ogiltigt",
+          "current_password_required": "Du måste ange det aktuella lösenordet",
+          "email_max_length": "E-postadressen måste innehålla färre än {maxLength} tecken.",
+          "email_required": "Du måste ange e-postadress",
+          "email_taken": "E-postadressen har redan tagits",
+          "invalid_email": "Ange en giltig e-postadress.",
+          "name_invalid_characters": "Namnet får inte innehålla siffror.",
+          "name_invalid_special_characters": "Namnet får inte innehålla specialtecken.",
+          "name_max_length": "Namnet måste innehålla färre än {maxLength} tecken.",
+          "name_required": "Du måste ange namn",
+          "new_password_must_differ_from_current_password": "Det nya lösenordet måste skilja sig från det nuvarande lösenordet",
+          "new_password_required": "Nytt lösenord krävs",
+          "password_max_length": "Lösenordet måste innehålla färre än {maxLength} tecken.",
+          "password_min_length": "Lösenordet måste innehålla minst 6 tecken.",
+          "passwords_must_match": "Lösenorden måste stämma överens"
+        },
+        "notifications": {
+          "notify_status_changes": "Meddela mig om statusändringar",
+          "notify_user_located": "Meddela mig när användaren har hittats",
+          "title": "Aviseringar"
+        },
+        "profile": {
+          "email": "E-postadress",
+          "name": "För- och efternamn",
+          "title": "Profilinformation"
+        },
+        "submit_cta": "Spara ändringar",
+        "success_title": "Ditt konto har uppdaterats",
+        "title": "Allmänt"
+      },
+      "title": "Inställningar"
+    },
+    "sex_offenders_search": {
+      "form": {
+        "city_placeholder": "Stad",
+        "errors": {
+          "first_name_required": "Förnamn är obligatoriskt",
+          "last_name_required": "Efternamn är obligatoriskt"
+        },
+        "first_name_placeholder": "Förnamn",
+        "last_name_placeholder": "Efternamn",
+        "state_placeholder": "Alla delstater",
+        "submit_button": "Kolla nu",
+        "title": "Gör en kontroll i registret över sexualbrottslingar",
+        "zip_placeholder": "Postnummer"
+      },
+      "loading": {
+        "subtitle": "Vänligen vänta medan vi hämtar uppgifter från det nationella registret.",
+        "title": "Kontrollerar registret över sexualbrottslingar..."
+      },
+      "results": {
+        "back": "Rygg",
+        "continue": "Fortsätt",
+        "empty_title": "Inga sexualbrottslingar hittades",
+        "results_found": "{count} resultat hittades",
+        "results_found_subtitle": "Välj det alternativ som passar bäst för att gå vidare.",
+        "search_again": "Sök igen"
+      },
+      "title": "Sexualförbrytare"
+    },
+    "sign_in": {
+      "description": "Ange din e-postadress för att logga in på ditt konto",
+      "sign_up_link": "Registrera dig",
+      "sign_up_prompt": "Har du inget konto?",
+      "title": "Logga in"
+    },
+    "sign_up": {
+      "components": {
+        "sign_up_form": {
+          "continue_with_email": "Fortsätt med e-postadress",
+          "continue_with_facebook": "Fortsätt med Facebook",
+          "continue_with_google": "Fortsätt med Google",
+          "email_label": "E-postadress",
+          "email_placeholder": "Din e-postadress",
+          "errors": {
+            "email_exists": "Den här e-postadressen är redan registrerad. Försök att logga in eller använd en annan e-postadress.",
+            "invalid_email": "Ange en giltig e-postadress."
+          },
+          "or": "eller"
+        }
+      },
+      "title": "Registrera dig för att få exakt plats för <brandColor>{phoneNumber}</brandColor>"
+    },
+    "status": {
+      "description": "Se förloppet nedan",
+      "detail_description": "Platsen har hittats",
+      "error_fetching_address": "Fel vid hämtning av adress",
+      "link_name": "Länk för {name}",
+      "load_more_button": "Läs in fler",
+      "loading_address": "Läser in adress ...",
+      "located_status": "Lokaliserad",
+      "no_locations_available": "Inga förfrågningar",
+      "pending_description": "Väntar på att mottagaren ska dela sin plats",
+      "pending_status": "Pågående",
+      "ready_status": "Rapport skapad",
+      "rejected_description": "Förbättra ditt meddelande för att uppmuntra mottagaren att dela sin plats",
+      "rejected_status": "Avvisad",
+      "reverse_lookup_description": "Sammanfattning av offentliga data som hittats för telefonnumret",
+      "reverse_lookup_report_for": "Omvänd sökrapport för {phone}",
+      "title": "Aktivitetshubb"
+    },
+    "success": {
+      "account_link": "Gå till ditt konto",
+      "click_below_to_account_your_link": "Klicka nedan för att komma åt ditt konto!",
+      "description": "Vi har skickat dina beställningsuppgifter och kontouppgifter till {email}. Du kan nu komma åt ditt konto.",
+      "did_you_like_your_shopping_experience": "Tyckte du om din köpupplevelse?",
+      "more_details_feedback": "Vi tar gärna emot detaljerad feedback: <email>support@mobitrace.io</email>",
+      "no": "Nej",
+      "thank_you_for_your_feedback": "Tack för din feedback!",
+      "title": "Betalningen lyckades!",
+      "we_ll_work_on_making_it_better": "Vi ska jobba på att bli ännu bättre.",
+      "yes": "Ja"
+    },
+    "upsell": {
+      "cancel_button": "Nej, tack",
+      "description": "Personlig support dygnet runt och förstklassig teknisk hjälp, bara ett klick bort.",
+      "footer_info": "Observera att {percentage} % omsättningsskatt kan läggas till på den totala köpesumman, beroende på din region",
+      "order_details": "Beställningsuppgifter:",
+      "products": {
+        "add_button": "Lägg till",
+        "add_order_button": "Lägg till för {price}",
+        "added_state": "Tillagd",
+        "details_button": "Information",
+        "remove_button": "Ta bort",
+        "scan_pro": {
+          "description": "Utforska alla aspekter av Mobitrace med vägledning från vårt tekniska supportteam. Upptäck alla funktioner och lär dig hur du får ut ännu mer av dem.",
+          "dialog": "<p>Maximera din upplevelse med Mobitrace med personlig support från vårt expertteam som guidar dig steg för steg. Upptäck alla funktioner och få ut det mesta av våra tjänster.</p><ul><li><strong>Smidig platsspårning.</strong>Spåra enkelt någons plats med en enda länk. Vårt team guidar dig genom hela processen och ser till att varje teknisk detalj hanteras med omsorg.</li><li> <strong>Omfattande profileringsstöd.</strong>Samarbeta med oss för att hitta all information du behöver. Från kontakter till profiler på sociala medier – vi hjälper dig att få en fullständig bild av personen du söker efter.</li><li><strong>Hitta din försvunna eller stulna telefon.</strong>Om din telefon är försvunnen finns vi här för att hjälpa dig. Våra avancerade verktyg kan snabbt hitta din enhet och visa dess exakta plats på en karta.</li><li><strong>Värna din onlinesäkerhet.</strong>Vi skannar databaser för att upptäcka om ditt telefonnummer eller din e-postadress har drabbats av tredjepartsintrång, vilket hjälper dig att ligga steget före cyberhot.</li></ul>",
+          "title": "ScanPRO"
+        },
+        "support_hotline": {
+          "description": "Köa inte för hjälp! Med prioriterad teknisk support slipper du köer och får snabb, personlig hjälp från våra skickliga tekniker.",
+          "title": "Prioriterad support dygnet runt"
+        }
+      },
+      "submit_button": "Lägg till i beställning",
+      "subtotal": "Delsumma",
+      "taxes": "Omsättningsskatt ({percentage} %)",
+      "title": "Maximera din Mobitrace-upplevelse!",
+      "total": "Totalt"
+    }
+  },
+  "routes": {
+    "forgot_password": "forgot-password",
+    "loader": "loader",
+    "reset_password": "reset-password",
+    "sign_in": "sign-in",
+    "sign_up": "sign-up"
+  }
+}

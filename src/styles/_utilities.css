@@ -1,0 +1,75 @@
+@layer utilities {
+  .columns-count-1 {
+    column-count: 1;
+  }
+
+  .columns-count-2 {
+    column-count: 2;
+  }
+
+  .columns-count-3 {
+    column-count: 3;
+  }
+
+  .columns-count-4 {
+    column-count: 3;
+  }
+
+  .border-currentcolor {
+    border-color: currentcolor;
+  }
+
+  .fill-press {
+    background-image: linear-gradient(
+      rgb(71 77 102 / 10%),
+      rgb(71 77 102 / 10%)
+    );
+  }
+
+  .shadow-icon {
+    box-shadow:
+      0 1px 1px 0 hsl(0deg 0% 16% / 8%),
+      0 3px 4px -1px hsl(0deg 0% 16% / 14%),
+      0 -3px 3px 0 hsl(0deg 0% 0% / 10%) inset,
+      0 3px 3px 0 hsl(0deg 0% 100% / 10%) inset,
+      0 0 0 1px hsl(0deg 0% 0% / 20%) inset;
+  }
+
+  .shadow-raised {
+    box-shadow:
+      0 4px 8px -2px hsl(0deg 0% 0% / 8%),
+      0 2px 4px -2px hsl(0deg 0% 0% / 10%);
+  }
+
+  .shadow-raised-lg {
+    box-shadow:
+      0 12px 29px 0 rgb(0 0 0 / 10%),
+    0 2.68px 6.48px 0 rgb(0 0 0 / 6%),
+    0 0.8px 1.93px 0 rgb(0 0 0 / 4%);
+  }
+
+  .animation-duration-500 {
+    animation-duration: 500ms;
+  }
+
+  .animation-duration-1000 {
+    animation-duration: 1000ms;
+  }
+
+  .comma-separated:not(:last-of-type) {
+    &::after {
+      content: ', ';
+    }
+  }
+
+  .print-remove-link {
+    @media print {
+      pointer-events: none !important;
+      cursor: default !important;
+    }
+  }
+
+  .page-break-inside-avoid {
+    page-break-inside: avoid;
+  }
+}

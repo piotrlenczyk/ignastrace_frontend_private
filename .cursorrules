@@ -1,0 +1,2 @@
+Avoid importing from @radix-ui if there is a component in @/components/ui that does the same thing.
+Don't import console from 'node:console' when using console.log.

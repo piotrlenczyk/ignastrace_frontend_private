@@ -1,0 +1,128 @@
+{{- if .Values.zero_trust.enabled }}
+apiVersion: tf.upbound.io/v1beta1
+kind: Workspace
+metadata:
+  name: {{ include "mobitrace-frontend.fullname" . }}-{{ .Release.Namespace }}
+spec:
+  writeConnectionSecretToRef:
+    namespace: {{ $.Release.Namespace }}
+    name: "{{ include "mobitrace-frontend.fullname" . }}-cloudflare"
+  providerConfigRef:
+    name: terraform-cf-aws-main
+  forProvider:
+    source: Inline
+    module: |
+      resource "cloudflare_zero_trust_access_application" "this" {
+        name                       = "{{ .Values.ingress.host }}"
+        policies                   = concat({{ toJson .Values.zero_trust.policies }}, [cloudflare_zero_trust_access_policy.emails_access.id, cloudflare_zero_trust_access_policy.service_token_access.id])
+        account_id                 = data.cloudflare_accounts.this.accounts[0].id
+        auto_redirect_to_identity  = false
+        http_only_cookie_attribute = true
+        domain                     = "{{ .Values.ingress.host }}"
+        self_hosted_domains        = ["{{ .Values.ingress.host }}"]
+        type                       = "self_hosted"
+        lifecycle {
+          ignore_changes = [account_id]
+        }
+      }
+      resource "cloudflare_zero_trust_access_policy" "emails_access" {
+        account_id       = data.cloudflare_accounts.this.accounts[0].id
+        name             = "Mobitrace emails access"
+        decision         = "allow"
+        session_duration = "730h"
+        include {
+          email_domain = [
+            "marsbased.com"
+          ]
+          email = [
+            "ignas@efuturemedia.com",
+            "daanfritz7@gmail.com",
+            "ivohot@gmail.com",
+            "mteixeira@sacradomus.com",
+            "phraseitceo@gmail.com",
+            "ellen.de.venter@gmail.com",
+            "amandine.chataigner@gmail.com",
+            "silke.luehrmann@gmx.de",
+            "ilaria.roncaglia@gmail.com",
+            "harald.roald@gmail.com",
+            "m.tosza@gmail.com",
+            "dmluciahorea@gmail.com",
+            "therese.svardsten@gmail.com",
+            "karahansisman@gmail.com",
+            # MOBITR-548
+            "vidiasc@gmail.com",
+            "leela.han@koreantranslationexpert.com",
+            "farahputri@gmail.com",
+            "47natcha@gmail.com",
+            "boh.vozniuk@gmail.com",
+            "quentinnguyen.localize@gmail.com",
+            "austra.muizniece@gmail.com",
+            "daniel@dgmultilingualservices.com",
+            "julius.valkiunas@gmail.com",
+            "sylocalize@gmail.com",
+            "sara.guinot.trad@gmail.com",
+          ]
+        }
+        lifecycle {
+          ignore_changes = [account_id]
+        }
+      }
+      resource "cloudflare_zero_trust_access_policy" "service_token_access" {
+        account_id       = data.cloudflare_accounts.this.accounts[0].id
+        name             = "Mobitrace Token Access"
+        decision         = "non_identity"
+        session_duration = "730h"
+        include {
+          service_token = [
+            cloudflare_zero_trust_access_service_token.this.id
+          ]
+        }
+        lifecycle {
+          ignore_changes = [account_id]
+        }
+      }
+      resource "cloudflare_zero_trust_access_service_token" "this" {
+        account_id = data.cloudflare_accounts.this.accounts[0].id
+        duration   = "87600h"
+        name       = "Service Access Token"
+        lifecycle {
+          ignore_changes = [account_id]
+        }
+      }
+      resource "cloudflare_zero_trust_access_application" "mobitrace_bypass_access" {
+      account_id                 = data.cloudflare_accounts.this.accounts[0].id
+      app_launcher_visible       = true
+      auto_redirect_to_identity  = false
+      domain                     = "{{ .Values.ingress.host }}/api/v1/webhooks/stripe"
+      enable_binding_cookie      = false
+      http_only_cookie_attribute = true
+      name                       = "{{ .Values.ingress.host }}"
+      self_hosted_domains        = ["{{ .Values.ingress.host }}/api/v1/webhooks/stripe", "{{ .Values.ingress.host }}/assets/*"]
+      session_duration           = "730h"
+      type                       = "self_hosted"
+      lifecycle {
+        ignore_changes = [account_id]
+      }
+      }
+      resource "cloudflare_zero_trust_access_policy" "mobitrace_bypass_access" {
+      account_id       = data.cloudflare_accounts.this.accounts[0].id
+      application_id   = cloudflare_zero_trust_access_application.mobitrace_bypass_access.id
+      name             = "Bypass"
+      precedence       = "1"
+      decision         = "bypass"
+      session_duration = "730h"
+      include {
+        everyone = true
+      }
+      lifecycle {
+        ignore_changes = [account_id]
+      }
+      }
+      output "service-account-id" {
+        value = cloudflare_zero_trust_access_service_token.this.client_id
+      }
+      output "service-account-secret" {
+        value = nonsensitive(cloudflare_zero_trust_access_service_token.this.client_secret)
+        sensitive = false
+      }
+{{- end }}

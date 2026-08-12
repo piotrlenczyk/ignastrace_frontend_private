@@ -1,0 +1,68 @@
+import { redirect } from 'next/navigation';
+
+import { getFunnelPhone } from '@/actions/funnel-phone-number';
+import { auth } from '@/auth';
+import FunnelLayout from '@/components/layouts/funnel-layout';
+import { ROUTES } from '@/constants/routes';
+import { useAuthenticatedRedirect } from '@/hooks/use-auth-redirect';
+import { usePhoneNumberFormatter } from '@/hooks/use-phone-number-formatter';
+import { getCurrencyFromCountry } from '@/libs/currency';
+import { getApi } from '@/libs/server/api';
+import { getUserCountry } from '@/libs/server/user-country';
+import type { Products } from '@/types/products';
+
+import { LookupCheckoutPageClient } from './_page';
+
+const Index = async () => {
+  const session = await auth();
+  const isAuthenticated = !!session;
+
+  if (!isAuthenticated) {
+    redirect(ROUTES.REVERSE_LOOKUP.SIGN_UP);
+  }
+
+  const [api, country, phoneNumber] = await Promise.all([
+    getApi(),
+    getUserCountry(),
+    getFunnelPhone(),
+  ]);
+
+  const currency = getCurrencyFromCountry(country);
+  const formattedNumber = usePhoneNumberFormatter(phoneNumber);
+
+  let defaultProduct: Products;
+  try {
+    defaultProduct = await api.get<Products>(`/products?currency=${currency}`);
+  } catch (error) {
+    console.error('Error fetching products:', error);
+
+    redirect(ROUTES.REVERSE_LOOKUP.HOME);
+  }
+
+  await useAuthenticatedRedirect({
+    activeSubscriptionRoute: ROUTES.REVERSE_LOOKUP.HOME,
+    endedSubscriptionRoute: ROUTES.REVERSE_LOOKUP.HOME,
+    noSubscriptionRoute: !formattedNumber.valid ? ROUTES.REVERSE_LOOKUP.HOME : undefined,
+  });
+
+  api.post('/klaviyo/checkout_started', {
+    flow: 'reverse_lookup',
+    product: 'reverse_lookup',
+  });
+
+  return (
+    <FunnelLayout positionMobileHeader="static" isReverseLookup showLogoLink={false}>
+      <main className="s-main flex flex-col">
+        <LookupCheckoutPageClient
+          currency={currency}
+          formattedNumber={formattedNumber}
+          country={country}
+          defaultProduct={defaultProduct}
+          phoneNumber={phoneNumber}
+        />
+      </main>
+    </FunnelLayout>
+  );
+};
+
+export default Index;

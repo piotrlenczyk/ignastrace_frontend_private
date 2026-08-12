@@ -1,0 +1,131 @@
+name: Build Stage Docker Image
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - 'LICENSE'
+      - '.gitignore'
+      - '.github/workflows/helm-chart-update.yaml'
+      - '.github/workflows/dev-branch.yaml'
+      - '.github/workflows/prod-release.yaml'
+  workflow_dispatch:
+    inputs:
+      build_docker:
+        description: 'Build Docker image?'
+        required: false
+        type: boolean
+      update_helm:
+        description: 'Update Helm chart?'
+        required: false
+        type: boolean
+
+concurrency: ci-stage-branch
+
+env:
+  AWS_REGION: us-east-1
+  NEXT_TELEMETRY_DISABLED: 1
+  NEXT_PUBLIC_API_URL: https://stage.mobitrace.io/api/v1
+  NEXT_PUBLIC_APP_URL: https://stage.mobitrace.io
+  NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${{ secrets.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
+  NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: pk_test_51RULmDGC6OGucnjKAxULVOyPcPGmKcZN6TW5b4V6ItQPLcFQkHVdPppxtbWaPRVemsa6qfJTxxYWvJDTT933T4ls00HC4cGEwv
+  NEXT_PUBLIC_LEMON_STRIPE_PUBLISHABLE_KEY: pk_test_51ThD0JBr5AKIbqjaABGRWGBI5hltviwnT7vBWDTYBfIuqsY830OCWqYAcgSwA6am2GPn8c0o9Q7Bbps5XayX5yA800VoWrUHqU
+  NEXT_PUBLIC_USE_LEMON_STRIPE: 1
+  NEXT_PUBLIC_GTM_ID: GTM-NTXVB7ZV
+  NEXT_PUBLIC_LANGUAGES_VERSION: 3
+  NEXT_PUBLIC_CURRENCY_VERSION: 3
+  NEXT_PUBLIC_REQUEST_ZIP: true
+  STAGE_BRANCH: main
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  detect-changes:
+    uses: QR-CODE-App/devops-shared/.github/workflows/shared-source-changes.yaml@main
+    with:
+      build_docker: ${{ inputs.build_docker || false }}
+      update_helm: ${{ inputs.update_helm || false }}
+      is_manual: ${{ github.event_name == 'workflow_dispatch' }}
+
+  initial:
+    name: Prepare image tag
+    runs-on: fmt-generic
+    needs: detect-changes
+    if: needs.detect-changes.outputs.docker == 'true'
+    outputs:
+      image_tag: ${{ steps.tag.outputs.image_tag }}
+    steps:
+      - name: Set image tag
+        id: tag
+        run: echo "image_tag=main-$(date +'%Y%m%d%H%M%S')-$(echo ${GITHUB_SHA::8})" >> $GITHUB_OUTPUT
+
+  build-push:
+    name: Build and push docker image
+    runs-on: fmt-generic
+    if: needs.detect-changes.outputs.docker == 'true'
+    needs:
+      - detect-changes
+      - initial
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup nodejs
+        id: setup-nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+
+      - name: install dependencies
+        run: npm ci
+
+      - name: build project
+        run: npm run build
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver: kubernetes
+
+      - name: Build and push
+        run: |
+          docker buildx build -t ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ needs.initial.outputs.image_tag }} --platform linux/amd64 --push .
+
+      - name: Update job summary
+        run: printf "Docker image ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ needs.initial.outputs.image_tag }} was pushed successfully!" >> $GITHUB_STEP_SUMMARY
+
+      - name: Update helm chart
+        uses: peter-evans/repository-dispatch@v4
+        with:
+          event-type: helm-chart-update
+          client-payload: '{"application-image-tag": "${{ needs.initial.outputs.image_tag }}", "branch": "${{ env.STAGE_BRANCH }}"}'
+
+  update-helm-only:
+    name: Update helm chart only
+    runs-on: fmt-generic
+    if: needs.detect-changes.outputs.helm == 'true' && needs.detect-changes.outputs.docker == 'false'
+    needs:
+      - detect-changes
+
+    steps:
+      - name: Update helm chart version only
+        uses: peter-evans/repository-dispatch@v4
+        with:
+          event-type: helm-chart-update
+          client-payload: '{"branch": "${{ env.STAGE_BRANCH }}"}'

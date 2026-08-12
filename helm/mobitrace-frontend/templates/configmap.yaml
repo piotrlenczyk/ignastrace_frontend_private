@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "mobitrace-frontend.fullname" . }}
+  labels:
+    {{- include "mobitrace-frontend.labels" . | nindent 4 }}
+data:
+  AUTH_URL: https://{{ .Values.ingress.host }}/api/auth
+  {{- range $key, $val := .Values.settings}}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
