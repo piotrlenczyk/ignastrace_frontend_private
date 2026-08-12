@@ -78,7 +78,7 @@ export const Hero = ({ defaultCountry }: { defaultCountry: CountryCode }) => {
         style={{ backgroundImage: 'url(/images/hero/map.png)' }}
       >
         <div className="container-wide relative lg:grid lg:grid-cols-[1fr_486px]">
-          <div className="flex max-w-screen-sm flex-col pb-6 pt-11 lg:justify-center lg:pb-11">
+          <div className="flex max-w-(--breakpoint-sm) flex-col pb-6 pt-11 lg:justify-center lg:pb-11">
             <h1 className="display mb-4 text-balance lg:mb-6">
               {title}
             </h1>

@@ -1,3 +1,28 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/*
+ * Tailwind v4 entry point. Everything the framework needs to know about this
+ * project — where to look for classes, what variants exist — lives here; the
+ * theme itself is in _theme.css.
+ */
+@import 'tailwindcss' source(none);
+@import 'tw-animate-css';
+
+/*
+ * Automatic source detection is off (`source(none)` above) and the sources are
+ * declared explicitly instead. An allowlist rather than detection-plus-excludes,
+ * so a large data file added later cannot silently rejoin the scan.
+ *
+ * What this deliberately keeps out: src/locales (several MB of translation JSON
+ * across ~15 languages), docs/, figma-variables.json, and src/styles/new — the
+ * generated Figma token pipeline, which is frozen and must never contribute
+ * class names.
+ *
+ * See docs/adr/0001-explicit-content-sources.md for the full reasoning.
+ */
+@source '../**/*.{js,ts,jsx,tsx}';
+
+/*
+ * v3 expressed this as a `screens` entry with a `raw` media query. v4 has no
+ * such escape hatch for max-width breakpoints; a custom variant is the
+ * replacement. The query is byte-for-byte what v3 emitted.
+ */
+@custom-variant md-max (@media (max-width: 1023px));

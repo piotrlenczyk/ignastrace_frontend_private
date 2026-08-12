@@ -1,4 +1,41 @@
 @layer base {
+  /*
+   * ── v3 preflight parity shims ──────────────────────────────────────────────
+   * v4's preflight changed three defaults. These restore v3's, so the version
+   * swap is not also a visual change. Grouped here so removing them later —
+   * which is a deliberate design decision, not a cleanup — is one edit.
+   *
+   * Ring-width and ring-colour are the two other documented preflight changes;
+   * no shim is needed because the bare `ring` utility appears nowhere in this
+   * codebase.
+   */
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    /* v3 defaulted to borderColor.DEFAULT, i.e. this palette's gray-200. */
+    border-color: hsl(var(--gray-transparent-200));
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    /*
+     * The literal, not `--color-gray-400` as the upgrade guide suggests: this
+     * palette has no gray-400, so v3 fell through to the preflight's own
+     * hardcoded default. Pointing at the theme variable would resolve to
+     * nothing.
+     */
+    color: #9ca3af;
+  }
+
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+
+  /* ── end v3 preflight parity shims ───────────────────────────────────────── */
+
   :root {
     /* theme */
     --gray: 230 33% 11%;
@@ -113,7 +150,7 @@
     --warning-stroke-strong: 42 69% 33% / 0.8;
     --warning-fill: 42 100% 59% / 0.05;
 
-    @media screen(md) {
+    @media (min-width: theme(--breakpoint-md)) {
       --s-header--height: 80px;
       --font-size-caption: 0.75rem;
     }
@@ -143,9 +180,14 @@
     @apply font-sans flex-1 text-base flex text-strong;
   }
 
-  h1,
-  .h1 {
-    @apply text-[2.1rem]/[1.22] xs:text-[2.25rem]/[1.22] lg:text-[3.5rem]/[1.1] text-strong;
+  /*
+   * `.h1` and `.h3` are `@utility` definitions in _utilities.css; only the
+   * element selectors are left here. h2/h4/h5/h6 keep the v3 shape because
+   * nothing composes or varies them — moving them too would shift them between
+   * cascade layers for no reason.
+   */
+  h1 {
+    @apply h1;
   }
 
   h2,
@@ -153,9 +195,8 @@
     @apply text-[1.65rem]/[1.2] xs:text-[1.75rem]/[1.2] lg:text-[3rem]/[1.15] text-strong;
   }
 
-  h3,
-  .h3 {
-    @apply text-[1.4rem]/[1.2] xs:text-[1.5rem] lg:text-[2rem] text-strong;
+  h3 {
+    @apply h3;
   }
 
   h4,
@@ -174,7 +215,7 @@
   }
 
   input:focus {
-    @apply outline-none;
+    @apply outline-hidden;
   }
 
   .display {

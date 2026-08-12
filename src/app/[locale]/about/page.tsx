@@ -63,7 +63,7 @@ export default async function About() {
           </section>
           <Locator
             defaultCountry={country}
-            className="my-8 md:mx-auto md:max-w-screen-sm md:py-14"
+            className="my-8 md:mx-auto md:max-w-(--breakpoint-sm) md:py-14"
             labelClassName="font-bold"
           />
         </div>

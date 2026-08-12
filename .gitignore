@@ -42,3 +42,6 @@ certificates
 
 # Lokalise binary
 bin/lokalise2
+
+# Figma token extraction scratch (see .claude/skills/figma-design-tokens)
+.tmp/

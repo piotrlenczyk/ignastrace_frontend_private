@@ -62,7 +62,7 @@ const StickyDownloadButton = ({
         isGenerating={isGenerating}
         onDownload={onDownload}
         buttonText={buttonText}
-        className="!text-sm shadow-lg print:hidden"
+        className="text-sm! shadow-lg print:hidden"
       />
     </div>
   );

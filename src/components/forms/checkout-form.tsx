@@ -149,7 +149,7 @@ const CheckoutForm = ({
       {
         isSubmitting && (
           <div className="
-            fixed inset-0 z-[100] !mt-0 grid animate-fade-in place-items-center
+            fixed inset-0 z-[100] mt-0! grid animate-fade-in place-items-center
             content-center gap-2 bg-[#fff3] text-center backdrop-blur-md will-change-auto"
           >
             <IconLoaderCircle size="large" className="animate-spin text-primary" />

@@ -1,0 +1,281 @@
+/*
+ * The theme, ported from the deleted tailwind.config.ts.
+ *
+ * `inline` is required, for two independent reasons:
+ *
+ * 1. --font-bebas is BOTH a theme token here and the custom property next/font
+ *    injects onto <html>. A non-inline @theme emits it into :root as
+ *    `--font-bebas: var(--font-bebas), <fallbacks>` — self-referential. The
+ *    unlayered next/font declaration wins and the fallback stack is silently
+ *    dropped (measured: the loader's two families and nothing else).
+ *    --font-sans is safe, since it points at the differently-named
+ *    --font-inter; the collision is what forces the inline form.
+ * 2. A large amount of hand-written CSS in _components.css reads the underlying
+ *    channel properties directly (`hsl(var(--primary-transparent-200))`). The
+ *    :root block in _base.css stays the single source of truth for those
+ *    values; this file only names them for Tailwind. Flattening the indirection
+ *    was considered and rejected — it would fork the palette in two places.
+ *
+ * See docs/adr/0002-colour-tokens-keep-indirection.md for the full reasoning.
+ */
+@theme inline {
+  /*
+   * v3 declared `screens` and `colors` at the top level of the theme, which
+   * *replaces* Tailwind's defaults rather than extending them. `initial` is the
+   * v4 spelling of that. Without it v4's default palette leaks back in and
+   * out-of-system names (bg-sky-500, bg-slate-200, …) silently start rendering.
+   *
+   * The animation namespace is deliberately NOT cleared: animate-spin and
+   * animate-pulse come from Tailwind core and are in active use.
+   */
+  --breakpoint-*: initial;
+  --color-*: initial;
+
+  /* Breakpoints. v3's `2xl` is dropped — it had no usages. `md-max` is a custom
+     variant now; see _init.css. */
+  --breakpoint-xs: 360px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+
+  /* Palette */
+  --color-white: #fff;
+  --color-transparent: transparent;
+  --color-black: #000;
+  --color-yellow: hsl(var(--yellow));
+  --color-yellow-1000: hsl(var(--yellow-transparent-1000));
+  --color-yellow-800: hsl(var(--yellow-transparent-800));
+  --color-yellow-500: hsl(var(--yellow-transparent-500));
+  --color-yellow-200: hsl(var(--yellow-transparent-200));
+  --color-yellow-50: hsl(var(--yellow-transparent-50));
+  --color-red: hsl(var(--red));
+  --color-red-1000: hsl(var(--red-transparent-1000));
+  --color-red-800: hsl(var(--red-transparent-800));
+  --color-red-200: hsl(var(--red-transparent-200));
+  --color-red-50: hsl(var(--red-transparent-50));
+  --color-amber: hsl(var(--amber));
+  --color-amber-1000: hsl(var(--amber-transparent-1000));
+  --color-amber-800: hsl(var(--amber-transparent-800));
+  --color-amber-200: hsl(var(--amber-transparent-200));
+  --color-amber-50: hsl(var(--amber-transparent-50));
+  --color-green: hsl(var(--green));
+  --color-green-1000: hsl(var(--green-transparent-1000));
+  --color-green-800: hsl(var(--green-transparent-800));
+  --color-green-200: hsl(var(--green-transparent-200));
+  --color-green-100: hsl(var(--green-transparent-100));
+  --color-green-50: hsl(var(--green-transparent-50));
+  --color-green-25: hsl(var(--green-transparent-25));
+  --color-teal: hsl(var(--teal));
+  --color-teal-1000: hsl(var(--teal-transparent-1000));
+  --color-teal-800: hsl(var(--teal-transparent-800));
+  --color-teal-200: hsl(var(--teal-transparent-200));
+  --color-teal-50: hsl(var(--teal-transparent-50));
+  --color-gray: hsl(var(--gray));
+  --color-gray-1000: hsl(var(--gray-transparent-1000));
+  --color-gray-800: hsl(var(--gray-transparent-800));
+  --color-gray-700: hsl(var(--gray-transparent-700));
+  --color-gray-500: hsl(var(--gray-transparent-500));
+  --color-gray-200: hsl(var(--gray-transparent-200));
+  --color-gray-100: hsl(var(--gray-transparent-100));
+  --color-gray-50: hsl(var(--gray-transparent-50));
+  --color-gray-25: hsl(var(--gray-transparent-25));
+  --color-neutral: hsl(var(--neutral));
+  --color-neutral-10: hsl(var(--neutral-10));
+  --color-overlay-light: hsl(var(--overlay-light));
+
+  /* Semantic colours (v3: theme.extend.colors) */
+  --color-background: hsl(var(--background));
+  --color-background-alternate: #f5f6fa;
+  --color-foreground: hsl(var(--foreground));
+  --color-pomegranate-50: hsl(var(--pomegranate-50));
+  --color-pomegranate-100: hsl(var(--pomegranate-100));
+  --color-pomegranate-200: hsl(var(--pomegranate-200));
+  --color-pomegranate-300: hsl(var(--pomegranate-300));
+  --color-pomegranate-400: hsl(var(--pomegranate-400));
+  --color-pomegranate-500: hsl(var(--pomegranate-500));
+  --color-pomegranate-600: hsl(var(--pomegranate-600));
+  --color-pomegranate-700: hsl(var(--pomegranate-700));
+  --color-pomegranate-800: hsl(var(--pomegranate-800));
+  --color-pomegranate-900: hsl(var(--pomegranate-900));
+  --color-pomegranate-950: hsl(var(--pomegranate-950));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-brand: hsl(var(--brand));
+  --color-brand-foreground: hsl(var(--brand-foreground));
+  --color-brand-strong: hsl(var(--brand-transparent-1000));
+  --color-brand-1000: hsl(var(--brand-transparent-1000));
+  --color-brand-800: hsl(var(--brand-transparent-800));
+  --color-brand-200: hsl(var(--brand-transparent-200));
+  --color-brand-50: hsl(var(--brand-transparent-50));
+  --color-brand-weak: hsl(var(--brand-transparent-50));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-primary-strong: hsl(var(--primary-transparent-1000));
+  --color-primary-1000: hsl(var(--primary-transparent-1000));
+  --color-primary-800: hsl(var(--primary-transparent-800));
+  --color-primary-200: hsl(var(--primary-transparent-200));
+  --color-primary-50: hsl(var(--primary-transparent-50));
+  --color-primary-weak: hsl(var(--primary-transparent-50));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-secondary-strong: hsl(var(--secondary-transparent-1000));
+  --color-secondary-1000: hsl(var(--secondary-transparent-1000));
+  --color-secondary-800: hsl(var(--secondary-transparent-800));
+  --color-secondary-200: hsl(var(--secondary-transparent-200));
+  --color-secondary-50: hsl(var(--secondary-transparent-50));
+  --color-secondary-weak: hsl(var(--secondary-transparent-50));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  /* `success` itself is a collision — see _utilities.css. */
+  --color-success-foreground: hsl(var(--success-foreground));
+  --color-warning-stroke: hsl(var(--warning-stroke));
+  --color-warning-stroke-strong: hsl(var(--warning-stroke-strong));
+  --color-warning-fill: hsl(var(--warning-fill));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+  --color-stroke-primary-weak: hsl(var(--primary-transparent-200));
+  --color-stroke-secondary-weak: hsl(var(--secondary-transparent-200));
+  --color-stroke-weak: hsl(var(--gray-transparent-100));
+
+  /*
+   * v3 kept `backgroundColor` and `textColor` as separate theme namespaces, so
+   * one name could mean two different colours depending on the utility. v4 has
+   * a single `--color-*` namespace feeding all of them, so the names where the
+   * two v3 namespaces disagreed cannot live here — `base`, `weak` and `success`
+   * are `@utility` definitions in _utilities.css instead. The rest agreed, or
+   * only ever existed in one namespace, and are plain theme entries.
+   */
+  --color-base-blur: hsl(var(--background-base-blur));
+  --color-alternate: hsl(var(--gray-solid-50));
+  --color-strong: hsl(var(--gray-transparent-1000));
+  --color-error: hsl(var(--red-transparent-800));
+  --color-body: hsl(var(--gray-transparent-700));
+  --color-disabled: hsl(var(--text-disabled));
+  --color-inverse-strong: var(--gray-solid-0);
+  --color-information: hsl(var(--text-information));
+
+  /* Typography */
+  --font-sans:
+    var(--font-inter), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-bebas:
+    var(--font-bebas), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --text-base: 1rem;
+  --text-base--line-height: 1.5;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.5;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.25rem;
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.5;
+  --text-caption: var(--font-size-caption);
+  --text-caption--line-height: 1.5;
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  /*
+   * Animations. v3 also redefined `pulse` here, with exactly Tailwind's own
+   * definition — dropped rather than restated, since the namespace is not
+   * cleared and core still provides it.
+   */
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-loading-bar: loading-bar 1s linear infinite;
+  --animate-fade-out: fade-out 0.2s;
+  --animate-fade-in: fade-in 0.2s;
+  --animate-onboarding-step-1: onboarding-step-1 0.8s linear;
+  --animate-map-pane: map-pane 30s linear infinite;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+
+    to {
+      height: 0;
+    }
+  }
+
+  @keyframes loading-bar {
+    0% {
+      transform: translateX(-50px);
+    }
+
+    100% {
+      transform: translateX(calc(100% + 50px));
+    }
+  }
+
+  @keyframes map-pane {
+    0% {
+      background-position: -99% center;
+    }
+
+    100% {
+      background-position: 99% center;
+    }
+  }
+
+  @keyframes fade-out {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes onboarding-step-1 {
+    0% {
+      max-height: 0;
+      opacity: 0;
+    }
+
+    40% {
+      max-height: 260px;
+      opacity: 0;
+    }
+
+    100% {
+      max-height: 100%;
+      opacity: 1;
+    }
+  }
+}

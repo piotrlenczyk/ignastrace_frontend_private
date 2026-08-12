@@ -1,75 +1,209 @@
-@layer utilities {
-  .columns-count-1 {
-    column-count: 1;
-  }
+/*
+ * v4 has no `@layer utilities` for hand-written classes: a class parked in that
+ * layer is inert as far as the engine is concerned, so `print:page-break-inside-
+ * avoid`, `hover:shadow-raised` and `lg:shadow-raised-lg` would all stop
+ * resolving. `@utility` registers them properly, variants included.
+ */
+@utility columns-count-1 {
+  column-count: 1;
+}
 
-  .columns-count-2 {
-    column-count: 2;
-  }
+@utility columns-count-2 {
+  column-count: 2;
+}
 
-  .columns-count-3 {
-    column-count: 3;
-  }
+@utility columns-count-3 {
+  column-count: 3;
+}
 
-  .columns-count-4 {
-    column-count: 3;
-  }
+@utility columns-count-4 {
+  column-count: 3;
+}
 
-  .border-currentcolor {
-    border-color: currentcolor;
-  }
+@utility border-currentcolor {
+  border-color: currentcolor;
+}
 
-  .fill-press {
-    background-image: linear-gradient(
-      rgb(71 77 102 / 10%),
-      rgb(71 77 102 / 10%)
-    );
-  }
+@utility fill-press {
+  background-image: linear-gradient(
+    rgb(71 77 102 / 10%),
+    rgb(71 77 102 / 10%)
+  );
+}
 
-  .shadow-icon {
-    box-shadow:
-      0 1px 1px 0 hsl(0deg 0% 16% / 8%),
-      0 3px 4px -1px hsl(0deg 0% 16% / 14%),
-      0 -3px 3px 0 hsl(0deg 0% 0% / 10%) inset,
-      0 3px 3px 0 hsl(0deg 0% 100% / 10%) inset,
-      0 0 0 1px hsl(0deg 0% 0% / 20%) inset;
-  }
+@utility shadow-icon {
+  box-shadow:
+    0 1px 1px 0 hsl(0deg 0% 16% / 8%),
+    0 3px 4px -1px hsl(0deg 0% 16% / 14%),
+    0 -3px 3px 0 hsl(0deg 0% 0% / 10%) inset,
+    0 3px 3px 0 hsl(0deg 0% 100% / 10%) inset,
+    0 0 0 1px hsl(0deg 0% 0% / 20%) inset;
+}
 
-  .shadow-raised {
-    box-shadow:
-      0 4px 8px -2px hsl(0deg 0% 0% / 8%),
-      0 2px 4px -2px hsl(0deg 0% 0% / 10%);
-  }
+@utility shadow-raised {
+  box-shadow:
+    0 4px 8px -2px hsl(0deg 0% 0% / 8%),
+    0 2px 4px -2px hsl(0deg 0% 0% / 10%);
+}
 
-  .shadow-raised-lg {
-    box-shadow:
-      0 12px 29px 0 rgb(0 0 0 / 10%),
+@utility shadow-raised-lg {
+  box-shadow:
+    0 12px 29px 0 rgb(0 0 0 / 10%),
     0 2.68px 6.48px 0 rgb(0 0 0 / 6%),
     0 0.8px 1.93px 0 rgb(0 0 0 / 4%);
+}
+
+@utility animation-duration-500 {
+  animation-duration: 500ms;
+}
+
+@utility animation-duration-1000 {
+  animation-duration: 1000ms;
+}
+
+@utility comma-separated {
+  &:not(:last-of-type)::after {
+    content: ', ';
+  }
+}
+
+@utility print-remove-link {
+  @media print {
+    pointer-events: none !important;
+    cursor: default !important;
+  }
+}
+
+@utility page-break-inside-avoid {
+  page-break-inside: avoid;
+}
+
+/*
+ * Classes other rules compose with `@apply`. In v4, applying a class that lives
+ * in a plain `@layer` is a hard build error, so these have to be real
+ * utilities. `badge`, `container-wide` and `full-main` moved out of
+ * _components.css; `h1` out of _base.css.
+ */
+@utility badge {
+  @apply flex items-center gap-1 rounded-full border px-2 py-[2px] text-sm;
+}
+
+@utility container-wide {
+  @apply max-w-[1216px] mx-auto w-full;
+}
+
+@utility full-main {
+  min-height: calc(100dvh - var(--s-header--height));
+}
+
+@utility h1 {
+  @apply text-[2.1rem]/[1.22] xs:text-[2.25rem]/[1.22] lg:text-[3.5rem]/[1.1] text-strong;
+}
+
+/*
+ * Hand-written classes that markup puts a variant on (`md-max:scribble`,
+ * `lg:h3`, `lg:layout-desktop`). v3 generated variants for anything in the base
+ * and component layers; v4 only does it for real utilities, so without this the
+ * variant compiles to nothing at all — silently.
+ */
+@utility scribble {
+  @apply text-secondary relative bg-none bg-transparent;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -10%;
+    left: 0;
+    height: 30%;
+    mask-image: url('/images/hero/strike.svg');
+    mask-repeat: no-repeat;
+    mask-size: 95%;
+    width: 100%;
+    background-image: linear-gradient(
+      to right,
+      currentcolor 40%,
+      transparent 50%
+    );
+    background-repeat: no-repeat;
+    background-size: 300%;
+  }
+}
+
+@utility h3 {
+  @apply text-[1.4rem]/[1.2] xs:text-[1.5rem] lg:text-[2rem] text-strong;
+}
+
+@utility layout-desktop {
+  @apply flex gap-1 bg-gray-50 p-1;
+
+  height: 100vh;
+
+  & > * {
+    @apply bg-white rounded-lg border border-gray-100;
+
+    height: 100%;
   }
 
-  .animation-duration-500 {
-    animation-duration: 500ms;
+  & > *:not(.s-header-nav-vertical) {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
   }
 
-  .animation-duration-1000 {
-    animation-duration: 1000ms;
+  & .s-header-nav-vertical {
+    @apply px-5 pt-5 pb-8;
+
+    overflow: hidden;
+    width: 300px;
+    flex-shrink: 0;
   }
 
-  .comma-separated:not(:last-of-type) {
-    &::after {
-      content: ', ';
-    }
+  /* v3 emitted this alongside the variant, so `body:has(.lg\:layout-desktop)`
+     is what actually locks scrolling — the unprefixed class is never in the
+     markup. */
+  body:has(&) {
+    overflow: hidden;
   }
+}
 
-  .print-remove-link {
-    @media print {
-      pointer-events: none !important;
-      cursor: default !important;
-    }
-  }
+/*
+ * `container` is built into v4. Adding to it here extends the built-in rather
+ * than replacing it, so the max-width steps at every breakpoint are still
+ * Tailwind's. v3 got the centring from `.container { @apply mx-auto }` in the
+ * component layer.
+ */
+@utility container {
+  margin-inline: auto;
+}
 
-  .page-break-inside-avoid {
-    page-break-inside: avoid;
-  }
+/*
+ * ── v3 namespace collisions ────────────────────────────────────────────────
+ * `backgroundColor` and `textColor` were separate theme namespaces in v3, so
+ * three names meant two different things depending on the utility. v4 resolves
+ * every colour utility out of one `--color-*` namespace, and a same-named
+ * `@utility` does not override a theme entry — it emits *alongside* it, and
+ * loses. So these three names are kept out of the theme entirely (see
+ * _theme.css) and spelled out per utility here.
+ *
+ * `base` is the dangerous one: `--color-base` also beats `--text-base`, which
+ * would turn all ~50 `text-base` call sites from a font size into white text.
+ *
+ * v3 could also produce `border-weak`, `bg-success`, `border-success` and so
+ * on from these names. None of them has a call site, so nothing is lost from
+ * the compiled output; a future need for one means adding it here.
+ */
+@utility bg-base {
+  background-color: hsl(var(--background));
+}
+
+@utility bg-weak {
+  background-color: hsl(var(--fill-weak));
+}
+
+@utility text-weak {
+  color: hsl(var(--text-weak));
+}
+
+@utility text-success {
+  color: hsl(var(--green-transparent-800));
 }

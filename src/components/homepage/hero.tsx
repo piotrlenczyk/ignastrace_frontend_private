@@ -113,10 +113,10 @@ export const Hero = ({ defaultCountry }: { defaultCountry: CountryCode }) => {
           {title}
         </h1>
         <HeroLocator
-          className="mb-4 lg:max-w-[514px] xl:max-w-screen-sm"
+          className="mb-4 lg:max-w-[514px] xl:max-w-(--breakpoint-sm)"
           defaultCountry={defaultCountry}
         />
-        <h2 className="mb-4 text-sm font-normal text-weak lg:max-w-[514px] xl:max-w-screen-sm">
+        <h2 className="mb-4 text-sm font-normal text-weak lg:max-w-[514px] xl:max-w-(--breakpoint-sm)">
           {subtitle}
         </h2>
         <Trust />

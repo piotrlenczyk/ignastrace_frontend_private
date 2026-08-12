@@ -17,7 +17,7 @@ export const DownloadReportButton = ({
   isGenerating,
   onDownload,
   buttonText,
-  className = 'w-full !text-sm lg:w-auto print:hidden',
+  className = 'w-full text-sm! lg:w-auto print:hidden',
 }: DownloadReportButtonProps) => {
   return (
     hasUnlimitedDownloads

@@ -9,9 +9,14 @@
     }
   }
 
+  /* v4 forbids `@apply` inside `@keyframes`, so the two utilities this used to
+     compose (`opacity-100 translate-y-0`) are written out. Plain CSS rather
+     than Tailwind's internal `--tw-translate-*` variables — a keyframe reaching
+     into engine internals is exactly what breaks on the next major. */
   @keyframes fade-in-slide-up {
     to {
-      @apply opacity-100 translate-y-0;
+      translate: 0 0;
+      opacity: 1;
     }
   }
 

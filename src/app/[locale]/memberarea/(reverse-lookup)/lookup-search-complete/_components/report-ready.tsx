@@ -61,7 +61,7 @@ export const ReportReady = ({ className, user }: ReportReadyProps) => {
               )
             : (
                 <UnlockUnlimitedDownloads
-                  className="order-2 !min-h-10 w-full !text-base sm:order-1 sm:w-auto"
+                  className="order-2 min-h-10! w-full text-base! sm:order-1 sm:w-auto"
                   variant="secondary"
                   onDownloadPdf={handleDownloadReport}
                 />

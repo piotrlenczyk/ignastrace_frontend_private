@@ -35,7 +35,7 @@ const UpsellProgressSteps = ({ currentStep, className }: UpsellProgressStepsProp
 
   return (
     <div className={cn('w-full mt-6 mb-8', className)}>
-      <div className="mx-auto grid max-w-screen-sm auto-cols-fr grid-flow-col px-1">
+      <div className="mx-auto grid max-w-(--breakpoint-sm) auto-cols-fr grid-flow-col px-1">
         {stepsWithStatus.map((step, index) => (
           <Fragment key={step.number}>
             {/* Circle indicator with label */}
