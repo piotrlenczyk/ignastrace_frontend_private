@@ -68,7 +68,8 @@ export const SexOffenderSearchResults = ({ search }: { search: SexOffenderSearch
                 className={cn(
                   'size-5 shrink-0 appearance-none rounded-full border-2 border-stroke-weak bg-white',
                   'checked:border-[5px] checked:border-primary',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+                  'focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring',
+                  'focus-visible:ring-offset-2',
                 )}
               />
               {match.photo_url && (

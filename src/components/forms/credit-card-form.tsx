@@ -153,7 +153,7 @@ export const CreditCardForm = ({
       { isLoading
       && (
         <div className="
-         absolute inset-0 z-[100] !mt-0 grid animate-fade-in
+         absolute inset-0 z-[100] mt-0! grid animate-fade-in
          place-items-center content-center bg-white/80 text-center"
         >
           <IconLoaderCircle size="large" className="animate-spin text-primary" />

@@ -24,7 +24,7 @@ export default async function ContactUsPage() {
           <ContactInformation />
         </div>
         <hr className="my-4 border-stroke-weak" />
-        <div className="max-w-screen-sm">
+        <div className="max-w-(--breakpoint-sm)">
           <ContactForm />
         </div>
       </main>

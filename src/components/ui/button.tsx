@@ -10,7 +10,7 @@ const buttonVariants = cva(
   inline-flex items-center justify-center gap-2 text-center
   rounded-md text-sm font-semibold
   ring-offset-2 transition-colors 
-  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring 
+  focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring 
   disabled:pointer-events-none disabled:border-gray-100 
   [&_svg]:pointer-events-none 
   [&_svg]:shrink-0
@@ -28,7 +28,7 @@ const buttonVariants = cva(
         inverse: 'shadow-raised focus-visible:ring-[currentColor] disabled:text-gray-100',
         destructive: 'hover:shadow-raised bg-red text-background disabled:bg-gray-100',
         outline:
-          'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground',
+          'border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground',
         'outline-secondary':
           'border border-primary text-primary bg-background', 
         ghost: 'hover:bg-accent hover:text-accent-foreground',

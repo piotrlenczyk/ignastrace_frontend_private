@@ -47,7 +47,7 @@ const AvatarWithLock = ({ animate = true }: AvatarWithLockProps) => {
           <IconLock className="size-5 text-white" />
         </span>
         <Image
-          className="!h-auto !max-w-none"
+          className="h-auto! max-w-none!"
           src={`/images/reverse-lookup/blur_photo_${currentPhotoIndex}.png`}
           alt="photo"
           width={72}

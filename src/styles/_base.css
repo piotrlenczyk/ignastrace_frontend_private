@@ -215,7 +215,7 @@
   }
 
   input:focus {
-    @apply outline-none;
+    @apply outline-hidden;
   }
 
   .display {

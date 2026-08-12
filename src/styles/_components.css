@@ -23,11 +23,11 @@
   }
 
   .container-content {
-    @apply max-w-screen-sm mx-auto w-full;
+    @apply max-w-(--breakpoint-sm) mx-auto w-full;
   }
 
   .container-medium {
-    @apply max-w-screen-md mx-auto w-full;
+    @apply max-w-(--breakpoint-md) mx-auto w-full;
   }
 
   .container-ultra {
@@ -35,7 +35,7 @@
   }
 
   .s-header {
-    @apply [grid-area:header] top-0 z-10  bg-[#fffe] backdrop-blur-sm px-3 lg:px-6
+    @apply [grid-area:header] top-0 z-10  bg-[#fffe] backdrop-blur-xs px-3 lg:px-6
       [position:var(--s-header--position,sticky)] md:[position:var(--s-header-md--position,sticky)];
   }
 
@@ -57,7 +57,7 @@
 
   .s-mobile-menu-content {
     @apply fixed inset-0 z-50 lg:hidden;
-    @apply bg-[#fffe] backdrop-blur-sm;
+    @apply bg-[#fffe] backdrop-blur-xs;
     @apply grid grid-rows-[min-content_1fr];
 
     margin-top: var(--s-header--height);

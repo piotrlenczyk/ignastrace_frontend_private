@@ -193,6 +193,112 @@ shim: the bare `ring` utility appears nowhere in the codebase.
   `stylelint` is back to the same 11 `color-hex-length` errors in the frozen
   `src/styles/new/`, and none anywhere else.
 
+## The utility renames (issue #4)
+
+v4 reused several v3 class names for different values. Where that happened the
+class had to move; where v4's rename only applies to *its own* default scale and
+this theme overrides that scale, the v3 name already resolves to the right value
+and moving it would have corrupted the design. The two sets are listed below with
+the compiled declarations that justify each decision, because "apply the upgrade
+tool's suggestions" is not a reviewable claim — the tool cannot see which scales
+`@theme` overrides.
+
+### Renamed, with the v3 declaration each one restores
+
+| Was (v3) | Now (v4) | Declaration, identical on both sides |
+| --- | --- | --- |
+| `shadow-sm` | `shadow-xs` | `0 1px 2px 0 rgb(0 0 0 / 0.05)` |
+| `shadow` | `shadow-sm` | `0 1px 3px 0 …, 0 1px 2px -1px …` |
+| `blur-sm` | `blur-xs` | `blur(4px)` — v4's `--blur-xs`, v3's literal |
+| `backdrop-blur-sm` | `backdrop-blur-xs` | `blur(4px)` |
+| `max-w-screen-sm` | `max-w-(--breakpoint-sm)` | `640px` |
+| `max-w-screen-md` | `max-w-(--breakpoint-md)` | `768px` |
+| `outline-none` | `outline-hidden` | no visible outline |
+| `!mt-0`, `!text-sm`, … | `mt-0!`, `text-sm!`, … | same declarations, `!important` |
+
+Notes on the two that are not a straight value swap:
+
+- **`max-w-screen-*` still compiles under 4.3** (deprecated, not removed), so
+  this was not a forced change — the utilities were replaced anyway because the
+  acceptance criteria ask for it and because the deprecation will eventually
+  bite. The `(--breakpoint-sm)` form was chosen over a literal `max-w-[640px]`
+  to keep the value pointing at the same `@theme` entry v3's `screens.sm` fed,
+  so a future breakpoint change still propagates. Eight call sites: six in
+  `.tsx`, plus `.container-content` / `.container-medium` in `_components.css`.
+- **`outline-hidden` is not declaration-identical to v3's `outline-none`.** v3
+  emitted `outline: 2px solid transparent; outline-offset: 2px`; v4's
+  `outline-hidden` emits `outline-style: none` plus a `forced-colors: active`
+  block that restores exactly v3's transparent outline. Both render no visible
+  outline, and the forced-colors path is *better* than v3's, which relied on the
+  transparent outline being made visible by the OS. v4's own `outline-none` was
+  not the right target: it means `outline-style: none` with no forced-colors
+  fallback.
+
+### Explicitly NOT renamed
+
+- **`rounded-sm`** (10 call sites). v4 renamed *its* `rounded-sm` (0.125rem) to
+  `rounded-xs`, but `@theme` defines `--radius-sm: calc(var(--radius) - 4px)`,
+  so `rounded-sm` compiles to that same `calc()` on both sides. Renaming it
+  would have silently swapped a themed radius for v4's default 0.125rem.
+- **The font-size utilities** (`text-xs`, `text-sm`, `text-base`, `text-lg`).
+  Same reasoning: `--text-*` is overridden in `@theme`, so `text-sm` is
+  `0.875rem` on both sides. Note that `!text-sm` → `text-sm!` still applies —
+  that is the important modifier moving position, not the class being renamed.
+- **Bare `rounded`.** v4 kept it at `0.25rem`, identical to v3. Renaming it to
+  `rounded-sm` — which the upgrade guide suggests — would have pointed it at the
+  overridden `--radius-sm` and changed the value.
+
+`checkbox.tsx` is the call site that makes a blanket find-and-replace unsafe: one
+class attribute holds both `shadow` (renamed to `shadow-sm`) and `rounded-sm`
+(must not move). `select.tsx` and `switch.tsx` are the same shape with
+`shadow-sm` next to `text-sm` / `rounded-md`.
+
+### Two v4 utility changes that were not on the ticket's list
+
+Both were found by diffing the compiled sheets rather than by reading the
+upgrade guide, and both are real rendering changes, so they are fixed here rather
+than deferred:
+
+1. **Bare `outline` changed width.** v3's `.outline` emitted `outline-style:
+   solid` and nothing else, leaving `outline-width` at the browser default
+   (`medium`, 3px everywhere in practice). v4's `.outline` adds `outline-width:
+   1px`. The two `PricingCard` outlines would have thinned from 3px to 1px, so
+   they are now `outline-3`.
+2. **`outline-hidden` suppresses a later `outline` on the same element.** v4
+   routes outline style through `--tw-outline-style`, which `outline-hidden` sets
+   to `none`; `outline` and `outline-<n>` then *read* that variable. On the
+   shared `inputStyle`, `focus-visible:outline-hidden` therefore killed the
+   `aria-[invalid=true]:outline` red error outline whenever an invalid field was
+   focused — a state v3 rendered as a 2px red outline. Fixed by making the aria
+   variant `outline-solid`, which re-asserts the style. Verified in the compiled
+   sheet: the `outline-solid` rule sorts after `outline-2`, so the net result is
+   `solid` / `2px` / red, as on v3.
+
+   One residual difference in that state is accepted rather than fixed: v3's
+   `outline-none` also set `outline-offset: 2px`, so an invalid *and focused*
+   input had a 2px-offset outline while an invalid, unfocused one had none. v4
+   gives both offset 0. Restoring it would need an offset utility on the aria
+   variant, which would change the unfocused case too.
+
+### Evidence
+
+- Every renamed utility's compiled declarations were read out of both sheets and
+  matched by hand; the table above is that comparison.
+- Diffing the compiled sheet before and after the renames yields 122 changed
+  lines, all of them accounted for by the table plus the two fixes above. The
+  only residual is `.focus\:filter-none:focus` and `.backdrop-blur-xl` shifting
+  position in the sheet, a source-order effect of the renamed classes sorting
+  differently. Neither shares a property with its new neighbours.
+- Class-name sweeps confirm the criteria: no `outline-none`, no
+  `max-w-screen-*`, and no important modifier in prefix position remains in
+  `src`; `rounded-sm` is at all 10 of its original call sites and the font-size
+  utilities are untouched apart from the two that changed modifier position.
+- `check-types` (15), `lint` (459 errors / 12 warnings), `vitest` (4 failed /
+  7 passed) and `stylelint` (11, all in the frozen `src/styles/new/`) are all
+  unchanged against the baseline. One transient new `style/max-len` error, from
+  `outline-hidden` being two characters longer than `outline-none`, was fixed by
+  splitting the class list in `results-content.tsx`.
+
 ## Verification seams
 
 Verification does not rely on the unit test suite, which runs in a DOM

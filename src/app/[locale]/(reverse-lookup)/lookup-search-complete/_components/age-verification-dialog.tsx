@@ -21,7 +21,7 @@ export function AgeVerificationDialog({ isOpen, onClickButton }: AgeVerification
 
   return (
     <Dialog open={isOpen}>
-      <DialogOverlay className="backdrop-blur-sm" />
+      <DialogOverlay className="backdrop-blur-xs" />
       <DialogPortal>
         <DialogContent className="max-w-[500px] p-6 lg:p-8" hideCloseButton>
           <DialogHeader>
