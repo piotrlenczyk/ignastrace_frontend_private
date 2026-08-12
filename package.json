@@ -12,6 +12,7 @@
     "lint:fix": "eslint . --fix",
     "check-types": "tsc --noEmit --pretty",
     "test": "vitest run",
+    "generate:tokens-css": "node scripts/generate-tokens-css.mjs",
     "generate:icons": "svgr --config-file .svgrrc.js --out-dir src/components/ui/icon/icons -- src/components/ui/icon/svgs",
     "lokalise:upload": "tsx src/tasks/upload-translations.ts",
     "lokalise:download": "tsx src/tasks/download-translations.ts"
