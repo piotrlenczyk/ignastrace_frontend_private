@@ -280,10 +280,80 @@ than deferred:
    gives both offset 0. Restoring it would need an offset utility on the aria
    variant, which would change the unfocused case too.
 
+### The pixel gate for #4, and what it turned up
+
+The dev server could not be used: it had cached the v3 PostCSS pipeline at
+startup and returns HTTP 500 since the dep swap, and restarting it is the
+developer's call. The gate was run instead against three **production** builds
+served side by side, in throwaway worktrees with their own `.next`:
+
+| port | commit | what it is |
+| --- | --- | --- |
+| 3011 | `886aa61` | v3 baseline (end of #2) |
+| 3013 | `2fa6804` | v4, before the renames (end of #3) |
+| 3012 | `631a3be` | v4, after the renames (this ticket) |
+
+Three builds rather than two, because a two-way v3-vs-now diff cannot say
+whether a difference came from #3 or from #4. Two runs were captured per side;
+same-code noise was 0 px on all but three shots (25 px, 57 px, 132 px), plus
+`reverse-phone-lookup` at 42k–67k px, consistent with the floor measured in #2.
+
+**The renames did not introduce a single pixel of divergence.** Comparing each
+shot's distance from the v3 baseline before and after this ticket:
+
+| shot | post-#3 vs v3 | post-#4 vs v3 | change |
+| --- | --- | --- | --- |
+| `login--desktop` | 50,667 | 49,623 | −1,044 |
+| `sign-up--desktop` | 16,474 | 15,408 | −1,066 |
+| `contact--desktop` | 41,157 | 40,444 | −713 |
+| `login--mobile` | 38,249 | 37,481 | −768 |
+| `sign-up--mobile` | 13,024 | 12,234 | −790 |
+| `cancellation--desktop` | 35,317 | 35,317 | 0 |
+| `pricing--desktop` | 1,340 | 1,340 | 0 |
+| `terms--desktop` | 664 | 664 | 0 |
+| `privacy-policy--desktop` | 332 | 332 | 0 |
+
+Every affected shot moved *closer* to v3 or stayed put; none moved away. All four
+v3-run × v4-run pairings agree on these numbers, so they are signal, not noise.
+
+**The residual divergence is a pre-existing #3 regression, diagnosed here but
+not fixed here** — it is not a utility rename, so it is out of this ticket's
+scope. It is written up rather than left for the screenshots to re-discover:
+
+> `space-y-*` no longer applies when the earlier sibling is inline. v3 emitted
+> `.space-y-2 > :not([hidden]) ~ :not([hidden]) { margin-top: … }`, putting the
+> margin on the *later* sibling. v4 emits
+> `:where(.space-y-2 > :not(:last-child)) { margin-block-end: … }`, putting it on
+> the *earlier* one. In every affected form the earlier sibling is a `<label>`,
+> which is `display: inline` — and vertical margins have no effect on a
+> non-replaced inline box. Measured on `/login`: the `.space-y-2` wrapper is 82px
+> tall on v3 and 74px on v4; the label's `margin-block-end` is a live `8px` in
+> both, it simply does nothing. The 8px loss per field compounds down the page,
+> which is the whole of the 35k–50k px diff on the four form pages.
+>
+> There are 22 `space-y-*` call sites across 17 files. The fix is either to give
+> `Label` a `block` display or to move those wrappers to `flex flex-col gap-*`;
+> that is a judgement call about the component, so it belongs to #6.
+
+One near-miss worth recording, because it would mislead the next person to probe
+this: **v4 added `outline-color` to `transition-colors`** (v3's list was `color`,
+`background-color`, `border-color`, `text-decoration-color`, `fill`, `stroke`).
+Reading `outlineColor` immediately after toggling `aria-invalid` therefore
+catches the value mid-animation and reports near-black, which looks exactly like
+a broken colour token. Once the transition settles, all three builds agree on
+`rgba(199, 56, 56, 0.8)`. The colour is fine; only the instant-vs-animated
+behaviour changed.
+
 ### Evidence
 
 - Every renamed utility's compiled declarations were read out of both sheets and
   matched by hand; the table above is that comparison.
+- `outline-3` and the `outline-solid` fix were verified by reading computed
+  styles out of the running builds, not by pixels: the `PricingCard` outlines are
+  `solid` / `3px` / same colour / `-1px` offset on both v3 and post-#4, and they
+  live on `reverse-phone-lookup`, the one page the pixel gate cannot judge. The
+  invalid-input outline goes `solid 2px red` on v3 → `none 0px` on post-#3 → back
+  to `solid 2px red` on post-#4.
 - Diffing the compiled sheet before and after the renames yields 122 changed
   lines, all of them accounted for by the table plus the two fixes above. The
   only residual is `.focus\:filter-none:focus` and `.backdrop-blur-xl` shifting
