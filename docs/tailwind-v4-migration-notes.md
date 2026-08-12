@@ -291,12 +291,40 @@ served side by side, in throwaway worktrees with their own `.next`:
 | --- | --- | --- |
 | 3011 | `886aa61` | v3 baseline (end of #2) |
 | 3013 | `2fa6804` | v4, before the renames (end of #3) |
-| 3012 | `631a3be` | v4, after the renames (this ticket) |
+| 3012 | `bf1eb59` | v4, after the renames (this ticket) |
 
 Three builds rather than two, because a two-way v3-vs-now diff cannot say
 whether a difference came from #3 or from #4. Two runs were captured per side;
 same-code noise was 0 px on all but three shots (25 px, 57 px, 132 px), plus
 `reverse-phone-lookup` at 42k–67k px, consistent with the floor measured in #2.
+
+The gate is 24 shots — the harness's 12 routes × desktop 1440 / mobile 390 — of
+which 22 are gateable (`reverse-phone-lookup` is excluded at both viewports, per
+the noise measurement below). Note the harness shoots 12 routes, more than the
+eight the acceptance criteria ask for. Nine of the 22 are in the table below;
+here is what the other 13 did, since "not in the table" is not the same as
+"clean":
+
+- **Pixel-identical to v3, before and after** (5): `about--mobile`,
+  `find-phone--mobile`, `pricing--mobile`, `privacy-policy--mobile`,
+  `terms--mobile`.
+- **18 px from v3, before and after** (2): `home--mobile`, `track--mobile`.
+  Unchanged by this ticket and an order of magnitude under the noise floor.
+- **Not diffable at all** (6): `about--desktop`, `cancellation--mobile`,
+  `contact--mobile`, `find-phone--desktop`, `home--desktop`, `track--desktop`.
+  The v4 page is *shorter* than the v3 page, so the two full-page captures have
+  different heights and a per-pixel diff is undefined. The deltas are −6 px
+  (`about--desktop`, `find-phone--desktop`, `home--desktop`, `track--desktop`),
+  −8 px (`cancellation--mobile`) and −40 px (`contact--mobile`).
+
+That last group is a real inherited difference, not a gap in the evidence. The
+−8 and −40 are multiples of the 8px that `space-y-2` stops contributing on the
+form pages (see below); the −6 shared by the four long pages is a separate,
+smaller shortening that this ticket did not chase down. What matters for #4 is
+that the heights are **identical before and after the renames** — post-#3 and
+post-#4 both render 1585 / 1091 / 1967 / 4171 / 4171 / 4171 — so the shortening
+is #3's in full, and the renames neither caused nor worsened it. Explaining the
+−6 is #6's job, and it is listed there.
 
 **The renames did not introduce a single pixel of divergence.** Comparing each
 shot's distance from the v3 baseline before and after this ticket:
@@ -334,6 +362,14 @@ scope. It is written up rather than left for the screenshots to re-discover:
 > There are 22 `space-y-*` call sites across 17 files. The fix is either to give
 > `Label` a `block` display or to move those wrappers to `flex flex-col gap-*`;
 > that is a judgement call about the component, so it belongs to #6.
+
+A second, much smaller inherited shortening is left for #6 as well: `about`,
+`find-phone`, `home` and `track` each render **6px shorter** on v4 at the desktop
+viewport (1591→1585 and 4177→4171), which is what makes those four shots
+undiffable. It is not the `space-y` bug — 6 is not a multiple of the 8px above —
+and it does not appear at the mobile viewport or on the other desktop pages. Like
+the `space-y` regression it is identical before and after the renames, so it
+predates this ticket; it has not been root-caused.
 
 One near-miss worth recording, because it would mislead the next person to probe
 this: **v4 added `outline-color` to `transition-colors`** (v3's list was `color`,
