@@ -73,6 +73,126 @@ untouched here — verified by re-running all three against a stashed tree.
 `stylelint` reports 11 `color-hex-length` errors, all inside `src/styles/new/`,
 which is the frozen Figma token pipeline and deliberately not edited.
 
+## The version swap and theme port (issue #3)
+
+This is the commit that actually moves to v4. What follows is the material the
+diff does not explain on its own.
+
+### Things v3 did that v4 has no direct equivalent for
+
+**Variants on hand-written classes.** v3 generated variants for anything in the
+base and component layers, so `lg:h3`, `lg:layout-desktop` and `md-max:scribble`
+all worked. v4 only does that for real utilities, and a variant on a
+layer-defined class compiles to *nothing at all* — no warning, no error, just a
+missing rule. The affected classes were found by cross-referencing every
+hand-written class name against every `variant:class` occurrence in the source:
+
+| Class | Why it had to become `@utility` |
+| --- | --- |
+| `badge`, `container-wide`, `full-main`, `h1` | Composed by another rule with `@apply` — a hard build error in v4 otherwise |
+| `scribble` | `md-max:scribble` |
+| `h3` | `lg:h3` |
+| `layout-desktop` | `lg:layout-desktop` |
+
+`layout-desktop` is the interesting one: v3 also generated the variant for the
+*other* rules mentioning the class — `body:has(.layout-desktop)`,
+`.layout-desktop > *`, `.layout-desktop .s-header-nav-vertical`. Since the only
+call site is `className="layout-default lg:layout-desktop"`, the unprefixed
+selectors never matched anything; the prefixed ones are what did the work. The
+`@utility` nests all of them, `body:has(&)` included, so the same set is
+generated.
+
+`h1` and `h3` moved out of `@layer base` into the utilities layer as a result.
+`h2`/`h4`/`h5`/`h6` deliberately did not — nothing composes or varies them, and
+moving them would change their cascade position for no reason. That asymmetry is
+intentional.
+
+**Two colour namespaces collapsed into one.** v3 had separate `colors`,
+`backgroundColor` and `textColor` theme keys, so one name could mean two
+different colours depending on the utility. v4 resolves every colour utility out
+of a single `--color-*`. Three names disagreed across the v3 namespaces:
+
+| Name | v3 `colors`/`textColor` | v3 `backgroundColor` |
+| --- | --- | --- |
+| `base` | — | `hsl(var(--background))` |
+| `weak` | `hsl(var(--text-weak))` | `hsl(var(--fill-weak))` |
+| `success` | `hsl(var(--green-transparent-800))` (text) | `hsl(var(--success))` |
+
+A same-named `@utility` does **not** override a theme entry — it emits alongside
+it and loses on source order. So all three are kept out of `@theme` entirely and
+written per-utility in `_utilities.css` instead.
+
+`base` was the one that mattered: `--color-base` also outranks `--text-base`, so
+leaving it in the theme turned all ~50 `text-base` call sites from a font size
+into white-on-white text. That was caught by compiling and diffing the generated
+rules, not by reading the config.
+
+v3 could also produce `border-weak`, `bg-success`, `ring-success` and similar
+from these names. None has a call site, so nothing is missing from the compiled
+output — but adding one now means adding it to `_utilities.css` by hand.
+
+### Behaviour differences that are not regressions
+
+- **`text-current` / `fill-current` now work.** v3's top-level `colors` block
+  replaced Tailwind's defaults and did not include `current`, so the three call
+  sites (`checkbox`, `dropdown-menu`, `alert-status`) were silently dead. v4
+  builds `current` into the utility rather than the palette, so they resolve.
+  This is a real, if small, rendering change — worth a look during #6.
+- **v3 was extracting class names out of JavaScript.** `.visible`, `.\!visible`,
+  `.filter` and `.table` were all in v3's output, produced by `const [visible,`,
+  `.filter(` and `<table`. v4's extractor is stricter and drops them. No markup
+  used them.
+- **Unused component classes are now emitted.** v3 tree-shook hand-written
+  `@layer components` rules by name; v4 emits a plain `@layer components` block
+  verbatim. `container-full`, `container-ultra`, `login-button`, `s-carousel*`,
+  `anchor-element`, `progress-bar-100` and `remove-animated-border` are dead CSS
+  in the output now. They are dead code in the *source* too — deleting them is a
+  reasonable follow-up, but not this commit's business.
+- **tw-animate-css ships its own `accordion-down`/`accordion-up` keyframes.**
+  Ours are imported afterwards and win. Both sets are in the output; only the
+  second is used.
+- `@apply` is not allowed inside `@keyframes` in v4, so `fade-in-slide-up` is
+  written out longhand. It uses `translate: 0 0` rather than Tailwind's
+  `--tw-translate-*` variables — a keyframe reaching into engine internals is
+  what breaks on the next major.
+
+### Parity shims
+
+Grouped at the top of `_base.css` so the follow-up removal is one edit: v3's
+default border colour, placeholder colour and button cursor.
+
+The placeholder shim uses the literal `#9ca3af`, not the `--color-gray-400`
+form the upgrade guide suggests. This palette has no `gray-400`, so under v3 the
+preflight's own hardcoded fallback was what actually rendered; pointing at the
+theme variable would resolve to nothing.
+
+Ring-width and ring-colour are the two other documented preflight changes. No
+shim: the bare `ring` utility appears nowhere in the codebase.
+
+### Evidence
+
+- Clean production build succeeds. `@property --bg-angle` survives Next's
+  minifier intact, along with the 72 `@property` registrations v4 emits — the
+  reason `cssnano` had to go rather than merely being redundant.
+- **Build time: 28.2s on v4 against 28.8s on v3** — measured back to back, each
+  from an empty `.next`, v3 built from a worktree at the previous commit with
+  its own `node_modules`. No regression; the difference is inside the noise.
+- **Emitted CSS grew from 91.8 KB to 107.9 KB (+17%).** Three causes, all
+  understood: the untree-shaken component classes listed above, v4's 72
+  `@property` registrations plus their `@supports` fallback block, and
+  tw-animate-css's duplicate keyframes. Worth revisiting after #4, not before.
+- Compiled stylesheet: 1,114 classes under v3, 1,115 under v4, with every
+  difference accounted for above.
+- No colour leakage: `bg-sky-500`, `text-slate-200`, `border-zinc-700` and
+  `bg-red-500` (a shade this palette does not define) all compile to nothing,
+  while `bg-green-50` and `text-strong` still resolve.
+- Every `animate-*` class in use resolves, checked one by one against the
+  compiled output.
+- `check-types` (15), `lint` (459 errors / 12 warnings) and `vitest` (4 failed /
+  7 passed) are all unchanged against the pre-existing baseline recorded above.
+  `stylelint` is back to the same 11 `color-hex-length` errors in the frozen
+  `src/styles/new/`, and none anywhere else.
+
 ## Verification seams
 
 Verification does not rely on the unit test suite, which runs in a DOM
