@@ -7,9 +7,8 @@ export default {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   ignore: [],
   theme: {
-    container: {
-      center: true,
-    },
+    // Container centring lives in the component layer (`.container` in
+    // _components.css), not here — one definition, not two.
     screens: {
       'xs': '360px',
       'sm': '640px',

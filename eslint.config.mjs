@@ -3,7 +3,6 @@ import nextPlugin from '@next/eslint-plugin-next';
 import jestDom from 'eslint-plugin-jest-dom';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
-import tailwind from 'eslint-plugin-tailwindcss';
 import testingLibrary from 'eslint-plugin-testing-library';
 
 export default antfu(
@@ -30,7 +29,9 @@ export default antfu(
       'package.json',
     ],
   },
-  ...tailwind.configs['flat/recommended'],
+  // eslint-plugin-tailwindcss is deliberately absent: it cannot parse Tailwind v4
+  // and its v4-compatible line is still pre-release. See
+  // docs/tailwind-v4-migration-notes.md for the rules this drops.
   jsxA11y.flatConfigs.recommended,
   {
     plugins: {

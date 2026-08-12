@@ -1,5 +1,10 @@
-@import '_custom.css';
+/*
+ * Tailwind's own directives must come first in the import chain (a hard
+ * requirement of Tailwind v4). This puts the unlayered third-party styling in
+ * _custom.css after the base layer rather than before it.
+ */
 @import '_init.css';
+@import '_custom.css';
 @import '_base.css';
 @import '_keyframes.css';
 @import '_components.css';

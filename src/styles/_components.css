@@ -1,3 +1,13 @@
+/*
+ * Registered custom properties must live at the top level — `@property` inside a
+ * cascade layer is invalid CSS, and Tailwind v4 emits a real `@layer`.
+ */
+@property --bg-angle {
+  inherits: false;
+  initial-value: 0deg;
+  syntax: '<angle>';
+}
+
 @layer components {
   .container {
     @apply mx-auto;
@@ -87,7 +97,7 @@
           'cop' auto / minmax(0, 1fr)
       );
 
-    @media screen(sm) {
+    @media (min-width: theme(screens.sm)) {
       /* prettier-ignore */
       --s-footer--grid-template:
         'se1 se1' auto
@@ -99,7 +109,7 @@
         'cop soc' auto / 1fr 1fr;
     }
 
-    @media screen(md) {
+    @media (min-width: theme(screens.md)) {
       /* prettier-ignore */
       --s-footer--grid-template:
         'se1 se1 se1' auto
@@ -109,7 +119,7 @@
         'cop cop soc' auto / 1fr 1fr 1fr;
     }
 
-    @media screen(lg) {
+    @media (min-width: theme(screens.lg)) {
       /* prettier-ignore */
       --s-footer--grid-template:
         'se1 se1 se1 se1 ' auto
@@ -198,7 +208,7 @@
     }
 
     &.phone-input-lg {
-      @media screen(md) {
+      @media (min-width: theme(screens.md)) {
         @apply bg-[var(--background-color)] border border-[var(--border-color)] rounded-xl p-[7px] flex-row gap-2;
 
         &:hover {
@@ -234,12 +244,6 @@
 
   .phone-input-input {
     @apply border-0 outline-0 bg-transparent;
-  }
-
-  @property --bg-angle {
-    inherits: false;
-    initial-value: 0deg;
-    syntax: '<angle>';
   }
 
   @keyframes custom-spin {

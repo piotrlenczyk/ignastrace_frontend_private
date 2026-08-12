@@ -113,7 +113,7 @@
     --warning-stroke-strong: 42 69% 33% / 0.8;
     --warning-fill: 42 100% 59% / 0.05;
 
-    @media screen(md) {
+    @media (min-width: theme(screens.md)) {
       --s-header--height: 80px;
       --font-size-caption: 0.75rem;
     }
