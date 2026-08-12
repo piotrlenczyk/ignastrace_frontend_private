@@ -1,0 +1,73 @@
+name: ralph-subissues
+description: Ralph loop — one sub-issue of the parent issue per iteration, until
+  none are open.
+steps:
+  - id: implement-issue
+    name: Implement next ready sub-issue
+    prompt: >
+      Ralph loop over the sub-issues of parent issue #{{task}}. This is ONE
+      iteration — at most one sub-issue.
+
+
+      Every iteration is a FRESH session. The handoff file is the only memory
+      between iterations:
+
+      read it first, and before you finish append what you did and what the next
+      iteration needs.
+
+
+      1. Clear the sentinel before anything else — a stale one from an earlier
+      run would end the loop
+         on the spot:
+
+           mkdir -p .ai/cezar/ralph && rm -f .ai/cezar/ralph/stop
+
+      2. Get the queue of READY sub-issues (open, with no OPEN blocker)
+
+      3. Terminal cases — write the sentinel and change NOTHING else:
+         - No sub-issue is open any more:
+
+             printf 'DONE\n' > .ai/cezar/ralph/stop
+
+         - Some are open but the ready list is empty (everything is blocked):
+
+             printf 'BLOCKED: %s\n' '#<n> blocked_by #<m>, ...' > .ai/cezar/ralph/stop
+
+         In every other case leave the sentinel ABSENT — its absence is what makes the loop run again.
+
+      4. Otherwise take the FIRST entry of the ready list and implement THAT ONE
+      sub-issue.
+         Read it with `gh issue view <n> --comments`.
+         - Do not merge two sub-issues into one iteration, even if they look related.
+         - Do not touch a sub-issue that is not on the list: if it is missing it is blocked or
+           already closed. If one looks like a prerequisite, treat it as the blocked case in step 3.
+
+      5. Close the iteration:
+         - commit on the current branch, then
+
+             gh issue close <n> --comment "<one-paragraph summary>"
+
+           The close is what unblocks the next sub-issue — skip it and the loop re-does this one.
+         - If you cannot finish it: do NOT close the issue. `gh issue comment <n>` with the blocker,
+           write `printf 'BLOCKED: #<n> <reason>\n' > .ai/cezar/ralph/stop`, and stop. That ends the
+           loop loudly instead of burning iterations on an issue that cannot move.
+    skill: implement
+  - id: loop-guard
+    name: More sub-issues?
+    command: test -f .ai/cezar/ralph/stop
+    onFail:
+      retry: implement-issue
+      max: 30
+  - id: loop-outcome
+    name: Loop outcome
+    command: |
+      set -eu
+      STOP=.ai/cezar/ralph/stop
+      cat "$STOP"
+      if grep -q '^DONE' "$STOP"; then
+        rm -f "$STOP"
+        echo "OK: every sub-issue of the parent is closed"
+        exit 0
+      fi
+      rm -f "$STOP"
+      exit 1
