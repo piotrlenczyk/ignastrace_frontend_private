@@ -460,3 +460,187 @@ The pixel gate reaches 12 public pages. Not covered, and needing manual checks:
 - `/checkout`, `/search`, `/success`, `/thank-you` — redirect away without
   funnel state.
 - The whole member area — requires authentication.
+
+## Sign-off (issue #6)
+
+Both seams re-run end to end against the pre-migration baseline. This section is
+the evidence; the reviewer-facing summary is in `tailwind-v4-merge-request.md`
+and the human QA list is in `tailwind-v4-manual-checklist.md`.
+
+### How the two builds were obtained
+
+The development server cannot be used for this: it caches the PostCSS pipeline
+at startup, so after the dependency swap it returns HTTP 500 until the developer
+restarts it, and only the developer owns that process. Both sides were therefore
+built and served as **production builds from throwaway git worktrees**:
+
+- v3 — worktree at `886aa61` (the last commit before the swap) with its own
+  `npm install`, served on `:3031`.
+- v4 — worktree at the migration HEAD, served on `:3041`.
+
+Each side was captured **twice**, so a same-code pair and an across-change pair
+could be compared against each other. That matters here: see the noise floor
+section above.
+
+### Seam 2 — the pixel gate
+
+Same-code noise on production builds is far lower than the development-server
+figures recorded earlier:
+
+| pairing              | shots differing | worst                       |
+| -------------------- | --------------- | --------------------------- |
+| v3 run 1 vs v3 run 2 | 1 of 22 gated   | 132 px (`pricing--desktop`) |
+| v4 run 1 vs v4 run 2 | 0 of 22 gated   | 0 px                        |
+
+Across the change, 24 shots (12 pages × 2 viewports):
+
+- **17 shots pixel-identical**, including every form page. Both `login` shots,
+  both `sign-up` shots, `contact` and `cancellation` at both viewports went from
+  12,000–50,000 differing pixels to **zero** once the two regressions below were
+  fixed.
+- **4 shots** — `about`, `find-phone`, `home`, `track` at desktop — 6 pixels
+  shorter. Fully accounted for: see "The `leading-*` change" below.
+- **1 shot** — `pricing--desktop`, 876 pixels. See "The zero-width outline"
+  below.
+- **2 shots excluded** — `reverse-phone-lookup`, which differs by 45,000–59,000
+  pixels between two runs of _identical_ code and is not gateable at all. It is
+  on the manual checklist.
+
+### Two regressions found and fixed
+
+Both were introduced by the version swap (#3), not by the renames (#4) — proven
+by capturing three points (v3, pre-rename v4, post-rename v4) rather than two.
+
+**1. `space-y-*` collapsed on every form.** v3 put the gap on the _later_
+sibling (`> :not([hidden]) ~ :not([hidden]) { margin-top }`); v4 puts it on the
+_earlier_ one (`:where(& > :not(:last-child)) { margin-block-end }`). Every
+`FormItem` is a `space-y-2` wrapper whose earlier sibling is a Radix `Label`,
+which is `display: inline` — and vertical margins do nothing on an inline box.
+Measured on `/login`: the wrapper was 82px on v3 and 74px on v4, with the
+label's `margin-block-end` a live 8px doing nothing.
+
+Fixed in `src/components/ui/label.tsx` by making the label `inline-block`. Three
+candidates were measured in the live page (`block`, `inline-block`, `flex`); all
+three restore the wrapper to 82px, and `inline-block` was chosen because it also
+keeps the label's shrink-to-fit width, so the click target is unchanged too.
+`Label` has exactly one consumer (`FormLabel`), so the blast radius is the forms
+and nothing else. Rewriting the wrappers as `flex flex-col gap-*` is what the
+upgrade guide suggests, and is explicitly out of scope for this migration.
+
+**2. `ring-offset-*` became self-activating.** v3's `ring-offset-2` set only
+`--tw-ring-offset-width`; the offset shadow was composited by the `ring-*`
+utilities, so on its own the class was inert. v4's `ring-offset-2` also sets
+`--tw-ring-offset-shadow`, which any `shadow-*` utility composites — so every
+button carrying a shadow painted a permanent 2px white ring that clipped its own
+drop shadow. Visible on the header "Log In" button on every page, and on the
+pricing CTAs.
+
+Fixed in `src/components/ui/button.tsx` by scoping it to `focus-visible:`, the
+variant that turns the ring on. That reproduces v3 exactly: nothing at rest, a
+2px offset on focus. The codebase's other `ring-offset-*` usages were checked
+and are unaffected — they are either already variant-scoped, or set only
+`--tw-ring-offset-color` (`ring-offset-background`), or sit on an element with
+no `shadow-*` to composite into (`credit-card-form.tsx`, where the class is dead
+under both versions).
+
+### The `leading-*` change — accepted, needs a reviewer decision
+
+The 6-pixel shortening on four desktop pages is entirely this, and nothing else:
+the DOM was compared element-by-element between the two builds, and on `/about`
+and `/home` the _only_ non-margin property that differs anywhere on the page is
+`lineHeight` on the `h3`s of the "why choose" cards, 27px → 24px.
+
+The markup is `text-base font-semibold leading-6 lg:text-lg`. In v3 the
+font-size utility carried its own `line-height`, and `.lg\:text-lg` was emitted
+inside a media query at the very end of the sheet, so at ≥1024px it beat the
+earlier `.leading-6` and the line-height became 1.5 × 18px = 27px. In v4 the
+font-size utility emits `line-height: var(--tw-leading, …)`, so an explicit
+`leading-*` wins regardless of order — 24px.
+
+This is v4 honouring what the author wrote, which puts it in the same category
+as the three behaviour changes accepted at the start of the migration, so it is
+**accepted and reported rather than silently reverted** — restoring v3 would
+mean adding a responsive leading override that nobody would write deliberately.
+It is called out because it is a real (if small) visual change that was not on
+the original list.
+
+Affected sites, and the one-line reversal if the reviewer prefers v3's rendering:
+
+| Site                               | Class list                           | v3   | v4   | To restore v3                              |
+| ---------------------------------- | ------------------------------------ | ---- | ---- | ------------------------------------------ |
+| `homepage/whyChoose.tsx:60`        | `text-base … leading-6 … lg:text-lg` | 27px | 24px | add `lg:leading-[1.5]`                     |
+| `about/page.tsx:33`                | same                                 | 27px | 24px | add `lg:leading-[1.5]`                     |
+| `_components/recentLookups.tsx:42` | `leading-6 … lg:text-base`           | 24px | 24px | no change — `text-base` is also 1.5 × 16px |
+| `homepage/instantLocator.tsx:20`   | `lg:text-2xl lg:leading-7`           | —    | —    | no change — measured identical in both     |
+
+### The zero-width outline — accepted
+
+`pricing--desktop` is the one gated shot with a non-zero pixel count: **876
+pixels, every one an anti-aliased edge of the two phone-input placeholders, and
+every one differing by exactly one level in one or two channels** (111 distinct
+colour pairs, all ±1). For scale, that same shot moves by 132 pixels with a
+maximum channel delta of **14** between two runs of identical v3 code.
+
+The cause is `.phone-input-input`'s `@apply outline-0`. v3 emitted
+`outline-width: 0px` alone; v4 also emits `outline-style: var(--tw-outline-style)`,
+which resolves to `solid`. A zero-width outline paints nothing — every other
+computed property on the element is byte-identical between the builds, and the
+placeholder's own colour, font and metrics are identical — but it is enough to
+shift Chrome's text rasterisation by one level. Not shimmed: the declaration is
+correct, and a one-level difference on anti-aliased glyph edges is below the
+threshold at which anything is distinguishable.
+
+### Seam 1 — the two claims the ticket asked to prove
+
+Both were assumed when the approach was chosen. Both are now measured rather
+than argued, using a static page that loads the v3 compiled sheet and then the
+v4 compiled sheet and diffs computed styles.
+
+**Cascade-layer precedence of the promoted classes is unchanged.** Every string
+literal in `src/` that mentions `badge`, `container-wide`, `full-main`, `h1`,
+`h3`, `scribble` or `layout-desktop` was collected — 41 distinct class strings —
+and each was rendered on a `div`, an `h1` and an `h3` (the tag matters, because
+`h1 { @apply h1 }` stays in the base layer while `.h1` moved to utilities). Of
+**124 probes, 3 differ**, and all three are the same thing: `rounded-full` on
+`.badge`, which is `9999px` under v3 and `calc(infinity * 1px)` under v4.
+Rendered at 240×240, 200×48, 560×560, 24×24 and 1000×3, the two values produce
+**0 differing pixels** — CSS clamps `border-radius` to half the box, so any
+value past that is the same pill.
+
+So promotion into the utilities layer changed the precedence of nothing that
+this codebase actually writes.
+
+**The relocated payment-form styling is inert.** `_custom.css` moved from before
+the base layer to after it, and in v4 it is unlayered, which beats every layered
+rule regardless of order. It contains one rule,
+`.wallet-form .StripeElement:has(iframe) { padding-top: 2px }`. Both compiled
+sheets contain exactly **two** mentions of `.wallet-form`/`.StripeElement` — the
+one rule, with nothing to compete with it. Rendered under both sheets, a
+`.StripeElement` with an iframe computes `padding-top: 2px`, one without
+computes `0px`, and one outside `.wallet-form` computes `0px`. Identical.
+
+### The unreachable features, measured
+
+The nine styling features on pages the pixel gate cannot reach were put through
+the same static comparison — 20 classes covering all nine, every computed
+property on the element and its `::before`, under both sheets, with animations
+frozen so running keyframes are not sampled at different moments.
+
+**12 are byte-identical. The other 8 differ in exactly one value** — the same
+`rounded-full` `9999px` → `calc(infinity * 1px)` as above, on the five badge
+variants, `.search-located-bg`, `.globe` and `.globe-map`. Nothing else differs
+on any of the twenty: filtering the probe output for non-`border-radius` lines
+returns nothing. That value renders pixel-identically (see above), so no
+declaration changed. What is left for a human is composition in real markup and
+live animation, which is what the manual checklist asks for.
+
+### Everything else
+
+- `check-types`: 15 errors, all in `src/hooks/get-subscription-redirect.test.ts`
+  — unchanged against the pre-existing baseline.
+- `lint`: 471 problems (459 errors, 12 warnings) — unchanged.
+- `vitest`: 4 failed / 7 passed, same file — unchanged.
+- `stylelint`: 11 `color-hex-length` errors, all in the frozen `src/styles/new/`
+  — unchanged.
+- No harness file is committed: everything lives under `.tmp/`, which is
+  gitignored.

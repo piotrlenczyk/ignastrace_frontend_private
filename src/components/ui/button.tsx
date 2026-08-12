@@ -4,13 +4,21 @@ import * as React from 'react';
 
 import { cn } from '@/libs/utils';
 
+/*
+ * `ring-offset-2` is scoped to `focus-visible:` rather than sitting unscoped.
+ * In v3 the unscoped form was inert until a `ring-*` utility composited it; v4's
+ * `ring-offset-*` sets `--tw-ring-offset-shadow` itself, so on every button that
+ * also carries a `shadow-*` it painted a permanent 2px white ring that clipped
+ * the drop shadow. Scoping it to the variant that turns the ring on reproduces
+ * v3 exactly. See docs/tailwind-v4-migration-notes.md.
+ */
 const buttonVariants = cva(
   `
   active:fill-press 
   inline-flex items-center justify-center gap-2 text-center
   rounded-md text-sm font-semibold
-  ring-offset-2 transition-colors 
-  focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring 
+  transition-colors
+  focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
   disabled:pointer-events-none disabled:border-gray-100 
   [&_svg]:pointer-events-none 
   [&_svg]:shrink-0
