@@ -25,7 +25,7 @@ const Index = async () => {
       <main className="s-main overflow-hidden pb-10 lg:px-6">
         <Hero defaultCountry={country} />
         <AlwaysKnowWhoCalled className="container-wide" />
-        <hr className="container-wide separator m-0 lg:mx-auto lg:block" />
+        <hr className="separator m-0 container-wide lg:mx-auto lg:block" />
         <div className="px-4 lg:px-6">
           <Locator defaultCountry={country} className="container-content py-8 lg:py-14" labelClassName="font-bold" />
         </div>
@@ -33,7 +33,7 @@ const Index = async () => {
         <PricingContent country={country} currency={currency} products={products} />
         <CustomerCarousel className="container-wide px-4 py-8 lg:px-0 lg:py-20" />
         <LatestResults className="container-wide" country={country} />
-        <hr className="container-wide separator m-0 lg:mx-auto lg:block" />
+        <hr className="separator m-0 container-wide lg:mx-auto lg:block" />
         <FAQs className="container-wide px-4 py-8 lg:px-0 lg:py-20" id="faq">
           <FAQs.Title />
           <FAQs.Content className="rounded-3xl bg-alternate px-5 lg:px-10 lg:py-4" />

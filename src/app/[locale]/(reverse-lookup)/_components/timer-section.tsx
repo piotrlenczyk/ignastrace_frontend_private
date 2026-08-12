@@ -41,7 +41,7 @@ const TimerSection: React.FC = () => {
           onClick={() => router.push(ROUTES.REVERSE_LOOKUP.CHECKOUT)}
         >
           {/* Show arrow on mobile, text on desktop */}
-          <span className="hidden md:inline text-lg">{t('continue')}</span>
+          <span className="hidden text-lg md:inline">{t('continue')}</span>
           <IconArrowRight className="size-6 md:hidden" />
         </Button>
       </div>

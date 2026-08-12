@@ -18,7 +18,7 @@ const PersonalInformationComponent = ({
   const t = useTranslations('pages.reverse_lookup.report.sex_offenders.report.personal_information');
 
   return (
-    <Card className={cn('p-6 shadow-raised border border-stroke-weak flex flex-col gap-8', className)}>
+    <Card className={cn('flex flex-col gap-8 border border-stroke-weak p-6 shadow-raised', className)}>
       <h4 className="font-bold">
         {t('title')}
       </h4>

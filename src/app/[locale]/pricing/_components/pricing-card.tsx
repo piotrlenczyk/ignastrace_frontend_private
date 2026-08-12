@@ -60,7 +60,7 @@ export const PricingCard = async (
 
       <div className="text-sm">
         <p className="text-start">{description}</p>
-        <ul className="ml-5 mt-4 list-inside list-disc pl-2">
+        <ul className="mt-4 ml-5 list-inside list-disc pl-2">
           {features.map(item =>
             <li className="mb-0 -indent-5" key={item}>{item}</li>,
           )}

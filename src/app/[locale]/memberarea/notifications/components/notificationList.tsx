@@ -32,7 +32,7 @@ const EmptyState = () => {
 
   return (
     <div className="text-center">
-      <div className="brand-icon mx-auto mb-4 size-24 rounded-3xl ">
+      <div className="brand-icon mx-auto mb-4 size-24 rounded-3xl">
         <IconNotificationRingingLine className="size-12" />
       </div>
       <h2 className="h4 mb-1">{t('empty.title') }</h2>

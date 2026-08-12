@@ -1,7 +1,8 @@
 'use client';
-import clsx from 'clsx';
 import type { CountryCode } from 'libphonenumber-js';
 import { useTranslations } from 'next-intl';
+
+import { cn } from '@/libs/utils';
 
 import {
   IconFaceHappyLine,
@@ -35,7 +36,7 @@ export const WhyChoose = ({ defaultCountry }: { defaultCountry: CountryCode }) =
     <div className="w-full bg-alternate px-0 lg:rounded-3xl">
       <div className="container-wide px-4 py-10 lg:py-20">
         <div className="container-medium text-center">
-          <h2 className="mb-3 ">
+          <h2 className="mb-3">
             {t('title')}
           </h2>
           <p className="h4 text-weak">
@@ -49,7 +50,7 @@ export const WhyChoose = ({ defaultCountry }: { defaultCountry: CountryCode }) =
             cards.map(({ Icon, id, title, description }: CardType, i) => (
               <Card
                 key={id}
-                className={clsx(`flex gap-4 p-4  md:block lg:p-8`, i < 3 ? 'md:col-[span_4]' : 'md:col-[span_6]')}
+                className={cn(`flex gap-4 p-4 md:block lg:p-8`, i < 3 ? 'md:col-[span_4]' : 'md:col-[span_6]')}
               >
                 <div
                   className="brand-icon-secondary-weak size-10 md:mb-6 lg:size-14"
@@ -57,7 +58,7 @@ export const WhyChoose = ({ defaultCountry }: { defaultCountry: CountryCode }) =
                   <Icon className="text-secondary" size="large" />
                 </div>
                 <div>
-                  <h3 className="mb-1 text-base font-semibold leading-6 text-strong lg:text-lg">{t(title) }</h3>
+                  <h3 className="mb-1 text-base leading-6 font-semibold text-strong lg:text-lg">{t(title) }</h3>
                   <p className="text-sm leading-5 text-weak">{t(description)}</p>
                 </div>
               </Card>

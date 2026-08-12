@@ -51,7 +51,7 @@ const ThankYouPage = async () => {
         currency={user.currency.toUpperCase()}
       />
       <FunnelLayout>
-        <main className="s-main full-main flex items-center p-6">
+        <main className="s-main flex full-main items-center p-6">
           <div className="container-small flex flex-col items-center gap-6 text-center">
             <div className="flex justify-center">
               {/* eslint-disable style/max-len */}

@@ -31,13 +31,13 @@ export const PricingCard = (
   // outline-3, not outline: v4's bare `outline` sets a 1px width, where v3 left
   // it at the browser default (medium, 3px). See docs/tailwind-v4-migration-notes.md.
   const cardCSS = cn(
-    'flex flex-col items-start outline-3 outline-offset-[-1px] justify-between gap-6 rounded-xl p-6',
+    'flex flex-col items-start justify-between gap-6 rounded-xl p-6 outline-3 outline-offset-[-1px]',
     colors[type].badge.bg,
     colors[type].badge.border,
   );
 
   const badgeCSS = cn(
-    'border-box rounded-2xl px-3 outline-3 outline-offset-[-1px] py-1 font-semibold text-base',
+    'rounded-2xl px-3 py-1 text-base font-semibold outline-3 outline-offset-[-1px]',
     colors[type].badge.border,
     colors[type].badge.text,
     colors[type].badge.bg,

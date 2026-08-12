@@ -14,7 +14,7 @@ export default async function ContactUsPage() {
         <h1 className="h3 font-bold">
           {t('contact_us')}
         </h1>
-        <hr className="mb-4 mt-6 border-stroke-weak" />
+        <hr className="mt-6 mb-4 border-stroke-weak" />
         <div className="flex flex-col gap-4">
           <h2 className="h4 font-bold">
             {t('title')}

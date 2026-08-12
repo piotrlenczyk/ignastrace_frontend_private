@@ -34,7 +34,7 @@ const UpsellProgressSteps = ({ currentStep, className }: UpsellProgressStepsProp
   }));
 
   return (
-    <div className={cn('w-full mt-6 mb-8', className)}>
+    <div className={cn('mt-6 mb-8 w-full', className)}>
       <div className="mx-auto grid max-w-(--breakpoint-sm) auto-cols-fr grid-flow-col px-1">
         {stepsWithStatus.map((step, index) => (
           <Fragment key={step.number}>
@@ -42,8 +42,8 @@ const UpsellProgressSteps = ({ currentStep, className }: UpsellProgressStepsProp
             <div className="flex flex-col items-center gap-2">
               <div
                 className={cn(
-                  'flex h-6 w-6 shrink-0 items-center justify-center border-[1.5px] rounded-full bg-transparent',
-                  step.status === 'completed' && 'bg-secondary border-secondary',
+                  'flex size-6 shrink-0 items-center justify-center rounded-full border-[1.5px] bg-transparent',
+                  step.status === 'completed' && 'border-secondary bg-secondary',
                   step.status === 'current' && 'border-secondary',
                   step.status === 'upcoming' && 'border-gray-500',
                 )}
@@ -67,8 +67,8 @@ const UpsellProgressSteps = ({ currentStep, className }: UpsellProgressStepsProp
               {/* Label */}
               <span
                 className={cn(
-                  'hidden lg:block text-xs text-center max-w-[60px]',
-                  step.status === 'upcoming' ? 'text-weak' : 'text-regular',
+                  'hidden max-w-[60px] text-center text-xs lg:block',
+                  step.status === 'upcoming' ? 'text-weak' : 'text-body',
                 )}
               >
                 {step.label}
@@ -79,7 +79,7 @@ const UpsellProgressSteps = ({ currentStep, className }: UpsellProgressStepsProp
             {index < stepsWithStatus.length - 1 && (
               <div
                 className={cn(
-                  'h-0.5 mt-3 w-full',
+                  'mt-3 h-0.5 w-full',
                   stepsWithStatus[index + 1]?.status === 'completed' || stepsWithStatus[index + 1]?.status === 'current'
                     ? 'bg-secondary'
                     : 'bg-stroke-weak',

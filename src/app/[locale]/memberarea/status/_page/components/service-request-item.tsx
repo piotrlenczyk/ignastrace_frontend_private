@@ -74,7 +74,7 @@ export const ServiceRequestItem = ({ serviceRequest }: ServiceRequestProps) => {
     <ContainerElement
       className={cn(
         'rounded-lg border border-stroke-weak p-4 text-left text-strong hover:border-primary',
-        isReady && 'active:fill-press w-full',
+        isReady && 'w-full active:fill-press',
       )}
       type={isReady ? 'button' : undefined}
       onClick={isReady ? handleViewDetail : undefined}

@@ -27,8 +27,9 @@ const GetReport: React.FC<GetReportProps> = ({ product, currency, country }) => 
   return (
     <div className="flex flex-col gap-6 rounded-2xl bg-alternate px-4 py-6 md:p-6">
       <h3 className="font-bold">{t('title')}</h3>
-      <div className="flex flex-col items-center justify-center gap-2 rounded-xl bg-weak px-4 py-3
-          md:flex-row md:justify-between"
+      <div className={`
+        flex flex-col items-center justify-center gap-2 rounded-xl bg-weak px-4 py-3 md:flex-row md:justify-between
+      `}
       >
         <p className="text-center md:text-left">{t('lookup_today')}</p>
         <Image src="/images/reverse-lookup/avatar_stack.png" alt="avatars" width={152} height={32} />
@@ -38,7 +39,7 @@ const GetReport: React.FC<GetReportProps> = ({ product, currency, country }) => 
           <span className="text-lg font-bold">
             {t('product_title')}
           </span>
-          <span className="text-sm uppercase text-weak">{currency}</span>
+          <span className="text-sm text-weak uppercase">{currency}</span>
         </p>
         <p className="flex w-full items-center justify-between gap-2 border-y border-neutral-10 py-2">
           <span className="text-sm">

@@ -35,7 +35,7 @@ export const ReportReady = ({ className, user }: ReportReadyProps) => {
   };
 
   return (
-    <div className={cn('rounded-2xl mt-4 p-4 sm:px-8 bg-alternate', className)}>
+    <div className={cn('mt-4 rounded-2xl bg-alternate p-4 sm:px-8', className)}>
       <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
         <div className="flex-1">
           {t('description')}

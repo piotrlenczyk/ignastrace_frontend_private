@@ -23,7 +23,7 @@ const SignUpPage = async () => {
   const title = t.rich('title', {
     brandColor: () => (
       <mark
-        className="h2 block whitespace-nowrap bg-transparent leading-tight text-secondary"
+        className="h2 block bg-transparent leading-tight whitespace-nowrap text-secondary"
       >
         {formattedNumber.number}
       </mark>
@@ -33,7 +33,7 @@ const SignUpPage = async () => {
 
   return (
     <FunnelLayout>
-      <main className="s-main animation-duration-1000 animate-fade-in px-6 py-8">
+      <main className="s-main animate-fade-in px-6 py-8 animation-duration-1000">
         <div className="container-small flex flex-col items-center gap-8 text-center">
           <h1 className="h3 font-bold">{title}</h1>
           <SignUpForm phoneNumber={formattedNumber.number} />

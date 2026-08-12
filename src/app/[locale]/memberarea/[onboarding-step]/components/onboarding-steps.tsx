@@ -28,7 +28,7 @@ export const OnboardingSteps = ({ currentStep = 1, className }: { currentStep?: 
               <Comp
                 key={link}
                 href={link}
-                className={cn('flex-1 rounded ', i < currentStep ? filledStepCSS : emptyStepCSS)}
+                className={cn('flex-1 rounded-sm', i < currentStep ? filledStepCSS : emptyStepCSS)}
                 aria-current={isCurrentStep ? 'page' : undefined}
               >
                 <VisuallyHidden>

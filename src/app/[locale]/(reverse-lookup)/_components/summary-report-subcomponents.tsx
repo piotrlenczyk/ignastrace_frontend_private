@@ -86,7 +86,7 @@ export const ResultsList: React.FC<ResultsListProps> = ({ t }) => {
 // Subcomponent for report header
 export const ReportHeader: React.FC<ReportHeaderProps> = ({ processedTitle, t }) => (
   <>
-    <h3 className="span-green font-bold leading-[1.2] text-strong lg:mb-1">
+    <h3 className="span-green leading-[1.2] font-bold text-strong lg:mb-1">
       {processedTitle}
     </h3>
     <p className="">{t('latest_report')}</p>

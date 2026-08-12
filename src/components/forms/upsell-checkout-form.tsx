@@ -53,7 +53,7 @@ const UpsellCheckoutForm = ({
       <div className="flex items-center justify-between gap-6">
         <div className="text-xl text-weak">{t('total')}</div>
         <div className="flex items-center gap-2">
-          <div className="h4 whitespace-nowrap font-bold leading-loose">
+          <div className="h4 leading-loose font-bold whitespace-nowrap">
             {formatPrice(product.price, product.currency, country, locale)}
           </div>
           <div className="flex items-center gap-1 text-xs font-bold uppercase">
@@ -62,7 +62,7 @@ const UpsellCheckoutForm = ({
         </div>
       </div>
 
-      <hr className="separator mb-6 mt-4" />
+      <hr className="separator mt-4 mb-6" />
 
       <Elements stripe={stripePromise} options={stripeOptions}>
         <StripeForm
@@ -107,9 +107,10 @@ const UpsellCheckoutForm = ({
       </p>
 
       {isSubmitting && (
-        <div className="
-          fixed inset-0 z-[100] mt-0! grid animate-fade-in place-items-center
-          content-center gap-2 bg-[#fff3] text-center backdrop-blur-md will-change-auto"
+        <div className={`
+          fixed inset-0 z-[100] mt-0! grid animate-fade-in place-items-center content-center gap-2 bg-[#fff3]
+          text-center backdrop-blur-md will-change-auto
+        `}
         >
           <IconLoaderCircle size="large" className="animate-spin text-primary" />
           <p className="h4">

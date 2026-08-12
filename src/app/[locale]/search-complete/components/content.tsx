@@ -18,12 +18,12 @@ export const SearchCompleteContent = ({ phoneNumber, nextStepURL }: { phoneNumbe
   };
 
   return (
-    <main className="s-main funnel-container-located funnel-container animation-duration-1000 relative animate-fade-in">
+    <main className="s-main funnel-container-located funnel-container relative animate-fade-in animation-duration-1000">
       <section
-        className="flex flex-1  flex-col items-center justify-center px-6"
+        className="flex flex-1 flex-col items-center justify-center px-6"
       >
-        <div className="search-located-bg container z-10 grid items-center justify-center gap-5 pb-2">
-          <div className=" lg:w-[336px]">
+        <div className="search-located-bg z-10 container grid items-center justify-center gap-5 pb-2">
+          <div className="lg:w-[336px]">
             <header className="flex flex-col items-center justify-center">
               <div className="brand-icon mb-4">
                 <IconLocationMy size="large" />
@@ -46,8 +46,8 @@ export const SearchCompleteContent = ({ phoneNumber, nextStepURL }: { phoneNumbe
 
       <div
         className={`
-          sticky bottom-0 flex w-full flex-col items-center justify-center 
-          gap-5 rounded-t-3xl bg-white px-4 py-6 lg:hidden
+          sticky bottom-0 flex w-full flex-col items-center justify-center gap-5 rounded-t-3xl bg-white px-4 py-6
+          lg:hidden
         `}
         style={{
           boxShadow: '10px 12px 48px 0px #00000040, 0px 4px 12px 0px #0000004D, 8px 16px 20px 0px #00000026',

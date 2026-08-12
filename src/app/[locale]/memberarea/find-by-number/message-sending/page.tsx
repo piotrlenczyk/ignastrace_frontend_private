@@ -51,7 +51,7 @@ export default async function MessageSendingPage({
 
   const title = t.rich('title', {
     brandColor: chunks => (
-      <h1 className="h2 whitespace-nowrap bg-transparent leading-snug">{chunks}</h1>
+      <h1 className="h2 bg-transparent leading-snug whitespace-nowrap">{chunks}</h1>
     ),
     phoneNumber: formattedNumber.number,
   });

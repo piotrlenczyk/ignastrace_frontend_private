@@ -73,7 +73,7 @@ const AddressInformationComponent = ({
   };
 
   return (
-    <Card className={cn('p-6 shadow-raised border border-stroke-weak flex flex-col gap-6', className)}>
+    <Card className={cn('flex flex-col gap-6 border border-stroke-weak p-6 shadow-raised', className)}>
       <h4 className="font-bold">
         {t('title')}
       </h4>

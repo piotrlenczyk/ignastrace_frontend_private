@@ -39,13 +39,13 @@ const RecentLookups: React.FC<RecentLookupsProps> = ({ originCountry = 'ES' }) =
         >
           <Flag size={40} countryCode={item.country as CountryCode} />
           <div className="flex flex-col gap-1">
-            <h3 className="text-base font-semibold leading-6 text-strong lg:text-base">
+            <h3 className="text-base leading-6 font-semibold text-strong lg:text-base">
               {item.title}
             </h3>
             <p className="text-sm text-weak">
               {t('result.description', { time: item.time })}
             </p>
-            <h3 className="h4 my-0.5 font-semibold leading-6 text-strong">
+            <h3 className="h4 my-0.5 leading-6 font-semibold text-strong">
               <BlurredPhoneNumber phoneNumber={item.phoneNumber} />
             </h3>
           </div>

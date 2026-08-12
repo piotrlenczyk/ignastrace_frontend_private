@@ -4,7 +4,7 @@ export default function LegalLayout({ children }: { children: React.ReactNode })
   return (
     <WebsiteLayout>
       <main className="s-main p-6">
-        <div className="container-wide content-html">
+        <div className="content-html container-wide">
           {children}
         </div>
       </main>

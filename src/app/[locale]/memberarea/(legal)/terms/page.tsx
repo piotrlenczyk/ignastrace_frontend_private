@@ -12,7 +12,7 @@ export default async function TermsAndConditionsPage() {
   return (
     <ProductLayout>
       <main className="flex flex-col px-4 py-6 lg:px-6">
-        <div className="container-wide content-html">
+        <div className="content-html container-wide">
           <div dangerouslySetInnerHTML={{ __html: translatedContent }} />
         </div>
       </main>

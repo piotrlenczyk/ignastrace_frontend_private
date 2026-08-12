@@ -91,7 +91,7 @@ const DataBreachHistory = ({
 
   return (
     <>
-      <Card className={cn('py-6 px-4 lg:px-6 shadow-raised border-stroke-weak flex flex-col gap-6', className)}>
+      <Card className={cn('flex flex-col gap-6 border-stroke-weak px-4 py-6 shadow-raised lg:px-6', className)}>
         <h4 className="font-bold">
           {t('title')}
         </h4>

@@ -18,7 +18,7 @@ export const SearchCompleteContent = ({ phoneNumber }: { phoneNumber: string }) 
       <section className="container-wide">
         <OwnerInformationCard onProgressComplete={() => onNavigateToSignUp()} phoneNumber={phoneNumber} isFunnel />
         <CustomerSayAbout className="mt-4 lg:mt-12" />
-        <AsSeenOn className="mt-10 lg:mb-8 lg:mt-10" />
+        <AsSeenOn className="mt-10 lg:mt-10 lg:mb-8" />
       </section>
     </main>
   );

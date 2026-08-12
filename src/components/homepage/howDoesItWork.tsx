@@ -1,5 +1,7 @@
 import { useTranslations } from 'next-intl';
 
+import { cn } from '@/libs/utils';
+
 import { IconLocationMy, IconPhoneLine, IconSendLine } from '../ui/icon/icons';
 
 export const HowDoesItWork = ({ className }: { className?: string }) => {
@@ -27,8 +29,8 @@ export const HowDoesItWork = ({ className }: { className?: string }) => {
   ];
 
   return (
-    <section className={`${className} px-5 py-8 lg:px-0 lg:py-16`}>
-      <h2 className="h1 mb-8 lg:mb-16">
+    <section className={cn(className, 'px-5 py-8 lg:px-0 lg:py-16')}>
+      <h2 className="mb-8 h1 lg:mb-16">
         { t('title')}
       </h2>
       <ol className="grid gap-12 lg:grid-cols-3 lg:gap-8">
@@ -36,16 +38,17 @@ export const HowDoesItWork = ({ className }: { className?: string }) => {
           items.map(item => (
             <li
               key={item.number}
-              className="relative [counter-increment:step-counter]
-              before:absolute before:right-[8px] before:top-[-8px]
-              before:z-[-1] before:font-bebas before:text-[88px] before:leading-none before:text-disabled
-              before:content-['0'_counter(step-counter)]"
+              className={`
+                relative [counter-increment:step-counter] before:absolute before:top-[-8px] before:right-[8px]
+                before:z-[-1] before:font-bebas before:text-[88px] before:leading-none before:text-disabled
+                before:content-['0'_counter(step-counter)]
+              `}
             >
               <article>
                 <div className="brand-icon-strong mb-4">
                   <item.icon size="large" />
                 </div>
-                <h2 className="h5 mb-2  font-semibold text-strong">{item.title}</h2>
+                <h2 className="h5 mb-2 font-semibold text-strong">{item.title}</h2>
                 <p className="text-weak">{item.description}</p>
               </article>
             </li>

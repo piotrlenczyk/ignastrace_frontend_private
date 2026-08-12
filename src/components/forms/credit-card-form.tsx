@@ -42,8 +42,7 @@ const options: StripeCardElementOptions = {
 const StyledInputs = ({ children }: { children: React.ReactNode }) => {
   return (
     <div
-      className="rounded-lg border border-input bg-white px-4 py-3
-        ring-offset-2 transition-colors hover:bg-gray-50"
+      className="rounded-lg border border-input bg-white px-4 py-3 ring-offset-2 transition-colors hover:bg-gray-50"
     >
       {children}
     </div>
@@ -152,9 +151,9 @@ export const CreditCardForm = ({
     <Form {...form}>
       { isLoading
       && (
-        <div className="
-         absolute inset-0 z-[100] mt-0! grid animate-fade-in
-         place-items-center content-center bg-white/80 text-center"
+        <div className={`
+          absolute inset-0 z-[100] mt-0! grid animate-fade-in place-items-center content-center bg-white/80 text-center
+        `}
         >
           <IconLoaderCircle size="large" className="animate-spin text-primary" />
         </div>
@@ -299,7 +298,7 @@ export const CreditCardForm = ({
 
         {
           stripeError && (
-            <div className="col-span-4 mb-1 mt-5 text-sm text-error">
+            <div className="col-span-4 mt-5 mb-1 text-sm text-error">
               {stripeError}
             </div>
           )

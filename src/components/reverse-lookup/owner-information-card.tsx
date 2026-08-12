@@ -35,7 +35,7 @@ const CollectionStatus = ({ isCompleted, label }: CollectionStatusProps) => {
           ? <IconCheckCircle size="large" className="text-secondary" />
           : (
             <div className="flex size-6 items-center justify-center">
-              <IconLoaderCircle size="medium" className=" text-gray-500" />
+              <IconLoaderCircle size="medium" className="text-gray-500" />
             </div>
           )}
       </div>
@@ -87,7 +87,7 @@ export const OwnerInformationCard = ({
     <section className="rounded-2xl border border-brand-200 bg-green-25 px-4 py-6 lg:p-12">
       <h3 className="w-full">
         {t.rich('title', {
-          bold: () => <span className="whitespace-nowrap font-bold">{phoneNumber}</span>,
+          bold: () => <span className="font-bold whitespace-nowrap">{phoneNumber}</span>,
         })}
       </h3>
       <p className="mt-2 lg:mt-1">{t('subtitle')}</p>
@@ -109,7 +109,7 @@ export const OwnerInformationCard = ({
         </div>
       </div>
 
-      <hr className="container-wide separator m-0 mb-6 mt-4 lg:mx-auto lg:my-8 lg:block" />
+      <hr className="separator m-0 container-wide mt-4 mb-6 lg:mx-auto lg:my-8 lg:block" />
 
       <h3 className="w-full">{t('collecting_data_title')}</h3>
 

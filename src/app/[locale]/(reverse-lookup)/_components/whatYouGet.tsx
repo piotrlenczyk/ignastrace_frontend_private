@@ -30,7 +30,7 @@ const WhatYouGet: React.FC<WhatYouGetProps> = () => {
   }, [t]);
 
   return (
-    <div className="flex flex-col gap-8 px-4 pb-1 pt-3 lg:p-6">
+    <div className="flex flex-col gap-8 px-4 pt-3 pb-1 lg:p-6">
       <h3 className="font-bold">{t('title')}</h3>
       <ul className="flex flex-col gap-4 lg:gap-6">
         {items}

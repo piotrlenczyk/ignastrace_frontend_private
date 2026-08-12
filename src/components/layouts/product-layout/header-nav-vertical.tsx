@@ -36,8 +36,8 @@ const Item = ({ className, href, isActive, children }: ItemProps) => {
     <Link
       href={primaryHref || '/'}
       className={cn(
-        'flex gap-2 px-3 py-2 text-base text-weak [&_svg]:text-neutral hover:bg-gray-50 rounded-lg',
-        isActive && 'bg-primary-50 text-primary [&_svg]:text-primary hover:bg-primary-50',
+        'flex gap-2 rounded-lg px-3 py-2 text-base text-weak hover:bg-gray-50 [&_svg]:text-neutral',
+        isActive && 'bg-primary-50 text-primary hover:bg-primary-50 [&_svg]:text-primary',
         className,
       )}
     >
@@ -142,7 +142,7 @@ const HeaderNavVertical = ({ unreadCount }: { unreadCount: number }) => {
             </span>
           </Item>
 
-          <hr className="mb-4 mt-3 border-gray-100" />
+          <hr className="mt-3 mb-4 border-gray-100" />
 
           <div className="flex flex-col gap-2">
             <span className="text-xs font-bold text-weak">{t('tools_library')}</span>

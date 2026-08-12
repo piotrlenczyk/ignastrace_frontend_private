@@ -28,9 +28,10 @@ import { CreditCardForm } from './credit-card-form';
 const StyledTabsTrigger = ({ value, children }: { value: string; children: React.ReactNode }) => {
   return (
     <TabsTrigger
-      className="h-14 border border-stroke-weak p-2 text-strong
-       data-[state=active]:border-2 data-[state=active]:border-primary
-       data-[state=active]:bg-background data-[state=active]:text-strong"
+      className={`
+        h-14 border border-stroke-weak p-2 text-strong data-[state=active]:border-2 data-[state=active]:border-primary
+        data-[state=active]:bg-background data-[state=active]:text-strong
+      `}
       value={value}
     >
       {children}
@@ -158,7 +159,7 @@ export const StripeForm = ({
   return (
     <Tabs defaultValue="card" className="w-full">
 
-      <TabsList className="mb-6 grid w-full grid-cols-3 gap-2 bg-transparent p-0 ">
+      <TabsList className="mb-6 grid w-full grid-cols-3 gap-2 bg-transparent p-0">
         <StyledTabsTrigger value="card">
           <IconCreditCard size="large" />
         </StyledTabsTrigger>

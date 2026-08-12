@@ -52,10 +52,10 @@ export default async function MemberAreaOnboardingStep1Page({ params }: { params
 
   return (
     <FunnelLayout>
-      <main className="s-main animation-duration-1000 grid h-full animate-fade-in px-6 py-4">
+      <main className="s-main grid h-full animate-fade-in px-6 py-4 animation-duration-1000">
         <div className="container-small flex flex-col justify-between gap-4 text-center md:justify-normal">
           <div className="min-h-[510px] md:min-h-[600px]">
-            <header className="mb-8 mt-5">
+            <header className="mt-5 mb-8">
               <Image
                 src={`/images/onboarding/step-${stepNumber}.jpg`}
                 className="mx-auto mb-8 animate-fade-in object-fill"
@@ -64,7 +64,7 @@ export default async function MemberAreaOnboardingStep1Page({ params }: { params
                 role="presentation"
                 alt=""
               />
-              <h1 className="h3 mb-2 font-bold">
+              <h1 className="mb-2 h3 font-bold">
                 {t('title')}
               </h1>
               <p className="min-h-24">

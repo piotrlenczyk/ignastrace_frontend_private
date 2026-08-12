@@ -108,7 +108,7 @@ const PossibleSocialMediaAccounts = ({
 
   return (
     <>
-      <Card className={cn('py-6 px-4 lg:px-6 shadow-raised border-stroke-weak flex flex-col gap-6', className)}>
+      <Card className={cn('flex flex-col gap-6 border-stroke-weak px-4 py-6 shadow-raised lg:px-6', className)}>
         <h4 className="font-bold">
           {isEmpty ? t('title_empty') : t('title')}
         </h4>
@@ -127,9 +127,14 @@ const PossibleSocialMediaAccounts = ({
         }
         {!isEmpty && <>
           {socialNetworks.map(item => (
-            <div key={item.kind} className="rounded-2xl border border-overlay-light flex items-start sm:items-center flex-col sm:flex-row gap-3 p-4">
-              <div className='flex items-center flex-1 gap-4'>
-                <div className="flex items-center justify-center border rounded-full w-10 h-10">
+            <div
+              key={item.kind}
+              className={`
+                flex flex-col items-start gap-3 rounded-2xl border border-overlay-light p-4 sm:flex-row sm:items-center
+              `}
+            >
+              <div className='flex flex-1 items-center gap-4'>
+                <div className="flex size-10 items-center justify-center rounded-full border">
                   {getSocialIcon(item.kind)}
                 </div>
                 <div className="flex-1">
@@ -162,20 +167,30 @@ const PossibleSocialMediaAccounts = ({
                     </Button>
                   }
                   {!item.url &&
-                    <span className='flex items-center gap-1 border rounded-2xl border-warning-stroke px-2 text-amber h-[32px]'>
+                    <span
+                      className={`
+                        flex h-[32px] items-center gap-1 rounded-2xl border border-warning-stroke px-2 text-amber
+                      `}
+                    >
                       <IconAlertTriangleLine className='text-amber-800' size='mediumLarge' />
                       {t("network_not_found")}
                     </span>
                   }
                 </>
               )}
-              {item.progress_status !== 'done' && <div className="size-6 animate-spin rounded-full border-[3px] border-neutral border-t-transparent duration-1000" />}
+              {item.progress_status !== 'done' && (
+                <div
+                  className={`
+                    size-6 animate-spin rounded-full border-[3px] border-neutral border-t-transparent duration-1000
+                  `}
+                />
+              )}
             </div>
           ))}
           {!reverseLookup.reverse_lookup_social_networks_upsell_purchased &&
-            <div className='rounded-2xl border border-primary-200 bg-primary-50 py-8 px-4 flex items-center flex-col'>
+            <div className='flex flex-col items-center rounded-2xl border border-primary-200 bg-primary-50 px-4 py-8'>
               <h4 className='font-bold'>{t('expand_search.title')}</h4>
-              <p className='text-sm text-weak mt-2'>{t('expand_search.more_platforms')}</p>
+              <p className='mt-2 text-sm text-weak'>{t('expand_search.more_platforms')}</p>
               <div className='mt-5 flex gap-2'>
                 <IconSocialBehance className="size-4" />
                 <IconSocialGithub className="size-4" />

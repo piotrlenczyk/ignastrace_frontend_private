@@ -51,12 +51,12 @@ const METHOD_TO_BUTTON_CLS = {
   googlePay: cn('bg-black text-white'),
 };
 
-const afterCls = cn('after:transition after:absolute after:inset-0 bg-transparent after:disabled:bg-transparent');
+const afterCls = cn('bg-transparent after:absolute after:inset-0 after:transition after:disabled:bg-transparent');
 
 const loadingCls = cn('shadow-none');
 
 const resetButtonStylesCls = cn(
-  'shadow-none rounded-none p-0 font-normal leading-none hover:filter-none active:filter-none focus:filter-none',
+  'rounded-none p-0 leading-none font-normal shadow-none hover:filter-none focus:filter-none active:filter-none',
 );
 
 export const WalletPaymentButton = forwardRef<
@@ -76,7 +76,10 @@ export const WalletPaymentButton = forwardRef<
     disabled={disabled}
     className={cn(
       resetButtonStylesCls,
-      'transition relative flex items-center justify-center rounded-lg overflow-hidden p-0 h-14 shadow-raised active:shadow-none disabled:shadow-none disabled:opacity-50',
+      `
+        relative flex h-14 items-center justify-center overflow-hidden rounded-lg p-0 shadow-raised transition
+        active:shadow-none disabled:opacity-50 disabled:shadow-none
+      `,
       afterCls,
       METHOD_TO_BUTTON_CLS[method as keyof typeof METHOD_TO_BUTTON_CLS],
       isLoading && loadingCls,

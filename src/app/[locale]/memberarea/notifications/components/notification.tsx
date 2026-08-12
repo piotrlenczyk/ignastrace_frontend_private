@@ -36,8 +36,6 @@ const ItemWrapper = ({
 
 export const NotificationItem = ({ notification }: { notification: Notification }) => {
   const isLocated = notification.kind === 'located';
-  const iconBgColor = isLocated ? 'brand-icon-secondary-weak' : 'brand-icon-primary-weak';
-  const iconColor = isLocated ? 'text-secondary' : 'text-primary';
   const href = isLocated ? `${ROUTES.MEMBER.STATUS.DETAIL}?id=${notification.location.id}` : undefined;
 
   const Icon = Icons[`${notification.location.type}-${notification.kind}`];
@@ -46,8 +44,8 @@ export const NotificationItem = ({ notification }: { notification: Notification 
 
   return (
     <ItemWrapper className="flex gap-3 p-2" href={href}>
-      <div className={cn(iconBgColor, 'size-12')}>
-        <Icon size="large" className={iconColor} />
+      <div className={cn(isLocated ? 'brand-icon-secondary-weak' : 'brand-icon-primary-weak', 'size-12')}>
+        <Icon size="large" className={isLocated ? 'text-secondary' : 'text-primary'} />
       </div>
 
       <div className="flex-1">

@@ -16,8 +16,7 @@ export default function CurrencySelector({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button
-          className="
-        flex items-center gap-1 p-2 text-right text-xs font-bold uppercase text-gray-700"
+          className="flex items-center gap-1 p-2 text-right text-xs font-bold text-gray-700 uppercase"
           type="button"
         >
           <span>{value.toUpperCase()}</span>

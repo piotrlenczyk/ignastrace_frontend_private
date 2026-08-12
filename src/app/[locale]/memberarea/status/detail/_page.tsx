@@ -55,7 +55,7 @@ export const DetailStatusClientPage = ({ location }: { location: Location }) => 
             </h1>
           </div>
           <div className="relative min-h-[400px] flex-1 overflow-hidden rounded-2xl bg-accent">
-            <div className="shadow-raised absolute inset-x-2 bottom-2 z-10 flex gap-1 rounded-lg bg-background p-3">
+            <div className="absolute inset-x-2 bottom-2 z-10 flex gap-1 rounded-lg bg-background p-3 shadow-raised">
               <IconLocationPinCheck size="large" className="text-success" />
               <p>{location.address}</p>
             </div>

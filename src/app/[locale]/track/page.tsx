@@ -39,7 +39,7 @@ const Index = async () => {
       <main className="s-main overflow-hidden pb-10 lg:px-6">
         <Hero defaultCountry={country} />
         <HowDoesItWork className="container-wide" />
-        <hr className="container-wide separator mb-4 mt-0 hidden lg:block" />
+        <hr className="separator container-wide mt-0 mb-4 hidden lg:block" />
         <div className="px-6">
           <Locator defaultCountry={country} className="container-content py-10" labelClassName="font-bold" />
         </div>

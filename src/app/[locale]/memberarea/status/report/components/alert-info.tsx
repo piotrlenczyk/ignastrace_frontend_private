@@ -12,7 +12,7 @@ export const AlertInfo = ({ children, className = '', iconClassName = '' }: Aler
     <div
       className={
         cn(
-          'rounded-lg border-y border-l-4 border-r',
+          'rounded-lg border-y border-r border-l-4',
           'border-[#EAEAEE] border-l-gray-500 bg-[#FCFCFD] p-4 lg:p-3',
           className,
         )

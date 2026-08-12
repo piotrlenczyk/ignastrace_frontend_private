@@ -22,7 +22,7 @@ const ReverseLookupValue = ({
     return (
       <>
         {validItems.map(item => (
-          <span key={item} className="comma-separated break-words">
+          <span key={item} className="break-words comma-separated">
             {item}
           </span>
         ))}

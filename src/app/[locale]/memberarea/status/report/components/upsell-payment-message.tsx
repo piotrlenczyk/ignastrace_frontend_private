@@ -161,7 +161,7 @@ export function UpsellPaymentMessage({
                 height={160}
               />
             )}
-          <h3 className="h3 text-center font-bold">
+          <h3 className="text-center h3 font-bold">
             {isSuccess ? t('payment_success') : t('payment_error')}
           </h3>
           <p className="text-center">

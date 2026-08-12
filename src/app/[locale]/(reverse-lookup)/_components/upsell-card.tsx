@@ -107,10 +107,10 @@ const UpsellCard = (
   };
 
   return (
-    <Card className="shadow-raised border border-stroke-weak px-4 py-6 lg:p-8">
+    <Card className="border border-stroke-weak px-4 py-6 shadow-raised lg:p-8">
       <div className="flex flex-col gap-5">
         <div className="flex justify-between">
-          <h3 className="h3 max-w-[180px] font-bold lg:max-w-[345px]">
+          <h3 className="max-w-[180px] h3 font-bold lg:max-w-[345px]">
             {title}
           </h3>
           <Image src={iconUrl} alt={`${title} icon`} width={63} height={72} />
@@ -154,14 +154,10 @@ const UpsellCard = (
         <div className="flex gap-4">
           <Button
             variant="ghost"
-            className="
-              flex-1
-              border
-              border-stroke-weak
-              font-semibold text-weak
-              hover:text-weak lg:max-w-[120px] lg:shrink-0
+            className={`
+              flex-1 border border-stroke-weak font-semibold text-weak hover:text-weak lg:max-w-[120px] lg:shrink-0
               lg:text-lg
-            "
+            `}
             onClick={handleSkip}
             disabled={isSubmitted || isSkipped}
           >

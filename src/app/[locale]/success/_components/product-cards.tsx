@@ -45,14 +45,12 @@ export const ProductCards = ({
           products && products.map(product => (
             <div
               className={`
-                box-content flex min-w-[280px] max-w-[50%] flex-1 px-3
-                first:pl-5 last:pr-5 md:first:pl-0 md:last:pr-0
+                box-content flex max-w-[50%] min-w-[280px] flex-1 px-3 first:pl-5 last:pr-5 md:first:pl-0 md:last:pr-0
               `}
               key={product.key}
             >
               <div
-                className="shadow-raised flex flex-1  flex-col
-                         gap-4 rounded-2xl bg-base p-6 text-strong"
+                className="flex flex-1 flex-col gap-4 rounded-2xl bg-base p-6 text-strong shadow-raised"
               >
                 <div className="brand-icon">
                   {product.key === 'scan_pro' && <IconRadarAlt size="large" />}
@@ -70,9 +68,10 @@ export const ProductCards = ({
                 <div className="flex min-h-10 items-center justify-between gap-4">
                   {isProductAdded(addedProducts, product.key)
                     ? (
-                        <div className="flex items-center gap-1 rounded-lg border
-                                      border-green-800 bg-white px-3 py-2 text-sm font-bold
-                                      text-green"
+                        <div className={`
+                          flex items-center gap-1 rounded-lg border border-green-800 bg-white px-3 py-2 text-sm
+                          font-bold text-green
+                        `}
                         >
                           <IconCheck className="text-base" />
                           {t('products.added_state')}
@@ -117,9 +116,10 @@ export const ProductCards = ({
                         <DialogFooter className="mt-4 min-h-10 items-center justify-between">
                           {isProductAdded(addedProducts, product.key)
                             ? (
-                                <div className="flex items-center gap-1 rounded-lg border
-                                      border-green-800 bg-white px-3 py-2 text-sm font-bold
-                                      text-green"
+                                <div className={`
+                                  flex items-center gap-1 rounded-lg border border-green-800 bg-white px-3 py-2 text-sm
+                                  font-bold text-green
+                                `}
                                 >
                                   <IconCheck className="text-xl" />
                                   {t('products.added_state')}

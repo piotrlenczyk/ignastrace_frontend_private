@@ -49,7 +49,7 @@ const Photos = ({ className, reverseLookup }: { className?: string; reverseLooku
 
   return (
     <Card className={
-      cn('py-6 px-4 lg:px-6 shadow-raised border-stroke-weak flex flex-col gap-6 overflow-hidden', className)
+      cn('flex flex-col gap-6 overflow-hidden border-stroke-weak px-4 py-6 shadow-raised lg:px-6', className)
     }
     >
       <h4 className="font-bold">
@@ -63,8 +63,8 @@ const Photos = ({ className, reverseLookup }: { className?: string; reverseLooku
       {!isEmpty && (
         <div className="select-none" ref={emblaRef}>
           <div className="-ml-4 flex">
-            {photosData.map((item, index) => (
-              <div key={item.id} className={`min-w-0 flex-[0_0_200px] ${index > 0 ? 'pl-4' : 'pl-4'}`}>
+            {photosData.map(item => (
+              <div key={item.id} className="min-w-0 flex-[0_0_200px] pl-4">
                 <div className="overflow-hidden">
                   <div className="relative aspect-square overflow-hidden rounded-t-2xl">
                     <Image
@@ -75,8 +75,9 @@ const Photos = ({ className, reverseLookup }: { className?: string; reverseLooku
                     />
                   </div>
                   <div
-                    className="flex min-h-[73px] items-center gap-2 rounded-b-2xl border
-                      border-t-0 border-stroke-weak px-3 py-4"
+                    className={`
+                      flex min-h-[73px] items-center gap-2 rounded-b-2xl border border-t-0 border-stroke-weak px-3 py-4
+                    `}
                   >
                     {item.logo}
                     {item.company && (

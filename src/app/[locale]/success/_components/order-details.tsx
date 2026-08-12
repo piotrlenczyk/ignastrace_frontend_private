@@ -57,8 +57,10 @@ export const OrderDetails = ({
                       {isProductAdded(addedProducts, product.key)
                       && (
                         <IconChevronRightSmall
-                          className=" mr-1 mt-[-3px] shrink-0 rotate-[var(--rotate,0deg)]
-                                      text-2xl text-neutral  transition-transform duration-200"
+                          className={`
+                            mt-[-3px] mr-1 shrink-0 rotate-(--rotate,0deg) text-2xl text-neutral transition-transform
+                            duration-200
+                          `}
                         />
                       )}
                       <span className="flex-1 pr-2">{t(`products.${product.key}.title` as any)}</span>
@@ -66,8 +68,10 @@ export const OrderDetails = ({
                     {isProductAdded(addedProducts, product.key)
                     && (
                       <CollapsibleContent
-                        className="overflow-hidden pl-3 data-[state=closed]:animate-accordion-up
-                                   data-[state=open]:animate-accordion-down"
+                        className={`
+                          overflow-hidden pl-3 data-[state=closed]:animate-accordion-up
+                          data-[state=open]:animate-accordion-down
+                        `}
                       >
                         <Button
                           variant="ghost"
@@ -93,7 +97,7 @@ export const OrderDetails = ({
                         <Button
                           variant="tertiary"
                           onClick={() => onAddProduct(product)}
-                          className="whitespace-nowrap p-0"
+                          className="p-0 whitespace-nowrap"
                         >
                           {t('products.add_order_button', {
                             price: formatPrice(product.price, currency, country, locale),

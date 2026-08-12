@@ -56,7 +56,7 @@ export const Loader = ({
   ], [t, carrier, countryName]);
 
   return (
-    <main className="s-main funnel-container animation-duration-1000 animate-fade-in">
+    <main className="s-main funnel-container animate-fade-in animation-duration-1000">
       <Image
         src="/images/search/radar.png"
         className="search-circle search-radar fixed"

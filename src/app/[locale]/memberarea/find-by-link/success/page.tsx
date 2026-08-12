@@ -70,7 +70,7 @@ export default async function Page({ searchParams }: { searchParams: { id: strin
             className="input-animated-border input-animated-border-secondary flex rounded-xl p-1"
           >
             <input
-              className="flex-1 text-ellipsis px-3 text-sm text-strong"
+              className="flex-1 px-3 text-sm text-ellipsis text-strong"
               type="text"
               readOnly
               value={link}
