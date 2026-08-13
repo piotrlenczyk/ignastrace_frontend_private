@@ -4,8 +4,7 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { useEffect, useMemo, useState } from 'react';
 
-import { IconCellTower } from '@/components/ui/icon/icons/CellTower';
-import { IconSearch } from '@/components/ui/icon/icons/Search';
+import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { useRouter } from '@/libs/i18n-routing';
 import { cn } from '@/libs/utils';
@@ -77,7 +76,7 @@ export const Loader = ({
         <div className="container grid max-w-[336px] gap-10 pb-16">
           <header className="flex flex-col items-center justify-between">
             <div className="brand-icon mb-4">
-              {isFirstStep ? <IconCellTower size="large" /> : <IconSearch size="large" className="animate-fade-in" />}
+              {isFirstStep ? <Icon name="mobile-protection" /> : <Icon name="search" className="animate-fade-in" />}
             </div>
             <h1 className={cn('h4 font-normal', { 'animate-fade-in': !isFirstStep })}>
               {isFirstStep ? t('connecting') : t('searching')}

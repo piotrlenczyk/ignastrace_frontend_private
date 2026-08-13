@@ -6,27 +6,7 @@ import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import {
-  IconAlertTriangleLine,
-  IconLockOpenLine,
-  IconOpenEternalLink,
-  IconSocialBehance,
-  IconSocialFacebook,
-  IconSocialGithub,
-  IconSocialGitlab,
-  IconSocialInstagram,
-  IconSocialKick,
-  IconSocialPinterest,
-  IconSocialReddit,
-  IconSocialSnapchat,
-  IconSocialTelegram,
-  IconSocialThreads,
-  IconSocialTiktok,
-  IconSocialTumblr,
-  IconSocialTwitch,
-  IconSocialX,
-  IconSocialYoutube,
-} from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
 import type { ReverseLookup, SocialMediaKind } from '@/types/reverse-lookup.types';
 
@@ -39,37 +19,37 @@ const POLL_INTERVAL_MS = 3000;
 const getSocialIcon = (kind: SocialMediaKind) => {
   switch (kind) {
     case 'behance':
-      return <IconSocialBehance className="size-6" />;
+      return <Icon name="globe" className="size-6" />;
     case 'github':
-      return <IconSocialGithub className="size-6" />;
+      return <Icon name="globe" className="size-6" />;
     case 'gitlab':
-      return <IconSocialGitlab className="size-6" />;
+      return <Icon name="globe" className="size-6" />;
     case 'instagram':
-      return <IconSocialInstagram className="size-6" />;
+      return <Icon name="globe" className="size-6" />;
     case 'facebook':
-      return <IconSocialFacebook className="size-6 text-[#0966FF]" />;
+      return <Icon name="globe" className="size-6 text-[#0966FF]" />;
     case 'pinterest':
-      return <IconSocialPinterest className="size-6" />;
+      return <Icon name="globe" className="size-6" />;
     case 'x':
-      return <IconSocialX className="size-6" />;
+      return <Icon name="globe" className="size-6" />;
     case 'kick':
-      return <IconSocialKick className="size-6" />;
+      return <Icon name="globe" className="size-6" />;
     case 'reddit':
-      return <IconSocialReddit className="size-6" />;
+      return <Icon name="globe" className="size-6" />;
     case 'snapchat':
-      return <IconSocialSnapchat className="size-6" />;
+      return <Icon name="globe" className="size-6" />;
     case 'telegram':
-      return <IconSocialTelegram className="size-6" />;
+      return <Icon name="globe" className="size-6" />;
     case 'threads':
-      return <IconSocialThreads className="size-6" />;
+      return <Icon name="globe" className="size-6" />;
     case 'tiktok':
-      return <IconSocialTiktok className="size-6" />;
+      return <Icon name="globe" className="size-6" />;
     case 'tumblr':
-      return <IconSocialTumblr className="size-6" />;
+      return <Icon name="globe" className="size-6" />;
     case 'twitch':
-      return <IconSocialTwitch className="size-6" />;
+      return <Icon name="globe" className="size-6" />;
     case 'youtube':
-      return <IconSocialYoutube className="size-6" />;
+      return <Icon name="globe" className="size-6" />;
     default:
       return null;
   }
@@ -163,7 +143,7 @@ const PossibleSocialMediaAccounts = ({
                       <Button variant="secondary" asChild>
                         <a href={item.url} target="_blank" rel="noindex nofollow noopener noreferrer">
                           {t('labels.opne_url')}
-                          <IconOpenEternalLink className="size-4" />
+                          <Icon name="open" className="size-4" />
                         </a>
                       </Button>
                     )}
@@ -173,7 +153,7 @@ const PossibleSocialMediaAccounts = ({
                           flex h-[32px] items-center gap-1 rounded-2xl border border-warning-stroke px-2 text-amber
                         `}
                       >
-                        <IconAlertTriangleLine className="text-amber-800" size="mediumLarge" />
+                        <Icon name="alert-circle" className="size-5 text-amber-800" />
                         {t('network_not_found')}
                       </span>
                     )}
@@ -193,19 +173,19 @@ const PossibleSocialMediaAccounts = ({
                 <h4 className="font-bold">{t('expand_search.title')}</h4>
                 <p className="mt-2 text-sm text-weak">{t('expand_search.more_platforms')}</p>
                 <div className="mt-5 flex gap-2">
-                  <IconSocialBehance className="size-4" />
-                  <IconSocialGithub className="size-4" />
-                  <IconSocialGitlab className="size-4" />
-                  <IconSocialKick className="size-4" />
-                  <IconSocialSnapchat className="size-4" />
-                  <IconSocialThreads className="size-4" />
-                  <IconSocialTiktok className="size-4" />
-                  <IconSocialTumblr className="size-4" />
-                  <IconSocialTwitch className="size-4" />
-                  <IconSocialX className="size-4" />
+                  <Icon name="globe" className="size-4" />
+                  <Icon name="globe" className="size-4" />
+                  <Icon name="globe" className="size-4" />
+                  <Icon name="globe" className="size-4" />
+                  <Icon name="globe" className="size-4" />
+                  <Icon name="globe" className="size-4" />
+                  <Icon name="globe" className="size-4" />
+                  <Icon name="globe" className="size-4" />
+                  <Icon name="globe" className="size-4" />
+                  <Icon name="globe" className="size-4" />
                 </div>
                 <Button className="mt-6" onClick={() => setShowUpsellDialog(true)}>
-                  <IconLockOpenLine className="size-4" />
+                  <Icon name="unlock" className="size-4" />
                   {t('expand_search.unlock_platforms')}
                 </Button>
               </div>

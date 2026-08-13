@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import AvatarWithLock from '@/components/reverse-lookup/avatar-with-lock';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { IconLoaderCircle, IconWarningLine } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { Input } from '@/components/ui/input';
 import { ROUTES } from '@/constants/routes';
 import { useSignUpMutation } from '@/hooks/api/use-sign-up-mutation';
@@ -78,7 +78,7 @@ export const SignUpForm = ({ phoneNumber, className }: { phoneNumber: string; cl
             `}
           >
             <div className="flex items-start gap-3">
-              <IconWarningLine size="large" className="text-amber-800" color="transparent" />
+              <Icon name="alert-circle" className="text-amber-800" />
               <div className="flex flex-col">
                 <p className="font-bold">{t('card_title')}</p>
                 <p className="mt-2 text-sm text-weak">{t('card_description')}</p>
@@ -109,7 +109,7 @@ export const SignUpForm = ({ phoneNumber, className }: { phoneNumber: string; cl
               className="h-auto w-full px-6 py-4 text-lg leading-5"
             >
               {t('submit_button')}
-              {isSubmitting ? <IconLoaderCircle size="large" className="ms-2 animate-spin" /> : ''}
+              {isSubmitting ? <Icon name="reload" className="ms-2 animate-spin" /> : ''}
             </Button>
           </form>
         </Form>

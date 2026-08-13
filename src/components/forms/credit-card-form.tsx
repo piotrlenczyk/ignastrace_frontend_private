@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { IconLoaderCircle } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { Input } from '@/components/ui/input';
 import { COUNTRIES_REQUESTING_ZIP } from '@/constants/countries';
 import { useCountry } from '@/hooks/useCountry';
@@ -147,7 +147,7 @@ export const CreditCardForm = ({
             absolute inset-0 z-100 mt-0! grid animate-fade-in place-items-center content-center bg-white/80 text-center
           `}
         >
-          <IconLoaderCircle size="large" className="animate-spin text-primary" />
+          <Icon name="reload" className="animate-spin text-primary" />
         </div>
       )}
       <form onSubmit={handlePreSubmit} className="grid grid-cols-4 gap-4 sm:gap-2">

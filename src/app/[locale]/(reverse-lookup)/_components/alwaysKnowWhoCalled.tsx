@@ -1,15 +1,7 @@
 import { useTranslations } from 'next-intl';
 
 import { Card } from '@/components/homepage/card';
-import {
-  IconAnnotationText,
-  IconChat,
-  IconEmail,
-  IconGlobeAlt,
-  IconLocationPinLine,
-  IconSearch,
-  IconUsersGroup,
-} from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
 
 export const AlwaysKnowWhoCalled = ({ className }: { className?: string }) => {
@@ -19,46 +11,46 @@ export const AlwaysKnowWhoCalled = ({ className }: { className?: string }) => {
     {
       title: t('step_1.title'),
       description: t('step_1.description'),
-      icon: IconSearch,
+      icon: 'search',
       number: 1,
     },
     {
       title: t('step_2.title'),
       description: t('step_2.description'),
-      icon: IconLocationPinLine,
+      icon: 'pin-location',
       number: 2,
     },
     {
       title: t('step_3.title'),
       description: t('step_3.description'),
-      icon: IconUsersGroup,
+      icon: 'user-group',
       number: 3,
     },
     {
       title: t('step_4.title'),
       description: t('step_4.description'),
-      icon: IconChat,
+      icon: 'chat',
       number: 4,
     },
     {
       title: t('step_5.title'),
       description: t('step_5.description'),
-      icon: IconEmail,
+      icon: 'mail',
       number: 5,
     },
     {
       title: t('step_6.title'),
       description: t('step_6.description'),
-      icon: IconAnnotationText,
+      icon: 'chat',
       number: 6,
     },
     {
       title: t('step_7.title'),
       description: t('step_7.description'),
-      icon: IconGlobeAlt,
+      icon: 'globe',
       number: 7,
     },
-  ];
+  ] as const;
 
   return (
     <section className={cn(className, 'px-4 py-8 lg:px-0 lg:py-16')}>
@@ -70,7 +62,7 @@ export const AlwaysKnowWhoCalled = ({ className }: { className?: string }) => {
         {items.map((item) => (
           <Card key={item.number} className={cn('flex gap-4 p-4 shadow-raised')}>
             <div className="brand-icon-secondary-weak size-10 shrink-0">
-              <item.icon size="large" className="text-secondary" />
+              <Icon name={item.icon} className="text-secondary" />
             </div>
             <div className="flex flex-col">
               <h3 className="mb-1 text-base font-semibold text-strong">{item.title}</h3>

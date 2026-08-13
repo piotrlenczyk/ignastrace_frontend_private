@@ -1,4 +1,4 @@
-import { IconStart } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
 
 import type { StartRateProps } from '../_types/start-rate.types';
@@ -16,15 +16,15 @@ export const StartRate = ({ className = '', rating, maxStars = 5 }: StartRatePro
         .fill(null)
         .map((_, index) => (
           <div key={`full-${index}`} className="relative inline-block align-top">
-            <IconStart className={cn('text-yellow-1000', className)} />
+            <Icon name="start-up" className={cn('text-yellow-1000', className)} />
           </div>
         ))}
 
       {hasPartialStar && (
         <div key="partial" className="relative align-top">
-          <IconStart className={cn('text-[#ECEDEF]', className)} />
+          <Icon name="start-up" className={cn('text-[#ECEDEF]', className)} />
           <div className="absolute top-0 left-0 overflow-hidden" style={{ width: `${partialPercentage}%` }}>
-            <IconStart className={cn('text-yellow-1000', className)} />
+            <Icon name="start-up" className={cn('text-yellow-1000', className)} />
           </div>
         </div>
       )}
@@ -33,7 +33,7 @@ export const StartRate = ({ className = '', rating, maxStars = 5 }: StartRatePro
         .fill(null)
         .map((_, index) => (
           <div key={`empty-${index}`} className="relative inline-block align-top">
-            <IconStart className={cn('text-[#ECEDEF]', className)} />
+            <Icon name="start-up" className={cn('text-[#ECEDEF]', className)} />
           </div>
         ))}
     </div>

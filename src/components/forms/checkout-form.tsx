@@ -8,13 +8,13 @@ import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useMemo, useState } from 'react';
 
 import type { FunnelPlan } from '@/actions/funnel-plan';
+import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { useGetProduct } from '@/hooks/api/use-get-product';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { getStripePromise } from '@/libs/stripe';
 import type { Products } from '@/types/products';
 
-import { IconLoaderCircle, IconLockLine } from '../ui/icon/icons';
 import { StripeForm } from './stripe-form';
 
 const CheckoutForm = ({
@@ -149,7 +149,7 @@ const CheckoutForm = ({
       </p>
       <div className="mt-4 mb-6 flex items-center justify-between gap-5 text-xs text-weak">
         <div className="flex items-center gap-2">
-          <IconLockLine className="text-2xl" />
+          <Icon name="safe" className="text-2xl" />
           <span>{t('trust_100')}</span>
         </div>
         <Image
@@ -167,7 +167,7 @@ const CheckoutForm = ({
             text-center backdrop-blur-md will-change-auto
           `}
         >
-          <IconLoaderCircle size="large" className="animate-spin text-primary" />
+          <Icon name="reload" className="animate-spin text-primary" />
           <p className="h4">{t('loading')}</p>
         </div>
       )}

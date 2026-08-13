@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
-import { IconArrowLeft, IconCheckCircle } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { usePdfDownload } from '@/hooks/use-pdf-download';
@@ -38,7 +38,7 @@ const ReportHeader = ({ reverseLookup, user }: { reverseLookup: ReverseLookup; u
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="sm" className="flex size-12 items-center gap-2" asChild>
             <Link href={`${ROUTES.MEMBER.STATUS.HOME}`}>
-              <IconArrowLeft size="large" className="text-neutral" />
+              <Icon name="arrow-left" className="text-neutral" />
             </Link>
           </Button>
           <h4 className="h4 font-bold">{t('title')}</h4>
@@ -61,7 +61,7 @@ const ReportHeader = ({ reverseLookup, user }: { reverseLookup: ReverseLookup; u
 
             <div className="flex w-full flex-col">
               <div className="flex items-center gap-1">
-                <IconCheckCircle className="size-5 text-secondary" />
+                <Icon name="check-circle" className="size-5 text-secondary" />
                 <p className="text-caption text-weak">{t('matches_found')}</p>
               </div>
               <h3 className="mt-1 font-bold lg:mt-2">{phoneNumberFormatted.number}</h3>

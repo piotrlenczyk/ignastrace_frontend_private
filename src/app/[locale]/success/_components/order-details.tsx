@@ -3,7 +3,7 @@ import { useLocale, useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { IconChevronRightSmall, IconTrashLine } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { DEFAULT_CURRENCY } from '@/constants/currencies';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { useCountry } from '@/hooks/useCountry';
@@ -49,7 +49,8 @@ export const OrderDetails = ({
                     )}
                   >
                     {isProductAdded(addedProducts, product.key) && (
-                      <IconChevronRightSmall
+                      <Icon
+                        name="arrow-right"
                         className={`
                           mt-[-3px] mr-1 shrink-0 rotate-(--rotate,0deg) text-2xl text-neutral transition-transform
                           duration-200
@@ -71,7 +72,7 @@ export const OrderDetails = ({
                         className="font-normal hover:underline"
                         onClick={() => onRemoveProduct(product.key)}
                       >
-                        <IconTrashLine className="text-xl text-neutral" />
+                        <Icon name="delete" className="text-xl text-neutral" />
                         {t(`products.remove_button`)}
                       </Button>
                     </CollapsibleContent>

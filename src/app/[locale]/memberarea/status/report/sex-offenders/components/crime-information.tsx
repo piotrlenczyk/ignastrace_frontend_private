@@ -1,12 +1,7 @@
 import { useLocale, useTranslations } from 'next-intl';
 
 import { Card } from '@/components/ui/card';
-import {
-  IconAlertTriangleLine,
-  IconCalendarDates,
-  IconLocationPinLine,
-  IconShieldAlert,
-} from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
 import type { SexOffenderData } from '@/types/sex-offenders.types';
 
@@ -32,7 +27,7 @@ const CrimeInformationComponent = ({
         <div className="flex flex-col gap-6">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <div className="flex items-start gap-2 text-lg">
-              <IconAlertTriangleLine size="large" className="text-brand" />
+              <Icon name="alert-circle" className="text-brand" />
               <div>
                 <h5 className="font-bold">{t('crime')}</h5>
                 <p>{sexOffenderData.crime || '--'}</p>
@@ -40,7 +35,7 @@ const CrimeInformationComponent = ({
             </div>
 
             <div className="flex items-start gap-2 text-lg">
-              <IconCalendarDates size="large" className="text-brand" />
+              <Icon name="calendar" className="text-brand" />
               <div>
                 <h5 className="font-bold">{t('conviction_date')}</h5>
                 <p>
@@ -51,7 +46,7 @@ const CrimeInformationComponent = ({
 
             {/* Jurisdiction */}
             <div className="flex items-start gap-2 text-lg">
-              <IconLocationPinLine size="large" className="text-brand" />
+              <Icon name="pin-location" className="text-brand" />
               <div>
                 <h5 className="font-bold">{t('jurisdiction')}</h5>
                 <p>{sexOffenderData.jurisdiction || '--'}</p>
@@ -60,7 +55,7 @@ const CrimeInformationComponent = ({
 
             {/* Registration date */}
             <div className="flex items-start gap-2 text-lg">
-              <IconCalendarDates size="large" className="text-brand" />
+              <Icon name="calendar" className="text-brand" />
               <div>
                 <h5 className="font-bold">{t('registration_date')}</h5>
                 <p>
@@ -73,7 +68,7 @@ const CrimeInformationComponent = ({
 
             {/* Risk level */}
             <div className="flex items-start gap-2 text-lg">
-              <IconShieldAlert size="large" className="text-brand" />
+              <Icon name="shield" className="text-brand" />
               <div>
                 <h5 className="font-bold">{t('risk_level')}</h5>
                 <p>{sexOffenderData.risk_level ? tValues(`risk_level.${sexOffenderData.risk_level}`) : '--'}</p>

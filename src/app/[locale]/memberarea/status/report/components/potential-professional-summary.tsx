@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl';
 
 import { Card } from '@/components/ui/card';
-import { IconBriefcase } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
 import type { ReverseLookup } from '@/types/reverse-lookup.types';
 
@@ -30,7 +30,7 @@ const PotentialProfessionalSummary = ({
 
       {jobs.map((item) => (
         <div key={item} className="flex items-center gap-2">
-          <IconBriefcase size="large" className="text-secondary" />
+          <Icon name="briefcase" className="text-secondary" />
           <p className="text-lg font-bold">{item ? t(`values.${item}`) : ''}</p>
         </div>
       ))}

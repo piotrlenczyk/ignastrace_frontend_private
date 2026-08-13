@@ -3,15 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
-import {
-  IconGridAlt,
-  IconLinkAlt01,
-  IconLocationMy,
-  IconPhoneLine,
-  IconSettingsAltLine,
-} from '@/components/ui/icon/icons';
-import { IconSexOffender } from '@/components/ui/icon/icons/IconSexOffender';
-import { IconTimeRefresh } from '@/components/ui/icon/icons/TimeRefresh';
+import { Icon } from '@/components/ui/icon';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { ROUTES } from '@/constants/routes';
 import { useFeatures } from '@/hooks/use-features';
@@ -63,15 +55,15 @@ export const FooterNav = () => {
       <div className="sticky bottom-0 bg-background px-4 py-3 lg:hidden print:hidden">
         <nav className="container-wide flex justify-around gap-1 text-xs text-weak">
           <Item href={ROUTES.MEMBER.STATUS.HOME}>
-            <IconTimeRefresh size="large" />
+            <Icon name="timer" />
           </Item>
           <button type="button" onClick={() => setIsToolsOpen(true)} className="flex flex-col items-center">
-            <IconGridAlt size="large" />
+            <Icon name="menu-square" />
           </button>
           <Item
             href={[ROUTES.MEMBER.SETTINGS.ACCOUNT, ROUTES.MEMBER.SETTINGS.BILLING, ROUTES.MEMBER.SETTINGS.GET_HELP]}
           >
-            <IconSettingsAltLine size="large" />
+            <Icon name="setting" />
           </Item>
         </nav>
       </div>
@@ -84,27 +76,27 @@ export const FooterNav = () => {
 
           <div className="flex flex-col gap-2 px-4">
             <ToolItem
-              icon={<IconLocationMy size="large" className="text-primary" />}
+              icon={<Icon name="location" className="text-primary" />}
               label={t('find_by_number')}
               href={ROUTES.MEMBER.FIND_BY_NUMBER.HOME}
               onClick={handleToolClick}
             />
             <ToolItem
-              icon={<IconLinkAlt01 size="large" className="text-primary" />}
+              icon={<Icon name="link" className="text-primary" />}
               label={t('find_by_link')}
               href={ROUTES.MEMBER.FIND_BY_LINK.HOME}
               onClick={handleToolClick}
             />
             {enableReverseLookup && (
               <ToolItem
-                icon={<IconPhoneLine size="large" className="text-primary" />}
+                icon={<Icon name="phone" className="text-primary" />}
                 label={t('phone_lookup')}
                 href={ROUTES.REVERSE_LOOKUP.MEMBER.PHONE_LOOKUP.FORM}
                 onClick={handleToolClick}
               />
             )}
             <ToolItem
-              icon={<IconSexOffender size="large" className="text-primary" />}
+              icon={<Icon name="handcuffs" className="text-primary" />}
               label={t('sex_offenders_search')}
               href={ROUTES.MEMBER.SEX_OFFENDERS_SEARCH.HOME}
               onClick={handleToolClick}

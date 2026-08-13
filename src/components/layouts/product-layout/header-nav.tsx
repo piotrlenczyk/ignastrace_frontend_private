@@ -5,15 +5,7 @@ import { useEffect, useState } from 'react';
 
 import { Logotype } from '@/components/logotype';
 import { Button } from '@/components/ui/button';
-import {
-  IconEmailLine,
-  IconLinkAlt01,
-  IconLocationMy,
-  IconNotificationLine,
-  IconPhoneLine,
-  IconSettingsAltLine,
-  IconTimeRefresh,
-} from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { useFeatures } from '@/hooks/use-features';
 import { useCountry } from '@/hooks/useCountry';
@@ -77,11 +69,11 @@ export const HeaderNav = ({ unreadCount }: { unreadCount: number }) => {
         </div>
         <div className="hidden gap-7 lg:flex xl:gap-8 print:hidden">
           <Item path={fullPath} href={ROUTES.MEMBER.FIND_BY_NUMBER.HOME}>
-            <IconLocationMy size="large" />
+            <Icon name="location" />
             {t('find_by_number')}
           </Item>
           <Item path={fullPath} href={ROUTES.MEMBER.FIND_BY_LINK.HOME}>
-            <IconLinkAlt01 size="large" />
+            <Icon name="link" />
             {t('find_by_link')}
           </Item>
           {enableReverseLookup && (
@@ -92,27 +84,27 @@ export const HeaderNav = ({ unreadCount }: { unreadCount: number }) => {
                 ROUTES.REVERSE_LOOKUP.MEMBER.PHONE_LOOKUP.PROGRESS,
               ]}
             >
-              <IconPhoneLine size="large" />
+              <Icon name="phone" />
               {t('phone_lookup')}
             </Item>
           )}
           <Item path={fullPath} href={ROUTES.MEMBER.STATUS.HOME}>
-            <IconTimeRefresh size="large" />
+            <Icon name="timer" />
             {t('status')}
           </Item>
           <Item path={fullPath} href={ROUTES.MEMBER.CONTACT_US}>
-            <IconEmailLine size="large" />
+            <Icon name="mail" />
             {t('contact_us')}
           </Item>
           <Item path={fullPath} href={ROUTES.MEMBER.SETTINGS.NOTIFICATIONS} className="relative">
-            <IconNotificationLine size="large" />
+            <Icon name="alert-circle" />
             <NumericBadge
               amount={unreadCount}
               className="absolute top-[-12px] right-[80%] translate-x-9 animate-fade-in"
             />
           </Item>
           <Item path={fullPath} href={ROUTES.MEMBER.SETTINGS.ACCOUNT}>
-            <IconSettingsAltLine size="large" />
+            <Icon name="setting" />
           </Item>
         </div>
         <div className="flex items-center gap-2 lg:hidden print:hidden">
@@ -125,7 +117,7 @@ export const HeaderNav = ({ unreadCount }: { unreadCount: number }) => {
             asChild
           >
             <Link href={ROUTES.MEMBER.CONTACT_US}>
-              <IconEmailLine size="large" />
+              <Icon name="mail" />
             </Link>
           </Button>
           <Button
@@ -138,7 +130,7 @@ export const HeaderNav = ({ unreadCount }: { unreadCount: number }) => {
             asChild
           >
             <Link href={ROUTES.MEMBER.SETTINGS.NOTIFICATIONS}>
-              <IconNotificationLine size="large" />
+              <Icon name="alert-circle" />
               {unreadCount > 0 && (
                 <div
                   className={`

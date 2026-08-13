@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
-import { IconCheck, IconRadarAlt, IconSupportLine } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { useCountry } from '@/hooks/useCountry';
 
@@ -53,8 +53,8 @@ export const ProductCards = ({
             >
               <div className="flex flex-1 flex-col gap-4 rounded-2xl bg-base p-6 text-strong shadow-raised">
                 <div className="brand-icon">
-                  {product.key === 'scan_pro' && <IconRadarAlt size="large" />}
-                  {product.key === 'support_hotline' && <IconSupportLine size="large" />}
+                  {product.key === 'scan_pro' && <Icon name="scan" />}
+                  {product.key === 'support_hotline' && <Icon name="customer-support" />}
                 </div>
                 <div>
                   <h2 className="mb-1 text-lg/normal font-bold">{t(`products.${product.key}.title` as any)}</h2>
@@ -71,7 +71,7 @@ export const ProductCards = ({
                         text-green
                       `}
                     >
-                      <IconCheck className="text-base" />
+                      <Icon name="tick" className="text-base" />
                       {t('products.added_state')}
                     </div>
                   ) : (
@@ -88,8 +88,8 @@ export const ProductCards = ({
                       <DialogContent className="dialog-products">
                         <DialogHeader className="mb-6">
                           <div className="brand-icon mb-4">
-                            {product.key === 'scan_pro' && <IconRadarAlt size="large" />}
-                            {product.key === 'support_hotline' && <IconSupportLine size="large" />}
+                            {product.key === 'scan_pro' && <Icon name="scan" />}
+                            {product.key === 'support_hotline' && <Icon name="customer-support" />}
                           </div>
                           <DialogTitle className="h3 font-bold">
                             {t(`products.${product.key}.title` as any)}
@@ -116,7 +116,7 @@ export const ProductCards = ({
                                 font-bold text-green
                               `}
                             >
-                              <IconCheck className="text-xl" />
+                              <Icon name="tick" className="text-xl" />
                               {t('products.added_state')}
                             </div>
                           ) : (

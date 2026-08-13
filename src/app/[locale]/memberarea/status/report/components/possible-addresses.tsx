@@ -2,7 +2,7 @@ import { useTranslations } from 'next-intl';
 
 import ReverseLookupValue from '@/components/reverse-lookup-value';
 import { Card } from '@/components/ui/card';
-import { IconLocationPinLine } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
 import type { ReverseLookup, ReverseLookupLocation } from '@/types/reverse-lookup.types';
 import { getCountryName } from '@/utils/country-names';
@@ -25,7 +25,7 @@ const PossibleAddresses = ({ className, reverseLookup }: { className?: string; r
 
       {locations.map((location) => (
         <div key={location.id} className="flex items-start gap-2">
-          <IconLocationPinLine size="large" className="size-6 text-secondary" />
+          <Icon name="pin-location" className="size-6 text-secondary" />
           <div className="flex-1 text-lg leading-8">
             <div>
               <strong>{t('labels.street')}: </strong>

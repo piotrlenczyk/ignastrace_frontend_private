@@ -4,16 +4,7 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
 import { Logotype } from '@/components/logotype';
-import {
-  IconEmailLine,
-  IconLinkAlt01,
-  IconLocationMy,
-  IconNotificationLine,
-  IconPhoneLine,
-  IconSettingsAltLine,
-  IconTimeRefresh,
-} from '@/components/ui/icon/icons';
-import { IconSexOffender } from '@/components/ui/icon/icons/IconSexOffender';
+import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { useFeatures } from '@/hooks/use-features';
 import { useCountry } from '@/hooks/useCountry';
@@ -73,21 +64,21 @@ const HeaderNavVertical = ({ unreadCount }: { unreadCount: number }) => {
         ROUTES.MEMBER.FIND_BY_NUMBER.MESSAGE_SENDING,
         ROUTES.MEMBER.FIND_BY_NUMBER.SUCCESS,
       ],
-      icon: <IconLocationMy size="large" />,
+      icon: <Icon name="location" />,
       label: t('find_by_number'),
       enabled: true,
     },
     {
       key: 'find_by_link',
       href: [ROUTES.MEMBER.FIND_BY_LINK.HOME, ROUTES.MEMBER.FIND_BY_LINK.SUCCESS],
-      icon: <IconLinkAlt01 size="large" />,
+      icon: <Icon name="link" />,
       label: t('find_by_link'),
       enabled: true,
     },
     {
       key: 'phone_lookup',
       href: [ROUTES.REVERSE_LOOKUP.MEMBER.PHONE_LOOKUP.FORM, ROUTES.REVERSE_LOOKUP.MEMBER.PHONE_LOOKUP.PROGRESS],
-      icon: <IconPhoneLine size="large" />,
+      icon: <Icon name="phone" />,
       label: t('phone_lookup'),
       enabled: enableReverseLookup,
     },
@@ -98,7 +89,7 @@ const HeaderNavVertical = ({ unreadCount }: { unreadCount: number }) => {
         ROUTES.MEMBER.SEX_OFFENDERS_SEARCH.RESULTS,
         ROUTES.MEMBER.SEX_OFFENDERS_SEARCH.REPORT,
       ],
-      icon: <IconSexOffender size="large" />,
+      icon: <Icon name="handcuffs" />,
       label: t('sex_offenders_search'),
       enabled: true,
     },
@@ -129,7 +120,7 @@ const HeaderNavVertical = ({ unreadCount }: { unreadCount: number }) => {
               ROUTES.MEMBER.STATUS.DATA_BREACH_HISTORY,
             ])}
           >
-            <IconTimeRefresh size="large" />
+            <Icon name="timer" />
             <span className="font-semibold">{t('my_activity')}</span>
           </Item>
 
@@ -156,7 +147,7 @@ const HeaderNavVertical = ({ unreadCount }: { unreadCount: number }) => {
             className="flex flex-1 items-center gap-2"
           >
             <div className="flex flex-1 items-center gap-2">
-              <IconNotificationLine size="large" />
+              <Icon name="alert-circle" />
               <span className="font-semibold">{t('notifications')}</span>
             </div>
             <NumericBadge amount={unreadCount} className="flex items-center justify-center" />
@@ -168,7 +159,7 @@ const HeaderNavVertical = ({ unreadCount }: { unreadCount: number }) => {
             isActive={getActive(fullPath, ROUTES.MEMBER.CONTACT_US)}
             className="flex flex-1 items-center gap-2"
           >
-            <IconEmailLine size="large" />
+            <Icon name="mail" />
             <span className="font-semibold">{t('contact_us')}</span>
           </Item>
 
@@ -180,7 +171,7 @@ const HeaderNavVertical = ({ unreadCount }: { unreadCount: number }) => {
               ROUTES.MEMBER.SETTINGS.GET_HELP,
             ])}
           >
-            <IconSettingsAltLine size="large" />
+            <Icon name="setting" />
             <span className="font-semibold">{t('settings')}</span>
           </Item>
         </div>

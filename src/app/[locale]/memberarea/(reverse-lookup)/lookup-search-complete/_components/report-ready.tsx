@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 
 import UnlockUnlimitedDownloads from '@/components/reverse-lookup/unlock-unlimited-downloads';
 import { Button } from '@/components/ui/button';
-import { IconDownload, IconLoaderCircle } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { usePdfDownload } from '@/hooks/use-pdf-download';
 import { cn } from '@/libs/utils';
@@ -45,7 +45,7 @@ export const ReportReady = ({ className, user }: ReportReadyProps) => {
               onClick={handleDownloadReport}
               disabled={isGenerating}
             >
-              {isGenerating ? <IconLoaderCircle className="size-4" /> : <IconDownload className="size-4" />}
+              {isGenerating ? <Icon name="reload" className="size-4" /> : <Icon name="download" className="size-4" />}
 
               <span className="px-1">{t('download_report_button')}</span>
             </Button>

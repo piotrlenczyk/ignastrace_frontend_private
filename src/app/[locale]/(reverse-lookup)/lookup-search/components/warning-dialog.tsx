@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogOverlay, DialogPortal, DialogTitle } from '@/components/ui/dialog';
-import { IconLock } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 
 export function WarningDialog({ isOpen, phoneNumber }: { isOpen: boolean; phoneNumber: string }) {
@@ -23,7 +23,7 @@ export function WarningDialog({ isOpen, phoneNumber }: { isOpen: boolean; phoneN
           <h3 className="font-bold">{phoneNumber}</h3>
           <p className="mt-2">{t('description')}</p>
           <div className="mt-4 flex items-center gap-x-2 rounded-md bg-weak p-3 lg:mt-6 lg:p-4">
-            <IconLock size="large" className="text-primary" />
+            <Icon name="safe" className="text-primary" />
             <span className="text-caption text-weak">{t('info_message', { phoneNumber })}</span>
           </div>
           <Button size="md" className="mt-5 w-full lg:mt-6" onClick={onNavigateToSearchComplete}>

@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import { IconCnn, IconForbes, IconFox, IconUsaToday } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
 
 type AsSeenOnProps = {
@@ -9,10 +9,13 @@ type AsSeenOnProps = {
 };
 
 const AS_SEEN_ON_ITEMS = [
-  { id: 1, icon: <IconFox className="h-[20px] w-[50px] sm:h-[25px] sm:w-[60px] md:h-[30px] md:w-[70px]" /> },
-  { id: 2, icon: <IconUsaToday className="h-[32px] w-[80px] sm:h-[40px] sm:w-[100px] md:h-[48px] md:w-[117px]" /> },
-  { id: 3, icon: <IconForbes className="h-[20px] w-[75px] sm:h-[25px] sm:w-[90px] md:h-[30px] md:w-[111px]" /> },
-  { id: 4, icon: <IconCnn className="h-[22px] w-[50px] sm:h-[28px] sm:w-[60px] md:h-[33px] md:w-[71px]" /> },
+  { id: 1, icon: <Icon name="globe" className="h-[20px] w-[50px] sm:h-[25px] sm:w-[60px] md:h-[30px] md:w-[70px]" /> },
+  {
+    id: 2,
+    icon: <Icon name="globe" className="h-[32px] w-[80px] sm:h-[40px] sm:w-[100px] md:h-[48px] md:w-[117px]" />,
+  },
+  { id: 3, icon: <Icon name="globe" className="h-[20px] w-[75px] sm:h-[25px] sm:w-[90px] md:h-[30px] md:w-[111px]" /> },
+  { id: 4, icon: <Icon name="globe" className="h-[22px] w-[50px] sm:h-[28px] sm:w-[60px] md:h-[33px] md:w-[71px]" /> },
 ];
 
 const AsSeenOn: React.FC<AsSeenOnProps> = ({ className }) => {

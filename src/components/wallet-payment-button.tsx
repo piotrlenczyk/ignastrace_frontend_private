@@ -1,9 +1,8 @@
 import type { MouseEventHandler, SVGProps } from 'react';
 import { forwardRef } from 'react';
 
+import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
-
-import { IconLoaderCircle } from './ui/icon/icons';
 
 const ApplePayIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg width={53} height={22} viewBox="0 0 53 22" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
@@ -85,7 +84,7 @@ export const WalletPaymentButton = forwardRef<
     )}
   >
     {isLoading ? (
-      <IconLoaderCircle size="large" className="animate-spin" />
+      <Icon name="reload" className="animate-spin" />
     ) : (
       METHOD_TO_ICON[method as keyof typeof METHOD_TO_ICON]
     )}

@@ -13,7 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { IconTrashLineAlt } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { useRouter } from '@/libs/i18n-routing';
 import { cn } from '@/libs/utils';
@@ -54,7 +54,7 @@ export function DeleteAccount({ className, disabled = false }: { className?: str
         disabled={disabled}
         onClick={() => setIsOpen(true)}
       >
-        <IconTrashLineAlt className="text-xl" />
+        <Icon name="delete" className="text-xl" />
         {t('delete_cta')}
       </Button>
 

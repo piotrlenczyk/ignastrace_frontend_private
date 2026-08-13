@@ -19,13 +19,60 @@ const twMerge = extendTailwindMerge<'animation-duration' | 'columns-count'>({
   extend: {
     theme: {
       /*
-       * The one custom font size. Without it `text-caption` falls through to
-       * the catch-all colour matcher, so it neither displaces `text-sm` nor
+       * Custom font sizes. Without registration a name falls through to the
+       * catch-all colour matcher, so it neither displaces a real font size nor
        * survives alongside a colour — it silently swallows one instead.
+       *
+       * `caption` is the legacy scale's one custom step. The rest are the new
+       * design's named text styles from styles/new/typo.css, and leaving them
+       * out was a live bug rather than untidiness: `text-md-semibold` was
+       * being treated as a colour, which put it in the same class group as
+       * `text-text-primary-on-brand` on the v2 primary button. cva emits the
+       * size variant after the hierarchy variant, so the text style won and the
+       * colour was dropped — the Lookup button rendered its label in the
+       * inherited body colour on a blue fill. Every v2 component that sets a
+       * text style and a text colour through `cn` had the same defect.
+       *
+       * These are enumerated, unlike the semantic colours, precisely because
+       * tailwind-merge's fallback for an unknown `text-*` is "colour": a colour
+       * needs no registration to behave, a font size does.
        */
-      text: ['caption'],
-      /* Hand-written box-shadow utilities. */
-      shadow: ['icon', 'raised', 'raised-lg'],
+      text: [
+        'caption',
+        'display-xl-medium',
+        'display-lg-medium',
+        'display-md-medium',
+        'display-sm-medium',
+        'display-xs-medium',
+        'display-xs-semibold',
+        'xl-regular',
+        'xl-medium',
+        'xl-semibold',
+        'xl-bold',
+        'lg-regular',
+        'lg-medium',
+        'lg-semibold',
+        'lg-bold',
+        'md-regular',
+        'md-medium',
+        'md-semibold',
+        'md-bold',
+        'sm-regular',
+        'sm-medium',
+        'sm-semibold',
+        'sm-bold',
+        'xs-regular',
+        'xs-medium',
+        'xs-semibold',
+        'xs-bold',
+      ],
+      /*
+       * Hand-written box-shadow utilities. `icon`/`raised`/`raised-lg` are the
+       * legacy elevations; `uui-*` are the new design's, which have to displace
+       * both each other and Tailwind's stock `shadow-md` when a call site
+       * overrides one.
+       */
+      shadow: ['icon', 'raised', 'raised-lg', 'uui-xs', 'uui-md', 'uui-xl', 'uui-overlay', 'uui-xs-skeuomorphic'],
     },
     classGroups: {
       /*

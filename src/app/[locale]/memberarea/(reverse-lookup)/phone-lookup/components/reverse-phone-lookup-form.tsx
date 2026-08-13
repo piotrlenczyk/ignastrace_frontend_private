@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 import { saveFunnelPhone } from '@/actions/funnel-phone-number';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
-import { IconLoaderCircle, IconLocationMy } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { PhoneInput as PhoneInputBase } from '@/components/ui/phone-input/index';
 import { ROUTES } from '@/constants/routes';
 import { useMessageErrorToast } from '@/hooks/use-message-error-toast';
@@ -83,11 +83,7 @@ export const ReversePhoneLookupForm = ({ country }: { country: CountryCode }) =>
             </div>
           )}
           <Button type="submit" size="xl" className="min-w-40" disabled={isSubmitting}>
-            {isSubmitting ? (
-              <IconLoaderCircle size="large" className="animate-spin" />
-            ) : (
-              <IconLocationMy size="large" />
-            )}
+            {isSubmitting ? <Icon name="reload" className="animate-spin" /> : <Icon name="location" />}
             {t('submit')}
           </Button>
         </form>

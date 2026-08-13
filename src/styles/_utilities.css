@@ -170,6 +170,16 @@
 }
 
 /*
+ * The new design's page shell: a 1440px content frame with the gutters the
+ * Figma layouts use — 16px on mobile, 32px from the desktop breakpoint up.
+ * Separate from `container` and `container-wide` on purpose; those two are
+ * legacy widths and neither carries padding.
+ */
+@utility container-page {
+  @apply mx-auto w-full max-w-[1440px] px-4 lg:px-8;
+}
+
+/*
  * ── v3 namespace collisions ────────────────────────────────────────────────
  * `backgroundColor` and `textColor` were separate theme namespaces in v3, so
  * three names meant two different things depending on the utility. v4 resolves
@@ -199,4 +209,63 @@
 
 @utility text-success {
   color: hsl(var(--green-transparent-800));
+}
+
+/*
+ * ── Untitled UI elevations ─────────────────────────────────────────────────
+ * The Figma export carries no shadows at all — not the utilities and not even
+ * the shadow *colours* — so an elevation from the new design has no token to
+ * resolve through. These spell out the layers the design file actually binds,
+ * read off `get_variable_defs` on the Reverse Lookup frame (13002:131636).
+ *
+ * The `-uui-` infix is load-bearing, not decoration. `--shadow-*` is one of the
+ * namespaces _theme.css does NOT reset, so Tailwind's built-in `shadow-xs` and
+ * `shadow-md` theme entries are live — and per the note at the top of this file,
+ * a same-named `@utility` emits alongside a theme entry and loses. Naming these
+ * `shadow-xs`/`shadow-md` would therefore compile to Tailwind's values, silently.
+ * Overriding the theme entries instead would have re-styled every legacy
+ * `shadow-md` call site, which is the other half of why they are namespaced.
+ *
+ * An Untitled UI elevation is two or three stacked layers; a single Tailwind
+ * shadow is one, which is why these are not just aliases. Layers are ordered
+ * widest-blur-first, matching Untitled UI's published spelling.
+ *
+ * `shadow-uui-lg` is deliberately absent: the design binds its three colours
+ * (shadow-lg_01/02/03) but Figma returned no effect geometry for it, and
+ * inventing the offsets would put a wrong value in the codebase that looks
+ * authoritative. Add it from the effect definition when a layer needs it.
+ */
+@utility shadow-uui-xs {
+  box-shadow: 0 1px 2px 0 #0a0d120d;
+}
+
+@utility shadow-uui-md {
+  box-shadow:
+    0 4px 6px -1px #0a0d121a,
+    0 2px 4px -2px #0a0d120f;
+}
+
+@utility shadow-uui-xl {
+  box-shadow:
+    0 20px 24px -4px #0a0d1214,
+    0 8px 8px -4px #0a0d1208,
+    0 3px 3px -1.5px #0a0d120a;
+}
+
+@utility shadow-uui-overlay {
+  box-shadow:
+    0 20px 24px -4px #00000014,
+    0 8px 8px -4px #0000000a;
+}
+
+/*
+ * The skeuomorphic button border: a drop shadow plus two inset layers, the
+ * outer of which fakes a 1px border. Untitled UI puts this on secondary
+ * buttons and inputs.
+ */
+@utility shadow-uui-xs-skeuomorphic {
+  box-shadow:
+    0 1px 2px 0 #0a0d120d,
+    inset 0 -2px 0 0 #0a0d120d,
+    inset 0 0 0 1px #0a0d122e;
 }

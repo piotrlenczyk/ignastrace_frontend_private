@@ -8,7 +8,7 @@ import { useState } from 'react';
 import AlertStatus from '@/components/ui/alert-status';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { IconLoaderCircle, IconLockOpenLine } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { cn } from '@/libs/utils';
 import type { ReverseLookup } from '@/types/reverse-lookup.types';
@@ -74,7 +74,7 @@ const DataBreachHistory = ({
     return (
       <div className="flex justify-end">
         <Button onClick={handleUnlockClick} disabled={isConsumingUpsell}>
-          {isConsumingUpsell ? <IconLoaderCircle className="size-4" /> : <IconLockOpenLine className="size-4" />}
+          {isConsumingUpsell ? <Icon name="reload" className="size-4" /> : <Icon name="unlock" className="size-4" />}
           {t('unlock_report')}
         </Button>
       </div>

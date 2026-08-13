@@ -2,7 +2,8 @@ import type { CountryCode } from 'libphonenumber-js';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
-import { IconLocationMy, IconLock, IconShieldCheck } from '../ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
+
 import { Card } from './card';
 import { PhoneInput } from './phoneInput';
 
@@ -10,12 +11,12 @@ const trustItems = [
   {
     title: 'secure',
     description: 'ssl_encription',
-    icon: IconLock,
+    icon: 'safe',
   },
   {
     title: '100',
     description: 'confidential',
-    icon: IconShieldCheck,
+    icon: 'shield',
   },
 ] as const;
 
@@ -26,7 +27,7 @@ const Trust = () => {
     <section className="grid w-full grid-cols-1 gap-4 xs:grid-cols-2 lg:flex lg:gap-3">
       {trustItems.map((item) => (
         <div key={item.title} className="flex place-items-center gap-3 rounded-md bg-weak p-2 backdrop-blur-xl">
-          <item.icon size="large" className="text-secondary" />
+          <Icon name={item.icon} className="text-secondary" />
           <div>
             <div className="text-sm font-bold text-strong">{t(item.title)}</div>
             <div className="text-xs">{t(item.description)}</div>
@@ -72,7 +73,7 @@ const Iphone = () => {
               flex size-10 shrink-0 items-center justify-center self-start rounded-xl bg-secondary-strong text-[white]
             `}
           >
-            <IconLocationMy size="large" />
+            <Icon name="location" />
           </div>
           <p className="h5 font-semibold text-secondary">{t('card_title')}</p>
         </div>

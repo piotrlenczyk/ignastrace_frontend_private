@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import { saveFunnelPhone } from '@/actions/funnel-phone-number';
 import { saveFunnelPlan } from '@/actions/funnel-plan';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
+import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { useConsent } from '@/hooks/use-consent';
 import { useRouter } from '@/libs/i18n-routing';
@@ -18,7 +19,6 @@ import { createPhoneFormSchema, type PhoneFormValues } from '@/types/phone-form.
 
 import { Button } from '../ui/button';
 import { ConsentModal } from '../ui/consent-modal';
-import { IconLoaderCircle, IconLocationMy } from '../ui/icon/icons';
 import { PhoneInput as PhoneInputBase } from '../ui/phone-input/index';
 
 export const PhoneInput = ({
@@ -130,11 +130,7 @@ export const PhoneInput = ({
             </div>
           )}
           <Button type="submit" size="xl" disabled={isSubmitting}>
-            {isSubmitting ? (
-              <IconLoaderCircle size="large" className="animate-spin" />
-            ) : (
-              <IconLocationMy size="large" />
-            )}
+            {isSubmitting ? <Icon name="reload" className="animate-spin" /> : <Icon name="location" />}
             {t('submit')}
           </Button>
         </form>

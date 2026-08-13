@@ -9,7 +9,7 @@ import {
   DropdownMenuItemCompressed,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { IconGlobeLine } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useUpdateLocaleMutation } from '@/hooks/api/use-update-locale-mutation';
 import { AvailableLanguages } from '@/libs/i18n';
@@ -52,7 +52,7 @@ export const LanguageSelector = () => {
             lg:self-center
           `}
         >
-          <IconGlobeLine size="fontSize" className="text-neutral xs:size-5" />
+          <Icon name="globe" className="size-[1em] text-neutral xs:size-5" />
           <abbr title={name} className="px-1 no-underline">
             {code}
           </abbr>

@@ -1,8 +1,8 @@
-import type { IconShieldCheckLine } from '@/components/ui/icon/icons';
+import { type IconName } from '@/components/ui/icon';
 
 export type CardType = {
   id: string;
-  Icon: typeof IconShieldCheckLine;
+  icon: IconName;
   title: any;
   description: any;
 };

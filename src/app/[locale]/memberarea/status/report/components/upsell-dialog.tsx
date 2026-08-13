@@ -7,9 +7,7 @@ import type { Product } from '@/app/[locale]/success/_types/product.type';
 import LimitedOfferTag from '@/components/reverse-lookup/limited-offer-tag';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
-import { IconCheckCircle } from '@/components/ui/icon/icons/CheckCircle';
-import { IconLoaderCircle } from '@/components/ui/icon/icons/LoaderCircle';
-import { IconTagLine } from '@/components/ui/icon/icons/TagLine';
+import { Icon } from '@/components/ui/icon';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { useCountry } from '@/hooks/useCountry';
 
@@ -144,7 +142,7 @@ const UpsellDialog = ({
   };
 
   const upsellBenefits = benefitKeys.map((key) => ({
-    icon: <IconCheckCircle className="size-6 text-secondary" />,
+    icon: <Icon name="check-circle" className="size-6 text-secondary" />,
     title: t(key as any),
   }));
 
@@ -165,7 +163,7 @@ const UpsellDialog = ({
               </div>
               <div className="flex flex-col gap-5">
                 <div className="flex items-center gap-3 rounded-lg bg-green-50 p-4">
-                  <IconTagLine className="size-6" />
+                  <Icon name="discount" className="size-6" />
                   <span className="text-sm lg:text-base">{t('special_limited_time_offer')}</span>
                 </div>
                 {upsellBenefits.map((benefit) => (
@@ -186,7 +184,7 @@ const UpsellDialog = ({
               <Button className="text-base font-semibold" onClick={handlePurchaseUpsell} disabled={isPending}>
                 {isPending ? (
                   <>
-                    {t('processing_payment')} <IconLoaderCircle className="size-4 animate-spin" />
+                    {t('processing_payment')} <Icon name="reload" className="size-4 animate-spin" />
                   </>
                 ) : (
                   t('purchase')

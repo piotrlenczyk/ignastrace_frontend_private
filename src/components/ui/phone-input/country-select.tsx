@@ -6,12 +6,11 @@ import * as RPNInput from 'react-phone-number-input';
 
 import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { Icon } from '@/components/ui/icon';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/libs/utils';
 
 import { Flag } from '../flag';
-import { IconCaretDown } from '../icon/icons';
-import { IconCheck } from '../icon/icons/Check';
 import { ScrollArea } from '../scroll-area';
 
 type CountrySelectOption = { label: string; value: RPNInput.Country };
@@ -39,7 +38,7 @@ const CountrySelect = ({ disabled, value, onChange, options }: CountrySelectProp
         <Button type="button" variant="ghost" className={cn('flex gap-1 rounded-lg px-3')} disabled={disabled}>
           <Flag countryCode={value} />
           {value ? `+${RPNInput.getCountryCallingCode(value)}` : ''}
-          <IconCaretDown className={cn('-mr-2 size-4 opacity-50', disabled ? 'hidden' : 'opacity-100')} />
+          <Icon name="arrow-down" className={cn('-mr-2 size-4 opacity-50', disabled ? 'hidden' : 'opacity-100')} />
         </Button>
       </PopoverTrigger>
       <PopoverContent
@@ -68,7 +67,8 @@ const CountrySelect = ({ disabled, value, onChange, options }: CountrySelectProp
                           {`+${RPNInput.getCountryCallingCode(option.value)}`}
                         </span>
                       )}
-                      <IconCheck
+                      <Icon
+                        name="tick"
                         className={cn('ml-auto size-4', option.value === value ? 'opacity-100' : 'opacity-0')}
                       />
                     </CommandItem>

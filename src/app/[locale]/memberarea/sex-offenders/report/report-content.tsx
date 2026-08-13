@@ -12,7 +12,7 @@ import OthersInformation from '@/app/[locale]/memberarea/status/report/sex-offen
 import PersonalInformation from '@/app/[locale]/memberarea/status/report/sex-offenders/components/personal-information';
 import Photos from '@/app/[locale]/memberarea/status/report/sex-offenders/components/photos';
 import { Button } from '@/components/ui/button';
-import { IconArrowLeft, IconCheckCircle } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { usePdfDownload } from '@/hooks/use-pdf-download';
 import { Link } from '@/libs/i18n-routing';
@@ -49,7 +49,7 @@ export const SexOffenderSearchReportContent = ({
         <div className="flex items-center gap-1">
           <Button asChild variant="ghost" size="icon" aria-label={t('new_search')}>
             <Link href={ROUTES.MEMBER.SEX_OFFENDERS_SEARCH.HOME}>
-              <IconArrowLeft />
+              <Icon name="arrow-left" />
             </Link>
           </Button>
           <h1 className="h4 font-bold">{t('title_profile')}</h1>
@@ -77,7 +77,7 @@ export const SexOffenderSearchReportContent = ({
           )}
           <div className="flex flex-col gap-1">
             <p className="text-sm text-weak">
-              <IconCheckCircle className="mr-1 size-5 text-secondary" />
+              <Icon name="check-circle" className="mr-1 size-5 text-secondary" />
               {t('records_found_for')}
             </p>
             <span className="h3 font-bold">{sexOffenderData.name}</span>

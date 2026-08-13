@@ -8,13 +8,13 @@ import { useState } from 'react';
 import { useCreateReverseLookupMutation } from '@/app/[locale]/memberarea/(reverse-lookup)/phone-lookup/hooks/api/use-create-reverse-lookup-mutation';
 import { useSendOrderConfirmEmailMutation } from '@/app/[locale]/success/_hooks/api/use-send-order-confirm-email-mutation';
 import type { Product } from '@/app/[locale]/success/_types/product.type';
+import { Icon } from '@/components/ui/icon';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useConfirmStripePaymentMutation } from '@/hooks/api/use-confirm-stripe-payment-mutation';
 import { useRouter } from '@/libs/i18n-routing';
 import type { Products } from '@/types/products';
 import type { StripeFormValues } from '@/types/stripe-form.types';
 
-import { IconCreditCard } from '../ui/icon/icons';
 import WalletSubscriptionPayment from '../wallet-subscription-payment';
 import { CreditCardForm } from './credit-card-form';
 
@@ -154,7 +154,7 @@ export const StripeForm = ({
     <Tabs defaultValue="card" className="w-full">
       <TabsList className="mb-6 grid w-full grid-cols-3 gap-2 bg-transparent p-0">
         <StyledTabsTrigger value="card">
-          <IconCreditCard size="large" />
+          <Icon name="credit-card" />
         </StyledTabsTrigger>
 
         <StyledTabsTrigger value="google_pay">

@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl';
 
 import { Card } from '@/components/ui/card';
-import { IconEmail, IconPhone2Line } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
 import type { ReverseLookup } from '@/types/reverse-lookup.types';
 
@@ -15,16 +15,16 @@ const PossibleContactDetails = ({ className, reverseLookup }: { className?: stri
 
   const contactsData = [
     {
-      icon: IconEmail,
+      icon: 'mail',
       label: t('labels.associated_emails'),
       values: emails,
     },
     {
-      icon: IconPhone2Line,
+      icon: 'phone',
       label: t('labels.associated_numbers'),
       values: phones,
     },
-  ];
+  ] as const;
 
   const isEmpty = emails.length === 0 && phones.length === 0;
 
@@ -39,7 +39,7 @@ const PossibleContactDetails = ({ className, reverseLookup }: { className?: stri
           (item) =>
             item.values.length > 0 && (
               <div key={item.label} className="grid grid-cols-[auto_1fr] items-start gap-2">
-                <item.icon className="size-6 text-secondary" />
+                <Icon name={item.icon} className="size-6 text-secondary" />
                 <div className="min-w-0 text-lg">
                   <p className="mb-0.5 font-bold">{item.label}:</p>
                   {item.values.map((value) => (

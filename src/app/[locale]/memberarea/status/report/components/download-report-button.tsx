@@ -2,7 +2,7 @@
 
 import UnlockUnlimitedDownloads from '@/components/reverse-lookup/unlock-unlimited-downloads';
 import { Button } from '@/components/ui/button';
-import { IconDownload, IconLoaderCircle } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 
 type DownloadReportButtonProps = {
   hasUnlimitedDownloads: boolean;
@@ -21,7 +21,7 @@ export const DownloadReportButton = ({
 }: DownloadReportButtonProps) => {
   return hasUnlimitedDownloads ? (
     <Button className={className} onClick={onDownload} disabled={isGenerating}>
-      {isGenerating ? <IconLoaderCircle className="size-4" /> : <IconDownload className="size-4" />}
+      {isGenerating ? <Icon name="reload" className="size-4" /> : <Icon name="download" className="size-4" />}
       {buttonText}
     </Button>
   ) : (

@@ -1,15 +1,7 @@
 import { useTranslations } from 'next-intl';
 
 import { Card } from '@/components/ui/card';
-import {
-  IconArrowUp,
-  IconCalendarDates,
-  IconEye,
-  IconFaceSmile,
-  IconGender,
-  IconPaintBrush,
-  IconStarLine,
-} from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
 import type { SexOffenderData } from '@/types/sex-offenders.types';
 
@@ -29,7 +21,7 @@ const BodyCharacteristicsComponent = ({
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <div className="flex items-start gap-2 text-lg">
-          <IconCalendarDates size="large" className="text-brand" />
+          <Icon name="calendar" className="text-brand" />
           <div>
             <h5 className="mb-0.5 font-bold">{t('age')}</h5>
             <p>{sexOffenderData.age || '--'}</p>
@@ -37,7 +29,7 @@ const BodyCharacteristicsComponent = ({
         </div>
 
         <div className="flex items-start gap-2 text-lg">
-          <IconGender size="large" className="text-brand" />
+          <Icon name="female" className="text-brand" />
           <div>
             <h5 className="mb-0.5 font-bold">{t('sex')}</h5>
             <p>{sexOffenderData.sex ? tValues(`sex.${sexOffenderData.sex}`) : '--'}</p>
@@ -45,7 +37,7 @@ const BodyCharacteristicsComponent = ({
         </div>
 
         <div className="flex items-start gap-2 text-lg">
-          <IconEye size="large" className="text-brand" />
+          <Icon name="view" className="text-brand" />
           <div>
             <h5 className="mb-0.5 font-bold">{t('eye_color')}</h5>
             <p>{sexOffenderData.eye_color ? tValues(`eye_color.${sexOffenderData.eye_color}`) : '--'}</p>
@@ -53,7 +45,7 @@ const BodyCharacteristicsComponent = ({
         </div>
 
         <div className="flex items-start gap-2 text-lg">
-          <IconPaintBrush size="large" className="text-brand" />
+          <Icon name="edit" className="text-brand" />
           <div>
             <h5 className="mb-0.5 font-bold">{t('hair_color')}</h5>
             <p>{sexOffenderData.hair_color ? tValues(`hair_color.${sexOffenderData.hair_color}`) : '--'}</p>
@@ -61,7 +53,7 @@ const BodyCharacteristicsComponent = ({
         </div>
 
         <div className="flex items-start gap-2 text-lg">
-          <IconFaceSmile size="large" className="text-brand" />
+          <Icon name="user" className="text-brand" />
           <div>
             <h5 className="mb-0.5 font-bold">{t('race')}</h5>
             <p>{sexOffenderData.race ? tValues(`race.${sexOffenderData.race}`) : '--'}</p>
@@ -69,7 +61,7 @@ const BodyCharacteristicsComponent = ({
         </div>
 
         <div className="flex items-start gap-2 text-lg">
-          <IconStarLine size="large" className="text-brand" />
+          <Icon name="star" className="text-brand" />
           <div>
             <h5 className="mb-0.5 font-bold">{t('ethnicity')}</h5>
             <p>{sexOffenderData.ethnicity ? tValues(`ethnicity.${sexOffenderData.ethnicity}`) : '--'}</p>
@@ -77,7 +69,7 @@ const BodyCharacteristicsComponent = ({
         </div>
 
         <div className="flex items-start gap-2 text-lg">
-          <IconArrowUp size="large" className="text-brand" />
+          <Icon name="arrow-up" className="text-brand" />
           <div>
             <h5 className="mb-0.5 font-bold">{t('height')}</h5>
             <p>{sexOffenderData.height ? `${sexOffenderData.height} inches` : '--'}</p>
@@ -85,7 +77,7 @@ const BodyCharacteristicsComponent = ({
         </div>
 
         <div className="flex items-start gap-2 text-lg">
-          <IconStarLine size="large" className="text-brand" />
+          <Icon name="star" className="text-brand" />
           <div>
             <h5 className="mb-0.5 font-bold">{t('weight')}</h5>
             <p>{sexOffenderData.weight ? `${sexOffenderData.weight} lbs` : '--'}</p>

@@ -1,4 +1,4 @@
-import { IconCheck } from '@/components/ui/icon/icons/Check';
+import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
 
 export const LoadingBar = ({
@@ -28,7 +28,7 @@ export const LoadingBar = ({
         )}
       >
         {loadedText}
-        <IconCheck />
+        <Icon name="tick" />
       </span>
     )}
   </div>

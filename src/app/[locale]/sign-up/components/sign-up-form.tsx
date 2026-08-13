@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { SocialSignIn } from '@/components/forms/social-sign-in';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { IconLoaderCircle } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { Input } from '@/components/ui/input';
 import { ROUTES } from '@/constants/routes';
 import { useSignUpMutation } from '@/hooks/api/use-sign-up-mutation';
@@ -93,7 +93,7 @@ export const SignUpForm = ({ phoneNumber }: { phoneNumber: string }) => {
             className="inline-block h-auto min-h-12 py-2 whitespace-normal"
           >
             {t('continue_with_email')}
-            {isSubmitting ? <IconLoaderCircle size="large" className="ms-2 animate-spin" /> : ''}
+            {isSubmitting ? <Icon name="reload" className="ms-2 animate-spin" /> : ''}
           </Button>
         </Form>
       </div>

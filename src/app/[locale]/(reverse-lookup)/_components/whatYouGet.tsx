@@ -3,15 +3,15 @@
 import { useTranslations } from 'next-intl';
 import React, { useMemo } from 'react';
 
-import { IconInfoCircleLine, IconLockLine, IconPhoneLine, IconRefresh } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 
 type WhatYouGetProps = Record<string, never>;
 
 const WHAT_YOU_GET_ITEMS = [
-  <IconPhoneLine className="size-6 text-brand" key="phone" />,
-  <IconLockLine className="size-6 text-brand" key="lock" />,
-  <IconRefresh className="size-6 text-brand" key="refresh" />,
-  <IconInfoCircleLine className="size-6 text-brand" key="info" />,
+  <Icon name="phone" className="size-6 text-brand" key="phone" />,
+  <Icon name="safe" className="size-6 text-brand" key="lock" />,
+  <Icon name="reload" className="size-6 text-brand" key="refresh" />,
+  <Icon name="info" className="size-6 text-brand" key="info" />,
 ];
 
 const WhatYouGet: React.FC<WhatYouGetProps> = () => {
