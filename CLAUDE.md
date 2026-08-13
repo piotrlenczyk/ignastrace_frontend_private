@@ -77,6 +77,26 @@ Components in `src/components/ui` are the **old** design system. For design work
 
 ## Working conventions
 
-- `npm run check-types` and `npm run lint` are the checks to run. Don't run `dev` or `build`.
+- `npm run check-types`, `npm run lint` and `npm run format:check` are the checks to run.
+  Don't run `dev` or `build`.
+- `npm run verify` chains all of those plus the tests and a production build. It is the one
+  command that answers "is this in a good state", and the one line that goes into CI when a
+  gate is back in scope.
+- The lint bar is **zero errors**; warnings are permitted and there are some. Don't add a
+  disable directive to clear one — if a rule is wrong for this codebase, change its severity
+  in `eslint.config.mjs` and say why in an ADR. See
+  `docs/adr/0006-lint-and-format-without-antfu.md`, which lists the rules already demoted.
+- Prettier owns formatting, at 120 columns to match the Tailwind class wrapping width. Both
+  generators format their own output, so regenerating tokens or icons never produces a
+  whitespace-only diff.
+- **CSS has no linter.** Stylelint went with the old lint stack; Prettier formats stylesheets
+  but checks nothing about them. Hand-written CSS is on you.
+- `AGENTS.md` carries a generated index of the Next documentation for the installed major.
+  This file stays the source of project rules; regenerate that one after a Next upgrade with
+  `npx @next/codemod agents-md --output AGENTS.md`.
+- **`middleware` deliberately stays on the deprecated convention.** Next 16 renames it to
+  `proxy`, which only supports the Node.js runtime — and changing the runtime of the composed
+  auth, i18n, case-normalisation and tracking chain is a behavioural change, not a rename.
+  This is a known deferred item, not an oversight. Don't "fix" it without planning that.
 - No `any` in TypeScript.
 - Architectural decisions live in `docs/adr/` — read the relevant record before contradicting one.
