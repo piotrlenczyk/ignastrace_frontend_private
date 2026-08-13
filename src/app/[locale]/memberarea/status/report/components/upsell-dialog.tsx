@@ -32,6 +32,18 @@ type PurchaseParams = {
   candidateIndex?: number;
 };
 
+/*
+ * Every caller passes a namespace under `…report.upsell`. Saying so, rather
+ * than accepting any namespace at all, is also what keeps this compiling: with
+ * next-intl v4's typed messages, `useTranslations` over the full namespace
+ * union instantiates one `t` signature per namespace in en.json and TypeScript
+ * gives up ("excessively deep").
+ */
+type UpsellNamespace = Extract<
+  Parameters<typeof useTranslations>[0],
+  `pages.reverse_lookup.report.upsell.${string}`
+>;
+
 type UpsellDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -39,7 +51,7 @@ type UpsellDialogProps = {
   onPurchaseSuccess?: (data?: PurchaseUpsellResponse) => void;
   onSuccessClose?: () => void;
   productKey: ProductKey;
-  translationNamespace: Parameters<typeof useTranslations>[0];
+  translationNamespace: UpsellNamespace;
   benefitKeys: string[];
   purchaseParams?: PurchaseParams;
   paymentMessageReportId?: string;

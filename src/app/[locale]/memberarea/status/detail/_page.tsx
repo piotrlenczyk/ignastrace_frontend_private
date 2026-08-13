@@ -50,7 +50,7 @@ export const DetailStatusClientPage = ({ location }: { location: Location }) => 
             </Button>
             <h1 className="h4 truncate font-bold">
               {location.type === 'LinkLocation'
-                ? t('link_name', { name: location.name })
+                ? t('link_name', { name: location.name ?? '' })
                 : formattedPhone.number}
             </h1>
           </div>

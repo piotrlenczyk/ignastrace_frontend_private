@@ -44,7 +44,7 @@ const PossiblePersonalDetails = ({
 
   const children = reverseLookup.reverse_lookup_owners.map(owner =>
     owner.has_children === true
-      ? t(`values.children`, { count: owner.num_children })
+      ? t(`values.children`, { count: owner.num_children ?? 0 })
       : owner.has_children === false
         ? t(`values.no_children`)
         : undefined,

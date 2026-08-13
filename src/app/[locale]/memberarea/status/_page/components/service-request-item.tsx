@@ -45,7 +45,7 @@ export const ServiceRequestItem = ({ serviceRequest }: ServiceRequestProps) => {
     switch (serviceRequest.source_type) {
       case 'Location':
         return serviceRequest.location.type === 'LinkLocation'
-          ? t('link_name', { name: serviceRequest.location.name })
+          ? t('link_name', { name: serviceRequest.location.name ?? '' })
           : formattedPhone;
       case 'SexOffenderSearchReport':
         return serviceRequest.location.name;

@@ -1,5 +1,5 @@
 import { useSearchParams } from 'next/navigation';
-import { useLocale } from 'next-intl';
+import { type Locale, useLocale } from 'next-intl';
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -13,7 +13,7 @@ import { IconGlobeLine } from '@/components/ui/icon/icons';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useUpdateLocaleMutation } from '@/hooks/api/use-update-locale-mutation';
 import { AvailableLanguages } from '@/libs/i18n';
-import { usePathname, useRouter } from '@/libs/i18n-routing';
+import { resolveLocale, usePathname, useRouter } from '@/libs/i18n-routing';
 
 export const LanguageSelector = () => {
   const locale = useLocale();
@@ -25,14 +25,14 @@ export const LanguageSelector = () => {
   const { mutate: updateLocale } = useUpdateLocaleMutation({
     onSuccess: (locale) => {
       const query = Object.fromEntries(searchParams.entries());
-      router.push({ pathname, query }, { locale });
+      router.push({ pathname, query }, { locale: resolveLocale(locale) });
       router.refresh();
     },
     onError: () => {
     },
   });
 
-  const handleChangeLanguage = (locale: string) => {
+  const handleChangeLanguage = (locale: Locale) => {
     setSelectedLanguage(locale);
     updateLocale(locale);
   };

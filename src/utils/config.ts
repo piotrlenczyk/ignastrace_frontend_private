@@ -1,4 +1,4 @@
-import type { LocalePrefixMode } from 'node_modules/next-intl/dist/types/src/routing/types';
+import type { LocalePrefixMode } from 'next-intl/routing';
 
 const localePrefix: LocalePrefixMode = 'as-needed';
 
@@ -49,7 +49,7 @@ export const getEnabledLocaleCodes = (version = getLanguageVersion()) => {
   return Object.values(getLanguagesByVersion(version)).map(locale => locale.code);
 };
 
-export const AppConfig = {
+export const SiteConfig = {
   name: 'Mobitrace.io',
   locales: getEnabledLocaleCodes(),
   allLocales: getAllLocaleCodes(),

@@ -20,7 +20,7 @@ export const useNotificationText = (notification: Notification) => {
           {chunks}
         </strong>
       ),
-      notificationName: notification.location.name,
+      notificationName: notification.location.name ?? '',
     })
     : null;
 
@@ -30,7 +30,7 @@ export const useNotificationText = (notification: Notification) => {
         {chunks}
       </strong>
     ),
-    notificationName: notification.location.name,
+    notificationName: notification.location.name ?? '',
     phone: usePhoneNumberFormatter(notification.location.phone).number,
   });
 

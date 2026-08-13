@@ -5,7 +5,7 @@ import createMiddleware from 'next-intl/middleware';
 
 import { AUTH_ROUTES, PROTECTED_ROUTES } from '@/constants/routes';
 import { routing } from '@/libs/i18n-routing';
-import { AppConfig, type LanguageCode } from '@/utils/config';
+import { SiteConfig, type LanguageCode } from '@/utils/config';
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -34,7 +34,7 @@ const redirectDisabledLocale = (request: NextRequest) => {
   const localeMatch = request.nextUrl.pathname.match(/^\/([a-z]{2})(\/|$)/);
   const locale = localeMatch?.[1] as LanguageCode | undefined;
 
-  if (!locale || !AppConfig.allLocales.includes(locale) || AppConfig.locales.includes(locale)) {
+  if (!locale || !SiteConfig.allLocales.includes(locale) || SiteConfig.locales.includes(locale)) {
     return null;
   }
 

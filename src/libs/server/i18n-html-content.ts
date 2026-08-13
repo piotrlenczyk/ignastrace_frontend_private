@@ -3,7 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { AppConfig } from '@/utils/config';
+import { SiteConfig } from '@/utils/config';
 
 /**
  * Sanitizes a path segment to prevent path traversal attacks
@@ -45,8 +45,8 @@ export const getTranslatedHtml = async (folder: string, locale: string, suffix?:
   }
 
   const fallbackFilename = sanitizedSuffix
-    ? `${AppConfig.defaultLocale}_${sanitizedSuffix}`
-    : AppConfig.defaultLocale;
+    ? `${SiteConfig.defaultLocale}_${sanitizedSuffix}`
+    : SiteConfig.defaultLocale;
   const fallbackPath = path.join(basePath, sanitizedFolder!, `${fallbackFilename}.html`);
 
   validatePath(fallbackPath, basePath);
