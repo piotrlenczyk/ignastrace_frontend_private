@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { IconCheckCircle } from '@/components/ui/icon/icons/CheckCircle';
 import { IconLoaderCircle } from '@/components/ui/icon/icons/LoaderCircle';
 import { IconTagLine } from '@/components/ui/icon/icons/TagLine';
-import { useCldrFormatPrice } from '@/hooks/use-cldr-format-price';
+import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { useCountry } from '@/hooks/useCountry';
 
 import { useGetUpsellProductsMutation } from '../_hooks/api/use-get-upsell-products-mutation';
@@ -72,7 +72,7 @@ const UpsellDialog = ({
   defaultPrice = 195,
 }: UpsellDialogProps) => {
   const t = useTranslations(translationNamespace);
-  const formatPrice = useCldrFormatPrice();
+  const formatPrice = createPriceFormatter();
   const locale = useLocale();
   const country = useCountry();
 

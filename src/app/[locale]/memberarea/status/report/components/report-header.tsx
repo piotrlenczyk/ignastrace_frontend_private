@@ -7,8 +7,8 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { IconArrowLeft, IconCheckCircle } from '@/components/ui/icon/icons';
 import { ROUTES } from '@/constants/routes';
+import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { usePdfDownload } from '@/hooks/use-pdf-download';
-import { usePhoneNumberFormatter } from '@/hooks/use-phone-number-formatter';
 import type { ReverseLookup } from '@/types/reverse-lookup.types';
 import type { User } from '@/types/user';
 
@@ -18,7 +18,7 @@ const ReportHeader = ({ reverseLookup, user }: { reverseLookup: ReverseLookup; u
   const t = useTranslations('pages.reverse_lookup.report.header');
   const { downloadPdf, isGenerating } = usePdfDownload();
 
-  const phoneNumberFormatted = usePhoneNumberFormatter(reverseLookup.phone);
+  const phoneNumberFormatted = formatPhoneNumber(reverseLookup.phone);
   const photo = reverseLookup.reverse_lookup_photos[0]?.content;
   const hasUnlimitedDownloads = user.purchase_info?.unlimited_downloads_upsell_available ?? false;
 

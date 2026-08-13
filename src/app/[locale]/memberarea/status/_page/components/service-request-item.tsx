@@ -6,7 +6,7 @@ import {
   IconRefreshCw,
 } from '@/components/ui/icon/icons';
 import { ROUTES } from '@/constants/routes';
-import { usePhoneNumberFormatter } from '@/hooks/use-phone-number-formatter';
+import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { Link, useRouter } from '@/libs/i18n-routing';
 import { cn } from '@/libs/utils';
 import type { ServiceRequestProps } from '@/types/service-request';
@@ -39,7 +39,7 @@ export const ServiceRequestItem = ({ serviceRequest }: ServiceRequestProps) => {
     ? ROUTES.MEMBER.FIND_BY_LINK.HOME
     : `${ROUTES.MEMBER.FIND_BY_NUMBER.MESSAGE_SENDING}?phone=${encodeURIComponent(serviceRequest.phone as string)}`;
 
-  const formattedPhone = usePhoneNumberFormatter(serviceRequest.phone as string).number;
+  const formattedPhone = formatPhoneNumber(serviceRequest.phone as string).number;
 
   const cardTitle = () => {
     switch (serviceRequest.source_type) {

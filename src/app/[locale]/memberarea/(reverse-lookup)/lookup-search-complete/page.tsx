@@ -4,8 +4,8 @@ import { getFunnelPhone } from '@/actions/funnel-phone-number';
 import { auth } from '@/auth';
 import ProductLayout from '@/components/layouts/product-layout';
 import { ROUTES } from '@/constants/routes';
+import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
-import { usePhoneNumberFormatter } from '@/hooks/use-phone-number-formatter';
 import { getApi } from '@/libs/server/api';
 import { getFeatures } from '@/libs/server/feature-flags';
 import type { User } from '@/types/user';
@@ -44,7 +44,7 @@ export default async function LookupSearchCompletePage() {
     redirect(redirectUrl);
   }
 
-  const formattedNumber = usePhoneNumberFormatter(phoneNumber);
+  const formattedNumber = formatPhoneNumber(phoneNumber);
 
   const api = await getApi();
   const user = await api.get<User>('/user?expand=purchase_info');

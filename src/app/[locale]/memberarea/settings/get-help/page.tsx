@@ -24,7 +24,6 @@ const GetHelpPage = async (props: PageProps<'/[locale]/memberarea/settings/get-h
         <h1 className="h4 font-bold">
           {t('contact_information.title')}
         </h1>
-        {/* eslint-disable-next-line react-dom/no-dangerously-set-innerhtml */}
         <div dangerouslySetInnerHTML={{ __html: t.raw('subtitle') }} />
         <ContactInformation />
       </div>

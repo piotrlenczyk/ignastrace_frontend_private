@@ -1,7 +1,5 @@
 import { getTranslations } from 'next-intl/server';
 
-import { resolveLocale } from '@/libs/i18n-routing';
-
 import { FAQs } from '@/components/homepage/faqs';
 import { Hero } from '@/components/homepage/hero';
 import { HowDoesItWork } from '@/components/homepage/howDoesItWork';
@@ -10,7 +8,8 @@ import { Locator } from '@/components/homepage/locator';
 import { WhyChoose } from '@/components/homepage/whyChoose';
 import WebsiteLayout from '@/components/layouts/website-layout';
 import { ROUTES } from '@/constants/routes';
-import { useAuthenticatedRedirect } from '@/hooks/use-auth-redirect';
+import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
+import { resolveLocale } from '@/libs/i18n-routing';
 import { getUserCountry } from '@/libs/server/user-country';
 
 export async function generateMetadata(props: PageProps<'/[locale]/find-lost-phone'>) {
@@ -31,7 +30,7 @@ export async function generateMetadata(props: PageProps<'/[locale]/find-lost-pho
 const Index = async () => {
   const country = await getUserCountry();
 
-  await useAuthenticatedRedirect({
+  await redirectIfAuthenticated({
     activeSubscriptionRoute: ROUTES.MEMBER.FIND_BY_NUMBER.HOME,
     endedSubscriptionRoute: ROUTES.MEMBER.SETTINGS.BILLING,
   });

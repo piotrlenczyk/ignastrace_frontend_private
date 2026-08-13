@@ -3,7 +3,12 @@ import { loadEnv } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 
-const include = ['src/**/*.test.{js,jsx,ts,tsx}'];
+/*
+ * The root entry is the ratchet test, which lints against eslint.config.mjs —
+ * the one piece of configuration in this repository with logic in it, and the
+ * one ADR 0003 warns goes quiet rather than red when it breaks.
+ */
+const include = ['src/**/*.test.{js,jsx,ts,tsx}', '*.test.mts'];
 
 /*
  * Tests that need a DOM. Vitest 3 removed `environmentMatchGlobs`; `projects`

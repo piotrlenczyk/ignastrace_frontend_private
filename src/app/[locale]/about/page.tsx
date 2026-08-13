@@ -4,7 +4,7 @@ import { Locator } from '@/components/homepage/locator';
 import WebsiteLayout from '@/components/layouts/website-layout';
 import { IconFlagLine, IconGlobeLine, IconLocationMy, IconThumbsUpLine } from '@/components/ui/icon/icons';
 import { ROUTES } from '@/constants/routes';
-import { useAuthenticatedRedirect } from '@/hooks/use-auth-redirect';
+import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
 import { getUserCountry } from '@/libs/server/user-country';
 
 type CardType = {
@@ -40,7 +40,7 @@ const Card = ({ title, description, Icon, t }: CardType & { t: any }) => {
 };
 
 export default async function About() {
-  await useAuthenticatedRedirect({
+  await redirectIfAuthenticated({
     activeSubscriptionRoute: ROUTES.MEMBER.SETTINGS.GET_HELP,
     endedSubscriptionRoute: ROUTES.MEMBER.SETTINGS.BILLING,
   });

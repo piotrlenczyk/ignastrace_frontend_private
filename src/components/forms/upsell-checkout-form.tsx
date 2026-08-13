@@ -8,7 +8,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 
 import type { Product } from '@/app/[locale]/success/_types/product.type';
-import { useCldrFormatPrice } from '@/hooks/use-cldr-format-price';
+import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { getStripePromise } from '@/libs/stripe';
 
 import { IconCheckCircleLine, IconLoaderCircle, IconLockLine } from '../ui/icon/icons';
@@ -25,7 +25,7 @@ const UpsellCheckoutForm = ({
   buttonText: string;
   onSuccess: () => void;
 }) => {
-  const formatPrice = useCldrFormatPrice();
+  const formatPrice = createPriceFormatter();
   const locale = useLocale();
   const stripePromise = useMemo(() => getStripePromise(locale as StripeElementLocale), [locale]);
   const [isSubmitting, setIsSubmitting] = useState(false);

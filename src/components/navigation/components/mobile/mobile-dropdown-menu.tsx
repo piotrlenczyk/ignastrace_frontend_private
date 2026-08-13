@@ -59,7 +59,7 @@ export const MobileDropdownMenu = (
           <Dialog.Content className="s-mobile-menu-content">
             <VisuallyHidden>
               <Dialog.DialogTitle>{t('mobile_dialog_title')}</Dialog.DialogTitle>
-              <Dialog.DialogDescription>t('mobile_dialog_description')</Dialog.DialogDescription>
+              <Dialog.DialogDescription>{t('mobile_dialog_description')}</Dialog.DialogDescription>
             </VisuallyHidden>
             <div className="s-mobile-menu-content-links">
               <Suspense fallback={<div>Cargando...</div>}>

@@ -10,8 +10,8 @@ import {
   IconCheckCircle,
 } from '@/components/ui/icon/icons';
 import { ROUTES } from '@/constants/routes';
+import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { usePdfDownload } from '@/hooks/use-pdf-download';
-import { usePhoneNumberFormatter } from '@/hooks/use-phone-number-formatter';
 import type { ReverseLookupDataLeak } from '@/types/reverse-lookup-data-leaks.types';
 import type { User } from '@/types/user';
 
@@ -30,7 +30,7 @@ export const ReportDetails = ({ user, reverseLookupDataLeaks, photo, phone, reve
 
   const { downloadPdf, isGenerating } = usePdfDownload();
 
-  const { number: formattedPhoneNumber } = usePhoneNumberFormatter(phone);
+  const { number: formattedPhoneNumber } = formatPhoneNumber(phone);
 
   const hasUnlimitedDownloads = user.purchase_info?.unlimited_downloads_upsell_available ?? false;
 

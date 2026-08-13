@@ -26,8 +26,8 @@ import { getFunnelPhone } from '@/actions/funnel-phone-number';
 import FunnelLayout from '@/components/layouts/funnel-layout';
 import { FALLBACK_COUNTRY } from '@/constants/countries';
 import { ROUTES } from '@/constants/routes';
+import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
-import { usePhoneNumberFormatter } from '@/hooks/use-phone-number-formatter';
 import { LanguageLocale } from '@/utils/config';
 
 import { Loader } from './components/loader';
@@ -63,7 +63,7 @@ const LoaderPage = async () => {
   const labels = localeMap[locale as keyof typeof localeMap] ?? en;
 
   const phoneNumber = await getFunnelPhone();
-  const formattedNumber = usePhoneNumberFormatter(phoneNumber);
+  const formattedNumber = formatPhoneNumber(phoneNumber);
 
   const redirectUrl = await getSubscriptionRedirect({
     routes: {

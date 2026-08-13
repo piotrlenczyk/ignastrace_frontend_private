@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl';
 
-import { usePhoneNumberFormatter } from '@/hooks/use-phone-number-formatter';
+import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import type { Notification } from '@/types/notification';
 
 const translations = {
@@ -31,7 +31,7 @@ export const useNotificationText = (notification: Notification) => {
       </strong>
     ),
     notificationName: notification.location.name ?? '',
-    phone: usePhoneNumberFormatter(notification.location.phone).number,
+    phone: formatPhoneNumber(notification.location.phone).number,
   });
 
   return {

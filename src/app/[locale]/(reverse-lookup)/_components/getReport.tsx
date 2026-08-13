@@ -8,7 +8,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { IconCheckCircleLine, IconLockLine } from '@/components/ui/icon/icons';
 import { ROUTES } from '@/constants/routes';
-import { useCldrFormatPrice } from '@/hooks/use-cldr-format-price';
+import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import type { Products } from '@/types/products';
 
 type GetReportProps = {
@@ -19,7 +19,7 @@ type GetReportProps = {
 
 const GetReport: React.FC<GetReportProps> = ({ product, currency, country }) => {
   const t = useTranslations('pages.reverse_lookup.components.get_report');
-  const formatPrice = useCldrFormatPrice();
+  const formatPrice = createPriceFormatter();
   const locale = useLocale();
   const trialPrice = formatPrice(product.trial_charge_price, currency, country, locale);
 

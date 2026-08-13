@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { IconCheckCircleLine, IconXOctagon } from '@/components/ui/icon/icons';
 import { ROUTES } from '@/constants/routes';
-import { useCldrFormatPrice } from '@/hooks/use-cldr-format-price';
+import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { Link, useRouter } from '@/libs/i18n-routing';
 import type { Subscription } from '@/types/subscription';
 
@@ -26,7 +26,7 @@ export function BillingPageClient({ subscription: defaultSubscription, country }
   const locale = useLocale();
   const t = useTranslations('pages.settings.billing');
   const [subscription, setSubscription] = useState<Subscription>(defaultSubscription);
-  const formatCldrPrice = useCldrFormatPrice();
+  const formatCldrPrice = createPriceFormatter();
   const router = useRouter();
   const expiredSubscriptionCancelAt = subscription.cancel_at || subscription.canceled_at;
 

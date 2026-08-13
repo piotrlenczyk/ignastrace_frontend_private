@@ -19,7 +19,6 @@ export default async function ContactUsPage() {
           <h2 className="h4 font-bold">
             {t('title')}
           </h2>
-          {/* eslint-disable-next-line react-dom/no-dangerously-set-innerhtml */}
           <div dangerouslySetInnerHTML={{ __html: t.raw('subtitle') }} />
           <ContactInformation />
         </div>

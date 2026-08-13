@@ -123,5 +123,14 @@
       "react": "$react",
       "react-dom": "$react-dom"
     }
+  },
+  "lint-staged": {
+    "*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{css,json,md,yml,yaml}": [
+      "prettier --write"
+    ]
   }
 }

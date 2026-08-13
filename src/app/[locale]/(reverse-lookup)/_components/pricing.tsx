@@ -1,7 +1,7 @@
 import type { CountryCode } from 'libphonenumber-js';
 import { useLocale, useTranslations } from 'next-intl';
 
-import { useCldrFormatPrice } from '@/hooks/use-cldr-format-price';
+import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import type { Products } from '@/types/products';
 
 import { PricingCard } from './pricing-card';
@@ -12,7 +12,7 @@ export function PricingContent({
   products,
 }: { country: CountryCode; currency: string; products: Products }) {
   const t = useTranslations('pages.reverse_lookup.components.pricing.cards');
-  const formatPrice = useCldrFormatPrice();
+  const formatPrice = createPriceFormatter();
   const locale = useLocale();
   const trialPrice = formatPrice(products.trial_charge_price, currency, country, locale);
   const subscriptionPrice = formatPrice(products.subscription_price, currency, country, locale);

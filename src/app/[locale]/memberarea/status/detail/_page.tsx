@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { IconArrowLeft, IconLocationPinCheck } from '@/components/ui/icon/icons';
 import { ROUTES } from '@/constants/routes';
-import { usePhoneNumberFormatter } from '@/hooks/use-phone-number-formatter';
+import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { Link } from '@/libs/i18n-routing';
 import type { Location } from '@/types/location';
 
@@ -16,7 +16,7 @@ export const DetailStatusClientPage = ({ location }: { location: Location }) => 
 
   const t = useTranslations('pages.status');
   const tCommon = useTranslations('common');
-  const formattedPhone = usePhoneNumberFormatter(location.phone);
+  const formattedPhone = formatPhoneNumber(location.phone);
 
   const mapStyles = [
     {

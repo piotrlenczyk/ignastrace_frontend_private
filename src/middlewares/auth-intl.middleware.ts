@@ -5,7 +5,7 @@ import createMiddleware from 'next-intl/middleware';
 
 import { AUTH_ROUTES, PROTECTED_ROUTES } from '@/constants/routes';
 import { routing } from '@/libs/i18n-routing';
-import { SiteConfig, type LanguageCode } from '@/utils/config';
+import { type LanguageCode,SiteConfig } from '@/utils/config';
 
 const intlMiddleware = createMiddleware(routing);
 

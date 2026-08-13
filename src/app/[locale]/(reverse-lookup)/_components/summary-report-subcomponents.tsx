@@ -1,4 +1,3 @@
-/* eslint-disable react-dom/no-dangerously-set-innerhtml */
 import Image from 'next/image';
 import React, { useMemo } from 'react';
 

@@ -1,4 +1,3 @@
-/* eslint-disable react-dom/no-dangerously-set-innerhtml */
 
 import { getLocale } from 'next-intl/server';
 

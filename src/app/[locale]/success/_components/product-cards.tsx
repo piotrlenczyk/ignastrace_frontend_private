@@ -1,4 +1,3 @@
-/* eslint-disable react-dom/no-dangerously-set-innerhtml */
 import { DialogDescription, DialogPortal, DialogTitle } from '@radix-ui/react-dialog';
 import { useLocale, useTranslations } from 'next-intl';
 import { useState } from 'react';
@@ -6,7 +5,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
 import { IconCheck, IconRadarAlt, IconSupportLine } from '@/components/ui/icon/icons';
-import { useCldrFormatPrice } from '@/hooks/use-cldr-format-price';
+import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { useCountry } from '@/hooks/useCountry';
 
 import type { Product } from '../_types/product.type';
@@ -23,7 +22,7 @@ export const ProductCards = ({
 }) => {
   const [dialogProduct, setDialogProduct] = useState<Product>();
   const t = useTranslations('pages.upsell');
-  const formatPrice = useCldrFormatPrice();
+  const formatPrice = createPriceFormatter();
   const locale = useLocale();
   const country = useCountry();
 
@@ -48,7 +47,8 @@ export const ProductCards = ({
                 box-content flex max-w-[50%] min-w-[280px] flex-1 px-3
                 first:pl-5
                 last:pr-5
-                md:first:pl-0 md:last:pr-0
+                md:first:pl-0
+                md:last:pr-0
               `}
               key={product.key}
             >

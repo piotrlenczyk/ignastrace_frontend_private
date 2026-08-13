@@ -3,7 +3,7 @@ import { useLocale, useTranslations } from 'next-intl';
 
 import { FAQs } from '@/components/homepage/faqs';
 import { InstantLocator } from '@/components/homepage/instantLocator';
-import { useCldrFormatPrice } from '@/hooks/use-cldr-format-price';
+import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import type { Products } from '@/types/products';
 
 import { PricingHero } from './hero';
@@ -15,7 +15,7 @@ export function PricingContent({
   products,
 }: { country: CountryCode; currency: string; products: Products }) {
   const t = useTranslations('pages.pricing.cards');
-  const formatPrice = useCldrFormatPrice();
+  const formatPrice = createPriceFormatter();
   const locale = useLocale();
 
   const trialPrice = formatPrice(products.trial_charge_price, currency, country, locale);

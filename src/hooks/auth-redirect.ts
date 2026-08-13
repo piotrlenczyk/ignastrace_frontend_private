@@ -16,7 +16,7 @@ type AuthRedirectOptions = {
   redirectIfAuthenticated?: boolean;
 };
 
-export const useAuthRedirect = async (options: AuthRedirectOptions): Promise<void> => {
+export const redirectBySubscriptionStatus = async (options: AuthRedirectOptions): Promise<void> => {
   const {
     routes,
     allowUnauthenticated = true,
@@ -38,12 +38,12 @@ export const useAuthRedirect = async (options: AuthRedirectOptions): Promise<voi
       }
     }
   } catch (error) {
-    console.error('Error in useAuthRedirect:', error);
+    console.error('Error in redirectBySubscriptionStatus:', error);
     throw error;
   }
 };
 
-export const useAuthenticatedRedirect = async ({
+export const redirectIfAuthenticated = async ({
   activeSubscriptionRoute,
   endedSubscriptionRoute,
   noSubscriptionRoute,
@@ -64,7 +64,7 @@ export const useAuthenticatedRedirect = async ({
     routes.noSubscription = noSubscriptionRoute;
   }
 
-  return useAuthRedirect({
+  return redirectBySubscriptionStatus({
     routes,
     redirectIfAuthenticated: true,
   });

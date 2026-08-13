@@ -123,7 +123,6 @@ const Carousel = React.forwardRef<
     return (
       <CarouselContext.Provider
 
-        // eslint-disable-next-line react/no-unstable-context-value
         value={{
           carouselRef,
           api,

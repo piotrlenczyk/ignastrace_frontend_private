@@ -2,13 +2,13 @@ import { getTranslations } from 'next-intl/server';
 
 import WebsiteLayout from '@/components/layouts/website-layout';
 import { ROUTES } from '@/constants/routes';
-import { useAuthenticatedRedirect } from '@/hooks/use-auth-redirect';
+import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
 
 import { ContactInformation } from './components/contact-information';
 import { ContactForm } from './form';
 
 export default async function Contact() {
-  await useAuthenticatedRedirect({
+  await redirectIfAuthenticated({
     activeSubscriptionRoute: ROUTES.MEMBER.SETTINGS.GET_HELP,
     endedSubscriptionRoute: ROUTES.MEMBER.SETTINGS.BILLING,
   });
@@ -18,8 +18,7 @@ export default async function Contact() {
   return (
     <WebsiteLayout>
       <main className={`
-        container container-wide flex flex-col gap-12 p-6
-        [grid-area:main]
+        container container-wide flex flex-col gap-12 p-6 [grid-area:main]
         md:grid md:grid-cols-2 md:gap-8 md:py-8
       `}
       >

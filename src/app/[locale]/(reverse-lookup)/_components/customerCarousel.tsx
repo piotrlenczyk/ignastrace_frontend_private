@@ -1,4 +1,3 @@
-/* eslint-disable react-dom/no-dangerously-set-innerhtml */
 'use client';
 
 import { useTranslations } from 'next-intl';

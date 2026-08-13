@@ -6,8 +6,8 @@ import { auth } from '@/auth';
 import ProductLayout from '@/components/layouts/product-layout';
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
+import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
-import { usePhoneNumberFormatter } from '@/hooks/use-phone-number-formatter';
 import { Link } from '@/libs/i18n-routing';
 
 export default async function MessageSendingPage() {
@@ -19,7 +19,7 @@ export default async function MessageSendingPage() {
   }
 
   const storedPhoneNumber = await getFunnelPhone();
-  const formattedNumber = usePhoneNumberFormatter(storedPhoneNumber);
+  const formattedNumber = formatPhoneNumber(storedPhoneNumber);
 
   const redirectUrl = await getSubscriptionRedirect({
     routes: {

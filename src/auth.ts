@@ -12,12 +12,10 @@ import { ROUTES } from './constants/routes';
 import { getApi } from './libs/server/api';
 
 declare module 'next-auth' {
-  // eslint-disable-next-line ts/consistent-type-definitions
   interface User extends ApiUser {
     apiToken: string;
   }
 
-  // eslint-disable-next-line ts/consistent-type-definitions
   interface Session {
     apiToken: string;
     user: {
@@ -28,7 +26,6 @@ declare module 'next-auth' {
 }
 
 declare module '@auth/core/jwt' {
-  // eslint-disable-next-line ts/consistent-type-definitions
   interface JWT {
     idToken?: string;
     apiToken: string;

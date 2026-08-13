@@ -9,8 +9,8 @@ import { Card } from '@/components/homepage/card';
 import LimitedOfferTag from '@/components/reverse-lookup/limited-offer-tag';
 import { Button } from '@/components/ui/button';
 import { IconLoaderCircle, IconTagLine } from '@/components/ui/icon/icons';
+import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { useApi } from '@/hooks/use-api';
-import { useCldrFormatPrice } from '@/hooks/use-cldr-format-price';
 import { useMessageErrorToast } from '@/hooks/use-message-error-toast';
 import { useCountry } from '@/hooks/useCountry';
 import type { User } from '@/types/user';
@@ -48,7 +48,7 @@ const UpsellCard = (
   const router = useRouter();
   const locale = useLocale();
   const country = useCountry();
-  const formatPrice = useCldrFormatPrice();
+  const formatPrice = createPriceFormatter();
   const showErrorToast = useMessageErrorToast();
 
   const [isPurchased, setIsPurchased] = useState(false);

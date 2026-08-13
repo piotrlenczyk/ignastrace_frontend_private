@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/collapsible';
 import { IconChevronRightSmall, IconTrashLine } from '@/components/ui/icon/icons';
 import { DEFAULT_CURRENCY } from '@/constants/currencies';
-import { useCldrFormatPrice } from '@/hooks/use-cldr-format-price';
+import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { useCountry } from '@/hooks/useCountry';
 import { cn } from '@/libs/utils';
 
@@ -30,7 +30,7 @@ export const OrderDetails = ({
   className?: string;
 }) => {
   const t = useTranslations('pages.upsell');
-  const formatPrice = useCldrFormatPrice();
+  const formatPrice = createPriceFormatter();
 
   const total = addedProducts.reduce((acc, product) => acc + product.price, 0);
   const currency = products[0]?.currency || DEFAULT_CURRENCY;

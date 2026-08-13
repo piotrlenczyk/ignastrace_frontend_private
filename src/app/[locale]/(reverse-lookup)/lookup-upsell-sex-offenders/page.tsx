@@ -5,7 +5,7 @@ import { auth } from '@/auth';
 import FunnelLayout from '@/components/layouts/funnel-layout';
 import { IconCheckCircle } from '@/components/ui/icon/icons';
 import { ROUTES } from '@/constants/routes';
-import { useCldrFormatPrice } from '@/hooks/use-cldr-format-price';
+import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { getApi } from '@/libs/server/api';
 import { getUserCountry } from '@/libs/server/user-country';
 
@@ -39,7 +39,7 @@ const UpsellSexOffendersPage = async () => {
 
   const locale = await getLocale();
   const country = await getUserCountry();
-  const formatPrice = await useCldrFormatPrice();
+  const formatPrice = await createPriceFormatter();
   const api = await getApi();
   const products = await api.get<Product[]>('/reverse_lookups_upsellings');
 

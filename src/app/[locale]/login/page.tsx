@@ -1,6 +1,6 @@
 import FunnelLayout from '@/components/layouts/funnel-layout';
 import { ROUTES } from '@/constants/routes';
-import { useAuthenticatedRedirect } from '@/hooks/use-auth-redirect';
+import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
 
 import { LoginForm } from './components/login-form';
 
@@ -8,7 +8,7 @@ export default async function LoginInPage(props: PageProps<'/[locale]/login'>) {
   const searchParams = await props.searchParams;
   const error = !!searchParams.error;
 
-  await useAuthenticatedRedirect({
+  await redirectIfAuthenticated({
     activeSubscriptionRoute: ROUTES.MEMBER.FIND_BY_NUMBER.HOME,
     endedSubscriptionRoute: ROUTES.MEMBER.SETTINGS.BILLING,
   });

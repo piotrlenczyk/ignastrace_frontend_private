@@ -19,6 +19,8 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
 
+import { format, resolveConfig } from 'prettier';
+
 const args = {};
 for (let i = 2; i < process.argv.length; i += 2) {
   args[process.argv[i].replace(/^--/, '')] = process.argv[i + 1];
@@ -361,16 +363,28 @@ const styleSections = families.map((family) => {
       }
       return lines.join('\n');
     });
-  // No blank line between styles, tempting though it is: stylelint's standard config forbids
-  // an empty line between consecutive custom properties. Only the section heading gets one,
-  // because the rule stops checking after a comment.
+  // No blank line between styles, tempting though it is: the list reads as one
+  // block that way, and the section heading is what separates groups.
   return [`${heading}\n`, ...blocks].join('\n');
 });
 
 mkdirSync(OUTDIR, { recursive: true });
 
-writeFileSync(
-  join(OUTDIR, 'primitives.css'),
+/*
+ * Written through Prettier rather than straight to disk. Prettier formats CSS
+ * in this repository, so a generator that emitted its own whitespace would make
+ * every regeneration produce a diff of nothing but reformatting — and the first
+ * `npm run format` after one would produce a second.
+ */
+const prettierOptions = await resolveConfig(join(OUTDIR, 'primitives.css'));
+
+async function writeCss(name, contents) {
+  const path = join(OUTDIR, name);
+  writeFileSync(path, await format(contents, { ...prettierOptions, filepath: path }));
+}
+
+await writeCss(
+  'primitives.css',
   `${header(
     'Primitives — the raw palette.',
     'Do not reference these from components; use semantics.css instead.',
@@ -388,16 +402,16 @@ writeFileSync(
  * compression. See docs/adr/0005-two-colour-systems-during-the-redesign.md,
  * which corrects record 0004 on this point.
  */
-writeFileSync(
-  join(OUTDIR, 'semantics.css'),
+await writeCss(
+  'semantics.css',
   `${header(
     'Semantics — colour intent tokens.',
     'Requires primitives.css. Tokens tagged "local" come from this Figma file and override the corporate library.',
   )}@import "./primitives.css";\n\n@theme static {\n${semanticLines.join('\n')}\n}\n`,
 );
 
-writeFileSync(
-  join(OUTDIR, 'typo.css'),
+await writeCss(
+  'typo.css',
   `${header(
     'Typography — named text styles.',
     'A style sets size, line height, weight and tracking; the font family is a separate font-* class, because Tailwind\'s --text-* namespace has no family modifier. Families point at the custom property next/font exposes.',

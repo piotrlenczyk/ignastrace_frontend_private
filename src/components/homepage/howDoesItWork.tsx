@@ -39,8 +39,7 @@ export const HowDoesItWork = ({ className }: { className?: string }) => {
             <li
               key={item.number}
               className={`
-                relative
-                [counter-increment:step-counter]
+                relative [counter-increment:step-counter]
                 before:absolute before:top-[-8px] before:right-[8px] before:z-[-1] before:font-bebas before:text-[88px]
                 before:leading-none before:text-disabled before:content-['0'_counter(step-counter)]
               `}

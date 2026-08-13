@@ -10,7 +10,7 @@ import { useEffect, useMemo, useState } from 'react';
 import type { FunnelPlan } from '@/actions/funnel-plan';
 import { ROUTES } from '@/constants/routes';
 import { useGetProduct } from '@/hooks/api/use-get-product';
-import { useCldrFormatPrice } from '@/hooks/use-cldr-format-price';
+import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { getStripePromise } from '@/libs/stripe';
 import type { Products } from '@/types/products';
 
@@ -42,7 +42,7 @@ const CheckoutForm = ({
 }) => {
   const t = useTranslations('pages.checkout');
 
-  const formatPrice = useCldrFormatPrice();
+  const formatPrice = createPriceFormatter();
   const locale = useLocale();
   const stripePromise = useMemo(() => getStripePromise(locale as StripeElementLocale), [locale]);
 

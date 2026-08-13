@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+ 
 import { Buffer } from 'node:buffer';
 
 import { LokaliseApi } from '@lokalise/node-api';

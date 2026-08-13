@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
 
-import { usePhoneNumberFormatter } from '@/hooks/use-phone-number-formatter';
+import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { detectLineType } from '@/utils/phone-line-detector';
 
 import { useCarrierQuery } from '../../../search/hooks/api/use-carrier-query';
 
 export const useSummaryReport = (phoneNumber: string) => {
-  const phoneNumberFormatted = usePhoneNumberFormatter(phoneNumber);
+  const phoneNumberFormatted = formatPhoneNumber(phoneNumber);
   const { data: carrierResponse } = useCarrierQuery({ phone: phoneNumber });
 
   // Detect line type

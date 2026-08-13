@@ -37,7 +37,6 @@ const FormField = <
   ...props
 }: ControllerProps<TFieldValues, TName>) => {
   return (
-    // eslint-disable-next-line react/no-unstable-context-value
     <FormFieldContext.Provider value={{ name: props.name }}>
       <Controller {...props} />
     </FormFieldContext.Provider>
@@ -82,7 +81,6 @@ const FormItem = React.forwardRef<
   const id = React.useId();
 
   return (
-    // eslint-disable-next-line react/no-unstable-context-value
     <FormItemContext.Provider value={{ id }}>
       <div ref={ref} className={cn('space-y-2', className)} {...props} />
     </FormItemContext.Provider>
@@ -178,6 +176,5 @@ export {
   FormItem,
   FormLabel,
   FormMessage,
-  // eslint-disable-next-line react-refresh/only-export-components
   useFormField,
 };

@@ -46,14 +46,12 @@ export function CancelSubscription({ status, isPending, onCancel }: CancelSubscr
           <DialogDescription>
             {isCanceled
               ? (
-            // eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
                   <div
                     className="animate-[fade-in_300ms_ease-out_100ms_both]"
                     dangerouslySetInnerHTML={{ __html: t.raw('description_canceled') }}
                   />
                 )
               : (
-            // eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
                   <div
                     dangerouslySetInnerHTML={{ __html: t.raw('description') }}
                   />
