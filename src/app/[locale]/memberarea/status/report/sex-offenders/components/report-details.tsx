@@ -20,10 +20,7 @@ import OthersInformation from './others-information';
 import PersonalInformationComponent from './personal-information';
 import Photos from './photos';
 
-export const ReportDetails = ({ sexOffenderData, user }: {
-  user: User;
-  sexOffenderData: SexOffenderData;
-}) => {
+export const ReportDetails = ({ sexOffenderData, user }: { user: User; sexOffenderData: SexOffenderData }) => {
   const t = useTranslations('pages.reverse_lookup.report.sex_offenders.report');
   const { downloadPdf, isGenerating } = usePdfDownload();
 
@@ -37,25 +34,20 @@ export const ReportDetails = ({ sexOffenderData, user }: {
 
   return (
     <section>
-      <div className={`
-        top-0 z-10 flex items-center justify-between gap-2 bg-white px-4 pt-2 pb-4
-        lg:sticky lg:rounded-t-lg lg:p-6
-        print:hidden
-      `}
+      <div
+        className={`
+          top-0 z-10 flex items-center justify-between gap-2 bg-white px-4 pt-2 pb-4
+          lg:sticky lg:rounded-t-lg lg:p-6
+          print:hidden
+        `}
       >
         <div className="flex items-center gap-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="flex size-12 items-center gap-2"
-          >
+          <Button variant="ghost" size="sm" className="flex size-12 items-center gap-2">
             <Link href={`${ROUTES.MEMBER.STATUS.REPORT}?id=${sexOffenderData.reverse_lookup_id}`}>
               <IconArrowLeft size="large" className="text-neutral" />
             </Link>
           </Button>
-          <h1 className="h4 font-bold">
-            {t('title_profile')}
-          </h1>
+          <h1 className="h4 font-bold">{t('title_profile')}</h1>
         </div>
         <div className="hidden lg:block">
           <DownloadReportButton

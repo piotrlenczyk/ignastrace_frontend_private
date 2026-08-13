@@ -21,11 +21,7 @@ const Index = async () => {
     redirect(ROUTES.REVERSE_LOOKUP.SIGN_UP);
   }
 
-  const [api, country, phoneNumber] = await Promise.all([
-    getApi(),
-    getUserCountry(),
-    getFunnelPhone(),
-  ]);
+  const [api, country, phoneNumber] = await Promise.all([getApi(), getUserCountry(), getFunnelPhone()]);
 
   const currency = getCurrencyFromCountry(country);
   const formattedNumber = formatPhoneNumber(phoneNumber);

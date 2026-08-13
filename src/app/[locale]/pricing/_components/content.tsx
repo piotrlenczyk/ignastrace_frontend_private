@@ -13,7 +13,11 @@ export function PricingContent({
   country,
   currency,
   products,
-}: { country: CountryCode; currency: string; products: Products }) {
+}: {
+  country: CountryCode;
+  currency: string;
+  products: Products;
+}) {
   const t = useTranslations('pages.pricing.cards');
   const formatPrice = createPriceFormatter();
   const locale = useLocale();
@@ -27,9 +31,7 @@ export function PricingContent({
       <PricingHero country={country} price={trialPrice} trialDays={trialDays} />
 
       <div className="container-wide flex flex-col px-4 py-8 lg:px-1">
-        <h1 className="mb-4 h1 lg:mb-8">
-          { t('title') }
-        </h1>
+        <h1 className="mb-4 h1 lg:mb-8">{t('title')}</h1>
         <div className="grid gap-4 md:grid-cols-2 md:gap-8">
           <PricingCard
             type="trial"
@@ -42,11 +44,9 @@ export function PricingContent({
           <PricingCard
             type="subscription"
             price={subscriptionPrice}
-            description={
-              t(trialDays === 1
-                ? 'subscription_24.description'
-                : 'subscription.description', { price: subscriptionPrice })
-            }
+            description={t(trialDays === 1 ? 'subscription_24.description' : 'subscription.description', {
+              price: subscriptionPrice,
+            })}
             trialDays={trialDays}
           />
         </div>
@@ -59,9 +59,7 @@ export function PricingContent({
         </div>
       </FAQs>
 
-      <InstantLocator
-        defaultCountry={country}
-      />
+      <InstantLocator defaultCountry={country} />
     </>
   );
 }

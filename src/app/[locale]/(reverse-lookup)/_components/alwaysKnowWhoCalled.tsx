@@ -63,34 +63,21 @@ export const AlwaysKnowWhoCalled = ({ className }: { className?: string }) => {
   return (
     <section className={cn(className, 'px-4 py-8 lg:px-0 lg:py-16')}>
       <div className="container max-w-[950px] lg:text-center">
-        <h2 className="mb-3 h3 font-bold lg:mb-2">
-          { t('title')}
-        </h2>
-        <p className="text-lg text-weak">
-          {t.raw('subtitle')}
-        </p>
+        <h2 className="mb-3 h3 font-bold lg:mb-2">{t('title')}</h2>
+        <p className="text-lg text-weak">{t.raw('subtitle')}</p>
       </div>
-      <div
-        className="grid w-full gap-4 pt-6 sm:grid-cols-2 md:grid md:grid-cols-3 md:gap-8 md:pt-14"
-      >
-        {
-          items.map(item => (
-            <Card
-              key={item.number}
-              className={cn('flex gap-4 p-4 shadow-raised')}
-            >
-              <div
-                className="brand-icon-secondary-weak size-10 shrink-0"
-              >
-                <item.icon size="large" className="text-secondary" />
-              </div>
-              <div className="flex flex-col">
-                <h3 className="mb-1 text-base font-semibold text-strong">{item.title}</h3>
-                <p className="text-sm leading-5 text-weak">{item.description}</p>
-              </div>
-            </Card>
-          ))
-        }
+      <div className="grid w-full gap-4 pt-6 sm:grid-cols-2 md:grid md:grid-cols-3 md:gap-8 md:pt-14">
+        {items.map((item) => (
+          <Card key={item.number} className={cn('flex gap-4 p-4 shadow-raised')}>
+            <div className="brand-icon-secondary-weak size-10 shrink-0">
+              <item.icon size="large" className="text-secondary" />
+            </div>
+            <div className="flex flex-col">
+              <h3 className="mb-1 text-base font-semibold text-strong">{item.title}</h3>
+              <p className="text-sm leading-5 text-weak">{item.description}</p>
+            </div>
+          </Card>
+        ))}
       </div>
     </section>
   );

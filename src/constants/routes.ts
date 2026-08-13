@@ -96,9 +96,7 @@ export const ROUTES = {
   },
 } as const;
 
-export const AUTH_ROUTES = [
-  ROUTES.SIGN_UP,
-];
+export const AUTH_ROUTES = [ROUTES.SIGN_UP];
 export const PROTECTED_ROUTES = [
   ROUTES.CHECKOUT,
   ROUTES.THANK_YOU,

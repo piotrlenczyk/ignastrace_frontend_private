@@ -13,11 +13,7 @@ export const BlurredPhoneNumber = ({ phoneNumber }: BlurredPhoneNumberProps) => 
 
   return (
     <span>
-      {countryCode}
-      {' '}
-      <span className="blur-xs">{middlePart}</span>
-      {' '}
-      {lastPart}
+      {countryCode} <span className="blur-xs">{middlePart}</span> {lastPart}
     </span>
   );
 };

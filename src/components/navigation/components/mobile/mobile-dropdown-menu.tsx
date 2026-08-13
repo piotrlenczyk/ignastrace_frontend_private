@@ -9,12 +9,7 @@ import { cn } from '@/libs/utils';
 
 import { MobileMainNavigation } from './mobile-main-navigation';
 
-const TriggerButton = ({
-  action,
-  ...props
-}: {
-  action: 'open' | 'close';
-}) => {
+const TriggerButton = ({ action, ...props }: { action: 'open' | 'close' }) => {
   const t = useTranslations('common');
   const label = action === 'open' ? t('open_menu') : t('close_menu');
   const Icon = action === 'open' ? Menu : X;
@@ -22,21 +17,18 @@ const TriggerButton = ({
   return (
     <Dialog.Trigger asChild>
       <Button variant="tranparent" size="icon" {...props} className="ml-2 size-12">
-        <Icon className={cn(
-          'size-[24px] shrink-0',
-          action === 'close' ? 'text-primary' : 'text-strong',
-        )}
-        />
-        <span className="sr-only">{ label }</span>
+        <Icon className={cn('size-[24px] shrink-0', action === 'close' ? 'text-primary' : 'text-strong')} />
+        <span className="sr-only">{label}</span>
       </Button>
     </Dialog.Trigger>
   );
 };
 
-export const MobileDropdownMenu = (
-  { toggleLanguageSelectorVisibility }:
-  { toggleLanguageSelectorVisibility: () => void },
-) => {
+export const MobileDropdownMenu = ({
+  toggleLanguageSelectorVisibility,
+}: {
+  toggleLanguageSelectorVisibility: () => void;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const closeMenu = () => {

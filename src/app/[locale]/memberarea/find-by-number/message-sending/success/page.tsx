@@ -47,21 +47,14 @@ export default async function MessageSendingPage() {
         <h1 className="h3 font-bold">{tFindByNumber('find_by_number')}</h1>
         <div className="container-content flex flex-1 flex-col justify-center gap-8">
           <div className="globe">
-            <div className="globe-map">
-            </div>
+            <div className="globe-map"></div>
           </div>
           <div className="grid gap-2">
-            <h1 className="text-center h3 font-bold">
-              {t('title')}
-            </h1>
-            <p className="text-center">
-              {phoneNumber}
-            </p>
+            <h1 className="text-center h3 font-bold">{t('title')}</h1>
+            <p className="text-center">{phoneNumber}</p>
           </div>
           <Button size="lg" asChild>
-            <Link href={ROUTES.MEMBER.STATUS.HOME}>
-              {t('cta')}
-            </Link>
+            <Link href={ROUTES.MEMBER.STATUS.HOME}>{t('cta')}</Link>
           </Button>
         </div>
       </main>

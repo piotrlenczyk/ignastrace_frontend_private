@@ -7,14 +7,7 @@ import { useForm } from 'react-hook-form';
 
 import { SocialSignIn } from '@/components/forms/social-sign-in';
 import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { IconLoaderCircle } from '@/components/ui/icon/icons';
 import { Input } from '@/components/ui/input';
 import { ROUTES } from '@/constants/routes';
@@ -74,9 +67,7 @@ export const SignUpForm = ({ phoneNumber }: { phoneNumber: string }) => {
       <div className="grid w-full gap-5">
         <SocialSignIn redirectTo={ROUTES.CHECKOUT} />
       </div>
-      <Separator>
-        {t('or')}
-      </Separator>
+      <Separator>{t('or')}</Separator>
       <div className="flex w-full flex-col gap-5 text-left">
         <Form {...form}>
           <form id="sign-up-form" onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
@@ -85,9 +76,7 @@ export const SignUpForm = ({ phoneNumber }: { phoneNumber: string }) => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-base font-normal text-strong">
-                    {t('email_label')}
-                  </FormLabel>
+                  <FormLabel className="text-base font-normal text-strong">{t('email_label')}</FormLabel>
                   <FormControl>
                     <Input type="email" placeholder={t('email_placeholder')} {...field} />
                   </FormControl>
@@ -104,7 +93,7 @@ export const SignUpForm = ({ phoneNumber }: { phoneNumber: string }) => {
             className="inline-block h-auto min-h-12 py-2 whitespace-normal"
           >
             {t('continue_with_email')}
-            { isSubmitting ? (<IconLoaderCircle size="large" className="ms-2 animate-spin" />) : ''}
+            {isSubmitting ? <IconLoaderCircle size="large" className="ms-2 animate-spin" /> : ''}
           </Button>
         </Form>
       </div>

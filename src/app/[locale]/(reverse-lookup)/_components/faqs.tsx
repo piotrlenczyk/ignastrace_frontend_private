@@ -1,12 +1,7 @@
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { cn } from '@/libs/utils';
 
 import type { Question } from '../_types/faqs.types';
@@ -28,11 +23,7 @@ const Title = ({ className, variant = 'section' }: { className?: string; variant
 
   const css = variant === 'section' ? 'h3 mb-6 text-center font-bold lg:mb-14' : 'h4 font-bold';
 
-  return (
-    <h2 className={cn(css, className)}>
-      {t('title')}
-    </h2>
-  );
+  return <h2 className={cn(css, className)}>{t('title')}</h2>;
 };
 
 const Content = ({ className }: { className?: string }) => {
@@ -42,22 +33,15 @@ const Content = ({ className }: { className?: string }) => {
     <Accordion
       type="single"
       collapsible
-      className={cn(
-        'mx-auto flex w-full max-w-[960px] flex-col items-stretch',
-        className,
-      )}
+      className={cn('mx-auto flex w-full max-w-[960px] flex-col items-stretch', className)}
     >
       {content.map(({ id, question, answer }: Question) => {
         return (
           <AccordionItem value={id} key={id}>
-            <AccordionTrigger
-              className="gap-4 py-5 text-left text-lg font-semibold text-strong lg:py-[22px]"
-            >
+            <AccordionTrigger className="gap-4 py-5 text-left text-lg font-semibold text-strong lg:py-[22px]">
               {t(question)}
             </AccordionTrigger>
-            <AccordionContent>
-              {t(answer)}
-            </AccordionContent>
+            <AccordionContent>{t(answer)}</AccordionContent>
           </AccordionItem>
         );
       })}
@@ -65,11 +49,10 @@ const Content = ({ className }: { className?: string }) => {
   );
 };
 
-const FAQs = ({ children, className, id }:
-{ children: ReactNode; className?: string; id?: string }) => {
+const FAQs = ({ children, className, id }: { children: ReactNode; className?: string; id?: string }) => {
   return (
     <section className={className} id={id}>
-      { children }
+      {children}
     </section>
   );
 };

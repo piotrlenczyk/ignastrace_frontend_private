@@ -4,10 +4,7 @@ import handleAuthAndIntl from './middlewares/auth-intl.middleware';
 import { handleCaseNormalization } from './middlewares/case-normalization.middleware';
 import { handleTracking } from './middlewares/tracking.middleware';
 
-export default async function middleware(
-  request: NextRequest,
-  _event: NextFetchEvent,
-) {
+export default async function middleware(request: NextRequest, _event: NextFetchEvent) {
   if (request.nextUrl.pathname === '/health') {
     return new Response(null, { status: 200 });
   }

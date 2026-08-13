@@ -49,9 +49,7 @@ const Index = async () => {
           <FAQs.Title />
           <FAQs.Content className="rounded-3xl bg-alternate px-4 py-3 lg:px-10 lg:py-4" />
         </FAQs>
-        <InstantLocator
-          defaultCountry={country}
-        />
+        <InstantLocator defaultCountry={country} />
       </main>
     </WebsiteLayout>
   );

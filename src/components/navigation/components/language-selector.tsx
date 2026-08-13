@@ -28,8 +28,7 @@ export const LanguageSelector = () => {
       router.push({ pathname, query }, { locale: resolveLocale(locale) });
       router.refresh();
     },
-    onError: () => {
-    },
+    onError: () => {},
   });
 
   const handleChangeLanguage = (locale: Locale) => {
@@ -37,7 +36,7 @@ export const LanguageSelector = () => {
     updateLocale(locale);
   };
 
-  const country = AvailableLanguages.find(lang => lang.code === locale) || AvailableLanguages[0];
+  const country = AvailableLanguages.find((lang) => lang.code === locale) || AvailableLanguages[0];
   const { name, code } = country!;
 
   return (
@@ -54,12 +53,14 @@ export const LanguageSelector = () => {
           `}
         >
           <IconGlobeLine size="fontSize" className="text-neutral xs:size-5" />
-          <abbr title={name} className="px-1 no-underline">{code}</abbr>
+          <abbr title={name} className="px-1 no-underline">
+            {code}
+          </abbr>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-[4.5rem] grid-cols-1">
         <ScrollArea className="h-40 px-2">
-          {AvailableLanguages.map(lang => (
+          {AvailableLanguages.map((lang) => (
             <DropdownMenuItemCompressed
               value={lang.code}
               valueSelected={selectedLanguage}

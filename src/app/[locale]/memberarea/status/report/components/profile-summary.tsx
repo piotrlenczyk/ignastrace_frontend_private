@@ -20,19 +20,17 @@ const ProfileSummary = ({ reverseLookup, className }: { reverseLookup: ReverseLo
   const t = useTranslations('pages.reverse_lookup.report.profile_summary');
   const tCommon = useTranslations('pages.reverse_lookup.report.common');
 
-  const usernames = reverseLookup.reverse_lookup_owners.map(owner => owner.usernames).flat();
-  const countryCodes = [...new Set(
-    reverseLookup.reverse_lookup_owners
-      .map(owner => owner.country_code)
-      .filter(Boolean),
-  )];
+  const usernames = reverseLookup.reverse_lookup_owners.map((owner) => owner.usernames).flat();
+  const countryCodes = [
+    ...new Set(reverseLookup.reverse_lookup_owners.map((owner) => owner.country_code).filter(Boolean)),
+  ];
   const countries = useTranslatedCountryNames(countryCodes);
 
   const profileData = [
     {
       icon: IconUsers,
       label: t('possible_owners'),
-      value: reverseLookup.reverse_lookup_owners.map(owner => owner.name),
+      value: reverseLookup.reverse_lookup_owners.map((owner) => owner.name),
     },
     {
       icon: IconComponentCard,
@@ -42,7 +40,7 @@ const ProfileSummary = ({ reverseLookup, className }: { reverseLookup: ReverseLo
     {
       icon: IconEmail,
       label: t('associated_emails'),
-      value: reverseLookup.reverse_lookup_owners.map(owner => owner.email),
+      value: reverseLookup.reverse_lookup_owners.map((owner) => owner.email),
     },
     {
       icon: IconLocationPinLine,
@@ -53,30 +51,23 @@ const ProfileSummary = ({ reverseLookup, className }: { reverseLookup: ReverseLo
       icon: IconCalendarDates,
       label: t('potential_date_of_birth'),
       value: reverseLookup.reverse_lookup_owners
-        .map(owner => owner.date_of_birth ? localeFormatDate(owner.date_of_birth, locale) : null)
+        .map((owner) => (owner.date_of_birth ? localeFormatDate(owner.date_of_birth, locale) : null))
         .filter((date): date is string => date !== null),
     },
   ];
 
   return (
     <Card className={cn('border-stroke-weak px-4 py-6 shadow-raised lg:px-6', className)}>
-      <h4 className="mb-6 font-bold lg:mb-5">
-        {t('title')}
-      </h4>
+      <h4 className="mb-6 font-bold lg:mb-5">{t('title')}</h4>
 
       <div className="grid gap-4">
-        {profileData.map(item => (
+        {profileData.map((item) => (
           <div key={item.label} className="grid grid-cols-[auto_1fr] items-start gap-2">
             <item.icon className="size-6 text-secondary" />
             <div className="min-w-0 text-lg">
-              <p className="mb-0.5 font-bold">
-                {item.label}
-              </p>
+              <p className="mb-0.5 font-bold">{item.label}</p>
               <p>
-                <ReverseLookupValue
-                  value={item.value}
-                  fallbackText={tCommon('no_data')}
-                />
+                <ReverseLookupValue value={item.value} fallbackText={tCommon('no_data')} />
               </p>
             </div>
           </div>

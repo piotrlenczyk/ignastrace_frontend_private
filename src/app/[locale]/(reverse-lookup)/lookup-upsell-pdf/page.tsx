@@ -47,7 +47,7 @@ const UpsellPdfPage = async () => {
   const api = await getApi();
   const products = await api.get<Product[]>('/reverse_lookups_upsellings');
 
-  const upsellProduct = products.find(product => product.key === 'unlimited_pdf_downloads') || {
+  const upsellProduct = products.find((product) => product.key === 'unlimited_pdf_downloads') || {
     key: 'unlimited_pdf_downloads',
     price: 195,
     currency: 'USD',
@@ -70,9 +70,7 @@ const UpsellPdfPage = async () => {
               iconUrl="/images/reverse-lookup/icon-pdf.svg"
               product={upsellProduct}
             />
-            <div className="text-center text-caption text-weak">
-              {t('disclaimer', { price })}
-            </div>
+            <div className="text-center text-caption text-weak">{t('disclaimer', { price })}</div>
           </div>
         </section>
       </main>

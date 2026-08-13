@@ -15,20 +15,13 @@ import { cn } from '@/libs/utils';
  * `inline-block` restores it while keeping the label's shrink-to-fit width, so
  * the click target is unchanged too. See docs/tailwind-v4-migration-notes.md.
  */
-const labelVariants = cva(
-  'inline-block peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
-);
+const labelVariants = cva('inline-block peer-disabled:cursor-not-allowed peer-disabled:opacity-70');
 
 const Label = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root> &
-  VariantProps<typeof labelVariants>
+  React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root> & VariantProps<typeof labelVariants>
 >(({ className, ...props }, ref) => (
-  <LabelPrimitive.Root
-    ref={ref}
-    className={cn(labelVariants(), className)}
-    {...props}
-  />
+  <LabelPrimitive.Root ref={ref} className={cn(labelVariants(), className)} {...props} />
 ));
 Label.displayName = LabelPrimitive.Root.displayName;
 

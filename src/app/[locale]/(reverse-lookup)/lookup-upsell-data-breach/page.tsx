@@ -37,7 +37,7 @@ const UpsellDataBreachPage = async () => {
 
   const api = await getApi();
   const products = await api.get<Product[]>('/reverse_lookups_upsellings');
-  const upsellProduct = products.find(product => product.key === 'data_leaks') || {
+  const upsellProduct = products.find((product) => product.key === 'data_leaks') || {
     key: 'data_leaks',
     price: 195,
     currency: 'USD',
@@ -58,9 +58,7 @@ const UpsellDataBreachPage = async () => {
               iconUrl="/images/reverse-lookup/icon-data-breach.svg"
               product={upsellProduct}
             />
-            <div className="text-center text-caption text-weak">
-              {t('disclaimer')}
-            </div>
+            <div className="text-center text-caption text-weak">{t('disclaimer')}</div>
           </div>
         </section>
       </main>

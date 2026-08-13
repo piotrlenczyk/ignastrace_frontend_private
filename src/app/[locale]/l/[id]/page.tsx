@@ -17,18 +17,14 @@ export default async function LocatePage(props: PageProps<'/[locale]/l/[id]'>) {
       <div className="p-4">
         <Logotype className="mx-auto mb-4" />
         <div>
-          {locationStatus.status === 'pending'
-            ? (
-                <LocationStatus id={params?.id} />
-              )
-            : (
-                <div>
-                  <h1 className="h4 mb-1 font-bold">
-                    {t('link_expired')}
-                  </h1>
-                  <p className="min-h-[2lh] text-balance">{t('link_expired_explain')}</p>
-                </div>
-              )}
+          {locationStatus.status === 'pending' ? (
+            <LocationStatus id={params?.id} />
+          ) : (
+            <div>
+              <h1 className="h4 mb-1 font-bold">{t('link_expired')}</h1>
+              <p className="min-h-[2lh] text-balance">{t('link_expired_explain')}</p>
+            </div>
+          )}
         </div>
       </div>
     </main>

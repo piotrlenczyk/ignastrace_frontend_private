@@ -19,10 +19,11 @@ const getLocalizedName = (locale: LanguageCode) => {
   return titleize(displayNames.of(locale) || locale);
 };
 
-export const AvailableLanguages = Object.values(LanguageLocale).filter(value => (
-  SiteConfig.locales.includes(value.code)
-)).map(value => ({
-  code: value.code,
-  name: getLocalizedName(value.code),
-  flag: value.flag,
-})).sort((a, b) => a.name.localeCompare(b.name));
+export const AvailableLanguages = Object.values(LanguageLocale)
+  .filter((value) => SiteConfig.locales.includes(value.code))
+  .map((value) => ({
+    code: value.code,
+    name: getLocalizedName(value.code),
+    flag: value.flag,
+  }))
+  .sort((a, b) => a.name.localeCompare(b.name));

@@ -23,9 +23,15 @@ const colors = {
   },
 };
 
-export const PricingCard = (
-  { price, description, type }:
-  { price: string; description: string; type: 'trial' | 'subscription' }) => {
+export const PricingCard = ({
+  price,
+  description,
+  type,
+}: {
+  price: string;
+  description: string;
+  type: 'trial' | 'subscription';
+}) => {
   const t = useTranslations('pages.reverse_lookup.components.pricing.cards');
 
   // outline-3, not outline: v4's bare `outline` sets a 1px width, where v3 left
@@ -43,39 +49,30 @@ export const PricingCard = (
     colors[type].badge.bg,
   );
 
-  const features = Array.from(
-    { length: 5 },
-    (_, i) => t(`${type}.features.feature_${i + 1}` as any),
-  );
+  const features = Array.from({ length: 5 }, (_, i) => t(`${type}.features.feature_${i + 1}` as any));
 
   return (
     <div className={cardCSS}>
-      <span className={badgeCSS}>
-        {t(`${type}.badge` as any)}
-      </span>
+      <span className={badgeCSS}>{t(`${type}.badge` as any)}</span>
 
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-        <h1 className="h3 font-bold">
-          {price || <Skeleton className="h-[70px] w-[220px] rounded-md" />}
-        </h1>
-        <div>
-          {t(`${type}.duration` as any)}
-        </div>
+        <h1 className="h3 font-bold">{price || <Skeleton className="h-[70px] w-[220px] rounded-md" />}</h1>
+        <div>{t(`${type}.duration` as any)}</div>
       </div>
 
       <div className="text-sm">
         <p className="text-start">{description}</p>
         <ul className="mt-4 list-outside list-disc pl-5">
-          {features.map(item =>
-            <li className="" key={item}>{item}</li>,
-          )}
+          {features.map((item) => (
+            <li className="" key={item}>
+              {item}
+            </li>
+          ))}
         </ul>
       </div>
 
       <Button className={cn('min-w-full', colors[type].cta.bg)} size="lg" asChild>
-        <a href="#locator">
-          {t(`${type}.cta` as any)}
-        </a>
+        <a href="#locator">{t(`${type}.cta` as any)}</a>
       </Button>
     </div>
   );

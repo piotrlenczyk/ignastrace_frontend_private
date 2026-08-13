@@ -21,20 +21,16 @@ export default function Cancellation() {
 
           <Info
             Icon={IconInbox}
-            description={t.rich('info_email', { link: chunks => (
-              <Link
-                className="underline underline-offset-2"
-                href="/contact"
-              >
-                {chunks}
-              </Link>
-            ) })}
+            description={t.rich('info_email', {
+              link: (chunks) => (
+                <Link className="underline underline-offset-2" href="/contact">
+                  {chunks}
+                </Link>
+              ),
+            })}
           />
 
-          <Info
-            Icon={IconUserCircle}
-            description={t('info_user')}
-          />
+          <Info Icon={IconUserCircle} description={t('info_user')} />
         </div>
       </main>
     </WebsiteLayout>

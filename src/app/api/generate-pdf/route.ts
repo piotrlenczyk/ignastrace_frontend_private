@@ -105,7 +105,7 @@ export async function POST(request: NextRequest) {
             secure: name.startsWith('__Secure-') || name.startsWith('__Host-'),
           };
         })
-        .filter(cookie => cookie.name && cookie.value);
+        .filter((cookie) => cookie.name && cookie.value);
 
       await page.setCookie(...jarCookies);
     }
@@ -151,9 +151,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error generating PDF:', error);
-    return NextResponse.json(
-      { error: 'Failed to generate PDF' },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: 'Failed to generate PDF' }, { status: 500 });
   }
 }

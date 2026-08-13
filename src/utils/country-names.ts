@@ -26,9 +26,7 @@ export function getCountryName(countryCode: string, locale?: string): string {
 }
 
 export function getCountryNames(countryCodes: (string | undefined)[], locale?: string): string[] {
-  return countryCodes
-    .filter((code): code is string => Boolean(code))
-    .map(code => getCountryName(code, locale));
+  return countryCodes.filter((code): code is string => Boolean(code)).map((code) => getCountryName(code, locale));
 }
 
 export function useTranslatedCountryNames(countryCodes: (string | undefined)[]): string[] {

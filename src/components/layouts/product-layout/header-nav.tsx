@@ -51,11 +51,7 @@ const Item = ({ className, path, href, children }: ItemProps) => {
   );
 };
 
-export const HeaderNav = ({
-  unreadCount,
-}: {
-  unreadCount: number;
-}) => {
+export const HeaderNav = ({ unreadCount }: { unreadCount: number }) => {
   const t = useTranslations('pages.memberArea.navigation');
 
   const pathname = usePathname();
@@ -68,9 +64,8 @@ export const HeaderNav = ({
 
   const country = useCountry();
 
-  const logoLink = country === 'US' || country === 'GB'
-    ? ROUTES.MEMBER.FIND_BY_LINK.HOME
-    : ROUTES.MEMBER.FIND_BY_NUMBER.HOME;
+  const logoLink =
+    country === 'US' || country === 'GB' ? ROUTES.MEMBER.FIND_BY_LINK.HOME : ROUTES.MEMBER.FIND_BY_NUMBER.HOME;
 
   return (
     <header className="s-header lg:hidden">
@@ -83,11 +78,11 @@ export const HeaderNav = ({
         <div className="hidden gap-7 lg:flex xl:gap-8 print:hidden">
           <Item path={fullPath} href={ROUTES.MEMBER.FIND_BY_NUMBER.HOME}>
             <IconLocationMy size="large" />
-            { t('find_by_number')}
+            {t('find_by_number')}
           </Item>
           <Item path={fullPath} href={ROUTES.MEMBER.FIND_BY_LINK.HOME}>
             <IconLinkAlt01 size="large" />
-            { t('find_by_link')}
+            {t('find_by_link')}
           </Item>
           {enableReverseLookup && (
             <Item
@@ -98,16 +93,16 @@ export const HeaderNav = ({
               ]}
             >
               <IconPhoneLine size="large" />
-              { t('phone_lookup')}
+              {t('phone_lookup')}
             </Item>
           )}
           <Item path={fullPath} href={ROUTES.MEMBER.STATUS.HOME}>
             <IconTimeRefresh size="large" />
-            { t('status')}
+            {t('status')}
           </Item>
           <Item path={fullPath} href={ROUTES.MEMBER.CONTACT_US}>
             <IconEmailLine size="large" />
-            { t('contact_us')}
+            {t('contact_us')}
           </Item>
           <Item path={fullPath} href={ROUTES.MEMBER.SETTINGS.NOTIFICATIONS} className="relative">
             <IconNotificationLine size="large" />
@@ -137,10 +132,7 @@ export const HeaderNav = ({
             variant="ghost"
             className={cn(
               'size-12 p-0 text-neutral',
-              getActive(
-                fullPath,
-                ROUTES.MEMBER.SETTINGS.NOTIFICATIONS,
-              ) && 'text-primary [&_svg]:text-primary',
+              getActive(fullPath, ROUTES.MEMBER.SETTINGS.NOTIFICATIONS) && 'text-primary [&_svg]:text-primary',
               'relative',
             )}
             asChild
@@ -148,11 +140,11 @@ export const HeaderNav = ({
             <Link href={ROUTES.MEMBER.SETTINGS.NOTIFICATIONS}>
               <IconNotificationLine size="large" />
               {unreadCount > 0 && (
-                <div className={`
-                  absolute top-[8px] right-[92%] size-2 translate-x-9 animate-fade-in rounded-full bg-red-1000
-                `}
-                >
-                </div>
+                <div
+                  className={`
+                    absolute top-[8px] right-[92%] size-2 translate-x-9 animate-fade-in rounded-full bg-red-1000
+                  `}
+                ></div>
               )}
             </Link>
           </Button>

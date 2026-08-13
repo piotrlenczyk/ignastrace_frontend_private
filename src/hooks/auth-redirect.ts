@@ -17,11 +17,7 @@ type AuthRedirectOptions = {
 };
 
 export const redirectBySubscriptionStatus = async (options: AuthRedirectOptions): Promise<void> => {
-  const {
-    routes,
-    allowUnauthenticated = true,
-    redirectIfAuthenticated = true,
-  } = options;
+  const { routes, allowUnauthenticated = true, redirectIfAuthenticated = true } = options;
 
   try {
     const session = await auth();

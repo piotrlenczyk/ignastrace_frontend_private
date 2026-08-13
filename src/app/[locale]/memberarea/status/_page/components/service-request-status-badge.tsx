@@ -10,9 +10,5 @@ type ServiceRequestStatusBadgeProps = {
 };
 
 export const ServiceRequestStatusBadge = ({ status, t }: ServiceRequestStatusBadgeProps) => {
-  return (
-    <div className={STATUS_CLASSES[status]}>
-      {t(`${status}_status`)}
-    </div>
-  );
+  return <div className={STATUS_CLASSES[status]}>{t(`${status}_status`)}</div>;
 };

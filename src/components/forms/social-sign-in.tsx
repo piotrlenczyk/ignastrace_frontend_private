@@ -13,12 +13,7 @@ export const SocialSignIn = ({ redirectTo }: { redirectTo: string }) => {
   };
 
   return (
-    <Button
-      size="lg"
-      variant="outline"
-      onClick={handleGoogleSignIn}
-      className="text-start"
-    >
+    <Button size="lg" variant="outline" onClick={handleGoogleSignIn} className="text-start">
       <IconGoogleBrand size="large" />
       {t('continue_with_google')}
     </Button>

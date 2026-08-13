@@ -16,9 +16,7 @@ const OthersInformationComponent = ({
 
   return (
     <Card className={cn('flex flex-col gap-8 border border-stroke-weak p-6 shadow-raised', className)}>
-      <h4 className="font-bold">
-        {t('title')}
-      </h4>
+      <h4 className="font-bold">{t('title')}</h4>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <div className="flex items-start gap-2 text-lg">
@@ -46,20 +44,18 @@ const OthersInformationComponent = ({
           <IconLinkExternal size="large" className="text-brand" />
           <div>
             <h5 className="mb-0.5 font-bold">{t('original_report')}</h5>
-            {sexOffenderData.original_source
-              ? (
-                  <a
-                    href={sexOffenderData.original_source}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block cursor-pointer text-primary underline"
-                  >
-                    {t('link')}
-                  </a>
-                )
-              : (
-                  <p>--</p>
-                )}
+            {sexOffenderData.original_source ? (
+              <a
+                href={sexOffenderData.original_source}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block cursor-pointer text-primary underline"
+              >
+                {t('link')}
+              </a>
+            ) : (
+              <p>--</p>
+            )}
           </div>
         </div>
       </div>

@@ -8,10 +8,7 @@ import { IconCaretDown } from '@/components/ui/icon/icons';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { AVAILABLE_CURRENCIES_DATA } from '@/constants/currencies';
 
-export default function CurrencySelector({
-  value,
-  onChange,
-}: { value: string; onChange: (c: string) => void }) {
+export default function CurrencySelector({ value, onChange }: { value: string; onChange: (c: string) => void }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -27,9 +24,7 @@ export default function CurrencySelector({
         <ScrollArea className="h-40 px-2">
           {Object.entries(AVAILABLE_CURRENCIES_DATA).map(([key, { symbol }]) => (
             <DropdownMenuItem className="justify-end" key={key} onSelect={() => onChange(key)}>
-              {symbol}
-              {' '}
-              {key.toUpperCase()}
+              {symbol} {key.toUpperCase()}
             </DropdownMenuItem>
           ))}
         </ScrollArea>

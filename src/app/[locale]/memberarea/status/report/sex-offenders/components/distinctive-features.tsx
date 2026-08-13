@@ -22,40 +22,20 @@ const DistinctiveFeaturesComponent = ({
 
   // Organize marks by body part
   const distinctiveFeatures = {
-    head: sexOffenderData.marks
-      .filter(mark => mark.body_part === 'head')
-      .map(mark => mark.description),
-    torso: sexOffenderData.marks
-      .filter(mark => mark.body_part === 'torso')
-      .map(mark => mark.description),
-    back: sexOffenderData.marks
-      .filter(mark => mark.body_part === 'back')
-      .map(mark => mark.description),
-    leftArm: sexOffenderData.marks
-      .filter(mark => mark.body_part === 'left_arm')
-      .map(mark => mark.description),
-    rightArm: sexOffenderData.marks
-      .filter(mark => mark.body_part === 'right_arm')
-      .map(mark => mark.description),
-    leftHand: sexOffenderData.marks
-      .filter(mark => mark.body_part === 'left_hand')
-      .map(mark => mark.description),
-    rightHand: sexOffenderData.marks
-      .filter(mark => mark.body_part === 'right_hand')
-      .map(mark => mark.description),
-    leftLeg: sexOffenderData.marks
-      .filter(mark => mark.body_part === 'left_leg')
-      .map(mark => mark.description),
-    rightLeg: sexOffenderData.marks
-      .filter(mark => mark.body_part === 'right_leg')
-      .map(mark => mark.description),
+    head: sexOffenderData.marks.filter((mark) => mark.body_part === 'head').map((mark) => mark.description),
+    torso: sexOffenderData.marks.filter((mark) => mark.body_part === 'torso').map((mark) => mark.description),
+    back: sexOffenderData.marks.filter((mark) => mark.body_part === 'back').map((mark) => mark.description),
+    leftArm: sexOffenderData.marks.filter((mark) => mark.body_part === 'left_arm').map((mark) => mark.description),
+    rightArm: sexOffenderData.marks.filter((mark) => mark.body_part === 'right_arm').map((mark) => mark.description),
+    leftHand: sexOffenderData.marks.filter((mark) => mark.body_part === 'left_hand').map((mark) => mark.description),
+    rightHand: sexOffenderData.marks.filter((mark) => mark.body_part === 'right_hand').map((mark) => mark.description),
+    leftLeg: sexOffenderData.marks.filter((mark) => mark.body_part === 'left_leg').map((mark) => mark.description),
+    rightLeg: sexOffenderData.marks.filter((mark) => mark.body_part === 'right_leg').map((mark) => mark.description),
   };
 
   return (
     <Card className={cn('flex flex-col gap-8 border border-stroke-weak p-6 shadow-raised', className)}>
-      <h4 className="font-bold">
-        {t('title')}
-      </h4>
+      <h4 className="font-bold">{t('title')}</h4>
 
       <div className="space-y-4">
         <FeatureRow label={t('head')} values={distinctiveFeatures.head} />

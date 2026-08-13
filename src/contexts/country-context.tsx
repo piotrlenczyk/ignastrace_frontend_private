@@ -17,9 +17,5 @@ type CountryProviderProps = {
 export function CountryProvider({ country, children }: CountryProviderProps) {
   const value = useMemo(() => ({ country }), [country]);
 
-  return (
-    <CountryContext.Provider value={value}>
-      {children}
-    </CountryContext.Provider>
-  );
+  return <CountryContext.Provider value={value}>{children}</CountryContext.Provider>;
 }

@@ -20,7 +20,11 @@ export const Loader = ({
   rawPhone,
   phoneNumber,
   countryName,
-}: { rawPhone: string; phoneNumber: string; countryName: string }) => {
+}: {
+  rawPhone: string;
+  phoneNumber: string;
+  countryName: string;
+}) => {
   const [loadedSteps, setLoadedSteps] = useState(0);
   const t = useTranslations('pages.loader.step_1');
 
@@ -34,7 +38,7 @@ export const Loader = ({
     let timeout: NodeJS.Timeout;
     if (carrier && loadedSteps < totalSteps) {
       timeout = setTimeout(() => {
-        setLoadedSteps(prev => prev + 1);
+        setLoadedSteps((prev) => prev + 1);
       }, loadingTimePerStep);
     }
     return () => {
@@ -48,13 +52,16 @@ export const Loader = ({
     }
   }, [loadedSteps, router]);
 
-  const loadingItems = useMemo(() => [
-    { text: t('database.text'), loadedText: t('database.loadedText') },
-    { text: t('carrier.text'), loadedText: carrier || '' },
-    { text: t('country.text'), loadedText: countryName },
-    { text: t('city.text'), loadedText: t('location.loadedText') },
-    { text: t('location.text'), loadedText: t('city.loadedText') },
-  ], [t, carrier, countryName]);
+  const loadingItems = useMemo(
+    () => [
+      { text: t('database.text'), loadedText: t('database.loadedText') },
+      { text: t('carrier.text'), loadedText: carrier || '' },
+      { text: t('country.text'), loadedText: countryName },
+      { text: t('city.text'), loadedText: t('location.loadedText') },
+      { text: t('location.text'), loadedText: t('city.loadedText') },
+    ],
+    [t, carrier, countryName],
+  );
 
   return (
     <main className="s-main funnel-container animate-fade-in animation-duration-1000">
@@ -70,10 +77,10 @@ export const Loader = ({
         <div className="container grid max-w-[336px] gap-10 pb-16">
           <header className="flex flex-col items-center justify-between">
             <div className="brand-icon mb-4">
-              { isFirstStep ? <IconCellTower size="large" /> : <IconSearch size="large" className="animate-fade-in" /> }
+              {isFirstStep ? <IconCellTower size="large" /> : <IconSearch size="large" className="animate-fade-in" />}
             </div>
             <h1 className={cn('h4 font-normal', { 'animate-fade-in': !isFirstStep })}>
-              { isFirstStep ? t('connecting') : t('searching') }
+              {isFirstStep ? t('connecting') : t('searching')}
             </h1>
             <h2 className="h1 font-bold text-primary lg:text-4xl">{phoneNumber}</h2>
           </header>

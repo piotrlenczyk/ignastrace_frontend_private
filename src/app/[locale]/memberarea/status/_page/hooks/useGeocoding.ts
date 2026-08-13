@@ -9,10 +9,7 @@ export const useGeocoding = (lat: number, lon: number) => {
     address: '',
   });
 
-  const geocoder = useMemo(
-    () => geocodingLib && new geocodingLib.Geocoder(),
-    [geocodingLib],
-  );
+  const geocoder = useMemo(() => geocodingLib && new geocodingLib.Geocoder(), [geocodingLib]);
 
   useEffect(() => {
     if (!geocoder || !lat || !lon) {
@@ -30,9 +27,7 @@ export const useGeocoding = (lat: number, lon: number) => {
       setState({
         loading: false,
         error: status !== 'OK',
-        address: status === 'OK' && results?.[0]
-          ? results[0].formatted_address
-          : '',
+        address: status === 'OK' && results?.[0] ? results[0].formatted_address : '',
       });
     });
   }, [geocoder, lat, lon]);

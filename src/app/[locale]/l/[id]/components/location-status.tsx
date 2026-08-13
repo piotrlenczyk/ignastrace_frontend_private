@@ -33,9 +33,7 @@ export const LocationStatus = ({ id }: { id: string }) => {
 
   return (
     <div>
-      <h1 className="h4 mb-1 font-bold">
-        {t('thank_you')}
-      </h1>
+      <h1 className="h4 mb-1 font-bold">{t('thank_you')}</h1>
       <p className="min-h-[2lh] text-balance">{address || t(status as any)}</p>
     </div>
   );

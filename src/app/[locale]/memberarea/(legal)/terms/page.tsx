@@ -1,4 +1,3 @@
-
 import { getLocale } from 'next-intl/server';
 
 import ProductLayout from '@/components/layouts/product-layout';

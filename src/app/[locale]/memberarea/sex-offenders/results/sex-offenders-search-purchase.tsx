@@ -28,11 +28,7 @@ export const SexOffenderSearchPurchase = ({
       onOpenChange={onOpenChange}
       productKey="sex_offenders_search"
       translationNamespace="pages.reverse_lookup.report.upsell.sex_offenders_search"
-      benefitKeys={[
-        'instant_access',
-        'verified_source_data',
-        'secure_one_time_payment',
-      ]}
+      benefitKeys={['instant_access', 'verified_source_data', 'secure_one_time_payment']}
       purchaseParams={{
         sexOffenderSearchId,
         candidateIndex,

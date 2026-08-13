@@ -5,7 +5,7 @@ import createMiddleware from 'next-intl/middleware';
 
 import { AUTH_ROUTES, PROTECTED_ROUTES } from '@/constants/routes';
 import { routing } from '@/libs/i18n-routing';
-import { type LanguageCode,SiteConfig } from '@/utils/config';
+import { type LanguageCode, SiteConfig } from '@/utils/config';
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -18,16 +18,11 @@ async function isAuthenticated(request: NextRequest) {
 }
 
 const isPublicRoute = (pathname: string) => {
-  return (
-    !pathname.match(`^\/([a-z]{2}\/)?(?:${PROTECTED_ROUTES.join('|')})`)
-    || pathname.startsWith('/api')
-  );
+  return !pathname.match(`^\/([a-z]{2}\/)?(?:${PROTECTED_ROUTES.join('|')})`) || pathname.startsWith('/api');
 };
 
 const isAuthRoute = (pathname: string) => {
-  return (
-    pathname.match(`^\/([a-z]{2}\/)?(?:${AUTH_ROUTES.join('|')})$`) !== null
-  );
+  return pathname.match(`^\/([a-z]{2}\/)?(?:${AUTH_ROUTES.join('|')})$`) !== null;
 };
 
 const redirectDisabledLocale = (request: NextRequest) => {
@@ -70,14 +65,11 @@ export default async function handleAuthAndIntl(request: NextRequest): Promise<N
   }
 
   if (!authenticated) {
-  // Redirect to sign-in if not authenticated
+    // Redirect to sign-in if not authenticated
     const localeMatch = pathname.match(/^\/([a-z]{2})\//);
     const locale = localeMatch ? localeMatch[1] : '';
 
-    const signInUrl = new URL(
-      `/${locale ? `${locale}/` : ''}sign-in`,
-      request.url,
-    );
+    const signInUrl = new URL(`/${locale ? `${locale}/` : ''}sign-in`, request.url);
     return NextResponse.redirect(signInUrl);
   }
 

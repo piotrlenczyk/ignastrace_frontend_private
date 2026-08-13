@@ -2,12 +2,7 @@ import { cn } from '@/libs/utils';
 
 import { type IconProps, sizes } from '../iconDefinition';
 
-export const IconFox = ({
-  className,
-  color = 'currentColor',
-  size = 'fontSize',
-  ...props
-}: IconProps) => (
+export const IconFox = ({ className, color = 'currentColor', size = 'fontSize', ...props }: IconProps) => (
   <svg
     width={sizes[size]}
     height={sizes[size]}
@@ -36,12 +31,7 @@ export const IconFox = ({
     </g>
     <defs>
       <clipPath id="clip0_11733_16160">
-        <rect
-          width={69.6752}
-          height={30}
-          fill="white"
-          transform="translate(0.566406)"
-        />
+        <rect width={69.6752} height={30} fill="white" transform="translate(0.566406)" />
       </clipPath>
     </defs>
   </svg>

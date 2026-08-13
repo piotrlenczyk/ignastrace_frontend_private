@@ -38,9 +38,7 @@ const DetailStatusPage = async (props: PageProps<'/[locale]/memberarea/status/de
   const api = await getApi();
   const location = await api.get<Location>(`/locations/${searchParams?.id}`);
 
-  return (
-    <DetailStatusClientPage location={location} />
-  );
+  return <DetailStatusClientPage location={location} />;
 };
 
 export default DetailStatusPage;

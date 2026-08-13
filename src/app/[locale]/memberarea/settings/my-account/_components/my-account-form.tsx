@@ -123,15 +123,9 @@ export const MyAccountForm = ({ user }: { user: User }) => {
             render={({ field }) => (
               <FormItem className="flex flex-row items-center gap-2 space-y-0">
                 <FormControl>
-                  <Switch
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
+                  <Switch checked={field.value} onCheckedChange={field.onChange} />
                 </FormControl>
-                <FormLabel className="text-sm">
-                  {t('notifications.notify_status_changes')}
-                </FormLabel>
-
+                <FormLabel className="text-sm">{t('notifications.notify_status_changes')}</FormLabel>
               </FormItem>
             )}
           />
@@ -141,15 +135,9 @@ export const MyAccountForm = ({ user }: { user: User }) => {
             render={({ field }) => (
               <FormItem className="flex flex-row items-center gap-2 space-y-0">
                 <FormControl>
-                  <Switch
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
+                  <Switch checked={field.value} onCheckedChange={field.onChange} />
                 </FormControl>
-                <FormLabel className="m-0 text-sm">
-                  {t('notifications.notify_user_located')}
-                </FormLabel>
-
+                <FormLabel className="m-0 text-sm">{t('notifications.notify_user_located')}</FormLabel>
               </FormItem>
             )}
           />

@@ -9,24 +9,18 @@ type RequestOptions = {
 };
 
 export const apiClient = (baseUrl: string, session?: Session | null) => ({
-  async request<T>(
-    endpoint: string,
-    options: RequestOptions = {},
-  ): Promise<{ data: T; authHeader?: string }> {
+  async request<T>(endpoint: string, options: RequestOptions = {}): Promise<{ data: T; authHeader?: string }> {
     const { method = 'GET', body, headers = {} } = options;
 
-    const response = await fetch(
-      `${baseUrl}${endpoint}`,
-      {
-        method,
-        headers: {
-          'Content-Type': 'application/json',
-          ...(session && { Authorization: session.apiToken }),
-          ...headers,
-        },
-        body: body ? JSON.stringify(body) : undefined,
+    const response = await fetch(`${baseUrl}${endpoint}`, {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+        ...(session && { Authorization: session.apiToken }),
+        ...headers,
       },
-    );
+      body: body ? JSON.stringify(body) : undefined,
+    });
 
     const textResponse = await response.text();
     const data = textResponse.length ? JSON.parse(textResponse) : {};
@@ -40,10 +34,7 @@ export const apiClient = (baseUrl: string, session?: Session | null) => ({
     return { data, authHeader: authHeader ?? undefined };
   },
 
-  async get<T>(
-    endpoint: string,
-    options?: Omit<RequestOptions, 'method' | 'body'>,
-  ) {
+  async get<T>(endpoint: string, options?: Omit<RequestOptions, 'method' | 'body'>) {
     const response = await this.request<T>(endpoint, {
       ...options,
       method: 'GET',
@@ -51,11 +42,7 @@ export const apiClient = (baseUrl: string, session?: Session | null) => ({
     return response.data;
   },
 
-  async post<T>(
-    endpoint: string,
-    body: Record<string, unknown>,
-    options?: Omit<RequestOptions, 'method'>,
-  ) {
+  async post<T>(endpoint: string, body: Record<string, unknown>, options?: Omit<RequestOptions, 'method'>) {
     const response = await this.request<T>(endpoint, {
       ...options,
       method: 'POST',
@@ -64,11 +51,7 @@ export const apiClient = (baseUrl: string, session?: Session | null) => ({
     return response?.data;
   },
 
-  async put<T>(
-    endpoint: string,
-    body: Record<string, unknown>,
-    options?: Omit<RequestOptions, 'method'>,
-  ) {
+  async put<T>(endpoint: string, body: Record<string, unknown>, options?: Omit<RequestOptions, 'method'>) {
     const response = await this.request<T>(endpoint, {
       ...options,
       method: 'PUT',
@@ -86,16 +69,12 @@ export const apiClient = (baseUrl: string, session?: Session | null) => ({
   },
 });
 
-export const hasApiError = (
-  error: ApiError,
-  field: string,
-  errorKey: string,
-): boolean => {
+export const hasApiError = (error: ApiError, field: string, errorKey: string): boolean => {
   const errors = error.data?.errors;
 
   if (!errors || !errors[field]) {
     return false;
   }
 
-  return errors[field].some(error => error.error === errorKey);
+  return errors[field].some((error) => error.error === errorKey);
 };

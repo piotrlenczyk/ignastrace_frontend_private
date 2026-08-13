@@ -8,11 +8,7 @@ type UseCountdownTimerOptions = {
   onComplete?: () => void;
 };
 
-export const useCountdownTimer = ({
-  initialMinutes,
-  storageKey,
-  onComplete,
-}: UseCountdownTimerOptions) => {
+export const useCountdownTimer = ({ initialMinutes, storageKey, onComplete }: UseCountdownTimerOptions) => {
   const [timeLeft, setTimeLeft] = useState<number>(0);
   const [isActive, setIsActive] = useState<boolean>(false);
   const [isClient, setIsClient] = useState<boolean>(false);
@@ -57,7 +53,7 @@ export const useCountdownTimer = ({
         onComplete?.();
       }
     } else {
-      const endTime = Date.now() + (initialMinutes * 60 * 1000);
+      const endTime = Date.now() + initialMinutes * 60 * 1000;
       localStorage.setItem(storageKey, endTime.toString());
       setTimeLeft(initialMinutes * 60);
       setIsActive(true);
@@ -156,7 +152,7 @@ export const useCountdownTimer = ({
     localStorage.removeItem(storageKey);
     localStorage.removeItem(completedKey);
 
-    const endTime = Date.now() + (initialMinutes * 60 * 1000);
+    const endTime = Date.now() + initialMinutes * 60 * 1000;
     localStorage.setItem(storageKey, endTime.toString());
     setTimeLeft(initialMinutes * 60);
     setIsActive(true);

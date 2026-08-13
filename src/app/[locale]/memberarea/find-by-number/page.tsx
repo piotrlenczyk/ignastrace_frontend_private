@@ -38,9 +38,7 @@ export default async function FindByNumberPage() {
       <main className="flex flex-col px-4 lg:p-6">
         <h1 className="h3 font-bold">{tFindByNumber('find_by_number')}</h1>
         <div className="container-content flex flex-1 flex-col justify-center gap-4">
-          <h2 className="h3 font-bold">
-            {t('label')}
-          </h2>
+          <h2 className="h3 font-bold">{t('label')}</h2>
           <PhoneInput
             defaultCountry={country}
             destinationUrl={ROUTES.MEMBER.FIND_BY_NUMBER.MESSAGE_SENDING}

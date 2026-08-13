@@ -44,7 +44,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
           aria-label={isVisible ? 'Hide password' : 'Show password'}
           aria-pressed={isVisible}
           disabled={disabled}
-          onClick={() => setIsVisible(current => !current)}
+          onClick={() => setIsVisible((current) => !current)}
         >
           <Icon className="size-5" aria-hidden="true" strokeWidth={2} />
         </button>

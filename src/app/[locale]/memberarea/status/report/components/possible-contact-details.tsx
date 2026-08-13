@@ -10,8 +10,8 @@ import { AlertInfo } from './alert-info';
 const PossibleContactDetails = ({ className, reverseLookup }: { className?: string; reverseLookup: ReverseLookup }) => {
   const t = useTranslations('pages.reverse_lookup.report.possible_contact_details');
 
-  const emails = reverseLookup.reverse_lookup_owners.map(owner => owner.email).filter(Boolean);
-  const phones = reverseLookup.reverse_lookup_owners.map(owner => owner.phone).filter(Boolean);
+  const emails = reverseLookup.reverse_lookup_owners.map((owner) => owner.email).filter(Boolean);
+  const phones = reverseLookup.reverse_lookup_owners.map((owner) => owner.phone).filter(Boolean);
 
   const contactsData = [
     {
@@ -30,31 +30,27 @@ const PossibleContactDetails = ({ className, reverseLookup }: { className?: stri
 
   return (
     <Card className={cn('flex flex-col gap-6 border-stroke-weak px-4 py-6 shadow-raised lg:px-6', className)}>
-      <h4 className="font-bold">
-        {isEmpty ? t('title_empty') : t('title')}
-      </h4>
+      <h4 className="font-bold">{isEmpty ? t('title_empty') : t('title')}</h4>
 
-      <AlertInfo>
-        {t('info')}
-      </AlertInfo>
+      <AlertInfo>{t('info')}</AlertInfo>
 
-      {!isEmpty && (
-        contactsData.map(item => (
-          item.values.length > 0 && (
-            <div key={item.label} className="grid grid-cols-[auto_1fr] items-start gap-2">
-              <item.icon className="size-6 text-secondary" />
-              <div className="min-w-0 text-lg">
-                <p className="mb-0.5 font-bold">
-                  {item.label}
-                  :
-                </p>
-                {item.values.map(value => (
-                  <p key={value} className="truncate">{value}</p>
-                ))}
+      {!isEmpty &&
+        contactsData.map(
+          (item) =>
+            item.values.length > 0 && (
+              <div key={item.label} className="grid grid-cols-[auto_1fr] items-start gap-2">
+                <item.icon className="size-6 text-secondary" />
+                <div className="min-w-0 text-lg">
+                  <p className="mb-0.5 font-bold">{item.label}:</p>
+                  {item.values.map((value) => (
+                    <p key={value} className="truncate">
+                      {value}
+                    </p>
+                  ))}
+                </div>
               </div>
-            </div>
-          )
-        )))}
+            ),
+        )}
     </Card>
   );
 };

@@ -7,10 +7,7 @@ import type { SexOffenderData } from '@/types/sex-offenders.types';
 import { getCountryName } from '@/utils/country-names';
 
 const AddressRow = ({ key, label, value }: { key: string; label: string; value: string | number }) => (
-  <div
-    key={key}
-    className="block border-b border-gray-100 pb-3 text-lg md:flex md:gap-3"
-  >
+  <div key={key} className="block border-b border-gray-100 pb-3 text-lg md:flex md:gap-3">
     <h5 className="mb-1 w-60 font-bold md:mb-0">{label}</h5>
     <p>{value ?? '--'}</p>
   </div>
@@ -40,12 +37,13 @@ const AddressInformationComponent = ({
     { label: t('length_of_residence'), value: location?.years_of_residence || '--' },
   ];
 
-  const locationCoordinates = location?.latitude && location?.longitude
-    ? {
-        lat: location.latitude,
-        lng: location.longitude,
-      }
-    : undefined;
+  const locationCoordinates =
+    location?.latitude && location?.longitude
+      ? {
+          lat: location.latitude,
+          lng: location.longitude,
+        }
+      : undefined;
 
   const zoom = 15;
 
@@ -74,12 +72,10 @@ const AddressInformationComponent = ({
 
   return (
     <Card className={cn('flex flex-col gap-6 border border-stroke-weak p-6 shadow-raised', className)}>
-      <h4 className="font-bold">
-        {t('title')}
-      </h4>
+      <h4 className="font-bold">{t('title')}</h4>
 
       <div className="space-y-4">
-        {addressData.map(item => (
+        {addressData.map((item) => (
           <AddressRow key={item.label} label={item.label} value={item.value} />
         ))}
       </div>
@@ -107,7 +103,6 @@ const AddressInformationComponent = ({
           </div>
         </APIProvider>
       )}
-
     </Card>
   );
 };

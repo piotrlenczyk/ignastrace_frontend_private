@@ -6,23 +6,10 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { IconEyeScan } from '@/components/ui/icon/icons';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ROUTES } from '@/constants/routes';
 import { US_STATES } from '@/constants/us-states';
 import { useGenericErrorToast } from '@/hooks/use-generic-error-toast';
@@ -82,9 +69,7 @@ export const SexOffenderSearchForm = () => {
 
   return (
     <Form {...form}>
-      <h2 className="h3 font-bold">
-        {t('title')}
-      </h2>
+      <h2 className="h3 font-bold">{t('title')}</h2>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="w-full space-y-3">
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           <FormField
@@ -144,7 +129,7 @@ export const SexOffenderSearchForm = () => {
                   </FormControl>
                   <SelectContent>
                     <SelectItem value="all">{t('state_placeholder')}</SelectItem>
-                    {US_STATES.map(state => (
+                    {US_STATES.map((state) => (
                       <SelectItem key={state.value} value={state.value}>
                         {state.label}
                       </SelectItem>

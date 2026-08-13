@@ -15,17 +15,16 @@ const loadGeocoding = async (): Promise<google.maps.GeocodingLibrary> => {
   return importLibrary('geocoding');
 };
 
-export async function reverseGeo(
-  lat: number,
-  lng: number,
-): Promise<string> {
+export async function reverseGeo(lat: number, lng: number): Promise<string> {
   const { Geocoder } = await loadGeocoding();
   const geocoder = new Geocoder();
 
-  const { results } = await geocoder.geocode({ location: {
-    lat,
-    lng,
-  } });
+  const { results } = await geocoder.geocode({
+    location: {
+      lat,
+      lng,
+    },
+  });
 
   if (results && results[0]) {
     return results[0].formatted_address;

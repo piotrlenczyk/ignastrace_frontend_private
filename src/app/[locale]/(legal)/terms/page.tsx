@@ -1,4 +1,3 @@
-
 import { getLocale } from 'next-intl/server';
 
 import { ROUTES } from '@/constants/routes';
@@ -13,7 +12,5 @@ export default async function TermsAndConditionsPage() {
   const locale = await getLocale();
 
   const translatedContent = await getTranslatedHtml('terms', locale, 'terms');
-  return (
-    <div dangerouslySetInnerHTML={{ __html: translatedContent }} />
-  );
+  return <div dangerouslySetInnerHTML={{ __html: translatedContent }} />;
 }

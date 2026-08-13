@@ -26,7 +26,5 @@ export const localeFormatDate = (date: Date | string, locale: string): string =>
     year: 'numeric',
   };
 
-  return new Intl.DateTimeFormat(locale, options)
-    .format(dateObj)
-    .replace(/\//g, '.');
+  return new Intl.DateTimeFormat(locale, options).format(dateObj).replace(/\//g, '.');
 };

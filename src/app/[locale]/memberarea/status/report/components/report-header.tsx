@@ -28,26 +28,20 @@ const ReportHeader = ({ reverseLookup, user }: { reverseLookup: ReverseLookup; u
 
   return (
     <>
-      <div className={`
-        top-0 z-10 flex items-center justify-between gap-2 bg-white px-4 pt-2 pb-4
-        lg:sticky lg:rounded-t-lg lg:p-6
-        print:hidden
-      `}
+      <div
+        className={`
+          top-0 z-10 flex items-center justify-between gap-2 bg-white px-4 pt-2 pb-4
+          lg:sticky lg:rounded-t-lg lg:p-6
+          print:hidden
+        `}
       >
         <div className="flex items-center gap-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="flex size-12 items-center gap-2"
-            asChild
-          >
+          <Button variant="ghost" size="sm" className="flex size-12 items-center gap-2" asChild>
             <Link href={`${ROUTES.MEMBER.STATUS.HOME}`}>
               <IconArrowLeft size="large" className="text-neutral" />
             </Link>
           </Button>
-          <h4 className="h4 font-bold">
-            {t('title')}
-          </h4>
+          <h4 className="h4 font-bold">{t('title')}</h4>
         </div>
         <div className="hidden lg:block">
           <DownloadReportButton
@@ -62,21 +56,13 @@ const ReportHeader = ({ reverseLookup, user }: { reverseLookup: ReverseLookup; u
         <div className="mb-4 flex flex-col gap-4 lg:mb-0 lg:flex-row lg:items-center lg:gap-5">
           <div className="flex items-center gap-6">
             {photo && (
-              <Image
-                className="size-[60px] rounded-xl object-cover"
-                src={photo}
-                alt="photo"
-                width={60}
-                height={60}
-              />
+              <Image className="size-[60px] rounded-xl object-cover" src={photo} alt="photo" width={60} height={60} />
             )}
 
             <div className="flex w-full flex-col">
               <div className="flex items-center gap-1">
                 <IconCheckCircle className="size-5 text-secondary" />
-                <p className="text-caption text-weak">
-                  {t('matches_found')}
-                </p>
+                <p className="text-caption text-weak">{t('matches_found')}</p>
               </div>
               <h3 className="mt-1 font-bold lg:mt-2">{phoneNumberFormatted.number}</h3>
             </div>

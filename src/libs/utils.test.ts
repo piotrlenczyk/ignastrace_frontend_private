@@ -3,7 +3,7 @@ import { cn } from './utils';
 describe('cn', () => {
   it('drops falsy inputs and flattens arrays and objects', () => {
     expect(cn('flex', false, undefined, null, '')).toBe('flex');
-    expect(cn(['flex', 'gap-1'], { 'items-center': true, 'hidden': false })).toBe('flex gap-1 items-center');
+    expect(cn(['flex', 'gap-1'], { 'items-center': true, hidden: false })).toBe('flex gap-1 items-center');
   });
 
   it('keeps classes that do not conflict', () => {

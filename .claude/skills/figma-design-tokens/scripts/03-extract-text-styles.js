@@ -11,9 +11,9 @@ const styles = new Map();
 const local = await figma.getLocalTextStylesAsync();
 for (const s of local) styles.set(s.id, s);
 
-const texts = figma.currentPage.findAllWithCriteria({ types: ["TEXT"] });
+const texts = figma.currentPage.findAllWithCriteria({ types: ['TEXT'] });
 for (const t of texts) {
-  if (typeof t.textStyleId === "string" && t.textStyleId && !styles.has(t.textStyleId)) {
+  if (typeof t.textStyleId === 'string' && t.textStyleId && !styles.has(t.textStyleId)) {
     const s = await figma.getStyleByIdAsync(t.textStyleId);
     if (s) styles.set(t.textStyleId, s);
   }

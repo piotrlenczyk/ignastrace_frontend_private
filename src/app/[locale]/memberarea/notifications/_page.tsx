@@ -37,15 +37,12 @@ export default function NotificationsClientPage({ unreadNotifications }: { unrea
       <main className="flex flex-col px-4 lg:p-6">
         <h1 className="mb-4 h3 font-bold lg:mb-6">{t('title')}</h1>
         <div className={cn('flex flex-1 flex-col gap-4', notifications.length === 0 && 'justify-center')}>
-          { error && <NotificationError /> }
-          { !isLoading && !error && (
-            <NotificationList
-              data={{ notifications, has_more: hasMore }}
-              fetchMoreFn={fetchMore}
-            />
+          {error && <NotificationError />}
+          {!isLoading && !error && (
+            <NotificationList data={{ notifications, has_more: hasMore }} fetchMoreFn={fetchMore} />
           )}
         </div>
       </main>
     </ProductLayout>
   );
-};
+}

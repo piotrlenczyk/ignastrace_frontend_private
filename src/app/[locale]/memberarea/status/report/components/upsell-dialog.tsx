@@ -19,11 +19,7 @@ import { UpsellPaymentMessage } from './upsell-payment-message';
 import { UpsellUpdatePaymentMethod } from './upsell-update-payment-method';
 
 type ProductKey =
-  | 'data_leaks'
-  | 'sex_offenders'
-  | 'sex_offenders_search'
-  | 'unlimited_pdf_downloads'
-  | 'social_networks';
+  'data_leaks' | 'sex_offenders' | 'sex_offenders_search' | 'unlimited_pdf_downloads' | 'social_networks';
 
 type PurchaseParams = {
   reverseLookupId?: string;
@@ -39,10 +35,7 @@ type PurchaseParams = {
  * union instantiates one `t` signature per namespace in en.json and TypeScript
  * gives up ("excessively deep").
  */
-type UpsellNamespace = Extract<
-  Parameters<typeof useTranslations>[0],
-  `pages.reverse_lookup.report.upsell.${string}`
->;
+type UpsellNamespace = Extract<Parameters<typeof useTranslations>[0], `pages.reverse_lookup.report.upsell.${string}`>;
 
 type UpsellDialogProps = {
   open: boolean;
@@ -90,7 +83,7 @@ const UpsellDialog = ({
 
   const { mutate: getUpsellProducts } = useGetUpsellProductsMutation({
     onSuccess: (products) => {
-      const upsellProduct = products.find(p => p.key === productKey);
+      const upsellProduct = products.find((p) => p.key === productKey);
       if (upsellProduct) {
         setProduct(upsellProduct);
       }
@@ -120,13 +113,13 @@ const UpsellDialog = ({
       onOpenChange(false);
       setShowMessage(true);
       setIsSuccess(false);
-      setRetryCount(prev => prev + 1);
+      setRetryCount((prev) => prev + 1);
     },
   });
 
   useEffect(() => {
     getUpsellProducts();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handlePurchaseUpsell = () => {
@@ -150,7 +143,7 @@ const UpsellDialog = ({
     handlePurchaseUpsell();
   };
 
-  const upsellBenefits = benefitKeys.map(key => ({
+  const upsellBenefits = benefitKeys.map((key) => ({
     icon: <IconCheckCircle className="size-6 text-secondary" />,
     title: t(key as any),
   }));
@@ -161,32 +154,24 @@ const UpsellDialog = ({
         <DialogContent className="max-w-[500px] p-6 md:p-8" hideCloseButton>
           <DialogTitle className="sr-only"></DialogTitle>
           <div className="flex flex-col gap-5">
-            <h4 className="h4 font-bold">
-              {t('title')}
-            </h4>
+            <h4 className="h4 font-bold">{t('title')}</h4>
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-2">
                 <div className="flex items-center justify-between">
                   <h4 className="text-lg font-bold">{t('total_due_today')}</h4>
-                  <span className="h4 text-right font-bold">
-                    {formattedPrice}
-                  </span>
+                  <span className="h4 text-right font-bold">{formattedPrice}</span>
                 </div>
                 <LimitedOfferTag className="mx-auto" />
               </div>
               <div className="flex flex-col gap-5">
                 <div className="flex items-center gap-3 rounded-lg bg-green-50 p-4">
                   <IconTagLine className="size-6" />
-                  <span className="text-sm lg:text-base">
-                    {t('special_limited_time_offer')}
-                  </span>
+                  <span className="text-sm lg:text-base">{t('special_limited_time_offer')}</span>
                 </div>
-                {upsellBenefits.map(benefit => (
+                {upsellBenefits.map((benefit) => (
                   <div key={benefit.title} className="flex gap-[6px]">
                     {benefit.icon}
-                    <span className="text-sm lg:text-base">
-                      {benefit.title}
-                    </span>
+                    <span className="text-sm lg:text-base">{benefit.title}</span>
                   </div>
                 ))}
               </div>
@@ -195,27 +180,17 @@ const UpsellDialog = ({
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <Button
-                variant="secondary"
-                onClick={() => onOpenChange(false)}
-                className="text-base font-semibold"
-              >
+              <Button variant="secondary" onClick={() => onOpenChange(false)} className="text-base font-semibold">
                 {t('cancel')}
               </Button>
-              <Button
-                className="text-base font-semibold"
-                onClick={handlePurchaseUpsell}
-                disabled={isPending}
-              >
-                {isPending
-                  ? (
-                      <>
-                        {t('processing_payment')}
-                        {' '}
-                        <IconLoaderCircle className="size-4 animate-spin" />
-                      </>
-                    )
-                  : t('purchase')}
+              <Button className="text-base font-semibold" onClick={handlePurchaseUpsell} disabled={isPending}>
+                {isPending ? (
+                  <>
+                    {t('processing_payment')} <IconLoaderCircle className="size-4 animate-spin" />
+                  </>
+                ) : (
+                  t('purchase')
+                )}
               </Button>
             </div>
           </div>

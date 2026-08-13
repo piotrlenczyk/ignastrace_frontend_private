@@ -19,7 +19,10 @@ import { Link } from '@/libs/i18n-routing';
 import type { SexOffenderData } from '@/types/sex-offenders.types';
 import type { User } from '@/types/user';
 
-export const SexOffenderSearchReportContent = ({ sexOffenderData, user }: {
+export const SexOffenderSearchReportContent = ({
+  sexOffenderData,
+  user,
+}: {
   sexOffenderData: SexOffenderData;
   user: User;
 }) => {
@@ -36,11 +39,12 @@ export const SexOffenderSearchReportContent = ({ sexOffenderData, user }: {
 
   return (
     <main>
-      <div className={`
-        top-0 z-10 flex items-center justify-between gap-2 bg-white px-4 pt-2 pb-4
-        lg:sticky lg:rounded-t-lg lg:p-6
-        print:hidden
-      `}
+      <div
+        className={`
+          top-0 z-10 flex items-center justify-between gap-2 bg-white px-4 pt-2 pb-4
+          lg:sticky lg:rounded-t-lg lg:p-6
+          print:hidden
+        `}
       >
         <div className="flex items-center gap-1">
           <Button asChild variant="ghost" size="icon" aria-label={t('new_search')}>

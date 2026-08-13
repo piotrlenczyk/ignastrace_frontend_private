@@ -66,15 +66,11 @@ const LoaderPage = async () => {
     redirect(ROUTES.REVERSE_LOOKUP.HOME);
   }
 
-  const countryName = labels[formattedNumber.country as keyof typeof labels || FALLBACK_COUNTRY];
+  const countryName = labels[(formattedNumber.country as keyof typeof labels) || FALLBACK_COUNTRY];
 
   return (
     <FunnelLayout isReverseLookup>
-      <Loader
-        rawPhone={phoneNumber}
-        phoneNumber={formattedNumber.number}
-        countryName={countryName}
-      />
+      <Loader rawPhone={phoneNumber} phoneNumber={formattedNumber.number} countryName={countryName} />
     </FunnelLayout>
   );
 };

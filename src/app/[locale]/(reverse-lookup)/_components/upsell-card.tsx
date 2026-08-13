@@ -31,16 +31,15 @@ type UpsellCardProps = {
   product: Product;
 };
 
-const UpsellCard = (
-  {
-    title,
-    specialOfferText,
-    upsellBenefits,
-    redirectUrl,
-    iconUrl,
-    purchaseButtonText,
-    product,
-  }: UpsellCardProps) => {
+const UpsellCard = ({
+  title,
+  specialOfferText,
+  upsellBenefits,
+  redirectUrl,
+  iconUrl,
+  purchaseButtonText,
+  product,
+}: UpsellCardProps) => {
   const t = useTranslations('pages.reverse_lookup.upsell');
   const tStripeForm = useTranslations('components.forms.stripe_form');
 
@@ -62,10 +61,7 @@ const UpsellCard = (
     onError: () => {
       console.error('Error creating upselling');
       setIsSubmitted(false);
-      showErrorToast(
-        tStripeForm('errors.stripe_generic_error'),
-        tStripeForm('errors.stripe_generic_error_title'),
-      );
+      showErrorToast(tStripeForm('errors.stripe_generic_error'), tStripeForm('errors.stripe_generic_error_title'));
     },
   });
 
@@ -110,9 +106,7 @@ const UpsellCard = (
     <Card className="border border-stroke-weak px-4 py-6 shadow-raised lg:p-8">
       <div className="flex flex-col gap-5">
         <div className="flex justify-between">
-          <h3 className="max-w-[180px] h3 font-bold lg:max-w-[345px]">
-            {title}
-          </h3>
+          <h3 className="max-w-[180px] h3 font-bold lg:max-w-[345px]">{title}</h3>
           <Image src={iconUrl} alt={`${title} icon`} width={63} height={72} />
         </div>
         <div className="flex flex-col gap-4">
@@ -137,16 +131,12 @@ const UpsellCard = (
           <div className="flex flex-col gap-5">
             <div className="flex items-center gap-3 rounded-lg bg-green-50 p-4">
               <IconTagLine className="size-6" />
-              <span className="lg:text-base">
-                {specialOfferText}
-              </span>
+              <span className="lg:text-base">{specialOfferText}</span>
             </div>
-            {upsellBenefits.map(benefit => (
+            {upsellBenefits.map((benefit) => (
               <div key={benefit.title} className="flex gap-[6px]">
                 {benefit.icon}
-                <span className="text-lg">
-                  {benefit.title}
-                </span>
+                <span className="text-lg">{benefit.title}</span>
               </div>
             ))}
           </div>

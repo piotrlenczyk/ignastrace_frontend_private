@@ -13,17 +13,13 @@ const PhonePublicInformation = ({ className, reverseLookup }: { className?: stri
 
   return (
     <Card className={cn('flex flex-col gap-6 border-stroke-weak px-4 py-6 shadow-raised lg:px-6', className)}>
-      <h4 className="font-bold">
-        {isEmpty ? t('title_empty') : t('title')}
-      </h4>
+      <h4 className="font-bold">{isEmpty ? t('title_empty') : t('title')}</h4>
 
-      <AlertInfo>
-        {t('info')}
-      </AlertInfo>
+      <AlertInfo>{t('info')}</AlertInfo>
 
       {!isEmpty && (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-6">
-          {reverseLookup.reverse_lookup_owners.map(owner => (
+          {reverseLookup.reverse_lookup_owners.map((owner) => (
             <div key={owner.id} className="rounded-2xl border border-gray-100 p-4">
               <div className="flex items-start gap-4">
                 {/* <Image
@@ -35,18 +31,12 @@ const PhonePublicInformation = ({ className, reverseLookup }: { className?: stri
                 /> */}
                 <div className="flex flex-col gap-1">
                   <div className="flex gap-1">
-                    <span className="shrink-0">
-                      {t('source')}
-                    </span>
-                    <strong className="break-words">
-                      {owner.source ? t(`sources.${owner.source}`) : ''}
-                    </strong>
+                    <span className="shrink-0">{t('source')}</span>
+                    <strong className="break-words">{owner.source ? t(`sources.${owner.source}`) : ''}</strong>
                   </div>
                   <div className="flex gap-1">
                     <span className="shrink-0">
-                      {t('name')}
-                      {' '}
-                      <strong>{owner.name}</strong>
+                      {t('name')} <strong>{owner.name}</strong>
                     </span>
                   </div>
                 </div>

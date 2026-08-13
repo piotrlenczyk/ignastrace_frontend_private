@@ -2,12 +2,7 @@ import { cn } from '@/libs/utils';
 
 import { type IconProps, sizes } from '../iconDefinition';
 
-export const IconSocialWhatsapp = ({
-  className,
-  color = 'currentColor',
-  size = 'fontSize',
-  ...props
-}: IconProps) => (
+export const IconSocialWhatsapp = ({ className, color = 'currentColor', size = 'fontSize', ...props }: IconProps) => (
   <svg
     width={sizes[size]}
     height={sizes[size]}
@@ -28,12 +23,7 @@ export const IconSocialWhatsapp = ({
       strokeOpacity={0.1}
     />
     <defs>
-      <pattern
-        id="pattern0_17525_37478"
-        patternContentUnits="objectBoundingBox"
-        width={1}
-        height={1}
-      >
+      <pattern id="pattern0_17525_37478" patternContentUnits="objectBoundingBox" width={1} height={1}>
         <use xlinkHref="#image0_17525_37478" transform="scale(0.00333333)" />
       </pattern>
       <image

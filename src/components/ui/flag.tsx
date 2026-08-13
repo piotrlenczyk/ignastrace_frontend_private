@@ -7,22 +7,17 @@ export const Flag = ({ countryCode, size = 20 }: { countryCode?: CountryCode; si
   const Comp = countryCode ? SquareFlags[countryCode] : null;
 
   return (
-    <div
-      className="phone-input-flag-wrapper size-(--size)"
-      style={{ '--size': `${size}px` } as React.CSSProperties}
-    >
-      {Comp
-        ? (
-            <Comp
-              style={{
-                height: `${size}px`,
-                width: `${size}px`,
-              }}
-            />
-          )
-        : (
-            <IconGlobeLine className="size-(--size) text-gray-700" />
-          )}
+    <div className="phone-input-flag-wrapper size-(--size)" style={{ '--size': `${size}px` } as React.CSSProperties}>
+      {Comp ? (
+        <Comp
+          style={{
+            height: `${size}px`,
+            width: `${size}px`,
+          }}
+        />
+      ) : (
+        <IconGlobeLine className="size-(--size) text-gray-700" />
+      )}
     </div>
   );
 };

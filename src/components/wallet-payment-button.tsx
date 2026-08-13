@@ -84,7 +84,11 @@ export const WalletPaymentButton = forwardRef<
       isLoading && loadingCls,
     )}
   >
-    { isLoading ? (<IconLoaderCircle size="large" className="animate-spin" />) : METHOD_TO_ICON[method as keyof typeof METHOD_TO_ICON]}
+    {isLoading ? (
+      <IconLoaderCircle size="large" className="animate-spin" />
+    ) : (
+      METHOD_TO_ICON[method as keyof typeof METHOD_TO_ICON]
+    )}
   </button>
 ));
 

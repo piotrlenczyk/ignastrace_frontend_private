@@ -2,7 +2,7 @@
 
 Project rules live in `CLAUDE.md` — read that first. This file exists for one
 reason: the block below is a generated index of the Next.js documentation that
-ships with the installed version, so an agent looks up how *this* Next works
+ships with the installed version, so an agent looks up how _this_ Next works
 instead of recalling an older major.
 
 Regenerate it after a Next upgrade with:

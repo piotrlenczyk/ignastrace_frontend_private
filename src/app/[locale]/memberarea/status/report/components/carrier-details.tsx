@@ -49,25 +49,17 @@ const CarrierDetails = ({ className, reverseLookup }: { className?: string; reve
 
   return (
     <Card className={cn('flex flex-col gap-6 border-stroke-weak px-4 py-6 shadow-raised lg:px-6', className)}>
-      <h4 className="font-bold">
-        { t('title') }
-      </h4>
+      <h4 className="font-bold">{t('title')}</h4>
 
-      <AlertInfo>
-        {t('info')}
-      </AlertInfo>
+      <AlertInfo>{t('info')}</AlertInfo>
 
       <div className="grid gap-4 sm:grid-cols-1 lg:grid-cols-2">
-        {carrierData.map(item => (
+        {carrierData.map((item) => (
           <div key={item.label} className="flex items-start gap-2">
             <item.icon className="size-6 text-secondary" />
             <div className="flex-1 text-lg">
-              <p className="mb-0.5 font-bold">
-                {item.label}
-              </p>
-              <p>
-                {item.value}
-              </p>
+              <p className="mb-0.5 font-bold">{item.label}</p>
+              <p>{item.value}</p>
             </div>
           </div>
         ))}

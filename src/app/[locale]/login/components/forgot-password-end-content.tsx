@@ -17,7 +17,9 @@ export const ForgotPasswordEndContent = ({ email, onClose }: { email: string; on
         {t('line_2')}
       </p>
       <DialogFooter className="mt-6">
-        <Button type="button" onClick={onClose}>{t('done')}</Button>
+        <Button type="button" onClick={onClose}>
+          {t('done')}
+        </Button>
       </DialogFooter>
     </>
   );

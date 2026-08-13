@@ -34,19 +34,11 @@ const twMerge = extendTailwindMerge<'animation-duration' | 'columns-count'>({
        * the two have to displace each other; `animation-duration-*` sets
        * animation-duration, which is not what the stock `duration-*` targets.
        */
-      'animation-duration': [
-        'animation-duration-500',
-        'animation-duration-1000',
-      ],
-      'columns-count': [
-        'columns-count-1',
-        'columns-count-2',
-        'columns-count-3',
-        'columns-count-4',
-      ],
+      'animation-duration': ['animation-duration-500', 'animation-duration-1000'],
+      'columns-count': ['columns-count-1', 'columns-count-2', 'columns-count-3', 'columns-count-4'],
     },
     conflictingClassGroups: {
-      'columns': ['columns-count'],
+      columns: ['columns-count'],
       'columns-count': ['columns'],
     },
   },
@@ -56,5 +48,4 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const titleize = (str: string) =>
-  str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+export const titleize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();

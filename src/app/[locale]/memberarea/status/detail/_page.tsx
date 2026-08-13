@@ -35,7 +35,7 @@ export const DetailStatusClientPage = ({ location }: { location: Location }) => 
   ];
 
   const handleMarkerClick = () => {
-    setZoom(prev => prev < 20 ? prev + 1 : 15);
+    setZoom((prev) => (prev < 20 ? prev + 1 : 15));
   };
 
   return (
@@ -49,9 +49,7 @@ export const DetailStatusClientPage = ({ location }: { location: Location }) => 
               </Link>
             </Button>
             <h1 className="h4 truncate font-bold">
-              {location.type === 'LinkLocation'
-                ? t('link_name', { name: location.name ?? '' })
-                : formattedPhone.number}
+              {location.type === 'LinkLocation' ? t('link_name', { name: location.name ?? '' }) : formattedPhone.number}
             </h1>
           </div>
           <div className="relative min-h-[400px] flex-1 overflow-hidden rounded-2xl bg-accent">

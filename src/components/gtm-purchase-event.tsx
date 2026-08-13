@@ -10,13 +10,7 @@ type GTMPurchaseEventProps = {
   currency: string;
 };
 
-const GTMPurchaseEvent = ({
-  event,
-  userId,
-  email,
-  value,
-  currency,
-}: GTMPurchaseEventProps) => {
+const GTMPurchaseEvent = ({ event, userId, email, value, currency }: GTMPurchaseEventProps) => {
   useEffect(() => {
     const key = `gtm_${event}:${userId}_event_fired`;
 

@@ -42,10 +42,10 @@ export const ForgotPasswordFormContent = ({
       <DialogDescription>{t('subtitle')}</DialogDescription>
       <Form {...form}>
         <form
-          onSubmit={((e) => {
+          onSubmit={(e) => {
             e.stopPropagation();
             handleSubmit(onSubmit)(e);
-          })}
+          }}
           className="space-y-4"
           id="forgot-password-form"
         >
@@ -62,14 +62,14 @@ export const ForgotPasswordFormContent = ({
             )}
           />
         </form>
-        {serverError && (
-          <FormMessage className="mt-2">
-            {serverError}
-          </FormMessage>
-        )}
+        {serverError && <FormMessage className="mt-2">{serverError}</FormMessage>}
         <DialogFooter className="mt-6">
-          <Button type="submit" form="forgot-password-form" disabled={isPending}>{t('submit_button')}</Button>
-          <Button variant="ghost" onClick={onCancel}>{t('cancel_button')}</Button>
+          <Button type="submit" form="forgot-password-form" disabled={isPending}>
+            {t('submit_button')}
+          </Button>
+          <Button variant="ghost" onClick={onCancel}>
+            {t('cancel_button')}
+          </Button>
         </DialogFooter>
       </Form>
     </>

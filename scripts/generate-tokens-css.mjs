@@ -234,7 +234,9 @@ for (const source of ['corporate', 'local']) {
 
     const previous = textStyles.get(token);
     if (previous && previous.source === source) {
-      warnings.push(`${source}: text styles "${name}" and "${previous.figmaName}" both map to "${token}" — kept "${previous.figmaName}"`);
+      warnings.push(
+        `${source}: text styles "${name}" and "${previous.figmaName}" both map to "${token}" — kept "${previous.figmaName}"`,
+      );
       continue;
     }
 
@@ -288,7 +290,7 @@ function header(title, note) {
     ' */',
     '',
   ]
-    .filter(line => line !== null)
+    .filter((line) => line !== null)
     .join('\n');
 }
 
@@ -320,12 +322,16 @@ function familyValue(designName) {
 const familyLabels = new Map();
 for (const family of families) {
   if (!family.startsWith(FAMILY_PREFIX)) {
-    warnings.push(`text styles reference "${family}" as a font family, which is not a ${FAMILY_PREFIX}* token — omitted`);
+    warnings.push(
+      `text styles reference "${family}" as a font family, which is not a ${FAMILY_PREFIX}* token — omitted`,
+    );
     continue;
   }
   const designName = typography.get(family);
   if (designName === undefined) {
-    warnings.push(`text styles reference font family "${family}", which the typography scale does not define — omitted`);
+    warnings.push(
+      `text styles reference font family "${family}", which the typography scale does not define — omitted`,
+    );
     continue;
   }
   familyLabels.set(family, { label: family.slice(FAMILY_PREFIX.length), designName: String(designName) });
@@ -347,7 +353,7 @@ const styleSections = families.map((family) => {
     ? `  /* ---- ${emitted.label} — pair with font-${emitted.label} ---- */`
     : `  /* ---- ${family} — no family token emitted, see warnings ---- */`;
   const blocks = [...textStyles.values()]
-    .filter(style => style.family === family)
+    .filter((style) => style.family === family)
     .sort((a, b) => b.size - a.size || (a.weight ?? 0) - (b.weight ?? 0) || a.token.localeCompare(b.token))
     .map((style) => {
       const local = style.source === 'local' ? ' /* local */' : '';
@@ -414,21 +420,25 @@ await writeCss(
   'typo.css',
   `${header(
     'Typography — named text styles.',
-    'A style sets size, line height, weight and tracking; the font family is a separate font-* class, because Tailwind\'s --text-* namespace has no family modifier. Families point at the custom property next/font exposes.',
+    "A style sets size, line height, weight and tracking; the font family is a separate font-* class, because Tailwind's --text-* namespace has no family modifier. Families point at the custom property next/font exposes.",
   )}@theme static {\n  /* ---- families ---- */\n${familyLines.join('\n')}\n\n${styleSections.join('\n\n')}\n}\n`,
 );
 
 // ---------------------------------------------------------------- report ----
-const localSemantics = [...semantics.values()].filter(s => s.source === 'local').length;
+const localSemantics = [...semantics.values()].filter((s) => s.source === 'local').length;
 const overrides = [...semantics.entries()].filter(
   ([name, s]) => s.source === 'local' && renamedSemantics.corporate.has(name),
 ).length;
 
-const localStyles = [...textStyles.values()].filter(s => s.source === 'local').length;
+const localStyles = [...textStyles.values()].filter((s) => s.source === 'local').length;
 
 console.log(`${relative(process.cwd(), join(OUTDIR, 'primitives.css'))}  ${primitives.size} tokens`);
-console.log(`${relative(process.cwd(), join(OUTDIR, 'semantics.css'))}   ${semantics.size} tokens (${localSemantics} local, ${overrides} overriding corporate)`);
-console.log(`${relative(process.cwd(), join(OUTDIR, 'typo.css'))}        ${textStyles.size} text styles, ${familyLines.length} families (${localStyles} local)`);
+console.log(
+  `${relative(process.cwd(), join(OUTDIR, 'semantics.css'))}   ${semantics.size} tokens (${localSemantics} local, ${overrides} overriding corporate)`,
+);
+console.log(
+  `${relative(process.cwd(), join(OUTDIR, 'typo.css'))}        ${textStyles.size} text styles, ${familyLines.length} families (${localStyles} local)`,
+);
 if (warnings.length) {
   console.log('');
   for (const w of warnings) {

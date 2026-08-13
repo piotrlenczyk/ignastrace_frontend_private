@@ -90,32 +90,34 @@ const UpsellCheckoutForm = ({
 
       <div className="mb-6 flex items-center justify-center gap-4">
         <Image src="/images/ssl.jpg" width="30" height="34" alt="SSL" />
-        <Image
-          src="/images/trust-badge-norton.jpg"
-          width="82"
-          height="48"
-          alt="Norton Secured powered by VeriSign"
-        />
+        <Image src="/images/trust-badge-norton.jpg" width="82" height="48" alt="Norton Secured powered by VeriSign" />
       </div>
 
       <p className="mb-6 text-center text-xs text-weak">
         {tUpsell.rich('agree_description_upsell', {
           price: formatPrice(product.price, product.currency, country, locale),
-          terms: chunks => <Link className="underline" target="_blank" href="/terms">{chunks}</Link>,
-          privacy: chunks => <Link className="underline" target="_blank" href="/privacy-policy">{chunks}</Link>,
+          terms: (chunks) => (
+            <Link className="underline" target="_blank" href="/terms">
+              {chunks}
+            </Link>
+          ),
+          privacy: (chunks) => (
+            <Link className="underline" target="_blank" href="/privacy-policy">
+              {chunks}
+            </Link>
+          ),
         })}
       </p>
 
       {isSubmitting && (
-        <div className={`
-          fixed inset-0 z-[100] mt-0! grid animate-fade-in place-items-center content-center gap-2 bg-[#fff3]
-          text-center backdrop-blur-md will-change-auto
-        `}
+        <div
+          className={`
+            fixed inset-0 z-[100] mt-0! grid animate-fade-in place-items-center content-center gap-2 bg-[#fff3]
+            text-center backdrop-blur-md will-change-auto
+          `}
         >
           <IconLoaderCircle size="large" className="animate-spin text-primary" />
-          <p className="h4">
-            {t('loading')}
-          </p>
+          <p className="h4">{t('loading')}</p>
         </div>
       )}
     </>

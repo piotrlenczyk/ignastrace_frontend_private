@@ -25,10 +25,7 @@
 }
 
 @utility fill-press {
-  background-image: linear-gradient(
-    rgb(71 77 102 / 10%),
-    rgb(71 77 102 / 10%)
-  );
+  background-image: linear-gradient(rgb(71 77 102 / 10%), rgb(71 77 102 / 10%));
 }
 
 @utility shadow-icon {
@@ -119,11 +116,7 @@
     mask-repeat: no-repeat;
     mask-size: 95%;
     width: 100%;
-    background-image: linear-gradient(
-      to right,
-      currentcolor 40%,
-      transparent 50%
-    );
+    background-image: linear-gradient(to right, currentcolor 40%, transparent 50%);
     background-repeat: no-repeat;
     background-size: 300%;
   }

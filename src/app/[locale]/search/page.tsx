@@ -83,7 +83,7 @@ const LoaderPage = async () => {
     redirect(ROUTES.HOME);
   }
 
-  const countryName = labels[formattedNumber.country as keyof typeof labels || FALLBACK_COUNTRY];
+  const countryName = labels[(formattedNumber.country as keyof typeof labels) || FALLBACK_COUNTRY];
 
   return (
     <FunnelLayout>

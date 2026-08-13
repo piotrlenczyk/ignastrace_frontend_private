@@ -27,19 +27,20 @@ const AsSeenOn: React.FC<AsSeenOnProps> = ({ className }) => {
             before:content-['']
           `}
         >
-          <span className="block bg-white px-2 text-weak">
-            {t('title')}
-          </span>
+          <span className="block bg-white px-2 text-weak">{t('title')}</span>
         </p>
       </div>
-      <ul className={`
-        container mt-6 flex w-full max-w-[830px] items-center justify-between gap-3
-        sm:gap-4
-        lg:mt-8 lg:justify-around
-      `}
+      <ul
+        className={`
+          container mt-6 flex w-full max-w-[830px] items-center justify-between gap-3
+          sm:gap-4
+          lg:mt-8 lg:justify-around
+        `}
       >
-        {AS_SEEN_ON_ITEMS.map(item => (
-          <li key={item.id} className="flex items-center justify-center">{item.icon}</li>
+        {AS_SEEN_ON_ITEMS.map((item) => (
+          <li key={item.id} className="flex items-center justify-center">
+            {item.icon}
+          </li>
         ))}
       </ul>
     </div>

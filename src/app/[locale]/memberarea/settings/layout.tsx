@@ -8,11 +8,7 @@ import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 
 import { SettingsLayoutClient } from './layout.client';
 
-export default async function SettingsLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function SettingsLayout({ children }: { children: React.ReactNode }) {
   const session = await auth();
   const isAuthenticated = !!session;
 
@@ -35,9 +31,7 @@ export default async function SettingsLayout({
   return (
     <ProductLayout>
       <main className="s-main">
-        <SettingsLayoutClient>
-          {children}
-        </SettingsLayoutClient>
+        <SettingsLayoutClient>{children}</SettingsLayoutClient>
       </main>
     </ProductLayout>
   );

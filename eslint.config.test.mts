@@ -31,7 +31,7 @@ const restrictedClassesIn = async (className: string, filePath = REDESIGNED_FILE
     { filePath },
   );
 
-  return (result?.messages ?? []).filter(message => message.ruleId === RULE);
+  return (result?.messages ?? []).filter((message) => message.ruleId === RULE);
 };
 
 describe('the redesign ratchet', () => {

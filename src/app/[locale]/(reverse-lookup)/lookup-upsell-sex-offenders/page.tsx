@@ -43,7 +43,7 @@ const UpsellSexOffendersPage = async () => {
   const api = await getApi();
   const products = await api.get<Product[]>('/reverse_lookups_upsellings');
 
-  const upsellProduct = products.find(product => product.key === 'sex_offenders') || {
+  const upsellProduct = products.find((product) => product.key === 'sex_offenders') || {
     key: 'sex_offenders',
     price: 195,
     currency: 'USD',
@@ -66,12 +66,8 @@ const UpsellSexOffendersPage = async () => {
               iconUrl="/images/reverse-lookup/icon-sex-offenders.svg"
               product={upsellProduct}
             />
-            <p className="text-center text-caption text-weak">
-              {t('disclaimer')}
-            </p>
-            <p className="text-center text-caption text-weak">
-              {t('purchase_terms', { price })}
-            </p>
+            <p className="text-center text-caption text-weak">{t('disclaimer')}</p>
+            <p className="text-center text-caption text-weak">{t('purchase_terms', { price })}</p>
           </div>
         </section>
       </main>

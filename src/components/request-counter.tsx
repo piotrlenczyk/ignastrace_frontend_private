@@ -5,11 +5,7 @@ export const RequestCounter = ({ requestCountData }: { requestCountData: Request
 
   return (
     <div className="min-w-8 text-sm text-gray-500">
-      {count}
-      {' '}
-      /
-      {' '}
-      {limit}
+      {count} / {limit}
     </div>
   );
 };

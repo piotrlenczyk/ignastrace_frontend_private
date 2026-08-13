@@ -7,16 +7,13 @@ export const CredentialsProvider = Credentials({
   authorize: async (credentials) => {
     const api = await getApi();
 
-    const { data, authHeader } = await api.request<User>(
-      '/users/sign_in',
-      {
-        method: 'POST',
-        body: {
-          email: credentials.email,
-          password: credentials.password,
-        },
+    const { data, authHeader } = await api.request<User>('/users/sign_in', {
+      method: 'POST',
+      body: {
+        email: credentials.email,
+        password: credentials.password,
       },
-    );
+    });
 
     if (!authHeader) {
       throw new Error('Invalid credentials.');

@@ -68,9 +68,7 @@ export const SignUpForm = ({ phoneNumber, className }: { phoneNumber: string; cl
             <AvatarWithLock animate={false} />
             <div className="flex w-full flex-col">
               <h3 className="mt-2 font-bold">{phoneNumber}</h3>
-              <p className="mt-2 text-sm text-weak">
-                {t('latest_report')}
-              </p>
+              <p className="mt-2 text-sm text-weak">{t('latest_report')}</p>
             </div>
           </div>
           <div
@@ -83,9 +81,7 @@ export const SignUpForm = ({ phoneNumber, className }: { phoneNumber: string; cl
               <IconWarningLine size="large" className="text-amber-800" color="transparent" />
               <div className="flex flex-col">
                 <p className="font-bold">{t('card_title')}</p>
-                <p className="mt-2 text-sm text-weak">
-                  {t('card_description')}
-                </p>
+                <p className="mt-2 text-sm text-weak">{t('card_description')}</p>
               </div>
             </div>
           </div>
@@ -113,7 +109,7 @@ export const SignUpForm = ({ phoneNumber, className }: { phoneNumber: string; cl
               className="h-auto w-full px-6 py-4 text-lg leading-5"
             >
               {t('submit_button')}
-              {isSubmitting ? (<IconLoaderCircle size="large" className="ms-2 animate-spin" />) : ''}
+              {isSubmitting ? <IconLoaderCircle size="large" className="ms-2 animate-spin" /> : ''}
             </Button>
           </form>
         </Form>

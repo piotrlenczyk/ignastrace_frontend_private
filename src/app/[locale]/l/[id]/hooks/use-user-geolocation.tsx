@@ -34,10 +34,7 @@ export function useUserGeolocation(): Partial<UserGeolocation> {
       setCoords(newCoords);
 
       try {
-        const result = await reverseGeo(
-          newCoords.latitude,
-          newCoords.longitude,
-        );
+        const result = await reverseGeo(newCoords.latitude, newCoords.longitude);
         setAddress(result);
         setStatus('located');
       } catch {
@@ -49,13 +46,9 @@ export function useUserGeolocation(): Partial<UserGeolocation> {
       setStatus('rejected');
     };
 
-    navigator.geolocation.getCurrentPosition(
-      successHandler,
-      errorHandler,
-      {
-        timeout: 300000,
-      },
-    );
+    navigator.geolocation.getCurrentPosition(successHandler, errorHandler, {
+      timeout: 300000,
+    });
   }, []);
 
   return {

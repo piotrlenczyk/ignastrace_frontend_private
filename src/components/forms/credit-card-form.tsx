@@ -1,13 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  CardCvcElement,
-  CardExpiryElement,
-  CardNumberElement,
-} from '@stripe/react-stripe-js';
-import type {
-  StripeCardElementOptions,
-  StripeElementStyle,
-} from '@stripe/stripe-js';
+import { CardCvcElement, CardExpiryElement, CardNumberElement } from '@stripe/react-stripe-js';
+import type { StripeCardElementOptions, StripeElementStyle } from '@stripe/stripe-js';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
@@ -23,9 +16,9 @@ import { stripeCreditCardSchema, type StripeFormValues } from '@/types/stripe-fo
 
 const cardStyle: StripeElementStyle = {
   base: {
-    'fontSize': '16px',
-    'color': '#2A2D3B',
-    'lineHeight': '24px',
+    fontSize: '16px',
+    color: '#2A2D3B',
+    lineHeight: '24px',
     '::placeholder': {
       color: '#6F727A',
     },
@@ -41,9 +34,7 @@ const options: StripeCardElementOptions = {
 
 const StyledInputs = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div
-      className="rounded-lg border border-input bg-white px-4 py-3 ring-offset-2 transition-colors hover:bg-gray-50"
-    >
+    <div className="rounded-lg border border-input bg-white px-4 py-3 ring-offset-2 transition-colors hover:bg-gray-50">
       {children}
     </div>
   );
@@ -74,8 +65,9 @@ export const CreditCardForm = ({
   });
 
   const [cardNumberError, setCardNumberError] = useState<string | undefined>(t('errors.card_number_required'));
-  const [expirationDateError, setExpirationDateError]
-    = useState<string | undefined>(t('errors.expiration_date_required'));
+  const [expirationDateError, setExpirationDateError] = useState<string | undefined>(
+    t('errors.expiration_date_required'),
+  );
   const [cvcError, setCvcError] = useState<string | undefined>(t('errors.cvc_required'));
   const [elementsReady, setElementsReady] = useState({
     cardNumber: false,
@@ -84,8 +76,8 @@ export const CreditCardForm = ({
   });
 
   const country = useCountry();
-  const showZipCode = process.env.NEXT_PUBLIC_REQUEST_ZIP === 'true'
-    && COUNTRIES_REQUESTING_ZIP.includes(country.toUpperCase());
+  const showZipCode =
+    process.env.NEXT_PUBLIC_REQUEST_ZIP === 'true' && COUNTRIES_REQUESTING_ZIP.includes(country.toUpperCase());
 
   const handlePreSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -139,7 +131,7 @@ export const CreditCardForm = ({
   };
 
   const handleElementReady = (elementType: keyof typeof elementsReady) => {
-    setElementsReady(prev => ({
+    setElementsReady((prev) => ({
       ...prev,
       [elementType]: true,
     }));
@@ -149,11 +141,11 @@ export const CreditCardForm = ({
 
   return (
     <Form {...form}>
-      { isLoading
-      && (
-        <div className={`
-          absolute inset-0 z-100 mt-0! grid animate-fade-in place-items-center content-center bg-white/80 text-center
-        `}
+      {isLoading && (
+        <div
+          className={`
+            absolute inset-0 z-100 mt-0! grid animate-fade-in place-items-center content-center bg-white/80 text-center
+          `}
         >
           <IconLoaderCircle size="large" className="animate-spin text-primary" />
         </div>
@@ -273,7 +265,7 @@ export const CreditCardForm = ({
           )}
         />
 
-        { showZipCode && (
+        {showZipCode && (
           <FormField
             control={form.control}
             name="zipCode"
@@ -294,15 +286,9 @@ export const CreditCardForm = ({
               </FormItem>
             )}
           />
-        ) }
+        )}
 
-        {
-          stripeError && (
-            <div className="col-span-4 mt-5 mb-1 text-sm text-error">
-              {stripeError}
-            </div>
-          )
-        }
+        {stripeError && <div className="col-span-4 mt-5 mb-1 text-sm text-error">{stripeError}</div>}
 
         <Button
           type="submit"

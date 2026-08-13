@@ -4,13 +4,7 @@ import { useTranslations } from 'next-intl';
 
 import type { Product } from '@/app/[locale]/success/_types/product.type';
 import UpsellCheckoutForm from '@/components/forms/upsell-checkout-form';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 type UpsellUpdatePaymentMethodProps = {
   open: boolean;

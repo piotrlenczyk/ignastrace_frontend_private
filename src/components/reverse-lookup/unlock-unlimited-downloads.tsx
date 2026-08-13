@@ -15,13 +15,12 @@ type UnlockUnlimitedDownloadsProps = {
   onDownloadPdf: () => Promise<void>;
 };
 
-const UnlockUnlimitedDownloads = (
-  {
-    className,
-    size = 'md',
-    variant = 'default',
-    onDownloadPdf,
-  }: UnlockUnlimitedDownloadsProps) => {
+const UnlockUnlimitedDownloads = ({
+  className,
+  size = 'md',
+  variant = 'default',
+  onDownloadPdf,
+}: UnlockUnlimitedDownloadsProps) => {
   const t = useTranslations('pages.reverse_lookup.report.header');
   const router = useRouter();
   const [showUpsellDialog, setShowUpsellDialog] = useState(false);
@@ -49,19 +48,17 @@ const UnlockUnlimitedDownloads = (
         className={cn(className, isDownloading ? 'gap-0 px-3' : 'gap-2')}
         disabled={isDownloading}
       >
-        {isDownloading
-          ? (
-              <>
-                <IconLoaderCircle className="size-4" />
-                <span className="px-1">{t('button')}</span>
-              </>
-            )
-          : (
-              <>
-                <IconLockOpenLine className={iconSize} />
-                {t('unlock_download_pdf')}
-              </>
-            )}
+        {isDownloading ? (
+          <>
+            <IconLoaderCircle className="size-4" />
+            <span className="px-1">{t('button')}</span>
+          </>
+        ) : (
+          <>
+            <IconLockOpenLine className={iconSize} />
+            {t('unlock_download_pdf')}
+          </>
+        )}
       </Button>
 
       <UnlimitedDownloadsUpsell

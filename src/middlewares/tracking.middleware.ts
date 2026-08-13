@@ -2,10 +2,7 @@ import { type NextRequest, NextResponse } from 'next/server';
 import { UAParser } from 'ua-parser-js';
 
 import { INTERNAL_QUERY_PARAMS, TRACKING_PREFIX } from '@/constants/tracking';
-import {
-  sanitizeQueryParams,
-  sanitizeUrl,
-} from '@/utils/sensitive-data-sanitizer';
+import { sanitizeQueryParams, sanitizeUrl } from '@/utils/sensitive-data-sanitizer';
 
 function searchParamsToRecord(params: URLSearchParams): Record<string, string> {
   const record: Record<string, string> = {};
@@ -44,9 +41,7 @@ function getDeviceInfo(request: NextRequest): Record<string, string> {
   };
 }
 
-function getTrackingDataToSet(
-  request: NextRequest,
-): Record<string, string> | null {
+function getTrackingDataToSet(request: NextRequest): Record<string, string> | null {
   const queryRecord = searchParamsToRecord(request.nextUrl.searchParams);
   const hasQueryParams = Object.keys(queryRecord).length > 0;
 
@@ -66,16 +61,13 @@ function getTrackingDataToSet(
   };
 }
 
-export function handleTracking(
-  request: NextRequest,
-  _response?: NextResponse,
-): NextResponse {
+export function handleTracking(request: NextRequest, _response?: NextResponse): NextResponse {
   const response = _response || NextResponse.next({ request });
 
   const trackingData = getTrackingDataToSet(request);
 
   if (trackingData) {
-    const cookieNames = request.cookies.getAll().map(c => c.name);
+    const cookieNames = request.cookies.getAll().map((c) => c.name);
     cookieNames.forEach((name) => {
       if (name.startsWith(TRACKING_PREFIX)) {
         response.cookies.delete(name);

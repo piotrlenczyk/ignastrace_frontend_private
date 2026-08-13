@@ -36,9 +36,7 @@ const SexOffendersPage = async (props: PageProps<'/[locale]/memberarea/status/re
   const api = await getApi();
 
   const [sexOffenderData, user] = await Promise.all([
-    api.get<SexOffenderData>(
-      `/sex_offenders_data/${searchParams.id}`,
-    ),
+    api.get<SexOffenderData>(`/sex_offenders_data/${searchParams.id}`),
     api.get<User>('/user?expand=purchase_info'),
   ]);
 
@@ -46,9 +44,7 @@ const SexOffendersPage = async (props: PageProps<'/[locale]/memberarea/status/re
     redirect(ROUTES.MEMBER.STATUS.HOME);
   }
 
-  return (
-    <ReportDetails sexOffenderData={sexOffenderData} user={user} />
-  );
+  return <ReportDetails sexOffenderData={sexOffenderData} user={user} />;
 };
 
 export default SexOffendersPage;

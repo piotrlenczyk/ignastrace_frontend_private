@@ -1,9 +1,4 @@
-const SENSITIVE_QUERY_KEYS = new Set([
-  'token',
-  'signInToken',
-  'code',
-  'confirmationCode',
-]);
+const SENSITIVE_QUERY_KEYS = new Set(['token', 'signInToken', 'code', 'confirmationCode']);
 
 const MASK_PLACEHOLDER = '*****';
 
@@ -25,9 +20,7 @@ export function sanitizeQueryParam(key: string, value: string): string {
   return value;
 }
 
-export function sanitizeQueryParams(
-  query: Record<string, string>,
-): Record<string, string> {
+export function sanitizeQueryParams(query: Record<string, string>): Record<string, string> {
   const sanitized: Record<string, string> = {};
 
   Object.entries(query).forEach(([key, value]) => {

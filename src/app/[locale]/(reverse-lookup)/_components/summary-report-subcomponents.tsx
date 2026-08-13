@@ -26,20 +26,12 @@ export const UserInfo: React.FC<UserInfoProps> = ({ phoneNumber, carrierResponse
         height={68}
       />
     </li>
-    <li className="text-lg font-bold">
-      {phoneNumber}
+    <li className="text-lg font-bold">{phoneNumber}</li>
+    <li className="text-sm text-weak">
+      {t('carrier')}: {carrierResponse || 'Unknown'}
     </li>
     <li className="text-sm text-weak">
-      {t('carrier')}
-      :
-      {' '}
-      {carrierResponse || 'Unknown'}
-    </li>
-    <li className="text-sm text-weak">
-      {t('line_type')}
-      :
-      {' '}
-      {lineType}
+      {t('line_type')}: {lineType}
     </li>
   </ul>
 );
@@ -72,12 +64,8 @@ export const ResultsList: React.FC<ResultsListProps> = ({ t }) => {
 
   return (
     <div>
-      <h4 className="text-lg font-bold">
-        {t('may_include')}
-      </h4>
-      <ul className="mt-6 flex flex-col gap-4">
-        {resultsList}
-      </ul>
+      <h4 className="text-lg font-bold">{t('may_include')}</h4>
+      <ul className="mt-6 flex flex-col gap-4">{resultsList}</ul>
     </div>
   );
 };
@@ -85,16 +73,12 @@ export const ResultsList: React.FC<ResultsListProps> = ({ t }) => {
 // Subcomponent for report header
 export const ReportHeader: React.FC<ReportHeaderProps> = ({ processedTitle, t }) => (
   <>
-    <h3 className="span-green leading-[1.2] font-bold text-strong lg:mb-1">
-      {processedTitle}
-    </h3>
+    <h3 className="span-green leading-[1.2] font-bold text-strong lg:mb-1">{processedTitle}</h3>
     <p className="">{t('latest_report')}</p>
   </>
 );
 
 // Subcomponent for caller information
 export const CallerInfo: React.FC<CallerInfoProps> = ({ t }) => (
-  <p className="caller-info-card text-sm/[20px] text-weak">
-    {t('caller_info')}
-  </p>
+  <p className="caller-info-card text-sm/[20px] text-weak">{t('caller_info')}</p>
 );

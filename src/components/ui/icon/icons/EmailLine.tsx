@@ -2,12 +2,7 @@ import { cn } from '@/libs/utils';
 
 import { type IconProps, sizes } from '../iconDefinition';
 
-export const IconEmailLine = ({
-  className,
-  color = 'currentColor',
-  size = 'fontSize',
-  ...props
-}: IconProps) => (
+export const IconEmailLine = ({ className, color = 'currentColor', size = 'fontSize', ...props }: IconProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={sizes[size]}

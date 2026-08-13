@@ -2,51 +2,18 @@ import type { ReverseLookupLocation, ReverseLookupPhoto } from './reverse-lookup
 
 export type Sex = 'male' | 'female' | 'intersex';
 
-export type EyeColor =
-  | 'amber'
-  | 'blue'
-  | 'brown'
-  | 'gray'
-  | 'green'
-  | 'hazel'
-  | 'red'
-  | 'violet'
-  | 'other';
+export type EyeColor = 'amber' | 'blue' | 'brown' | 'gray' | 'green' | 'hazel' | 'red' | 'violet' | 'other';
 
 export type HairColor =
-  | 'black'
-  | 'brown'
-  | 'blonde'
-  | 'red'
-  | 'gray'
-  | 'white'
-  | 'auburn'
-  | 'chestnut'
-  | 'dyed'
-  | 'bald'
-  | 'other';
+  'black' | 'brown' | 'blonde' | 'red' | 'gray' | 'white' | 'auburn' | 'chestnut' | 'dyed' | 'bald' | 'other';
 
 export type Race =
-  | 'white'
-  | 'black_or_african_american'
-  | 'asian'
-  | 'native_american'
-  | 'pacific_islander'
-  | 'mixed'
-  | 'other';
+  'white' | 'black_or_african_american' | 'asian' | 'native_american' | 'pacific_islander' | 'mixed' | 'other';
 
 export type Ethnicity = 'hispanic' | 'non_hispanic' | 'other';
 
 export type BodyPart =
-  | 'head'
-  | 'torso'
-  | 'back'
-  | 'left_arm'
-  | 'right_arm'
-  | 'left_hand'
-  | 'right_hand'
-  | 'left_leg'
-  | 'right_leg';
+  'head' | 'torso' | 'back' | 'left_arm' | 'right_arm' | 'left_hand' | 'right_hand' | 'left_leg' | 'right_leg';
 
 export type RiskLevel = 'low' | 'medium' | 'high';
 
@@ -79,14 +46,7 @@ export type Job =
   | 'other';
 
 export type MaritalStatus =
-  | 'single'
-  | 'married'
-  | 'divorced'
-  | 'widowed'
-  | 'separated'
-  | 'in_relationship'
-  | 'engaged'
-  | 'domestic_partnership';
+  'single' | 'married' | 'divorced' | 'widowed' | 'separated' | 'in_relationship' | 'engaged' | 'domestic_partnership';
 
 export type Education =
   | 'no_formal_education'

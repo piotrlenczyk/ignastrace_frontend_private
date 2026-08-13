@@ -10,28 +10,28 @@ import { AlertInfo } from './alert-info';
 const PotentialProfessionalSummary = ({
   className,
   reverseLookup,
-}: { className?: string; reverseLookup: ReverseLookup }) => {
+}: {
+  className?: string;
+  reverseLookup: ReverseLookup;
+}) => {
   const t = useTranslations('pages.reverse_lookup.report.potential_professional_summary');
 
-  const jobs = reverseLookup.reverse_lookup_owners.map(owner => owner.jobs).flat().filter(Boolean);
+  const jobs = reverseLookup.reverse_lookup_owners
+    .map((owner) => owner.jobs)
+    .flat()
+    .filter(Boolean);
   const isEmpty = jobs.length === 0;
 
   return (
     <Card className={cn('flex flex-col gap-6 border-stroke-weak px-4 py-6 shadow-raised lg:px-6', className)}>
-      <h4 className="font-bold">
-        {isEmpty ? t('title_empty') : t('title')}
-      </h4>
+      <h4 className="font-bold">{isEmpty ? t('title_empty') : t('title')}</h4>
 
-      <AlertInfo>
-        {t('info')}
-      </AlertInfo>
+      <AlertInfo>{t('info')}</AlertInfo>
 
-      {jobs.map(item => (
+      {jobs.map((item) => (
         <div key={item} className="flex items-center gap-2">
           <IconBriefcase size="large" className="text-secondary" />
-          <p className="text-lg font-bold">
-            {item ? t(`values.${item}`) : ''}
-          </p>
+          <p className="text-lg font-bold">{item ? t(`values.${item}`) : ''}</p>
         </div>
       ))}
     </Card>

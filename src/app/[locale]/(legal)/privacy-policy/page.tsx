@@ -12,7 +12,5 @@ export default async function PrivacyPolicyPage() {
   const locale = await getLocale();
   const translatedContent = await getTranslatedHtml('privacy-policy', locale);
 
-  return (
-    <div dangerouslySetInnerHTML={{ __html: translatedContent }} />
-  );
+  return <div dangerouslySetInnerHTML={{ __html: translatedContent }} />;
 }

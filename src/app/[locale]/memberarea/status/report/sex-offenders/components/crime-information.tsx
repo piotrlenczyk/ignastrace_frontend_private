@@ -25,40 +25,24 @@ const CrimeInformationComponent = ({
 
   return (
     <Card className={cn('flex flex-col gap-8 border border-stroke-weak p-6 shadow-raised', className)}>
-      <h4 className="font-bold">
-        {t('title')}
-      </h4>
+      <h4 className="font-bold">{t('title')}</h4>
 
-      {!sexOffenderData.crime && (
-        <p className="text-gray-500">{t('no_information_available')}</p>
-      )}
+      {!sexOffenderData.crime && <p className="text-gray-500">{t('no_information_available')}</p>}
       {sexOffenderData.crime && (
         <div className="flex flex-col gap-6">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <div className="flex items-start gap-2 text-lg">
-              <IconAlertTriangleLine
-                size="large"
-                className="text-brand"
-              />
+              <IconAlertTriangleLine size="large" className="text-brand" />
               <div>
-                <h5 className="font-bold">
-                  {t('crime')}
-                </h5>
-                <p>
-                  {sexOffenderData.crime || '--'}
-                </p>
+                <h5 className="font-bold">{t('crime')}</h5>
+                <p>{sexOffenderData.crime || '--'}</p>
               </div>
             </div>
 
             <div className="flex items-start gap-2 text-lg">
-              <IconCalendarDates
-                size="large"
-                className="text-brand"
-              />
+              <IconCalendarDates size="large" className="text-brand" />
               <div>
-                <h5 className="font-bold">
-                  {t('conviction_date')}
-                </h5>
+                <h5 className="font-bold">{t('conviction_date')}</h5>
                 <p>
                   {sexOffenderData.conviction_date ? localeFormatDate(sexOffenderData.conviction_date, locale) : '--'}
                 </p>
@@ -67,30 +51,18 @@ const CrimeInformationComponent = ({
 
             {/* Jurisdiction */}
             <div className="flex items-start gap-2 text-lg">
-              <IconLocationPinLine
-                size="large"
-                className="text-brand"
-              />
+              <IconLocationPinLine size="large" className="text-brand" />
               <div>
-                <h5 className="font-bold">
-                  {t('jurisdiction')}
-                </h5>
-                <p>
-                  {sexOffenderData.jurisdiction || '--'}
-                </p>
+                <h5 className="font-bold">{t('jurisdiction')}</h5>
+                <p>{sexOffenderData.jurisdiction || '--'}</p>
               </div>
             </div>
 
             {/* Registration date */}
             <div className="flex items-start gap-2 text-lg">
-              <IconCalendarDates
-                size="large"
-                className="text-brand"
-              />
+              <IconCalendarDates size="large" className="text-brand" />
               <div>
-                <h5 className="font-bold">
-                  {t('registration_date')}
-                </h5>
+                <h5 className="font-bold">{t('registration_date')}</h5>
                 <p>
                   {sexOffenderData.registration_date
                     ? localeFormatDate(sexOffenderData.registration_date, locale)
@@ -101,23 +73,15 @@ const CrimeInformationComponent = ({
 
             {/* Risk level */}
             <div className="flex items-start gap-2 text-lg">
-              <IconShieldAlert
-                size="large"
-                className="text-brand"
-              />
+              <IconShieldAlert size="large" className="text-brand" />
               <div>
-                <h5 className="font-bold">
-                  {t('risk_level')}
-                </h5>
-                <p>
-                  {sexOffenderData.risk_level ? tValues(`risk_level.${sexOffenderData.risk_level}`) : '--'}
-                </p>
+                <h5 className="font-bold">{t('risk_level')}</h5>
+                <p>{sexOffenderData.risk_level ? tValues(`risk_level.${sexOffenderData.risk_level}`) : '--'}</p>
               </div>
             </div>
           </div>
         </div>
       )}
-
     </Card>
   );
 };

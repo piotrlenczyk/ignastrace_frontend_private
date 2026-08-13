@@ -80,13 +80,7 @@ export const CancellationForm = () => {
             </FormItem>
           )}
         />
-        <Button
-          type="submit"
-          variant="brand"
-          size="lg"
-          className="w-full"
-          disabled={isPending}
-        >
+        <Button type="submit" variant="brand" size="lg" className="w-full" disabled={isPending}>
           {t('submit')}
         </Button>
       </form>

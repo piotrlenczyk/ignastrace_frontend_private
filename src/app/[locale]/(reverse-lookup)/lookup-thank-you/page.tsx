@@ -36,10 +36,7 @@ const ThankYouPage = async () => {
   const api = await getApi();
   const user = await api.get<User>('/user?expand=purchase_info');
 
-  await Promise.all([
-    api.post('/user/send_order_confirm_email', {}),
-    api.post('/klaviyo/order_confirmed'),
-  ]);
+  await Promise.all([api.post('/user/send_order_confirm_email', {}), api.post('/klaviyo/order_confirmed')]);
 
   return (
     <>
@@ -63,12 +60,8 @@ const ThankYouPage = async () => {
                 priority
               />
             </div>
-            <h1 className="h3 font-bold">
-              {t('title')}
-            </h1>
-            <p className="text-lg">
-              {t('description', { email: user.email })}
-            </p>
+            <h1 className="h3 font-bold">{t('title')}</h1>
+            <p className="text-lg">{t('description', { email: user.email })}</p>
 
             <TrustPilot />
 

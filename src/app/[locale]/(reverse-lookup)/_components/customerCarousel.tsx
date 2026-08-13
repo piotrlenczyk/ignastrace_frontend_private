@@ -10,11 +10,7 @@ export const CustomerCarousel = ({ className }: { className: string }) => {
   return (
     <section className={className}>
       <h2 className="mb-3 h3 font-bold lg:mb-3" dangerouslySetInnerHTML={{ __html: t.raw('title') }} />
-      <p
-        className="h5 text-weak"
-      >
-        {t('subtitle')}
-      </p>
+      <p className="h5 text-weak">{t('subtitle')}</p>
 
       <CustomerOpinionsCarousel />
     </section>

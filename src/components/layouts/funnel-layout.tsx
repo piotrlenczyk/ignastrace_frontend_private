@@ -23,17 +23,15 @@ const FunnelLayout: React.FC<FunnelLayoutProps> = async ({
       <header className="s-header">
         <nav className="s-header-nav">
           <div className="mr-auto flex items-center space-x-4">
-            {showLogoLink
-              ? (
-                  <Link href={logoHref} className="text-2xl font-bold text-primary">
-                    <Logotype />
-                  </Link>
-                )
-              : (
-                  <div className="text-2xl font-bold text-primary">
-                    <Logotype />
-                  </div>
-                )}
+            {showLogoLink ? (
+              <Link href={logoHref} className="text-2xl font-bold text-primary">
+                <Logotype />
+              </Link>
+            ) : (
+              <div className="text-2xl font-bold text-primary">
+                <Logotype />
+              </div>
+            )}
           </div>
         </nav>
       </header>

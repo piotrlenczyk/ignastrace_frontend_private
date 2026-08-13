@@ -21,9 +21,7 @@ const GetHelpPage = async (props: PageProps<'/[locale]/memberarea/settings/get-h
       </FAQs>
       <hr className="mb-4 border-stroke-weak" />
       <div className="grid gap-6">
-        <h1 className="h4 font-bold">
-          {t('contact_information.title')}
-        </h1>
+        <h1 className="h4 font-bold">{t('contact_information.title')}</h1>
         <div dangerouslySetInnerHTML={{ __html: t.raw('subtitle') }} />
         <ContactInformation />
       </div>

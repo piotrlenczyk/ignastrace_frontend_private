@@ -3,24 +3,12 @@ import { useEffect, useState } from 'react';
 
 import CheckoutForm from '@/components/forms/checkout-form';
 import { Button } from '@/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useGetProduct } from '@/hooks/api/use-get-product';
 import { getCurrencyFromCountry } from '@/libs/currency';
 import type { Products } from '@/types/products';
 
-export function ActivateSubscription({
-  buttonText,
-  country,
-}: {
-  buttonText: string;
-  country: string;
-}) {
+export function ActivateSubscription({ buttonText, country }: { buttonText: string; country: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const t = useTranslations('pages.settings.billing.activate_dialog');
   const [product, setProduct] = useState<Products>();
@@ -41,7 +29,9 @@ export function ActivateSubscription({
 
   return (
     <>
-      <Button className="mt-4" onClick={() => setIsOpen(true)}>{buttonText}</Button>
+      <Button className="mt-4" onClick={() => setIsOpen(true)}>
+        {buttonText}
+      </Button>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="max-w-lg" aria-describedby={undefined}>

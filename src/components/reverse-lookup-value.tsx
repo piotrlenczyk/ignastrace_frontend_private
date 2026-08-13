@@ -4,10 +4,7 @@ type ReverseLookupValueProps = {
   className?: string;
 };
 
-const ReverseLookupValue = ({
-  value,
-  fallbackText,
-}: ReverseLookupValueProps) => {
+const ReverseLookupValue = ({ value, fallbackText }: ReverseLookupValueProps) => {
   if (!value || (Array.isArray(value) && value.length === 0)) {
     return <span className="text-weak">{fallbackText}</span>;
   }
@@ -21,7 +18,7 @@ const ReverseLookupValue = ({
     }
     return (
       <>
-        {validItems.map(item => (
+        {validItems.map((item) => (
           <span key={item} className="break-words comma-separated">
             {item}
           </span>

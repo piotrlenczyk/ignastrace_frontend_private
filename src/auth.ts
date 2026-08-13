@@ -80,24 +80,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
 });
 
-async function handleOAuthSignIn(
-  provider: string,
-  accessToken: string,
-): Promise<User> {
+async function handleOAuthSignIn(provider: string, accessToken: string): Promise<User> {
   try {
     const api = await getApi();
     const phoneNumber = await getFunnelPhone();
 
-    const { data, authHeader } = await api.request<ApiUser>(
-      `/oauth/${provider}`,
-      {
-        method: 'POST',
-        body: {
-          access_token: accessToken,
-          onboarding_phone_number: phoneNumber,
-        },
+    const { data, authHeader } = await api.request<ApiUser>(`/oauth/${provider}`, {
+      method: 'POST',
+      body: {
+        access_token: accessToken,
+        onboarding_phone_number: phoneNumber,
       },
-    );
+    });
 
     if (!authHeader) {
       throw new AuthError(`Authentication failed with ${provider}`);

@@ -15,12 +15,7 @@ type UpsellPaymentMessageProps = {
   isSuccess?: boolean;
   reportId?: string | null;
   retryCount: number;
-  product:
-    | 'data_leaks'
-    | 'sex_offenders'
-    | 'sex_offenders_search'
-    | 'unlimited_pdf_downloads'
-    | 'social_networks';
+  product: 'data_leaks' | 'sex_offenders' | 'sex_offenders_search' | 'unlimited_pdf_downloads' | 'social_networks';
   onRetry: () => void;
   onUpdatePaymentMethod: () => void;
   isRetrying?: boolean;
@@ -50,11 +45,7 @@ function UpsellPaymentMessageButtons({
 
   if (isSuccess) {
     return (
-      <Button
-        className={buttonClassName}
-        type="button"
-        onClick={onSuccess}
-      >
+      <Button className={buttonClassName} type="button" onClick={onSuccess}>
         {t('close')}
       </Button>
     );
@@ -63,23 +54,14 @@ function UpsellPaymentMessageButtons({
   if (retryingPayment) {
     return (
       <div className="flex w-full gap-2">
-        <Button
-          className={cn(buttonClassName, 'text-sm')}
-          type="button"
-          onClick={onRetry}
-          disabled={isRetrying}
-        >
-          {isRetrying
-            ? (
-                <>
-                  {t('try_again')}
-                  {' '}
-                  <IconLoaderCircle className="size-4 animate-spin" />
-                </>
-              )
-            : (
-                t('try_again')
-              )}
+        <Button className={cn(buttonClassName, 'text-sm')} type="button" onClick={onRetry} disabled={isRetrying}>
+          {isRetrying ? (
+            <>
+              {t('try_again')} <IconLoaderCircle className="size-4 animate-spin" />
+            </>
+          ) : (
+            t('try_again')
+          )}
         </Button>
         <Button
           className={cn(buttonClassName, 'text-sm')}
@@ -95,11 +77,7 @@ function UpsellPaymentMessageButtons({
   }
 
   return (
-    <Button
-      className={buttonClassName}
-      type="button"
-      onClick={onUpdatePaymentMethod}
-    >
+    <Button className={buttonClassName} type="button" onClick={onUpdatePaymentMethod}>
       {t('update_payment_method')}
     </Button>
   );
@@ -144,30 +122,18 @@ export function UpsellPaymentMessage({
       <DialogContent className="max-w-md" hideCloseButton>
         <DialogTitle className="sr-only"></DialogTitle>
         <div className="flex flex-col items-center space-y-6">
-          {isSuccess
-            ? (
-                <Image
-                  src="/images/upsell/payment-success.svg"
-                  alt="Success"
-                  width={160}
-                  height={160}
-                />
-              )
-            : (
-                <Image
-                  src="/images/upsell/payment-error.svg"
-                  alt="Error"
-                  width={160}
-                  height={160}
-                />
-              )}
-          <h3 className="text-center h3 font-bold">
-            {isSuccess ? t('payment_success') : t('payment_error')}
-          </h3>
+          {isSuccess ? (
+            <Image src="/images/upsell/payment-success.svg" alt="Success" width={160} height={160} />
+          ) : (
+            <Image src="/images/upsell/payment-error.svg" alt="Error" width={160} height={160} />
+          )}
+          <h3 className="text-center h3 font-bold">{isSuccess ? t('payment_success') : t('payment_error')}</h3>
           <p className="text-center">
             {isSuccess
               ? t('payment_success_description')
-              : retryingPayment ? t('payment_retry_description') : t('payment_error_description')}
+              : retryingPayment
+                ? t('payment_retry_description')
+                : t('payment_error_description')}
           </p>
           <UpsellPaymentMessageButtons
             isSuccess={isSuccess}

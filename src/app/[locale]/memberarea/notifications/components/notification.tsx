@@ -16,22 +16,14 @@ const Icons = {
   'PhoneLocation-rejected': IconLocationPinCancelLine,
 };
 
-const ItemWrapper = ({
-  className,
-  children,
-  href,
-}: {
-  className: string;
-  children: ReactNode;
-  href?: string;
-}) => {
-  return href
-    ? (
-        <Link href={href} className={className}>
-          {children}
-        </Link>
-      )
-    : (<div className={className}>{children}</div>);
+const ItemWrapper = ({ className, children, href }: { className: string; children: ReactNode; href?: string }) => {
+  return href ? (
+    <Link href={href} className={className}>
+      {children}
+    </Link>
+  ) : (
+    <div className={className}>{children}</div>
+  );
 };
 
 export const NotificationItem = ({ notification }: { notification: Notification }) => {
@@ -49,25 +41,18 @@ export const NotificationItem = ({ notification }: { notification: Notification 
       </div>
 
       <div className="flex-1">
-        { text_accessed
-          ? (
-              <p className="overflow-hidden">
-                { text_accessed }
-                <span>
-                  {' '}
-                  { text }
-                </span>
-              </p>
-            )
-          : (
-              <p>{ text }</p>
-            )}
-        <p className="text-sm text-weak">{ date }</p>
+        {text_accessed ? (
+          <p className="overflow-hidden">
+            {text_accessed}
+            <span> {text}</span>
+          </p>
+        ) : (
+          <p>{text}</p>
+        )}
+        <p className="text-sm text-weak">{date}</p>
       </div>
 
-      { notification.status === 'unread' && (
-        <div className="size-3 shrink-0 rounded-full bg-primary" />
-      )}
+      {notification.status === 'unread' && <div className="size-3 shrink-0 rounded-full bg-primary" />}
     </ItemWrapper>
   );
 };

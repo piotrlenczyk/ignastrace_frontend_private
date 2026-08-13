@@ -24,11 +24,8 @@ const Trust = () => {
 
   return (
     <section className="grid w-full grid-cols-1 gap-4 xs:grid-cols-2 lg:flex lg:gap-3">
-      {trustItems.map(item => (
-        <div
-          key={item.title}
-          className="flex place-items-center gap-3 rounded-md bg-weak p-2 backdrop-blur-xl"
-        >
+      {trustItems.map((item) => (
+        <div key={item.title} className="flex place-items-center gap-3 rounded-md bg-weak p-2 backdrop-blur-xl">
           <item.icon size="large" className="text-secondary" />
           <div>
             <div className="text-sm font-bold text-strong">{t(item.title)}</div>
@@ -40,13 +37,7 @@ const Trust = () => {
   );
 };
 
-export const HeroLocator = ({
-  className,
-  defaultCountry,
-}: {
-  className?: string;
-  defaultCountry: CountryCode;
-}) => {
+export const HeroLocator = ({ className, defaultCountry }: { className?: string; defaultCountry: CountryCode }) => {
   const t = useTranslations('components.phone_input');
 
   return (
@@ -89,13 +80,7 @@ const Iphone = () => {
         <p className="mb-1 text-sm">{t('card_address')}</p>
         <p className="text-sm font-bold">{t('card_date')}</p>
       </Card>
-      <Image
-        src="/images/hero/iphone.png"
-        alt={t('iphone_alt')}
-        width={390}
-        height={720}
-        priority
-      />
+      <Image src="/images/hero/iphone.png" alt={t('iphone_alt')} width={390} height={720} priority />
     </aside>
   );
 };
@@ -103,7 +88,7 @@ const Iphone = () => {
 export const Hero = ({ defaultCountry }: { defaultCountry: CountryCode }) => {
   const t = useTranslations('pages.index.hero');
   const title = t.rich('title', {
-    underlined: chunks => <mark className="text-brand">{chunks}</mark>,
+    underlined: (chunks) => <mark className="text-brand">{chunks}</mark>,
   });
   const subtitle = t('subtitle');
 
@@ -116,16 +101,9 @@ export const Hero = ({ defaultCountry }: { defaultCountry: CountryCode }) => {
       style={{ backgroundImage: 'url(/images/hero/map.png)' }}
     >
       <div className="relative container-wide py-10">
-        <h1 className="display mb-10 text-balance lg:relative lg:p-0 lg:pr-[580px] lg:pb-12">
-          {title}
-        </h1>
-        <HeroLocator
-          className="mb-4 lg:max-w-[514px] xl:max-w-(--breakpoint-sm)"
-          defaultCountry={defaultCountry}
-        />
-        <h2 className="mb-4 text-sm font-normal text-weak lg:max-w-[514px] xl:max-w-(--breakpoint-sm)">
-          {subtitle}
-        </h2>
+        <h1 className="display mb-10 text-balance lg:relative lg:p-0 lg:pr-[580px] lg:pb-12">{title}</h1>
+        <HeroLocator className="mb-4 lg:max-w-[514px] xl:max-w-(--breakpoint-sm)" defaultCountry={defaultCountry} />
+        <h2 className="mb-4 text-sm font-normal text-weak lg:max-w-[514px] xl:max-w-(--breakpoint-sm)">{subtitle}</h2>
         <Trust />
         <Iphone />
       </div>

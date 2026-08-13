@@ -22,9 +22,7 @@ const SignUpPage = async () => {
 
   const title = t.rich('title', {
     brandColor: () => (
-      <mark
-        className="h2 block bg-transparent leading-tight whitespace-nowrap text-secondary"
-      >
+      <mark className="h2 block bg-transparent leading-tight whitespace-nowrap text-secondary">
         {formattedNumber.number}
       </mark>
     ),

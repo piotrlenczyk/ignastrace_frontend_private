@@ -63,9 +63,9 @@ ingress:
   host: domain.com
   annotations:
     # Increase proxy buffer sizes to handle large session cookies from AuthJS
-    nginx.ingress.kubernetes.io/proxy-buffer-size: "16k"
-    nginx.ingress.kubernetes.io/proxy-buffers-number: "4"
-    nginx.ingress.kubernetes.io/proxy-busy-buffers-size: "24k"
+    nginx.ingress.kubernetes.io/proxy-buffer-size: '16k'
+    nginx.ingress.kubernetes.io/proxy-buffers-number: '4'
+    nginx.ingress.kubernetes.io/proxy-busy-buffers-size: '24k'
   # kubernetes.io/tls-acme: "true"
 
 resources: {}

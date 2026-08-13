@@ -5,12 +5,7 @@ import { Bebas_Neue, Inter } from 'next/font/google';
 import Script from 'next/script';
 import { SessionProvider } from 'next-auth/react';
 import { NextIntlClientProvider } from 'next-intl';
-import {
-  getLocale,
-  getMessages,
-  getTranslations,
-  setRequestLocale,
-} from 'next-intl/server';
+import { getLocale, getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 
 import { auth } from '@/auth';
 import { QueryProvider } from '@/components/navigation/providers/query-client-provider';
@@ -154,11 +149,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         {/* end Convert Experiences code */}
 
         <meta name="theme-color" content="#FFFFFF" />
-        <script
-          data-domain="mobitrace.io"
-          src="https://plausible.io/js/script.js"
-          defer
-        />
+        <script data-domain="mobitrace.io" src="https://plausible.io/js/script.js" defer />
         {GTM_ID && (
           <Script id="gtm-script" strategy="afterInteractive">
             {`

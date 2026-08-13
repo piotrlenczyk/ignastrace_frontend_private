@@ -52,7 +52,9 @@
   }
 
   .login-button {
-    box-shadow: 0 2px 4px -2px rgb(0 0 0 / 8%), 0 4px 8px -2px rgb(0 0 0 / 4%);
+    box-shadow:
+      0 2px 4px -2px rgb(0 0 0 / 8%),
+      0 4px 8px -2px rgb(0 0 0 / 4%);
   }
 
   .s-mobile-menu-content {
@@ -94,9 +96,9 @@
           'cop' auto / minmax(0, 1fr)
       );
 
-    @media (min-width: theme(--breakpoint-sm)) {
-      /* prettier-ignore */
-      --s-footer--grid-template:
+      @media (min-width: theme(--breakpoint-sm)) {
+        /* prettier-ignore */
+        --s-footer--grid-template:
         'se1 se1' auto
         'lgo lgo' auto
         'se2 se2' auto
@@ -104,27 +106,27 @@
         'dis dis' auto
         'se3 se3' auto
         'cop soc' auto / 1fr 1fr;
-    }
+      }
 
-    @media (min-width: theme(--breakpoint-md)) {
-      /* prettier-ignore */
-      --s-footer--grid-template:
+      @media (min-width: theme(--breakpoint-md)) {
+        /* prettier-ignore */
+        --s-footer--grid-template:
         'se1 se1 se1' auto
         'lgo lnk lnk' 1fr
         'lgo dis dis' auto
         'se2 se2 se2' auto
         'cop cop soc' auto / 1fr 1fr 1fr;
-    }
+      }
 
-    @media (min-width: theme(--breakpoint-lg)) {
-      /* prettier-ignore */
-      --s-footer--grid-template:
+      @media (min-width: theme(--breakpoint-lg)) {
+        /* prettier-ignore */
+        --s-footer--grid-template:
         'se1 se1 se1 se1 ' auto
         'lgo lnk lnk lnk ' 1fr
         'lgo dis dis dis' auto
         'se2 se2 se2 se2' auto
         'cop cop soc soc' auto / 1fr 1fr 1fr 1fr;
-    }
+      }
     }
   }
 
@@ -174,7 +176,7 @@
       --border-color: hsl(var(--destructive));
       --background-color: hsl(var(--red-transparent-50));
 
-      color: hsl(var(--destructive))
+      color: hsl(var(--destructive));
     }
 
     &.phone-input-lg {
@@ -182,7 +184,7 @@
         @apply bg-[var(--background-color)] border border-[var(--border-color)] rounded-xl p-[7px] flex-row gap-2;
 
         &:hover {
-          @apply border-primary-800
+          @apply border-primary-800;
         }
 
         &:has(input:focus-visible) {
@@ -200,7 +202,7 @@
     @apply flex-1 gap-1 bg-[var(--background-color)] border border-[var(--border-color)] rounded-lg p-1;
 
     &:hover {
-      @apply border-primary-800
+      @apply border-primary-800;
     }
 
     &:has(input:focus-visible) {
@@ -308,11 +310,7 @@
   .search-located-bg {
     @apply border-[color:rgba(255,255,255,0.5)] backdrop-blur-xl z-10 w-[324px] lg:w-[560px] max-w-none h-[324px] lg:h-[560px] rounded-full border-[12px] border-solid fixed;
 
-    background: radial-gradient(
-      50% 50% at 50% 50%,
-      rgb(255 255 255 / 0%) 0%,
-      rgb(23 229 161 / 20%) 100%
-    );
+    background: radial-gradient(50% 50% at 50% 50%, rgb(255 255 255 / 0%) 0%, rgb(23 229 161 / 20%) 100%);
   }
 
   .order-table {
@@ -369,14 +367,13 @@
     }
   }
 
-
   .layout-default {
     @apply flex-1 grid;
 
     grid-template:
-    'header' auto
-    'main' 1fr
-    'footer' auto / 1fr;
+      'header' auto
+      'main' 1fr
+      'footer' auto / 1fr;
   }
 
   .badge-located,
@@ -403,15 +400,15 @@
 
     background-image:
       radial-gradient(50% 50% at 50% 50%, rgb(255 255 255 / 60%) 0%, rgb(255 255 255 / 0%) 100%),
-      linear-gradient(225deg, #E5FBFF 0%, #1A8CFF 70%);;
-    filter: drop-shadow(0 0 12px rgb(0 102 204 / 40%)) drop-shadow(0 0 3px #06C)
+      linear-gradient(225deg, #e5fbff 0%, #1a8cff 70%);
+    filter: drop-shadow(0 0 12px rgb(0 102 204 / 40%)) drop-shadow(0 0 3px #06c);
   }
 
   .globe-map {
     @apply w-60 h-60 rounded-full animate-map-pane opacity-90;
 
-    background-image: url("/images/map.svg");
-    box-shadow:  0 -5px 34px 12px #06C inset;
+    background-image: url('/images/map.svg');
+    box-shadow: 0 -5px 34px 12px #06c inset;
   }
 
   .span-green span {
@@ -427,11 +424,11 @@
       @apply h1 font-bold mb-8;
     }
 
-    h2{
+    h2 {
       @apply text-[1.5rem]/[1.2] text-strong font-bold;
     }
 
-    h3{
+    h3 {
       @apply text-[1.25rem]/[1.33] text-strong font-bold;
     }
 
@@ -443,7 +440,14 @@
       @apply text-[1rem]/[1.4] text-strong;
     }
 
-    p, ul, ol, h2, h3, h4, h5, h6 {
+    p,
+    ul,
+    ol,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       @apply mb-4;
     }
 
@@ -475,8 +479,8 @@
     height: 40px;
     border-radius: 12px;
     background:
-     repeating-linear-gradient(135deg,#00A661 0 10px,#4dc190 0 20px) 0/0%   no-repeat,
-     repeating-linear-gradient(135deg,#e1eaeb    0 10px,#e1eaeb    0 20px) 0/100%;
+      repeating-linear-gradient(135deg, #00a661 0 10px, #4dc190 0 20px) 0/0% no-repeat,
+      repeating-linear-gradient(135deg, #e1eaeb 0 10px, #e1eaeb 0 20px) 0/100%;
   }
 
   .progress-bar-30 {

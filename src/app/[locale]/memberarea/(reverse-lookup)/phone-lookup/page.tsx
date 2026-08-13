@@ -6,13 +6,7 @@ import { auth } from '@/auth';
 import ProductLayout from '@/components/layouts/product-layout';
 import { RequestCounter } from '@/components/request-counter';
 import { IconInfoCircleLine } from '@/components/ui/icon/icons';
-import {
-  Tooltip,
-  TooltipArrow,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
+import { Tooltip, TooltipArrow, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getApi } from '@/libs/server/api';
@@ -63,9 +57,7 @@ export default async function FindByNumberPage() {
         </div>
         <div className="container-content flex flex-1 flex-col justify-center gap-4">
           <div className="flex items-center justify-between gap-2">
-            <h1 className="h3 font-bold">
-              {t('label')}
-            </h1>
+            <h1 className="h3 font-bold">{t('label')}</h1>
             <div className="flex items-center gap-1">
               <RequestCounter requestCountData={requestCountData} />
               <TooltipProvider>

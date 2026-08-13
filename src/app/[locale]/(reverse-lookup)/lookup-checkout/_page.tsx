@@ -18,14 +18,13 @@ type LookupCheckoutPageClientProps = {
   phoneNumber?: string;
 };
 
-export const LookupCheckoutPageClient = (
-  {
-    currency,
-    formattedNumber,
-    country,
-    defaultProduct,
-    phoneNumber,
-  }: LookupCheckoutPageClientProps) => {
+export const LookupCheckoutPageClient = ({
+  currency,
+  formattedNumber,
+  country,
+  defaultProduct,
+  phoneNumber,
+}: LookupCheckoutPageClientProps) => {
   const t = useTranslations('pages.reverse_lookup.checkout');
 
   const [selectedCurrency, setSelectedCurrency] = useState(currency);
@@ -36,9 +35,7 @@ export const LookupCheckoutPageClient = (
         <div className="container-content flex items-start justify-between">
           <div>
             <h1 className="mb-1 text-2xl font-bold lg:h3">{t('title')}</h1>
-            <div className="text-2xl font-bold text-primary lg:h3 lg:text-primary">
-              {formattedNumber.number}
-            </div>
+            <div className="text-2xl font-bold text-primary lg:h3 lg:text-primary">{formattedNumber.number}</div>
           </div>
           <CurrencySelector value={selectedCurrency} onChange={setSelectedCurrency} />
         </div>

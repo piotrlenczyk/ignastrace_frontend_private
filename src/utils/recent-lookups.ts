@@ -18,7 +18,7 @@ const shuffleArray = <T>(array: T[]): T[] => {
 
 export const generateRecentLookups = (originCountry: string = 'ES'): RecentLookupItem[] => {
   const countries = Object.keys(COUNTRIES_SAMPLE_DATA);
-  const otherCountries = countries.filter(country => country !== originCountry);
+  const otherCountries = countries.filter((country) => country !== originCountry);
 
   const items: RecentLookupItem[] = [];
 

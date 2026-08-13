@@ -29,8 +29,8 @@ const dummyRoutes = {
   hasUpsellings: 'hasUpsellingsURL',
 };
 
-type SubscriptionType = 'NO_SUBSCRIPTION' | 'ACTIVE_SUBSCRIPTION' |
-  'ENDED_SUBSCRIPTION' | 'HAS_UPSELLINGS' | 'HAS_NO_UPSELLINGS';
+type SubscriptionType =
+  'NO_SUBSCRIPTION' | 'ACTIVE_SUBSCRIPTION' | 'ENDED_SUBSCRIPTION' | 'HAS_UPSELLINGS' | 'HAS_NO_UPSELLINGS';
 
 const setUpUser = (subscriptionType: SubscriptionType) => {
   vi.resetAllMocks();

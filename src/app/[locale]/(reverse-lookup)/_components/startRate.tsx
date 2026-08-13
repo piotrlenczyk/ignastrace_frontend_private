@@ -12,29 +12,30 @@ export const StartRate = ({ className = '', rating, maxStars = 5 }: StartRatePro
 
   return (
     <div className="flex flex-row items-start gap-1">
-      {Array(fullStars).fill(null).map((_, index) => (
-        <div key={`full-${index}`} className="relative inline-block align-top">
-          <IconStart className={cn('text-yellow-1000', className)} />
-        </div>
-      ))}
+      {Array(fullStars)
+        .fill(null)
+        .map((_, index) => (
+          <div key={`full-${index}`} className="relative inline-block align-top">
+            <IconStart className={cn('text-yellow-1000', className)} />
+          </div>
+        ))}
 
       {hasPartialStar && (
         <div key="partial" className="relative align-top">
           <IconStart className={cn('text-[#ECEDEF]', className)} />
-          <div
-            className="absolute top-0 left-0 overflow-hidden"
-            style={{ width: `${partialPercentage}%` }}
-          >
+          <div className="absolute top-0 left-0 overflow-hidden" style={{ width: `${partialPercentage}%` }}>
             <IconStart className={cn('text-yellow-1000', className)} />
           </div>
         </div>
       )}
 
-      {Array(emptyStars).fill(null).map((_, index) => (
-        <div key={`empty-${index}`} className="relative inline-block align-top">
-          <IconStart className={cn('text-[#ECEDEF]', className)} />
-        </div>
-      ))}
+      {Array(emptyStars)
+        .fill(null)
+        .map((_, index) => (
+          <div key={`empty-${index}`} className="relative inline-block align-top">
+            <IconStart className={cn('text-[#ECEDEF]', className)} />
+          </div>
+        ))}
     </div>
   );
 };

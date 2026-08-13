@@ -19,8 +19,8 @@ and use that instead — everything below is file-agnostic.
 Two questions decide where every token lands. Keep them separate in your head — they
 are orthogonal, and conflating them is the main way this task goes wrong.
 
-1. **Is it a primitive or a semantic?** A variable holding a *raw* value (`#0a3d29`, `16`,
-   `"Inter"`) is a primitive. A variable that *aliases another variable* is a semantic —
+1. **Is it a primitive or a semantic?** A variable holding a _raw_ value (`#0a3d29`, `16`,
+   `"Inter"`) is a primitive. A variable that _aliases another variable_ is a semantic —
    it expresses intent ("text-primary") by pointing at a primitive. This is a property of
    the data, not of the variable's name, so read `valuesByMode`, never guess from naming.
 2. **Where does it come from?** Variables local to the Figma file (`remote: false`) are this
@@ -29,7 +29,7 @@ are orthogonal, and conflating them is the main way this task goes wrong.
    not be edited here. Developers need to know which is which before they touch anything,
    which is the whole reason for the split.
 
-Third-party UI kits subscribed to the file (Apple's iOS kit, Material, etc.) are *also*
+Third-party UI kits subscribed to the file (Apple's iOS kit, Material, etc.) are _also_
 `remote: true` but are not the design system. They must be excluded — see
 "Choosing which collections count" below.
 
@@ -38,11 +38,11 @@ Third-party UI kits subscribed to the file (Apple's iOS kit, Material, etc.) are
 ```json
 {
   "primitives": { "corporate": { "gray-900": "#181d27" }, "local": { "primary-color-600": "#1570ef" } },
-  "semantics":  { "corporate": { "text-primary": "gray-900" }, "local": { "bg-brand-solid": "primary-color-600" } },
-  "shadows":    { "corporate": { "effects-shadow-xs": "#0a0d120d" }, "local": {} },
-  "spacing":    { "corporate": { "spacing-xl": 16 }, "local": {} },
-  "radius":     { "corporate": { "radius-md": 8 }, "local": {} },
-  "sizing":     { "corporate": { "width-lg": 640 }, "local": {} },
+  "semantics": { "corporate": { "text-primary": "gray-900" }, "local": { "bg-brand-solid": "primary-color-600" } },
+  "shadows": { "corporate": { "effects-shadow-xs": "#0a0d120d" }, "local": {} },
+  "spacing": { "corporate": { "spacing-xl": 16 }, "local": {} },
+  "radius": { "corporate": { "radius-md": 8 }, "local": {} },
+  "sizing": { "corporate": { "width-lg": 640 }, "local": {} },
   "typography": { "corporate": { "font-size-text-md": 16 }, "local": {} },
   "textStyles": { "corporate": { "text-md-semibold": { "fontFamily": "font-family-body", "…": "…" } }, "local": {} },
   "_meta": { "…": "provenance, mode used, what was excluded" }
@@ -56,10 +56,10 @@ do we have" stops having an answer. So each gets its own section.
 
 Which section a token lands in is decided by the **type of the value at the end of its alias
 chain**, not by its name: a token that resolves to a number cannot be a color, whatever it is
-called. Names only pick *which* dimension section it goes to. Anything numeric that fits none
+called. Names only pick _which_ dimension section it goes to. Anything numeric that fits none
 of the named dimension sections lands in `dimensions`, which only appears when it is non-empty.
 
-- **Semantics resolve to a primitive *name*, not a value.** The indirection is the point —
+- **Semantics resolve to a primitive _name_, not a value.** The indirection is the point —
   it survives a palette change. A semantic pointing at another semantic keeps that name;
   don't flatten the chain.
 - **Dimensions resolve to final numbers.** The same indirection earns nothing for a 16px step
@@ -143,7 +143,7 @@ naming the mode being exported (`(light mode)`), kebab-cases, drops a redundant 
 (`Focus rings/focus-ring`). So `Colors/Text/text-primary (900)` becomes `text-primary`, not
 `colors-text-text-primary`.
 
-Annotations naming a *different* mode are deliberately kept, which is why the dark ramp comes
+Annotations naming a _different_ mode are deliberately kept, which is why the dark ramp comes
 out as `gray-dark-mode-900` next to `gray-900`. Dropping it would make the two collide and one
 would silently overwrite the other — a wrong hex under a name that looks right. Any collision
 that still happens falls back to the full path and is listed in `_meta.collisions`; a non-empty
@@ -162,6 +162,6 @@ renamed variable in Figma, not a deleted one, and it will break the code that re
   context, and `search_design_system` does not return variables here either. That is why
   library membership is inferred from collection names instead of being read directly —
   if a future Figma release makes those work, prefer them.
-- Remote collections *do* expose their full `variableIds`, so one seed variable is enough to
+- Remote collections _do_ expose their full `variableIds`, so one seed variable is enough to
   enumerate an entire library collection. That is what makes step 1 → step 3 work.
 - `figma.getLocalTextStylesAsync()` is empty here; all text styles are remote.

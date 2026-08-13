@@ -4,11 +4,7 @@ import { useApi } from '@/hooks/use-api';
 import type { ApiError } from '@/libs/api-error';
 import type { Carrier } from '@/types/carrier';
 
-export function useCarrierQuery({
-  phone,
-}: {
-  phone: string;
-}) {
+export function useCarrierQuery({ phone }: { phone: string }) {
   const api = useApi();
 
   async function getCarrier() {

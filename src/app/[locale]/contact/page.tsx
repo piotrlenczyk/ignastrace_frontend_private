@@ -17,19 +17,16 @@ export default async function Contact() {
 
   return (
     <WebsiteLayout>
-      <main className={`
-        container container-wide flex flex-col gap-12 p-6 [grid-area:main]
-        md:grid md:grid-cols-2 md:gap-8 md:py-8
-      `}
+      <main
+        className={`
+          container container-wide flex flex-col gap-12 p-6 [grid-area:main]
+          md:grid md:grid-cols-2 md:gap-8 md:py-8
+        `}
       >
         <section className="flex flex-col gap-6">
-          <h1 className="font-bold">
-            {t('title')}
-          </h1>
+          <h1 className="font-bold">{t('title')}</h1>
           <div dangerouslySetInnerHTML={{ __html: t.raw('subtitle') }} />
-          <h2 className="h4 font-bold">
-            {t('contact_information.title')}
-          </h2>
+          <h2 className="h4 font-bold">{t('contact_information.title')}</h2>
           <ContactInformation />
         </section>
         <ContactForm variant="brand" />

@@ -23,21 +23,16 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        'default':
-          'bg-primary text-primary-foreground hover:shadow-raised disabled:bg-gray-100 disabled:shadow-none',
-        'brand':
-          'bg-brand text-brand-foreground hover:shadow-raised disabled:bg-gray-100 disabled:shadow-none',
-        'secondary':
-          'border border-primary text-primary hover:shadow-raised disabled:text-gray-100',
-        'tertiary': 'text-primary disabled:text-gray-100',
-        'inverse': 'shadow-raised focus-visible:ring-[currentColor] disabled:text-gray-100',
-        'destructive': 'bg-red text-background hover:shadow-raised disabled:bg-gray-100',
-        'outline':
-          'border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground',
-        'outline-secondary':
-          'border border-primary bg-background text-primary',
-        'ghost': 'hover:bg-accent hover:text-accent-foreground',
-        'tranparent': '',
+        default: 'bg-primary text-primary-foreground hover:shadow-raised disabled:bg-gray-100 disabled:shadow-none',
+        brand: 'bg-brand text-brand-foreground hover:shadow-raised disabled:bg-gray-100 disabled:shadow-none',
+        secondary: 'border border-primary text-primary hover:shadow-raised disabled:text-gray-100',
+        tertiary: 'text-primary disabled:text-gray-100',
+        inverse: 'shadow-raised focus-visible:ring-[currentColor] disabled:text-gray-100',
+        destructive: 'bg-red text-background hover:shadow-raised disabled:bg-gray-100',
+        outline: 'border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground',
+        'outline-secondary': 'border border-primary bg-background text-primary',
+        ghost: 'hover:bg-accent hover:text-accent-foreground',
+        tranparent: '',
       },
       size: {
         default: 'min-h-10 px-4 py-2',
@@ -57,18 +52,13 @@ const buttonVariants = cva(
 
 export type ButtonProps = {
   asChild?: boolean;
-} & React.ButtonHTMLAttributes<HTMLButtonElement> & VariantProps<typeof buttonVariants>;
+} & React.ButtonHTMLAttributes<HTMLButtonElement> &
+  VariantProps<typeof buttonVariants>;
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : 'button';
-    return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        {...props}
-      />
-    );
+    return <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />;
   },
 );
 Button.displayName = 'Button';

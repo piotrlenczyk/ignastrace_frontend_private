@@ -18,9 +18,7 @@ export function TransitionProvider({
 
   return (
     <TransitionContext.Provider value={value}>
-      <div className={cn(className, containerClassName)}>
-        {children}
-      </div>
+      <div className={cn(className, containerClassName)}>{children}</div>
     </TransitionContext.Provider>
   );
 }

@@ -6,10 +6,7 @@ import { getNavigationItems } from '../helpers/main-navigation';
 import { MobileLoginButton } from './mobile-login-button';
 import { MobileNavItem } from './mobile-nav-item';
 
-export const MobileMainNavigation = (
-  { onClick }:
-  { onClick: () => void },
-) => {
+export const MobileMainNavigation = ({ onClick }: { onClick: () => void }) => {
   const t = useTranslations('navigation');
 
   const items = getNavigationItems('mobile');
@@ -24,7 +21,7 @@ export const MobileMainNavigation = (
             onClick={onClick}
             variant={item.name === 'settings' ? 'outline' : 'ghost'}
           >
-            { t(item.name as any) }
+            {t(item.name as any)}
           </MobileNavItem>
         );
       })}
