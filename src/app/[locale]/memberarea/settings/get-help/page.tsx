@@ -3,12 +3,13 @@ import { getTranslations } from 'next-intl/server';
 import { ContactInformation } from '@/app/[locale]/contact/components/contact-information';
 import { ContactForm } from '@/app/[locale]/contact/form';
 import { FAQs } from '@/components/homepage/faqs';
+import { resolveLocale } from '@/libs/i18n-routing';
 
 import { LogoutButton } from '../_components/logout-button';
 
-const GetHelpPage = async (props: { params: { locale: string } }) => {
+const GetHelpPage = async (props: PageProps<'/[locale]/memberarea/settings/get-help'>) => {
   const t = await getTranslations({
-    locale: props.params.locale,
+    locale: resolveLocale((await props.params).locale),
     namespace: 'pages.contact',
   });
 

@@ -26,7 +26,8 @@ import StickyDownloadPdfButton from './components/sticky-download-pdf-button';
 
 export const dynamic = 'force-dynamic';
 
-const ReportStatusPage = async ({ searchParams }: { searchParams?: { id?: string; empty?: boolean } }) => {
+const ReportStatusPage = async (props: PageProps<'/[locale]/memberarea/status/report'>) => {
+  const searchParams = await props.searchParams;
   const session = await auth();
   const isAuthenticated = !!session;
 

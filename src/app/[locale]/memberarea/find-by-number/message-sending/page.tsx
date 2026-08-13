@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 
 import { getFunnelPhone } from '@/actions/funnel-phone-number';
+import { firstValue } from '@/utils/search-params';
 import { auth } from '@/auth';
 import ProductLayout from '@/components/layouts/product-layout';
 import { ROUTES } from '@/constants/routes';
@@ -12,11 +13,8 @@ import type { RequestCountData } from '@/types/request_count_data';
 
 import { MessageSendingForm } from './components/form';
 
-export default async function MessageSendingPage({
-  searchParams,
-}: {
-  searchParams?: { phone?: string };
-}) {
+export default async function MessageSendingPage(props: PageProps<'/[locale]/memberarea/find-by-number/message-sending'>) {
+  const searchParams = await props.searchParams;
   const session = await auth();
   const isAuthenticated = !!session;
   const api = await getApi();
@@ -25,7 +23,7 @@ export default async function MessageSendingPage({
     redirect(ROUTES.HOME);
   }
 
-  const phoneNumber = searchParams?.phone || (await getFunnelPhone());
+  const phoneNumber = firstValue(searchParams.phone) || (await getFunnelPhone());
 
   const formattedNumber = usePhoneNumberFormatter(phoneNumber);
 

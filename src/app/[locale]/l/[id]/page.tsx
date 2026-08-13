@@ -1,5 +1,4 @@
 import { getTranslations } from 'next-intl/server';
-import React from 'react';
 
 import { Logotype } from '@/components/logotype';
 import { getApi } from '@/libs/server/api';
@@ -7,7 +6,8 @@ import type { LocationStatusResponse } from '@/types/location-status-response';
 
 import { LocationStatus } from './components/location-status';
 
-export default async function LocatePage({ params }: { params: { id: string } }) {
+export default async function LocatePage(props: PageProps<'/[locale]/l/[id]'>) {
+  const params = await props.params;
   const t = await getTranslations('pages.locate');
   const api = await getApi();
   const locationStatus = await api.get<LocationStatusResponse>(`/locations/${params?.id}/status`);

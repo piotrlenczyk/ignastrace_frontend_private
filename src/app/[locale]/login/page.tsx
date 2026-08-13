@@ -4,7 +4,8 @@ import { useAuthenticatedRedirect } from '@/hooks/use-auth-redirect';
 
 import { LoginForm } from './components/login-form';
 
-export default async function LoginInPage({ searchParams }: { searchParams: { error?: string } }) {
+export default async function LoginInPage(props: PageProps<'/[locale]/login'>) {
+  const searchParams = await props.searchParams;
   const error = !!searchParams.error;
 
   await useAuthenticatedRedirect({

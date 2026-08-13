@@ -15,7 +15,8 @@ import type { Route } from '@/types/routes';
 
 import { CopyToClipBoard } from './components/copy-to-clipboard';
 
-export default async function Page({ searchParams }: { searchParams: { id: string } }) {
+export default async function Page(props: PageProps<'/[locale]/memberarea/find-by-link/success'>) {
+  const searchParams = await props.searchParams;
   const session = await auth();
   const isAuthenticated = !!session;
 

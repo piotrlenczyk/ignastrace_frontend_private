@@ -9,7 +9,8 @@ import type { Location } from '@/types/location';
 
 import { DetailStatusClientPage } from './_page';
 
-const DetailStatusPage = async ({ searchParams }: { searchParams?: { id?: string } }) => {
+const DetailStatusPage = async (props: PageProps<'/[locale]/memberarea/status/detail'>) => {
+  const searchParams = await props.searchParams;
   const session = await auth();
   const isAuthenticated = !!session;
 

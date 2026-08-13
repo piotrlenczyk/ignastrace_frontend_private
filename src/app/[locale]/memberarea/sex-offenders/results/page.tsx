@@ -9,7 +9,8 @@ import type { SexOffenderSearch } from '@/types/sex-offenders.types';
 
 import { SexOffenderSearchResults } from './results-content';
 
-const SexOffenderSearchResultsPage = async ({ searchParams }: { searchParams?: { id?: string } }) => {
+const SexOffenderSearchResultsPage = async (props: PageProps<'/[locale]/memberarea/sex-offenders/results'>) => {
+  const searchParams = await props.searchParams;
   const session = await auth();
   const isAuthenticated = !!session;
 

@@ -9,7 +9,8 @@ import type { User } from '@/types/user';
 
 import { ReportDetails } from './components/report-details';
 
-const SexOffendersPage = async ({ searchParams }: { searchParams?: { id?: string } }) => {
+const SexOffendersPage = async (props: PageProps<'/[locale]/memberarea/status/report/sex-offenders'>) => {
+  const searchParams = await props.searchParams;
   const session = await auth();
   const isAuthenticated = !!session;
 

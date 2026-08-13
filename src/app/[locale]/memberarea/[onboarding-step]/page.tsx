@@ -12,7 +12,8 @@ import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 
 import { OnboardingSteps } from './components/onboarding-steps';
 
-export default async function MemberAreaOnboardingStep1Page({ params }: { params: { 'onboarding-step': string } }) {
+export default async function MemberAreaOnboardingStep1Page(props: PageProps<'/[locale]/memberarea/[onboarding-step]'>) {
+  const params = await props.params;
   const session = await auth();
   const isAuthenticated = !!session;
 

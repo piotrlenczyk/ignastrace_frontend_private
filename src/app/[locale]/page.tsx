@@ -1,5 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 
+import { resolveLocale } from '@/libs/i18n-routing';
+
 import { FAQs } from '@/components/homepage/faqs';
 import { Hero } from '@/components/homepage/hero';
 import { HowDoesItWork } from '@/components/homepage/howDoesItWork';
@@ -11,9 +13,9 @@ import { ROUTES } from '@/constants/routes';
 import { useAuthenticatedRedirect } from '@/hooks/use-auth-redirect';
 import { getUserCountry } from '@/libs/server/user-country';
 
-export async function generateMetadata(props: { params: { locale: string } }) {
+export async function generateMetadata(props: PageProps<'/[locale]'>) {
   const t = await getTranslations({
-    locale: props.params.locale,
+    locale: resolveLocale((await props.params).locale),
     namespace: 'pages.index',
   });
 
