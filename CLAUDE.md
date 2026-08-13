@@ -75,6 +75,24 @@ Components in `src/components/ui` are the **old** design system. For design work
   is identical.
 - Read them with next-intl as usual, e.g. `useTranslations('__NEW__.checkout')`.
 
+## Storybook
+
+`npm run storybook` opens the workbench for the new design at `localhost:6006`. It
+catalogues **v2 only** — the generated colour tokens and text styles under
+`Foundations`, and the rebuilt components and sections. Legacy components get no story;
+they are frozen and deleted with the old theme (`docs/adr/0007-*.md`).
+
+- Stories sit next to the component, as `<component>.stories.tsx`, and are typed with
+  `Meta`/`StoryObj` from `@storybook/nextjs-vite`.
+- Cover the Figma variants the component defines, not just the ones a screen uses.
+- The foundation stories read `src/styles/new` as text — regenerating tokens updates them,
+  so never hand-list a colour or a text style there.
+- A class name assembled at runtime compiles to nothing (Tailwind scans source text), so
+  render a token by reading its custom property, not by building a class string.
+- Configuration lives in `.storybook/`: the app's providers and the web fonts are supplied
+  there, and `@/actions/funnel-phone-number` is aliased to a stub because a `'use server'`
+  module cannot load in a browser.
+
 ## Working conventions
 
 - `npm run check-types`, `npm run lint` and `npm run format:check` are the checks to run.

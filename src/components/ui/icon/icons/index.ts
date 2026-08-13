@@ -59,7 +59,6 @@ import { IconLink } from './Link';
 import { IconListCheck } from './ListCheck';
 import { IconLocate } from './Locate';
 import { IconLocation } from './Location';
-import { IconLogout } from './Logout';
 import { IconMail } from './Mail';
 import { IconMailAccount } from './MailAccount';
 import { IconMenu } from './Menu';
@@ -168,7 +167,6 @@ export * from './Link';
 export * from './ListCheck';
 export * from './Locate';
 export * from './Location';
-export * from './Logout';
 export * from './Mail';
 export * from './MailAccount';
 export * from './Menu';
@@ -283,7 +281,6 @@ export const iconRegistry = {
   'list-check': IconListCheck,
   locate: IconLocate,
   location: IconLocation,
-  logout: IconLogout,
   'mail-account': IconMailAccount,
   mail: IconMail,
   'menu-square': IconMenuSquare,

@@ -21,3 +21,4 @@ moves. Describe things by their role instead.
 | [0004](0004-token-layers-and-the-tailwind-theme.md)            | The design-token export meets Tailwind's theme at the semantic boundary   | Accepted; one consequence corrected by 0005 |
 | [0005](0005-two-colour-systems-during-the-redesign.md)         | Two colour systems ship side by side for the length of the redesign       | Accepted                                    |
 | [0006](0006-lint-and-format-without-antfu.md)                  | Lint follows the framework; a formatter owns formatting                   | Accepted                                    |
+| [0007](0007-a-component-workbench-for-the-new-design-only.md)  | A component workbench, catalogued for the new design only                 | Accepted                                    |
