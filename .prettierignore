@@ -14,3 +14,8 @@ src/locales
 
 # Lockfile
 package-lock.json
+
+# Helm templates are Go templates that happen to end in .yaml — Prettier's YAML
+# parser cannot read them, and reformatting the chart is not this repository's
+# job anyway.
+helm/*/templates

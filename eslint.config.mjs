@@ -98,9 +98,7 @@ const TAILWIND_ENTRY_POINT = 'src/styles/application.css';
  * silent no-op ADR 0003 records for the entry point above, and it is worse for
  * a rule whose entire job is to notice things.
  */
-const LEGACY_THEME_PATH = fileURLToPath(
-  new URL('./src/styles/_theme-legacy.css', import.meta.url),
-);
+const LEGACY_THEME_PATH = fileURLToPath(new URL('./src/styles/_theme-legacy.css', import.meta.url));
 
 /*
  * Directories rebuilt against the Figma design: one entry per route as it
@@ -113,6 +111,7 @@ const LEGACY_THEME_PATH = fileURLToPath(
  * importing one of them is not an error — the restriction is per file, so it
  * has nothing to say about what a file imports.
  */
+/** @type {string[]} */
 const MIGRATED_PATHS = [];
 
 /*
@@ -193,9 +192,9 @@ export function legacyClassRestrictions() {
     return [];
   }
 
-  const names = [
-    ...readFileSync(LEGACY_THEME_PATH, 'utf8').matchAll(/^\s*--color-([a-z0-9-]+):/gm),
-  ].map(([, name]) => name);
+  const names = [...readFileSync(LEGACY_THEME_PATH, 'utf8').matchAll(/^\s*--color-([a-z0-9-]+):/gm)].map(
+    ([, name]) => name,
+  );
 
   if (names.length === 0) {
     return [];
@@ -243,24 +242,28 @@ const tailwindPlugin = {
  * exercises this exact object, so a rule renamed, an option reshaped or the
  * plugin left unregistered fails the suite rather than going quiet.
  */
+/**
+ * @param {string[]} paths
+ * @returns {import('eslint').Linter.Config[]}
+ */
 export function ratchetConfig(paths) {
   if (paths.length === 0) {
     return [];
   }
 
-  return [{
-    files: paths,
-    ...tailwindPlugin,
-    rules: {
-      'better-tailwindcss/no-restricted-classes': [
-        'error',
-        { restrict: legacyClassRestrictions() },
-      ],
+  return [
+    {
+      files: paths,
+      ...tailwindPlugin,
+      rules: {
+        'better-tailwindcss/no-restricted-classes': ['error', { restrict: legacyClassRestrictions() }],
+      },
     },
-  }];
+  ];
 }
 
-export default [
+/** @type {import('eslint').Linter.Config[]} */
+const config = [
   {
     /*
      * `migrations/**` used to be listed here and that directory does not exist.
@@ -268,14 +271,7 @@ export default [
      * warns about, so it is gone. Locale files are Lokalise's; the rest is
      * generated.
      */
-    ignores: [
-      '.next/**',
-      'coverage/**',
-      'next-env.d.ts',
-      'node_modules/**',
-      'out/**',
-      'src/locales/**',
-    ],
+    ignores: ['.next/**', 'coverage/**', 'next-env.d.ts', 'node_modules/**', 'out/**', 'src/locales/**'],
   },
 
   /*
@@ -337,10 +333,7 @@ export default [
           printWidth: 120,
         },
       ],
-      'better-tailwindcss/no-unknown-classes': [
-        'error',
-        { ignore: HAND_WRITTEN_CLASSES.map(name => `^${name}$`) },
-      ],
+      'better-tailwindcss/no-unknown-classes': ['error', { ignore: HAND_WRITTEN_CLASSES.map((name) => `^${name}$`) }],
     },
   },
 
@@ -447,3 +440,5 @@ export default [
     },
   },
 ];
+
+export default config;

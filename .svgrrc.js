@@ -12,7 +12,13 @@ const indexTemplate = (paths) => {
 module.exports = {
   jsxRuntime: 'automatic',
   typescript: true,
-  prettier: true,
+  /*
+   * SVGR bundles its own Prettier and resolves its own defaults, which do not
+   * match .prettierrc.mjs — regenerating icons under it reformatted all 116
+   * files. The `generate:icons` script runs the project's Prettier over the
+   * output instead, so there is one formatting standard in the repository.
+   */
+  prettier: false,
   svgo: false,
   jsx: {
     babelConfig: {
