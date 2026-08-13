@@ -1,22 +1,26 @@
 /*
- * The theme, ported from the deleted tailwind.config.ts.
+ * The half of the theme that outlives the redesign.
  *
- * `inline` is required, for two independent reasons:
+ * The colour palette and the type scale moved to _theme-legacy.css, which is
+ * deleted once the last page has been rebuilt against the Figma design. What
+ * stays here is everything that is neither colour nor typography, and so has no
+ * counterpart in the Figma export: the namespace resets, the breakpoints, the
+ * radius scale and the animations.
  *
- * 1. --font-bebas is BOTH a theme token here and the custom property next/font
- *    injects onto <html>. A non-inline @theme emits it into :root as
- *    `--font-bebas: var(--font-bebas), <fallbacks>` — self-referential. The
- *    unlayered next/font declaration wins and the fallback stack is silently
- *    dropped (measured: the loader's two families and nothing else).
- *    --font-sans is safe, since it points at the differently-named
- *    --font-inter; the collision is what forces the inline form.
- * 2. A large amount of hand-written CSS in _components.css reads the underlying
- *    channel properties directly (`hsl(var(--primary-transparent-200))`). The
- *    :root block in _base.css stays the single source of truth for those
- *    values; this file only names them for Tailwind. Flattening the indirection
- *    was considered and rejected — it would fork the palette in two places.
+ * The resets are the reason this split exists. `--color-*: initial` does not
+ * merely remove the old palette — it is what keeps Tailwind's *default* palette
+ * out. Had it travelled with the legacy file, deleting that file would have
+ * silently re-enabled bg-sky-500, bg-slate-200 and the rest, months after
+ * anyone remembered why the line was there.
  *
- * See docs/adr/0002-colour-tokens-keep-indirection.md for the full reasoning.
+ * `inline` is carried over from the unsplit file. Neither reason ADR 0002 gives
+ * for it still applies here — both concern tokens that moved to
+ * _theme-legacy.css — but inline and non-inline differ in whether a theme's
+ * properties reach :root, and the split was meant to change nothing. Making
+ * this block non-inline is a real decision, available whenever someone wants
+ * `var(--radius-lg)` to resolve at runtime.
+ *
+ * See docs/adr/0005-two-colour-systems-during-the-redesign.md.
  */
 @theme inline {
   /*
@@ -31,6 +35,19 @@
   --breakpoint-*: initial;
   --color-*: initial;
 
+  /*
+   * The typography gate, and the last step of the redesign rather than a
+   * cleanup. Unlike the colour names, `text-base`, `text-lg`, `text-sm` and
+   * `text-xs` are *also* Tailwind core defaults, so deleting _theme-legacy.css
+   * does not make them unregistered — core quietly takes over and line height
+   * shifts across every call site, with no lint error to show for it.
+   * Uncommenting this closes that gate: every size class becomes unregistered
+   * unless the theme names it, and the linter can then find every straggler.
+   * Deliberately not enabled yet — today it would report one violation for
+   * every size class on every page that has not been redesigned.
+   */
+  /* --text-*: initial; */
+
   /* Breakpoints. v3's `2xl` is dropped — it had no usages. `md-max` is a custom
      variant now; see _init.css. */
   --breakpoint-xs: 360px;
@@ -39,153 +56,29 @@
   --breakpoint-lg: 1024px;
   --breakpoint-xl: 1280px;
 
-  /* Palette */
-  --color-white: #fff;
-  --color-transparent: transparent;
-  --color-black: #000;
-  --color-yellow: hsl(var(--yellow));
-  --color-yellow-1000: hsl(var(--yellow-transparent-1000));
-  --color-yellow-800: hsl(var(--yellow-transparent-800));
-  --color-yellow-500: hsl(var(--yellow-transparent-500));
-  --color-yellow-200: hsl(var(--yellow-transparent-200));
-  --color-yellow-50: hsl(var(--yellow-transparent-50));
-  --color-red: hsl(var(--red));
-  --color-red-1000: hsl(var(--red-transparent-1000));
-  --color-red-800: hsl(var(--red-transparent-800));
-  --color-red-200: hsl(var(--red-transparent-200));
-  --color-red-50: hsl(var(--red-transparent-50));
-  --color-amber: hsl(var(--amber));
-  --color-amber-1000: hsl(var(--amber-transparent-1000));
-  --color-amber-800: hsl(var(--amber-transparent-800));
-  --color-amber-200: hsl(var(--amber-transparent-200));
-  --color-amber-50: hsl(var(--amber-transparent-50));
-  --color-green: hsl(var(--green));
-  --color-green-1000: hsl(var(--green-transparent-1000));
-  --color-green-800: hsl(var(--green-transparent-800));
-  --color-green-200: hsl(var(--green-transparent-200));
-  --color-green-100: hsl(var(--green-transparent-100));
-  --color-green-50: hsl(var(--green-transparent-50));
-  --color-green-25: hsl(var(--green-transparent-25));
-  --color-teal: hsl(var(--teal));
-  --color-teal-1000: hsl(var(--teal-transparent-1000));
-  --color-teal-800: hsl(var(--teal-transparent-800));
-  --color-teal-200: hsl(var(--teal-transparent-200));
-  --color-teal-50: hsl(var(--teal-transparent-50));
-  --color-gray: hsl(var(--gray));
-  --color-gray-1000: hsl(var(--gray-transparent-1000));
-  --color-gray-800: hsl(var(--gray-transparent-800));
-  --color-gray-700: hsl(var(--gray-transparent-700));
-  --color-gray-500: hsl(var(--gray-transparent-500));
-  --color-gray-200: hsl(var(--gray-transparent-200));
-  --color-gray-100: hsl(var(--gray-transparent-100));
-  --color-gray-50: hsl(var(--gray-transparent-50));
-  --color-gray-25: hsl(var(--gray-transparent-25));
-  --color-neutral: hsl(var(--neutral));
-  --color-neutral-10: hsl(var(--neutral-10));
-  --color-overlay-light: hsl(var(--overlay-light));
-
-  /* Semantic colours (v3: theme.extend.colors) */
-  --color-background: hsl(var(--background));
-  --color-background-alternate: #f5f6fa;
-  --color-foreground: hsl(var(--foreground));
-  --color-pomegranate-50: hsl(var(--pomegranate-50));
-  --color-pomegranate-100: hsl(var(--pomegranate-100));
-  --color-pomegranate-200: hsl(var(--pomegranate-200));
-  --color-pomegranate-300: hsl(var(--pomegranate-300));
-  --color-pomegranate-400: hsl(var(--pomegranate-400));
-  --color-pomegranate-500: hsl(var(--pomegranate-500));
-  --color-pomegranate-600: hsl(var(--pomegranate-600));
-  --color-pomegranate-700: hsl(var(--pomegranate-700));
-  --color-pomegranate-800: hsl(var(--pomegranate-800));
-  --color-pomegranate-900: hsl(var(--pomegranate-900));
-  --color-pomegranate-950: hsl(var(--pomegranate-950));
-  --color-card: hsl(var(--card));
-  --color-card-foreground: hsl(var(--card-foreground));
-  --color-popover: hsl(var(--popover));
-  --color-popover-foreground: hsl(var(--popover-foreground));
-  --color-brand: hsl(var(--brand));
-  --color-brand-foreground: hsl(var(--brand-foreground));
-  --color-brand-strong: hsl(var(--brand-transparent-1000));
-  --color-brand-1000: hsl(var(--brand-transparent-1000));
-  --color-brand-800: hsl(var(--brand-transparent-800));
-  --color-brand-200: hsl(var(--brand-transparent-200));
-  --color-brand-50: hsl(var(--brand-transparent-50));
-  --color-brand-weak: hsl(var(--brand-transparent-50));
-  --color-primary: hsl(var(--primary));
-  --color-primary-foreground: hsl(var(--primary-foreground));
-  --color-primary-strong: hsl(var(--primary-transparent-1000));
-  --color-primary-1000: hsl(var(--primary-transparent-1000));
-  --color-primary-800: hsl(var(--primary-transparent-800));
-  --color-primary-200: hsl(var(--primary-transparent-200));
-  --color-primary-50: hsl(var(--primary-transparent-50));
-  --color-primary-weak: hsl(var(--primary-transparent-50));
-  --color-secondary: hsl(var(--secondary));
-  --color-secondary-foreground: hsl(var(--secondary-foreground));
-  --color-secondary-strong: hsl(var(--secondary-transparent-1000));
-  --color-secondary-1000: hsl(var(--secondary-transparent-1000));
-  --color-secondary-800: hsl(var(--secondary-transparent-800));
-  --color-secondary-200: hsl(var(--secondary-transparent-200));
-  --color-secondary-50: hsl(var(--secondary-transparent-50));
-  --color-secondary-weak: hsl(var(--secondary-transparent-50));
-  --color-muted: hsl(var(--muted));
-  --color-muted-foreground: hsl(var(--muted-foreground));
-  --color-accent: hsl(var(--accent));
-  --color-accent-foreground: hsl(var(--accent-foreground));
-  --color-destructive: hsl(var(--destructive));
-  --color-destructive-foreground: hsl(var(--destructive-foreground));
-
-  /* `success` itself is a collision — see _utilities.css. */
-  --color-success-foreground: hsl(var(--success-foreground));
-  --color-warning-stroke: hsl(var(--warning-stroke));
-  --color-warning-stroke-strong: hsl(var(--warning-stroke-strong));
-  --color-warning-fill: hsl(var(--warning-fill));
-  --color-border: hsl(var(--border));
-  --color-input: hsl(var(--input));
-  --color-ring: hsl(var(--ring));
-  --color-chart-1: hsl(var(--chart-1));
-  --color-chart-2: hsl(var(--chart-2));
-  --color-chart-3: hsl(var(--chart-3));
-  --color-chart-4: hsl(var(--chart-4));
-  --color-chart-5: hsl(var(--chart-5));
-  --color-stroke-primary-weak: hsl(var(--primary-transparent-200));
-  --color-stroke-secondary-weak: hsl(var(--secondary-transparent-200));
-  --color-stroke-weak: hsl(var(--gray-transparent-100));
-
   /*
-   * v3 kept `backgroundColor` and `textColor` as separate theme namespaces, so
-   * one name could mean two different colours depending on the utility. v4 has
-   * a single `--color-*` namespace feeding all of them, so the names where the
-   * two v3 namespaces disagreed cannot live here — `base`, `weak` and `success`
-   * are `@utility` definitions in _utilities.css instead. The rest agreed, or
-   * only ever existed in one namespace, and are plain theme entries.
+   * The document's default family, not a design token — Tailwind's preflight
+   * resolves `--default-font-family` through this, which is why it has no call
+   * sites and yet holds the whole application on Inter. It stays here rather
+   * than travelling with the type scale precisely because that dependency is
+   * invisible: deleting _theme-legacy.css would otherwise drop every page onto
+   * system-ui without a single error.
+   *
+   * --font-bebas is in _theme-legacy.css. It is retired with the old theme, and
+   * it is the token ADR 0002 records as forcing the inline form.
    */
-  --color-base-blur: hsl(var(--background-base-blur));
-  --color-alternate: hsl(var(--gray-solid-50));
-  --color-strong: hsl(var(--gray-transparent-1000));
-  --color-error: hsl(var(--red-transparent-800));
-  --color-body: hsl(var(--gray-transparent-700));
-  --color-disabled: hsl(var(--text-disabled));
-  --color-inverse-strong: var(--gray-solid-0);
-  --color-information: hsl(var(--text-information));
-
-  /* Typography */
   --font-sans:
   var(--font-inter), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
   'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  --font-bebas:
-  var(--font-bebas), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
-  'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  /* --text-*: initial; */
-  --text-base: 1rem;
-  --text-base--line-height: 1.5;
-  --text-lg: 1.125rem;
-  --text-lg--line-height: 1.5;
-  --text-sm: 0.875rem;
-  --text-sm--line-height: 1.25rem;
-  --text-xs: 0.75rem;
-  --text-xs--line-height: 1.5;
-  --text-caption: var(--font-size-caption);
-  --text-caption--line-height: 1.5;
+
+  /*
+   * Radius. The scale is Figma's — 10/8/6 for lg/md/sm — reached by moving the
+   * single `--radius` in _base.css; the two `calc()`s below already produced
+   * the right steps from it. The Figma export also carries xs, xxs, xl and up,
+   * which are deliberately not emitted: `--radius-*` is the one namespace where
+   * the two systems collide by name, so a second scale cannot coexist here the
+   * way the two colour vocabularies do.
+   */
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);

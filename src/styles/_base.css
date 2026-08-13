@@ -124,7 +124,18 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
+    /*
+     * Figma's radius scale. The two `calc()`s in _theme.css already derive md
+     * and sm by subtracting 2px and 4px, so moving this one value from 8px to
+     * 10px lands the whole scale on 10/8/6 exactly.
+     *
+     * Radius is the one namespace where the two design systems collide: the
+     * Figma names are the same as these (radius-lg, radius-md, radius-sm) with
+     * different values, so unlike the two colour vocabularies they cannot
+     * coexist and be chosen between. The values are simply swapped, which moves
+     * pages that have not been redesigned yet as well.
+     */
+    --radius: 0.625rem;
     --pomegranate-50: 10 100% 97%;
     --pomegranate-100: 10 100% 94%;
     --pomegranate-200: 10 100% 87%;

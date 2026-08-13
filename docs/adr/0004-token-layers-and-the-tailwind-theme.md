@@ -1,6 +1,9 @@
 # 0004 — The design-token export meets Tailwind's theme at the semantic boundary
 
-**Status:** Accepted — August 2026.
+**Status:** Accepted — August 2026. The decision stands; one of the consequences below does
+not. Record 0005 answers the question this one parks about joining the import chain, and
+corrects the claim that intent tokens exist as runtime custom properties — they do so only
+in the emission form 0005 adopts, not in the one described here.
 
 ## Context
 

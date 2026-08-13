@@ -12,9 +12,15 @@
  * so a large data file added later cannot silently rejoin the scan.
  *
  * What this deliberately keeps out: src/locales (several MB of translation JSON
- * across ~15 languages), docs/, figma-variables.json, and src/styles/new — the
- * generated Figma token pipeline, which is frozen and must never contribute
- * class names.
+ * across ~15 languages), docs/ and figma-variables.json.
+ *
+ * src/styles/new was once named here as well, as something that "must never
+ * contribute class names". That was a category error worth not repeating: this
+ * glob decides which files are read as *markup* and mined for classes someone
+ * wrote, and it matches no stylesheet at all. The generated token files are in
+ * the import chain now and they do bring class names into being — by naming
+ * tokens in the theme, which is how every class in this project exists, and
+ * which the scan has no bearing on.
  *
  * See docs/adr/0001-explicit-content-sources.md for the full reasoning.
  */

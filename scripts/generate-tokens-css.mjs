@@ -377,12 +377,23 @@ writeFileSync(
   )}:root {\n${primitiveLines.join('\n')}\n}\n`,
 );
 
+/*
+ * `static` rather than a plain `@theme`, here and in typo.css below. Tailwind
+ * only emits a theme variable into :root if some utility built from it survives
+ * the scan, so under a plain block an intent nobody has used as a class yet does
+ * not exist at runtime at all — it cannot be inspected in devtools and cannot be
+ * reached by `var(--color-…)` from hand-written CSS. During a redesign that is
+ * backwards: the tokens are least used exactly when they most need to be
+ * legible. `static` emits all of them, which costs a few kilobytes before
+ * compression. See docs/adr/0005-two-colour-systems-during-the-redesign.md,
+ * which corrects record 0004 on this point.
+ */
 writeFileSync(
   join(OUTDIR, 'semantics.css'),
   `${header(
     'Semantics — colour intent tokens.',
     'Requires primitives.css. Tokens tagged "local" come from this Figma file and override the corporate library.',
-  )}@import "./primitives.css";\n\n@theme {\n${semanticLines.join('\n')}\n}\n`,
+  )}@import "./primitives.css";\n\n@theme static {\n${semanticLines.join('\n')}\n}\n`,
 );
 
 writeFileSync(
@@ -390,7 +401,7 @@ writeFileSync(
   `${header(
     'Typography — named text styles.',
     'A style sets size, line height, weight and tracking; the font family is a separate font-* class, because Tailwind\'s --text-* namespace has no family modifier. Families point at the custom property next/font exposes.',
-  )}@theme {\n  /* ---- families ---- */\n${familyLines.join('\n')}\n\n${styleSections.join('\n\n')}\n}\n`,
+  )}@theme static {\n  /* ---- families ---- */\n${familyLines.join('\n')}\n\n${styleSections.join('\n\n')}\n}\n`,
 );
 
 // ---------------------------------------------------------------- report ----
