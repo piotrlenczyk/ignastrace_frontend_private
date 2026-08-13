@@ -102,6 +102,9 @@
         "privacy": "Privacy policy",
         "cookies": "Cookie Policy"
       }
+    },
+    "social_sign_in": {
+      "unavailable": "Signing in with Google or Facebook is temporarily unavailable. Please use your email address."
     }
   },
   "common": {

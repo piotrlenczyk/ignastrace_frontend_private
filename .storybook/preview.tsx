@@ -1,7 +1,6 @@
 import './preview.css';
 
 import type { Preview } from '@storybook/nextjs-vite';
-import { SessionProvider } from 'next-auth/react';
 import { NextIntlClientProvider } from 'next-intl';
 
 import { QueryProvider } from '../src/components/navigation/providers/query-client-provider';
@@ -39,28 +38,26 @@ const preview: Preview = {
   /*
    * The app's client providers, in the app's order, minus the ones no v2
    * component reads (country, features, consent). Without the intl provider any
-   * component calling `useTranslations` throws; without the session and query
-   * providers the language selector's mutation hook does. `session={null}`
-   * renders the signed-out state and stops NextAuth from calling an API route
-   * that does not exist here.
+   * component calling `useTranslations` throws; without the query provider the
+   * language selector's mutation hook does. There is no session provider to
+   * add: client code reads the session from a readable cookie through a hook,
+   * which reports "signed out" here because no such cookie is set.
    */
   decorators: [
     (Story) => (
-      <SessionProvider session={null} refetchOnWindowFocus={false}>
-        <QueryProvider>
-          <NextIntlClientProvider locale="en" messages={messages} timeZone="UTC">
-            <div
-              style={{
-                fontFamily: 'var(--font-body)',
-                color: 'var(--color-text-primary)',
-                background: 'var(--color-bg-primary)',
-              }}
-            >
-              <Story />
-            </div>
-          </NextIntlClientProvider>
-        </QueryProvider>
-      </SessionProvider>
+      <QueryProvider>
+        <NextIntlClientProvider locale="en" messages={messages} timeZone="UTC">
+          <div
+            style={{
+              fontFamily: 'var(--font-body)',
+              color: 'var(--color-text-primary)',
+              background: 'var(--color-bg-primary)',
+            }}
+          >
+            <Story />
+          </div>
+        </NextIntlClientProvider>
+      </QueryProvider>
     ),
   ],
 

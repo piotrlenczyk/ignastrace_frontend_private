@@ -73,7 +73,7 @@ export const LoginForm = ({ error }: { error: boolean }) => {
           </div>
         )}
 
-        <SocialSignIn redirectTo={ROUTES.CHECKOUT} />
+        <SocialSignIn />
 
         <Separator>{t('or')}</Separator>
         <form id="sign-in-form" onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col gap-4">

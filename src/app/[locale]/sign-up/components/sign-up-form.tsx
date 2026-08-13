@@ -61,7 +61,7 @@ export const SignUpForm = () => {
   return (
     <>
       <div className="grid w-full gap-5">
-        <SocialSignIn redirectTo={ROUTES.CHECKOUT} />
+        <SocialSignIn />
       </div>
       <Separator>{t('or')}</Separator>
       <div className="flex w-full flex-col gap-5 text-left">

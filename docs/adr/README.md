@@ -22,3 +22,4 @@ moves. Describe things by their role instead.
 | [0005](0005-two-colour-systems-during-the-redesign.md)         | Two colour systems ship side by side for the length of the redesign       | Accepted                                    |
 | [0006](0006-lint-and-format-without-antfu.md)                  | Lint follows the framework; a formatter owns formatting                   | Accepted                                    |
 | [0007](0007-a-component-workbench-for-the-new-design-only.md)  | A component workbench, catalogued for the new design only                 | Accepted                                    |
+| [0008](0008-a-sealed-session-on-the-new-api.md)                | A sealed session holding the new API's token pair, renewed in middleware  | Accepted                                    |
