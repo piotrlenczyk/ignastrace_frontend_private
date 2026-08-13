@@ -4,7 +4,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
-import { IconCheckCircleLine, IconXOctagon } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { Link, useRouter } from '@/libs/i18n-routing';
@@ -57,19 +57,19 @@ export function BillingPageClient({ subscription: defaultSubscription, country }
           <h2 className="h4 font-bold">{t('subscription')}</h2>
           {subscription.status === 'active' && (
             <span className="badge-active px-2 py-px">
-              <IconCheckCircleLine className="size-4" />
+              <Icon name="check-circle" className="size-4" />
               {t('active_state')}
             </span>
           )}
           {subscription.status === 'cancelled' && (
             <span className="badge-canceled px-2 py-px">
-              <IconXOctagon className="size-4" />
+              <Icon name="cancel" className="size-4" />
               {t('canceled_state')}
             </span>
           )}
           {subscription.status === 'expired' && (
             <span className="badge-expired px-2 py-px">
-              <IconXOctagon className="size-4" />
+              <Icon name="cancel" className="size-4" />
               {t('expired_state')}
             </span>
           )}

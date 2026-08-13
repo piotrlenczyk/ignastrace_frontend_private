@@ -1,7 +1,7 @@
 import * as SquareFlags from 'country-flag-icons/react/1x1';
 import type { CountryCode } from 'libphonenumber-js';
 
-import { IconGlobeLine } from './icon/icons';
+import { Icon } from '@/components/ui/icon';
 
 export const Flag = ({ countryCode, size = 20 }: { countryCode?: CountryCode; size?: number }) => {
   const Comp = countryCode ? SquareFlags[countryCode] : null;
@@ -16,7 +16,7 @@ export const Flag = ({ countryCode, size = 20 }: { countryCode?: CountryCode; si
           }}
         />
       ) : (
-        <IconGlobeLine className="size-(--size) text-gray-700" />
+        <Icon name="globe" className="size-(--size) text-gray-700" />
       )}
     </div>
   );

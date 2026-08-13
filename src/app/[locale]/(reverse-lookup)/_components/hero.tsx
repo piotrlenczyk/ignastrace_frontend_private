@@ -2,7 +2,7 @@ import type { CountryCode } from 'libphonenumber-js';
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 
-import { IconLock, IconShieldCheck } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 
 import { PhoneInput } from './phoneInput';
 
@@ -10,12 +10,12 @@ const trustItems = [
   {
     title: 'secure',
     description: 'ssl_encription',
-    icon: IconLock,
+    icon: 'safe',
   },
   {
     title: '100',
     description: 'confidential',
-    icon: IconShieldCheck,
+    icon: 'shield',
   },
 ] as const;
 
@@ -29,7 +29,7 @@ const Trust = () => {
           key={item.title}
           className="flex place-items-center gap-1 rounded-md bg-weak p-1 backdrop-blur-xl lg:gap-2 lg:p-2"
         >
-          <item.icon className="size-4 text-secondary lg:size-5" />
+          <Icon name={item.icon} className="size-4 text-secondary lg:size-5" />
           <div
             className={`justify-center gap-1 text-[10px] leading-snug lg:flex lg:flex-col lg:gap-0 lg:p-1 lg:text-xs`}
           >

@@ -1,8 +1,7 @@
 import { useTranslations } from 'next-intl';
 
+import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
-
-import { IconAlarm } from '../ui/icon/icons';
 
 type LimitedOfferTagProps = {
   className?: string;
@@ -17,7 +16,7 @@ const LimitedOfferTag = ({ className }: LimitedOfferTagProps) => {
         className,
       )}
     >
-      <IconAlarm className="size-4" />
+      <Icon name="timer" className="size-4" />
       <span className="text-sm font-bold text-primary">{t('limited_offer')}</span>
     </div>
   );

@@ -8,7 +8,7 @@ import { useMemo, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { IconLoaderCircle, IconLockOpenLine } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { cn } from '@/libs/utils';
 import type { ReverseLookup } from '@/types/reverse-lookup.types';
@@ -95,9 +95,9 @@ const SexOffendersBackgroundCheck = ({
               <strong className="text-lg">{owner.name}</strong>
               <Button onClick={() => handleUnlockClick(owner.id)} disabled={isConsumingUpsell}>
                 {isConsumingUpsell && ownerId === owner.id ? (
-                  <IconLoaderCircle className="size-4" />
+                  <Icon name="reload" className="size-4" />
                 ) : (
-                  <IconLockOpenLine className="size-4" />
+                  <Icon name="unlock" className="size-4" />
                 )}
                 {t('unlock_report')}
               </Button>

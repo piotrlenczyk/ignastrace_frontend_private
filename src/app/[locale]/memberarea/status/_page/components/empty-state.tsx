@@ -1,10 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 
 import ToolItem from '@/components/layouts/product-layout/tool-item';
-import { IconLinkAlt01 } from '@/components/ui/icon/icons';
-import { IconSexOffender } from '@/components/ui/icon/icons/IconSexOffender';
-import { IconLocationMy } from '@/components/ui/icon/icons/LocationMy';
-import { IconPhoneLine } from '@/components/ui/icon/icons/PhoneLine';
+import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { getFeatures } from '@/libs/server/feature-flags';
 
@@ -17,14 +14,14 @@ const Actions = async () => {
     <div className="mx-auto flex max-w-[1200px] flex-wrap justify-center gap-6">
       <div className="w-full md:w-[360px]">
         <ToolItem
-          icon={<IconLocationMy size="large" className="text-primary" />}
+          icon={<Icon name="location" className="text-primary" />}
           label={t('find_by_number')}
           href={ROUTES.MEMBER.FIND_BY_NUMBER.HOME}
         />
       </div>
       <div className="w-full md:w-[360px]">
         <ToolItem
-          icon={<IconLinkAlt01 size="large" className="text-primary" />}
+          icon={<Icon name="link" className="text-primary" />}
           label={t('find_by_link')}
           href={ROUTES.MEMBER.FIND_BY_LINK.HOME}
         />
@@ -32,7 +29,7 @@ const Actions = async () => {
       {enableReverseLookup && (
         <div className="w-full md:w-[360px]">
           <ToolItem
-            icon={<IconPhoneLine size="large" className="text-primary" />}
+            icon={<Icon name="phone" className="text-primary" />}
             label={t('phone_lookup')}
             href={ROUTES.REVERSE_LOOKUP.MEMBER.PHONE_LOOKUP.FORM}
           />
@@ -40,7 +37,7 @@ const Actions = async () => {
       )}
       <div className="w-full md:w-[360px]">
         <ToolItem
-          icon={<IconSexOffender size="large" className="text-primary" />}
+          icon={<Icon name="handcuffs" className="text-primary" />}
           label={t('sex_offenders_search')}
           href={ROUTES.MEMBER.SEX_OFFENDERS_SEARCH.HOME}
         />

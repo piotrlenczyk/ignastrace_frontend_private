@@ -1,6 +1,6 @@
 import { useLocale, useTranslations } from 'next-intl';
 
-import { IconLockLine } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import type { ReverseLookupDataLeak } from '@/types/reverse-lookup-data-leaks.types';
 
 import { localeFormatDate } from '../../../_page/utils';
@@ -17,7 +17,7 @@ export const BreachCard = ({ breach }: { breach: ReverseLookupDataLeak }) => {
       `}
     >
       <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary">
-        <IconLockLine className="size-6 text-white" />
+        <Icon name="safe" className="size-6 text-white" />
       </div>
 
       <div className="flex flex-col gap-3">

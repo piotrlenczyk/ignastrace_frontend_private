@@ -3,7 +3,7 @@ import { getLocale, getTranslations } from 'next-intl/server';
 
 import { auth } from '@/auth';
 import FunnelLayout from '@/components/layouts/funnel-layout';
-import { IconCheckCircle } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { getApi } from '@/libs/server/api';
@@ -25,15 +25,15 @@ const UpsellSexOffendersPage = async () => {
   const upsellBenefits = [
     {
       title: t('upsell_benefits_1'),
-      icon: <IconCheckCircle className="size-6 text-secondary" />,
+      icon: <Icon name="check-circle" className="size-6 text-secondary" />,
     },
     {
       title: t('upsell_benefits_2'),
-      icon: <IconCheckCircle className="size-6 text-secondary" />,
+      icon: <Icon name="check-circle" className="size-6 text-secondary" />,
     },
     {
       title: t('upsell_benefits_3'),
-      icon: <IconCheckCircle className="size-6 text-secondary" />,
+      icon: <Icon name="check-circle" className="size-6 text-secondary" />,
     },
   ];
 

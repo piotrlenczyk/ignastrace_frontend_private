@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
-import { IconCheckCircle, IconLoaderCircle } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
 
 import AvatarWithLock from './avatar-with-lock';
@@ -32,10 +32,10 @@ const CollectionStatus = ({ isCompleted, label }: CollectionStatusProps) => {
     <div className="flex items-center gap-2 lg:gap-2">
       <div className="flex items-center justify-center">
         {isCompleted ? (
-          <IconCheckCircle size="large" className="text-secondary" />
+          <Icon name="check-circle" className="text-secondary" />
         ) : (
           <div className="flex size-6 items-center justify-center">
-            <IconLoaderCircle size="medium" className="text-gray-500" />
+            <Icon name="reload" className="size-4 text-gray-500" />
           </div>
         )}
       </div>

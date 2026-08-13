@@ -2,7 +2,7 @@ import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogOverlay, DialogPortal, DialogTitle } from '@/components/ui/dialog';
-import { IconAlertTriangle } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 
 export type AgeVerificationDialogProps = {
   isOpen: boolean;
@@ -22,7 +22,7 @@ export function AgeVerificationDialog({ isOpen, onClickButton }: AgeVerification
           </DialogHeader>
           <p>{t('description')}</p>
           <div className="mt-5 flex items-center gap-2 rounded-md bg-weak p-3 lg:mt-6 lg:p-4">
-            <IconAlertTriangle size="large" className="text-primary" />
+            <Icon name="alert-circle" className="text-primary" />
             <span className="text-sm">
               {t.rich('info_message', {
                 bold: (chunks) => <span className="font-bold">{chunks}</span>,

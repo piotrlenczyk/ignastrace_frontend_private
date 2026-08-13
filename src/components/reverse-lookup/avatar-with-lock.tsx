@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-import { IconLock } from '../ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 
 type AvatarWithLockProps = {
   animate?: boolean;
@@ -34,7 +34,7 @@ const AvatarWithLock = ({ animate = true }: AvatarWithLockProps) => {
             before:bg-primary
           `}
         >
-          <IconLock className="size-5 text-white" />
+          <Icon name="safe" className="size-5 text-white" />
         </span>
         <Image
           className="h-auto! max-w-none!"

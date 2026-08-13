@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
-import { IconArrowLeft, IconCheckCircle } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { usePdfDownload } from '@/hooks/use-pdf-download';
@@ -53,7 +53,7 @@ export const ReportDetails = ({
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="sm" className="flex size-12 items-center gap-2" asChild>
             <Link href={`${ROUTES.MEMBER.STATUS.REPORT}?id=${reverseLookupId}`}>
-              <IconArrowLeft size="large" className="text-neutral" />
+              <Icon name="arrow-left" className="text-neutral" />
             </Link>
           </Button>
           <h1 className="h4 font-bold">{t('title')}</h1>
@@ -75,7 +75,7 @@ export const ReportDetails = ({
           )}
           <div className="flex flex-col gap-1">
             <p className="text-caption text-weak">
-              <IconCheckCircle className="size-5 text-secondary" /> {t('breaches_found_for')}
+              <Icon name="check-circle" className="size-5 text-secondary" /> {t('breaches_found_for')}
             </p>
             <span className="h3 font-bold">{formattedPhoneNumber}</span>
           </div>

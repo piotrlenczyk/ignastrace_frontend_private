@@ -5,7 +5,7 @@ import { getFunnelPhone } from '@/actions/funnel-phone-number';
 import { auth } from '@/auth';
 import ProductLayout from '@/components/layouts/product-layout';
 import { RequestCounter } from '@/components/request-counter';
-import { IconInfoCircleLine } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { Tooltip, TooltipArrow, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
@@ -63,7 +63,7 @@ export default async function FindByNumberPage() {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
-                    <IconInfoCircleLine className="text-weak hover:text-black" />
+                    <Icon name="info" className="text-weak hover:text-black" />
                   </TooltipTrigger>
                   <TooltipContent
                     side="bottom"

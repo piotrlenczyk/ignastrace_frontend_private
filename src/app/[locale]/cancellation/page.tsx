@@ -1,7 +1,6 @@
 import { useTranslations } from 'next-intl';
 
 import WebsiteLayout from '@/components/layouts/website-layout';
-import { IconInbox, IconUserCircle } from '@/components/ui/icon/icons';
 import { Link } from '@/libs/i18n-routing';
 
 import { CancellationForm } from './_components/cancellation-form';
@@ -20,7 +19,7 @@ export default function Cancellation() {
           <CancellationForm />
 
           <Info
-            Icon={IconInbox}
+            icon="mail-account"
             description={t.rich('info_email', {
               link: (chunks) => (
                 <Link className="underline underline-offset-2" href="/contact">
@@ -30,7 +29,7 @@ export default function Cancellation() {
             })}
           />
 
-          <Info Icon={IconUserCircle} description={t('info_user')} />
+          <Info icon="user-account" description={t('info_user')} />
         </div>
       </main>
     </WebsiteLayout>

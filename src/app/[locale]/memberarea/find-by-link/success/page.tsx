@@ -5,7 +5,7 @@ import { getFunnelPhone } from '@/actions/funnel-phone-number';
 import { auth } from '@/auth';
 import ProductLayout from '@/components/layouts/product-layout';
 import { Button } from '@/components/ui/button';
-import { IconCheckCircleAlt03 } from '@/components/ui/icon/icons/CheckCircleAlt03';
+import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { Link } from '@/libs/i18n-routing';
@@ -54,7 +54,7 @@ export default async function Page(props: PageProps<'/[locale]/memberarea/find-b
         <h1 className="h3 font-bold">{tFindByLink('find_by_link')}</h1>
         <div className="container-content flex flex-1 flex-col justify-center gap-4">
           <div className="brand-icon">
-            <IconCheckCircleAlt03 size="large" />
+            <Icon name="check-circle" />
           </div>
           <h1 className="h3 font-bold">{t('title')}</h1>
           <div className="flex flex-col gap-1">

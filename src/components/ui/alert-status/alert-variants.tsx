@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { IconAlertTriangleLine, IconCheckCircleLine, IconInfoCircleLine } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 
 export type AlertVariant = 'success' | 'warning' | 'info';
 
@@ -20,7 +20,7 @@ export const alertVariants: Record<AlertVariant, AlertVariantConfig> = {
     bgColor: 'bg-green-50',
     iconColor: 'text-green',
     textColor: 'text-green',
-    icon: <IconCheckCircleLine size="large" />,
+    icon: <Icon name="check-circle" />,
   },
   warning: {
     borderLeftColor: 'border-l-red-800',
@@ -28,7 +28,7 @@ export const alertVariants: Record<AlertVariant, AlertVariantConfig> = {
     bgColor: 'bg-red-50',
     iconColor: 'text-error',
     textColor: 'text-error',
-    icon: <IconAlertTriangleLine size="large" />,
+    icon: <Icon name="alert-circle" />,
   },
   info: {
     borderLeftColor: 'border-l-blue-600',
@@ -36,6 +36,6 @@ export const alertVariants: Record<AlertVariant, AlertVariantConfig> = {
     bgColor: 'bg-blue-50',
     iconColor: 'text-blue-600',
     textColor: 'text-blue-800',
-    icon: <IconInfoCircleLine size="large" />,
+    icon: <Icon name="info" />,
   },
 };

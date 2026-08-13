@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { IconEyeScan } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ROUTES } from '@/constants/routes';
@@ -156,7 +156,7 @@ export const SexOffenderSearchForm = () => {
         </div>
 
         <Button type="submit" size="lg" className="w-full" disabled={isPending}>
-          <IconEyeScan size="large" className="mr-2" />
+          <Icon name="scan" className="mr-2" />
           {t('submit_button')}
         </Button>
       </form>

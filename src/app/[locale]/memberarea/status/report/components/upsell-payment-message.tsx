@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
-import { IconLoaderCircle } from '@/components/ui/icon/icons/LoaderCircle';
+import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
 
 type UpsellPaymentMessageProps = {
@@ -57,7 +57,7 @@ function UpsellPaymentMessageButtons({
         <Button className={cn(buttonClassName, 'text-sm')} type="button" onClick={onRetry} disabled={isRetrying}>
           {isRetrying ? (
             <>
-              {t('try_again')} <IconLoaderCircle className="size-4 animate-spin" />
+              {t('try_again')} <Icon name="reload" className="size-4 animate-spin" />
             </>
           ) : (
             t('try_again')

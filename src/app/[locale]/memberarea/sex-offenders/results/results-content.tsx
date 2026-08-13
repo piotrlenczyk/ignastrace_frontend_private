@@ -5,8 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
-import { IconArrowLeft } from '@/components/ui/icon/icons';
-import { IconLocationPinCheck } from '@/components/ui/icon/icons/LocationPinCheck';
+import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { Link } from '@/libs/i18n-routing';
 import { cn } from '@/libs/utils';
@@ -79,7 +78,7 @@ export const SexOffenderSearchResults = ({ search }: { search: SexOffenderSearch
               <div>
                 <p className="text-lg font-bold lg:text-2xl">{`${match.first_name} ${match.last_name}`}</p>
                 <p className="flex items-center gap-1 text-sm text-weak">
-                  <IconLocationPinCheck size="small" className="shrink-0" />
+                  <Icon name="pin-location" className="size-3 shrink-0" />
                   {[match.address, match.city, match.state, 'USA'].filter(Boolean).join(', ')}
                 </p>
               </div>
@@ -90,7 +89,7 @@ export const SexOffenderSearchResults = ({ search }: { search: SexOffenderSearch
         <div className="flex w-full flex-col-reverse gap-4 lg:grid lg:grid-cols-2">
           <Button asChild variant="secondary">
             <Link href={ROUTES.MEMBER.SEX_OFFENDERS_SEARCH.HOME}>
-              <IconArrowLeft size="small" className="mr-2" />
+              <Icon name="arrow-left" className="mr-2 size-3" />
               {t('back')}
             </Link>
           </Button>

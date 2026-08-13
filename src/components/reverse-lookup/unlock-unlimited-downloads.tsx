@@ -3,10 +3,10 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import UnlimitedDownloadsUpsell from '@/app/[locale]/memberarea/status/report/components/unlimited-downloads-upsell';
+import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
 
 import { Button } from '../ui/button';
-import { IconLoaderCircle, IconLockOpenLine } from '../ui/icon/icons';
 
 type UnlockUnlimitedDownloadsProps = {
   className?: string;
@@ -50,12 +50,12 @@ const UnlockUnlimitedDownloads = ({
       >
         {isDownloading ? (
           <>
-            <IconLoaderCircle className="size-4" />
+            <Icon name="reload" className="size-4" />
             <span className="px-1">{t('button')}</span>
           </>
         ) : (
           <>
-            <IconLockOpenLine className={iconSize} />
+            <Icon name="unlock" className={iconSize} />
             {t('unlock_download_pdf')}
           </>
         )}

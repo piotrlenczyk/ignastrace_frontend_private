@@ -1,4 +1,4 @@
-import { IconInfoCircleLine } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
 
 type AlertInfoProps = {
@@ -17,7 +17,7 @@ export const AlertInfo = ({ children, className = '', iconClassName = '' }: Aler
       )}
     >
       <div className="flex items-start gap-3">
-        <IconInfoCircleLine className={cn('size-[22px] text-gray-500 lg:size-6', iconClassName)} />
+        <Icon name="info" className={cn('size-[22px] text-gray-500 lg:size-6', iconClassName)} />
         <p className="text-sm text-weak lg:text-base">{children}</p>
       </div>
     </div>

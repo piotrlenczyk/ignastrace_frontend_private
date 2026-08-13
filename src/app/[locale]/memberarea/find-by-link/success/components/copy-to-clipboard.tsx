@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 
-import { IconCopyLine } from '@/components/ui/icon/icons/CopyLine';
+import { Icon } from '@/components/ui/icon';
 import { useToast } from '@/hooks/use-toast';
 
 export const CopyToClipBoard = ({ content }: { content: string }) => {
@@ -19,7 +19,7 @@ export const CopyToClipBoard = ({ content }: { content: string }) => {
 
   return (
     <button type="button" onClick={handleClick} className="brand-icon">
-      <IconCopyLine size="large" />
+      <Icon name="copy" />
     </button>
   );
 };

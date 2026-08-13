@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
-import { IconArrowLeft, IconCheckCircle } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { usePdfDownload } from '@/hooks/use-pdf-download';
 import type { SexOffenderData } from '@/types/sex-offenders.types';
@@ -44,7 +44,7 @@ export const ReportDetails = ({ sexOffenderData, user }: { user: User; sexOffend
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="sm" className="flex size-12 items-center gap-2">
             <Link href={`${ROUTES.MEMBER.STATUS.REPORT}?id=${sexOffenderData.reverse_lookup_id}`}>
-              <IconArrowLeft size="large" className="text-neutral" />
+              <Icon name="arrow-left" className="text-neutral" />
             </Link>
           </Button>
           <h1 className="h4 font-bold">{t('title_profile')}</h1>
@@ -72,7 +72,7 @@ export const ReportDetails = ({ sexOffenderData, user }: { user: User; sexOffend
           )}
           <div className="flex flex-col gap-1">
             <p className="text-sm text-weak">
-              <IconCheckCircle className="mr-1 size-5 text-secondary" />
+              <Icon name="check-circle" className="mr-1 size-5 text-secondary" />
               {t('records_found_for')}
             </p>
             <span className="h3 font-bold">{sexOffenderData.name}</span>

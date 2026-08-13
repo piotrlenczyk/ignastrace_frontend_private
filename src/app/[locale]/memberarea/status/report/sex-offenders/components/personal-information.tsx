@@ -1,7 +1,7 @@
 import { useLocale, useTranslations } from 'next-intl';
 
 import { Card } from '@/components/ui/card';
-import { IconCalendarDates, IconStarLine } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
 import type { SexOffenderData } from '@/types/sex-offenders.types';
 
@@ -23,7 +23,7 @@ const PersonalInformationComponent = ({
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <div className="flex items-start gap-2 text-lg">
-          <IconStarLine size="large" className="text-brand" />
+          <Icon name="star" className="text-brand" />
           <div>
             <h5 className="mb-0.5 font-bold">{t('name')}</h5>
             <p>{sexOffenderData.name || '--'}</p>
@@ -31,7 +31,7 @@ const PersonalInformationComponent = ({
         </div>
 
         <div className="flex items-start gap-2 text-lg">
-          <IconStarLine size="large" className="text-brand" />
+          <Icon name="star" className="text-brand" />
           <div>
             <h5 className="mb-0.5 font-bold">{t('first_name_nicknames')}</h5>
             <p>
@@ -41,7 +41,7 @@ const PersonalInformationComponent = ({
         </div>
 
         <div className="flex items-start gap-2 text-lg">
-          <IconCalendarDates size="large" className="text-brand" />
+          <Icon name="calendar" className="text-brand" />
           <div>
             <h5 className="mb-0.5 font-bold">{t('date_of_birth')}</h5>
             <p>{sexOffenderData.date_of_birth ? localeFormatDate(sexOffenderData.date_of_birth, locale) : '--'}</p>

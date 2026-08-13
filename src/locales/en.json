@@ -1,5 +1,109 @@
 {
-  "__NEW__": {},
+  "__NEW__": {
+    "navigation": {
+      "home": "IgnasTrace.io home",
+      "about_us": "About us",
+      "pricing": "Pricing",
+      "faqs": "FAQs",
+      "contact": "Contact us",
+      "login": "Log in",
+      "open_menu": "Open menu",
+      "close_menu": "Close menu",
+      "menu_title": "Main menu",
+      "menu_description": "Site navigation and account links",
+      "language": "Language",
+      "cancel": "Cancel",
+      "change_language": "Change language"
+    },
+    "phone_field": {
+      "search": "Search by country or code...",
+      "no_results": "Country code not found."
+    },
+    "reverse_lookup": {
+      "hero": {
+        "title": "Phone Number Lookup",
+        "subtitle": "Unknown number? Get names, addresses, social profiles, and more in seconds.",
+        "placeholder": "Enter a phone number",
+        "submit": "Lookup",
+        "rating": "4.4",
+        "rating_label": "Rated 4.4 out of 5",
+        "trusted_by": "Trusted by <strong>30+ million</strong> people",
+        "confidential": "100% confidential",
+        "benefits": {
+          "identity": "Uncover the true identity and location of any caller",
+          "photos": "Gain instant access to photos and linked social media profiles",
+          "privacy": "Search with complete confidence — your privacy is always protected"
+        },
+        "image_alt": "A phone identifying an unknown call, with the caller's email, location and photos found",
+        "errors": {
+          "invalid_phone": "Please enter a valid phone number."
+        }
+      },
+      "full_report": {
+        "title": "Get the full report with Ignastrace",
+        "subtitle": "By entering a number into Ignastrace's reverse phone lookup, you'll discover publicly available information associated with the number.",
+        "owner_details": {
+          "title": "Owner's details",
+          "description": "Uncover the person behind the number — name, age, and gender at a glance"
+        },
+        "relationships": {
+          "title": "Relationships & Associates",
+          "description": "See who's connected — family members, friends, and known associates"
+        },
+        "contact_info": {
+          "title": "Contact info",
+          "description": "Keep yourself protected by verifying the identities of those you talk to online."
+        },
+        "social_media": {
+          "title": "Social media",
+          "description": "Their digital footprint — accounts, dating profiles, and shared photos"
+        },
+        "location": {
+          "title": "Location",
+          "description": "Where they are and where they've been — current and past addresses with co-residents"
+        },
+        "other_info": {
+          "title": "Other information",
+          "description": "Dig deeper — ancestry, data breach exposure, and more hidden details"
+        }
+      },
+      "cta": {
+        "title": "Look up any phone number now!",
+        "subtitle": "Ignastrace is the ultimate solution for discovering anyone's location or records - simply by using their phone number"
+      }
+    },
+    "footer": {
+      "home_aria": "IgnasTrace.io home",
+      "tagline": "Locate any mobile phone — fast and easy with Ignastrace.",
+      "copyright": "2026 Ignastrace.io. All rights reserved.",
+      "disclaimer": "Disclaimer: The Site cannot and does not contain professional or definitively accurate information.",
+      "read_more": "read more",
+      "tools": {
+        "title": "Tools",
+        "location_by_number": "Location by Number",
+        "reverse_lookup": "Reverse Lookup"
+      },
+      "about": {
+        "title": "About",
+        "home": "Home",
+        "about_us": "About us",
+        "pricing": "Pricing",
+        "login": "Log in"
+      },
+      "support": {
+        "title": "Support",
+        "contact": "Contact us",
+        "faqs": "FAQs",
+        "cancel_subscription": "Cancel subscription"
+      },
+      "legal": {
+        "title": "Legal",
+        "terms": "Terms & Conditions",
+        "privacy": "Privacy policy",
+        "cookies": "Cookie Policy"
+      }
+    }
+  },
   "common": {
     "back": "Back",
     "close": "Close",

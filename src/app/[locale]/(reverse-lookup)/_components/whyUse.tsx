@@ -6,14 +6,7 @@ import type { CountryCode } from 'libphonenumber-js';
 import { useTranslations } from 'next-intl';
 
 import { Card } from '@/components/homepage/card';
-import {
-  IconCheckStar,
-  IconNumber1,
-  IconNumber2,
-  IconNumber3,
-  IconNumber4,
-  IconNumber5,
-} from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
 
 import type { CardType } from '../_types/why-use.types';
@@ -24,11 +17,36 @@ export const WhyUse = ({ defaultCountry }: { defaultCountry: CountryCode }) => {
   const options = { align: 'start', dragFree: true } as EmblaOptionsType;
   const [emblaRef] = useEmblaCarousel(options, [WheelGesturesPlugin()]);
   const cards: CardType[] = [
-    { id: '1', Icon: IconNumber1, title: t('reasons.reason_1.title'), description: t('reasons.reason_1.description') },
-    { id: '2', Icon: IconNumber2, title: t('reasons.reason_2.title'), description: t('reasons.reason_2.description') },
-    { id: '3', Icon: IconNumber3, title: t('reasons.reason_3.title'), description: t('reasons.reason_3.description') },
-    { id: '4', Icon: IconNumber4, title: t('reasons.reason_4.title'), description: t('reasons.reason_4.description') },
-    { id: '5', Icon: IconNumber5, title: t('reasons.reason_5.title'), description: t('reasons.reason_5.description') },
+    {
+      id: '1',
+      icon: 'star-circle',
+      title: t('reasons.reason_1.title'),
+      description: t('reasons.reason_1.description'),
+    },
+    {
+      id: '2',
+      icon: 'star-circle',
+      title: t('reasons.reason_2.title'),
+      description: t('reasons.reason_2.description'),
+    },
+    {
+      id: '3',
+      icon: 'star-circle',
+      title: t('reasons.reason_3.title'),
+      description: t('reasons.reason_3.description'),
+    },
+    {
+      id: '4',
+      icon: 'star-circle',
+      title: t('reasons.reason_4.title'),
+      description: t('reasons.reason_4.description'),
+    },
+    {
+      id: '5',
+      icon: 'star-circle',
+      title: t('reasons.reason_5.title'),
+      description: t('reasons.reason_5.description'),
+    },
   ];
   const useCases = [
     {
@@ -62,13 +80,13 @@ export const WhyUse = ({ defaultCountry }: { defaultCountry: CountryCode }) => {
         </div>
 
         <div className="grid w-full gap-4 py-6 md:grid md:grid-cols-[repeat(12,1fr)] md:gap-8 md:pt-16 lg:pb-16">
-          {cards.map(({ Icon, id, title, description }: CardType, i) => (
+          {cards.map(({ icon, id, title, description }: CardType, i) => (
             <Card
               key={id}
               className={cn(`flex flex-col gap-4 p-4 md:block lg:p-8`, i < 3 ? 'md:col-[span_4]' : 'md:col-[span_6]')}
             >
               <div className="brand-icon-secondary-weak size-10 md:mb-6 lg:size-14">
-                <Icon className="text-secondary" size="large" />
+                <Icon name={icon} className="text-secondary" />
               </div>
               <div>
                 <h3 className="mb-2 text-lg font-semibold text-strong">{title}</h3>
@@ -90,7 +108,7 @@ export const WhyUse = ({ defaultCountry }: { defaultCountry: CountryCode }) => {
               {useCases.map((item) => (
                 <div key={item.number} className="min-h-28 w-60 min-w-0 flex-[0_0_auto] pr-4 last:pr-0">
                   <Card className="flex size-full gap-4 p-4">
-                    <IconCheckStar className="text-[26px] text-secondary" />
+                    <Icon name="checkmark-badge" className="text-[26px] text-secondary" />
                     <div className="flex flex-col">
                       <p className="text-sm leading-5">{item.description}</p>
                     </div>
@@ -104,7 +122,7 @@ export const WhyUse = ({ defaultCountry }: { defaultCountry: CountryCode }) => {
         <div className="hidden w-full grid-cols-5 gap-8 pt-6 pb-16 lg:grid">
           {useCases.map((item) => (
             <Card key={item.number} className={cn('flex gap-4 p-4')}>
-              <IconCheckStar className="text-[26px] text-secondary" />
+              <Icon name="checkmark-badge" className="text-[26px] text-secondary" />
 
               <div className="flex flex-col">
                 <p className="text-sm leading-5">{item.description}</p>

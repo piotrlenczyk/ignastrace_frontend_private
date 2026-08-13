@@ -1,8 +1,7 @@
 import { useTranslations } from 'next-intl';
 
+import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
-
-import { IconLocationMy, IconPhoneLine, IconSendLine } from '../ui/icon/icons';
 
 export const HowDoesItWork = ({ className }: { className?: string }) => {
   const t = useTranslations('pages.index.how_does_it_work');
@@ -11,22 +10,22 @@ export const HowDoesItWork = ({ className }: { className?: string }) => {
     {
       title: t('step_1.title'),
       description: t('step_1.description'),
-      icon: IconPhoneLine,
+      icon: 'phone',
       number: '01',
     },
     {
       title: t('step_2.title'),
       description: t('step_2.description'),
-      icon: IconSendLine,
+      icon: 'send',
       number: '02',
     },
     {
       title: t('step_3.title'),
       description: t('step_3.description'),
-      icon: IconLocationMy,
+      icon: 'location',
       number: '03',
     },
-  ];
+  ] as const;
 
   return (
     <section className={cn(className, 'px-5 py-8 lg:px-0 lg:py-16')}>
@@ -43,7 +42,7 @@ export const HowDoesItWork = ({ className }: { className?: string }) => {
           >
             <article>
               <div className="brand-icon-strong mb-4">
-                <item.icon size="large" />
+                <Icon name={item.icon} />
               </div>
               <h2 className="h5 mb-2 font-semibold text-strong">{item.title}</h2>
               <p className="text-weak">{item.description}</p>

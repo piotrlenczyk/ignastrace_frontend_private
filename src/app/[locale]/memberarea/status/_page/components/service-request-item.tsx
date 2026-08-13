@@ -2,7 +2,7 @@
 
 import { useLocale, useTranslations } from 'next-intl';
 
-import { IconRefreshCw } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { Link, useRouter } from '@/libs/i18n-routing';
@@ -84,7 +84,7 @@ export const ServiceRequestItem = ({ serviceRequest }: ServiceRequestProps) => {
           {!isReady && serviceRequest.source_type === 'Location' && (
             <button type="button" className="p-0">
               <Link href={refreshLocationLink}>
-                <IconRefreshCw size="medium" className="text-neutral" />
+                <Icon name="reload" className="size-4 text-neutral" />
               </Link>
             </button>
           )}

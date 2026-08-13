@@ -6,7 +6,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import React from 'react';
 
 import { Button } from '@/components/ui/button';
-import { IconCheckCircleLine, IconLockLine } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import type { Products } from '@/types/products';
@@ -51,11 +51,11 @@ const GetReport: React.FC<GetReportProps> = ({ product, currency, country }) => 
         </Button>
         <p className="flex w-full items-center justify-between gap-2 text-[10px] text-weak md:text-xs">
           <span className="flex items-center gap-1 md:gap-2">
-            <IconCheckCircleLine className="size-4 text-brand" />
+            <Icon name="check-circle" className="size-4 text-brand" />
             {t('trial_description')}
           </span>
           <span className="flex items-center gap-1 md:gap-2">
-            <IconLockLine className="size-4 text-weak" />
+            <Icon name="safe" className="size-4 text-weak" />
             {t('secure')}
           </span>
         </p>

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React, { useMemo } from 'react';
 
-import { IconCheckCircle } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 
 import { StartRate } from './startRate';
 import type {
@@ -56,7 +56,7 @@ export const ResultsList: React.FC<ResultsListProps> = ({ t }) => {
   const resultsList = useMemo(() => {
     return Array.from({ length: RESULTS_TO_INCLUDE }).map((_, index) => (
       <li key={index} className="flex items-start gap-2">
-        <IconCheckCircle className="size-6 text-brand" />
+        <Icon name="check-circle" className="size-6 text-brand" />
         <span className="text-lg">{t(`result_${index + 1}` as any)}</span>
       </li>
     ));

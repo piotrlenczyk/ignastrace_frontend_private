@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { Card } from '@/components/homepage/card';
 import LimitedOfferTag from '@/components/reverse-lookup/limited-offer-tag';
 import { Button } from '@/components/ui/button';
-import { IconLoaderCircle, IconTagLine } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { useApi } from '@/hooks/use-api';
 import { useMessageErrorToast } from '@/hooks/use-message-error-toast';
@@ -73,7 +73,7 @@ const UpsellCard = ({
       return (
         <span className="flex items-center gap-1">
           {t('processing')}
-          <IconLoaderCircle className="size-4 animate-spin" />
+          <Icon name="reload" className="size-4 animate-spin" />
         </span>
       );
     }
@@ -130,7 +130,7 @@ const UpsellCard = ({
           </Button>
           <div className="flex flex-col gap-5">
             <div className="flex items-center gap-3 rounded-lg bg-green-50 p-4">
-              <IconTagLine className="size-6" />
+              <Icon name="discount" className="size-6" />
               <span className="lg:text-base">{specialOfferText}</span>
             </div>
             {upsellBenefits.map((benefit) => (

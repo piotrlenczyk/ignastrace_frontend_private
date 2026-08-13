@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
-import { IconArrowLeft, IconLocationPinCheck } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { Link } from '@/libs/i18n-routing';
@@ -45,7 +45,7 @@ export const DetailStatusClientPage = ({ location }: { location: Location }) => 
           <div className="flex items-center gap-1">
             <Button variant="ghost" className="size-12" asChild>
               <Link href={ROUTES.MEMBER.STATUS.HOME} aria-label={tCommon('back')}>
-                <IconArrowLeft size="large" className="text-neutral" />
+                <Icon name="arrow-left" className="text-neutral" />
               </Link>
             </Button>
             <h1 className="h4 truncate font-bold">
@@ -54,7 +54,7 @@ export const DetailStatusClientPage = ({ location }: { location: Location }) => 
           </div>
           <div className="relative min-h-[400px] flex-1 overflow-hidden rounded-2xl bg-accent">
             <div className="absolute inset-x-2 bottom-2 z-10 flex gap-1 rounded-lg bg-background p-3 shadow-raised">
-              <IconLocationPinCheck size="large" className="text-success" />
+              <Icon name="pin-location" className="text-success" />
               <p>{location.address}</p>
             </div>
             <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ''}>

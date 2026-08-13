@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
-import { IconLoaderCircle } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { useMessageErrorToast } from '@/hooks/use-message-error-toast';
 import { useRouter } from '@/libs/i18n-routing';
@@ -88,7 +88,7 @@ const UpsellPageClient = ({ products }: { products: Product[] }) => {
         <div className="container-content flex flex-col gap-4">
           <Button size="lg" onClick={handleSubmit} disabled={isCreatingUpselling || isSubmitted}>
             {t('submit_button')}
-            {isSubmitting ? <IconLoaderCircle size="large" className="animate-spin" /> : ''}
+            {isSubmitting ? <Icon name="reload" className="animate-spin" /> : ''}
           </Button>
           <Button
             variant="ghost"

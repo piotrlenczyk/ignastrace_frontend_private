@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import { Card } from '@/components/ui/card';
-import { IconSocialFacebook, IconSocialWhatsapp } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
 import type { ReverseLookup } from '@/types/reverse-lookup.types';
 
@@ -26,9 +26,9 @@ const Photos = ({ className, reverseLookup }: { className?: string; reverseLooku
   const getSocialIcon = (source: string) => {
     switch (source) {
       case 'whatsapp':
-        return <IconSocialWhatsapp className="size-10" />;
+        return <Icon name="globe" className="size-10" />;
       case 'facebook':
-        return <IconSocialFacebook className="size-10 text-[#0966FF]" />;
+        return <Icon name="globe" className="size-10 text-[#0966FF]" />;
       default:
         return null;
     }

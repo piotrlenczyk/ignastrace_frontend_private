@@ -2,14 +2,7 @@ import { useLocale, useTranslations } from 'next-intl';
 
 import ReverseLookupValue from '@/components/reverse-lookup-value';
 import { Card } from '@/components/ui/card';
-import {
-  IconCalendarDate,
-  IconGender,
-  IconLinkAlt02,
-  IconStarLine,
-  IconUsersGroup,
-  IconWallet,
-} from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
 import type { ReverseLookup } from '@/types/reverse-lookup.types';
 
@@ -78,36 +71,36 @@ const PossiblePersonalDetails = ({
 
   const personalData = [
     {
-      icon: IconCalendarDate,
+      icon: 'calendar',
       label: t('labels.date_of_birth'),
       value: dateOfBirths,
     },
     {
-      icon: IconGender,
+      icon: 'female',
       label: t('labels.gender'),
       value: genders,
     },
     {
-      icon: IconLinkAlt02,
+      icon: 'link',
       label: t('labels.marital_status'),
       value: maritalStatuses,
     },
     {
-      icon: IconWallet,
+      icon: 'credit-card',
       label: t('labels.income'),
       value: incomes,
     },
     {
-      icon: IconStarLine,
+      icon: 'star',
       label: t('labels.children'),
       value: children,
     },
     {
-      icon: IconUsersGroup,
+      icon: 'user-group',
       label: t('labels.household_size'),
       value: householdSize,
     },
-  ];
+  ] as const;
   return (
     <Card className={cn('flex flex-col gap-6 border-stroke-weak px-4 py-6 shadow-raised lg:px-6', className)}>
       <h4 className="font-bold">{isEmpty ? t('title_empty') : t('title')}</h4>
@@ -118,7 +111,7 @@ const PossiblePersonalDetails = ({
         <div className="grid gap-6 gap-y-4 sm:grid-cols-1 lg:grid-cols-2">
           {personalData.map((item) => (
             <div key={item.label} className="flex items-start gap-2">
-              <item.icon className="size-6 text-secondary" />
+              <Icon name={item.icon} className="size-6 text-secondary" />
               <div className="flex flex-1 flex-col gap-0.5 text-lg">
                 <p className="font-bold">{item.label}</p>
                 <p>

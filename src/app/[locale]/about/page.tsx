@@ -2,30 +2,30 @@ import { getTranslations } from 'next-intl/server';
 
 import { Locator } from '@/components/homepage/locator';
 import WebsiteLayout from '@/components/layouts/website-layout';
-import { IconFlagLine, IconGlobeLine, IconLocationMy, IconThumbsUpLine } from '@/components/ui/icon/icons';
+import { Icon, type IconName } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
 import { getUserCountry } from '@/libs/server/user-country';
 
 type CardType = {
   id: string;
-  Icon: typeof IconGlobeLine;
+  icon: IconName;
   title: any;
   description: any;
 };
 
 const cards: CardType[] = [
-  { id: '1', Icon: IconFlagLine, title: 'cards.card_1.title', description: 'cards.card_1.description' },
-  { id: '2', Icon: IconLocationMy, title: 'cards.card_2.title', description: 'cards.card_2.description' },
-  { id: '3', Icon: IconThumbsUpLine, title: 'cards.card_3.title', description: 'cards.card_3.description' },
-  { id: '4', Icon: IconGlobeLine, title: 'cards.card_4.title', description: 'cards.card_4.description' },
+  { id: '1', icon: 'globe', title: 'cards.card_1.title', description: 'cards.card_1.description' },
+  { id: '2', icon: 'location', title: 'cards.card_2.title', description: 'cards.card_2.description' },
+  { id: '3', icon: 'favourite', title: 'cards.card_3.title', description: 'cards.card_3.description' },
+  { id: '4', icon: 'globe', title: 'cards.card_4.title', description: 'cards.card_4.description' },
 ];
 
-const Card = ({ title, description, Icon, t }: CardType & { t: any }) => {
+const Card = ({ title, description, icon, t }: CardType & { t: any }) => {
   return (
     <article className="flex flex-col gap-4 md:mb-6">
       <div className="brand-icon text-white">
-        <Icon size="large" />
+        <Icon name={icon} />
       </div>
       <div>
         <h3 className="mb-1 text-base leading-6 font-semibold text-strong lg:text-lg">{t(title)}</h3>

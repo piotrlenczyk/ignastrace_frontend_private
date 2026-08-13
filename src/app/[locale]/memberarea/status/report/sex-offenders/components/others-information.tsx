@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl';
 
 import { Card } from '@/components/ui/card';
-import { IconLinkExternal, IconLocationPinLine, IconUserAlert } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
 import type { SexOffenderData } from '@/types/sex-offenders.types';
 
@@ -20,28 +20,28 @@ const OthersInformationComponent = ({
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <div className="flex items-start gap-2 text-lg">
-          <IconLocationPinLine size="large" className="text-brand" />
+          <Icon name="pin-location" className="text-brand" />
           <div>
             <h5 className="mb-0.5 font-bold">{t('jurisdiction')}</h5>
             <p>{sexOffenderData.jurisdiction || '--'}</p>
           </div>
         </div>
         <div className="flex items-start gap-2 text-lg">
-          <IconUserAlert size="large" className="text-brand" />
+          <Icon name="user" className="text-brand" />
           <div>
             <h5 className="mb-0.5 font-bold">{t('is_absconded')}</h5>
             <p>{sexOffenderData.is_absconder ? t('yes') : '--'}</p>
           </div>
         </div>
         <div className="flex items-start gap-2 text-lg">
-          <IconUserAlert size="large" className="text-brand" />
+          <Icon name="user" className="text-brand" />
           <div>
             <h5 className="mb-0.5 font-bold">{t('is_predator')}</h5>
             <p>{sexOffenderData.is_predator ? t('yes') : '--'}</p>
           </div>
         </div>
         <div className="flex items-start gap-2 text-lg">
-          <IconLinkExternal size="large" className="text-brand" />
+          <Icon name="open" className="text-brand" />
           <div>
             <h5 className="mb-0.5 font-bold">{t('original_report')}</h5>
             {sexOffenderData.original_source ? (

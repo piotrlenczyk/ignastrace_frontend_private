@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { IconLinkAlt01, IconLocationPinCancelLine, IconLocationPinLine } from '@/components/ui/icon/icons';
+import { Icon, type IconName } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { Link } from '@/libs/i18n-routing';
 import { cn } from '@/libs/utils';
@@ -9,11 +9,11 @@ import type { Notification } from '@/types/notification';
 import { useNotificationDate } from '../hooks/useNotificationDate';
 import { useNotificationText } from '../hooks/useNotificationText';
 
-const Icons = {
-  'LinkLocation-located': IconLinkAlt01,
-  'LinkLocation-rejected': IconLinkAlt01,
-  'PhoneLocation-located': IconLocationPinLine,
-  'PhoneLocation-rejected': IconLocationPinCancelLine,
+const iconNames: Record<string, IconName | undefined> = {
+  'LinkLocation-located': 'link',
+  'LinkLocation-rejected': 'link',
+  'PhoneLocation-located': 'pin-location',
+  'PhoneLocation-rejected': 'pin-location',
 };
 
 const ItemWrapper = ({ className, children, href }: { className: string; children: ReactNode; href?: string }) => {
@@ -30,14 +30,14 @@ export const NotificationItem = ({ notification }: { notification: Notification 
   const isLocated = notification.kind === 'located';
   const href = isLocated ? `${ROUTES.MEMBER.STATUS.DETAIL}?id=${notification.location.id}` : undefined;
 
-  const Icon = Icons[`${notification.location.type}-${notification.kind}`];
+  const iconName = iconNames[`${notification.location.type}-${notification.kind}`];
   const { date } = useNotificationDate(notification);
   const { text_accessed, text } = useNotificationText(notification);
 
   return (
     <ItemWrapper className="flex gap-3 p-2" href={href}>
       <div className={cn(isLocated ? 'brand-icon-secondary-weak' : 'brand-icon-primary-weak', 'size-12')}>
-        <Icon size="large" className={isLocated ? 'text-secondary' : 'text-primary'} />
+        <Icon name={iconName ?? 'alert-circle'} className={isLocated ? 'text-secondary' : 'text-primary'} />
       </div>
 
       <div className="flex-1">

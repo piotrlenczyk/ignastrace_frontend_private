@@ -1,14 +1,8 @@
 import type { SVGProps } from 'react';
 
-export type IconProps = Omit<SVGProps<SVGSVGElement>, 'color' | 'width' | 'height'> & {
-  size?: 'small' | 'medium' | 'mediumLarge' | 'large' | 'fontSize';
-  color?: string;
-};
-
-export const sizes = {
-  small: '12px',
-  medium: '16px',
-  mediumLarge: '20px',
-  large: '24px',
-  fontSize: '1em',
-};
+/*
+ * Generated icons render at 24×24 in `currentColor`. Size them with a utility
+ * class (`size-4`, `size-5`, …) and colour them with `text-*`; both beat the
+ * presentation attributes the generator writes.
+ */
+export type IconProps = SVGProps<SVGSVGElement>;

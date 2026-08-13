@@ -8,10 +8,10 @@ import { useLocale, useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 
 import type { Product } from '@/app/[locale]/success/_types/product.type';
+import { Icon } from '@/components/ui/icon';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { getStripePromise } from '@/libs/stripe';
 
-import { IconCheckCircleLine, IconLoaderCircle, IconLockLine } from '../ui/icon/icons';
 import { StripeForm } from './stripe-form';
 
 const UpsellCheckoutForm = ({
@@ -79,11 +79,11 @@ const UpsellCheckoutForm = ({
 
       <div className="my-6 flex justify-center gap-5 text-xs">
         <div className="flex items-center gap-2 text-weak">
-          <IconLockLine className="text-2xl" />
+          <Icon name="safe" className="text-2xl" />
           {t('trust_100')}
         </div>
         <div className="flex items-center gap-2 text-weak">
-          <IconCheckCircleLine className="text-2xl" />
+          <Icon name="check-circle" className="text-2xl" />
           {t('trust_cancel')}
         </div>
       </div>
@@ -116,7 +116,7 @@ const UpsellCheckoutForm = ({
             text-center backdrop-blur-md will-change-auto
           `}
         >
-          <IconLoaderCircle size="large" className="animate-spin text-primary" />
+          <Icon name="reload" className="animate-spin text-primary" />
           <p className="h4">{t('loading')}</p>
         </div>
       )}

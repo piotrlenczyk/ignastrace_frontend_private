@@ -4,7 +4,7 @@ import { signOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
-import { IconLogOut } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { cn } from '@/libs/utils';
 
@@ -26,7 +26,7 @@ export const LogoutButton = ({ className }: LogoutButtonProps) => {
       variant="outline"
       onClick={handleLogout}
     >
-      <IconLogOut size="fontSize" className="text-base" />
+      <Icon name="logout" className="size-[1em] text-base" />
       <span className="text-base font-semibold">{tCommon('logout')}</span>
     </Button>
   );

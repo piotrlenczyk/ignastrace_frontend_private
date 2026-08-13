@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
-import { IconLoaderCircle, IconLocationMy } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { Link } from '@/libs/i18n-routing';
 import type { Route } from '@/types/routes';
 
@@ -24,7 +24,7 @@ export const SearchCompleteContent = ({ phoneNumber, nextStepURL }: { phoneNumbe
           <div className="lg:w-[336px]">
             <header className="flex flex-col items-center justify-center">
               <div className="brand-icon mb-4">
-                <IconLocationMy size="large" />
+                <Icon name="location" />
               </div>
               <h1 className="h2 mb-2 text-center font-bold">{t('title')}</h1>
               <h2 className="h3 font-bold text-primary">{phoneNumber}</h2>
@@ -34,7 +34,7 @@ export const SearchCompleteContent = ({ phoneNumber, nextStepURL }: { phoneNumbe
               <Button className="mx-auto" size="lg" asChild>
                 <Link href={nextStepURL} onClick={handleClick}>
                   {t('cta')}
-                  {isSubmitting ? <IconLoaderCircle size="large" className="animate-spin" /> : ''}
+                  {isSubmitting ? <Icon name="reload" className="animate-spin" /> : ''}
                 </Link>
               </Button>
             </div>
@@ -55,7 +55,7 @@ export const SearchCompleteContent = ({ phoneNumber, nextStepURL }: { phoneNumbe
         <Button className="mx-auto w-full" size="lg" asChild>
           <Link href={nextStepURL} onClick={handleClick}>
             {t('cta')}
-            {isSubmitting ? <IconLoaderCircle size="large" className="animate-spin" /> : ''}
+            {isSubmitting ? <Icon name="reload" className="animate-spin" /> : ''}
           </Link>
         </Button>
       </div>

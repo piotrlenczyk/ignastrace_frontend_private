@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 
 import { LanguageSelector } from '@/components/navigation/components/language-selector';
 import { Button } from '@/components/ui/button';
-import { IconLogOut } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ROUTES } from '@/constants/routes';
 import { usePathname, useRouter } from '@/libs/i18n-routing';
@@ -62,7 +62,7 @@ export function SettingsLayoutClient({ children }: SettingsLayoutClientProps) {
             variant="ghost"
             onClick={handleLogout}
           >
-            <IconLogOut size="fontSize" className="text-sm xs:text-base" />
+            <Icon name="logout" className="size-[1em] text-sm xs:text-base" />
             {tCommon('logout')}
           </Button>
           <LanguageSelector />

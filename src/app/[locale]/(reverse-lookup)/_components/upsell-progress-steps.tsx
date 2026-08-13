@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { Fragment } from 'react';
 
-import { IconCheck } from '@/components/ui/icon/icons';
+import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
 
 type Step = {
@@ -49,7 +49,7 @@ const UpsellProgressSteps = ({ currentStep, className }: UpsellProgressStepsProp
                 )}
               >
                 {step.status === 'completed' ? (
-                  <IconCheck className="size-4 text-white" />
+                  <Icon name="tick" className="size-4 text-white" />
                 ) : (
                   <span
                     className={cn('text-sm font-semibold', step.status === 'current' ? 'text-secondary' : 'text-weak')}
