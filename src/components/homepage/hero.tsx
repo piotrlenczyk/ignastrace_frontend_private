@@ -24,7 +24,7 @@ const Trust = () => {
 
   return (
     <section className="grid w-full grid-cols-1 gap-4 xs:grid-cols-2 lg:flex lg:gap-3">
-      {trustItems.map((item) => (
+      {trustItems.map(item => (
         <div
           key={item.title}
           className="flex place-items-center gap-3 rounded-md bg-weak p-2 backdrop-blur-xl"
@@ -103,7 +103,7 @@ const Iphone = () => {
 export const Hero = ({ defaultCountry }: { defaultCountry: CountryCode }) => {
   const t = useTranslations('pages.index.hero');
   const title = t.rich('title', {
-    underlined: (chunks) => <mark className="text-brand">{chunks}</mark>,
+    underlined: chunks => <mark className="text-brand">{chunks}</mark>,
   });
   const subtitle = t('subtitle');
 

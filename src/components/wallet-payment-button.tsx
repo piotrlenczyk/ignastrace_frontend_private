@@ -1,5 +1,3 @@
-/* eslint-disable style/max-len */
-
 import type { MouseEventHandler, SVGProps } from 'react';
 import { forwardRef } from 'react';
 

@@ -125,6 +125,7 @@ export const CreditCardForm = ({
     const zipCodeValue = form.getValues('zipCode');
     if (showZipCode && zipCodeValue && zipCodeValue.trim() !== '') {
       const trimmedZip = zipCodeValue.trim();
+      // eslint-disable-next-line regexp/no-unused-capturing-group
       if (!/^\d{5}(-\d{4})?$/.test(trimmedZip)) {
         form.setError('zipCode', { message: t('errors.zip_code_invalid_format') });
         hasErrors = true;
@@ -152,7 +153,7 @@ export const CreditCardForm = ({
       { isLoading
       && (
         <div className={`
-          absolute inset-0 z-[100] mt-0! grid animate-fade-in place-items-center content-center bg-white/80 text-center
+          absolute inset-0 z-100 mt-0! grid animate-fade-in place-items-center content-center bg-white/80 text-center
         `}
         >
           <IconLoaderCircle size="large" className="animate-spin text-primary" />

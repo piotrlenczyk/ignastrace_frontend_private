@@ -5,16 +5,18 @@ import { useSearchParams } from 'next/navigation';
 import { useLocale } from 'next-intl';
 import * as React from 'react';
 import * as RPNInput from 'react-phone-number-input';
+
 import { cn } from '@/libs/utils';
+import { formatPhoneNumberPlaceholder } from '@/utils/formatPhoneNumberPlaceholder';
+
+import { localeMap } from './constants';
 import { CountrySelect } from './country-select';
 import { FlagComponent } from './flag-component';
 import { InputComponent } from './input-component';
-import { localeMap } from './constants';
 import type { PhoneInputProps } from './types';
-import { formatPhoneNumberPlaceholder } from '@/utils/formatPhoneNumberPlaceholder';
 
-const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
-  React.forwardRef<React.ElementRef<typeof RPNInput.default>, PhoneInputProps>(
+const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps>
+  = React.forwardRef<React.ElementRef<typeof RPNInput.default>, PhoneInputProps>(
     ({ className, onChange, onSelectCountry, ...props }, ref) => {
       const locale = useLocale();
       const labels = React.useMemo(() => {
@@ -24,7 +26,6 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
       const country = searchParams.get('country') || props.defaultCountry || 'GB';
 
       const [placeholder, setPlaceholder] = React.useState(formatPhoneNumberPlaceholder(props.defaultCountry as CountryCode));
-
 
       const handlePlaceholderChange = React.useCallback(
         (countryCode: CountryCode) => {
@@ -44,7 +45,7 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
       return (
         <RPNInput.default
           ref={ref}
-          className={cn('flex w-full items-center py-1 gap-1 phone-input-input', className)}
+          className={cn('phone-input-input flex w-full items-center gap-1 py-1', className)}
           flagComponent={FlagComponent}
           countrySelectComponent={CountrySelect}
           inputComponent={InputComponent}
@@ -62,4 +63,4 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
 
 PhoneInput.displayName = 'PhoneInput';
 
-export { PhoneInput }; 
+export { PhoneInput };

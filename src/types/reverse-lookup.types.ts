@@ -166,11 +166,11 @@ export const SOCIAL_MEDIA_KIND_VALUES = [
 export type SocialMediaKind = typeof SOCIAL_MEDIA_KIND_VALUES[number];
 
 export type SocialMediaAccount = {
-  id: string
+  id: string;
   kind: SocialMediaKind;
   url: string;
   username: string;
-  progress_status: 'new' | 'processing' | 'done'
+  progress_status: 'new' | 'processing' | 'done';
 };
 
 export type ReverseLookupLocation = {
@@ -212,7 +212,7 @@ export type SexOffenderReport = {
   name: string;
   upsell_purchased: boolean;
   reverse_lookup_owner_id: string;
-  is_empty_record: boolean
+  is_empty_record: boolean;
 };
 
 export type PhotoSource = 'whatsapp' | 'other';

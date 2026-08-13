@@ -109,11 +109,11 @@ const SexOffendersBackgroundCheck = ({
               <Button onClick={() => handleUnlockClick(owner.id)} disabled={isConsumingUpsell}>
                 {isConsumingUpsell && ownerId === owner.id
                   ? (
-                    <IconLoaderCircle className="size-4" />
-                  )
+                      <IconLoaderCircle className="size-4" />
+                    )
                   : (
-                    <IconLockOpenLine className="size-4" />
-                  )}
+                      <IconLockOpenLine className="size-4" />
+                    )}
                 {t('unlock_report')}
               </Button>
             </div>

@@ -17,6 +17,10 @@ import testingLibrary from 'eslint-plugin-testing-library';
  * A class deleted from the stylesheet should be deleted from this list too.
  */
 const HAND_WRITTEN_CLASSES = [
+  'destructive',
+  'success',
+  'phone-input-flag-wrapper',
+  's-carousel-pager-item',
   'badge-active',
   'badge-canceled',
   'badge-expired',
@@ -86,7 +90,7 @@ export default antfu(
       'migrations/**/*',
       'next-env.d.ts',
       'src/locales/**/*',
-      'src/components/ui/**/*',
+      // 'src/components/ui/**/*',
       'package.json',
     ],
   },
@@ -178,7 +182,6 @@ export default antfu(
       'test/padding-around-all': 'error',
       'test/prefer-lowercase-title': 'off',
       'eol-last': ['error', 'always'],
-      'style/max-len': ['error', { code: 120 }],
     },
   },
   {

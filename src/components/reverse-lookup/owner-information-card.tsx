@@ -34,10 +34,10 @@ const CollectionStatus = ({ isCompleted, label }: CollectionStatusProps) => {
         {isCompleted
           ? <IconCheckCircle size="large" className="text-secondary" />
           : (
-            <div className="flex size-6 items-center justify-center">
-              <IconLoaderCircle size="medium" className="text-gray-500" />
-            </div>
-          )}
+              <div className="flex size-6 items-center justify-center">
+                <IconLoaderCircle size="medium" className="text-gray-500" />
+              </div>
+            )}
       </div>
       <span className="text-lg">{label}</span>
     </div>

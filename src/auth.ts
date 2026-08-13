@@ -17,8 +17,6 @@ declare module 'next-auth' {
     apiToken: string;
   }
 
-  
-
   // eslint-disable-next-line ts/consistent-type-definitions
   interface Session {
     apiToken: string;

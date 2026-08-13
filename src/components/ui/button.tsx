@@ -14,38 +14,33 @@ import { cn } from '@/libs/utils';
  */
 const buttonVariants = cva(
   `
-  active:fill-press 
-  inline-flex items-center justify-center gap-2 text-center
-  rounded-md text-sm font-semibold
-  transition-colors
-  focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
-  disabled:pointer-events-none disabled:border-gray-100 
-  [&_svg]:pointer-events-none 
-  [&_svg]:shrink-0
-`,
+    inline-flex items-center justify-center gap-2 rounded-md text-center text-sm font-semibold transition-colors
+    focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-hidden
+    active:fill-press disabled:pointer-events-none disabled:border-gray-100 [&_svg]:pointer-events-none [&_svg]:shrink-0
+  `,
   {
     variants: {
       variant: {
-        default:
-          'hover:shadow-raised bg-primary text-primary-foreground disabled:bg-gray-100 disabled:shadow-none',
-        brand:
-          'hover:shadow-raised bg-brand text-brand-foreground disabled:bg-gray-100 disabled:shadow-none',
-        secondary:
-          'hover:shadow-raised border border-primary text-primary disabled:text-gray-100',
-        tertiary: 'text-primary disabled:text-gray-100',
-        inverse: 'shadow-raised focus-visible:ring-[currentColor] disabled:text-gray-100',
-        destructive: 'hover:shadow-raised bg-red text-background disabled:bg-gray-100',
-        outline:
+        'default':
+          'bg-primary text-primary-foreground hover:shadow-raised disabled:bg-gray-100 disabled:shadow-none',
+        'brand':
+          'bg-brand text-brand-foreground hover:shadow-raised disabled:bg-gray-100 disabled:shadow-none',
+        'secondary':
+          'border border-primary text-primary hover:shadow-raised disabled:text-gray-100',
+        'tertiary': 'text-primary disabled:text-gray-100',
+        'inverse': 'shadow-raised focus-visible:ring-[currentColor] disabled:text-gray-100',
+        'destructive': 'bg-red text-background hover:shadow-raised disabled:bg-gray-100',
+        'outline':
           'border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground',
         'outline-secondary':
-          'border border-primary text-primary bg-background', 
-        ghost: 'hover:bg-accent hover:text-accent-foreground',
-        tranparent: '',
+          'border border-primary bg-background text-primary',
+        'ghost': 'hover:bg-accent hover:text-accent-foreground',
+        'tranparent': '',
       },
       size: {
         default: 'min-h-10 px-4 py-2',
         sm: 'min-h-8 rounded-md px-3 py-1 text-xs',
-        md: 'min-h-10 lg:min-h-12 rounded-md px-4 py-2 text-sm/normal lg:text-base font-semibold',
+        md: 'min-h-10 rounded-md px-4 py-2 text-sm/normal font-semibold lg:min-h-12 lg:text-base',
         lg: 'min-h-12 rounded-lg px-6 py-2 text-lg/tight font-semibold',
         xl: 'min-h-14 rounded-lg px-6 py-2 text-lg/tight font-semibold',
         icon: 'size-9',

@@ -71,15 +71,15 @@ function UpsellPaymentMessageButtons({
         >
           {isRetrying
             ? (
-              <>
-                {t('try_again')}
-                {' '}
-                <IconLoaderCircle className="size-4 animate-spin" />
-              </>
-            )
+                <>
+                  {t('try_again')}
+                  {' '}
+                  <IconLoaderCircle className="size-4 animate-spin" />
+                </>
+              )
             : (
-              t('try_again')
-            )}
+                t('try_again')
+              )}
         </Button>
         <Button
           className={cn(buttonClassName, 'text-sm')}
@@ -130,7 +130,7 @@ export function UpsellPaymentMessage({
       return;
     }
 
-    onSuccessClose?.()
+    onSuccessClose?.();
 
     router.refresh();
   };
@@ -146,21 +146,21 @@ export function UpsellPaymentMessage({
         <div className="flex flex-col items-center space-y-6">
           {isSuccess
             ? (
-              <Image
-                src="/images/upsell/payment-success.svg"
-                alt="Success"
-                width={160}
-                height={160}
-              />
-            )
+                <Image
+                  src="/images/upsell/payment-success.svg"
+                  alt="Success"
+                  width={160}
+                  height={160}
+                />
+              )
             : (
-              <Image
-                src="/images/upsell/payment-error.svg"
-                alt="Error"
-                width={160}
-                height={160}
-              />
-            )}
+                <Image
+                  src="/images/upsell/payment-error.svg"
+                  alt="Error"
+                  width={160}
+                  height={160}
+                />
+              )}
           <h3 className="text-center h3 font-bold">
             {isSuccess ? t('payment_success') : t('payment_error')}
           </h3>

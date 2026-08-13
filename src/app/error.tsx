@@ -10,7 +10,6 @@ import { Link } from '@/libs/i18n-routing';
 
 export default function GlobalError() {
   const t = useTranslations('pages.error');
-  
 
   return (
     <div className="layout-default">

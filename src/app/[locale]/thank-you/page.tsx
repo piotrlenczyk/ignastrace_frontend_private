@@ -54,7 +54,6 @@ const ThankYouPage = async () => {
         <main className="s-main flex full-main items-center p-6">
           <div className="container-small flex flex-col items-center gap-6 text-center">
             <div className="flex justify-center">
-              {/* eslint-disable style/max-len */}
               <svg width="161" height="161" viewBox="0 0 161 161" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M107.224 39.7391C91.8824 37.6493 76.5483 36.1191 60.7693 36.5835C43.5021 37.0955 24.4322 38.5007 15.2042 51.8432C9.22085 60.5001 6.9119 69.9549 6.15248 79.6954C5.0402 94.0025 4.65667 110.018 10.8624 123.676C19.3618 142.378 40.1883 146.813 63.2853 149.195C83.4521 151.273 105.376 151.582 124.162 144.694C142.84 137.841 152.314 123.665 153.932 108.292C155.589 92.5438 157.484 75.5277 150.68 60.2858C143.837 44.9725 125.481 42.2337 107.217 39.745L107.224 39.7391Z" fill="#F23D00" fillOpacity="0.05" />
                 <rect x="30.5" y="10.5" width="100" height="120" rx="8" fill="white" />

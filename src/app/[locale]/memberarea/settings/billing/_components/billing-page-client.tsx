@@ -1,24 +1,26 @@
 'use client';
 
-import { ActivateSubscription } from './activate-subscription';
+import { useLocale, useTranslations } from 'next-intl';
+import { useState } from 'react';
+
 import { Button } from '@/components/ui/button';
-import { CancelSubscription } from './cancel-subscription';
 import { IconCheckCircleLine, IconXOctagon } from '@/components/ui/icon/icons';
+import { ROUTES } from '@/constants/routes';
+import { useCldrFormatPrice } from '@/hooks/use-cldr-format-price';
 import { Link, useRouter } from '@/libs/i18n-routing';
+import type { Subscription } from '@/types/subscription';
+
 import { localeFormatDate } from '../../../status/_page/utils';
 import { LogoutButton } from '../../_components/logout-button';
-import { ROUTES } from '@/constants/routes';
 import { useCancelSubscriptionMutation } from '../_hooks/api/use-cancel-subscription-mutation';
-import { useCldrFormatPrice } from '@/hooks/use-cldr-format-price';
-import { useLocale, useTranslations } from 'next-intl';
 import { useReactivateSubscriptionMutation } from '../_hooks/api/use-reactivate-subscription-mutation';
-import { useState } from 'react';
-import type { Subscription } from '@/types/subscription';
+import { ActivateSubscription } from './activate-subscription';
+import { CancelSubscription } from './cancel-subscription';
 
 export type BillingPageClientProps = {
   subscription: Subscription;
   country: string;
-}
+};
 
 export function BillingPageClient({ subscription: defaultSubscription, country }: BillingPageClientProps) {
   const locale = useLocale();
@@ -95,19 +97,19 @@ export function BillingPageClient({ subscription: defaultSubscription, country }
               <p>{t('next_billing_date', { date: localeFormatDate(subscription.current_period_end, locale) })}</p>
             )}
             {subscription.status === 'expired'
-              && expiredSubscriptionCancelAt
-              && (
-                <>
-                  <p className="text-destructive">
-                    {t('expired_date', { date: localeFormatDate(expiredSubscriptionCancelAt, locale) })}
-                  </p>
-                  <p className="text-destructive">{t('expired_description')}</p>
-                  <ActivateSubscription
-                    buttonText={t('expired_cta')}
-                    country={country}
-                  />
-                </>
-              )}
+            && expiredSubscriptionCancelAt
+            && (
+              <>
+                <p className="text-destructive">
+                  {t('expired_date', { date: localeFormatDate(expiredSubscriptionCancelAt, locale) })}
+                </p>
+                <p className="text-destructive">{t('expired_description')}</p>
+                <ActivateSubscription
+                  buttonText={t('expired_cta')}
+                  country={country}
+                />
+              </>
+            )}
             {subscription.status === 'cancelled' && subscription.canceled_at && (
               <>
                 <p>
@@ -122,7 +124,7 @@ export function BillingPageClient({ subscription: defaultSubscription, country }
               </>
             )}
             {subscription.status === 'active' && (
-              <div className='mt-2'>
+              <div className="mt-2">
                 <CancelSubscription
                   status={subscription.status}
                   onCancel={cancelSubscription}

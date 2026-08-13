@@ -140,6 +140,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
     >
       <head>
         {/* begin Convert Experiences code */}
+        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
         <script
           type="text/javascript"
           src="//cdn-4.convertexperiments.com/v1/js/10048246-100418060.js?environment=production"

@@ -1,17 +1,17 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { IconCellTower } from '@/components/ui/icon/icons/CellTower';
 import { IconSearch } from '@/components/ui/icon/icons/Search';
+import { ROUTES } from '@/constants/routes';
 import { cn } from '@/libs/utils';
 
 import { useCarrierQuery } from '../hooks/api/use-carrier-query';
 import { LoadingBar } from './loading-bar';
-import { useRouter } from 'next/navigation';
-import { ROUTES } from '@/constants/routes';
 
 const loadingTimePerStep = 2000;
 const totalSteps = 6;
@@ -43,7 +43,7 @@ export const Loader = ({
 
   useEffect(() => {
     if (loadedSteps === totalSteps) {
-      router.push(ROUTES.REVERSE_LOOKUP.SEARCH_COMPLETE)
+      router.push(ROUTES.REVERSE_LOOKUP.SEARCH_COMPLETE);
     }
   }, [loadedSteps]);
 
