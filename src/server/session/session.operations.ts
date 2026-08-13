@@ -1,6 +1,7 @@
-import { createSession } from './session';
-import { AuthApiError, requestLogin, requestLogout } from './session.api';
+import { createSession, renewSessionTokens } from './session';
+import { type ApiRequestContext, AuthApiError, requestLogin, requestLogout, requestTokenRefresh } from './session.api';
 import { clearSession, readSession, type SessionCookieWriter, writeSession } from './session.cookies';
+import type { SessionData } from './session.types';
 
 export type SignInError = 'invalid_credentials' | 'unavailable';
 
@@ -42,6 +43,35 @@ export const performSignIn = async (
   await writeSession(cookies, session);
 
   return { success: true };
+};
+
+/**
+ * Exchanges the refresh token for a new pair and writes it into the jar given.
+ *
+ * Returns the renewed session, or `null` when the exchange was refused — in
+ * which case the jar is left holding no session at all, so whatever reads it
+ * next sees an anonymous visitor rather than a token nothing will accept.
+ *
+ * Concurrent renewals are knowingly unguarded: the refresh token rotates, so
+ * two requests arriving together can invalidate each other and sign the member
+ * out. Deduplicating them is out of scope for now (see issue #16).
+ */
+export const performRenewal = async (
+  cookies: SessionCookieWriter,
+  session: SessionData,
+  context: ApiRequestContext = {},
+): Promise<SessionData | null> => {
+  try {
+    const renewed = renewSessionTokens(session, await requestTokenRefresh(session.refreshToken, context));
+
+    await writeSession(cookies, renewed);
+
+    return renewed;
+  } catch {
+    clearSession(cookies);
+
+    return null;
+  }
 };
 
 /**

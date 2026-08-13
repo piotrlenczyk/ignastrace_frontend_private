@@ -24,6 +24,14 @@ export const SESSION_COOKIE_MAX_AGE_SECONDS = SESSION_TTL_SECONDS - 60 * 60;
 /** The access token's own lifetime, used when its claims carry no expiry. */
 export const ACCESS_TOKEN_FALLBACK_TTL_SECONDS = 60 * 60 * 24;
 
+/*
+ * How far ahead of the recorded expiry a token is already treated as expired.
+ * The API's clock and this one need not agree, and a token renewed a few
+ * seconds early costs nothing next to a request refused for being a second
+ * late.
+ */
+export const ACCESS_TOKEN_EXPIRY_SKEW_MS = 30 * 1000;
+
 export const SESSION_COOKIE_OPTIONS = {
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',

@@ -1,6 +1,7 @@
 import createClient, { type Middleware, wrapAsPathBasedClient } from 'openapi-fetch';
 
 import { getIP } from '@/server/lib/ip';
+import { getSession } from '@/server/session/session.server';
 
 import { type components, type paths } from './api';
 
@@ -29,6 +30,20 @@ export const _client = createClient<paths>(baseClientConfig);
 // Server-side middleware that can access locale
 const serverMiddleware: Middleware = {
   async onRequest({ request }) {
+    /*
+     * The session's token, attached so that no call site can forget it. A
+     * caller that set the header itself keeps it: the flows that exchange one
+     * token for another have to be able to send something other than the
+     * session's.
+     */
+    if (!request.headers.has('Authorization')) {
+      const session = await getSession();
+
+      if (session) {
+        request.headers.set('Authorization', `Bearer ${session.accessToken}`);
+      }
+    }
+
     const ip = await getIP();
     if (ip) {
       request.headers.set('x-forwarded-for', ip);

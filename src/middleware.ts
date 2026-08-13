@@ -1,10 +1,18 @@
 import type { NextFetchEvent, NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 import { handleCaseNormalization } from './middlewares/case-normalization.middleware';
 import { handleIntl } from './middlewares/intl.middleware';
 import { handleRedirects } from './middlewares/redirects.middleware';
 import { handleSession } from './middlewares/session.middleware';
 import { handleTracking } from './middlewares/tracking.middleware';
+
+/*
+ * Route handlers take the session step and nothing else. They need the renewed
+ * token as much as a page does, but a guard redirect or a locale rewrite would
+ * replace the response their caller is waiting for with a navigation.
+ */
+const isRouteHandler = (request: NextRequest): boolean => request.nextUrl.pathname.startsWith('/api/');
 
 /*
  * The chain, in order: case normalisation → session → redirects →
@@ -16,15 +24,26 @@ export default async function middleware(request: NextRequest, _event: NextFetch
     return new Response(null, { status: 200 });
   }
 
+  if (isRouteHandler(request)) {
+    const { applyToResponse } = await handleSession(request);
+    const response = NextResponse.next({ request });
+
+    await applyToResponse(response);
+
+    return response;
+  }
+
   const caseNormalizationResponse = handleCaseNormalization(request);
 
   if (caseNormalizationResponse) {
     return caseNormalizationResponse;
   }
 
-  const session = await handleSession(request);
+  const { session, applyToResponse } = await handleSession(request);
 
   const response = handleRedirects(request, session) ?? handleIntl(request);
+
+  await applyToResponse(response);
 
   const trackedResponse = handleTracking(request, response);
 
@@ -33,6 +52,10 @@ export default async function middleware(request: NextRequest, _event: NextFetch
   return trackedResponse;
 }
 
+/*
+ * Route handlers are matched too, so that a server-side endpoint is never the
+ * one place still holding a token the session step would have renewed.
+ */
 export const config = {
-  matcher: ['/((?!_next|.*\\..*|api/).*)', '/'],
+  matcher: ['/((?!_next|.*\\..*).*)', '/'],
 };

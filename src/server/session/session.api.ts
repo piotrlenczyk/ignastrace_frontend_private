@@ -13,6 +13,21 @@ const apiUrl = (path: string): string => `${process.env.API_BASE_URL ?? ''}${pat
 
 const authorized = (accessToken: string) => ({ Authorization: `Bearer ${accessToken}` });
 
+/**
+ * What the generated client would otherwise derive from the request scope. In
+ * the middleware runtime there is no such scope, so the caller reads both off
+ * the incoming request and passes them in.
+ */
+export type ApiRequestContext = {
+  locale?: string;
+  forwardedFor?: string;
+};
+
+const contextHeaders = ({ locale, forwardedFor }: ApiRequestContext): Record<string, string> => ({
+  ...(locale ? { 'x-locale': locale } : {}),
+  ...(forwardedFor ? { 'x-forwarded-for': forwardedFor } : {}),
+});
+
 export class AuthApiError extends Error {
   constructor(readonly status: number) {
     super(`The authentication API responded with ${status}.`);
@@ -26,6 +41,28 @@ export const requestLogin = async (email: string, password: string): Promise<JWT
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
+  });
+
+  if (!response.ok) {
+    throw new AuthApiError(response.status);
+  }
+
+  return (await response.json()) as JWTSessionResponse;
+};
+
+/**
+ * Exchanges a refresh token for a fresh pair. Throws `AuthApiError` when the
+ * refresh token is spent or rejected, which is the signal to stop treating the
+ * visitor as signed in.
+ */
+export const requestTokenRefresh = async (
+  refreshToken: string,
+  context: ApiRequestContext = {},
+): Promise<JWTSessionResponse> => {
+  const response = await fetch(apiUrl('/api/v1/auth/refresh-token'), {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...contextHeaders(context) },
+    body: JSON.stringify({ refreshToken } satisfies components['schemas']['RefreshTokenDto']),
   });
 
   if (!response.ok) {

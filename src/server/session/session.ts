@@ -1,8 +1,9 @@
 import { decodeAccessToken, readExpiryFromClaims, readIdentityFromClaims } from './access-token';
 import { requestCurrentUser } from './session.api';
+import { ACCESS_TOKEN_EXPIRY_SKEW_MS } from './session.constants';
 import type { SessionData, SessionUser } from './session.types';
 
-type TokenPair = {
+export type TokenPair = {
   token: string;
   refreshToken: string;
 };
@@ -38,6 +39,33 @@ export const createSession = async (
     user,
   };
 };
+
+/**
+ * The same session carrying a newly issued token pair.
+ *
+ * The identity is carried over rather than read back: a refresh returns
+ * tokens, not a user, and asking the current-user endpoint who this is on
+ * every expiry is exactly the per-request cost this session model set out to
+ * avoid. A refresh does not change who the member is.
+ */
+export const renewSessionTokens = (
+  session: SessionData,
+  { token, refreshToken }: TokenPair,
+  now = Date.now(),
+): SessionData => ({
+  ...session,
+  accessToken: token,
+  accessTokenExpiresAt: readExpiryFromClaims(decodeAccessToken(token), now),
+  refreshToken,
+});
+
+/**
+ * Whether the access token has run out, counted a little early so that a clock
+ * this application and the API disagree on cannot produce a request refused
+ * for a token it believed was still good.
+ */
+export const isAccessTokenExpired = (session: SessionData, now = Date.now()): boolean =>
+  session.accessTokenExpiresAt - ACCESS_TOKEN_EXPIRY_SKEW_MS <= now;
 
 const isComplete = (identity: Partial<SessionUser>): identity is SessionUser =>
   !!identity.id && !!identity.email && !!identity.type;
