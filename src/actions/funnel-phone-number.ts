@@ -1,10 +1,10 @@
 'use server';
 
 import { cookies } from 'next/headers';
-import type { User } from 'next-auth';
 
-import { auth } from '@/auth';
 import { getApi } from '@/libs/server/api';
+import { getSession } from '@/server/session/session.server';
+import type { User } from '@/types/user';
 
 export async function saveFunnelPhone(phoneNumber: string) {
   (await cookies()).set('funnelPhoneNumber', phoneNumber);
@@ -17,7 +17,7 @@ export async function getFunnelPhone() {
     return cookiePhoneNumber;
   }
 
-  const session = await auth();
+  const session = await getSession();
 
   if (!session) {
     return;

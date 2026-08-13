@@ -2,7 +2,7 @@
 
 import { redirect } from 'next/navigation';
 
-import { auth } from '@/auth';
+import { getSession } from '@/server/session/session.server';
 
 import { apiClient } from '../api-client';
 import { ApiError } from '../api-error';
@@ -14,8 +14,11 @@ async function handleError(error: unknown) {
 }
 
 export async function getApi() {
-  const session = await auth();
-  const client = apiClient(process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || '', session?.apiToken);
+  const session = await getSession();
+  const client = apiClient(
+    process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || '',
+    session && `Bearer ${session.accessToken}`,
+  );
 
   return {
     async request<T>(endpoint: string, options?: Parameters<typeof client.request>[1]) {

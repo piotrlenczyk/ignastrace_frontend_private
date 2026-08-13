@@ -2,7 +2,6 @@ import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 
 import { getFunnelPhone } from '@/actions/funnel-phone-number';
-import { auth } from '@/auth';
 import ProductLayout from '@/components/layouts/product-layout';
 import { RequestCounter } from '@/components/request-counter';
 import { Icon } from '@/components/ui/icon';
@@ -12,6 +11,7 @@ import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getApi } from '@/libs/server/api';
 import { getFeatures } from '@/libs/server/feature-flags';
 import { getUserCountry } from '@/libs/server/user-country';
+import { getSession } from '@/server/session/session.server';
 import type { RequestCountData } from '@/types/request_count_data';
 
 import { ReversePhoneLookupForm } from './components/reverse-phone-lookup-form';
@@ -20,7 +20,7 @@ export default async function FindByNumberPage() {
   const country = await getUserCountry();
   const t = await getTranslations('pages.reverse_lookup.member_area.phone_lookup');
 
-  const session = await auth();
+  const session = await getSession();
   const isAuthenticated = !!session;
   const api = await getApi();
 

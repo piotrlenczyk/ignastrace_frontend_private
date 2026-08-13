@@ -2,16 +2,16 @@ import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 
 import { getFunnelPhone } from '@/actions/funnel-phone-number';
-import { auth } from '@/auth';
 import ProductLayout from '@/components/layouts/product-layout';
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { Link } from '@/libs/i18n-routing';
+import { getSession } from '@/server/session/session.server';
 
 export default async function MessageSendingPage() {
-  const session = await auth();
+  const session = await getSession();
   const isAuthenticated = !!session;
 
   if (!isAuthenticated) {

@@ -1,17 +1,17 @@
 import { redirect } from 'next/navigation';
 
-import { auth } from '@/auth';
 import ProductLayout from '@/components/layouts/product-layout';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getApi } from '@/libs/server/api';
+import { getSession } from '@/server/session/session.server';
 import type { SexOffenderSearch } from '@/types/sex-offenders.types';
 
 import { SexOffenderSearchResults } from './results-content';
 
 const SexOffenderSearchResultsPage = async (props: PageProps<'/[locale]/memberarea/sex-offenders/results'>) => {
   const searchParams = await props.searchParams;
-  const session = await auth();
+  const session = await getSession();
   const isAuthenticated = !!session;
 
   if (!isAuthenticated) {

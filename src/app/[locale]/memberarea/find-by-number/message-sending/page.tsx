@@ -2,12 +2,12 @@ import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 
 import { getFunnelPhone } from '@/actions/funnel-phone-number';
-import { auth } from '@/auth';
 import ProductLayout from '@/components/layouts/product-layout';
 import { ROUTES } from '@/constants/routes';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getApi } from '@/libs/server/api';
+import { getSession } from '@/server/session/session.server';
 import type { RequestCountData } from '@/types/request_count_data';
 import { firstValue } from '@/utils/search-params';
 
@@ -17,7 +17,7 @@ export default async function MessageSendingPage(
   props: PageProps<'/[locale]/memberarea/find-by-number/message-sending'>,
 ) {
   const searchParams = await props.searchParams;
-  const session = await auth();
+  const session = await getSession();
   const isAuthenticated = !!session;
   const api = await getApi();
 

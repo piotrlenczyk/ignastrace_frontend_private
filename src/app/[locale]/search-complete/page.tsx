@@ -1,11 +1,11 @@
 import { redirect } from 'next/navigation';
 
 import { getFunnelPhone } from '@/actions/funnel-phone-number';
-import { auth } from '@/auth';
 import FunnelLayout from '@/components/layouts/funnel-layout';
 import { ROUTES } from '@/constants/routes';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
+import { getSession } from '@/server/session/session.server';
 
 import { SearchCompleteContent } from './components/content';
 
@@ -31,7 +31,7 @@ const SearchComplete = async () => {
     redirect(ROUTES.HOME);
   }
 
-  const session = await auth();
+  const session = await getSession();
   const isAuthenticated = !!session;
 
   const nextStepURL = isAuthenticated ? ROUTES.CHECKOUT : ROUTES.SIGN_UP;

@@ -3,11 +3,9 @@ import '@/styles/application.css';
 import type { Metadata } from 'next';
 import { Bebas_Neue, Inter } from 'next/font/google';
 import Script from 'next/script';
-import { SessionProvider } from 'next-auth/react';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 
-import { auth } from '@/auth';
 import { QueryProvider } from '@/components/navigation/providers/query-client-provider';
 import { Toaster } from '@/components/ui/toaster';
 import { ConsentProvider } from '@/contexts/consent-context';
@@ -121,7 +119,6 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   setRequestLocale(locale);
 
   const messages = await getMessages();
-  const session = await auth();
   const country = await getUserCountry();
   const features = await getFeatures();
   const isUSUser = country === 'US';
@@ -163,20 +160,23 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         )}
       </head>
       <body suppressHydrationWarning>
-        <SessionProvider session={session}>
-          <QueryProvider>
-            <NextIntlClientProvider locale={locale} messages={messages}>
-              <CountryProvider country={country}>
-                <FeaturesProvider features={features}>
-                  <ConsentProvider isUSUser={isUSUser}>
-                    {props.children}
-                    <Toaster />
-                  </ConsentProvider>
-                </FeaturesProvider>
-              </CountryProvider>
-            </NextIntlClientProvider>
-          </QueryProvider>
-        </SessionProvider>
+        {/*
+          No session provider: `useSession` in `@/hooks/use-session` reads the
+          access-token cookie directly, so there is nothing above the tree for a
+          client component to subscribe to.
+        */}
+        <QueryProvider>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <CountryProvider country={country}>
+              <FeaturesProvider features={features}>
+                <ConsentProvider isUSUser={isUSUser}>
+                  {props.children}
+                  <Toaster />
+                </ConsentProvider>
+              </FeaturesProvider>
+            </CountryProvider>
+          </NextIntlClientProvider>
+        </QueryProvider>
       </body>
     </html>
   );

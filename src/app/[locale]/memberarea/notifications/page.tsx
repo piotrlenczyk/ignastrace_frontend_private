@@ -1,16 +1,16 @@
 import { redirect } from 'next/navigation';
-import type { User } from 'next-auth';
 
 import { getFunnelPhone } from '@/actions/funnel-phone-number';
-import { auth } from '@/auth';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getApi } from '@/libs/server/api';
+import { getSession } from '@/server/session/session.server';
+import type { User } from '@/types/user';
 
 import NotificationsClientPage from './_page';
 
 export default async function NotificationsPage() {
-  const session = await auth();
+  const session = await getSession();
   const isAuthenticated = !!session;
 
   if (!isAuthenticated) {

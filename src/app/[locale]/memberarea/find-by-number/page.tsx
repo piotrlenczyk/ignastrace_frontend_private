@@ -2,19 +2,19 @@ import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 
 import { getFunnelPhone } from '@/actions/funnel-phone-number';
-import { auth } from '@/auth';
 import { PhoneInput } from '@/components/homepage/phoneInput';
 import ProductLayout from '@/components/layouts/product-layout';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getUserCountry } from '@/libs/server/user-country';
+import { getSession } from '@/server/session/session.server';
 
 export default async function FindByNumberPage() {
   const country = await getUserCountry();
   const t = await getTranslations('components.phone_input');
   const tFindByNumber = await getTranslations('pages.find_by_number_send_message');
 
-  const session = await auth();
+  const session = await getSession();
   const isAuthenticated = !!session;
 
   if (!isAuthenticated) {

@@ -1,10 +1,10 @@
 import { redirect } from 'next/navigation';
 
-import { auth } from '@/auth';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getApi } from '@/libs/server/api';
 import { getFeatures } from '@/libs/server/feature-flags';
+import { getSession } from '@/server/session/session.server';
 import type { ReverseLookup } from '@/types/reverse-lookup.types';
 import type { User } from '@/types/user';
 
@@ -28,7 +28,7 @@ export const dynamic = 'force-dynamic';
 
 const ReportStatusPage = async (props: PageProps<'/[locale]/memberarea/status/report'>) => {
   const searchParams = await props.searchParams;
-  const session = await auth();
+  const session = await getSession();
   const isAuthenticated = !!session;
 
   const { ENABLE_REVERSE_LOOKUP } = await getFeatures();
