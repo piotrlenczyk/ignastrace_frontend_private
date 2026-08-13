@@ -4,7 +4,11 @@
  * The session is two cookies that are always written together: a sealed,
  * http-only one holding the token pair and the identity, and a companion one
  * holding the raw access token so page scripts can call the API directly.
- * Nothing outside `session.cookies.ts` should touch either of them.
+ *
+ * `session.cookies.ts` is the only place either of them is written. The
+ * readable one is also read in the browser, and there `libs/session-cookie.ts`
+ * is the only place that does it — a client component never reaches for
+ * `document.cookie` itself.
  */
 
 export const SESSION_COOKIE_NAME = 'ignastrace_session';

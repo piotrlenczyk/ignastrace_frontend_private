@@ -15,7 +15,7 @@ async function handleError(error: unknown) {
 
 export async function getApi() {
   const session = await auth();
-  const client = apiClient(process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || '', session);
+  const client = apiClient(process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || '', session?.apiToken);
 
   return {
     async request<T>(endpoint: string, options?: Parameters<typeof client.request>[1]) {

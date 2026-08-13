@@ -1,10 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
-import type { User } from 'next-auth';
-import { useSession } from 'next-auth/react';
 
 import { useApi } from '@/hooks/use-api';
 import { useCountry } from '@/hooks/useCountry';
 import type { ApiError } from '@/libs/api-error';
+import { updateSessionEmail } from '@/server/session/session.actions';
 
 import type { MyAccountFormValues } from '../../_types/my-account.types';
 
@@ -16,11 +15,10 @@ export function useMyAccountMutation({
   onError: (error: ApiError) => void;
 }) {
   const api = useApi();
-  const session = useSession();
   const country = useCountry();
 
   async function updateMyAccount(data: MyAccountFormValues) {
-    const { authHeader } = await api.request<User>('/user', {
+    await api.request('/user', {
       method: 'PUT',
       body: {
         name: data.name,
@@ -33,8 +31,13 @@ export function useMyAccountMutation({
       },
     });
 
-    // When the email changes the authHeader needs to be updated
-    await session.update({ apiToken: authHeader, email: data.email });
+    /*
+     * The address the session carries is the one the member just changed, so it
+     * is written back before the form's success handler refreshes the router —
+     * the refresh is what re-renders the tree with the rewritten cookie. The
+     * tokens are untouched, so the member stays signed in.
+     */
+    await updateSessionEmail(data.email);
   }
 
   return useMutation({

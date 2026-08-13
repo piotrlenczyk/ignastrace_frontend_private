@@ -8,7 +8,7 @@ import {
   SESSION_TTL_SECONDS,
 } from './session.constants';
 import type { SessionCookieWriter } from './session.cookies';
-import { performRegistration, performSignIn, performSignOut } from './session.operations';
+import { performEmailUpdate, performRegistration, performSignIn, performSignOut } from './session.operations';
 import type { SessionData } from './session.types';
 
 const API = 'https://api.ignastrace.test';
@@ -81,6 +81,15 @@ const serveApi = (routes: Record<string, Route>) => {
   vi.stubGlobal('fetch', fetchMock);
 
   return fetchMock;
+};
+
+/** A jar holding the session a successful sign-in would have left in it. */
+const signedIn = async (jar: ReturnType<typeof createCookieJar>) => {
+  serveApi({
+    '/api/v1/auth/login': { status: 201, body: { token: accessToken(FULL_CLAIMS), refreshToken: 'refresh-1' } },
+  });
+
+  await performSignIn(jar, { email: 'member@example.com', password: 'secret' });
 };
 
 const sealedSession = async (jar: ReturnType<typeof createCookieJar>): Promise<SessionData> =>
@@ -276,14 +285,42 @@ describe('performRegistration', () => {
   });
 });
 
-describe('performSignOut', () => {
-  const signedIn = async (jar: ReturnType<typeof createCookieJar>) => {
-    serveApi({
-      '/api/v1/auth/login': { status: 201, body: { token: accessToken(FULL_CLAIMS), refreshToken: 'refresh-1' } },
-    });
-    await performSignIn(jar, { email: 'member@example.com', password: 'secret' });
-  };
+describe('performEmailUpdate', () => {
+  it('records the new address without disturbing the tokens', async () => {
+    const jar = createCookieJar();
+    await signedIn(jar);
 
+    await performEmailUpdate(jar, 'renamed@example.com');
+
+    expect(await sealedSession(jar)).toEqual({
+      isLoggedIn: true,
+      accessToken: accessToken(FULL_CLAIMS),
+      accessTokenExpiresAt: IN_A_DAY * 1000,
+      refreshToken: 'refresh-1',
+      user: { id: 'user-1', email: 'renamed@example.com', type: 'USER', roles: ['STANDARD_USER'] },
+    });
+  });
+
+  it('leaves the member signed in, with both cookies still in place', async () => {
+    const jar = createCookieJar();
+    await signedIn(jar);
+
+    await performEmailUpdate(jar, 'renamed@example.com');
+
+    expect(jar.names()).toEqual([ACCESS_TOKEN_COOKIE_NAME, SESSION_COOKIE_NAME].sort());
+    expect(jar.entry(ACCESS_TOKEN_COOKIE_NAME)?.value).toBe(accessToken(FULL_CLAIMS));
+  });
+
+  it('does nothing for a visitor without a session, rather than minting one', async () => {
+    const jar = createCookieJar();
+
+    await performEmailUpdate(jar, 'renamed@example.com');
+
+    expect(jar.names()).toEqual([]);
+  });
+});
+
+describe('performSignOut', () => {
   it('clears both cookies and revokes the token upstream', async () => {
     const jar = createCookieJar();
     await signedIn(jar);

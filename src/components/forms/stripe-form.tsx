@@ -1,7 +1,6 @@
 import { useElements, useStripe } from '@stripe/react-stripe-js';
 import type { PaymentRequestPaymentMethodEvent } from '@stripe/stripe-js';
 import Image from 'next/image';
-import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
@@ -11,6 +10,7 @@ import type { Product } from '@/app/[locale]/success/_types/product.type';
 import { Icon } from '@/components/ui/icon';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useConfirmStripePaymentMutation } from '@/hooks/api/use-confirm-stripe-payment-mutation';
+import { useSession } from '@/hooks/use-session';
 import { useRouter } from '@/libs/i18n-routing';
 import type { Products } from '@/types/products';
 import type { StripeFormValues } from '@/types/stripe-form.types';
@@ -66,7 +66,7 @@ export const StripeForm = ({
   const elements = useElements();
 
   const stripe = useStripe();
-  const { data: session } = useSession();
+  const { session } = useSession();
 
   const t = useTranslations('components.forms.stripe_form');
   const [isRedirecting, setIsRedirecting] = useState(false);
@@ -128,7 +128,7 @@ export const StripeForm = ({
     try {
       confirmStripePayment({
         data,
-        email: session?.user?.email || '',
+        email: session?.user.email || '',
         currency,
         elements,
       });
@@ -141,7 +141,7 @@ export const StripeForm = ({
     try {
       confirmStripePayment({
         data,
-        email: session?.user?.email || '',
+        email: session?.user.email || '',
         currency,
         elements,
       });

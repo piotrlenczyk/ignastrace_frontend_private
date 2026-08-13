@@ -4,6 +4,7 @@ import { cookies } from 'next/headers';
 
 import {
   type Credentials,
+  performEmailUpdate,
   performRegistration,
   performSignIn,
   performSignOut,
@@ -26,6 +27,15 @@ export async function signIn(credentials: Credentials): Promise<SignInResult> {
  */
 export async function register(registration: Registration): Promise<RegistrationResult> {
   return performRegistration(await cookies(), registration);
+}
+
+/**
+ * Carries a changed email address into the session, so a profile edit does not
+ * leave the member looking at a stale address — or signed out. The caller
+ * refreshes the router afterwards to re-render with the rewritten cookies.
+ */
+export async function updateSessionEmail(email: string): Promise<void> {
+  await performEmailUpdate(await cookies(), email);
 }
 
 /** Ends the session: revoked upstream where possible, cleared locally always. */

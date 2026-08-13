@@ -120,6 +120,22 @@ export const performRenewal = async (
 };
 
 /**
+ * Records a changed email address on the session already in the jar, leaving
+ * the token pair exactly as it was.
+ *
+ * A member who edits their address stays signed in: the address is identity,
+ * not authentication, and the tokens they hold are still the ones the API
+ * issued them. A visitor without a session gets no session out of this.
+ */
+export const performEmailUpdate = async (cookies: SessionCookieWriter, email: string): Promise<void> => {
+  const session = await readSession(cookies);
+
+  if (session) {
+    await writeSession(cookies, { ...session, user: { ...session.user, email } });
+  }
+};
+
+/**
  * Revokes the token upstream and clears both cookies. The revocation is
  * best-effort: a member on a flaky connection is signed out locally either
  * way, because the alternative is being stuck half-signed-in.
