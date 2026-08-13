@@ -135,8 +135,8 @@ const PossibleSocialMediaAccounts = ({
               <div
                 key={item.kind}
                 className={`
-                  flex flex-col items-start gap-3 rounded-2xl border border-overlay-light p-4 sm:flex-row
-                  sm:items-center
+                  flex flex-col items-start gap-3 rounded-2xl border border-overlay-light p-4
+                  sm:flex-row sm:items-center
                 `}
               >
                 <div className="flex flex-1 items-center gap-4">

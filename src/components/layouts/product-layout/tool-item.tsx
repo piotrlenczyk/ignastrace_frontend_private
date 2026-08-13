@@ -13,8 +13,8 @@ const ToolItem = ({ icon, label, href, onClick }: ToolItemProps) => {
       href={href}
       onClick={onClick}
       className={`
-        flex items-center gap-3 rounded-xl border border-stroke-weak bg-background p-4 hover:border-primary
-        hover:bg-primary-50
+        flex items-center gap-3 rounded-xl border border-stroke-weak bg-background p-4
+        hover:border-primary hover:bg-primary-50
       `}
     >
       <div className="flex size-[36px] items-center justify-center rounded-lg border border-primary-200">

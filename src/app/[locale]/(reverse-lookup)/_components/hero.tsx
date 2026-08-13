@@ -32,7 +32,8 @@ const Trust = () => {
           >
             <item.icon className="size-4 text-secondary lg:size-5" />
             <div className={`
-              justify-center gap-1 text-[10px] leading-snug lg:flex lg:flex-col lg:gap-0 lg:p-1 lg:text-xs
+              justify-center gap-1 text-[10px] leading-snug
+              lg:flex lg:flex-col lg:gap-0 lg:p-1 lg:text-xs
             `}
             >
               <span className="mr-0.5 font-bold">{`${t(item.title)} `}</span>
@@ -72,8 +73,8 @@ export const Hero = ({ defaultCountry }: { defaultCountry: CountryCode }) => {
     <section className="px-2 lg:px-0">
       <div
         className={`
-          flex w-full rounded-3xl bg-alternate bg-[-410px_-80px] bg-no-repeat px-4 lg:min-h-[680px] lg:bg-[right_top]
-          lg:px-6
+          flex w-full rounded-3xl bg-alternate bg-[-410px_-80px] bg-no-repeat px-4
+          lg:min-h-[680px] lg:bg-[right_top] lg:px-6
         `}
         style={{ backgroundImage: 'url(/images/hero/map.png)' }}
       >

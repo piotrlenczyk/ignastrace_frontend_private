@@ -45,7 +45,10 @@ export const ProductCards = ({
           products && products.map(product => (
             <div
               className={`
-                box-content flex max-w-[50%] min-w-[280px] flex-1 px-3 first:pl-5 last:pr-5 md:first:pl-0 md:last:pr-0
+                box-content flex max-w-[50%] min-w-[280px] flex-1 px-3
+                first:pl-5
+                last:pr-5
+                md:first:pl-0 md:last:pr-0
               `}
               key={product.key}
             >

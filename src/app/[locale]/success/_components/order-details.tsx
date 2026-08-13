@@ -69,7 +69,8 @@ export const OrderDetails = ({
                     && (
                       <CollapsibleContent
                         className={`
-                          overflow-hidden pl-3 data-[state=closed]:animate-accordion-up
+                          overflow-hidden pl-3
+                          data-[state=closed]:animate-accordion-up
                           data-[state=open]:animate-accordion-down
                         `}
                       >

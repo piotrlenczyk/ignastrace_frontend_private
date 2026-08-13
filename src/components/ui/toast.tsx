@@ -17,7 +17,8 @@ const ToastViewport = React.forwardRef<
     ref={ref}
     className={cn(
       `
-        fixed top-0 right-0 z-100 flex max-h-screen w-full flex-col-reverse p-4 sm:top-auto sm:bottom-0 sm:flex-col
+        fixed top-0 right-0 z-100 flex max-h-screen w-full flex-col-reverse p-4
+        sm:top-auto sm:bottom-0 sm:flex-col
         md:max-w-[546px]
       `,
       className,
@@ -30,24 +31,29 @@ ToastViewport.displayName = ToastPrimitives.Viewport.displayName;
 const toastVariants = cva(
   `
     group pointer-events-auto relative flex w-full items-center space-x-2 overflow-hidden rounded-md border bg-white p-6
-    text-sm text-weak transition-all after:absolute after:left-0 after:z-10 after:h-full after:w-1 after:rounded-md
-    after:content-[''] data-[state=closed]:animate-out data-[state=closed]:fade-out-80
-    data-[state=closed]:slide-out-to-right-full data-[state=open]:animate-in data-[state=open]:slide-in-from-top-full
-    data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-(--radix-toast-swipe-end-x)
-    data-[swipe=end]:animate-out data-[swipe=move]:translate-x-(--radix-toast-swipe-move-x)
-    data-[swipe=move]:transition-none data-[state=open]:sm:slide-in-from-bottom-full
+    text-sm text-weak transition-all
+    after:absolute after:left-0 after:z-10 after:h-full after:w-1 after:rounded-md after:content-['']
+    data-[state=closed]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full
+    data-[state=open]:animate-in data-[state=open]:slide-in-from-top-full
+    data-[swipe=cancel]:translate-x-0
+    data-[swipe=end]:translate-x-(--radix-toast-swipe-end-x) data-[swipe=end]:animate-out
+    data-[swipe=move]:translate-x-(--radix-toast-swipe-move-x) data-[swipe=move]:transition-none
+    data-[state=open]:sm:slide-in-from-bottom-full
   `,
   {
     variants: {
       variant: {
         default: 'border bg-background text-foreground',
         destructive: `
-          destructive group border-red-200 bg-[#FFF6F6] before:mt-1 before:mr-3 before:h-7 before:w-6 before:shrink-0
-          before:self-start before:bg-[url("/images/toast/states/icon-error.svg")] before:bg-no-repeat after:bg-red-800
+          destructive group border-red-200 bg-[#FFF6F6]
+          before:mt-1 before:mr-3 before:h-7 before:w-6 before:shrink-0 before:self-start
+          before:bg-[url("/images/toast/states/icon-error.svg")] before:bg-no-repeat
+          after:bg-red-800
         `,
         success: `
-          success group border-green-200 bg-[#F3FCFA] before:mt-1 before:mr-3 before:h-7 before:w-6 before:shrink-0
-          before:self-start before:bg-[url("/images/toast/states/icon-success.svg")] before:bg-no-repeat
+          success group border-green-200 bg-[#F3FCFA]
+          before:mt-1 before:mr-3 before:h-7 before:w-6 before:shrink-0 before:self-start
+          before:bg-[url("/images/toast/states/icon-success.svg")] before:bg-no-repeat
           after:bg-green-800
         `,
       },
@@ -82,10 +88,14 @@ const ToastAction = React.forwardRef<
     className={cn(
       `
         inline-flex h-8 shrink-0 items-center justify-center rounded-md border bg-transparent px-3 text-sm font-medium
-        transition-colors group-[.destructive]:border-muted/40 hover:bg-secondary
+        transition-colors
+        group-[.destructive]:border-muted/40
+        hover:bg-secondary
         group-[.destructive]:hover:border-destructive/30 group-[.destructive]:hover:bg-destructive
-        group-[.destructive]:hover:text-destructive-foreground focus:ring-1 focus:ring-ring focus:outline-hidden
-        group-[.destructive]:focus:ring-destructive disabled:pointer-events-none disabled:opacity-50
+        group-[.destructive]:hover:text-destructive-foreground
+        focus:ring-1 focus:ring-ring focus:outline-hidden
+        group-[.destructive]:focus:ring-destructive
+        disabled:pointer-events-none disabled:opacity-50
       `,
       className,
     )}

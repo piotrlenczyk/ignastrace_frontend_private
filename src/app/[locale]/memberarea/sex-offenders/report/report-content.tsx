@@ -37,7 +37,8 @@ export const SexOffenderSearchReportContent = ({ sexOffenderData, user }: {
   return (
     <main>
       <div className={`
-        top-0 z-10 flex items-center justify-between gap-2 bg-white px-4 pt-2 pb-4 lg:sticky lg:rounded-t-lg lg:p-6
+        top-0 z-10 flex items-center justify-between gap-2 bg-white px-4 pt-2 pb-4
+        lg:sticky lg:rounded-t-lg lg:p-6
         print:hidden
       `}
       >

@@ -132,7 +132,7 @@ export default antfu(
            * line per variant regardless of length, which would rewrite every
            * short static attribute in the codebase for no reading benefit.
            */
-          group: 'never',
+          group: 'newLine',
           preferSingleLine: true,
           printWidth: 120,
         },

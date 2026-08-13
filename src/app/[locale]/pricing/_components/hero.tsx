@@ -26,7 +26,8 @@ export function PricingHero(
       style={{ backgroundImage: 'url(/images/hero/map.png)' }}
     >
       <div className={`
-        mx-auto flex w-full max-w-[1152px] flex-col items-start gap-6 py-10 md:items-center md:text-center
+        mx-auto flex w-full max-w-[1152px] flex-col items-start gap-6 py-10
+        md:items-center md:text-center
       `}
       >
         <div className="rounded-full bg-secondary px-3 py-1 text-white">

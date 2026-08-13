@@ -155,8 +155,9 @@ const UpsellCard = (
           <Button
             variant="ghost"
             className={`
-              flex-1 border border-stroke-weak font-semibold text-weak hover:text-weak lg:max-w-[120px] lg:shrink-0
-              lg:text-lg
+              flex-1 border border-stroke-weak font-semibold text-weak
+              hover:text-weak
+              lg:max-w-[120px] lg:shrink-0 lg:text-lg
             `}
             onClick={handleSkip}
             disabled={isSubmitted || isSkipped}

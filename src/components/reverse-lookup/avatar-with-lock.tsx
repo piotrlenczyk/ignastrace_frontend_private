@@ -28,8 +28,9 @@ const AvatarWithLock = ({ animate = true }: AvatarWithLockProps) => {
     <div>
       <div className="relative">
         <span className={`
-          absolute right-0 bottom-0 z-[1] flex items-center justify-center before:pointer-events-none before:absolute
-          before:-z-10 before:block before:size-8 before:rounded-full before:bg-primary
+          absolute right-0 bottom-0 z-[1] flex items-center justify-center
+          before:pointer-events-none before:absolute before:-z-10 before:block before:size-8 before:rounded-full
+          before:bg-primary
         `}
         >
           <IconLock className="size-5 text-white" />

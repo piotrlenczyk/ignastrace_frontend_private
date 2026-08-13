@@ -29,7 +29,8 @@ const GetReport: React.FC<GetReportProps> = ({ product, currency, country }) => 
     <div className="flex flex-col gap-6 rounded-2xl bg-alternate px-4 py-6 md:p-6">
       <h3 className="font-bold">{t('title')}</h3>
       <div className={`
-        flex flex-col items-center justify-center gap-2 rounded-xl bg-weak px-4 py-3 md:flex-row md:justify-between
+        flex flex-col items-center justify-center gap-2 rounded-xl bg-weak px-4 py-3
+        md:flex-row md:justify-between
       `}
       >
         <p className="text-center md:text-left">{t('lookup_today')}</p>

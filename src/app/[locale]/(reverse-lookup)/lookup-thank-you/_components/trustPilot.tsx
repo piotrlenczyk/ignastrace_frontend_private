@@ -83,7 +83,8 @@ const TrustPilot = () => {
 
   return (
     <div className={`
-      container-wide flex flex-col items-center justify-center gap-4 rounded-xl bg-gray-50 px-4 py-6 lg:px-0 lg:py-8
+      container-wide flex flex-col items-center justify-center gap-4 rounded-xl bg-gray-50 px-4 py-6
+      lg:px-0 lg:py-8
     `}
     >
       {contentTrustPilot()}

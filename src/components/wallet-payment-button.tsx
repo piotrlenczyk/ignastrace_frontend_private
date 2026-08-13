@@ -76,7 +76,8 @@ export const WalletPaymentButton = forwardRef<
       resetButtonStylesCls,
       `
         relative flex h-14 items-center justify-center overflow-hidden rounded-lg p-0 shadow-raised transition
-        active:shadow-none disabled:opacity-50 disabled:shadow-none
+        active:shadow-none
+        disabled:opacity-50 disabled:shadow-none
       `,
       afterCls,
       METHOD_TO_BUTTON_CLS[method as keyof typeof METHOD_TO_BUTTON_CLS],

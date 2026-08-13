@@ -11,8 +11,8 @@ export const BreachCard = ({ breach }: { breach: ReverseLookupDataLeak }) => {
 
   return (
     <div className={`
-      flex gap-3 rounded-lg border border-stroke-weak bg-white p-4 print:border-none print:p-0
-      print:page-break-inside-avoid
+      flex gap-3 rounded-lg border border-stroke-weak bg-white p-4
+      print:border-none print:p-0 print:page-break-inside-avoid
     `}
     >
       <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary">

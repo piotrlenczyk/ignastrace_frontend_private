@@ -22,8 +22,9 @@ const AsSeenOn: React.FC<AsSeenOnProps> = ({ className }) => {
       <div className="relative">
         <p
           className={`
-            flex w-full items-center justify-center before:absolute before:top-3 before:-z-10 before:w-full
-            before:border-t before:border-gray-100 before:content-['']
+            flex w-full items-center justify-center
+            before:absolute before:top-3 before:-z-10 before:w-full before:border-t before:border-gray-100
+            before:content-['']
           `}
         >
           <span className="block bg-white px-2 text-weak">
@@ -32,7 +33,9 @@ const AsSeenOn: React.FC<AsSeenOnProps> = ({ className }) => {
         </p>
       </div>
       <ul className={`
-        container mt-6 flex w-full max-w-[830px] items-center justify-between gap-3 sm:gap-4 lg:mt-8 lg:justify-around
+        container mt-6 flex w-full max-w-[830px] items-center justify-between gap-3
+        sm:gap-4
+        lg:mt-8 lg:justify-around
       `}
       >
         {AS_SEEN_ON_ITEMS.map(item => (

@@ -53,8 +53,8 @@ export const HeroLocator = ({
     <section className={className}>
       <p
         className={`
-          pb-2 text-base leading-normal font-semibold text-strong lg:relative lg:mb-3 lg:p-0 lg:text-2xl lg:leading-7
-          lg:font-normal
+          pb-2 text-base leading-normal font-semibold text-strong
+          lg:relative lg:mb-3 lg:p-0 lg:text-2xl lg:leading-7 lg:font-normal
         `}
       >
         {t('label')}
@@ -110,8 +110,8 @@ export const Hero = ({ defaultCountry }: { defaultCountry: CountryCode }) => {
   return (
     <section
       className={`
-        flex w-full items-center bg-alternate bg-[-410px_-80px] bg-no-repeat px-6 lg:min-h-[681px] lg:rounded-3xl
-        lg:bg-[right_top]
+        flex w-full items-center bg-alternate bg-[-410px_-80px] bg-no-repeat px-6
+        lg:min-h-[681px] lg:rounded-3xl lg:bg-[right_top]
       `}
       style={{ backgroundImage: 'url(/images/hero/map.png)' }}
     >
