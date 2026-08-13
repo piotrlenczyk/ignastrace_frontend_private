@@ -170,6 +170,16 @@
 }
 
 /*
+ * The new design's page shell: a 1440px content frame with the gutters the
+ * Figma layouts use — 16px on mobile, 32px from the desktop breakpoint up.
+ * Separate from `container` and `container-wide` on purpose; those two are
+ * legacy widths and neither carries padding.
+ */
+@utility container-page {
+  @apply mx-auto w-full max-w-[1440px] px-4 lg:px-8;
+}
+
+/*
  * ── v3 namespace collisions ────────────────────────────────────────────────
  * `backgroundColor` and `textColor` were separate theme namespaces in v3, so
  * three names meant two different things depending on the utility. v4 resolves

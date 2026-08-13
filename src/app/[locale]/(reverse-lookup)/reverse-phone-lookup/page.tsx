@@ -40,11 +40,11 @@ const Index = async () => {
       <main className="overflow-hidden">
         <Hero defaultCountry={country} />
         <FullReport />
-        <CustomerCarousel className="container-wide px-4 py-8 lg:px-0 lg:py-20" />
+        <CustomerCarousel className="container-page px-4 py-8 lg:px-0 lg:py-20" />
         <div className="px-4 lg:px-6">
           <Locator defaultCountry={country} className="container-content py-8 lg:py-14" labelClassName="font-bold" />
         </div>
-        <FAQs className="container-wide px-4 py-8 lg:px-0 lg:py-20" id="faq">
+        <FAQs className="container-page px-4 py-8 lg:px-0 lg:py-20" id="faq">
           <FAQs.Title />
           <FAQs.Content className="rounded-3xl bg-alternate px-5 lg:px-10 lg:py-4" />
         </FAQs>
