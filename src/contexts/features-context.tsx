@@ -18,9 +18,5 @@ type FeaturesProviderProps = {
 export function FeaturesProvider({ children, features }: FeaturesProviderProps) {
   const value = useMemo(() => ({ features }), [features]);
 
-  return (
-    <FeaturesContext.Provider value={value}>
-      {children}
-    </FeaturesContext.Provider>
-  );
+  return <FeaturesContext.Provider value={value}>{children}</FeaturesContext.Provider>;
 }

@@ -36,9 +36,7 @@ const FindByLinkPage = async () => {
       <main className="flex flex-col px-4 lg:p-6">
         <h1 className="h3 font-bold">{t('find_by_link')}</h1>
         <div className="container-content flex flex-1 flex-col justify-center gap-4">
-          <h1 className="h3 font-bold">
-            { t('title')}
-          </h1>
+          <h1 className="h3 font-bold">{t('title')}</h1>
           <CreateCustomLinkForm />
           <aside className="rounded-lg bg-alternate p-6 text-strong lg:mt-4">
             <ol className="ml-5 list-decimal">
@@ -51,7 +49,6 @@ const FindByLinkPage = async () => {
         </div>
       </main>
     </ProductLayout>
-
   );
 };
 

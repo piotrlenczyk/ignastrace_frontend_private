@@ -11,9 +11,7 @@ localColls.forEach((c) => collIds.add(c.id));
 
 // Sample bound variables off the page. Sampling (not exhaustive walking) is enough: we only
 // need one variable per collection to unlock the whole collection in step 3.
-const seedNodes = figma.currentPage.findAll(
-  (n) => n.boundVariables && Object.keys(n.boundVariables).length > 0
-);
+const seedNodes = figma.currentPage.findAll((n) => n.boundVariables && Object.keys(n.boundVariables).length > 0);
 const seedVarIds = new Set();
 const step = Math.max(1, Math.floor(seedNodes.length / 1500));
 for (let i = 0; i < seedNodes.length; i += step) {
@@ -30,9 +28,9 @@ for (const id of seedVarIds) {
 }
 
 // Text styles reference typography variables that may live in an otherwise unused collection.
-const texts = figma.currentPage.findAllWithCriteria({ types: ["TEXT"] });
+const texts = figma.currentPage.findAllWithCriteria({ types: ['TEXT'] });
 const styleIds = new Set();
-for (const t of texts) if (typeof t.textStyleId === "string" && t.textStyleId) styleIds.add(t.textStyleId);
+for (const t of texts) if (typeof t.textStyleId === 'string' && t.textStyleId) styleIds.add(t.textStyleId);
 for (const sid of styleIds) {
   const s = await figma.getStyleByIdAsync(sid);
   if (!s || !s.boundVariables) continue;
@@ -56,9 +54,7 @@ while (queue.length) {
   if (!c) continue;
 
   const lightMode =
-    c.modes.find((m) => /light/i.test(m.name)) ||
-    c.modes.find((m) => m.modeId === c.defaultModeId) ||
-    c.modes[0];
+    c.modes.find((m) => /light/i.test(m.name)) || c.modes.find((m) => m.modeId === c.defaultModeId) || c.modes[0];
 
   const samples = [];
   for (const vid of c.variableIds.slice(0, 6)) {
@@ -71,7 +67,7 @@ while (queue.length) {
     const v = await figma.variables.getVariableByIdAsync(vid);
     if (!v) continue;
     const raw = v.valuesByMode[lightMode.modeId];
-    if (raw && typeof raw === "object" && raw.type === "VARIABLE_ALIAS") {
+    if (raw && typeof raw === 'object' && raw.type === 'VARIABLE_ALIAS') {
       const t = await figma.variables.getVariableByIdAsync(raw.id);
       if (t && !seen.has(t.variableCollectionId)) queue.push(t.variableCollectionId);
     }

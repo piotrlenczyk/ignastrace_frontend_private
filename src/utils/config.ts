@@ -1,4 +1,4 @@
-import type { LocalePrefixMode } from 'node_modules/next-intl/dist/types/src/routing/types';
+import type { LocalePrefixMode } from 'next-intl/routing';
 
 const localePrefix: LocalePrefixMode = 'as-needed';
 
@@ -28,7 +28,7 @@ export const LanguageLocale = {
   Slovak: { code: 'sk', flag: 'SK', version: 3 },
 } as const;
 
-export type LanguageCode = typeof LanguageLocale[keyof typeof LanguageLocale]['code'];
+export type LanguageCode = (typeof LanguageLocale)[keyof typeof LanguageLocale]['code'];
 
 export const getLanguagesByVersion = (version: number = 1) => {
   return Object.entries(LanguageLocale)
@@ -37,7 +37,7 @@ export const getLanguagesByVersion = (version: number = 1) => {
 };
 
 export const getAllLocaleCodes = () => {
-  return Object.values(LanguageLocale).map(locale => locale.code) as LanguageCode[];
+  return Object.values(LanguageLocale).map((locale) => locale.code) as LanguageCode[];
 };
 
 export const getLanguageVersion = () => {
@@ -46,10 +46,10 @@ export const getLanguageVersion = () => {
 };
 
 export const getEnabledLocaleCodes = (version = getLanguageVersion()) => {
-  return Object.values(getLanguagesByVersion(version)).map(locale => locale.code);
+  return Object.values(getLanguagesByVersion(version)).map((locale) => locale.code);
 };
 
-export const AppConfig = {
+export const SiteConfig = {
   name: 'Mobitrace.io',
   locales: getEnabledLocaleCodes(),
   allLocales: getAllLocaleCodes(),

@@ -12,7 +12,10 @@ import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 
 import { OnboardingSteps } from './components/onboarding-steps';
 
-export default async function MemberAreaOnboardingStep1Page({ params }: { params: { 'onboarding-step': string } }) {
+export default async function MemberAreaOnboardingStep1Page(
+  props: PageProps<'/[locale]/memberarea/[onboarding-step]'>,
+) {
+  const params = await props.params;
   const session = await auth();
   const isAuthenticated = !!session;
 
@@ -34,11 +37,7 @@ export default async function MemberAreaOnboardingStep1Page({ params }: { params
 
   const lastLink = phoneNumber ? ROUTES.MEMBER.FIND_BY_NUMBER.MESSAGE_SENDING : ROUTES.MEMBER.FIND_BY_NUMBER.HOME;
 
-  const links = [
-    ROUTES.MEMBER.ONBOARDING.STEP_2,
-    ROUTES.MEMBER.ONBOARDING.STEP_3,
-    lastLink,
-  ];
+  const links = [ROUTES.MEMBER.ONBOARDING.STEP_2, ROUTES.MEMBER.ONBOARDING.STEP_3, lastLink];
 
   const step = params['onboarding-step'];
   const validSteps = ['onboarding-step-1', 'onboarding-step-2', 'onboarding-step-3'];
@@ -64,18 +63,12 @@ export default async function MemberAreaOnboardingStep1Page({ params }: { params
                 role="presentation"
                 alt=""
               />
-              <h1 className="mb-2 h3 font-bold">
-                {t('title')}
-              </h1>
-              <p className="min-h-24">
-                {t('body')}
-              </p>
+              <h1 className="mb-2 h3 font-bold">{t('title')}</h1>
+              <p className="min-h-24">{t('body')}</p>
             </header>
 
             <Button size="lg" className="w-full" asChild>
-              <AnimatedLink href={links[stepNumber - 1]!}>
-                {t('cta')}
-              </AnimatedLink>
+              <AnimatedLink href={links[stepNumber - 1]!}>{t('cta')}</AnimatedLink>
             </Button>
           </div>
           <OnboardingSteps currentStep={stepNumber} />

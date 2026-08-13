@@ -1,6 +1,6 @@
 import { isPossiblePhoneNumber, parsePhoneNumber } from 'libphonenumber-js';
 
-export const usePhoneNumberFormatter = (phoneNumber: string | undefined) => {
+export const formatPhoneNumber = (phoneNumber: string | undefined) => {
   if (!phoneNumber || !isPossiblePhoneNumber(phoneNumber)) {
     return {
       number: phoneNumber || '',

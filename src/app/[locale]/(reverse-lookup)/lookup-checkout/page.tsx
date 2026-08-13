@@ -4,8 +4,8 @@ import { getFunnelPhone } from '@/actions/funnel-phone-number';
 import { auth } from '@/auth';
 import FunnelLayout from '@/components/layouts/funnel-layout';
 import { ROUTES } from '@/constants/routes';
-import { useAuthenticatedRedirect } from '@/hooks/use-auth-redirect';
-import { usePhoneNumberFormatter } from '@/hooks/use-phone-number-formatter';
+import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
+import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { getCurrencyFromCountry } from '@/libs/currency';
 import { getApi } from '@/libs/server/api';
 import { getUserCountry } from '@/libs/server/user-country';
@@ -21,14 +21,10 @@ const Index = async () => {
     redirect(ROUTES.REVERSE_LOOKUP.SIGN_UP);
   }
 
-  const [api, country, phoneNumber] = await Promise.all([
-    getApi(),
-    getUserCountry(),
-    getFunnelPhone(),
-  ]);
+  const [api, country, phoneNumber] = await Promise.all([getApi(), getUserCountry(), getFunnelPhone()]);
 
   const currency = getCurrencyFromCountry(country);
-  const formattedNumber = usePhoneNumberFormatter(phoneNumber);
+  const formattedNumber = formatPhoneNumber(phoneNumber);
 
   let defaultProduct: Products;
   try {
@@ -39,7 +35,7 @@ const Index = async () => {
     redirect(ROUTES.REVERSE_LOOKUP.HOME);
   }
 
-  await useAuthenticatedRedirect({
+  await redirectIfAuthenticated({
     activeSubscriptionRoute: ROUTES.REVERSE_LOOKUP.HOME,
     endedSubscriptionRoute: ROUTES.REVERSE_LOOKUP.HOME,
     noSubscriptionRoute: !formattedNumber.valid ? ROUTES.REVERSE_LOOKUP.HOME : undefined,

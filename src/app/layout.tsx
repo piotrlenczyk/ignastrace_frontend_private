@@ -5,12 +5,7 @@ import { Bebas_Neue, Inter } from 'next/font/google';
 import Script from 'next/script';
 import { SessionProvider } from 'next-auth/react';
 import { NextIntlClientProvider } from 'next-intl';
-import {
-  getLocale,
-  getMessages,
-  getTranslations,
-  setRequestLocale,
-} from 'next-intl/server';
+import { getLocale, getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 
 import { auth } from '@/auth';
 import { QueryProvider } from '@/components/navigation/providers/query-client-provider';
@@ -44,7 +39,8 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 
   const baseUrl = getBaseUrl();
-  const alternates = getAlternates();
+  const alternates = await getAlternates();
+  const currentPath = await getCurrentPath();
 
   const metadata = {
     title: t('meta_title'),
@@ -58,7 +54,7 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: t('site_name'),
       locale,
       type: 'website',
-      url: getCurrentPath(),
+      url: currentPath,
       images: [
         {
           url: '/images/og-image.jpg',
@@ -136,6 +132,11 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html
       lang={locale}
+      // Next 16 no longer forces `scroll-behavior: auto` during client-side
+      // navigation, and _base.css sets `scroll-behavior: smooth` globally.
+      // Without this opt-in, every route change would animate a scroll to the
+      // top instead of jumping there. In-page anchors stay smooth either way.
+      data-scroll-behavior="smooth"
       className={cn(interFont.variable, bebasFont.variable)}
     >
       <head>
@@ -148,11 +149,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         {/* end Convert Experiences code */}
 
         <meta name="theme-color" content="#FFFFFF" />
-        <script
-          data-domain="mobitrace.io"
-          src="https://plausible.io/js/script.js"
-          defer
-        />
+        <script data-domain="mobitrace.io" src="https://plausible.io/js/script.js" defer />
         {GTM_ID && (
           <Script id="gtm-script" strategy="afterInteractive">
             {`

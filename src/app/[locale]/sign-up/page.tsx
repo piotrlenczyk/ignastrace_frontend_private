@@ -3,8 +3,8 @@ import { getTranslations } from 'next-intl/server';
 import { getFunnelPhone } from '@/actions/funnel-phone-number';
 import FunnelLayout from '@/components/layouts/funnel-layout';
 import { ROUTES } from '@/constants/routes';
-import { useAuthenticatedRedirect } from '@/hooks/use-auth-redirect';
-import { usePhoneNumberFormatter } from '@/hooks/use-phone-number-formatter';
+import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
+import { formatPhoneNumber } from '@/hooks/format-phone-number';
 
 import { SignUpForm } from './components/sign-up-form';
 
@@ -12,9 +12,9 @@ const SignUpPage = async () => {
   const t = await getTranslations('pages.loader_complete');
 
   const phoneNumber = await getFunnelPhone();
-  const formattedNumber = usePhoneNumberFormatter(phoneNumber);
+  const formattedNumber = formatPhoneNumber(phoneNumber);
 
-  await useAuthenticatedRedirect({
+  await redirectIfAuthenticated({
     activeSubscriptionRoute: ROUTES.MEMBER.FIND_BY_NUMBER.HOME,
     endedSubscriptionRoute: ROUTES.MEMBER.SETTINGS.BILLING,
     noSubscriptionRoute: formattedNumber.valid ? ROUTES.CHECKOUT : ROUTES.HOME,
@@ -22,9 +22,7 @@ const SignUpPage = async () => {
 
   const title = t.rich('title', {
     brandColor: () => (
-      <mark
-        className="h2 block bg-transparent leading-tight whitespace-nowrap text-secondary"
-      >
+      <mark className="h2 block bg-transparent leading-tight whitespace-nowrap text-secondary">
         {formattedNumber.number}
       </mark>
     ),

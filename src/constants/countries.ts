@@ -5,9 +5,29 @@ export const COOKIE_EXPIRY_DAYS = 30;
 export const COUNTRIES_REQUESTING_ZIP = ['US'];
 
 export type CountryCode =
-  | 'GB' | 'ES' | 'PT' | 'FR' | 'DE' | 'IT' | 'NL' | 'NO'
-  | 'PL' | 'SV' | 'TR' | 'RO' | 'DK' | 'TH' | 'KR' | 'UA'
-  | 'VN' | 'MY' | 'ID' | 'US' | 'MX' | 'AR' | 'BR';
+  | 'GB'
+  | 'ES'
+  | 'PT'
+  | 'FR'
+  | 'DE'
+  | 'IT'
+  | 'NL'
+  | 'NO'
+  | 'PL'
+  | 'SV'
+  | 'TR'
+  | 'RO'
+  | 'DK'
+  | 'TH'
+  | 'KR'
+  | 'UA'
+  | 'VN'
+  | 'MY'
+  | 'ID'
+  | 'US'
+  | 'MX'
+  | 'AR'
+  | 'BR';
 
 export type CountrySampleData = {
   phones: readonly string[];
@@ -336,16 +356,7 @@ export const COUNTRIES_SAMPLE_DATA: CountriesData = {
       '+82 107 890 1234',
       '+82 108 901 2345',
     ],
-    names: [
-      '김민수',
-      '박지영',
-      '이준호',
-      '최서연',
-      '정우진',
-      '한예린',
-      '송태현',
-      '윤소희',
-    ],
+    names: ['김민수', '박지영', '이준호', '최서연', '정우진', '한예린', '송태현', '윤소희'],
   },
   UA: {
     phones: [

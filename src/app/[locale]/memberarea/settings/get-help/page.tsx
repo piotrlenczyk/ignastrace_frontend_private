@@ -3,12 +3,13 @@ import { getTranslations } from 'next-intl/server';
 import { ContactInformation } from '@/app/[locale]/contact/components/contact-information';
 import { ContactForm } from '@/app/[locale]/contact/form';
 import { FAQs } from '@/components/homepage/faqs';
+import { resolveLocale } from '@/libs/i18n-routing';
 
 import { LogoutButton } from '../_components/logout-button';
 
-const GetHelpPage = async (props: { params: { locale: string } }) => {
+const GetHelpPage = async (props: PageProps<'/[locale]/memberarea/settings/get-help'>) => {
   const t = await getTranslations({
-    locale: props.params.locale,
+    locale: resolveLocale((await props.params).locale),
     namespace: 'pages.contact',
   });
 
@@ -20,10 +21,7 @@ const GetHelpPage = async (props: { params: { locale: string } }) => {
       </FAQs>
       <hr className="mb-4 border-stroke-weak" />
       <div className="grid gap-6">
-        <h1 className="h4 font-bold">
-          {t('contact_information.title')}
-        </h1>
-        {/* eslint-disable-next-line react-dom/no-dangerously-set-innerhtml */}
+        <h1 className="h4 font-bold">{t('contact_information.title')}</h1>
         <div dangerouslySetInnerHTML={{ __html: t.raw('subtitle') }} />
         <ContactInformation />
       </div>

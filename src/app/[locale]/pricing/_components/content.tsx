@@ -3,7 +3,7 @@ import { useLocale, useTranslations } from 'next-intl';
 
 import { FAQs } from '@/components/homepage/faqs';
 import { InstantLocator } from '@/components/homepage/instantLocator';
-import { useCldrFormatPrice } from '@/hooks/use-cldr-format-price';
+import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import type { Products } from '@/types/products';
 
 import { PricingHero } from './hero';
@@ -13,9 +13,13 @@ export function PricingContent({
   country,
   currency,
   products,
-}: { country: CountryCode; currency: string; products: Products }) {
+}: {
+  country: CountryCode;
+  currency: string;
+  products: Products;
+}) {
   const t = useTranslations('pages.pricing.cards');
-  const formatPrice = useCldrFormatPrice();
+  const formatPrice = createPriceFormatter();
   const locale = useLocale();
 
   const trialPrice = formatPrice(products.trial_charge_price, currency, country, locale);
@@ -27,9 +31,7 @@ export function PricingContent({
       <PricingHero country={country} price={trialPrice} trialDays={trialDays} />
 
       <div className="container-wide flex flex-col px-4 py-8 lg:px-1">
-        <h1 className="mb-4 h1 lg:mb-8">
-          { t('title') }
-        </h1>
+        <h1 className="mb-4 h1 lg:mb-8">{t('title')}</h1>
         <div className="grid gap-4 md:grid-cols-2 md:gap-8">
           <PricingCard
             type="trial"
@@ -42,11 +44,9 @@ export function PricingContent({
           <PricingCard
             type="subscription"
             price={subscriptionPrice}
-            description={
-              t(trialDays === 1
-                ? 'subscription_24.description'
-                : 'subscription.description', { price: subscriptionPrice })
-            }
+            description={t(trialDays === 1 ? 'subscription_24.description' : 'subscription.description', {
+              price: subscriptionPrice,
+            })}
             trialDays={trialDays}
           />
         </div>
@@ -59,9 +59,7 @@ export function PricingContent({
         </div>
       </FAQs>
 
-      <InstantLocator
-        defaultCountry={country}
-      />
+      <InstantLocator defaultCountry={country} />
     </>
   );
 }

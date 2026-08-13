@@ -35,8 +35,11 @@ export const hasSubscription = async (options: SubscriptionCheckOptions = {}) =>
   if (!checkedUser) {
     return false;
   }
-  return checkedUser.subscription_status !== 'initial' && checkedUser.subscription_status !== 'incomplete'
-    && checkedUser.subscription_status !== 'incomplete_expired';
+  return (
+    checkedUser.subscription_status !== 'initial' &&
+    checkedUser.subscription_status !== 'incomplete' &&
+    checkedUser.subscription_status !== 'incomplete_expired'
+  );
 };
 
 // A cancelled subscription is still active but will expire when the current period ends

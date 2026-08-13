@@ -1,4 +1,3 @@
-/* eslint-disable react-dom/no-dangerously-set-innerhtml */
 import { DialogDescription, DialogPortal, DialogTitle } from '@radix-ui/react-dialog';
 import { useLocale, useTranslations } from 'next-intl';
 import { useState } from 'react';
@@ -6,7 +5,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
 import { IconCheck, IconRadarAlt, IconSupportLine } from '@/components/ui/icon/icons';
-import { useCldrFormatPrice } from '@/hooks/use-cldr-format-price';
+import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { useCountry } from '@/hooks/useCountry';
 
 import type { Product } from '../_types/product.type';
@@ -23,7 +22,7 @@ export const ProductCards = ({
 }) => {
   const [dialogProduct, setDialogProduct] = useState<Product>();
   const t = useTranslations('pages.upsell');
-  const formatPrice = useCldrFormatPrice();
+  const formatPrice = createPriceFormatter();
   const locale = useLocale();
   const country = useCountry();
 
@@ -38,49 +37,46 @@ export const ProductCards = ({
   };
 
   return (
-
     <div className="container-content">
       <div className="mx-auto my-0 flex w-full max-w-full overflow-x-auto pb-6">
-        {
-          products && products.map(product => (
+        {products &&
+          products.map((product) => (
             <div
               className={`
                 box-content flex max-w-[50%] min-w-[280px] flex-1 px-3
                 first:pl-5
                 last:pr-5
-                md:first:pl-0 md:last:pr-0
+                md:first:pl-0
+                md:last:pr-0
               `}
               key={product.key}
             >
-              <div
-                className="flex flex-1 flex-col gap-4 rounded-2xl bg-base p-6 text-strong shadow-raised"
-              >
+              <div className="flex flex-1 flex-col gap-4 rounded-2xl bg-base p-6 text-strong shadow-raised">
                 <div className="brand-icon">
                   {product.key === 'scan_pro' && <IconRadarAlt size="large" />}
                   {product.key === 'support_hotline' && <IconSupportLine size="large" />}
                 </div>
                 <div>
                   <h2 className="mb-1 text-lg/normal font-bold">{t(`products.${product.key}.title` as any)}</h2>
-                  <p className="text-sm">
-                    {t(`products.${product.key}.description` as any)}
-                  </p>
+                  <p className="text-sm">{t(`products.${product.key}.description` as any)}</p>
                 </div>
                 <div className="mt-auto font-semibold">
                   {formatPrice(product.price, product.currency, country, locale)}
                 </div>
                 <div className="flex min-h-10 items-center justify-between gap-4">
-                  {isProductAdded(addedProducts, product.key)
-                    ? (
-                        <div className={`
-                          flex items-center gap-1 rounded-lg border border-green-800 bg-white px-3 py-2 text-sm
-                          font-bold text-green
-                        `}
-                        >
-                          <IconCheck className="text-base" />
-                          {t('products.added_state')}
-                        </div>
-                      )
-                    : <Button onClick={() => onAddProduct(product)}>{t('products.add_button')}</Button>}
+                  {isProductAdded(addedProducts, product.key) ? (
+                    <div
+                      className={`
+                        flex items-center gap-1 rounded-lg border border-green-800 bg-white px-3 py-2 text-sm font-bold
+                        text-green
+                      `}
+                    >
+                      <IconCheck className="text-base" />
+                      {t('products.added_state')}
+                    </div>
+                  ) : (
+                    <Button onClick={() => onAddProduct(product)}>{t('products.add_button')}</Button>
+                  )}
 
                   <Dialog open={dialogProduct === product} onOpenChange={() => toggleDialog(product)}>
                     <DialogTrigger asChild>
@@ -102,33 +98,30 @@ export const ProductCards = ({
 
                         {product.key === 'scan_pro' && (
                           <DialogDescription asChild>
-                            <div
-                              dangerouslySetInnerHTML={{ __html: t.raw(`products.${product.key}.dialog`) }}
-                            />
+                            <div dangerouslySetInnerHTML={{ __html: t.raw(`products.${product.key}.dialog`) }} />
                           </DialogDescription>
                         )}
 
                         {product.key === 'support_hotline' && (
                           <DialogDescription asChild>
-                            <div
-                              dangerouslySetInnerHTML={{ __html: t.raw(`products.${product.key}.description`) }}
-                            />
+                            <div dangerouslySetInnerHTML={{ __html: t.raw(`products.${product.key}.description`) }} />
                           </DialogDescription>
                         )}
 
                         <DialogFooter className="mt-4 min-h-10 items-center justify-between">
-                          {isProductAdded(addedProducts, product.key)
-                            ? (
-                                <div className={`
-                                  flex items-center gap-1 rounded-lg border border-green-800 bg-white px-3 py-2 text-sm
-                                  font-bold text-green
-                                `}
-                                >
-                                  <IconCheck className="text-xl" />
-                                  {t('products.added_state')}
-                                </div>
-                              )
-                            : <Button onClick={() => onAddProduct(product)}>{t('products.add_button')}</Button>}
+                          {isProductAdded(addedProducts, product.key) ? (
+                            <div
+                              className={`
+                                flex items-center gap-1 rounded-lg border border-green-800 bg-white px-3 py-2 text-sm
+                                font-bold text-green
+                              `}
+                            >
+                              <IconCheck className="text-xl" />
+                              {t('products.added_state')}
+                            </div>
+                          ) : (
+                            <Button onClick={() => onAddProduct(product)}>{t('products.add_button')}</Button>
+                          )}
 
                           <div className="font-semibold">
                             {formatPrice(product.price, product.currency, country, locale)}
@@ -140,8 +133,7 @@ export const ProductCards = ({
                 </div>
               </div>
             </div>
-          ))
-        }
+          ))}
       </div>
     </div>
   );

@@ -1,28 +1,9 @@
 // Constants for reverse lookup enums
-export const SOURCE_VALUES = [
-  'social_media',
-  'public_records',
-  'data_breach',
-  'other',
-] as const;
+export const SOURCE_VALUES = ['social_media', 'public_records', 'data_breach', 'other'] as const;
 
-export const SEX_VALUES = [
-  'male',
-  'female',
-  'intersex',
-] as const;
+export const SEX_VALUES = ['male', 'female', 'intersex'] as const;
 
-export const EYE_COLOR_VALUES = [
-  'amber',
-  'blue',
-  'brown',
-  'gray',
-  'green',
-  'hazel',
-  'red',
-  'violet',
-  'other',
-] as const;
+export const EYE_COLOR_VALUES = ['amber', 'blue', 'brown', 'gray', 'green', 'hazel', 'red', 'violet', 'other'] as const;
 
 export const HAIR_COLOR_VALUES = [
   'black',
@@ -48,11 +29,7 @@ export const RACE_VALUES = [
   'other',
 ] as const;
 
-export const ETHNICITY_VALUES = [
-  'hispanic',
-  'non_hispanic',
-  'other',
-] as const;
+export const ETHNICITY_VALUES = ['hispanic', 'non_hispanic', 'other'] as const;
 
 export const BODY_PART_VALUES = [
   'head',
@@ -66,11 +43,7 @@ export const BODY_PART_VALUES = [
   'right_leg',
 ] as const;
 
-export const RISK_LEVEL_VALUES = [
-  'low',
-  'medium',
-  'high',
-] as const;
+export const RISK_LEVEL_VALUES = ['low', 'medium', 'high'] as const;
 
 export const JOB_VALUES = [
   'agriculture',
@@ -126,17 +99,17 @@ export const EDUCATION_VALUES = [
 ] as const;
 
 // Type definitions for the constants
-export type Source = typeof SOURCE_VALUES[number];
-export type Sex = typeof SEX_VALUES[number];
-export type EyeColor = typeof EYE_COLOR_VALUES[number];
-export type HairColor = typeof HAIR_COLOR_VALUES[number];
-export type Race = typeof RACE_VALUES[number];
-export type Ethnicity = typeof ETHNICITY_VALUES[number];
-export type BodyPart = typeof BODY_PART_VALUES[number];
-export type RiskLevel = typeof RISK_LEVEL_VALUES[number];
-export type Job = typeof JOB_VALUES[number];
-export type MaritalStatus = typeof MARITAL_STATUS_VALUES[number];
-export type Education = typeof EDUCATION_VALUES[number];
+export type Source = (typeof SOURCE_VALUES)[number];
+export type Sex = (typeof SEX_VALUES)[number];
+export type EyeColor = (typeof EYE_COLOR_VALUES)[number];
+export type HairColor = (typeof HAIR_COLOR_VALUES)[number];
+export type Race = (typeof RACE_VALUES)[number];
+export type Ethnicity = (typeof ETHNICITY_VALUES)[number];
+export type BodyPart = (typeof BODY_PART_VALUES)[number];
+export type RiskLevel = (typeof RISK_LEVEL_VALUES)[number];
+export type Job = (typeof JOB_VALUES)[number];
+export type MaritalStatus = (typeof MARITAL_STATUS_VALUES)[number];
+export type Education = (typeof EDUCATION_VALUES)[number];
 
 export type ReverseLookupCompact = {
   id: string;
@@ -163,7 +136,7 @@ export const SOCIAL_MEDIA_KIND_VALUES = [
   'youtube',
 ] as const;
 
-export type SocialMediaKind = typeof SOCIAL_MEDIA_KIND_VALUES[number];
+export type SocialMediaKind = (typeof SOCIAL_MEDIA_KIND_VALUES)[number];
 
 export type SocialMediaAccount = {
   id: string;

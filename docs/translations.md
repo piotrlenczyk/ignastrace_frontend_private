@@ -17,9 +17,11 @@ Do not download or upload translations to Lokalise—it is their responsibility.
 Lokalise does not automatically delete unused keys, so some remain in their system. Since we need one of these keys again, we should notify them that it has been reintroduced and is already available in their Lokalise project for review.
 
 ## Use the CLI (now it's not needed unless the translation team requires us to do it)
+
 Make sure you have the required environment variables set up (`LOKALISE_API_TOKEN` and `LOKALISE_PROJECT_ID`) in your `.env` file.
 
 Available translation commands:
+
 - `npm run lokalise:download` - Download latest translations from Lokalise to your local project
 - `npm run lokalise:upload` - Upload new translation keys from your local project to Lokalise
 

@@ -10,7 +10,7 @@ import { useEffect, useMemo, useState } from 'react';
 import type { FunnelPlan } from '@/actions/funnel-plan';
 import { ROUTES } from '@/constants/routes';
 import { useGetProduct } from '@/hooks/api/use-get-product';
-import { useCldrFormatPrice } from '@/hooks/use-cldr-format-price';
+import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { getStripePromise } from '@/libs/stripe';
 import type { Products } from '@/types/products';
 
@@ -42,7 +42,7 @@ const CheckoutForm = ({
 }) => {
   const t = useTranslations('pages.checkout');
 
-  const formatPrice = useCldrFormatPrice();
+  const formatPrice = createPriceFormatter();
   const locale = useLocale();
   const stripePromise = useMemo(() => getStripePromise(locale as StripeElementLocale), [locale]);
 
@@ -84,25 +84,31 @@ const CheckoutForm = ({
   const conditions = t.rich(trialDays === 1 ? 'agree_description_24' : 'agree_description', {
     trialPrice: formatPrice(product?.trial_charge_price || 0, currency, country, locale),
     subscriptionPrice: formatPrice(product?.subscription_price || 0, currency, country, locale),
-    terms: chunks => <Link target="_blank" href="/terms">{chunks}</Link>,
-    privacy: chunks => <Link target="_blank" href="/privacy-policy">{chunks}</Link>,
+    terms: (chunks) => (
+      <Link target="_blank" href="/terms">
+        {chunks}
+      </Link>
+    ),
+    privacy: (chunks) => (
+      <Link target="_blank" href="/privacy-policy">
+        {chunks}
+      </Link>
+    ),
   });
 
   return (
     <>
       <div className="flex items-center justify-between gap-6">
         <div className="text-xl text-weak">{t('total')}</div>
-        {skipTrial
-          ? (
-              <div className="h4 leading-loose font-bold">
-                {formatPrice(product?.subscription_price || 0, currency, country, locale)}
-              </div>
-            )
-          : (
-              <div className="h4 leading-loose font-bold">
-                {formatPrice(product?.trial_charge_price || 0, currency, country, locale)}
-              </div>
-            )}
+        {skipTrial ? (
+          <div className="h4 leading-loose font-bold">
+            {formatPrice(product?.subscription_price || 0, currency, country, locale)}
+          </div>
+        ) : (
+          <div className="h4 leading-loose font-bold">
+            {formatPrice(product?.trial_charge_price || 0, currency, country, locale)}
+          </div>
+        )}
       </div>
       <hr className="separator mt-4 mb-6" />
       <Elements stripe={stripePromise} options={stripeOptions}>
@@ -123,14 +129,22 @@ const CheckoutForm = ({
       <p className="mt-6 text-center text-sm">
         {isReactivate
           ? t('agree_description_reactivate', {
-            subscriptionPrice: formatPrice(product?.subscription_price || 0, currency, country, locale),
-          })
+              subscriptionPrice: formatPrice(product?.subscription_price || 0, currency, country, locale),
+            })
           : skipTrial
             ? t.rich('agree_description_subscription', {
-              subscriptionPrice: formatPrice(product?.subscription_price || 0, currency, country, locale),
-              terms: chunks => <Link target="_blank" href="/terms">{chunks}</Link>,
-              privacy: chunks => <Link target="_blank" href="/privacy-policy">{chunks}</Link>,
-            })
+                subscriptionPrice: formatPrice(product?.subscription_price || 0, currency, country, locale),
+                terms: (chunks) => (
+                  <Link target="_blank" href="/terms">
+                    {chunks}
+                  </Link>
+                ),
+                privacy: (chunks) => (
+                  <Link target="_blank" href="/privacy-policy">
+                    {chunks}
+                  </Link>
+                ),
+              })
             : conditions}
       </p>
       <div className="mt-4 mb-6 flex items-center justify-between gap-5 text-xs text-weak">
@@ -146,20 +160,17 @@ const CheckoutForm = ({
           alt="Norton Secured powered by VeriSign"
         />
       </div>
-      {
-        isSubmitting && (
-          <div className={`
+      {isSubmitting && (
+        <div
+          className={`
             fixed inset-0 z-[100] mt-0! grid animate-fade-in place-items-center content-center gap-2 bg-[#fff3]
             text-center backdrop-blur-md will-change-auto
           `}
-          >
-            <IconLoaderCircle size="large" className="animate-spin text-primary" />
-            <p className="h4">
-              {t('loading')}
-            </p>
-          </div>
-        )
-      }
+        >
+          <IconLoaderCircle size="large" className="animate-spin text-primary" />
+          <p className="h4">{t('loading')}</p>
+        </div>
+      )}
     </>
   );
 };

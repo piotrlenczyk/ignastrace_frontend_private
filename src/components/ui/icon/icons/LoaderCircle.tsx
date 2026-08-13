@@ -2,12 +2,7 @@ import { cn } from '@/libs/utils';
 
 import { type IconProps, sizes } from '../iconDefinition';
 
-export const IconLoaderCircle = ({
-  className,
-  color = 'currentColor',
-  size = 'fontSize',
-  ...props
-}: IconProps) => (
+export const IconLoaderCircle = ({ className, color = 'currentColor', size = 'fontSize', ...props }: IconProps) => (
   <svg
     width={sizes[size]}
     height={sizes[size]}
@@ -19,14 +14,7 @@ export const IconLoaderCircle = ({
     {...props}
   >
     <g>
-      <circle
-        cx={12}
-        cy={12}
-        r={9.5}
-        fill="none"
-        strokeWidth={3}
-        strokeLinecap="round"
-      >
+      <circle cx={12} cy={12} r={9.5} fill="none" strokeWidth={3} strokeLinecap="round">
         <animate
           attributeName="stroke-dasharray"
           dur="1.5s"

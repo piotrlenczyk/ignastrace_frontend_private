@@ -28,7 +28,7 @@ const UpsellProgressSteps = ({ currentStep, className }: UpsellProgressStepsProp
     { number: 5, label: t('access_report') },
   ];
 
-  const stepsWithStatus: Step[] = steps.map(step => ({
+  const stepsWithStatus: Step[] = steps.map((step) => ({
     ...step,
     status: step.number < currentStep ? 'completed' : step.number === currentStep ? 'current' : 'upcoming',
   }));
@@ -48,20 +48,15 @@ const UpsellProgressSteps = ({ currentStep, className }: UpsellProgressStepsProp
                   step.status === 'upcoming' && 'border-gray-500',
                 )}
               >
-                {step.status === 'completed'
-                  ? (
-                      <IconCheck className="size-4 text-white" />
-                    )
-                  : (
-                      <span
-                        className={cn(
-                          'text-sm font-semibold',
-                          step.status === 'current' ? 'text-secondary' : 'text-weak',
-                        )}
-                      >
-                        {step.number}
-                      </span>
-                    )}
+                {step.status === 'completed' ? (
+                  <IconCheck className="size-4 text-white" />
+                ) : (
+                  <span
+                    className={cn('text-sm font-semibold', step.status === 'current' ? 'text-secondary' : 'text-weak')}
+                  >
+                    {step.number}
+                  </span>
+                )}
               </div>
 
               {/* Label */}

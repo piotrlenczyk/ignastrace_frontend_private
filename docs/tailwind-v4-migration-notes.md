@@ -16,11 +16,11 @@ Removing it dropped three rules that were previously enforced in CI. All three
 have since been replaced by `eslint-plugin-better-tailwindcss`, which does parse
 v4; see `docs/adr/0003-tailwind-class-linting-and-token-aware-merging.md`.
 
-| Rule | What it caught | Replacement |
-| --- | --- | --- |
-| `tailwindcss/no-custom-classname` | Class names that are neither a Tailwind utility nor a known custom class — i.e. typos in utility names | `better-tailwindcss/no-unregistered-classes`. Found three live defects on adoption. |
-| `tailwindcss/classnames-order` | Class attributes not in Tailwind's canonical order | `better-tailwindcss/enforce-consistent-class-order`, plus `enforce-consistent-line-wrapping` for wrapping at the same 120 columns `style/max-len` measures. |
-| `tailwindcss/enforces-shorthand` | `mt-2 mb-2` where `my-2` would do | `better-tailwindcss/enforce-shorthand-classes`. Collapsed 4 sites on adoption (`w-6 h-6` → `size-6`, `items-center justify-items-center` → `place-items-center`). |
+| Rule                              | What it caught                                                                                         | Replacement                                                                                                                                                       |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `tailwindcss/no-custom-classname` | Class names that are neither a Tailwind utility nor a known custom class — i.e. typos in utility names | `better-tailwindcss/no-unregistered-classes`. Found three live defects on adoption.                                                                               |
+| `tailwindcss/classnames-order`    | Class attributes not in Tailwind's canonical order                                                     | `better-tailwindcss/enforce-consistent-class-order`, plus `enforce-consistent-line-wrapping` for wrapping at the same 120 columns `style/max-len` measures.       |
+| `tailwindcss/enforces-shorthand`  | `mt-2 mb-2` where `my-2` would do                                                                      | `better-tailwindcss/enforce-shorthand-classes`. Collapsed 4 sites on adoption (`w-6 h-6` → `size-6`, `items-center justify-items-center` → `place-items-center`). |
 
 The gap this section originally recorded is closed. It is kept because the
 reasoning for the removal is still the reasoning for the replacement's choice of
@@ -43,7 +43,7 @@ three places — every one of them intended:
    after the utilities. `StripeElement` is matched by exactly one selector in the
    whole sheet, so the move is inert — the assumption was checked, not trusted.
 2. `.container` loses a duplicate `margin-right: auto; margin-left: auto`. The
-   surviving declaration comes from `_components.css` and is emitted *after* all
+   surviving declaration comes from `_components.css` and is emitted _after_ all
    the `max-width` breakpoint steps, so centring is unchanged.
 3. `@property --bg-angle` moves to the top level. Position is irrelevant for a
    registration, and there is only one.
@@ -56,11 +56,11 @@ the output.
 1279/1280/1440px — these transitions cannot be seen from two screenshot
 viewports:
 
-| Value | Transition |
-| --- | --- |
-| `--s-header--height` | 64px → 80px exactly at 768px |
-| `--font-size-caption` | 0.625rem → 0.75rem exactly at 768px |
-| footer grid template | 1 → 2 columns at 640px, 2 → 3 at 768px, 3 → 4 at 1024px |
+| Value                 | Transition                                              |
+| --------------------- | ------------------------------------------------------- |
+| `--s-header--height`  | 64px → 80px exactly at 768px                            |
+| `--font-size-caption` | 0.625rem → 0.75rem exactly at 768px                     |
+| footer grid template  | 1 → 2 columns at 640px, 2 → 3 at 768px, 3 → 4 at 1024px |
 
 **Pixel gate.** Pixel-identical on all 22 gated shots for the run pair that
 agrees (see the noise-floor caveat below).
@@ -88,19 +88,19 @@ diff does not explain on its own.
 **Variants on hand-written classes.** v3 generated variants for anything in the
 base and component layers, so `lg:h3`, `lg:layout-desktop` and `md-max:scribble`
 all worked. v4 only does that for real utilities, and a variant on a
-layer-defined class compiles to *nothing at all* — no warning, no error, just a
+layer-defined class compiles to _nothing at all_ — no warning, no error, just a
 missing rule. The affected classes were found by cross-referencing every
 hand-written class name against every `variant:class` occurrence in the source:
 
-| Class | Why it had to become `@utility` |
-| --- | --- |
+| Class                                        | Why it had to become `@utility`                                             |
+| -------------------------------------------- | --------------------------------------------------------------------------- |
 | `badge`, `container-wide`, `full-main`, `h1` | Composed by another rule with `@apply` — a hard build error in v4 otherwise |
-| `scribble` | `md-max:scribble` |
-| `h3` | `lg:h3` |
-| `layout-desktop` | `lg:layout-desktop` |
+| `scribble`                                   | `md-max:scribble`                                                           |
+| `h3`                                         | `lg:h3`                                                                     |
+| `layout-desktop`                             | `lg:layout-desktop`                                                         |
 
 `layout-desktop` is the interesting one: v3 also generated the variant for the
-*other* rules mentioning the class — `body:has(.layout-desktop)`,
+_other_ rules mentioning the class — `body:has(.layout-desktop)`,
 `.layout-desktop > *`, `.layout-desktop .s-header-nav-vertical`. Since the only
 call site is `className="layout-default lg:layout-desktop"`, the unprefixed
 selectors never matched anything; the prefixed ones are what did the work. The
@@ -117,11 +117,11 @@ intentional.
 different colours depending on the utility. v4 resolves every colour utility out
 of a single `--color-*`. Three names disagreed across the v3 namespaces:
 
-| Name | v3 `colors`/`textColor` | v3 `backgroundColor` |
-| --- | --- | --- |
-| `base` | — | `hsl(var(--background))` |
-| `weak` | `hsl(var(--text-weak))` | `hsl(var(--fill-weak))` |
-| `success` | `hsl(var(--green-transparent-800))` (text) | `hsl(var(--success))` |
+| Name      | v3 `colors`/`textColor`                    | v3 `backgroundColor`     |
+| --------- | ------------------------------------------ | ------------------------ |
+| `base`    | —                                          | `hsl(var(--background))` |
+| `weak`    | `hsl(var(--text-weak))`                    | `hsl(var(--fill-weak))`  |
+| `success` | `hsl(var(--green-transparent-800))` (text) | `hsl(var(--success))`    |
 
 A same-named `@utility` does **not** override a theme entry — it emits alongside
 it and loses on source order. So all three are kept out of `@theme` entirely and
@@ -151,7 +151,7 @@ output — but adding one now means adding it to `_utilities.css` by hand.
   `@layer components` rules by name; v4 emits a plain `@layer components` block
   verbatim. `container-full`, `container-ultra`, `login-button`, `s-carousel*`,
   `anchor-element`, `progress-bar-100` and `remove-animated-border` are dead CSS
-  in the output now. They are dead code in the *source* too — deleting them is a
+  in the output now. They are dead code in the _source_ too — deleting them is a
   reasonable follow-up, but not this commit's business.
 - **tw-animate-css ships its own `accordion-down`/`accordion-up` keyframes.**
   Ours are imported afterwards and win. Both sets are in the output; only the
@@ -201,7 +201,7 @@ shim: the bare `ring` utility appears nowhere in the codebase.
 ## The utility renames (issue #4)
 
 v4 reused several v3 class names for different values. Where that happened the
-class had to move; where v4's rename only applies to *its own* default scale and
+class had to move; where v4's rename only applies to _its own_ default scale and
 this theme overrides that scale, the v3 name already resolves to the right value
 and moving it would have corrupted the design. The two sets are listed below with
 the compiled declarations that justify each decision, because "apply the upgrade
@@ -210,16 +210,16 @@ tool's suggestions" is not a reviewable claim — the tool cannot see which scal
 
 ### Renamed, with the v3 declaration each one restores
 
-| Was (v3) | Now (v4) | Declaration, identical on both sides |
-| --- | --- | --- |
-| `shadow-sm` | `shadow-xs` | `0 1px 2px 0 rgb(0 0 0 / 0.05)` |
-| `shadow` | `shadow-sm` | `0 1px 3px 0 …, 0 1px 2px -1px …` |
-| `blur-sm` | `blur-xs` | `blur(4px)` — v4's `--blur-xs`, v3's literal |
-| `backdrop-blur-sm` | `backdrop-blur-xs` | `blur(4px)` |
-| `max-w-screen-sm` | `max-w-(--breakpoint-sm)` | `640px` |
-| `max-w-screen-md` | `max-w-(--breakpoint-md)` | `768px` |
-| `outline-none` | `outline-hidden` | no visible outline |
-| `!mt-0`, `!text-sm`, … | `mt-0!`, `text-sm!`, … | same declarations, `!important` |
+| Was (v3)               | Now (v4)                  | Declaration, identical on both sides         |
+| ---------------------- | ------------------------- | -------------------------------------------- |
+| `shadow-sm`            | `shadow-xs`               | `0 1px 2px 0 rgb(0 0 0 / 0.05)`              |
+| `shadow`               | `shadow-sm`               | `0 1px 3px 0 …, 0 1px 2px -1px …`            |
+| `blur-sm`              | `blur-xs`                 | `blur(4px)` — v4's `--blur-xs`, v3's literal |
+| `backdrop-blur-sm`     | `backdrop-blur-xs`        | `blur(4px)`                                  |
+| `max-w-screen-sm`      | `max-w-(--breakpoint-sm)` | `640px`                                      |
+| `max-w-screen-md`      | `max-w-(--breakpoint-md)` | `768px`                                      |
+| `outline-none`         | `outline-hidden`          | no visible outline                           |
+| `!mt-0`, `!text-sm`, … | `mt-0!`, `text-sm!`, …    | same declarations, `!important`              |
 
 Notes on the two that are not a straight value swap:
 
@@ -234,14 +234,14 @@ Notes on the two that are not a straight value swap:
   emitted `outline: 2px solid transparent; outline-offset: 2px`; v4's
   `outline-hidden` emits `outline-style: none` plus a `forced-colors: active`
   block that restores exactly v3's transparent outline. Both render no visible
-  outline, and the forced-colors path is *better* than v3's, which relied on the
+  outline, and the forced-colors path is _better_ than v3's, which relied on the
   transparent outline being made visible by the OS. v4's own `outline-none` was
   not the right target: it means `outline-style: none` with no forced-colors
   fallback.
 
 ### Explicitly NOT renamed
 
-- **`rounded-sm`** (10 call sites). v4 renamed *its* `rounded-sm` (0.125rem) to
+- **`rounded-sm`** (10 call sites). v4 renamed _its_ `rounded-sm` (0.125rem) to
   `rounded-xs`, but `@theme` defines `--radius-sm: calc(var(--radius) - 4px)`,
   so `rounded-sm` compiles to that same `calc()` on both sides. Renaming it
   would have silently swapped a themed radius for v4's default 0.125rem.
@@ -265,13 +265,13 @@ upgrade guide, and both are real rendering changes, so they are fixed here rathe
 than deferred:
 
 1. **Bare `outline` changed width.** v3's `.outline` emitted `outline-style:
-   solid` and nothing else, leaving `outline-width` at the browser default
+solid` and nothing else, leaving `outline-width` at the browser default
    (`medium`, 3px everywhere in practice). v4's `.outline` adds `outline-width:
-   1px`. The two `PricingCard` outlines would have thinned from 3px to 1px, so
+1px`. The two `PricingCard` outlines would have thinned from 3px to 1px, so
    they are now `outline-3`.
 2. **`outline-hidden` suppresses a later `outline` on the same element.** v4
    routes outline style through `--tw-outline-style`, which `outline-hidden` sets
-   to `none`; `outline` and `outline-<n>` then *read* that variable. On the
+   to `none`; `outline` and `outline-<n>` then _read_ that variable. On the
    shared `inputStyle`, `focus-visible:outline-hidden` therefore killed the
    `aria-[invalid=true]:outline` red error outline whenever an invalid field was
    focused — a state v3 rendered as a 2px red outline. Fixed by making the aria
@@ -280,7 +280,7 @@ than deferred:
    `solid` / `2px` / red, as on v3.
 
    One residual difference in that state is accepted rather than fixed: v3's
-   `outline-none` also set `outline-offset: 2px`, so an invalid *and focused*
+   `outline-none` also set `outline-offset: 2px`, so an invalid _and focused_
    input had a 2px-offset outline while an invalid, unfocused one had none. v4
    gives both offset 0. Restoring it would need an offset utility on the aria
    variant, which would change the unfocused case too.
@@ -292,10 +292,10 @@ startup and returns HTTP 500 since the dep swap, and restarting it is the
 developer's call. The gate was run instead against three **production** builds
 served side by side, in throwaway worktrees with their own `.next`:
 
-| port | commit | what it is |
-| --- | --- | --- |
-| 3011 | `886aa61` | v3 baseline (end of #2) |
-| 3013 | `2fa6804` | v4, before the renames (end of #3) |
+| port | commit    | what it is                          |
+| ---- | --------- | ----------------------------------- |
+| 3011 | `886aa61` | v3 baseline (end of #2)             |
+| 3013 | `2fa6804` | v4, before the renames (end of #3)  |
 | 3012 | `bf1eb59` | v4, after the renames (this ticket) |
 
 Three builds rather than two, because a two-way v3-vs-now diff cannot say
@@ -317,7 +317,7 @@ here is what the other 13 did, since "not in the table" is not the same as
   Unchanged by this ticket and an order of magnitude under the noise floor.
 - **Not diffable at all** (6): `about--desktop`, `cancellation--mobile`,
   `contact--mobile`, `find-phone--desktop`, `home--desktop`, `track--desktop`.
-  The v4 page is *shorter* than the v3 page, so the two full-page captures have
+  The v4 page is _shorter_ than the v3 page, so the two full-page captures have
   different heights and a per-pixel diff is undefined. The deltas are −6 px
   (`about--desktop`, `find-phone--desktop`, `home--desktop`, `track--desktop`),
   −8 px (`cancellation--mobile`) and −40 px (`contact--mobile`).
@@ -334,19 +334,19 @@ is #3's in full, and the renames neither caused nor worsened it. Explaining the
 **The renames did not introduce a single pixel of divergence.** Comparing each
 shot's distance from the v3 baseline before and after this ticket:
 
-| shot | post-#3 vs v3 | post-#4 vs v3 | change |
-| --- | --- | --- | --- |
-| `login--desktop` | 50,667 | 49,623 | −1,044 |
-| `sign-up--desktop` | 16,474 | 15,408 | −1,066 |
-| `contact--desktop` | 41,157 | 40,444 | −713 |
-| `login--mobile` | 38,249 | 37,481 | −768 |
-| `sign-up--mobile` | 13,024 | 12,234 | −790 |
-| `cancellation--desktop` | 35,317 | 35,317 | 0 |
-| `pricing--desktop` | 1,340 | 1,340 | 0 |
-| `terms--desktop` | 664 | 664 | 0 |
-| `privacy-policy--desktop` | 332 | 332 | 0 |
+| shot                      | post-#3 vs v3 | post-#4 vs v3 | change |
+| ------------------------- | ------------- | ------------- | ------ |
+| `login--desktop`          | 50,667        | 49,623        | −1,044 |
+| `sign-up--desktop`        | 16,474        | 15,408        | −1,066 |
+| `contact--desktop`        | 41,157        | 40,444        | −713   |
+| `login--mobile`           | 38,249        | 37,481        | −768   |
+| `sign-up--mobile`         | 13,024        | 12,234        | −790   |
+| `cancellation--desktop`   | 35,317        | 35,317        | 0      |
+| `pricing--desktop`        | 1,340         | 1,340         | 0      |
+| `terms--desktop`          | 664           | 664           | 0      |
+| `privacy-policy--desktop` | 332           | 332           | 0      |
 
-Every affected shot moved *closer* to v3 or stayed put; none moved away. All four
+Every affected shot moved _closer_ to v3 or stayed put; none moved away. All four
 v3-run × v4-run pairings agree on these numbers, so they are signal, not noise.
 
 **The residual divergence is a pre-existing #3 regression, diagnosed here but
@@ -355,9 +355,9 @@ scope. It is written up rather than left for the screenshots to re-discover:
 
 > `space-y-*` no longer applies when the earlier sibling is inline. v3 emitted
 > `.space-y-2 > :not([hidden]) ~ :not([hidden]) { margin-top: … }`, putting the
-> margin on the *later* sibling. v4 emits
+> margin on the _later_ sibling. v4 emits
 > `:where(.space-y-2 > :not(:last-child)) { margin-block-end: … }`, putting it on
-> the *earlier* one. In every affected form the earlier sibling is a `<label>`,
+> the _earlier_ one. In every affected form the earlier sibling is a `<label>`,
 > which is `display: inline` — and vertical margins have no effect on a
 > non-replaced inline box. Measured on `/login`: the `.space-y-2` wrapper is 82px
 > tall on v3 and 74px on v4; the label's `margin-block-end` is a live `8px` in
@@ -447,7 +447,7 @@ Two conclusions a reviewer should take from this:
 1. **A single-pair pixel diff is not trustworthy on this app.** A per-page
    numeric threshold would have to be set at ~1,400 pixels to avoid false
    alarms, which is too coarse to catch a real regression. The reliable signal
-   is instead *cross-run agreement*: capture more than one run per side and look
+   is instead _cross-run agreement_: capture more than one run per side and look
    for a pair that agrees.
 2. **`reverse-phone-lookup` is not gateable.** Its content is genuinely
    non-deterministic between loads. It is excluded from the pixel gate and must
@@ -459,7 +459,7 @@ The pixel gate reaches 12 public pages. Not covered, and needing manual checks:
 
 - `reverse-phone-lookup` — non-deterministic, excluded from the gate (above).
 - `/l/[id]` and `/search-complete` — both use the bare `.container` class, and
-  neither is reachable without state. `/contact` also uses `.container` and *is*
+  neither is reachable without state. `/contact` also uses `.container` and _is_
   gated, so the class itself is covered; these two pages are only uncovered for
   their own additional styling.
 - `/checkout`, `/search`, `/success`, `/thank-you` — redirect away without

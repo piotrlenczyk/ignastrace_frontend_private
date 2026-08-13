@@ -9,8 +9,8 @@ import { Card } from '@/components/homepage/card';
 import LimitedOfferTag from '@/components/reverse-lookup/limited-offer-tag';
 import { Button } from '@/components/ui/button';
 import { IconLoaderCircle, IconTagLine } from '@/components/ui/icon/icons';
+import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { useApi } from '@/hooks/use-api';
-import { useCldrFormatPrice } from '@/hooks/use-cldr-format-price';
 import { useMessageErrorToast } from '@/hooks/use-message-error-toast';
 import { useCountry } from '@/hooks/useCountry';
 import type { User } from '@/types/user';
@@ -31,16 +31,15 @@ type UpsellCardProps = {
   product: Product;
 };
 
-const UpsellCard = (
-  {
-    title,
-    specialOfferText,
-    upsellBenefits,
-    redirectUrl,
-    iconUrl,
-    purchaseButtonText,
-    product,
-  }: UpsellCardProps) => {
+const UpsellCard = ({
+  title,
+  specialOfferText,
+  upsellBenefits,
+  redirectUrl,
+  iconUrl,
+  purchaseButtonText,
+  product,
+}: UpsellCardProps) => {
   const t = useTranslations('pages.reverse_lookup.upsell');
   const tStripeForm = useTranslations('components.forms.stripe_form');
 
@@ -48,7 +47,7 @@ const UpsellCard = (
   const router = useRouter();
   const locale = useLocale();
   const country = useCountry();
-  const formatPrice = useCldrFormatPrice();
+  const formatPrice = createPriceFormatter();
   const showErrorToast = useMessageErrorToast();
 
   const [isPurchased, setIsPurchased] = useState(false);
@@ -62,10 +61,7 @@ const UpsellCard = (
     onError: () => {
       console.error('Error creating upselling');
       setIsSubmitted(false);
-      showErrorToast(
-        tStripeForm('errors.stripe_generic_error'),
-        tStripeForm('errors.stripe_generic_error_title'),
-      );
+      showErrorToast(tStripeForm('errors.stripe_generic_error'), tStripeForm('errors.stripe_generic_error_title'));
     },
   });
 
@@ -110,9 +106,7 @@ const UpsellCard = (
     <Card className="border border-stroke-weak px-4 py-6 shadow-raised lg:p-8">
       <div className="flex flex-col gap-5">
         <div className="flex justify-between">
-          <h3 className="max-w-[180px] h3 font-bold lg:max-w-[345px]">
-            {title}
-          </h3>
+          <h3 className="max-w-[180px] h3 font-bold lg:max-w-[345px]">{title}</h3>
           <Image src={iconUrl} alt={`${title} icon`} width={63} height={72} />
         </div>
         <div className="flex flex-col gap-4">
@@ -137,16 +131,12 @@ const UpsellCard = (
           <div className="flex flex-col gap-5">
             <div className="flex items-center gap-3 rounded-lg bg-green-50 p-4">
               <IconTagLine className="size-6" />
-              <span className="lg:text-base">
-                {specialOfferText}
-              </span>
+              <span className="lg:text-base">{specialOfferText}</span>
             </div>
-            {upsellBenefits.map(benefit => (
+            {upsellBenefits.map((benefit) => (
               <div key={benefit.title} className="flex gap-[6px]">
                 {benefit.icon}
-                <span className="text-lg">
-                  {benefit.title}
-                </span>
+                <span className="text-lg">{benefit.title}</span>
               </div>
             ))}
           </div>

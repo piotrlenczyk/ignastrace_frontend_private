@@ -78,15 +78,18 @@ const getSocialIcon = (kind: SocialMediaKind) => {
 const PossibleSocialMediaAccounts = ({
   className,
   reverseLookup,
-}: { className?: string; reverseLookup: ReverseLookup }) => {
+}: {
+  className?: string;
+  reverseLookup: ReverseLookup;
+}) => {
   const [showUpsellDialog, setShowUpsellDialog] = useState(false);
-  const [showLookingForMore, setShowLookingForMore] = useState(
-    () => {
-      const hasProcessingSocialNetworks = reverseLookup.reverse_lookup_social_media_accounts.some(({ progress_status }) => progress_status === 'processing');
+  const [showLookingForMore, setShowLookingForMore] = useState(() => {
+    const hasProcessingSocialNetworks = reverseLookup.reverse_lookup_social_media_accounts.some(
+      ({ progress_status }) => progress_status === 'processing',
+    );
 
-      return reverseLookup.reverse_lookup_social_networks_upsell_purchased && hasProcessingSocialNetworks;
-    },
-  );
+    return reverseLookup.reverse_lookup_social_networks_upsell_purchased && hasProcessingSocialNetworks;
+  });
 
   const router = useRouter();
 
@@ -96,7 +99,9 @@ const PossibleSocialMediaAccounts = ({
 
   useEffect(() => {
     if (data) {
-      const hasProcessingSocialNetworks = data.reverse_lookup_social_media_accounts.some(({ progress_status }) => progress_status === 'processing');
+      const hasProcessingSocialNetworks = data.reverse_lookup_social_media_accounts.some(
+        ({ progress_status }) => progress_status === 'processing',
+      );
 
       if (!hasProcessingSocialNetworks) {
         setShowLookingForMore(false);
@@ -106,22 +111,18 @@ const PossibleSocialMediaAccounts = ({
 
   const t = useTranslations('pages.reverse_lookup.report.possible_social_media_accounts');
 
-  const socialNetworks = data?.reverse_lookup_social_media_accounts || reverseLookup.reverse_lookup_social_media_accounts;
+  const socialNetworks =
+    data?.reverse_lookup_social_media_accounts || reverseLookup.reverse_lookup_social_media_accounts;
   const isEmpty = socialNetworks.length === 0;
 
   return (
     <>
       <Card className={cn('flex flex-col gap-6 border-stroke-weak px-4 py-6 shadow-raised lg:px-6', className)}>
-        <h4 className="font-bold">
-          {isEmpty ? t('title_empty') : t('title')}
-        </h4>
+        <h4 className="font-bold">{isEmpty ? t('title_empty') : t('title')}</h4>
 
-        <AlertInfo>
-          {t('info')}
-        </AlertInfo>
+        <AlertInfo>{t('info')}</AlertInfo>
 
-        {isEmpty
-        && (
+        {isEmpty && (
           <AlertInfo
             className="border-amber-200 border-l-warning-stroke-strong bg-warning-fill"
             iconClassName="text-warning-stroke-strong"
@@ -131,7 +132,7 @@ const PossibleSocialMediaAccounts = ({
         )}
         {!isEmpty && (
           <>
-            {socialNetworks.map(item => (
+            {socialNetworks.map((item) => (
               <div
                 key={item.kind}
                 className={`
@@ -146,30 +147,19 @@ const PossibleSocialMediaAccounts = ({
                   <div className="flex-1">
                     <div className="leading-[24px]">
                       <p>
-                        <span className="mr-1">
-                          {t('labels.source')}
-                          :
-                        </span>
-                        <span className="text-lg font-bold">
-                          {t(`sources.${item.kind}`)}
-                        </span>
+                        <span className="mr-1">{t('labels.source')}:</span>
+                        <span className="text-lg font-bold">{t(`sources.${item.kind}`)}</span>
                       </p>
                       <p>
-                        <span className="mr-1">
-                          {t('labels.name')}
-                          :
-                        </span>
-                        <span className="text-lg font-bold">
-                          {item.username}
-                        </span>
+                        <span className="mr-1">{t('labels.name')}:</span>
+                        <span className="text-lg font-bold">{item.username}</span>
                       </p>
                     </div>
                   </div>
                 </div>
                 {item.progress_status === 'done' && (
                   <>
-                    {item.url
-                    && (
+                    {item.url && (
                       <Button variant="secondary" asChild>
                         <a href={item.url} target="_blank" rel="noindex nofollow noopener noreferrer">
                           {t('labels.opne_url')}
@@ -177,8 +167,7 @@ const PossibleSocialMediaAccounts = ({
                         </a>
                       </Button>
                     )}
-                    {!item.url
-                    && (
+                    {!item.url && (
                       <span
                         className={`
                           flex h-[32px] items-center gap-1 rounded-2xl border border-warning-stroke px-2 text-amber
@@ -199,8 +188,7 @@ const PossibleSocialMediaAccounts = ({
                 )}
               </div>
             ))}
-            {!reverseLookup.reverse_lookup_social_networks_upsell_purchased
-            && (
+            {!reverseLookup.reverse_lookup_social_networks_upsell_purchased && (
               <div className="flex flex-col items-center rounded-2xl border border-primary-200 bg-primary-50 px-4 py-8">
                 <h4 className="font-bold">{t('expand_search.title')}</h4>
                 <p className="mt-2 text-sm text-weak">{t('expand_search.more_platforms')}</p>
@@ -216,10 +204,7 @@ const PossibleSocialMediaAccounts = ({
                   <IconSocialTwitch className="size-4" />
                   <IconSocialX className="size-4" />
                 </div>
-                <Button
-                  className="mt-6"
-                  onClick={() => setShowUpsellDialog(true)}
-                >
+                <Button className="mt-6" onClick={() => setShowUpsellDialog(true)}>
                   <IconLockOpenLine className="size-4" />
                   {t('expand_search.unlock_platforms')}
                 </Button>
@@ -234,11 +219,7 @@ const PossibleSocialMediaAccounts = ({
         onSuccessClose={() => setShowLookingForMore(true)}
         productKey="social_networks"
         translationNamespace="pages.reverse_lookup.report.upsell.social_networks"
-        benefitKeys={[
-          'scan_10_major_social_platforms',
-          'related_usernames_and_public_profile',
-          'matching_accounts',
-        ]}
+        benefitKeys={['scan_10_major_social_platforms', 'related_usernames_and_public_profile', 'matching_accounts']}
         purchaseParams={{ reverseLookupId: reverseLookup.id }}
       />
     </>

@@ -16,12 +16,7 @@ const UnlimitedDownloadsUpsell = ({ open, onOpenChange, onDownloadPdf }: Unlimit
       onDownloadPdf={onDownloadPdf}
       productKey="unlimited_pdf_downloads"
       translationNamespace="pages.reverse_lookup.report.upsell.unlimited_pdf_downloads"
-      benefitKeys={[
-        'upsell_benefits_1',
-        'upsell_benefits_2',
-        'upsell_benefits_3',
-        'upsell_benefits_4',
-      ]}
+      benefitKeys={['upsell_benefits_1', 'upsell_benefits_2', 'upsell_benefits_3', 'upsell_benefits_4']}
     />
   );
 };

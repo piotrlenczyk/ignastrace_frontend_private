@@ -65,9 +65,7 @@ const DataBreachHistory = ({
       return (
         <div className="flex justify-end">
           <Button variant="secondary" asChild>
-            <Link href={`${ROUTES.MEMBER.STATUS.DATA_BREACH_HISTORY}?id=${reverseLookup.id}`}>
-              {t('show_report')}
-            </Link>
+            <Link href={`${ROUTES.MEMBER.STATUS.DATA_BREACH_HISTORY}?id=${reverseLookup.id}`}>{t('show_report')}</Link>
           </Button>
         </div>
       );
@@ -76,13 +74,7 @@ const DataBreachHistory = ({
     return (
       <div className="flex justify-end">
         <Button onClick={handleUnlockClick} disabled={isConsumingUpsell}>
-          {isConsumingUpsell
-            ? (
-                <IconLoaderCircle className="size-4" />
-              )
-            : (
-                <IconLockOpenLine className="size-4" />
-              )}
+          {isConsumingUpsell ? <IconLoaderCircle className="size-4" /> : <IconLockOpenLine className="size-4" />}
           {t('unlock_report')}
         </Button>
       </div>
@@ -92,9 +84,7 @@ const DataBreachHistory = ({
   return (
     <>
       <Card className={cn('flex flex-col gap-6 border-stroke-weak px-4 py-6 shadow-raised lg:px-6', className)}>
-        <h4 className="font-bold">
-          {t('title')}
-        </h4>
+        <h4 className="font-bold">{t('title')}</h4>
 
         <AlertStatus
           title={t('alert_title', { count: breachCount })}
@@ -104,11 +94,7 @@ const DataBreachHistory = ({
         {renderActionButton()}
       </Card>
 
-      <DataBreachUpsell
-        open={showUpsellDialog}
-        onOpenChange={setShowUpsellDialog}
-        reportId={reverseLookup.id}
-      />
+      <DataBreachUpsell open={showUpsellDialog} onOpenChange={setShowUpsellDialog} reportId={reverseLookup.id} />
     </>
   );
 };

@@ -14,10 +14,7 @@ import { ROUTES } from '@/constants/routes';
 import { useConsent } from '@/hooks/use-consent';
 import { useRouter } from '@/libs/i18n-routing';
 import { cn } from '@/libs/utils';
-import {
-  createPhoneFormSchema,
-  type PhoneFormValues,
-} from '@/types/phone-form.types';
+import { createPhoneFormSchema, type PhoneFormValues } from '@/types/phone-form.types';
 
 import { Button } from '../ui/button';
 import { ConsentModal } from '../ui/consent-modal';
@@ -102,22 +99,14 @@ export const PhoneInput = ({
       };
       proceed(data as PhoneFormValues);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAgreed, data]);
 
   return (
     <>
-      {showConsentModal && (
-        <ConsentModal
-          onAccept={handleConsentAccept}
-          onDecline={handleConsentDecline}
-        />
-      )}
+      {showConsentModal && <ConsentModal onAccept={handleConsentAccept} onDecline={handleConsentDecline} />}
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(handleSubmit)}
-          className={cn('phone-input', lgBackground, className)}
-        >
+        <form onSubmit={form.handleSubmit(handleSubmit)} className={cn('phone-input', lgBackground, className)}>
           <div className="phone-input-form">
             <FormField
               control={form.control}
@@ -127,8 +116,7 @@ export const PhoneInput = ({
                   <FormControl>
                     <PhoneInputBase
                       value={field.value}
-                      onChange={formattedPhone =>
-                        field.onChange(formattedPhone)}
+                      onChange={(formattedPhone) => field.onChange(formattedPhone)}
                       defaultCountry={defaultCountry}
                     />
                   </FormControl>
@@ -142,13 +130,11 @@ export const PhoneInput = ({
             </div>
           )}
           <Button type="submit" size="xl" disabled={isSubmitting}>
-            {isSubmitting
-              ? (
-                  <IconLoaderCircle size="large" className="animate-spin" />
-                )
-              : (
-                  <IconLocationMy size="large" />
-                )}
+            {isSubmitting ? (
+              <IconLoaderCircle size="large" className="animate-spin" />
+            ) : (
+              <IconLocationMy size="large" />
+            )}
             {t('submit')}
           </Button>
         </form>

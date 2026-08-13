@@ -8,8 +8,7 @@ import type { User } from '@/types/user';
 
 import { ReportReady } from './report-ready';
 
-export const SearchCompleteContent = (
-  { phoneNumber, user }: { phoneNumber: string; user: User }) => {
+export const SearchCompleteContent = ({ phoneNumber, user }: { phoneNumber: string; user: User }) => {
   const t = useTranslations('pages.reverse_lookup.member_area.phone_lookup');
   const [isShowPDF, setIsShowPDF] = useState(false);
 

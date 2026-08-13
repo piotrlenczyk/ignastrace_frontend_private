@@ -30,7 +30,7 @@ export const ContactInformation = () => {
 
   return (
     <dl className="flex flex-col gap-6">
-      {items.map(item => (
+      {items.map((item) => (
         <div key={item.id} className="flex gap-2">
           <item.icon size="large" className="text-secondary" />
           <div>

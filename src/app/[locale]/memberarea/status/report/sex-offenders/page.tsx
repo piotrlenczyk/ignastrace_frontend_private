@@ -9,7 +9,8 @@ import type { User } from '@/types/user';
 
 import { ReportDetails } from './components/report-details';
 
-const SexOffendersPage = async ({ searchParams }: { searchParams?: { id?: string } }) => {
+const SexOffendersPage = async (props: PageProps<'/[locale]/memberarea/status/report/sex-offenders'>) => {
+  const searchParams = await props.searchParams;
   const session = await auth();
   const isAuthenticated = !!session;
 
@@ -35,9 +36,7 @@ const SexOffendersPage = async ({ searchParams }: { searchParams?: { id?: string
   const api = await getApi();
 
   const [sexOffenderData, user] = await Promise.all([
-    api.get<SexOffenderData>(
-      `/sex_offenders_data/${searchParams.id}`,
-    ),
+    api.get<SexOffenderData>(`/sex_offenders_data/${searchParams.id}`),
     api.get<User>('/user?expand=purchase_info'),
   ]);
 
@@ -45,9 +44,7 @@ const SexOffendersPage = async ({ searchParams }: { searchParams?: { id?: string
     redirect(ROUTES.MEMBER.STATUS.HOME);
   }
 
-  return (
-    <ReportDetails sexOffenderData={sexOffenderData} user={user} />
-  );
+  return <ReportDetails sexOffenderData={sexOffenderData} user={user} />;
 };
 
 export default SexOffendersPage;

@@ -12,12 +12,7 @@ import {
 } from '@/components/ui/icon/icons';
 import { IconSexOffender } from '@/components/ui/icon/icons/IconSexOffender';
 import { IconTimeRefresh } from '@/components/ui/icon/icons/TimeRefresh';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { ROUTES } from '@/constants/routes';
 import { useFeatures } from '@/hooks/use-features';
 import { Link, usePathname } from '@/libs/i18n-routing';
@@ -43,13 +38,11 @@ const Item = ({ className, href, children, active }: ItemProps) => {
   return (
     <Link
       href={primaryHref || '/'}
-      className={
-        cn(
-          'relative flex flex-1 flex-col items-center gap-1 text-center text-xs [&_svg]:text-neutral',
-          getActive(active || href, pathname) && 'text-primary [&_svg]:text-primary',
-          className,
-        )
-      }
+      className={cn(
+        'relative flex flex-1 flex-col items-center gap-1 text-center text-xs [&_svg]:text-neutral',
+        getActive(active || href, pathname) && 'text-primary [&_svg]:text-primary',
+        className,
+      )}
     >
       {children}
     </Link>
@@ -72,18 +65,11 @@ export const FooterNav = () => {
           <Item href={ROUTES.MEMBER.STATUS.HOME}>
             <IconTimeRefresh size="large" />
           </Item>
-          <button
-            type="button"
-            onClick={() => setIsToolsOpen(true)}
-            className="flex flex-col items-center"
-          >
+          <button type="button" onClick={() => setIsToolsOpen(true)} className="flex flex-col items-center">
             <IconGridAlt size="large" />
           </button>
-          <Item href={[
-            ROUTES.MEMBER.SETTINGS.ACCOUNT,
-            ROUTES.MEMBER.SETTINGS.BILLING,
-            ROUTES.MEMBER.SETTINGS.GET_HELP,
-          ]}
+          <Item
+            href={[ROUTES.MEMBER.SETTINGS.ACCOUNT, ROUTES.MEMBER.SETTINGS.BILLING, ROUTES.MEMBER.SETTINGS.GET_HELP]}
           >
             <IconSettingsAltLine size="large" />
           </Item>
@@ -91,15 +77,9 @@ export const FooterNav = () => {
       </div>
 
       <Sheet open={isToolsOpen} onOpenChange={setIsToolsOpen}>
-        <SheetContent
-          side="bottom"
-          className="rounded-t-3xl p-0 pb-8"
-          hideCloseButton
-        >
+        <SheetContent side="bottom" className="rounded-t-3xl p-0 pb-8" hideCloseButton>
           <SheetHeader className="mb-6 border-b border-stroke-weak px-4 pt-6">
-            <SheetTitle className="pb-2 text-left text-lg font-bold">
-              {t('tools_library')}
-            </SheetTitle>
+            <SheetTitle className="pb-2 text-left text-lg font-bold">{t('tools_library')}</SheetTitle>
           </SheetHeader>
 
           <div className="flex flex-col gap-2 px-4">

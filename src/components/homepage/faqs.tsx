@@ -1,12 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { getFeatures } from '@/libs/server/feature-flags';
 import { cn } from '@/libs/utils';
 
@@ -33,40 +28,27 @@ const Title = async ({ className, variant = 'section' }: { className?: string; v
 
   const css = variant === 'section' ? 'mb-8 text-center lg:mb-14' : 'h4 font-bold';
 
-  return (
-    <h2 className={cn(css, className)}>
-      {t('title')}
-    </h2>
-  );
+  return <h2 className={cn(css, className)}>{t('title')}</h2>;
 };
 
 const Content = async ({ className }: { className?: string }) => {
   const t = await getTranslations('pages.index.faqs');
   const { ENABLE_REVERSE_LOOKUP } = await getFeatures();
-  const faqs = !ENABLE_REVERSE_LOOKUP
-    ? content.filter(({ id }) => id !== 'q7' && id !== 'q8' && id !== 'q9')
-    : content;
+  const faqs = !ENABLE_REVERSE_LOOKUP ? content.filter(({ id }) => id !== 'q7' && id !== 'q8' && id !== 'q9') : content;
 
   return (
     <Accordion
       type="single"
       collapsible
-      className={cn(
-        'mx-auto flex w-full max-w-[960px] flex-col items-stretch',
-        className,
-      )}
+      className={cn('mx-auto flex w-full max-w-[960px] flex-col items-stretch', className)}
     >
       {faqs.map(({ id, question, answer }: Question) => {
         return (
           <AccordionItem value={id} key={id}>
-            <AccordionTrigger
-              className="gap-4 py-4 text-left text-lg text-strong lg:py-5"
-            >
+            <AccordionTrigger className="gap-4 py-4 text-left text-lg text-strong lg:py-5">
               {t(question)}
             </AccordionTrigger>
-            <AccordionContent>
-              {t(answer)}
-            </AccordionContent>
+            <AccordionContent>{t(answer)}</AccordionContent>
           </AccordionItem>
         );
       })}
@@ -74,11 +56,10 @@ const Content = async ({ className }: { className?: string }) => {
   );
 };
 
-const FAQs = ({ children, className, id }:
-{ children: ReactNode; className?: string; id?: string }) => {
+const FAQs = ({ children, className, id }: { children: ReactNode; className?: string; id?: string }) => {
   return (
     <section className={className} id={id}>
-      { children }
+      {children}
     </section>
   );
 };

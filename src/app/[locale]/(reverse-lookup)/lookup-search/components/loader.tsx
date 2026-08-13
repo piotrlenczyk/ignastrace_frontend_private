@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { IconCellTower } from '@/components/ui/icon/icons/CellTower';
 import { IconSearch } from '@/components/ui/icon/icons/Search';
@@ -20,7 +20,11 @@ export const Loader = ({
   rawPhone,
   phoneNumber,
   countryName,
-}: { rawPhone: string; phoneNumber: string; countryName: string }) => {
+}: {
+  rawPhone: string;
+  phoneNumber: string;
+  countryName: string;
+}) => {
   const [loadedSteps, setLoadedSteps] = useState(0);
   const t = useTranslations('pages.reverse_lookup.search.components.loader.step_1');
   const { data: carrierResponse } = useCarrierQuery({ phone: rawPhone });
@@ -33,7 +37,7 @@ export const Loader = ({
     let timeout: NodeJS.Timeout;
     if (carrier && loadedSteps < totalSteps) {
       timeout = setTimeout(() => {
-        setLoadedSteps(prev => prev + 1);
+        setLoadedSteps((prev) => prev + 1);
       }, loadingTimePerStep);
     }
     return () => {
@@ -47,13 +51,16 @@ export const Loader = ({
     }
   }, [loadedSteps]);
 
-  const loadingItems = useMemo(() => [
-    { text: t('carrier.text'), loadedText: carrier || '' },
-    { text: t('type.text'), loadedText: t('type.loadedText') },
-    { text: t('country.text'), loadedText: countryName },
-    { text: t('city.text'), loadedText: t('location.loadedText') },
-    { text: t('location.text'), loadedText: t('city.loadedText') },
-  ], [t, carrier, countryName]);
+  const loadingItems = useMemo(
+    () => [
+      { text: t('carrier.text'), loadedText: carrier || '' },
+      { text: t('type.text'), loadedText: t('type.loadedText') },
+      { text: t('country.text'), loadedText: countryName },
+      { text: t('city.text'), loadedText: t('location.loadedText') },
+      { text: t('location.text'), loadedText: t('city.loadedText') },
+    ],
+    [t, carrier, countryName],
+  );
 
   return (
     <main className="s-main funnel-container animate-fade-in animation-duration-1000">

@@ -12,12 +12,10 @@ import { ROUTES } from './constants/routes';
 import { getApi } from './libs/server/api';
 
 declare module 'next-auth' {
-  // eslint-disable-next-line ts/consistent-type-definitions
   interface User extends ApiUser {
     apiToken: string;
   }
 
-  // eslint-disable-next-line ts/consistent-type-definitions
   interface Session {
     apiToken: string;
     user: {
@@ -28,7 +26,6 @@ declare module 'next-auth' {
 }
 
 declare module '@auth/core/jwt' {
-  // eslint-disable-next-line ts/consistent-type-definitions
   interface JWT {
     idToken?: string;
     apiToken: string;
@@ -83,24 +80,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
 });
 
-async function handleOAuthSignIn(
-  provider: string,
-  accessToken: string,
-): Promise<User> {
+async function handleOAuthSignIn(provider: string, accessToken: string): Promise<User> {
   try {
     const api = await getApi();
     const phoneNumber = await getFunnelPhone();
 
-    const { data, authHeader } = await api.request<ApiUser>(
-      `/oauth/${provider}`,
-      {
-        method: 'POST',
-        body: {
-          access_token: accessToken,
-          onboarding_phone_number: phoneNumber,
-        },
+    const { data, authHeader } = await api.request<ApiUser>(`/oauth/${provider}`, {
+      method: 'POST',
+      body: {
+        access_token: accessToken,
+        onboarding_phone_number: phoneNumber,
       },
-    );
+    });
 
     if (!authHeader) {
       throw new AuthError(`Authentication failed with ${provider}`);

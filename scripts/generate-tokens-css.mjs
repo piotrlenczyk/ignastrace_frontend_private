@@ -19,6 +19,8 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
 
+import { format, resolveConfig } from 'prettier';
+
 const args = {};
 for (let i = 2; i < process.argv.length; i += 2) {
   args[process.argv[i].replace(/^--/, '')] = process.argv[i + 1];
@@ -232,7 +234,9 @@ for (const source of ['corporate', 'local']) {
 
     const previous = textStyles.get(token);
     if (previous && previous.source === source) {
-      warnings.push(`${source}: text styles "${name}" and "${previous.figmaName}" both map to "${token}" — kept "${previous.figmaName}"`);
+      warnings.push(
+        `${source}: text styles "${name}" and "${previous.figmaName}" both map to "${token}" — kept "${previous.figmaName}"`,
+      );
       continue;
     }
 
@@ -286,7 +290,7 @@ function header(title, note) {
     ' */',
     '',
   ]
-    .filter(line => line !== null)
+    .filter((line) => line !== null)
     .join('\n');
 }
 
@@ -318,12 +322,16 @@ function familyValue(designName) {
 const familyLabels = new Map();
 for (const family of families) {
   if (!family.startsWith(FAMILY_PREFIX)) {
-    warnings.push(`text styles reference "${family}" as a font family, which is not a ${FAMILY_PREFIX}* token — omitted`);
+    warnings.push(
+      `text styles reference "${family}" as a font family, which is not a ${FAMILY_PREFIX}* token — omitted`,
+    );
     continue;
   }
   const designName = typography.get(family);
   if (designName === undefined) {
-    warnings.push(`text styles reference font family "${family}", which the typography scale does not define — omitted`);
+    warnings.push(
+      `text styles reference font family "${family}", which the typography scale does not define — omitted`,
+    );
     continue;
   }
   familyLabels.set(family, { label: family.slice(FAMILY_PREFIX.length), designName: String(designName) });
@@ -345,7 +353,7 @@ const styleSections = families.map((family) => {
     ? `  /* ---- ${emitted.label} — pair with font-${emitted.label} ---- */`
     : `  /* ---- ${family} — no family token emitted, see warnings ---- */`;
   const blocks = [...textStyles.values()]
-    .filter(style => style.family === family)
+    .filter((style) => style.family === family)
     .sort((a, b) => b.size - a.size || (a.weight ?? 0) - (b.weight ?? 0) || a.token.localeCompare(b.token))
     .map((style) => {
       const local = style.source === 'local' ? ' /* local */' : '';
@@ -361,16 +369,28 @@ const styleSections = families.map((family) => {
       }
       return lines.join('\n');
     });
-  // No blank line between styles, tempting though it is: stylelint's standard config forbids
-  // an empty line between consecutive custom properties. Only the section heading gets one,
-  // because the rule stops checking after a comment.
+  // No blank line between styles, tempting though it is: the list reads as one
+  // block that way, and the section heading is what separates groups.
   return [`${heading}\n`, ...blocks].join('\n');
 });
 
 mkdirSync(OUTDIR, { recursive: true });
 
-writeFileSync(
-  join(OUTDIR, 'primitives.css'),
+/*
+ * Written through Prettier rather than straight to disk. Prettier formats CSS
+ * in this repository, so a generator that emitted its own whitespace would make
+ * every regeneration produce a diff of nothing but reformatting — and the first
+ * `npm run format` after one would produce a second.
+ */
+const prettierOptions = await resolveConfig(join(OUTDIR, 'primitives.css'));
+
+async function writeCss(name, contents) {
+  const path = join(OUTDIR, name);
+  writeFileSync(path, await format(contents, { ...prettierOptions, filepath: path }));
+}
+
+await writeCss(
+  'primitives.css',
   `${header(
     'Primitives — the raw palette.',
     'Do not reference these from components; use semantics.css instead.',
@@ -388,33 +408,37 @@ writeFileSync(
  * compression. See docs/adr/0005-two-colour-systems-during-the-redesign.md,
  * which corrects record 0004 on this point.
  */
-writeFileSync(
-  join(OUTDIR, 'semantics.css'),
+await writeCss(
+  'semantics.css',
   `${header(
     'Semantics — colour intent tokens.',
     'Requires primitives.css. Tokens tagged "local" come from this Figma file and override the corporate library.',
   )}@import "./primitives.css";\n\n@theme static {\n${semanticLines.join('\n')}\n}\n`,
 );
 
-writeFileSync(
-  join(OUTDIR, 'typo.css'),
+await writeCss(
+  'typo.css',
   `${header(
     'Typography — named text styles.',
-    'A style sets size, line height, weight and tracking; the font family is a separate font-* class, because Tailwind\'s --text-* namespace has no family modifier. Families point at the custom property next/font exposes.',
+    "A style sets size, line height, weight and tracking; the font family is a separate font-* class, because Tailwind's --text-* namespace has no family modifier. Families point at the custom property next/font exposes.",
   )}@theme static {\n  /* ---- families ---- */\n${familyLines.join('\n')}\n\n${styleSections.join('\n\n')}\n}\n`,
 );
 
 // ---------------------------------------------------------------- report ----
-const localSemantics = [...semantics.values()].filter(s => s.source === 'local').length;
+const localSemantics = [...semantics.values()].filter((s) => s.source === 'local').length;
 const overrides = [...semantics.entries()].filter(
   ([name, s]) => s.source === 'local' && renamedSemantics.corporate.has(name),
 ).length;
 
-const localStyles = [...textStyles.values()].filter(s => s.source === 'local').length;
+const localStyles = [...textStyles.values()].filter((s) => s.source === 'local').length;
 
 console.log(`${relative(process.cwd(), join(OUTDIR, 'primitives.css'))}  ${primitives.size} tokens`);
-console.log(`${relative(process.cwd(), join(OUTDIR, 'semantics.css'))}   ${semantics.size} tokens (${localSemantics} local, ${overrides} overriding corporate)`);
-console.log(`${relative(process.cwd(), join(OUTDIR, 'typo.css'))}        ${textStyles.size} text styles, ${familyLines.length} families (${localStyles} local)`);
+console.log(
+  `${relative(process.cwd(), join(OUTDIR, 'semantics.css'))}   ${semantics.size} tokens (${localSemantics} local, ${overrides} overriding corporate)`,
+);
+console.log(
+  `${relative(process.cwd(), join(OUTDIR, 'typo.css'))}        ${textStyles.size} text styles, ${familyLines.length} families (${localStyles} local)`,
+);
 if (warnings.length) {
   console.log('');
   for (const w of warnings) {

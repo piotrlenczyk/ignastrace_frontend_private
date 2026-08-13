@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl';
 
-import { usePhoneNumberFormatter } from '@/hooks/use-phone-number-formatter';
+import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import type { Notification } from '@/types/notification';
 
 const translations = {
@@ -13,25 +13,18 @@ const translations = {
 export const useNotificationText = (notification: Notification) => {
   const t = useTranslations('pages.notifications');
 
-  const text_accessed = notification.location.type === 'LinkLocation'
-    ? t.rich('link_accessed', {
-      strong: chunks => (
-        <strong>
-          {chunks}
-        </strong>
-      ),
-      notificationName: notification.location.name,
-    })
-    : null;
+  const text_accessed =
+    notification.location.type === 'LinkLocation'
+      ? t.rich('link_accessed', {
+          strong: (chunks) => <strong>{chunks}</strong>,
+          notificationName: notification.location.name ?? '',
+        })
+      : null;
 
   const text = t.rich(translations[`${notification.location.type}-${notification.kind}`], {
-    strong: chunks => (
-      <strong>
-        {chunks}
-      </strong>
-    ),
-    notificationName: notification.location.name,
-    phone: usePhoneNumberFormatter(notification.location.phone).number,
+    strong: (chunks) => <strong>{chunks}</strong>,
+    notificationName: notification.location.name ?? '',
+    phone: formatPhoneNumber(notification.location.phone).number,
   });
 
   return {

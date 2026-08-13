@@ -12,17 +12,15 @@ const Results = ({ data, fetchMoreFn }: { data: NotificationsApiResponse; fetchM
   return (
     <>
       <div className="flex flex-col gap-3">
-        {data.notifications.map(notification => (
+        {data.notifications.map((notification) => (
           <NotificationItem notification={notification} key={notification.id} />
         ))}
       </div>
-      {
-        data.has_more && (
-          <Button className="mt-4 w-full" variant="secondary" size="lg" onClick={fetchMoreFn}>
-            {t('load_more')}
-          </Button>
-        )
-      }
+      {data.has_more && (
+        <Button className="mt-4 w-full" variant="secondary" size="lg" onClick={fetchMoreFn}>
+          {t('load_more')}
+        </Button>
+      )}
     </>
   );
 };
@@ -35,16 +33,22 @@ const EmptyState = () => {
       <div className="brand-icon mx-auto mb-4 size-24 rounded-3xl">
         <IconNotificationRingingLine className="size-12" />
       </div>
-      <h2 className="h4 mb-1">{t('empty.title') }</h2>
+      <h2 className="h4 mb-1">{t('empty.title')}</h2>
       <p>{t('empty.text')}</p>
     </div>
   );
 };
 
-export const NotificationList = (
-  { data, fetchMoreFn }:
-  { data: NotificationsApiResponse; fetchMoreFn: () => void }) => {
-  return data.notifications && data.notifications.length
-    ? <Results data={data} fetchMoreFn={fetchMoreFn} />
-    : <EmptyState />;
+export const NotificationList = ({
+  data,
+  fetchMoreFn,
+}: {
+  data: NotificationsApiResponse;
+  fetchMoreFn: () => void;
+}) => {
+  return data.notifications && data.notifications.length ? (
+    <Results data={data} fetchMoreFn={fetchMoreFn} />
+  ) : (
+    <EmptyState />
+  );
 };

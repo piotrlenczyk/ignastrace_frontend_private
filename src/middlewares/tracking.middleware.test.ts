@@ -19,7 +19,7 @@ describe('handleTracking', () => {
 
     const response = handleTracking(request);
 
-    const cookieNames = response.cookies.getAll().map(c => c.name);
+    const cookieNames = response.cookies.getAll().map((c) => c.name);
 
     expect(cookieNames).toContain(`${TRACKING_PREFIX}utm_source`);
   });
@@ -29,7 +29,7 @@ describe('handleTracking', () => {
 
     const response = handleTracking(request);
 
-    const cookieNames = response.cookies.getAll().map(c => c.name);
+    const cookieNames = response.cookies.getAll().map((c) => c.name);
 
     expect(cookieNames).toContain(`${TRACKING_PREFIX}utm_source`);
     expect(cookieNames).not.toContain(`${TRACKING_PREFIX}plan`);

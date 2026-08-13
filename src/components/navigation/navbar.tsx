@@ -19,8 +19,7 @@ export const Navbar = () => {
     setLanguageSelectorVisible(!languageSelectorVisible);
   };
 
-  const isReverseLookupPage = pathname.includes('/reverse-phone-lookup')
-    || pathname.includes('/lookup-');
+  const isReverseLookupPage = pathname.includes('/reverse-phone-lookup') || pathname.includes('/lookup-');
 
   const logoHref = isReverseLookupPage ? ROUTES.REVERSE_LOOKUP.HOME : ROUTES.HOME;
 
@@ -37,14 +36,10 @@ export const Navbar = () => {
           <div className="hidden lg:mb-[2px] lg:block">
             <DesktopMainNavigation />
           </div>
-          <Suspense>
-            {languageSelectorVisible && <LanguageSelector />}
-          </Suspense>
+          <Suspense>{languageSelectorVisible && <LanguageSelector />}</Suspense>
         </div>
 
-        <MobileDropdownMenu
-          toggleLanguageSelectorVisibility={toggleLanguageSelectorVisibility}
-        />
+        <MobileDropdownMenu toggleLanguageSelectorVisibility={toggleLanguageSelectorVisibility} />
         <DesktopLoginButton />
       </nav>
     </header>

@@ -6,8 +6,8 @@ import { auth } from '@/auth';
 import ProductLayout from '@/components/layouts/product-layout';
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
+import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
-import { usePhoneNumberFormatter } from '@/hooks/use-phone-number-formatter';
 import { Link } from '@/libs/i18n-routing';
 
 export default async function MessageSendingPage() {
@@ -19,7 +19,7 @@ export default async function MessageSendingPage() {
   }
 
   const storedPhoneNumber = await getFunnelPhone();
-  const formattedNumber = usePhoneNumberFormatter(storedPhoneNumber);
+  const formattedNumber = formatPhoneNumber(storedPhoneNumber);
 
   const redirectUrl = await getSubscriptionRedirect({
     routes: {
@@ -47,21 +47,14 @@ export default async function MessageSendingPage() {
         <h1 className="h3 font-bold">{tFindByNumber('find_by_number')}</h1>
         <div className="container-content flex flex-1 flex-col justify-center gap-8">
           <div className="globe">
-            <div className="globe-map">
-            </div>
+            <div className="globe-map"></div>
           </div>
           <div className="grid gap-2">
-            <h1 className="text-center h3 font-bold">
-              {t('title')}
-            </h1>
-            <p className="text-center">
-              {phoneNumber}
-            </p>
+            <h1 className="text-center h3 font-bold">{t('title')}</h1>
+            <p className="text-center">{phoneNumber}</p>
           </div>
           <Button size="lg" asChild>
-            <Link href={ROUTES.MEMBER.STATUS.HOME}>
-              {t('cta')}
-            </Link>
+            <Link href={ROUTES.MEMBER.STATUS.HOME}>{t('cta')}</Link>
           </Button>
         </div>
       </main>

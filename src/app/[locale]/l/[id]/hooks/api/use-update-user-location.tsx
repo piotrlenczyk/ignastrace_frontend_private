@@ -10,13 +10,13 @@ export const LOCATION_STATUS = {
 };
 
 type ApprovedParams = Pick<Location, 'address' | 'id' | 'lat' | 'lon'> & {
-  status: typeof LOCATION_STATUS['APPROVED'];
+  status: (typeof LOCATION_STATUS)['APPROVED'];
 };
 type RejectedParams = Pick<Location, 'id'> & {
   address?: never;
   lat?: never;
   lon?: never;
-  status: typeof LOCATION_STATUS['REJECTED'];
+  status: (typeof LOCATION_STATUS)['REJECTED'];
 };
 
 export function useUpdateUserLocation({

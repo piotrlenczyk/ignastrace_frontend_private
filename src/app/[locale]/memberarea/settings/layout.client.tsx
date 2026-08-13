@@ -45,15 +45,11 @@ export function SettingsLayoutClient({ children }: SettingsLayoutClientProps) {
   };
 
   const getCurrentTabValue = () => {
-    return settingsTabs.find(tab => pathname.includes(tab.value))?.value || settingsTabs?.[0]?.value;
+    return settingsTabs.find((tab) => pathname.includes(tab.value))?.value || settingsTabs?.[0]?.value;
   };
 
   useEffect(() => {
-    Promise.all(
-      settingsTabs.map(tab =>
-        router.prefetch(tab.value),
-      ),
-    );
+    Promise.all(settingsTabs.map((tab) => router.prefetch(tab.value)));
   }, [router]);
 
   return (
@@ -74,17 +70,10 @@ export function SettingsLayoutClient({ children }: SettingsLayoutClientProps) {
       </header>
 
       <div className="container-content">
-        <Tabs
-          value={getCurrentTabValue()}
-          onValueChange={handleTabChange}
-        >
+        <Tabs value={getCurrentTabValue()} onValueChange={handleTabChange}>
           <TabsList className="mb-4 w-full">
-            {settingsTabs.map(tab => (
-              <TabsTrigger
-                key={tab.value}
-                value={tab.value}
-                className="grow text-sm xs:text-base"
-              >
+            {settingsTabs.map((tab) => (
+              <TabsTrigger key={tab.value} value={tab.value} className="grow text-sm xs:text-base">
                 {t(`${tab.title}.title`)}
               </TabsTrigger>
             ))}

@@ -1,5 +1,3 @@
-/* eslint-disable react-dom/no-dangerously-set-innerhtml */
-
 import { getLocale } from 'next-intl/server';
 
 import ProductLayout from '@/components/layouts/product-layout';

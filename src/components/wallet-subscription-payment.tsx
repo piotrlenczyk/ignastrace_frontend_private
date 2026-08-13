@@ -107,35 +107,25 @@ export default function WalletSubscriptionPayment({
     (paymentRequest as PaymentRequest).show();
   };
 
-  return (
-    (hasCheckedAvailability && !isAvailable)
-      ? (
-          <div className="border border-stroke-weak p-2 text-strong">
-            <h3 className="text-base font-medium">
-              {
-                method === 'googlePay'
-                  ? t('errors.google_pay_not_available')
-                  : t('errors.apple_pay_not_available')
-              }
-            </h3>
-            <p className="text-sm">
-              {
-                method === 'googlePay'
-                  ? t('errors.google_pay_not_available_description')
-                  : t('errors.apple_pay_not_available_description')
-              }
-            </p>
-          </div>
-        )
-      : (
-          <div className="flex flex-col gap-6">
-            <WalletPaymentButton
-              isLoading={!hasCheckedAvailability}
-              onClick={handleButtonClick}
-              method={method}
-              disabled={!isAvailable}
-            />
-          </div>
-        )
+  return hasCheckedAvailability && !isAvailable ? (
+    <div className="border border-stroke-weak p-2 text-strong">
+      <h3 className="text-base font-medium">
+        {method === 'googlePay' ? t('errors.google_pay_not_available') : t('errors.apple_pay_not_available')}
+      </h3>
+      <p className="text-sm">
+        {method === 'googlePay'
+          ? t('errors.google_pay_not_available_description')
+          : t('errors.apple_pay_not_available_description')}
+      </p>
+    </div>
+  ) : (
+    <div className="flex flex-col gap-6">
+      <WalletPaymentButton
+        isLoading={!hasCheckedAvailability}
+        onClick={handleButtonClick}
+        method={method}
+        disabled={!isAvailable}
+      />
+    </div>
   );
-};
+}

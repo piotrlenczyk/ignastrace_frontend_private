@@ -20,15 +20,14 @@ type CheckoutPageClientProps = {
   plan: FunnelPlan;
 };
 
-export const CheckoutPageClient = (
-  {
-    currency,
-    formattedNumber,
-    country,
-    defaultProduct,
-    enableUpsells,
-    plan,
-  }: CheckoutPageClientProps) => {
+export const CheckoutPageClient = ({
+  currency,
+  formattedNumber,
+  country,
+  defaultProduct,
+  enableUpsells,
+  plan,
+}: CheckoutPageClientProps) => {
   const t = useTranslations('pages.checkout');
 
   const [selectedCurrency, setSelectedCurrency] = useState(currency);
@@ -39,9 +38,7 @@ export const CheckoutPageClient = (
         <div className="container-content flex items-start justify-between">
           <div>
             <h1 className="mb-1 text-2xl font-bold lg:h3">{t('title')}</h1>
-            <div className="text-2xl font-bold text-primary lg:h3 lg:text-primary">
-              {formattedNumber.number}
-            </div>
+            <div className="text-2xl font-bold text-primary lg:h3 lg:text-primary">{formattedNumber.number}</div>
           </div>
           <CurrencySelector value={selectedCurrency} onChange={setSelectedCurrency} />
         </div>

@@ -47,13 +47,14 @@ const DialogContent = React.forwardRef<
         >
           {children}
           {!hideCloseButton && (
-            <DialogPrimitive.Close className={`
-              absolute top-4 right-4 rounded-sm opacity-70 ring-offset-background transition-opacity
-              hover:opacity-100
-              focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-hidden
-              disabled:pointer-events-none
-              data-[state=open]:bg-accent data-[state=open]:text-muted-foreground
-            `}
+            <DialogPrimitive.Close
+              className={`
+                absolute top-4 right-4 rounded-sm opacity-70 ring-offset-background transition-opacity
+                hover:opacity-100
+                focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-hidden
+                disabled:pointer-events-none
+                data-[state=open]:bg-accent data-[state=open]:text-muted-foreground
+              `}
             >
               <Cross2Icon className="size-6" />
               <span className="sr-only">Close</span>
@@ -66,24 +67,12 @@ const DialogContent = React.forwardRef<
 ));
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
-const DialogHeader = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
-  <div
-    className={cn(
-      'mr-6 flex flex-col space-y-1.5',
-      className,
-    )}
-    {...props}
-  />
+const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn('mr-6 flex flex-col space-y-1.5', className)} {...props} />
 );
 DialogHeader.displayName = 'DialogHeader';
 
-const DialogFooter = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
+const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div className={cn('flex gap-2', className)} {...props} />
 );
 DialogFooter.displayName = 'DialogFooter';
@@ -92,11 +81,7 @@ const DialogTitle = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
 >(({ className, ...props }, ref) => (
-  <DialogPrimitive.Title
-    ref={ref}
-    className={cn('h4 mb-2 leading-none', className)}
-    {...props}
-  />
+  <DialogPrimitive.Title ref={ref} className={cn('h4 mb-2 leading-none', className)} {...props} />
 ));
 DialogTitle.displayName = DialogPrimitive.Title.displayName;
 

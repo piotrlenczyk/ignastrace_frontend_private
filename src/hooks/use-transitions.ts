@@ -13,9 +13,7 @@ export function useTransitions() {
   const transitionContext = useContext(TransitionContext);
 
   if (!transitionContext) {
-    throw new Error(
-      'You are attempting to use useTransitions outside of a TransitionContext.',
-    );
+    throw new Error('You are attempting to use useTransitions outside of a TransitionContext.');
   }
 
   const context = transitionContext;

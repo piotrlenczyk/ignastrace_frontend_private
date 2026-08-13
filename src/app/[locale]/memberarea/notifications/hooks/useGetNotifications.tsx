@@ -54,7 +54,7 @@ export function useNotificationsQuery() {
     },
     select: (data): NotificationsQueryResult => ({
       ...data,
-      notifications: data.pages.flatMap(page => page.notifications),
+      notifications: data.pages.flatMap((page) => page.notifications),
       has_more: data.pages[data.pages.length - 1]?.has_more ?? false,
     }),
     initialPageParam: '',

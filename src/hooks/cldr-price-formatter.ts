@@ -30,7 +30,7 @@ const zeroDecimalCurrency = (currency: string) => {
   ].includes(currency.toUpperCase());
 };
 
-export const useCldrFormatPrice = () => {
+export const createPriceFormatter = () => {
   return (
     price: number,
     currency: string,

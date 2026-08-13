@@ -2,12 +2,7 @@ import { cn } from '@/libs/utils';
 
 import { type IconProps, sizes } from '../iconDefinition';
 
-export const IconSocialGitlab = ({
-  className,
-  color = 'currentColor',
-  size = 'fontSize',
-  ...props
-}: IconProps) => (
+export const IconSocialGitlab = ({ className, color = 'currentColor', size = 'fontSize', ...props }: IconProps) => (
   <svg
     width={sizes[size]}
     height={sizes[size]}
@@ -17,14 +12,8 @@ export const IconSocialGitlab = ({
     className={cn('inline-block shrink-0', className)}
     {...props}
   >
-    <path
-      d="M12.0072 22.2487L16.1472 9.5072H7.86719L12.0072 22.2487Z"
-      fill="#E24329"
-    />
-    <path
-      d="M12.0066 22.2487L7.86656 9.5072H2.06445L12.0066 22.2487Z"
-      fill="#FC6D26"
-    />
+    <path d="M12.0072 22.2487L16.1472 9.5072H7.86719L12.0072 22.2487Z" fill="#E24329" />
+    <path d="M12.0066 22.2487L7.86656 9.5072H2.06445L12.0066 22.2487Z" fill="#FC6D26" />
     <path
       d="M2.06376 9.5072L0.805686 13.3792C0.690936 13.7324 0.816615 14.1193 1.11704 14.3375L12.0059 22.2487L2.06376 9.5072Z"
       fill="#FCA326"
@@ -33,10 +22,7 @@ export const IconSocialGitlab = ({
       d="M2.06445 9.50725H7.86656L5.37302 1.83314C5.24477 1.43821 4.68613 1.43832 4.55788 1.83314L2.06445 9.50725Z"
       fill="#E24329"
     />
-    <path
-      d="M12.0078 22.2487L16.1478 9.5072H21.9499L12.0078 22.2487Z"
-      fill="#FC6D26"
-    />
+    <path d="M12.0078 22.2487L16.1478 9.5072H21.9499L12.0078 22.2487Z" fill="#FC6D26" />
     <path
       d="M21.9499 9.5072L23.208 13.3792C23.3227 13.7324 23.1971 14.1193 22.8966 14.3375L12.0078 22.2487L21.9499 9.5072Z"
       fill="#FCA326"

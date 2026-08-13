@@ -50,27 +50,25 @@ export function ConsentModal({ onAccept, onDecline }: ConsentModalProps) {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="mt-3 flex gap-2">
-          {showDeclineModal
-            ? (
-                <Button onClick={handleDeclineAccept} className="w-full">
-                  {t('decline_accept')}
-                </Button>
-              )
-            : (
-                <>
-                  <Button
-                    variant="outline"
-                    onClick={handleDecline}
-                    className="flex-1 font-normal"
-                    style={{ borderColor: '#FF6E1ACC', color: '#FF6E1ACC' }}
-                  >
-                    {t('decline')}
-                  </Button>
-                  <Button onClick={handleAccept} className="flex-1 font-normal">
-                    {t('accept')}
-                  </Button>
-                </>
-              )}
+          {showDeclineModal ? (
+            <Button onClick={handleDeclineAccept} className="w-full">
+              {t('decline_accept')}
+            </Button>
+          ) : (
+            <>
+              <Button
+                variant="outline"
+                onClick={handleDecline}
+                className="flex-1 font-normal"
+                style={{ borderColor: '#FF6E1ACC', color: '#FF6E1ACC' }}
+              >
+                {t('decline')}
+              </Button>
+              <Button onClick={handleAccept} className="flex-1 font-normal">
+                {t('accept')}
+              </Button>
+            </>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>

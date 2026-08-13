@@ -41,13 +41,7 @@ const StatusPage = async () => {
       <h1 className="h3 font-bold">{t('title')}</h1>
       <p className="text-lg text-strong">{t('description')}</p>
 
-      {serviceRequests.length > 0
-        ? (
-            <ServiceRequests serviceRequests={serviceRequests} />
-          )
-        : (
-            <EmptyState />
-          )}
+      {serviceRequests.length > 0 ? <ServiceRequests serviceRequests={serviceRequests} /> : <EmptyState />}
     </div>
   );
 };

@@ -8,14 +8,7 @@ import { useForm } from 'react-hook-form';
 import { ForgotPasswordForm } from '@/app/[locale]/login/components/forgot-password-form';
 import { SocialSignIn } from '@/components/forms/social-sign-in';
 import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { PasswordInput } from '@/components/ui/password-input';
 import { ROUTES } from '@/constants/routes';
@@ -69,9 +62,7 @@ export const LoginForm = ({ error }: { error: boolean }) => {
 
         <SocialSignIn redirectTo={ROUTES.CHECKOUT} />
 
-        <Separator>
-          {t('or')}
-        </Separator>
+        <Separator>{t('or')}</Separator>
         <form id="sign-in-form" onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col gap-4">
           <FormField
             control={form.control}

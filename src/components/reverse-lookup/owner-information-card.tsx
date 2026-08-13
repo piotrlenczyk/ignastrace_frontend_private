@@ -17,7 +17,7 @@ const PROGRESS_THRESHOLDS = [95, 20, 65, 45, 80, 5];
 
 const shuffleArray = (array: number[]): number[] => {
   return array
-    .map(value => ({ value, sort: Math.random() }))
+    .map((value) => ({ value, sort: Math.random() }))
     .sort((a, b) => a.sort - b.sort)
     .map(({ value }) => value);
 };
@@ -31,13 +31,13 @@ const CollectionStatus = ({ isCompleted, label }: CollectionStatusProps) => {
   return (
     <div className="flex items-center gap-2 lg:gap-2">
       <div className="flex items-center justify-center">
-        {isCompleted
-          ? <IconCheckCircle size="large" className="text-secondary" />
-          : (
-              <div className="flex size-6 items-center justify-center">
-                <IconLoaderCircle size="medium" className="text-gray-500" />
-              </div>
-            )}
+        {isCompleted ? (
+          <IconCheckCircle size="large" className="text-secondary" />
+        ) : (
+          <div className="flex size-6 items-center justify-center">
+            <IconLoaderCircle size="medium" className="text-gray-500" />
+          </div>
+        )}
       </div>
       <span className="text-lg">{label}</span>
     </div>
@@ -94,10 +94,11 @@ export const OwnerInformationCard = ({
       <div className="mt-4 flex gap-5 lg:mt-8 lg:gap-6">
         <AvatarWithLock />
         <div className="flex w-full flex-col">
-          <div className={cn(
-            'progress-bar relative w-full overflow-hidden',
-            isFunnel ? 'progress-bar-60' : 'progress-bar-30',
-          )}
+          <div
+            className={cn(
+              'progress-bar relative w-full overflow-hidden',
+              isFunnel ? 'progress-bar-60' : 'progress-bar-30',
+            )}
           >
             <div className="absolute inset-4 flex items-center justify-end">
               <span className={cn('text-sm font-semibold', progress === PROGRESS_BAR_TOTAL && 'text-white')}>
@@ -126,18 +127,9 @@ export const OwnerInformationCard = ({
           isCompleted={progress > (randomizedThresholds[2] ?? 45)}
           label={t('collecting_data_online')}
         />
-        <CollectionStatus
-          isCompleted={progress > (randomizedThresholds[3] ?? 65)}
-          label={t('collecting_data_job')}
-        />
-        <CollectionStatus
-          isCompleted={progress > (randomizedThresholds[4] ?? 80)}
-          label={t('collecting_data_email')}
-        />
-        <CollectionStatus
-          isCompleted={progress > (randomizedThresholds[5] ?? 95)}
-          label={t('collecting_data_past')}
-        />
+        <CollectionStatus isCompleted={progress > (randomizedThresholds[3] ?? 65)} label={t('collecting_data_job')} />
+        <CollectionStatus isCompleted={progress > (randomizedThresholds[4] ?? 80)} label={t('collecting_data_email')} />
+        <CollectionStatus isCompleted={progress > (randomizedThresholds[5] ?? 95)} label={t('collecting_data_past')} />
       </div>
     </section>
   );

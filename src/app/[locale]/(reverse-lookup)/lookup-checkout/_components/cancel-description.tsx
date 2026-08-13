@@ -6,7 +6,11 @@ export const CancelDescription = () => {
   return (
     <p>
       {t.rich('cancel_description', {
-        email: chunks => <a href={`mailto:${chunks}`} className="link">{chunks}</a>,
+        email: (chunks) => (
+          <a href={`mailto:${chunks}`} className="link">
+            {chunks}
+          </a>
+        ),
       })}
     </p>
   );

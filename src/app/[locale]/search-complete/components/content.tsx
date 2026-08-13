@@ -19,9 +19,7 @@ export const SearchCompleteContent = ({ phoneNumber, nextStepURL }: { phoneNumbe
 
   return (
     <main className="s-main funnel-container-located funnel-container relative animate-fade-in animation-duration-1000">
-      <section
-        className="flex flex-1 flex-col items-center justify-center px-6"
-      >
+      <section className="flex flex-1 flex-col items-center justify-center px-6">
         <div className="search-located-bg z-10 container grid items-center justify-center gap-5 pb-2">
           <div className="lg:w-[336px]">
             <header className="flex flex-col items-center justify-center">
@@ -36,7 +34,7 @@ export const SearchCompleteContent = ({ phoneNumber, nextStepURL }: { phoneNumbe
               <Button className="mx-auto" size="lg" asChild>
                 <Link href={nextStepURL} onClick={handleClick}>
                   {t('cta')}
-                  { isSubmitting ? (<IconLoaderCircle size="large" className="animate-spin" />) : ''}
+                  {isSubmitting ? <IconLoaderCircle size="large" className="animate-spin" /> : ''}
                 </Link>
               </Button>
             </div>
@@ -57,7 +55,7 @@ export const SearchCompleteContent = ({ phoneNumber, nextStepURL }: { phoneNumbe
         <Button className="mx-auto w-full" size="lg" asChild>
           <Link href={nextStepURL} onClick={handleClick}>
             {t('cta')}
-            { isSubmitting ? (<IconLoaderCircle size="large" className="animate-spin" />) : ''}
+            {isSubmitting ? <IconLoaderCircle size="large" className="animate-spin" /> : ''}
           </Link>
         </Button>
       </div>

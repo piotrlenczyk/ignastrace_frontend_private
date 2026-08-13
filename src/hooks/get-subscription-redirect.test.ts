@@ -1,15 +1,24 @@
-import { hasActiveSubscription, hasSubscription, hasUpsellings } from '@/libs/subscription';
+import { getUserForPoliciesCheck, hasActiveSubscription, hasSubscription, hasUpsellings } from '@/libs/subscription';
 
 import { getSubscriptionRedirect } from './get-subscription-redirect';
 
 vi.mock('next/server', () => ({}));
 
+/*
+ * Mirrors the real export list of @/libs/subscription. The factory replaces the
+ * module wholesale, so an export missing here is a throw at call time rather
+ * than an undefined — which is how this file came to be red: it mocked
+ * `hasAnySubscription` and `hasEndedSubscription`, which the module does not
+ * export, and left out `getUserForPoliciesCheck`, which it does and which
+ * getSubscriptionRedirect calls first.
+ */
 vi.mock('@/libs/subscription', () => ({
+  getUser: vi.fn(),
+  getUserForPoliciesCheck: vi.fn(),
   hasSubscription: vi.fn(),
-  hasAnySubscription: vi.fn(),
   hasActiveSubscription: vi.fn(),
-  hasUpsellings: vi.fn(),
   hasEndedSubscription: vi.fn(),
+  hasUpsellings: vi.fn(),
 }));
 
 const dummyRoutes = {
@@ -20,41 +29,39 @@ const dummyRoutes = {
   hasUpsellings: 'hasUpsellingsURL',
 };
 
-type SubscriptionType = 'NO_SUBSCRIPTION' | 'ACTIVE_SUBSCRIPTION' |
-  'ENDED_SUBSCRIPTION' | 'HAS_UPSELLINGS' | 'HAS_NO_UPSELLINGS';
+type SubscriptionType =
+  'NO_SUBSCRIPTION' | 'ACTIVE_SUBSCRIPTION' | 'ENDED_SUBSCRIPTION' | 'HAS_UPSELLINGS' | 'HAS_NO_UPSELLINGS';
 
 const setUpUser = (subscriptionType: SubscriptionType) => {
   vi.resetAllMocks();
 
+  vi.mocked(getUserForPoliciesCheck).mockResolvedValue({} as Awaited<ReturnType<typeof getUserForPoliciesCheck>>);
+
+  const setPolicies = (subscription: boolean, active: boolean, upsellings: boolean) => {
+    vi.mocked(hasSubscription).mockResolvedValue(subscription);
+    vi.mocked(hasActiveSubscription).mockResolvedValue(active);
+    vi.mocked(hasUpsellings).mockResolvedValue(upsellings);
+  };
+
   switch (subscriptionType) {
     case 'NO_SUBSCRIPTION':
-      hasSubscription.mockReturnValue(false);
-      hasActiveSubscription.mockReturnValue(false);
-      hasUpsellings.mockReturnValue(false);
+      setPolicies(false, false, false);
       return;
 
     case 'ACTIVE_SUBSCRIPTION':
-      hasSubscription.mockReturnValue(true);
-      hasActiveSubscription.mockReturnValue(true);
-      hasUpsellings.mockReturnValue(false);
+      setPolicies(true, true, false);
       return;
 
     case 'ENDED_SUBSCRIPTION':
-      hasSubscription.mockReturnValue(true);
-      hasActiveSubscription.mockReturnValue(false);
-      hasUpsellings.mockReturnValue(false);
+      setPolicies(true, false, false);
       return;
 
     case 'HAS_NO_UPSELLINGS':
-      hasSubscription.mockReturnValue(true);
-      hasActiveSubscription.mockReturnValue(true);
-      hasUpsellings.mockReturnValue(false);
+      setPolicies(true, true, false);
       return;
 
     case 'HAS_UPSELLINGS':
-      hasSubscription.mockReturnValue(true);
-      hasActiveSubscription.mockReturnValue(true);
-      hasUpsellings.mockReturnValue(true);
+      setPolicies(true, true, true);
       return;
 
     default:
@@ -100,7 +107,11 @@ describe('getSubscriptionRedirect()', () => {
 
         const output = await getSubscriptionRedirect({ routes: dummyRoutes });
 
-        expect(output).toBe(dummyRoutes.hasSubscription);
+        // `activeSubscription` is tried before `hasSubscription`, and both are
+        // set here — so this is the route the case is named after. The previous
+        // assertion named the other one; it never ran, because the mock above
+        // was throwing before any of these reached an expectation.
+        expect(output).toBe(dummyRoutes.activeSubscription);
       });
     });
   });

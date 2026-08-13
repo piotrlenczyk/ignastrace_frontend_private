@@ -8,8 +8,8 @@ import GTMPurchaseEvent from '@/components/gtm-purchase-event';
 import FunnelLayout from '@/components/layouts/funnel-layout';
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
-import { useAuthenticatedRedirect } from '@/hooks/use-auth-redirect';
-import { usePhoneNumberFormatter } from '@/hooks/use-phone-number-formatter';
+import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
+import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { Link } from '@/libs/i18n-routing';
 import { getApi } from '@/libs/server/api';
 import type { User } from '@/types/user';
@@ -25,9 +25,9 @@ const ThankYouPage = async () => {
   }
 
   const phoneNumber = await getFunnelPhone();
-  const formattedNumber = usePhoneNumberFormatter(phoneNumber);
+  const formattedNumber = formatPhoneNumber(phoneNumber);
 
-  await useAuthenticatedRedirect({
+  await redirectIfAuthenticated({
     endedSubscriptionRoute: ROUTES.MEMBER.SETTINGS.BILLING,
     noSubscriptionRoute: formattedNumber.valid ? ROUTES.REVERSE_LOOKUP.CHECKOUT : ROUTES.REVERSE_LOOKUP.HOME,
   });
@@ -36,10 +36,7 @@ const ThankYouPage = async () => {
   const api = await getApi();
   const user = await api.get<User>('/user?expand=purchase_info');
 
-  await Promise.all([
-    api.post('/user/send_order_confirm_email', {}),
-    api.post('/klaviyo/order_confirmed'),
-  ]);
+  await Promise.all([api.post('/user/send_order_confirm_email', {}), api.post('/klaviyo/order_confirmed')]);
 
   return (
     <>
@@ -63,12 +60,8 @@ const ThankYouPage = async () => {
                 priority
               />
             </div>
-            <h1 className="h3 font-bold">
-              {t('title')}
-            </h1>
-            <p className="text-lg">
-              {t('description', { email: user.email })}
-            </p>
+            <h1 className="h3 font-bold">{t('title')}</h1>
+            <p className="text-lg">{t('description', { email: user.email })}</p>
 
             <TrustPilot />
 

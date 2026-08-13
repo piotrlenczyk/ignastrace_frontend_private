@@ -5,8 +5,8 @@ import { getFunnelPlan } from '@/actions/funnel-plan';
 import { auth } from '@/auth';
 import FunnelLayout from '@/components/layouts/funnel-layout';
 import { ROUTES } from '@/constants/routes';
-import { useAuthenticatedRedirect } from '@/hooks/use-auth-redirect';
-import { usePhoneNumberFormatter } from '@/hooks/use-phone-number-formatter';
+import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
+import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { getCurrencyFromCountry } from '@/libs/currency';
 import { getApi } from '@/libs/server/api';
 import { getUserCountry } from '@/libs/server/user-country';
@@ -30,7 +30,7 @@ const CheckoutPage = async () => {
   ]);
 
   const currency = getCurrencyFromCountry(country);
-  const formattedNumber = usePhoneNumberFormatter(phoneNumber);
+  const formattedNumber = formatPhoneNumber(phoneNumber);
 
   let defaultProduct: Products;
   try {
@@ -41,7 +41,7 @@ const CheckoutPage = async () => {
     redirect(ROUTES.HOME);
   }
 
-  await useAuthenticatedRedirect({
+  await redirectIfAuthenticated({
     activeSubscriptionRoute: ROUTES.MEMBER.FIND_BY_NUMBER.HOME,
     endedSubscriptionRoute: ROUTES.MEMBER.SETTINGS.BILLING,
     noSubscriptionRoute: !formattedNumber.valid ? ROUTES.HOME : undefined,

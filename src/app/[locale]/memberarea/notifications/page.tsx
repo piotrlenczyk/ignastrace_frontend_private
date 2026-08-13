@@ -34,4 +34,4 @@ export default async function NotificationsPage() {
   const user = await api.get<User>('/user');
 
   return <NotificationsClientPage unreadNotifications={user.unread_count > 0} />;
-};
+}

@@ -17,9 +17,7 @@ const ToolItem = ({ icon, label, href, onClick }: ToolItemProps) => {
         hover:border-primary hover:bg-primary-50
       `}
     >
-      <div className="flex size-[36px] items-center justify-center rounded-lg border border-primary-200">
-        {icon}
-      </div>
+      <div className="flex size-[36px] items-center justify-center rounded-lg border border-primary-200">{icon}</div>
       <span className="text-lg font-semibold">{label}</span>
     </Link>
   );

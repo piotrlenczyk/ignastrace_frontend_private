@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { IconCheckCircleLine, IconXOctagon } from '@/components/ui/icon/icons';
 import { ROUTES } from '@/constants/routes';
-import { useCldrFormatPrice } from '@/hooks/use-cldr-format-price';
+import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { Link, useRouter } from '@/libs/i18n-routing';
 import type { Subscription } from '@/types/subscription';
 
@@ -26,7 +26,7 @@ export function BillingPageClient({ subscription: defaultSubscription, country }
   const locale = useLocale();
   const t = useTranslations('pages.settings.billing');
   const [subscription, setSubscription] = useState<Subscription>(defaultSubscription);
-  const formatCldrPrice = useCldrFormatPrice();
+  const formatCldrPrice = createPriceFormatter();
   const router = useRouter();
   const expiredSubscriptionCancelAt = subscription.cancel_at || subscription.canceled_at;
 
@@ -78,17 +78,13 @@ export function BillingPageClient({ subscription: defaultSubscription, country }
           <div className="flex justify-between gap-2 border-b border-border py-2">
             <span>Mobitrace</span>
             <span className="font-bold">
-              {formatCldrPrice(subscription.price, subscription.currency, country, locale)}
-              /
-              {t('month')}
+              {formatCldrPrice(subscription.price, subscription.currency, country, locale)}/{t('month')}
             </span>
           </div>
           <div className="mb-5 flex justify-between gap-2 py-4">
             <span>{t('total')}</span>
             <span className="font-bold">
-              {formatCldrPrice(subscription.price, subscription.currency, country, locale)}
-              /
-              {t('month')}
+              {formatCldrPrice(subscription.price, subscription.currency, country, locale)}/{t('month')}
             </span>
           </div>
           <div className="flex flex-col gap-2 text-sm">
@@ -96,28 +92,19 @@ export function BillingPageClient({ subscription: defaultSubscription, country }
             {subscription.status === 'active' && (
               <p>{t('next_billing_date', { date: localeFormatDate(subscription.current_period_end, locale) })}</p>
             )}
-            {subscription.status === 'expired'
-            && expiredSubscriptionCancelAt
-            && (
+            {subscription.status === 'expired' && expiredSubscriptionCancelAt && (
               <>
                 <p className="text-destructive">
                   {t('expired_date', { date: localeFormatDate(expiredSubscriptionCancelAt, locale) })}
                 </p>
                 <p className="text-destructive">{t('expired_description')}</p>
-                <ActivateSubscription
-                  buttonText={t('expired_cta')}
-                  country={country}
-                />
+                <ActivateSubscription buttonText={t('expired_cta')} country={country} />
               </>
             )}
             {subscription.status === 'cancelled' && subscription.canceled_at && (
               <>
-                <p>
-                  {t('canceled_date', { date: localeFormatDate(subscription.canceled_at, locale) })}
-                </p>
-                <p>
-                  {t('active_date', { date: localeFormatDate(subscription.current_period_end, locale) })}
-                </p>
+                <p>{t('canceled_date', { date: localeFormatDate(subscription.canceled_at, locale) })}</p>
+                <p>{t('active_date', { date: localeFormatDate(subscription.current_period_end, locale) })}</p>
                 <Button className="mt-4" onClick={() => reactivateSubscription()} disabled={isReactivating}>
                   {t('canceled_cta')}
                 </Button>
@@ -148,4 +135,4 @@ export function BillingPageClient({ subscription: defaultSubscription, country }
       </div>
     </>
   );
-};
+}

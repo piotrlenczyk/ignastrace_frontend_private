@@ -14,7 +14,7 @@ Next.js project for Mobitrace.io with typescript and tailwindcss
 ## Problem solving
 
 - Stripe does not let you finalize a payment, error 503. Surely you have previously been working on a project with stripe and you have cached the id of the other project. To fix this you need to do a Reset database.
+
 ```sh
 bin/dockerdev run rails db:reset
 ```
-

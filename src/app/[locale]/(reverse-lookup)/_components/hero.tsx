@@ -24,24 +24,20 @@ const Trust = () => {
 
   return (
     <section className="grid w-full grid-cols-1 gap-4 xs:grid-cols-2 lg:flex lg:gap-3">
-      {
-        trustItems.map(item => (
+      {trustItems.map((item) => (
+        <div
+          key={item.title}
+          className="flex place-items-center gap-1 rounded-md bg-weak p-1 backdrop-blur-xl lg:gap-2 lg:p-2"
+        >
+          <item.icon className="size-4 text-secondary lg:size-5" />
           <div
-            key={item.title}
-            className="flex place-items-center gap-1 rounded-md bg-weak p-1 backdrop-blur-xl lg:gap-2 lg:p-2"
+            className={`justify-center gap-1 text-[10px] leading-snug lg:flex lg:flex-col lg:gap-0 lg:p-1 lg:text-xs`}
           >
-            <item.icon className="size-4 text-secondary lg:size-5" />
-            <div className={`
-              justify-center gap-1 text-[10px] leading-snug
-              lg:flex lg:flex-col lg:gap-0 lg:p-1 lg:text-xs
-            `}
-            >
-              <span className="mr-0.5 font-bold">{`${t(item.title)} `}</span>
-              <span>{t(item.description)}</span>
-            </div>
+            <span className="mr-0.5 font-bold">{`${t(item.title)} `}</span>
+            <span>{t(item.description)}</span>
           </div>
-        ))
-      }
+        </div>
+      ))}
     </section>
   );
 };
@@ -65,7 +61,7 @@ const Iphone = ({ locale }: { locale: string }) => {
 
 export const Hero = ({ defaultCountry }: { defaultCountry: CountryCode }) => {
   const t = useTranslations('pages.reverse_lookup.components.hero');
-  const title = t.rich('title', { mark: chunks => <mark className="text-brand">{chunks}</mark> });
+  const title = t.rich('title', { mark: (chunks) => <mark className="text-brand">{chunks}</mark> });
   const subtitle = t('subtitle');
   const locale = useLocale();
 
@@ -80,12 +76,8 @@ export const Hero = ({ defaultCountry }: { defaultCountry: CountryCode }) => {
       >
         <div className="relative container-wide lg:grid lg:grid-cols-[1fr_486px]">
           <div className="flex max-w-(--breakpoint-sm) flex-col pt-11 pb-6 lg:justify-center lg:pb-11">
-            <h1 className="display mb-4 text-balance lg:mb-6">
-              {title}
-            </h1>
-            <h2 className="mb-10 text-lg/[28px] font-normal text-weak lg:mb-12 lg:text-[24px]/[28px]">
-              {subtitle}
-            </h2>
+            <h1 className="display mb-4 text-balance lg:mb-6">{title}</h1>
+            <h2 className="mb-10 text-lg/[28px] font-normal text-weak lg:mb-12 lg:text-[24px]/[28px]">{subtitle}</h2>
             <div className="mb-3 lg:mb-4">
               <PhoneInput defaultCountry={defaultCountry} />
             </div>

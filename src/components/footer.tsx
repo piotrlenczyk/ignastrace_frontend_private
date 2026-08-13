@@ -15,16 +15,16 @@ const footerLinks = {
     linkedin: 'https://www.linkedin.com/company/mobitrace-ad/',
   },
   links: {
-    'location_number': ROUTES.HOME,
-    'about_us': ROUTES.ABOUT,
-    'pricing': ROUTES.PRICING,
-    'faqs': ROUTES.FAQ,
-    'contact': ROUTES.CONTACT,
-    'login': ROUTES.SIGN_IN,
-    'cancel_subscription': ROUTES.CANCELLATION,
+    location_number: ROUTES.HOME,
+    about_us: ROUTES.ABOUT,
+    pricing: ROUTES.PRICING,
+    faqs: ROUTES.FAQ,
+    contact: ROUTES.CONTACT,
+    login: ROUTES.SIGN_IN,
+    cancel_subscription: ROUTES.CANCELLATION,
     'privacy policy': ROUTES.PRIVACY_POLICY,
-    'terms_and_conditions': ROUTES.TERMS,
-    'reverse_lookup': ROUTES.REVERSE_LOOKUP.HOME,
+    terms_and_conditions: ROUTES.TERMS,
+    reverse_lookup: ROUTES.REVERSE_LOOKUP.HOME,
   },
 };
 
@@ -86,17 +86,15 @@ export function Footer() {
         <div className="grid grid-cols-2 gap-8 text-sm [grid-area:lnk] lg:hidden">
           {footerColumnsMobile.map((column, columnIndex) => (
             <ul key={columnIndex} className="space-y-2">
-              {column.map(({ key, url }) => (
-                !isReverseLookupVisible && key === 'reverse_lookup'
-                  ? null
-                  : (
-                      <li key={key}>
-                        <Link href={url} className="hover:underline">
-                          {t(`links.${key as FooterLinksKeys}`)}
-                        </Link>
-                      </li>
-                    )
-              ))}
+              {column.map(({ key, url }) =>
+                !isReverseLookupVisible && key === 'reverse_lookup' ? null : (
+                  <li key={key}>
+                    <Link href={url} className="hover:underline">
+                      {t(`links.${key as FooterLinksKeys}`)}
+                    </Link>
+                  </li>
+                ),
+              )}
             </ul>
           ))}
         </div>
@@ -105,30 +103,22 @@ export function Footer() {
         <div className="hidden grid-cols-3 gap-8 text-sm [grid-area:lnk] lg:grid">
           {footerColumnsDesktop.map((column, columnIndex) => (
             <ul key={columnIndex} className="space-y-2">
-              {column.map(({ key, url }) => (
-                !isReverseLookupVisible && key === 'reverse_lookup'
-                  ? null
-                  : (
-                      <li key={key}>
-                        <Link href={url} className="hover:underline">
-                          {t(`links.${key as FooterLinksKeys}`)}
-                        </Link>
-                      </li>
-                    )
-              ))}
+              {column.map(({ key, url }) =>
+                !isReverseLookupVisible && key === 'reverse_lookup' ? null : (
+                  <li key={key}>
+                    <Link href={url} className="hover:underline">
+                      {t(`links.${key as FooterLinksKeys}`)}
+                    </Link>
+                  </li>
+                ),
+              )}
             </ul>
           ))}
         </div>
 
         <hr className="separator [grid-area:se3] md:hidden" />
         <p className="mb-6 text-center text-sm [grid-area:cop] sm:text-left">
-          &copy;
-          {' '}
-          {new Date().getFullYear()}
-          {' '}
-          Mobitrace.io.
-          {' '}
-          {t('rights')}
+          &copy; {new Date().getFullYear()} Mobitrace.io. {t('rights')}
         </p>
       </div>
     </footer>

@@ -25,12 +25,7 @@ export const SexOffenderSearchResults = ({ search }: { search: SexOffenderSearch
       <main className="flex flex-1 flex-col px-4 pt-6 lg:p-6">
         <h1 className="h3 font-bold">{tPage('title')}</h1>
         <div className="container-content flex flex-1 flex-col items-center justify-center gap-6 pb-24 text-center">
-          <Image
-            src="/images/sex-offenders-not-found.png"
-            alt=""
-            width={280}
-            height={280}
-          />
+          <Image src="/images/sex-offenders-not-found.png" alt="" width={280} height={280} />
           <h2 className="h3 font-bold">{t('empty_title')}</h2>
           <Button asChild>
             <Link href={ROUTES.MEMBER.SEX_OFFENDERS_SEARCH.HOME}>{t('search_again')}</Link>
@@ -51,7 +46,7 @@ export const SexOffenderSearchResults = ({ search }: { search: SexOffenderSearch
 
         <fieldset className="flex w-full flex-col gap-2">
           <legend className="sr-only">{t('results_found_subtitle')}</legend>
-          {search.matches.map(match => (
+          {search.matches.map((match) => (
             <label
               key={match.candidate_index}
               className={cn(

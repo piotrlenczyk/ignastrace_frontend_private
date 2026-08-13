@@ -114,7 +114,7 @@ relies on.
 - The wrapping rule and the JSX formatting rules can disagree, because wrapping a class attribute can
   turn a single-line element into a multi-line one and bring a second set of rules into play. It
   happened in two files and was resolved by hand. It will happen again.
-- The pre-existing lint backlog came out four errors *smaller* rather than unchanged. This change set
+- The pre-existing lint backlog came out four errors _smaller_ rather than unchanged. This change set
   out not to touch it, and did not: the four are long-line and quote-style violations that the
   wrapping rule resolved as a by-product, which it cannot avoid doing, since shortening over-long
   lines is the rule's purpose. Nothing was fixed deliberately and nothing else in the backlog moved.

@@ -106,21 +106,10 @@ export const MessageSendingForm = ({
 
   return (
     <>
-      {showConsentModal && (
-        <ConsentModal
-          onAccept={handleConsentAccept}
-          onDecline={handleConsentDecline}
-        />
-      )}
+      {showConsentModal && <ConsentModal onAccept={handleConsentAccept} onDecline={handleConsentDecline} />}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="grid gap-4">
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <input type="hidden" {...field} />
-            )}
-          />
+          <FormField control={form.control} name="phone" render={({ field }) => <input type="hidden" {...field} />} />
 
           <FormField
             control={form.control}
@@ -139,7 +128,9 @@ export const MessageSendingForm = ({
             )}
           />
 
-          <Button type="submit" size="lg" className="mt-2" disabled={isPending}>{t('CTA')}</Button>
+          <Button type="submit" size="lg" className="mt-2" disabled={isPending}>
+            {t('CTA')}
+          </Button>
         </form>
       </Form>
     </>

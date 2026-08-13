@@ -7,10 +7,14 @@ import { getApi } from '@/libs/server/api';
 import type { ReverseLookup } from '@/types/reverse-lookup.types';
 import type { ReverseLookupDataLeakResponse } from '@/types/reverse-lookup-data-leaks.types';
 import type { User } from '@/types/user';
+import { firstValue } from '@/utils/search-params';
 
 import { ReportDetails } from './components/report-details';
 
-export default async function DataBreachHistoryPage({ searchParams }: { searchParams?: { id?: string } }) {
+export default async function DataBreachHistoryPage(
+  props: PageProps<'/[locale]/memberarea/status/report/data-breach-history'>,
+) {
+  const searchParams = await props.searchParams;
   const session = await auth();
   const isAuthenticated = !!session;
 
@@ -18,7 +22,9 @@ export default async function DataBreachHistoryPage({ searchParams }: { searchPa
     redirect(ROUTES.HOME);
   }
 
-  if (!searchParams?.id) {
+  const reverseLookupId = firstValue(searchParams.id);
+
+  if (!reverseLookupId) {
     redirect(ROUTES.MEMBER.STATUS.HOME);
   }
 
@@ -36,12 +42,8 @@ export default async function DataBreachHistoryPage({ searchParams }: { searchPa
   const api = await getApi();
 
   const [reverseLookupDataLeaksResponse, reverseLookup, user] = await Promise.all([
-    api.get<ReverseLookupDataLeakResponse>(
-      `/reverse_lookups/${searchParams?.id}/data_leaks`,
-    ),
-    api.get<ReverseLookup>(
-      `/reverse_lookups/${searchParams?.id}`,
-    ),
+    api.get<ReverseLookupDataLeakResponse>(`/reverse_lookups/${reverseLookupId}/data_leaks`),
+    api.get<ReverseLookup>(`/reverse_lookups/${reverseLookupId}`),
     api.get<User>('/user?expand=purchase_info'),
   ]);
 
@@ -55,7 +57,7 @@ export default async function DataBreachHistoryPage({ searchParams }: { searchPa
       reverseLookupDataLeaks={reverseLookupDataLeaksResponse.reverse_lookup_data_leaks}
       photo={reverseLookupDataLeaksResponse.photo}
       phone={reverseLookupDataLeaksResponse.phone}
-      reverseLookupId={searchParams?.id}
+      reverseLookupId={reverseLookupId}
     />
   );
 }

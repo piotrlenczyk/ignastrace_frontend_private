@@ -62,9 +62,8 @@ const HeaderNavVertical = ({ unreadCount }: { unreadCount: number }) => {
 
   const country = useCountry();
 
-  const logoLink = country === 'US' || country === 'GB'
-    ? ROUTES.MEMBER.FIND_BY_LINK.HOME
-    : ROUTES.MEMBER.FIND_BY_NUMBER.HOME;
+  const logoLink =
+    country === 'US' || country === 'GB' ? ROUTES.MEMBER.FIND_BY_LINK.HOME : ROUTES.MEMBER.FIND_BY_NUMBER.HOME;
 
   const navItems = [
     {
@@ -80,20 +79,14 @@ const HeaderNavVertical = ({ unreadCount }: { unreadCount: number }) => {
     },
     {
       key: 'find_by_link',
-      href: [
-        ROUTES.MEMBER.FIND_BY_LINK.HOME,
-        ROUTES.MEMBER.FIND_BY_LINK.SUCCESS,
-      ],
+      href: [ROUTES.MEMBER.FIND_BY_LINK.HOME, ROUTES.MEMBER.FIND_BY_LINK.SUCCESS],
       icon: <IconLinkAlt01 size="large" />,
       label: t('find_by_link'),
       enabled: true,
     },
     {
       key: 'phone_lookup',
-      href: [
-        ROUTES.REVERSE_LOOKUP.MEMBER.PHONE_LOOKUP.FORM,
-        ROUTES.REVERSE_LOOKUP.MEMBER.PHONE_LOOKUP.PROGRESS,
-      ],
+      href: [ROUTES.REVERSE_LOOKUP.MEMBER.PHONE_LOOKUP.FORM, ROUTES.REVERSE_LOOKUP.MEMBER.PHONE_LOOKUP.PROGRESS],
       icon: <IconPhoneLine size="large" />,
       label: t('phone_lookup'),
       enabled: enableReverseLookup,
@@ -137,25 +130,22 @@ const HeaderNavVertical = ({ unreadCount }: { unreadCount: number }) => {
             ])}
           >
             <IconTimeRefresh size="large" />
-            <span className="font-semibold">
-              {t('my_activity')}
-            </span>
+            <span className="font-semibold">{t('my_activity')}</span>
           </Item>
 
           <hr className="mt-3 mb-4 border-gray-100" />
 
           <div className="flex flex-col gap-2">
             <span className="text-xs font-bold text-weak">{t('tools_library')}</span>
-            {navItems.map(item => (
-              item.enabled && (
-                <Item key={item.key} href={item.href} isActive={getActive(fullPath, item.href)}>
-                  {item.icon}
-                  <span className="font-semibold">
-                    {item.label}
-                  </span>
-                </Item>
-              )
-            ))}
+            {navItems.map(
+              (item) =>
+                item.enabled && (
+                  <Item key={item.key} href={item.href} isActive={getActive(fullPath, item.href)}>
+                    {item.icon}
+                    <span className="font-semibold">{item.label}</span>
+                  </Item>
+                ),
+            )}
           </div>
 
           <hr className="my-3 border-gray-100" />
@@ -167,14 +157,9 @@ const HeaderNavVertical = ({ unreadCount }: { unreadCount: number }) => {
           >
             <div className="flex flex-1 items-center gap-2">
               <IconNotificationLine size="large" />
-              <span className="font-semibold">
-                {t('notifications')}
-              </span>
+              <span className="font-semibold">{t('notifications')}</span>
             </div>
-            <NumericBadge
-              amount={unreadCount}
-              className="flex items-center justify-center"
-            />
+            <NumericBadge amount={unreadCount} className="flex items-center justify-center" />
           </Item>
         </div>
         <div className="flex flex-col gap-2">
@@ -184,17 +169,11 @@ const HeaderNavVertical = ({ unreadCount }: { unreadCount: number }) => {
             className="flex flex-1 items-center gap-2"
           >
             <IconEmailLine size="large" />
-            <span className="font-semibold">
-              {t('contact_us')}
-            </span>
+            <span className="font-semibold">{t('contact_us')}</span>
           </Item>
 
           <Item
-            href={[
-              ROUTES.MEMBER.SETTINGS.ACCOUNT,
-              ROUTES.MEMBER.SETTINGS.BILLING,
-              ROUTES.MEMBER.SETTINGS.GET_HELP,
-            ]}
+            href={[ROUTES.MEMBER.SETTINGS.ACCOUNT, ROUTES.MEMBER.SETTINGS.BILLING, ROUTES.MEMBER.SETTINGS.GET_HELP]}
             isActive={getActive(fullPath, [
               ROUTES.MEMBER.SETTINGS.ACCOUNT,
               ROUTES.MEMBER.SETTINGS.BILLING,
@@ -202,9 +181,7 @@ const HeaderNavVertical = ({ unreadCount }: { unreadCount: number }) => {
             ])}
           >
             <IconSettingsAltLine size="large" />
-            <span className="font-semibold">
-              {t('settings')}
-            </span>
+            <span className="font-semibold">{t('settings')}</span>
           </Item>
         </div>
       </nav>

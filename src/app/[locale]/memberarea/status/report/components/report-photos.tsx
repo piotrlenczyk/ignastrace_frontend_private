@@ -35,44 +35,37 @@ const Photos = ({ className, reverseLookup }: { className?: string; reverseLooku
   };
 
   const photosData = reverseLookup.reverse_lookup_photos
-    .map(photo => ({
+    .map((photo) => ({
       id: photo.id,
       image: photo.content,
       logo: getSocialIcon(photo.source),
       company: tSocial.has(photo.source as any) ? tSocial(photo.source as any) : t('other'),
     }))
-    .filter(item => !invalidImages.has(item.image));
+    .filter((item) => !invalidImages.has(item.image));
 
   const handleImageError = (imageSrc: string) => {
-    setInvalidImages(prev => new Set(prev).add(imageSrc));
+    setInvalidImages((prev) => new Set(prev).add(imageSrc));
   };
 
   return (
-    <Card className={
-      cn('flex flex-col gap-6 overflow-hidden border-stroke-weak px-4 py-6 shadow-raised lg:px-6', className)
-    }
+    <Card
+      className={cn(
+        'flex flex-col gap-6 overflow-hidden border-stroke-weak px-4 py-6 shadow-raised lg:px-6',
+        className,
+      )}
     >
-      <h4 className="font-bold">
-        {isEmpty ? t('title_empty') : t('title')}
-      </h4>
+      <h4 className="font-bold">{isEmpty ? t('title_empty') : t('title')}</h4>
 
-      <AlertInfo>
-        {t('info')}
-      </AlertInfo>
+      <AlertInfo>{t('info')}</AlertInfo>
 
       {!isEmpty && (
         <div className="select-none" ref={emblaRef}>
           <div className="-ml-4 flex">
-            {photosData.map(item => (
+            {photosData.map((item) => (
               <div key={item.id} className="min-w-0 flex-[0_0_200px] pl-4">
                 <div className="overflow-hidden">
                   <div className="relative aspect-square overflow-hidden rounded-t-2xl">
-                    <Image
-                      src={item.image}
-                      alt="Avatar"
-                      fill
-                      onError={() => handleImageError(item.image)}
-                    />
+                    <Image src={item.image} alt="Avatar" fill onError={() => handleImageError(item.image)} />
                   </div>
                   <div
                     className={`
@@ -80,9 +73,7 @@ const Photos = ({ className, reverseLookup }: { className?: string; reverseLooku
                     `}
                   >
                     {item.logo}
-                    {item.company && (
-                      <p>{item.company}</p>
-                    )}
+                    {item.company && <p>{item.company}</p>}
                   </div>
                 </div>
               </div>

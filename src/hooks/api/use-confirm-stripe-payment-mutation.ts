@@ -79,9 +79,8 @@ export function useConfirmStripePaymentMutation({
   ) {
     const card = elements.getElement(CardNumberElement);
 
-    const addressData = data.zipCode && validator.isPostalCode(data.zipCode, 'any')
-      ? { postal_code: data.zipCode }
-      : {};
+    const addressData =
+      data.zipCode && validator.isPostalCode(data.zipCode, 'any') ? { postal_code: data.zipCode } : {};
 
     if (!card) {
       throw new Error('Card element not found');
@@ -208,9 +207,10 @@ export function useConfirmStripePaymentMutation({
 
     const trackingData = getTrackingData();
 
-    const result = ('complete' in data && 'paymentMethod' in data)
-      ? await payWithWallet(stripe, data, currency, trackingData)
-      : await payWithCard(stripe, elements, data, email, currency, trackingData);
+    const result =
+      'complete' in data && 'paymentMethod' in data
+        ? await payWithWallet(stripe, data, currency, trackingData)
+        : await payWithCard(stripe, elements, data, email, currency, trackingData);
 
     if (!isUpdatePaymentMethod) {
       await syncSubscription(result.paymentIntent.id);

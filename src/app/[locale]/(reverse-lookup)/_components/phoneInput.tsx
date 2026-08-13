@@ -61,10 +61,7 @@ export const PhoneInput = ({
   return (
     <>
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(handleSubmit)}
-          className={cn('phone-input', lgBackground, className)}
-        >
+        <form onSubmit={form.handleSubmit(handleSubmit)} className={cn('phone-input', lgBackground, className)}>
           <div className="phone-input-form">
             <FormField
               control={form.control}
@@ -73,7 +70,7 @@ export const PhoneInput = ({
                 <FormItem>
                   <FormControl>
                     <PhoneInputBase
-                      onChange={formattedPhone => field.onChange(formattedPhone)}
+                      onChange={(formattedPhone) => field.onChange(formattedPhone)}
                       defaultCountry={defaultCountry}
                     />
                   </FormControl>
@@ -87,13 +84,11 @@ export const PhoneInput = ({
             </div>
           )}
           <Button type="submit" size="xl" className="min-w-40" disabled={isSubmitting}>
-            {isSubmitting
-              ? (
-                  <IconLoaderCircle size="large" className="animate-spin" />
-                )
-              : (
-                  <IconLocationMy size="large" />
-                )}
+            {isSubmitting ? (
+              <IconLoaderCircle size="large" className="animate-spin" />
+            ) : (
+              <IconLocationMy size="large" />
+            )}
             {t('submit')}
           </Button>
         </form>

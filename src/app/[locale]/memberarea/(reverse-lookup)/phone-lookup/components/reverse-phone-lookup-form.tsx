@@ -60,10 +60,7 @@ export const ReversePhoneLookupForm = ({ country }: { country: CountryCode }) =>
   return (
     <>
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(handleSubmit)}
-          className="phone-input"
-        >
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="phone-input">
           <div className="phone-input-form">
             <FormField
               control={form.control}
@@ -72,7 +69,7 @@ export const ReversePhoneLookupForm = ({ country }: { country: CountryCode }) =>
                 <FormItem>
                   <FormControl>
                     <PhoneInputBase
-                      onChange={formattedPhone => field.onChange(formattedPhone)}
+                      onChange={(formattedPhone) => field.onChange(formattedPhone)}
                       defaultCountry={country}
                     />
                   </FormControl>
@@ -86,13 +83,11 @@ export const ReversePhoneLookupForm = ({ country }: { country: CountryCode }) =>
             </div>
           )}
           <Button type="submit" size="xl" className="min-w-40" disabled={isSubmitting}>
-            {isSubmitting
-              ? (
-                  <IconLoaderCircle size="large" className="animate-spin" />
-                )
-              : (
-                  <IconLocationMy size="large" />
-                )}
+            {isSubmitting ? (
+              <IconLoaderCircle size="large" className="animate-spin" />
+            ) : (
+              <IconLocationMy size="large" />
+            )}
             {t('submit')}
           </Button>
         </form>

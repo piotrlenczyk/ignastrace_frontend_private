@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { Buffer } from 'node:buffer';
 import { unlink, writeFileSync } from 'node:fs';
 import path from 'node:path';

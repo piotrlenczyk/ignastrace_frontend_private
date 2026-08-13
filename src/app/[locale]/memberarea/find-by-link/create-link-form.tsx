@@ -5,14 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { ROUTES } from '@/constants/routes';
 import { useGenericErrorToast } from '@/hooks/use-generic-error-toast';
@@ -55,9 +48,7 @@ export const CreateCustomLinkForm = ({ className }: { className?: string }) => {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
-                {t('linkLabel')}
-              </FormLabel>
+              <FormLabel>{t('linkLabel')}</FormLabel>
               <div className="input-animated-border rounded-lg">
                 <FormControl>
                   <Input className="phone-input-input h-14 border-0" placeholder={t('linkPlaceholder')} {...field} />

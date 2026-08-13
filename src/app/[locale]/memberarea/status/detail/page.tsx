@@ -9,7 +9,8 @@ import type { Location } from '@/types/location';
 
 import { DetailStatusClientPage } from './_page';
 
-const DetailStatusPage = async ({ searchParams }: { searchParams?: { id?: string } }) => {
+const DetailStatusPage = async (props: PageProps<'/[locale]/memberarea/status/detail'>) => {
+  const searchParams = await props.searchParams;
   const session = await auth();
   const isAuthenticated = !!session;
 
@@ -37,9 +38,7 @@ const DetailStatusPage = async ({ searchParams }: { searchParams?: { id?: string
   const api = await getApi();
   const location = await api.get<Location>(`/locations/${searchParams?.id}`);
 
-  return (
-    <DetailStatusClientPage location={location} />
-  );
+  return <DetailStatusClientPage location={location} />;
 };
 
 export default DetailStatusPage;

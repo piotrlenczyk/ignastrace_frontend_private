@@ -16,9 +16,17 @@ const colors = {
   },
 };
 
-export const PricingCard = async (
-  { price, description, type, trialDays }:
-  { price: string; description: string; type: 'trial' | 'subscription'; trialDays: number }) => {
+export const PricingCard = async ({
+  price,
+  description,
+  type,
+  trialDays,
+}: {
+  price: string;
+  description: string;
+  type: 'trial' | 'subscription';
+  trialDays: number;
+}) => {
   const t = await getTranslations('pages.pricing.cards');
 
   const { ENABLE_REVERSE_LOOKUP } = await getFeatures();
@@ -38,39 +46,32 @@ export const PricingCard = async (
   );
 
   const isReverseLookupVisible = ENABLE_REVERSE_LOOKUP;
-  const features = Array.from(
-    isReverseLookupVisible ? { length: 5 } : { length: type === 'trial' ? 3 : 4 },
-    (_, i) => t(`${translationKey}.${isReverseLookupVisible ? 'new_features' : 'features'}.feature_${i + 1}` as any),
+  const features = Array.from(isReverseLookupVisible ? { length: 5 } : { length: type === 'trial' ? 3 : 4 }, (_, i) =>
+    t(`${translationKey}.${isReverseLookupVisible ? 'new_features' : 'features'}.feature_${i + 1}` as any),
   );
 
   return (
     <div className={cardCSS}>
-      <span className={badgeCSS}>
-        {t(`${translationKey}.badge` as any)}
-      </span>
+      <span className={badgeCSS}>{t(`${translationKey}.badge` as any)}</span>
 
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-        <h1 className="font-bold">
-          {price || <Skeleton className="h-[70px] w-[220px] rounded-md" />}
-        </h1>
-        <div>
-          {t(`${translationKey}.duration` as any)}
-        </div>
+        <h1 className="font-bold">{price || <Skeleton className="h-[70px] w-[220px] rounded-md" />}</h1>
+        <div>{t(`${translationKey}.duration` as any)}</div>
       </div>
 
       <div className="text-sm">
         <p className="text-start">{description}</p>
         <ul className="mt-4 ml-5 list-inside list-disc pl-2">
-          {features.map(item =>
-            <li className="mb-0 -indent-5" key={item}>{item}</li>,
-          )}
+          {features.map((item) => (
+            <li className="mb-0 -indent-5" key={item}>
+              {item}
+            </li>
+          ))}
         </ul>
       </div>
 
       <Button className={cn('min-w-full', colors[type].cta.bg)} size="lg" asChild>
-        <a href={`?plan=${type}#locator`}>
-          {t(`${translationKey}.cta` as any)}
-        </a>
+        <a href={`?plan=${type}#locator`}>{t(`${translationKey}.cta` as any)}</a>
       </Button>
     </div>
   );

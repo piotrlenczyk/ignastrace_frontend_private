@@ -25,9 +25,7 @@ const BodyCharacteristicsComponent = ({
 
   return (
     <Card className={cn('flex flex-col gap-8 border border-stroke-weak p-6 shadow-raised', className)}>
-      <h4 className="font-bold">
-        {t('title')}
-      </h4>
+      <h4 className="font-bold">{t('title')}</h4>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <div className="flex items-start gap-2 text-lg">

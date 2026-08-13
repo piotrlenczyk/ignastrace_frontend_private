@@ -2,12 +2,7 @@ import { cn } from '@/libs/utils';
 
 import { type IconProps, sizes } from '../iconDefinition';
 
-export const IconForbes = ({
-  className,
-  color = 'currentColor',
-  size = 'fontSize',
-  ...props
-}: IconProps) => (
+export const IconForbes = ({ className, color = 'currentColor', size = 'fontSize', ...props }: IconProps) => (
   <svg
     width={sizes[size]}
     height={sizes[size]}
@@ -26,12 +21,7 @@ export const IconForbes = ({
     </g>
     <defs>
       <clipPath id="clip0_11733_16176">
-        <rect
-          width={111.111}
-          height={30}
-          fill="white"
-          transform="translate(0.242188)"
-        />
+        <rect width={111.111} height={30} fill="white" transform="translate(0.242188)" />
       </clipPath>
     </defs>
   </svg>

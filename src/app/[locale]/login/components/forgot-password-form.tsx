@@ -50,18 +50,16 @@ export const ForgotPasswordForm = ({ className, onOpen }: { className?: string; 
       </DialogTrigger>
       <DialogPortal>
         <DialogContent className="max-w-[480px]">
-          {isSubmitted
-            ? (
-                <ForgotPasswordEndContent email={email} onClose={toggle} />
-              )
-            : (
-                <ForgotPasswordFormContent
-                  isPending={isPending}
-                  onCancel={toggle}
-                  onSubmit={handleSubmit}
-                  serverError={serverError}
-                />
-              )}
+          {isSubmitted ? (
+            <ForgotPasswordEndContent email={email} onClose={toggle} />
+          ) : (
+            <ForgotPasswordFormContent
+              isPending={isPending}
+              onCancel={toggle}
+              onSubmit={handleSubmit}
+              serverError={serverError}
+            />
+          )}
         </DialogContent>
       </DialogPortal>
     </Dialog>

@@ -54,15 +54,14 @@ export function ConsentProvider({ children, isUSUser = false }: ConsentProviderP
     checkConsentStatus();
   }, [checkConsentStatus]);
 
-  const value = useMemo(() => ({
-    shouldShowConsent,
-    setConsentGiven,
-    checkConsentStatus,
-  }), [shouldShowConsent, setConsentGiven, checkConsentStatus]);
-
-  return (
-    <ConsentContext.Provider value={value}>
-      {children}
-    </ConsentContext.Provider>
+  const value = useMemo(
+    () => ({
+      shouldShowConsent,
+      setConsentGiven,
+      checkConsentStatus,
+    }),
+    [shouldShowConsent, setConsentGiven, checkConsentStatus],
   );
+
+  return <ConsentContext.Provider value={value}>{children}</ConsentContext.Provider>;
 }

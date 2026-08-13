@@ -1,6 +1,6 @@
 import WebsiteLayout from '@/components/layouts/website-layout';
 import { ROUTES } from '@/constants/routes';
-import { useAuthenticatedRedirect } from '@/hooks/use-auth-redirect';
+import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
 import { getCurrencyFromCountry } from '@/libs/currency';
 import { getApi } from '@/libs/server/api';
 import { getUserCountry } from '@/libs/server/user-country';
@@ -9,7 +9,7 @@ import type { Products } from '@/types/products';
 import { PricingContent } from './_components/content';
 
 export default async function PricingPage() {
-  await useAuthenticatedRedirect({
+  await redirectIfAuthenticated({
     activeSubscriptionRoute: ROUTES.MEMBER.SETTINGS.BILLING,
     endedSubscriptionRoute: ROUTES.MEMBER.SETTINGS.BILLING,
   });

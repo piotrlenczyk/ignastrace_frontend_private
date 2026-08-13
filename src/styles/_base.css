@@ -61,10 +61,10 @@
     --brand-transparent-50: 155 100% 32% / 0.05;
     --primary: 22 100% 55% / 1;
     --primary-foreground: 0 0% 100%;
-    --primary-transparent-1000:  22 100% 55% / 1;
-    --primary-transparent-800:  22 100% 55% / 0.8;
-    --primary-transparent-200:  22 100% 55% / 0.2;
-    --primary-transparent-50:  22 100% 55% / 0.05;
+    --primary-transparent-1000: 22 100% 55% / 1;
+    --primary-transparent-800: 22 100% 55% / 0.8;
+    --primary-transparent-200: 22 100% 55% / 0.2;
+    --primary-transparent-50: 22 100% 55% / 0.05;
     --secondary: 155 100% 32%;
     --secondary-foreground: 0 0% 100%;
     --secondary-transparent-1000: 155 100% 32% / 1;
@@ -155,7 +155,7 @@
     --font-size-caption: 0.625rem;
     --text-weak: 232 17% 17% / 0.65;
     --fill-weak: 230 11% 45% / 0.04;
-    --text-information: 202 73% 38%/ 1;
+    --text-information: 202 73% 38%/1;
     --overlay-light: 230 18% 34% / 0.1;
     --warning-stroke: 42 69% 33% / 0.2;
     --warning-stroke-strong: 42 69% 33% / 0.8;
@@ -166,7 +166,6 @@
       --font-size-caption: 0.75rem;
     }
   }
-
 
   a {
     @apply text-[var(--a--color,inherit)];

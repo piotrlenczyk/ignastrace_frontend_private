@@ -5,18 +5,18 @@ import { getFunnelPhone } from '@/actions/funnel-phone-number';
 import { auth } from '@/auth';
 import ProductLayout from '@/components/layouts/product-layout';
 import { ROUTES } from '@/constants/routes';
+import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
-import { usePhoneNumberFormatter } from '@/hooks/use-phone-number-formatter';
 import { getApi } from '@/libs/server/api';
 import type { RequestCountData } from '@/types/request_count_data';
+import { firstValue } from '@/utils/search-params';
 
 import { MessageSendingForm } from './components/form';
 
-export default async function MessageSendingPage({
-  searchParams,
-}: {
-  searchParams?: { phone?: string };
-}) {
+export default async function MessageSendingPage(
+  props: PageProps<'/[locale]/memberarea/find-by-number/message-sending'>,
+) {
+  const searchParams = await props.searchParams;
   const session = await auth();
   const isAuthenticated = !!session;
   const api = await getApi();
@@ -25,9 +25,9 @@ export default async function MessageSendingPage({
     redirect(ROUTES.HOME);
   }
 
-  const phoneNumber = searchParams?.phone || (await getFunnelPhone());
+  const phoneNumber = firstValue(searchParams.phone) || (await getFunnelPhone());
 
-  const formattedNumber = usePhoneNumberFormatter(phoneNumber);
+  const formattedNumber = formatPhoneNumber(phoneNumber);
 
   const redirectUrl = await getSubscriptionRedirect({
     routes: {
@@ -50,9 +50,7 @@ export default async function MessageSendingPage({
   }
 
   const title = t.rich('title', {
-    brandColor: chunks => (
-      <h1 className="h2 bg-transparent leading-snug whitespace-nowrap">{chunks}</h1>
-    ),
+    brandColor: (chunks) => <h1 className="h2 bg-transparent leading-snug whitespace-nowrap">{chunks}</h1>,
     phoneNumber: formattedNumber.number,
   });
 
@@ -61,9 +59,7 @@ export default async function MessageSendingPage({
       <main className="flex flex-col px-4 lg:p-6">
         <h1 className="h3 font-bold">{t('find_by_number')}</h1>
         <div className="container-content flex flex-1 flex-col justify-center gap-8">
-          <div className="h4 text-center font-bold">
-            { title }
-          </div>
+          <div className="h4 text-center font-bold">{title}</div>
           <MessageSendingForm rawPhoneNumber={phoneNumber} requestCountData={requestCountData} />
           <ul className="list-disc pl-4 text-sm">
             <li>{t('extra_info.bullet_1')}</li>

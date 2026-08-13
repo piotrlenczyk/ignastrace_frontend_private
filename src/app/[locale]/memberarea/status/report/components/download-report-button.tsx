@@ -19,29 +19,12 @@ export const DownloadReportButton = ({
   buttonText,
   className = 'w-full text-sm! lg:w-auto print:hidden',
 }: DownloadReportButtonProps) => {
-  return (
-    hasUnlimitedDownloads
-      ? (
-          <Button
-            className={className}
-            onClick={onDownload}
-            disabled={isGenerating}
-          >
-            {isGenerating
-              ? (
-                  <IconLoaderCircle className="size-4" />
-                )
-              : (
-                  <IconDownload className="size-4" />
-                )}
-            {buttonText}
-          </Button>
-        )
-      : (
-          <UnlockUnlimitedDownloads
-            className={className}
-            onDownloadPdf={onDownload}
-          />
-        )
+  return hasUnlimitedDownloads ? (
+    <Button className={className} onClick={onDownload} disabled={isGenerating}>
+      {isGenerating ? <IconLoaderCircle className="size-4" /> : <IconDownload className="size-4" />}
+      {buttonText}
+    </Button>
+  ) : (
+    <UnlockUnlimitedDownloads className={className} onDownloadPdf={onDownload} />
   );
 };

@@ -15,7 +15,8 @@ import type { Route } from '@/types/routes';
 
 import { CopyToClipBoard } from './components/copy-to-clipboard';
 
-export default async function Page({ searchParams }: { searchParams: { id: string } }) {
+export default async function Page(props: PageProps<'/[locale]/memberarea/find-by-link/success'>) {
+  const searchParams = await props.searchParams;
   const session = await auth();
   const isAuthenticated = !!session;
 
@@ -31,12 +32,12 @@ export default async function Page({ searchParams }: { searchParams: { id: strin
 
   const phoneNumber = await getFunnelPhone();
 
-  const redirectUrl = await getSubscriptionRedirect({
+  const redirectUrl = (await getSubscriptionRedirect({
     routes: {
       noSubscription: phoneNumber ? ROUTES.CHECKOUT : ROUTES.HOME,
       endedSubscription: ROUTES.MEMBER.SETTINGS.BILLING,
     },
-  }) as Route;
+  })) as Route;
 
   if (redirectUrl) {
     redirect(redirectUrl);
@@ -55,37 +56,20 @@ export default async function Page({ searchParams }: { searchParams: { id: strin
           <div className="brand-icon">
             <IconCheckCircleAlt03 size="large" />
           </div>
-          <h1 className="h3 font-bold">
-            { t('title')}
-          </h1>
+          <h1 className="h3 font-bold">{t('title')}</h1>
           <div className="flex flex-col gap-1">
-            <h2 className="text-base font-bold text-strong">
-              {t('subtitle')}
-            </h2>
-            <p className="text-sm text-strong">
-              { t('body')}
-            </p>
+            <h2 className="text-base font-bold text-strong">{t('subtitle')}</h2>
+            <p className="text-sm text-strong">{t('body')}</p>
           </div>
-          <div
-            className="input-animated-border input-animated-border-secondary flex rounded-xl p-1"
-          >
-            <input
-              className="flex-1 px-3 text-sm text-ellipsis text-strong"
-              type="text"
-              readOnly
-              value={link}
-            />
+          <div className="input-animated-border input-animated-border-secondary flex rounded-xl p-1">
+            <input className="flex-1 px-3 text-sm text-ellipsis text-strong" type="text" readOnly value={link} />
             <CopyToClipBoard content={link} />
           </div>
           <Button size="lg" asChild>
-            <Link href={ROUTES.MEMBER.STATUS.HOME}>
-              {t('statusCTA')}
-            </Link>
+            <Link href={ROUTES.MEMBER.STATUS.HOME}>{t('statusCTA')}</Link>
           </Button>
           <Button variant="secondary" size="lg" asChild>
-            <Link href={ROUTES.MEMBER.FIND_BY_LINK.HOME}>
-              {t('generateNewCTA')}
-            </Link>
+            <Link href={ROUTES.MEMBER.FIND_BY_LINK.HOME}>{t('generateNewCTA')}</Link>
           </Button>
         </div>
       </main>

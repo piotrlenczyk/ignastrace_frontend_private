@@ -27,11 +27,11 @@ const UpsellPageClient = ({ products }: { products: Product[] }) => {
   const showErrorToast = useMessageErrorToast();
 
   const addProduct = (product: Product) => {
-    setAddedProducts(prevProducts => [...prevProducts, product]);
+    setAddedProducts((prevProducts) => [...prevProducts, product]);
   };
 
   const removeProduct = (productId: string) => {
-    setAddedProducts(prevProducts => prevProducts.filter(product => product.key !== productId));
+    setAddedProducts((prevProducts) => prevProducts.filter((product) => product.key !== productId));
   };
 
   const { mutate: createUpselling, isPending: isCreatingUpselling } = useUpsellingMutation({
@@ -44,10 +44,7 @@ const UpsellPageClient = ({ products }: { products: Product[] }) => {
 
       setIsSubmitted(false);
       setIsSubmitting(false);
-      showErrorToast(
-        tStripeForm('errors.stripe_generic_error'),
-        tStripeForm('errors.stripe_generic_error_title'),
-      );
+      showErrorToast(tStripeForm('errors.stripe_generic_error'), tStripeForm('errors.stripe_generic_error_title'));
     },
   });
 
@@ -63,7 +60,7 @@ const UpsellPageClient = ({ products }: { products: Product[] }) => {
   const handleSubmit = () => {
     setIsSubmitting(true);
     try {
-      const productKeys = addedProducts.map(product => product.key);
+      const productKeys = addedProducts.map((product) => product.key);
       createUpselling(productKeys);
     } catch {
       setIsSubmitting(false);
@@ -77,11 +74,7 @@ const UpsellPageClient = ({ products }: { products: Product[] }) => {
           <h1 className="mb-3 h3 font-bold">{t('title')}</h1>
           <p className="mb-6 text-strong">{t('description')}</p>
         </div>
-        <ProductCards
-          products={products}
-          addedProducts={addedProducts}
-          onAddProduct={addProduct}
-        />
+        <ProductCards products={products} addedProducts={addedProducts} onAddProduct={addProduct} />
 
         <OrderDetails
           products={products}
@@ -90,13 +83,12 @@ const UpsellPageClient = ({ products }: { products: Product[] }) => {
           onRemoveProduct={removeProduct}
           className="px-6 md:px-0"
         />
-
       </div>
       <div className="sticky bottom-0 bg-base-blur p-6 backdrop-blur-xl md:px-0">
         <div className="container-content flex flex-col gap-4">
           <Button size="lg" onClick={handleSubmit} disabled={isCreatingUpselling || isSubmitted}>
             {t('submit_button')}
-            { isSubmitting ? (<IconLoaderCircle size="large" className="animate-spin" />) : ''}
+            {isSubmitting ? <IconLoaderCircle size="large" className="animate-spin" /> : ''}
           </Button>
           <Button
             variant="ghost"

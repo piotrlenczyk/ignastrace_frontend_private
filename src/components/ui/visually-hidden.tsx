@@ -6,11 +6,7 @@ type VisuallyHiddenProps = {
 };
 
 const VisuallyHidden = ({ children, ...props }: VisuallyHiddenProps) => {
-  return (
-    <RadixVisuallyHidden.Root {...props}>
-      {children}
-    </RadixVisuallyHidden.Root>
-  );
+  return <RadixVisuallyHidden.Root {...props}>{children}</RadixVisuallyHidden.Root>;
 };
 
 export default VisuallyHidden;

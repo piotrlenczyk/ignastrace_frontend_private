@@ -5,13 +5,7 @@ import React from 'react';
 import AvatarWithLock from '@/components/reverse-lookup/avatar-with-lock';
 
 import { useSummaryReport } from './hooks/use-summary-report';
-import {
-  CallerInfo,
-  ReportHeader,
-  ResultsList,
-  TrustSection,
-  UserInfo,
-} from './summary-report-subcomponents';
+import { CallerInfo, ReportHeader, ResultsList, TrustSection, UserInfo } from './summary-report-subcomponents';
 import TimerSection from './timer-section';
 import type { SummaryReportProps } from './types/summary-report.types';
 
@@ -21,7 +15,7 @@ const SummaryReportCard: React.FC<SummaryReportProps> = ({ phoneNumber }) => {
 
   const title = t.rich('title', {
     phoneNumber: phoneNumberFormatted.number,
-    mark: chunks => <mark className="whitespace-nowrap text-brand">{chunks}</mark>,
+    mark: (chunks) => <mark className="whitespace-nowrap text-brand">{chunks}</mark>,
   });
 
   return (

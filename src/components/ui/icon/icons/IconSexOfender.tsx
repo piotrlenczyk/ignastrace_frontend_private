@@ -2,12 +2,7 @@ import { cn } from '@/libs/utils';
 
 import { type IconProps, sizes } from '../iconDefinition';
 
-export const IconIconSexOfender = ({
-  className,
-  color = 'currentColor',
-  size = 'fontSize',
-  ...props
-}: IconProps) => (
+export const IconIconSexOfender = ({ className, color = 'currentColor', size = 'fontSize', ...props }: IconProps) => (
   <svg
     width={sizes[size]}
     height={sizes[size]}
@@ -368,12 +363,7 @@ export const IconIconSexOfender = ({
         <stop offset={1} stopColor="#FFE16E" stopOpacity={0} />
       </radialGradient>
       <clipPath id="clip0_15760_17566">
-        <rect
-          width={19.9596}
-          height={23.1111}
-          fill="white"
-          transform="translate(7.51953 4)"
-        />
+        <rect width={19.9596} height={23.1111} fill="white" transform="translate(7.51953 4)" />
       </clipPath>
     </defs>
   </svg>

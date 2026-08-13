@@ -37,18 +37,10 @@ const AlertStatus = ({
       )}
     >
       <div className="flex items-start gap-3">
-        {showIcon && (
-          <div className={cn(styles.textColor, '[&_svg]:text-current')}>
-            {styles.icon}
-          </div>
-        )}
+        {showIcon && <div className={cn(styles.textColor, '[&_svg]:text-current')}>{styles.icon}</div>}
         <div className="flex flex-col gap-1">
-          <p className={cn('text-sm font-bold', styles.textColor)}>
-            {title}
-          </p>
-          <p className="text-sm text-weak">
-            {description}
-          </p>
+          <p className={cn('text-sm font-bold', styles.textColor)}>{title}</p>
+          <p className="text-sm text-weak">{description}</p>
         </div>
       </div>
     </div>

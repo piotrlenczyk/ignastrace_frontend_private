@@ -55,13 +55,10 @@ export const EmptyState = async () => {
   return (
     <div className="py-10 lg:min-w-[640px]">
       <div className="globe mb-4">
-        <div className="globe-map">
-        </div>
+        <div className="globe-map"></div>
       </div>
       <div className="flex flex-col gap-6 py-8 text-center">
-        <h4 className="h4 font-bold">
-          {t('no_locations_available')}
-        </h4>
+        <h4 className="h4 font-bold">{t('no_locations_available')}</h4>
         <Actions />
       </div>
     </div>

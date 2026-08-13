@@ -2,12 +2,7 @@ import { cn } from '@/libs/utils';
 
 import { type IconProps, sizes } from '../iconDefinition';
 
-export const IconXOctagon = ({
-  className,
-  color = 'currentColor',
-  size = 'fontSize',
-  ...props
-}: IconProps) => (
+export const IconXOctagon = ({ className, color = 'currentColor', size = 'fontSize', ...props }: IconProps) => (
   <svg
     height={sizes[size]}
     viewBox="0 0 16 16"

@@ -2,12 +2,7 @@ import { cn } from '@/libs/utils';
 
 import { type IconProps, sizes } from '../iconDefinition';
 
-export const IconRefreshCw = ({
-  className,
-  color = 'currentColor',
-  size = 'fontSize',
-  ...props
-}: IconProps) => (
+export const IconRefreshCw = ({ className, color = 'currentColor', size = 'fontSize', ...props }: IconProps) => (
   <svg
     width={sizes[size]}
     height={sizes[size]}

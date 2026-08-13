@@ -10,11 +10,9 @@ export const DesktopMainNavigation = () => {
   const items = getNavigationItems('desktop');
   return (
     <ul className="flex">
-      {items.map(item => (
+      {items.map((item) => (
         <li key={item.name} className="px-4 font-semibold text-weak hover:text-strong">
-          <Link href={item.href}>
-            {t(item.name as any)}
-          </Link>
+          <Link href={item.href}>{t(item.name as any)}</Link>
         </li>
       ))}
     </ul>

@@ -1,5 +1,5 @@
 import { useSearchParams } from 'next/navigation';
-import { useLocale } from 'next-intl';
+import { type Locale, useLocale } from 'next-intl';
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -13,7 +13,7 @@ import { IconGlobeLine } from '@/components/ui/icon/icons';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useUpdateLocaleMutation } from '@/hooks/api/use-update-locale-mutation';
 import { AvailableLanguages } from '@/libs/i18n';
-import { usePathname, useRouter } from '@/libs/i18n-routing';
+import { resolveLocale, usePathname, useRouter } from '@/libs/i18n-routing';
 
 export const LanguageSelector = () => {
   const locale = useLocale();
@@ -25,19 +25,18 @@ export const LanguageSelector = () => {
   const { mutate: updateLocale } = useUpdateLocaleMutation({
     onSuccess: (locale) => {
       const query = Object.fromEntries(searchParams.entries());
-      router.push({ pathname, query }, { locale });
+      router.push({ pathname, query }, { locale: resolveLocale(locale) });
       router.refresh();
     },
-    onError: () => {
-    },
+    onError: () => {},
   });
 
-  const handleChangeLanguage = (locale: string) => {
+  const handleChangeLanguage = (locale: Locale) => {
     setSelectedLanguage(locale);
     updateLocale(locale);
   };
 
-  const country = AvailableLanguages.find(lang => lang.code === locale) || AvailableLanguages[0];
+  const country = AvailableLanguages.find((lang) => lang.code === locale) || AvailableLanguages[0];
   const { name, code } = country!;
 
   return (
@@ -54,12 +53,14 @@ export const LanguageSelector = () => {
           `}
         >
           <IconGlobeLine size="fontSize" className="text-neutral xs:size-5" />
-          <abbr title={name} className="px-1 no-underline">{code}</abbr>
+          <abbr title={name} className="px-1 no-underline">
+            {code}
+          </abbr>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-[4.5rem] grid-cols-1">
         <ScrollArea className="h-40 px-2">
-          {AvailableLanguages.map(lang => (
+          {AvailableLanguages.map((lang) => (
             <DropdownMenuItemCompressed
               value={lang.code}
               valueSelected={selectedLanguage}

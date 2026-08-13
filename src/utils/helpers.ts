@@ -1,16 +1,13 @@
 import { headers } from 'next/headers';
 
-import { AppConfig } from './config';
+import { SiteConfig } from './config';
 
 export const getBaseUrl = () => {
   if (process.env.NEXT_PUBLIC_APP_URL) {
     return process.env.NEXT_PUBLIC_APP_URL;
   }
 
-  if (
-    process.env.VERCEL_ENV === 'production'
-    && process.env.VERCEL_PROJECT_PRODUCTION_URL
-  ) {
+  if (process.env.VERCEL_ENV === 'production' && process.env.VERCEL_PROJECT_PRODUCTION_URL) {
     return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
   }
 
@@ -22,23 +19,23 @@ export const getBaseUrl = () => {
 };
 
 export const getI18nPath = (url: string, locale: string) => {
-  if (locale === AppConfig.defaultLocale) {
+  if (locale === SiteConfig.defaultLocale) {
     return url;
   }
 
   return `/${locale}${url}`;
 };
 
-export const getCurrentPath = (): string => {
-  const headersList = headers();
+export const getCurrentPath = async (): Promise<string> => {
+  const headersList = await headers();
   return headersList.get('x-pathname') || '/';
 };
 
-export const getAlternates = (): {
+export const getAlternates = async (): Promise<{
   canonical: string;
   languages: Record<string, string>;
-} | null => {
-  const headersList = headers();
+} | null> => {
+  const headersList = await headers();
   const linkHeader = headersList.get('link');
 
   if (!linkHeader) {

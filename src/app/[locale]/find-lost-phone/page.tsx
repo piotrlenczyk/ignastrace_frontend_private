@@ -8,12 +8,13 @@ import { Locator } from '@/components/homepage/locator';
 import { WhyChoose } from '@/components/homepage/whyChoose';
 import WebsiteLayout from '@/components/layouts/website-layout';
 import { ROUTES } from '@/constants/routes';
-import { useAuthenticatedRedirect } from '@/hooks/use-auth-redirect';
+import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
+import { resolveLocale } from '@/libs/i18n-routing';
 import { getUserCountry } from '@/libs/server/user-country';
 
-export async function generateMetadata(props: { params: { locale: string } }) {
+export async function generateMetadata(props: PageProps<'/[locale]/find-lost-phone'>) {
   const t = await getTranslations({
-    locale: props.params.locale,
+    locale: resolveLocale((await props.params).locale),
     namespace: 'pages.index',
   });
 
@@ -29,7 +30,7 @@ export async function generateMetadata(props: { params: { locale: string } }) {
 const Index = async () => {
   const country = await getUserCountry();
 
-  await useAuthenticatedRedirect({
+  await redirectIfAuthenticated({
     activeSubscriptionRoute: ROUTES.MEMBER.FIND_BY_NUMBER.HOME,
     endedSubscriptionRoute: ROUTES.MEMBER.SETTINGS.BILLING,
   });
@@ -48,9 +49,7 @@ const Index = async () => {
           <FAQs.Title />
           <FAQs.Content className="rounded-3xl bg-alternate px-4 py-3 lg:px-10 lg:py-4" />
         </FAQs>
-        <InstantLocator
-          defaultCountry={country}
-        />
+        <InstantLocator defaultCountry={country} />
       </main>
     </WebsiteLayout>
   );

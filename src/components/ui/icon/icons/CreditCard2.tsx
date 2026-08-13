@@ -2,12 +2,7 @@ import clsx from 'clsx';
 
 import { type IconProps, sizes } from '../iconDefinition';
 
-export const IconCreditCard2 = ({
-  className,
-  color = 'currentColor',
-  size = 'fontSize',
-  ...props
-}: IconProps) => (
+export const IconCreditCard2 = ({ className, color = 'currentColor', size = 'fontSize', ...props }: IconProps) => (
   <svg
     width={sizes[size]}
     height={sizes[size]}

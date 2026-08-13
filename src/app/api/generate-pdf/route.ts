@@ -105,7 +105,7 @@ export async function POST(request: NextRequest) {
             secure: name.startsWith('__Secure-') || name.startsWith('__Host-'),
           };
         })
-        .filter(cookie => cookie.name && cookie.value);
+        .filter((cookie) => cookie.name && cookie.value);
 
       await page.setCookie(...jarCookies);
     }
@@ -139,7 +139,10 @@ export async function POST(request: NextRequest) {
 
     await browser.close();
 
-    return new NextResponse(pdf, {
+    // `page.pdf()` returns a `Uint8Array<ArrayBufferLike>`, which `BodyInit`
+    // does not accept — a `SharedArrayBuffer` cannot back a response body.
+    // Re-wrapping narrows it to a plain `ArrayBuffer`.
+    return new NextResponse(new Uint8Array(pdf), {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
@@ -148,9 +151,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error generating PDF:', error);
-    return NextResponse.json(
-      { error: 'Failed to generate PDF' },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: 'Failed to generate PDF' }, { status: 500 });
   }
 }

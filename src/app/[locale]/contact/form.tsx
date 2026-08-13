@@ -15,9 +15,13 @@ import { useToast } from '@/hooks/use-toast';
 import { useContactUsMutation } from './hooks/contact-us-mutation';
 import { contactUsCreateSchema, type ContactUsFormValues } from './types/contact-form.types';
 
-export const ContactForm = (
-  { className, variant = 'default' }:
-  { className?: string; variant?: 'default' | 'brand' }) => {
+export const ContactForm = ({
+  className,
+  variant = 'default',
+}: {
+  className?: string;
+  variant?: 'default' | 'brand';
+}) => {
   const t = useTranslations('pages.contact.form');
   const locale = useLocale();
   const { toast } = useToast();
@@ -54,7 +58,9 @@ export const ContactForm = (
     mutate(data);
   };
 
-  const { formState: { isValid, isDirty } } = form;
+  const {
+    formState: { isValid, isDirty },
+  } = form;
 
   return (
     <div className={className}>
@@ -67,11 +73,7 @@ export const ContactForm = (
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
-                    {t('name_label')}
-                    {' '}
-                    *
-                  </FormLabel>
+                  <FormLabel>{t('name_label')} *</FormLabel>
                   <div className="rounded-md">
                     <FormControl>
                       <Input {...field} />
@@ -86,11 +88,7 @@ export const ContactForm = (
               name="surname"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
-                    {t('surname_label')}
-                    {' '}
-                    *
-                  </FormLabel>
+                  <FormLabel>{t('surname_label')} *</FormLabel>
                   <div className="rounded-md">
                     <FormControl>
                       <Input {...field} />
@@ -105,11 +103,7 @@ export const ContactForm = (
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
-                    {t('email_label')}
-                    {' '}
-                    *
-                  </FormLabel>
+                  <FormLabel>{t('email_label')} *</FormLabel>
                   <div className="rounded-md">
                     <FormControl>
                       <Input {...field} />
@@ -124,11 +118,7 @@ export const ContactForm = (
               name="subject"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
-                    {t('subject_label')}
-                    {' '}
-                    *
-                  </FormLabel>
+                  <FormLabel>{t('subject_label')} *</FormLabel>
                   <div className="rounded-md">
                     <FormControl>
                       <Select onValueChange={field.onChange} value={field.value}>
@@ -154,11 +144,7 @@ export const ContactForm = (
             name="message"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>
-                  {t('message_label')}
-                  {' '}
-                  *
-                </FormLabel>
+                <FormLabel>{t('message_label')} *</FormLabel>
                 <div className="rounded-md">
                   <FormControl>
                     <Textarea {...field} rows={7} />

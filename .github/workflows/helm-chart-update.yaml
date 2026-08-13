@@ -39,21 +39,21 @@ jobs:
         working-directory: helm/${{ env.HELM_CHART }}
         run: |
           TIMESTAMP=$(date +'%Y%m%d%H%M%S')
-          
+
           # Determine branch: use payload branch if available, otherwise use github ref
           if [[ "${{ github.event_name }}" == "repository_dispatch" ]] && [[ -n "${{ github.event.client_payload.branch }}" ]]; then
             BRANCH="${{ github.event.client_payload.branch }}"
           else
             BRANCH="${{ github.ref_name }}"
           fi
-          
+
           # Determine version prefix based on branch
           if [[ "$BRANCH" == "main" ]]; then
             VERSION_PREFIX="0.5"
           else
             VERSION_PREFIX="0.1"
           fi
-          
+
           yq --inplace ".version = \"${VERSION_PREFIX}.${TIMESTAMP}\"" Chart.yaml
           echo "version=$(yq .version Chart.yaml)" >> $GITHUB_OUTPUT
 
@@ -69,8 +69,8 @@ jobs:
         uses: EndBug/add-and-commit@v9
         with:
           author_name: 'GitHub Actions'
-          message: "Bump helm chart version to ${{ steps.chart-version.outputs.version }} [skip ci]"
-          add: "helm"
+          message: 'Bump helm chart version to ${{ steps.chart-version.outputs.version }} [skip ci]'
+          add: 'helm'
           push: 'true'
           pull: '-ff'
           github_token: '${{ secrets.SHARED_GHA_WORKFLOW_TOKEN }}'

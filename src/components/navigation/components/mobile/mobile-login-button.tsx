@@ -4,10 +4,13 @@ import { ROUTES } from '@/constants/routes';
 
 import { MobileNavItem } from './mobile-nav-item';
 
-export function MobileLoginButton(
-  { isAuthenticated = false, onClick }:
-  { isAuthenticated?: boolean; onClick: () => void },
-) {
+export function MobileLoginButton({
+  isAuthenticated = false,
+  onClick,
+}: {
+  isAuthenticated?: boolean;
+  onClick: () => void;
+}) {
   const t = useTranslations('common');
 
   if (isAuthenticated) {

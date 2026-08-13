@@ -22,7 +22,11 @@ const SexOffendersBackgroundCheck = ({
   className,
   reverseLookup,
   user,
-}: { className?: string; reverseLookup: ReverseLookup; user: User }) => {
+}: {
+  className?: string;
+  reverseLookup: ReverseLookup;
+  user: User;
+}) => {
   const t = useTranslations('pages.reverse_lookup.report.sex_offenders_background_check');
   const router = useRouter();
 
@@ -32,12 +36,10 @@ const SexOffendersBackgroundCheck = ({
 
   const { createdReports, lockedReports, isEmpty } = useMemo(() => {
     const reportedOwnerIds = new Set(
-      reverseLookup.sex_offender_reports.map(report => report.reverse_lookup_owner_id),
+      reverseLookup.sex_offender_reports.map((report) => report.reverse_lookup_owner_id),
     );
 
-    const locked = reverseLookup.reverse_lookup_owners.filter(
-      owner => !reportedOwnerIds.has(owner.id),
-    );
+    const locked = reverseLookup.reverse_lookup_owners.filter((owner) => !reportedOwnerIds.has(owner.id));
 
     const created = reverseLookup.sex_offender_reports;
 
@@ -73,47 +75,30 @@ const SexOffendersBackgroundCheck = ({
     <>
       <Card className={cn('flex flex-col gap-6 border-stroke-weak px-4 py-6 shadow-raised lg:px-6', className)}>
         <div className="flex items-center justify-between gap-4">
-          <h4 className="font-bold">
-            {isEmpty ? t('title_empty') : t('title')}
-          </h4>
-          <Image
-            src="/images/reverse-lookup/icon-sex-offenders.svg"
-            alt={t('alt_icon')}
-            width={32}
-            height={32}
-          />
+          <h4 className="font-bold">{isEmpty ? t('title_empty') : t('title')}</h4>
+          <Image src="/images/reverse-lookup/icon-sex-offenders.svg" alt={t('alt_icon')} width={32} height={32} />
         </div>
 
-        <AlertInfo>
-          {t('info')}
-        </AlertInfo>
+        <AlertInfo>{t('info')}</AlertInfo>
 
         <div className="relative flex flex-col gap-4">
-          {createdReports.map(report => (
+          {createdReports.map((report) => (
             <div key={report.id} className="flex items-center justify-between">
-              <strong className="text-lg">
-                {report.name}
-              </strong>
+              <strong className="text-lg">{report.name}</strong>
               <Button variant="secondary" className="shrink-0" asChild>
-                <Link href={`${ROUTES.MEMBER.STATUS.SEX_OFFENDERS}?id=${report.id}`}>
-                  {t('show_report')}
-                </Link>
+                <Link href={`${ROUTES.MEMBER.STATUS.SEX_OFFENDERS}?id=${report.id}`}>{t('show_report')}</Link>
               </Button>
             </div>
           ))}
-          {lockedReports.map(owner => (
+          {lockedReports.map((owner) => (
             <div key={owner.id} className="flex items-center justify-between">
-              <strong className="text-lg">
-                {owner.name}
-              </strong>
+              <strong className="text-lg">{owner.name}</strong>
               <Button onClick={() => handleUnlockClick(owner.id)} disabled={isConsumingUpsell}>
-                {isConsumingUpsell && ownerId === owner.id
-                  ? (
-                      <IconLoaderCircle className="size-4" />
-                    )
-                  : (
-                      <IconLockOpenLine className="size-4" />
-                    )}
+                {isConsumingUpsell && ownerId === owner.id ? (
+                  <IconLoaderCircle className="size-4" />
+                ) : (
+                  <IconLockOpenLine className="size-4" />
+                )}
                 {t('unlock_report')}
               </Button>
             </div>

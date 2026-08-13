@@ -2,12 +2,7 @@ import { cn } from '@/libs/utils';
 
 import { type IconProps, sizes } from '../iconDefinition';
 
-export const IconSocialInstagram = ({
-  className,
-  color = 'currentColor',
-  size = 'fontSize',
-  ...props
-}: IconProps) => (
+export const IconSocialInstagram = ({ className, color = 'currentColor', size = 'fontSize', ...props }: IconProps) => (
   <svg
     width={sizes[size]}
     height={sizes[size]}
@@ -17,30 +12,9 @@ export const IconSocialInstagram = ({
     className={cn('inline-block shrink-0', className)}
     {...props}
   >
-    <rect
-      x={1.5}
-      y={1.5}
-      width={21}
-      height={21}
-      rx={6}
-      fill="url(#instagram-paint0_radial_17662_66997)"
-    />
-    <rect
-      x={1.5}
-      y={1.5}
-      width={21}
-      height={21}
-      rx={6}
-      fill="url(#instagram-paint1_radial_17662_66997)"
-    />
-    <rect
-      x={1.5}
-      y={1.5}
-      width={21}
-      height={21}
-      rx={6}
-      fill="url(#instagram-paint2_radial_17662_66997)"
-    />
+    <rect x={1.5} y={1.5} width={21} height={21} rx={6} fill="url(#instagram-paint0_radial_17662_66997)" />
+    <rect x={1.5} y={1.5} width={21} height={21} rx={6} fill="url(#instagram-paint1_radial_17662_66997)" />
+    <rect x={1.5} y={1.5} width={21} height={21} rx={6} fill="url(#instagram-paint2_radial_17662_66997)" />
     <path
       d="M17.25 7.875C17.25 8.49632 16.7463 9 16.125 9C15.5037 9 15 8.49632 15 7.875C15 7.25368 15.5037 6.75 16.125 6.75C16.7463 6.75 17.25 7.25368 17.25 7.875Z"
       fill="white"

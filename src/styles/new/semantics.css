@@ -5,7 +5,7 @@
  * Source: Figma "Ignastrace.io" (P49JZ2fY4oCoD25vpUQXNU), light mode.
  * Requires primitives.css. Tokens tagged "local" come from this Figma file and override the corporate library.
  */
-@import "./primitives.css";
+@import './primitives.css';
 
 @theme static {
   --color-alpha-black-10: #0000001a;

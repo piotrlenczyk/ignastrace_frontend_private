@@ -7,11 +7,11 @@ import { auth } from '@/auth';
 import { getApi } from '@/libs/server/api';
 
 export async function saveFunnelPhone(phoneNumber: string) {
-  cookies().set('funnelPhoneNumber', phoneNumber);
+  (await cookies()).set('funnelPhoneNumber', phoneNumber);
 }
 
 export async function getFunnelPhone() {
-  const cookiePhoneNumber = cookies().get('funnelPhoneNumber')?.value;
+  const cookiePhoneNumber = (await cookies()).get('funnelPhoneNumber')?.value;
 
   if (cookiePhoneNumber) {
     return cookiePhoneNumber;

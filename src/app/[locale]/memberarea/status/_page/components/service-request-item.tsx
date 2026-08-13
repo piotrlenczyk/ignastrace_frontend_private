@@ -2,11 +2,9 @@
 
 import { useLocale, useTranslations } from 'next-intl';
 
-import {
-  IconRefreshCw,
-} from '@/components/ui/icon/icons';
+import { IconRefreshCw } from '@/components/ui/icon/icons';
 import { ROUTES } from '@/constants/routes';
-import { usePhoneNumberFormatter } from '@/hooks/use-phone-number-formatter';
+import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { Link, useRouter } from '@/libs/i18n-routing';
 import { cn } from '@/libs/utils';
 import type { ServiceRequestProps } from '@/types/service-request';
@@ -35,17 +33,18 @@ export const ServiceRequestItem = ({ serviceRequest }: ServiceRequestProps) => {
     }
   };
 
-  const refreshLocationLink = serviceRequest.location.type === 'LinkLocation'
-    ? ROUTES.MEMBER.FIND_BY_LINK.HOME
-    : `${ROUTES.MEMBER.FIND_BY_NUMBER.MESSAGE_SENDING}?phone=${encodeURIComponent(serviceRequest.phone as string)}`;
+  const refreshLocationLink =
+    serviceRequest.location.type === 'LinkLocation'
+      ? ROUTES.MEMBER.FIND_BY_LINK.HOME
+      : `${ROUTES.MEMBER.FIND_BY_NUMBER.MESSAGE_SENDING}?phone=${encodeURIComponent(serviceRequest.phone as string)}`;
 
-  const formattedPhone = usePhoneNumberFormatter(serviceRequest.phone as string).number;
+  const formattedPhone = formatPhoneNumber(serviceRequest.phone as string).number;
 
   const cardTitle = () => {
     switch (serviceRequest.source_type) {
       case 'Location':
         return serviceRequest.location.type === 'LinkLocation'
-          ? t('link_name', { name: serviceRequest.location.name })
+          ? t('link_name', { name: serviceRequest.location.name ?? '' })
           : formattedPhone;
       case 'SexOffenderSearchReport':
         return serviceRequest.location.name;
@@ -80,9 +79,7 @@ export const ServiceRequestItem = ({ serviceRequest }: ServiceRequestProps) => {
       onClick={isReady ? handleViewDetail : undefined}
     >
       <div className="mb-1 flex items-center justify-between gap-2">
-        <div className="text-xs capitalize">
-          {statusFormatDate(serviceRequest.status_updated_at, locale)}
-        </div>
+        <div className="text-xs capitalize">{statusFormatDate(serviceRequest.status_updated_at, locale)}</div>
         <div className="flex gap-2">
           {!isReady && serviceRequest.source_type === 'Location' && (
             <button type="button" className="p-0">
@@ -97,9 +94,7 @@ export const ServiceRequestItem = ({ serviceRequest }: ServiceRequestProps) => {
 
       <div className="mb-3 flex items-center gap-2">
         <ServiceRequestIconHeader serviceRequest={serviceRequest} />
-        <h2 className="text-base font-bold">
-          { cardTitle() }
-        </h2>
+        <h2 className="text-base font-bold">{cardTitle()}</h2>
       </div>
 
       <div className="flex items-start gap-2">

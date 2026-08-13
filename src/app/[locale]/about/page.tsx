@@ -4,7 +4,7 @@ import { Locator } from '@/components/homepage/locator';
 import WebsiteLayout from '@/components/layouts/website-layout';
 import { IconFlagLine, IconGlobeLine, IconLocationMy, IconThumbsUpLine } from '@/components/ui/icon/icons';
 import { ROUTES } from '@/constants/routes';
-import { useAuthenticatedRedirect } from '@/hooks/use-auth-redirect';
+import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
 import { getUserCountry } from '@/libs/server/user-country';
 
 type CardType = {
@@ -24,15 +24,11 @@ const cards: CardType[] = [
 const Card = ({ title, description, Icon, t }: CardType & { t: any }) => {
   return (
     <article className="flex flex-col gap-4 md:mb-6">
-      <div
-        className="brand-icon text-white"
-      >
+      <div className="brand-icon text-white">
         <Icon size="large" />
       </div>
       <div>
-        <h3 className="mb-1 text-base leading-6 font-semibold text-strong lg:text-lg">
-          {t(title) }
-        </h3>
+        <h3 className="mb-1 text-base leading-6 font-semibold text-strong lg:text-lg">{t(title)}</h3>
         <div className="content-html text-weak" dangerouslySetInnerHTML={{ __html: t.raw(description) }} />
       </div>
     </article>
@@ -40,7 +36,7 @@ const Card = ({ title, description, Icon, t }: CardType & { t: any }) => {
 };
 
 export default async function About() {
-  await useAuthenticatedRedirect({
+  await redirectIfAuthenticated({
     activeSubscriptionRoute: ROUTES.MEMBER.SETTINGS.GET_HELP,
     endedSubscriptionRoute: ROUTES.MEMBER.SETTINGS.BILLING,
   });

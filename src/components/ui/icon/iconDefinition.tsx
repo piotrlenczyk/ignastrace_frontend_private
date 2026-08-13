@@ -1,9 +1,6 @@
 import type { SVGProps } from 'react';
 
-export type IconProps = Omit<
-  SVGProps<SVGSVGElement>,
-  'color' | 'width' | 'height'
-> & {
+export type IconProps = Omit<SVGProps<SVGSVGElement>, 'color' | 'width' | 'height'> & {
   size?: 'small' | 'medium' | 'mediumLarge' | 'large' | 'fontSize';
   color?: string;
 };
