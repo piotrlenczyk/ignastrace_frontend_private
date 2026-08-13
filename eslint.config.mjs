@@ -1,3 +1,6 @@
+import { existsSync, readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+
 import antfu from '@antfu/eslint-config';
 import nextPlugin from '@next/eslint-plugin-next';
 import betterTailwindcss from 'eslint-plugin-better-tailwindcss';
@@ -70,6 +73,147 @@ const HAND_WRITTEN_CLASSES = [
   'span-green',
 ];
 
+/*
+ * The stylesheet the class linter resolves the legal class set from. Named once
+ * because ADR 0003 calls it load-bearing — if it stops resolving the rules go
+ * quiet rather than failing — and a value like that should not be spelled out
+ * in two places where only one of them can be updated.
+ */
+const TAILWIND_ENTRY_POINT = 'src/styles/application.css';
+
+/*
+ * ── the redesign ratchet ────────────────────────────────────────────────────
+ * Pages are being rebuilt against the Figma design one at a time, and the old
+ * palette and type scale are deleted once the last one lands. Until then both
+ * vocabularies compile side by side, so nothing on its own stops a freshly
+ * redesigned page from reaching for a token that is on its way out. This does —
+ * but only inside directories that have already been redesigned, since
+ * everywhere else the old names are still the only ones the page is written in.
+ *
+ * See docs/adr/0005-two-colour-systems-during-the-redesign.md.
+ *
+ * The path is resolved against this file rather than the working directory. A
+ * relative one would read as correct and behave correctly from the repository
+ * root, then quietly find nothing when ESLint is invoked from anywhere else —
+ * and finding nothing here does not fail, it restricts nothing. That is the
+ * silent no-op ADR 0003 records for the entry point above, and it is worse for
+ * a rule whose entire job is to notice things.
+ */
+const LEGACY_THEME_PATH = fileURLToPath(
+  new URL('./src/styles/_theme-legacy.css', import.meta.url),
+);
+
+/*
+ * Directories rebuilt against the Figma design: one entry per route as it
+ * lands, together with that route's page-specific components. Until the first
+ * one is added the block below contributes nothing, which is the intended
+ * resting state and not an oversight.
+ *
+ * src/components/ui is deliberately absent. The shared components keep the old
+ * palette until they are redesigned in their own right, and a redesigned page
+ * importing one of them is not an error — the restriction is per file, so it
+ * has nothing to say about what a file imports.
+ */
+const MIGRATED_PATHS = [];
+
+/*
+ * Utility prefixes that resolve out of the `--color-*` namespace. Enumerated
+ * rather than matched loosely, because the two vocabularies are only a hyphen
+ * apart: `text-body` is retiring and `font-body` is its replacement, so a
+ * pattern broad enough to catch the first catches the second too. The
+ * directional border and divide suffixes are spelled out for the same reason —
+ * a lazier `border-[a-z]+` reads the new `border-border-primary` as the
+ * retiring `border` followed by a `primary` suffix, and reports it.
+ */
+const COLOUR_UTILITY_PREFIXES = [
+  'bg',
+  'text',
+  'decoration',
+  'border',
+  'border-[xysetrbl]',
+  'divide',
+  'divide-[xy]',
+  'outline',
+  'ring',
+  'ring-offset',
+  'inset-ring',
+  'shadow',
+  'inset-shadow',
+  'accent',
+  'caret',
+  'fill',
+  'stroke',
+  'placeholder',
+  'from',
+  'via',
+  'to',
+].join('|');
+
+/*
+ * The five sizes that retire alongside the palette. These have to be listed by
+ * hand, unlike the colour names: `text-base`, `text-lg`, `text-sm` and
+ * `text-xs` are also Tailwind's own defaults, so they cannot be read off the
+ * file that is being deleted. That same fact is why they will not be caught by
+ * no-unregistered-classes at the end either — core supplies them once the theme
+ * stops overriding them, and the only visible effect is that line height
+ * quietly changes. Here is the one place they are guarded.
+ */
+const LEGACY_TEXT_SIZES = ['base', 'lg', 'sm', 'xs', 'caption'];
+
+/*
+ * The rule matches against the class exactly as it is written, so the patterns
+ * have to account for everything that may be attached to a utility rather than
+ * only its bare name.
+ *
+ * In front: any number of variants, each ending in a colon, and the leading
+ * form of the important marker. Expressed as a negative lookbehind so that the
+ * reported class name is the utility itself and not the separator before it.
+ *
+ * Behind: an optional modifier — the opacity or line-height shorthand, as in
+ * `bg-primary/50` or `text-sm/6` — and then the trailing important marker.
+ * `text-sm!` and `text-base!` are both already in use here, and an anchor that
+ * stops at the name silently lets every one of them through.
+ */
+const CLASS_START = '(?<![^:!])';
+const CLASS_END = '(?:\\/[\\w.[\\]-]+)?!?$';
+
+/*
+ * Read the retiring colour names out of the stylesheet rather than restating
+ * them here. A hundred-odd names copied into a config file is a list that
+ * drifts, with nothing to notice when it does — and ADR 0004 already turned
+ * down a hand-maintained token bridge on exactly that ground. Deriving them
+ * means a token dropped from the theme stops being reported in the same commit
+ * that drops it.
+ *
+ * Once _theme-legacy.css is deleted this yields nothing and the rule falls
+ * silent, which is correct rather than a gap: with the theme gone, every
+ * surviving old class is an unregistered one, and that rule is already on.
+ */
+function legacyClassRestrictions() {
+  if (!existsSync(LEGACY_THEME_PATH)) {
+    return [];
+  }
+
+  const names = [
+    ...readFileSync(LEGACY_THEME_PATH, 'utf8').matchAll(/^\s*--color-([a-z0-9-]+):/gm),
+  ].map(([, name]) => name);
+
+  if (names.length === 0) {
+    return [];
+  }
+
+  return [
+    {
+      message: '"$0" is from the retiring palette. Use an intent token from src/styles/new/semantics.css.',
+      pattern: `${CLASS_START}(?:${COLOUR_UTILITY_PREFIXES})-(?:${names.join('|')})${CLASS_END}`,
+    },
+    {
+      message: '"$0" is from the retiring type scale. Use a named text style from src/styles/new/typo.css.',
+      pattern: `${CLASS_START}text-(?:${LEGACY_TEXT_SIZES.join('|')})${CLASS_END}`,
+    },
+  ];
+}
+
 export default antfu(
   {
     react: true,
@@ -106,7 +250,7 @@ export default antfu(
         // in CSS — so this is the only way the plugin can learn which classes
         // exist. If it stops resolving, no-unregistered-classes goes quiet
         // rather than failing. See docs/adr/0003-*.md.
-        entryPoint: 'src/styles/application.css',
+        entryPoint: TAILWIND_ENTRY_POINT,
       },
     },
     rules: {
@@ -145,6 +289,31 @@ export default antfu(
       ],
     },
   },
+  /*
+   * The ratchet, scoped to what has already been redesigned. Spread out of an
+   * array so that an empty MIGRATED_PATHS contributes no config object at all —
+   * a block with `files: []` would be a config that silently matches nothing,
+   * which reads the same as a rule that is not working.
+   */
+  ...(MIGRATED_PATHS.length > 0
+    ? [{
+        files: MIGRATED_PATHS,
+        plugins: {
+          'better-tailwindcss': betterTailwindcss,
+        },
+        settings: {
+          'better-tailwindcss': {
+            entryPoint: TAILWIND_ENTRY_POINT,
+          },
+        },
+        rules: {
+          'better-tailwindcss/no-restricted-classes': [
+            'error',
+            { restrict: legacyClassRestrictions() },
+          ],
+        },
+      }]
+    : []),
   {
     plugins: {
       '@next/next': nextPlugin,

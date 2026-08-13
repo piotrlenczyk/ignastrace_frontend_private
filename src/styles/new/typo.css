@@ -1,0 +1,99 @@
+/*
+ * Typography — named text styles.
+ *
+ * AUTO-GENERATED from figma-variables.json by scripts/generate-tokens-css.mjs — do not edit by hand.
+ * Source: Figma "Ignastrace.io" (P49JZ2fY4oCoD25vpUQXNU), light mode.
+ * A style sets size, line height, weight and tracking; the font family is a separate font-* class, because Tailwind's --text-* namespace has no family modifier. Families point at the custom property next/font exposes.
+ */
+@theme static {
+  /* ---- families ---- */
+  --font-display: var(--font-inter), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+  /* ---- display — pair with font-display ---- */
+
+  --text-display-xl-medium: 3.75rem;
+  --text-display-xl-medium--line-height: 4.5rem;
+  --text-display-xl-medium--font-weight: 500;
+  --text-display-xl-medium--letter-spacing: -0.02em;
+  --text-display-lg-medium: 3rem;
+  --text-display-lg-medium--line-height: 3.75rem;
+  --text-display-lg-medium--font-weight: 500;
+  --text-display-lg-medium--letter-spacing: -0.02em;
+  --text-display-md-medium: 2.25rem;
+  --text-display-md-medium--line-height: 2.75rem;
+  --text-display-md-medium--font-weight: 500;
+  --text-display-md-medium--letter-spacing: -0.02em;
+  --text-display-sm-medium: 1.875rem;
+  --text-display-sm-medium--line-height: 2.375rem;
+  --text-display-sm-medium--font-weight: 500;
+  --text-display-xs-medium: 1.5rem;
+  --text-display-xs-medium--line-height: 2rem;
+  --text-display-xs-medium--font-weight: 500;
+  --text-display-xs-semibold: 1.5rem;
+  --text-display-xs-semibold--line-height: 2rem;
+  --text-display-xs-semibold--font-weight: 600;
+
+  /* ---- body — pair with font-body ---- */
+
+  --text-xl-regular: 1.25rem;
+  --text-xl-regular--line-height: 1.875rem;
+  --text-xl-regular--font-weight: 400;
+  --text-xl-medium: 1.25rem;
+  --text-xl-medium--line-height: 1.875rem;
+  --text-xl-medium--font-weight: 500;
+  --text-xl-semibold: 1.25rem;
+  --text-xl-semibold--line-height: 1.875rem;
+  --text-xl-semibold--font-weight: 600;
+  --text-xl-bold: 1.25rem;
+  --text-xl-bold--line-height: 1.875rem;
+  --text-xl-bold--font-weight: 700;
+  --text-lg-regular: 1.125rem;
+  --text-lg-regular--line-height: 1.75rem;
+  --text-lg-regular--font-weight: 400;
+  --text-lg-medium: 1.125rem;
+  --text-lg-medium--line-height: 1.75rem;
+  --text-lg-medium--font-weight: 500;
+  --text-lg-semibold: 1.125rem;
+  --text-lg-semibold--line-height: 1.75rem;
+  --text-lg-semibold--font-weight: 600;
+  --text-lg-bold: 1.125rem;
+  --text-lg-bold--line-height: 1.75rem;
+  --text-lg-bold--font-weight: 700;
+  --text-md-regular: 1rem;
+  --text-md-regular--line-height: 1.5rem;
+  --text-md-regular--font-weight: 400;
+  --text-md-medium: 1rem;
+  --text-md-medium--line-height: 1.5rem;
+  --text-md-medium--font-weight: 500;
+  --text-md-semibold: 1rem;
+  --text-md-semibold--line-height: 1.5rem;
+  --text-md-semibold--font-weight: 600;
+  --text-md-bold: 1rem;
+  --text-md-bold--line-height: 1.5rem;
+  --text-md-bold--font-weight: 700;
+  --text-sm-regular: 0.875rem;
+  --text-sm-regular--line-height: 1.25rem;
+  --text-sm-regular--font-weight: 400;
+  --text-sm-medium: 0.875rem;
+  --text-sm-medium--line-height: 1.25rem;
+  --text-sm-medium--font-weight: 500;
+  --text-sm-semibold: 0.875rem;
+  --text-sm-semibold--line-height: 1.25rem;
+  --text-sm-semibold--font-weight: 600;
+  --text-sm-bold: 0.875rem;
+  --text-sm-bold--line-height: 1.25rem;
+  --text-sm-bold--font-weight: 700;
+  --text-xs-regular: 0.75rem;
+  --text-xs-regular--line-height: 1.125rem;
+  --text-xs-regular--font-weight: 400;
+  --text-xs-medium: 0.75rem;
+  --text-xs-medium--line-height: 1.125rem;
+  --text-xs-medium--font-weight: 500;
+  --text-xs-semibold: 0.75rem;
+  --text-xs-semibold--line-height: 1.125rem;
+  --text-xs-semibold--font-weight: 600;
+  --text-xs-bold: 0.75rem;
+  --text-xs-bold--line-height: 1.125rem;
+  --text-xs-bold--font-weight: 700;
+}
