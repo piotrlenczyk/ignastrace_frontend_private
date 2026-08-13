@@ -1,0 +1,17 @@
+/*
+ * The application stylesheet, unmodified — Storybook renders against exactly the
+ * CSS the app ships, including the generated token layers in src/styles/new.
+ */
+@import '../src/styles/application.css';
+
+/*
+ * next/font is a build-time transform of the App Router layout, and there is no
+ * layout here: the `--font-inter` / `--font-bebas` custom properties the type
+ * scale resolves through would be undefined. The families are pulled from
+ * Google Fonts in preview-head.html instead and bound to the same names, so
+ * `font-display` and `font-body` render the faces the app renders.
+ */
+:root {
+  --font-inter: 'Inter';
+  --font-bebas: 'Bebas Neue';
+}

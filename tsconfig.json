@@ -51,5 +51,17 @@
     ]
   },
   "exclude": ["./out/**/*", "./node_modules/**/*", "**/*.spec.ts", "**/*.e2e.ts"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.mts", ".next/types/**/*.ts", ".next/dev/types/**/*.ts"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.mts",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    // A leading dot keeps a directory out of the globs above, so Storybook's
+    // configuration — and the `?raw` module declaration the token stories need —
+    // is named explicitly.
+    ".storybook/**/*.ts",
+    ".storybook/**/*.tsx"
+  ]
 }

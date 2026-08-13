@@ -24,3 +24,6 @@ package-lock.json
 # parser cannot read them, and reformatting the chart is not this repository's
 # job anyway.
 helm/*/templates
+
+# Storybook build output
+storybook-static

@@ -17,7 +17,7 @@ type WebsiteLayoutV2Props = {
  */
 const WebsiteLayoutV2: React.FC<WebsiteLayoutV2Props> = ({ children }) => {
   return (
-    <div className="w-full min-h-screen bg-bg-primary">
+    <div className="min-h-screen w-full bg-bg-primary">
       <NavbarV2 />
       {children}
       <FooterV2 />
