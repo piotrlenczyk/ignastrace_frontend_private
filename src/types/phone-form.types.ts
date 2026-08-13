@@ -1,5 +1,5 @@
 import { isValidPhoneNumber } from 'libphonenumber-js';
-import z from 'zod';
+import { z } from 'zod';
 
 export const createPhoneFormSchema = (t: (...args: any[]) => string) =>
   z.object({

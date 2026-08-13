@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { IconCellTower } from '@/components/ui/icon/icons/CellTower';
 import { IconSearch } from '@/components/ui/icon/icons/Search';

@@ -1,6 +1,5 @@
 import { redirect } from 'next/navigation';
 import { getLocale } from 'next-intl/server';
-import React from 'react';
 import de from 'react-phone-number-input/locale/de';
 import el from 'react-phone-number-input/locale/el';
 import en from 'react-phone-number-input/locale/en';

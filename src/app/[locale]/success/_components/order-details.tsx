@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
-import React from 'react';
 
 import { Button } from '@/components/ui/button';
 import {

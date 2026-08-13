@@ -13,7 +13,7 @@ export const contactUsCreateSchema = (t: (...args: any[]) => string) =>
       .min(1, { message: t('errors.surname_required') })
       .max(MAX_FIELD_CHARACTERS, { message: t('errors.max_length') })
       .regex(/^[a-záéíóúñ\s]+$/i, { message: t('errors.invalid_surname_format') }),
-    email: z.string().email({ message: t('errors.invalid_email') }),
+    email: z.email({ message: t('errors.invalid_email') }),
     subject: z.string().min(1),
     message: z.string()
       .min(1, { message: t('errors.message_required') })

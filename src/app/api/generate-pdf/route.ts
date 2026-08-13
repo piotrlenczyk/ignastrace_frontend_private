@@ -139,7 +139,10 @@ export async function POST(request: NextRequest) {
 
     await browser.close();
 
-    return new NextResponse(pdf, {
+    // `page.pdf()` returns a `Uint8Array<ArrayBufferLike>`, which `BodyInit`
+    // does not accept — a `SharedArrayBuffer` cannot back a response body.
+    // Re-wrapping narrows it to a plain `ArrayBuffer`.
+    return new NextResponse(new Uint8Array(pdf), {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',

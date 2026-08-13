@@ -12,8 +12,7 @@ export const createMyAccountFormSchema = (t: (...args: any[]) => string) =>
         .refine(value => !/[!@#$%^&*()_+=[\]{};:"\\|,.<>/?]/.test(value), {
           message: t('errors.name_invalid_special_characters'),
         }),
-      email: z.string()
-        .email({ message: t('errors.invalid_email') })
+      email: z.email({ message: t('errors.invalid_email') })
         .max(100, { message: t('errors.email_max_length', { maxLength: 100 }) }),
       notify_status_changes: z.boolean(),
       notify_user_located: z.boolean(),
