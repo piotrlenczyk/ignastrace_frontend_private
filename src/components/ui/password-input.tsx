@@ -38,8 +38,8 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
             'rounded-e-lg text-gray-700 transition-colors',
             'hover:text-gray-1000 disabled:pointer-events-none disabled:text-gray-100',
             inputStyle,
-            'w-12 border-0 bg-transparent px-0 py-0 hover:bg-transparent',
-            'active:bg-transparent focus-visible:ring-2',
+            'w-12 border-0 bg-transparent p-0 hover:bg-transparent',
+            'focus-visible:ring-2 active:bg-transparent',
           )}
           aria-label={isVisible ? 'Hide password' : 'Show password'}
           aria-pressed={isVisible}

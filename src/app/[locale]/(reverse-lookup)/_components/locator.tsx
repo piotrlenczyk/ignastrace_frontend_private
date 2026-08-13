@@ -15,7 +15,7 @@ export const Locator = (
 
   return (
     <div className={cn('text-center', className)}>
-      <div className={cn('h4 mb-4 lg:mb-6 font-bold', labelClassName)}>
+      <div className={cn('h4 mb-4 font-bold lg:mb-6', labelClassName)}>
         {t('label')}
       </div>
       <PhoneInput defaultCountry={defaultCountry} />

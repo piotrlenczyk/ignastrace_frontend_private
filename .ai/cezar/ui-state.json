@@ -1,12 +1,19 @@
 {
   "lastTask": {
-    "source": "workflow",
-    "ref": "ralph-subissues"
+    "source": "skill",
+    "ref": "implement"
   },
   "recentSources": [
+    {
+      "source": "skill",
+      "ref": "implement"
+    },
     {
       "source": "workflow",
       "ref": "ralph-subissues"
     }
-  ]
+  ],
+  "skillUsage": {
+    "implement": 1
+  }
 }

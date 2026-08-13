@@ -1,16 +1,17 @@
-import { ReactNode } from 'react';
-import { IconCheckCircleLine,IconInfoCircleLine, IconAlertTriangleLine } from '@/components/ui/icon/icons';
+import type { ReactNode } from 'react';
+
+import { IconAlertTriangleLine, IconCheckCircleLine, IconInfoCircleLine } from '@/components/ui/icon/icons';
 
 export type AlertVariant = 'success' | 'warning' | 'info';
 
-export interface AlertVariantConfig {
+export type AlertVariantConfig = {
   borderLeftColor: string;
   borderColor: string;
   bgColor: string;
   iconColor: string;
   textColor: string;
   icon: ReactNode;
-}
+};
 
 export const alertVariants: Record<AlertVariant, AlertVariantConfig> = {
   success: {
@@ -19,7 +20,7 @@ export const alertVariants: Record<AlertVariant, AlertVariantConfig> = {
     bgColor: 'bg-green-50',
     iconColor: 'text-green',
     textColor: 'text-green',
-    icon: <IconCheckCircleLine size="large" />
+    icon: <IconCheckCircleLine size="large" />,
   },
   warning: {
     borderLeftColor: 'border-l-red-800',
@@ -27,7 +28,7 @@ export const alertVariants: Record<AlertVariant, AlertVariantConfig> = {
     bgColor: 'bg-red-50',
     iconColor: 'text-error',
     textColor: 'text-error',
-    icon: <IconAlertTriangleLine size="large" />
+    icon: <IconAlertTriangleLine size="large" />,
   },
   info: {
     borderLeftColor: 'border-l-blue-600',
@@ -35,6 +36,6 @@ export const alertVariants: Record<AlertVariant, AlertVariantConfig> = {
     bgColor: 'bg-blue-50',
     iconColor: 'text-blue-600',
     textColor: 'text-blue-800',
-    icon: <IconInfoCircleLine size="large" />
-  }
+    icon: <IconInfoCircleLine size="large" />,
+  },
 };

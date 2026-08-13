@@ -21,6 +21,16 @@
 @source '../**/*.{js,ts,jsx,tsx}';
 
 /*
+ * Some files mention class names without ever applying them, and the scanner
+ * cannot tell the difference — it compiles every one into the production
+ * stylesheet as dead CSS. Two kinds do it here: tests that assert on class
+ * strings, and the class-merging helper, whose configuration enumerates class
+ * groups by name. Neither ever reaches markup.
+ */
+@source not '../**/*.test.{js,ts,jsx,tsx}';
+@source not '../libs/utils.ts';
+
+/*
  * v3 expressed this as a `screens` entry with a `raw` media query. v4 has no
  * such escape hatch for max-width breakpoints; a custom variant is the
  * replacement. The query is byte-for-byte what v3 emitted.

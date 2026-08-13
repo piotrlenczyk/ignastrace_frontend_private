@@ -74,7 +74,7 @@ const UpsellPageClient = ({ products }: { products: Product[] }) => {
     <>
       <div className="s-main bg-alternate py-6">
         <div className="container-content px-6 md:px-0">
-          <h1 className="h3 mb-3 font-bold">{t('title')}</h1>
+          <h1 className="mb-3 h3 font-bold">{t('title')}</h1>
           <p className="mb-6 text-strong">{t('description')}</p>
         </div>
         <ProductCards
@@ -100,7 +100,7 @@ const UpsellPageClient = ({ products }: { products: Product[] }) => {
           </Button>
           <Button
             variant="ghost"
-            className=" mx-auto text-base font-normal text-weak underline underline-offset-2"
+            className="mx-auto text-base font-normal text-weak underline underline-offset-2"
             onClick={() => sendOrderConfirmEmail()}
             disabled={isCreatingUpselling || isSubmitted}
           >

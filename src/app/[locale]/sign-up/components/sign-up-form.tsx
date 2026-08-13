@@ -101,7 +101,7 @@ export const SignUpForm = ({ phoneNumber }: { phoneNumber: string }) => {
             size="lg"
             type="submit"
             disabled={isPending || isRedirecting}
-            className="inline-block h-auto min-h-12 whitespace-normal py-2"
+            className="inline-block h-auto min-h-12 py-2 whitespace-normal"
           >
             {t('continue_with_email')}
             { isSubmitting ? (<IconLoaderCircle size="large" className="ms-2 animate-spin" />) : ''}

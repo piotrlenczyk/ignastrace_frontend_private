@@ -1,4 +1,4 @@
-import type { CountryCode} from 'libphonenumber-js';
+import type { CountryCode } from 'libphonenumber-js';
 import type * as RPNInput from 'react-phone-number-input';
 
 export type PhoneInputProps = Omit<

@@ -41,7 +41,7 @@ const Item = ({ className, path, href, children }: ItemProps) => {
       href={primaryHref || '/'}
       className={cn(
         'relative flex flex-row items-center gap-2 text-center text-weak',
-        '[&_svg]:text-neutral [&_svg]:text-base font-semibold lg:text-sm xl:text-base',
+        'font-semibold lg:text-sm xl:text-base [&_svg]:text-base [&_svg]:text-neutral',
         getActive(path, href) && 'text-primary [&_svg]:text-primary',
         className,
       )}
@@ -113,7 +113,7 @@ export const HeaderNav = ({
             <IconNotificationLine size="large" />
             <NumericBadge
               amount={unreadCount}
-              className="absolute right-[80%] top-[-12px] translate-x-9 animate-fade-in"
+              className="absolute top-[-12px] right-[80%] translate-x-9 animate-fade-in"
             />
           </Item>
           <Item path={fullPath} href={ROUTES.MEMBER.SETTINGS.ACCOUNT}>
@@ -148,8 +148,9 @@ export const HeaderNav = ({
             <Link href={ROUTES.MEMBER.SETTINGS.NOTIFICATIONS}>
               <IconNotificationLine size="large" />
               {unreadCount > 0 && (
-                <div className="
-                absolute right-[92%] top-[8px] size-2 translate-x-9 animate-fade-in rounded-full bg-red-1000"
+                <div className={`
+                  absolute top-[8px] right-[92%] size-2 translate-x-9 animate-fade-in rounded-full bg-red-1000
+                `}
                 >
                 </div>
               )}

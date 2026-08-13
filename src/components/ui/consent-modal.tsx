@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -39,36 +39,38 @@ export function ConsentModal({ onAccept, onDecline }: ConsentModalProps) {
   };
 
   return (
-    <Dialog open={true} onOpenChange={() => {}}>
+    <Dialog open onOpenChange={() => {}}>
       <DialogContent className="sm:max-w-md" hideCloseButton>
         <DialogHeader>
-          <DialogTitle className="font-bold text-h3 leading-h3 tracking-normal mb-0">
+          <DialogTitle className="mb-0 text-lg font-bold tracking-normal">
             {showDeclineModal ? t('decline_title') : t('title')}
           </DialogTitle>
-          <DialogDescription className="font-normal text-sm leading-6 tracking-normal text-weak">
+          <DialogDescription className="text-sm leading-6 font-normal tracking-normal text-weak">
             {showDeclineModal ? t('decline_description') : t('description')}
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="flex gap-2 mt-3">
-          {showDeclineModal ? (
-            <Button onClick={handleDeclineAccept} className="w-full">
-              {t('decline_accept')}
-            </Button>
-          ) : (
-            <>
-              <Button
-                variant="outline"
-                onClick={handleDecline}
-                className="flex-1 font-normal"
-                style={{ borderColor: '#FF6E1ACC', color: '#FF6E1ACC' }}
-              >
-                {t('decline')}
-              </Button>
-              <Button onClick={handleAccept} className="flex-1 font-normal">
-                {t('accept')}
-              </Button>
-            </>
-          )}
+        <DialogFooter className="mt-3 flex gap-2">
+          {showDeclineModal
+            ? (
+                <Button onClick={handleDeclineAccept} className="w-full">
+                  {t('decline_accept')}
+                </Button>
+              )
+            : (
+                <>
+                  <Button
+                    variant="outline"
+                    onClick={handleDecline}
+                    className="flex-1 font-normal"
+                    style={{ borderColor: '#FF6E1ACC', color: '#FF6E1ACC' }}
+                  >
+                    {t('decline')}
+                  </Button>
+                  <Button onClick={handleAccept} className="flex-1 font-normal">
+                    {t('accept')}
+                  </Button>
+                </>
+              )}
         </DialogFooter>
       </DialogContent>
     </Dialog>

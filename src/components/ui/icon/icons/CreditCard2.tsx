@@ -1,7 +1,7 @@
-/* eslint-disable simple-import-sort/imports  */
-/* eslint-disable import/newline-after-import  */
 import clsx from 'clsx';
+
 import { type IconProps, sizes } from '../iconDefinition';
+
 export const IconCreditCard2 = ({
   className,
   color = 'currentColor',

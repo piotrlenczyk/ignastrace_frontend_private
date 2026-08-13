@@ -37,7 +37,7 @@ export default async function MessageSendingPage() {
   const tFindByNumber = await getTranslations('pages.find_by_number_send_message');
 
   const phoneNumber = t.rich('description', {
-    strong: () => <strong className="whitespace-nowrap font-bold">{formattedNumber.number}</strong>,
+    strong: () => <strong className="font-bold whitespace-nowrap">{formattedNumber.number}</strong>,
     phoneNumber: () => formattedNumber.number,
   });
 
@@ -51,7 +51,7 @@ export default async function MessageSendingPage() {
             </div>
           </div>
           <div className="grid gap-2">
-            <h1 className="h3 text-center font-bold">
+            <h1 className="text-center h3 font-bold">
               {t('title')}
             </h1>
             <p className="text-center">

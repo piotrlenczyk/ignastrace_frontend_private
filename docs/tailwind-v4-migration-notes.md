@@ -4,7 +4,7 @@ Notes accumulated by the commits that make up the Tailwind v3 → v4 migration
 (issue #1). Each section is material a reviewer needs that the diff does not
 show on its own. The final sign-off report is issue #6.
 
-## Lost tooling coverage
+## Lost tooling coverage — since restored (issue #8)
 
 ### Tailwind ESLint rules (removed in the v4-compatible prefactor, issue #2)
 
@@ -12,17 +12,22 @@ show on its own. The final sign-off report is issue #6.
 Tailwind v4, and its v4-compatible line is still pre-release — a linter that
 errors on every custom class in this codebase is worse than no linter at all.
 
-Removing it drops three rules that were previously enforced in CI:
+Removing it dropped three rules that were previously enforced in CI. All three
+have since been replaced by `eslint-plugin-better-tailwindcss`, which does parse
+v4; see `docs/adr/0003-tailwind-class-linting-and-token-aware-merging.md`.
 
 | Rule | What it caught | Replacement |
 | --- | --- | --- |
-| `tailwindcss/no-custom-classname` | Class names that are neither a Tailwind utility nor a known custom class — i.e. typos in utility names | None. Typos now fail silently at runtime. |
-| `tailwindcss/classnames-order` | Class attributes not in Tailwind's canonical order | None. A class-sorting formatter plugin is a reasonable follow-up (out of scope for this migration). |
-| `tailwindcss/enforces-shorthand` | `mt-2 mb-2` where `my-2` would do | None. |
+| `tailwindcss/no-custom-classname` | Class names that are neither a Tailwind utility nor a known custom class — i.e. typos in utility names | `better-tailwindcss/no-unregistered-classes`. Found three live defects on adoption. |
+| `tailwindcss/classnames-order` | Class attributes not in Tailwind's canonical order | `better-tailwindcss/enforce-consistent-class-order`, plus `enforce-consistent-line-wrapping` for wrapping at the same 120 columns `style/max-len` measures. |
+| `tailwindcss/enforces-shorthand` | `mt-2 mb-2` where `my-2` would do | `better-tailwindcss/enforce-shorthand-classes`. Collapsed 4 sites on adoption (`w-6 h-6` → `size-6`, `items-center justify-items-center` → `place-items-center`). |
 
-This loss is intentional and accepted for the duration of the migration. It is
-recorded here so the team can decide whether to replace any of it rather than
-discovering the gap later.
+The gap this section originally recorded is closed. It is kept because the
+reasoning for the removal is still the reasoning for the replacement's choice of
+plugin, and because every rule the new plugin ships is enabled, not only the
+three replacements above — so the codebase also gained duplicate-class and
+conflicting-class detection, deprecated-class detection, and consistency rules
+for arbitrary-value and important syntax, none of which the old plugin had.
 
 ## Parity evidence: the v4-compatible prefactor (issue #2)
 

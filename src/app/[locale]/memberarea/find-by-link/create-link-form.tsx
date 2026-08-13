@@ -1,7 +1,6 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 
@@ -18,6 +17,7 @@ import { Input } from '@/components/ui/input';
 import { ROUTES } from '@/constants/routes';
 import { useGenericErrorToast } from '@/hooks/use-generic-error-toast';
 import { useRouter } from '@/libs/i18n-routing';
+import { cn } from '@/libs/utils';
 
 import { useCreateLinkLocationMutation } from './hooks/api/use-create-link-location-mutation';
 import { type CreateLinkFormValues, createLinkLocationSchema } from './types/create-link.types';
@@ -49,7 +49,7 @@ export const CreateCustomLinkForm = ({ className }: { className?: string }) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className={clsx('space-y-3', className)}>
+      <form onSubmit={form.handleSubmit(handleSubmit)} className={cn('space-y-3', className)}>
         <FormField
           control={form.control}
           name="name"

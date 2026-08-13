@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { IconLogOut } from '@/components/ui/icon/icons';
 import { ROUTES } from '@/constants/routes';
+import { cn } from '@/libs/utils';
 
 type LogoutButtonProps = {
   className?: string;
@@ -21,7 +22,7 @@ export const LogoutButton = ({ className }: LogoutButtonProps) => {
   return (
     <Button
       size="lg"
-      className={`mb-2 w-full gap-2 border-primary text-primary hover:text-primary lg:hidden ${className ?? ''}`}
+      className={cn('mb-2 w-full gap-2 border-primary text-primary hover:text-primary lg:hidden', className)}
       variant="outline"
       onClick={handleLogout}
     >

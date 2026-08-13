@@ -10,12 +10,12 @@ export const BreachCard = ({ breach }: { breach: ReverseLookupDataLeak }) => {
   const t = useTranslations('pages.reverse_lookup.report.data_breach_history.report');
 
   return (
-    <div className="print:page-break-inside-avoid flex gap-3 rounded-lg border
-    border-stroke-weak bg-white p-4 print:border-none print:p-0"
+    <div className={`
+      flex gap-3 rounded-lg border border-stroke-weak bg-white p-4
+      print:border-none print:p-0 print:page-break-inside-avoid
+    `}
     >
-      <div className="flex size-12 shrink-0 items-center
-      justify-center rounded-xl bg-primary"
-      >
+      <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary">
         <IconLockLine className="size-6 text-white" />
       </div>
 

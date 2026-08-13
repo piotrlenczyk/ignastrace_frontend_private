@@ -40,9 +40,11 @@ export const ReportDetails = ({ user, reverseLookupDataLeaks, photo, phone, reve
 
   return (
     <section>
-      <div className="
-        top-0 z-10 flex items-center justify-between gap-2 bg-white
-        px-4 pb-4 pt-2 lg:sticky lg:rounded-t-lg lg:p-6 print:hidden"
+      <div className={`
+        top-0 z-10 flex items-center justify-between gap-2 bg-white px-4 pt-2 pb-4
+        lg:sticky lg:rounded-t-lg lg:p-6
+        print:hidden
+      `}
       >
         <div className="flex items-center gap-2">
           <Button

@@ -40,9 +40,6 @@ module.exports = {
 
     return tpl`
       ${interfaces}
-      
-      /* eslint-disable simple-import-sort/imports  */
-      /* eslint-disable import/newline-after-import  */
 
       import {cn} from '@/libs/utils';
 

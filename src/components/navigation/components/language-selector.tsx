@@ -46,9 +46,11 @@ export const LanguageSelector = () => {
         <Button
           variant="ghost"
           className={`
-            min-w-[86px] gap-0.5 px-1 text-sm font-semibold uppercase text-weak
-            hover:bg-transparent hover:text-weak xs:px-2 xs:text-base
-            sm:gap-2 sm:px-4 lg:self-center
+            min-w-[86px] gap-0.5 px-1 text-sm font-semibold text-weak uppercase
+            hover:bg-transparent hover:text-weak
+            xs:px-2 xs:text-base
+            sm:gap-2 sm:px-4
+            lg:self-center
           `}
         >
           <IconGlobeLine size="fontSize" className="text-neutral xs:size-5" />

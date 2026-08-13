@@ -20,6 +20,7 @@ import { CountryProvider } from '@/contexts/country-context';
 import { FeaturesProvider } from '@/contexts/features-context';
 import { getFeatures } from '@/libs/server/feature-flags';
 import { getUserCountry } from '@/libs/server/user-country';
+import { cn } from '@/libs/utils';
 import { getAlternates, getBaseUrl, getCurrentPath } from '@/utils/helpers';
 
 const interFont = Inter({
@@ -135,10 +136,11 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html
       lang={locale}
-      className={`${interFont.variable} ${bebasFont.variable}`}
+      className={cn(interFont.variable, bebasFont.variable)}
     >
       <head>
         {/* begin Convert Experiences code */}
+        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
         <script
           type="text/javascript"
           src="//cdn-4.convertexperiments.com/v1/js/10048246-100418060.js?environment=production"

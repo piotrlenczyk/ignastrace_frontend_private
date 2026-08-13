@@ -19,7 +19,7 @@ export function PricingContent({
 
   return (
     <div className="container-wide px-4 pt-8 lg:px-0 lg:py-20">
-      <h1 className="h3 mb-8 text-center font-bold">
+      <h1 className="mb-8 text-center h3 font-bold">
         { t('title') }
       </h1>
       <div className="grid gap-4 md:grid-cols-2 md:gap-8">

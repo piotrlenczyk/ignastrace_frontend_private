@@ -59,7 +59,7 @@ export const LoginForm = ({ error }: { error: boolean }) => {
   return (
     <div className="flex flex-col gap-6">
       <Form {...form}>
-        <h1 className="h3 text-center font-bold text-strong">{t('title')}</h1>
+        <h1 className="text-center h3 font-bold text-strong">{t('title')}</h1>
 
         {error && (
           <div className="mb-4 rounded-md border border-destructive bg-destructive/10 p-3 text-sm text-destructive">

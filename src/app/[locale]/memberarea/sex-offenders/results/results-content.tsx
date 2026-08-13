@@ -42,7 +42,7 @@ export const SexOffenderSearchResults = ({ search }: { search: SexOffenderSearch
 
   return (
     <main className="flex flex-1 flex-col gap-6 px-4 py-6 lg:p-6">
-      <h1 className="h3 w-full font-bold">{tPage('title')}</h1>
+      <h1 className="w-full h3 font-bold">{tPage('title')}</h1>
       <div className="container-content flex flex-1 flex-col items-center gap-4 pb-24 lg:justify-center">
         <div className="flex w-full flex-col gap-1">
           <h2 className="h4 font-bold">{t('results_found', { count: search.matches.length })}</h2>
@@ -55,7 +55,7 @@ export const SexOffenderSearchResults = ({ search }: { search: SexOffenderSearch
             <label
               key={match.candidate_index}
               className={cn(
-                'flex items-center gap-3 rounded-2xl border p-3 text-left cursor-pointer',
+                'flex cursor-pointer items-center gap-3 rounded-2xl border p-3 text-left',
                 selectedIndex === match.candidate_index ? 'border-primary bg-primary-50' : 'border-stroke-weak',
               )}
             >
@@ -68,7 +68,7 @@ export const SexOffenderSearchResults = ({ search }: { search: SexOffenderSearch
                 className={cn(
                   'size-5 shrink-0 appearance-none rounded-full border-2 border-stroke-weak bg-white',
                   'checked:border-[5px] checked:border-primary',
-                  'focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring',
+                  'focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-hidden',
                   'focus-visible:ring-offset-2',
                 )}
               />

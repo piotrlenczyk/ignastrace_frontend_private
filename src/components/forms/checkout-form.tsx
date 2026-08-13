@@ -94,17 +94,17 @@ const CheckoutForm = ({
         <div className="text-xl text-weak">{t('total')}</div>
         {skipTrial
           ? (
-              <div className="h4 font-bold leading-loose">
+              <div className="h4 leading-loose font-bold">
                 {formatPrice(product?.subscription_price || 0, currency, country, locale)}
               </div>
             )
           : (
-              <div className="h4 font-bold leading-loose">
+              <div className="h4 leading-loose font-bold">
                 {formatPrice(product?.trial_charge_price || 0, currency, country, locale)}
               </div>
             )}
       </div>
-      <hr className="separator mb-6 mt-4" />
+      <hr className="separator mt-4 mb-6" />
       <Elements stripe={stripePromise} options={stripeOptions}>
         <StripeForm
           buttonText={buttonText}
@@ -133,7 +133,7 @@ const CheckoutForm = ({
             })
             : conditions}
       </p>
-      <div className="mb-6 mt-4 flex items-center justify-between gap-5 text-xs text-weak">
+      <div className="mt-4 mb-6 flex items-center justify-between gap-5 text-xs text-weak">
         <div className="flex items-center gap-2">
           <IconLockLine className="text-2xl" />
           <span>{t('trust_100')}</span>
@@ -148,9 +148,10 @@ const CheckoutForm = ({
       </div>
       {
         isSubmitting && (
-          <div className="
-            fixed inset-0 z-[100] mt-0! grid animate-fade-in place-items-center
-            content-center gap-2 bg-[#fff3] text-center backdrop-blur-md will-change-auto"
+          <div className={`
+            fixed inset-0 z-[100] mt-0! grid animate-fade-in place-items-center content-center gap-2 bg-[#fff3]
+            text-center backdrop-blur-md will-change-auto
+          `}
           >
             <IconLoaderCircle size="large" className="animate-spin text-primary" />
             <p className="h4">

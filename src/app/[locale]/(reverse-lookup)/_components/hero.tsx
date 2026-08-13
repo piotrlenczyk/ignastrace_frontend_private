@@ -28,14 +28,13 @@ const Trust = () => {
         trustItems.map(item => (
           <div
             key={item.title}
-            className="
-              flex items-center justify-items-center gap-1 rounded-md bg-weak p-1 backdrop-blur-xl lg:gap-2 lg:p-2"
+            className="flex place-items-center gap-1 rounded-md bg-weak p-1 backdrop-blur-xl lg:gap-2 lg:p-2"
           >
-            <item.icon className="size-4lg:size-5 text-secondary" />
-            <div className="
-              justify-center
-              gap-1
-              text-[10px] leading-snug lg:flex lg:flex-col lg:gap-0 lg:p-1 lg:text-xs"
+            <item.icon className="size-4 text-secondary lg:size-5" />
+            <div className={`
+              justify-center gap-1 text-[10px] leading-snug
+              lg:flex lg:flex-col lg:gap-0 lg:p-1 lg:text-xs
+            `}
             >
               <span className="mr-0.5 font-bold">{`${t(item.title)} `}</span>
               <span>{t(item.description)}</span>
@@ -73,12 +72,14 @@ export const Hero = ({ defaultCountry }: { defaultCountry: CountryCode }) => {
   return (
     <section className="px-2 lg:px-0">
       <div
-        className="flex w-full rounded-3xl bg-alternate bg-[-410px_-80px] bg-no-repeat px-4 lg:min-h-[680px]
-                   lg:bg-[right_top] lg:px-6 "
+        className={`
+          flex w-full rounded-3xl bg-alternate bg-[-410px_-80px] bg-no-repeat px-4
+          lg:min-h-[680px] lg:bg-[right_top] lg:px-6
+        `}
         style={{ backgroundImage: 'url(/images/hero/map.png)' }}
       >
-        <div className="container-wide relative lg:grid lg:grid-cols-[1fr_486px]">
-          <div className="flex max-w-(--breakpoint-sm) flex-col pb-6 pt-11 lg:justify-center lg:pb-11">
+        <div className="relative container-wide lg:grid lg:grid-cols-[1fr_486px]">
+          <div className="flex max-w-(--breakpoint-sm) flex-col pt-11 pb-6 lg:justify-center lg:pb-11">
             <h1 className="display mb-4 text-balance lg:mb-6">
               {title}
             </h1>

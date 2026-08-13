@@ -1,8 +1,9 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import * as RPNInput from 'react-phone-number-input';
-import { useTranslations } from 'next-intl';
+
 import { Button } from '@/components/ui/button';
 import {
   Command,
@@ -18,6 +19,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { cn } from '@/libs/utils';
+
 import { Flag } from '../flag';
 import { IconCaretDown } from '../icon/icons';
 import { IconCheck } from '../icon/icons/Check';
@@ -60,7 +62,7 @@ const CountrySelect = ({
           {value ? `+${RPNInput.getCountryCallingCode(value)}` : ''}
           <IconCaretDown
             className={cn(
-              '-mr-2 h-4 w-4 opacity-50',
+              '-mr-2 size-4 opacity-50',
               disabled ? 'hidden' : 'opacity-100',
             )}
           />
@@ -92,7 +94,7 @@ const CountrySelect = ({
                       )}
                       <IconCheck
                         className={cn(
-                          'ml-auto h-4 w-4',
+                          'ml-auto size-4',
                           option.value === value ? 'opacity-100' : 'opacity-0',
                         )}
                       />
@@ -108,4 +110,4 @@ const CountrySelect = ({
 };
 
 export { CountrySelect };
-export type { CountrySelectProps, CountrySelectOption }; 
+export type { CountrySelectOption, CountrySelectProps };

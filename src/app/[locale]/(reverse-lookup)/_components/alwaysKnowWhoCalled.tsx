@@ -61,9 +61,9 @@ export const AlwaysKnowWhoCalled = ({ className }: { className?: string }) => {
   ];
 
   return (
-    <section className={`${className} px-4 py-8 lg:px-0 lg:py-16`}>
+    <section className={cn(className, 'px-4 py-8 lg:px-0 lg:py-16')}>
       <div className="container max-w-[950px] lg:text-center">
-        <h2 className="h3 mb-3 font-bold lg:mb-2">
+        <h2 className="mb-3 h3 font-bold lg:mb-2">
           { t('title')}
         </h2>
         <p className="text-lg text-weak">

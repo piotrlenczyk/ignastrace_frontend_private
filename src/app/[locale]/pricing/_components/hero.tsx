@@ -25,10 +25,12 @@ export function PricingHero(
       className="overflow-hidden bg-alternate bg-[-415px_-30px] bg-no-repeat px-6 lg:rounded-3xl lg:bg-[170px_-115px]"
       style={{ backgroundImage: 'url(/images/hero/map.png)' }}
     >
-      <div className="mx-auto flex w-full max-w-[1152px] flex-col items-start
-       gap-6 py-10 md:items-center md:text-center"
+      <div className={`
+        mx-auto flex w-full max-w-[1152px] flex-col items-start gap-6 py-10
+        md:items-center md:text-center
+      `}
       >
-        <div className=" rounded-full bg-secondary px-3 py-1 text-white">
+        <div className="rounded-full bg-secondary px-3 py-1 text-white">
           {t('special_offer')}
         </div>
         <h1 className="display-mini break-words md:text-[56px]">

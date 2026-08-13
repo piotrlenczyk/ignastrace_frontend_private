@@ -30,7 +30,7 @@ const Card = ({ title, description, Icon, t }: CardType & { t: any }) => {
         <Icon size="large" />
       </div>
       <div>
-        <h3 className="mb-1 text-base font-semibold leading-6 text-strong lg:text-lg">
+        <h3 className="mb-1 text-base leading-6 font-semibold text-strong lg:text-lg">
           {t(title) }
         </h3>
         <div className="content-html text-weak" dangerouslySetInnerHTML={{ __html: t.raw(description) }} />

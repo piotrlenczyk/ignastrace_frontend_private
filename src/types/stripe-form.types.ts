@@ -16,6 +16,7 @@ export const stripeCreditCardSchema = (t: (...args: any[]) => string) =>
         if (!value || value === '') {
           return true;
         }
+        // eslint-disable-next-line regexp/no-unused-capturing-group
         return /^\d{5}(-\d{4})?$/.test(value);
       }, {
         message: t('errors.zip_code_invalid_format'),

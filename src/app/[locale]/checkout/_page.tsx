@@ -35,18 +35,18 @@ export const CheckoutPageClient = (
 
   return (
     <>
-      <div className=" bg-background-alternate p-4 lg:bg-background">
+      <div className="bg-background-alternate p-4 lg:bg-background">
         <div className="container-content flex items-start justify-between">
           <div>
-            <h1 className="lg:h3 mb-1 text-2xl font-bold">{t('title')}</h1>
-            <div className="lg:h3 text-2xl font-bold text-primary lg:text-primary">
+            <h1 className="mb-1 text-2xl font-bold lg:h3">{t('title')}</h1>
+            <div className="text-2xl font-bold text-primary lg:h3 lg:text-primary">
               {formattedNumber.number}
             </div>
           </div>
           <CurrencySelector value={selectedCurrency} onChange={setSelectedCurrency} />
         </div>
       </div>
-      <div className="container-content lg:shadow-raised-lg relative px-6 pt-12 lg:rounded-2xl lg:p-12">
+      <div className="container-content relative px-6 pt-12 lg:rounded-2xl lg:p-12 lg:shadow-raised-lg">
         <CheckoutForm
           currency={selectedCurrency}
           country={country}

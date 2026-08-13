@@ -58,7 +58,7 @@ export const WhyUse = ({ defaultCountry }: { defaultCountry: CountryCode }) => {
     <div className="w-full bg-alternate px-0 lg:rounded-3xl">
       <div className="container-wide px-4 py-10 lg:px-0 lg:py-20">
         <div className="text-center">
-          <h2 className="h3 mb-2 text-center font-bold lg:mb-2">
+          <h2 className="mb-2 text-center h3 font-bold lg:mb-2">
             {t('title')}
           </h2>
           <p
@@ -96,7 +96,7 @@ export const WhyUse = ({ defaultCountry }: { defaultCountry: CountryCode }) => {
           </span>
         </div>
 
-        <h2 className="h3 mt-6 text-center font-bold">
+        <h2 className="mt-6 text-center h3 font-bold">
           {t('title_2')}
         </h2>
 
@@ -120,7 +120,7 @@ export const WhyUse = ({ defaultCountry }: { defaultCountry: CountryCode }) => {
           </div>
         </div>
 
-        <div className="hidden w-full grid-cols-5 gap-8 pb-16 pt-6 lg:grid">
+        <div className="hidden w-full grid-cols-5 gap-8 pt-6 pb-16 lg:grid">
           {
             useCases.map(item => (
               <Card

@@ -27,7 +27,7 @@ export function PricingContent({
       <PricingHero country={country} price={trialPrice} trialDays={trialDays} />
 
       <div className="container-wide flex flex-col px-4 py-8 lg:px-1">
-        <h1 className="h1 mb-4 lg:mb-8">
+        <h1 className="mb-4 h1 lg:mb-8">
           { t('title') }
         </h1>
         <div className="grid gap-4 md:grid-cols-2 md:gap-8">

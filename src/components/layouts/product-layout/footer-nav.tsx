@@ -1,6 +1,5 @@
 'use client';
 
-import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
@@ -22,6 +21,7 @@ import {
 import { ROUTES } from '@/constants/routes';
 import { useFeatures } from '@/hooks/use-features';
 import { Link, usePathname } from '@/libs/i18n-routing';
+import { cn } from '@/libs/utils';
 
 import ToolItem from './tool-item';
 
@@ -44,7 +44,7 @@ const Item = ({ className, href, children, active }: ItemProps) => {
     <Link
       href={primaryHref || '/'}
       className={
-        clsx(
+        cn(
           'relative flex flex-1 flex-col items-center gap-1 text-center text-xs [&_svg]:text-neutral',
           getActive(active || href, pathname) && 'text-primary [&_svg]:text-primary',
           className,

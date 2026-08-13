@@ -13,7 +13,7 @@ const PotentialEducation = ({ className, reverseLookup }: { className?: string; 
   const education = reverseLookup.reverse_lookup_owners.map(owner => owner.education).flat().filter(Boolean);
 
   return (
-    <Card className={cn('py-6 px-4 lg:px-6 shadow-raised border-stroke-weak flex flex-col gap-6', className)}>
+    <Card className={cn('flex flex-col gap-6 border-stroke-weak px-4 py-6 shadow-raised lg:px-6', className)}>
       <h4 className="font-bold">
         {education.length === 0 ? t('title_empty') : t('title')}
       </h4>

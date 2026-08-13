@@ -29,10 +29,10 @@ export const CustomerOpinionsCarousel: React.FC<CustomerOpinionsCarouselProps> =
       <div className="mt-6 select-none" ref={emblaRef}>
         <div className="flex">
           <div className="min-w-0 flex-[0_0_280px]">
-            <Card className="flex h-full min-h-[220px] flex-col
-            justify-center gap-4 border border-gray-100 p-5
-            shadow-[0px_20px_24px_-4px_rgba(0,0,0,0.08),0px_8px_8px_-4px_rgba(0,0,0,0.04)]
-            "
+            <Card className={`
+              flex h-full min-h-[220px] flex-col justify-center gap-4 border border-gray-100 p-5
+              shadow-[0px_20px_24px_-4px_rgba(0,0,0,0.08),0px_8px_8px_-4px_rgba(0,0,0,0.04)]
+            `}
             >
               <div className="flex flex-col gap-2">
                 <h4 className="text-lg font-bold">
@@ -63,8 +63,10 @@ export const CustomerOpinionsCarousel: React.FC<CustomerOpinionsCarouselProps> =
               key={opinionKey}
               className="min-w-0 flex-[0_0_300px] pl-5"
             >
-              <Card className="flex h-full min-h-[220px] flex-col justify-center border border-gray-100 p-5
-              shadow-[0px_20px_24px_-4px_rgba(0,0,0,0.08),0px_8px_8px_-4px_rgba(0,0,0,0.04)]"
+              <Card className={`
+                flex h-full min-h-[220px] flex-col justify-center border border-gray-100 p-5
+                shadow-[0px_20px_24px_-4px_rgba(0,0,0,0.08),0px_8px_8px_-4px_rgba(0,0,0,0.04)]
+              `}
               >
                 <div className="flex flex-col gap-1">
                   {getOpinionText(opinionKey, 'title').trim() !== '' && (

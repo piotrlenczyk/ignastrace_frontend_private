@@ -59,7 +59,7 @@ const ProfileSummary = ({ reverseLookup, className }: { reverseLookup: ReverseLo
   ];
 
   return (
-    <Card className={cn('py-6 px-4 lg:px-6 shadow-raised border-stroke-weak', className)}>
+    <Card className={cn('border-stroke-weak px-4 py-6 shadow-raised lg:px-6', className)}>
       <h4 className="mb-6 font-bold lg:mb-5">
         {t('title')}
       </h4>

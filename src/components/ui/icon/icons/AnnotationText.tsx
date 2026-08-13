@@ -1,7 +1,7 @@
-/* eslint-disable simple-import-sort/imports  */
-/* eslint-disable import/newline-after-import  */
 import { cn } from '@/libs/utils';
+
 import { type IconProps, sizes } from '../iconDefinition';
+
 export const IconAnnotationText = ({
   className,
   color = 'currentColor',

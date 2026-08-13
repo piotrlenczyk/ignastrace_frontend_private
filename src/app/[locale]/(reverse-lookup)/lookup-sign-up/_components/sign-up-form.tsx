@@ -74,10 +74,10 @@ export const SignUpForm = ({ phoneNumber, className }: { phoneNumber: string; cl
             </div>
           </div>
           <div
-            className="
-                    mt-8 rounded-lg
-                    border-y border-l-4 border-r border-amber-200
-                    border-l-amber-800 bg-[rgba(255,192,46,0.05)] p-5"
+            className={`
+              mt-8 rounded-lg border-y border-r border-l-4 border-amber-200 border-l-amber-800
+              bg-[rgba(255,192,46,0.05)] p-5
+            `}
           >
             <div className="flex items-start gap-3">
               <IconWarningLine size="large" className="text-amber-800" color="transparent" />

@@ -178,7 +178,7 @@ const UpsellDialog = ({
                   </div>
                 ))}
               </div>
-              <div className="whitespace-pre-line text-caption text-weak">
+              <div className="text-caption whitespace-pre-line text-weak">
                 {t('disclaimer_info', { price: formattedPrice })}
               </div>
             </div>
