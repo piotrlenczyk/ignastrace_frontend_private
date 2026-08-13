@@ -34,7 +34,7 @@ const SignUpPage = async () => {
       <main className="s-main animate-fade-in px-6 py-8 animation-duration-1000">
         <div className="container-small flex flex-col items-center gap-8 text-center">
           <h1 className="h3 font-bold">{title}</h1>
-          <SignUpForm phoneNumber={formattedNumber.number} />
+          <SignUpForm />
         </div>
       </main>
     </FunnelLayout>

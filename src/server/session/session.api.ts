@@ -51,6 +51,28 @@ export const requestLogin = async (email: string, password: string): Promise<JWT
 };
 
 /**
+ * Creates an account and returns the pair it is signed in with — the API issues
+ * the password itself and mails it to the address, so there is nothing to send
+ * beyond the email. Throws `AuthApiError` when refused; `409` means taken.
+ */
+export const requestRegistration = async (
+  email: string,
+  context: ApiRequestContext = {},
+): Promise<JWTSessionResponse> => {
+  const response = await fetch(apiUrl('/api/v1/auth/register'), {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...contextHeaders(context) },
+    body: JSON.stringify({ email } satisfies components['schemas']['RegisterDto']),
+  });
+
+  if (!response.ok) {
+    throw new AuthApiError(response.status);
+  }
+
+  return (await response.json()) as JWTSessionResponse;
+};
+
+/**
  * Exchanges a refresh token for a fresh pair. Throws `AuthApiError` when the
  * refresh token is spent or rejected, which is the signal to stop treating the
  * visitor as signed in.

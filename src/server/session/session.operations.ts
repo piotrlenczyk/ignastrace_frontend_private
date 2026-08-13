@@ -1,5 +1,12 @@
-import { createSession, renewSessionTokens } from './session';
-import { type ApiRequestContext, AuthApiError, requestLogin, requestLogout, requestTokenRefresh } from './session.api';
+import { createSession, renewSessionTokens, type TokenPair } from './session';
+import {
+  type ApiRequestContext,
+  AuthApiError,
+  requestLogin,
+  requestLogout,
+  requestRegistration,
+  requestTokenRefresh,
+} from './session.api';
 import { clearSession, readSession, type SessionCookieWriter, writeSession } from './session.cookies';
 import type { SessionData } from './session.types';
 
@@ -12,12 +19,36 @@ export type Credentials = {
   password: string;
 };
 
+export type RegistrationError = 'email_taken' | 'unavailable';
+
+export type RegistrationResult = { success: true } | { success: false; error: RegistrationError };
+
+export type Registration = {
+  email: string;
+  /** Which language the API should write the account's welcome mail in. */
+  locale?: string;
+};
+
 /*
- * Sign-in and sign-out expressed against a cookie jar rather than against
- * `cookies()`. The server actions in `session.actions.ts` are the wrappers
- * that supply the request's jar; everything that decides what lands in the two
- * cookies lives here, so both operations can be driven directly in a test.
+ * Sign-in, registration and sign-out expressed against a cookie jar rather than
+ * against `cookies()`. The server actions in `session.actions.ts` are the
+ * wrappers that supply the request's jar; everything that decides what lands in
+ * the two cookies lives here, so each operation can be driven directly in a
+ * test.
  */
+
+/** Turns a freshly issued token pair into the two cookies, or into neither. */
+const establishSession = async (cookies: SessionCookieWriter, tokens: TokenPair): Promise<boolean> => {
+  const session = await createSession(tokens);
+
+  if (!session) {
+    return false;
+  }
+
+  await writeSession(cookies, session);
+
+  return true;
+};
 
 /** Exchanges credentials for a session and writes both cookies, or neither. */
 export const performSignIn = async (
@@ -34,15 +65,29 @@ export const performSignIn = async (
     return { success: false, error: refused ? 'invalid_credentials' : 'unavailable' };
   }
 
-  const session = await createSession(tokens);
+  return (await establishSession(cookies, tokens)) ? { success: true } : { success: false, error: 'unavailable' };
+};
 
-  if (!session) {
-    return { success: false, error: 'unavailable' };
+/**
+ * Creates the account and signs it in in the same step: registration returns a
+ * token pair, so there is no reason to send someone who has just typed their
+ * address back through a login form.
+ */
+export const performRegistration = async (
+  cookies: SessionCookieWriter,
+  { email, locale }: Registration,
+): Promise<RegistrationResult> => {
+  let tokens;
+
+  try {
+    tokens = await requestRegistration(email, { locale });
+  } catch (error) {
+    const taken = error instanceof AuthApiError && error.status === 409;
+
+    return { success: false, error: taken ? 'email_taken' : 'unavailable' };
   }
 
-  await writeSession(cookies, session);
-
-  return { success: true };
+  return (await establishSession(cookies, tokens)) ? { success: true } : { success: false, error: 'unavailable' };
 };
 
 /**

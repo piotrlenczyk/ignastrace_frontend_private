@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -12,17 +12,14 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Icon } from '@/components/ui/icon';
 import { Input } from '@/components/ui/input';
 import { ROUTES } from '@/constants/routes';
-import { useSignUpMutation } from '@/hooks/api/use-sign-up-mutation';
+import { type SignUpError, useSignUpMutation } from '@/hooks/api/use-sign-up-mutation';
 import { useGenericErrorToast } from '@/hooks/use-generic-error-toast';
-import { hasApiError } from '@/libs/api-client';
-import type { ApiError } from '@/libs/api-error';
 import { cn } from '@/libs/utils';
 import { createSignUpSchema, type SignUpFormValues } from '@/types/sign-up.types';
 
 export const SignUpForm = ({ phoneNumber, className }: { phoneNumber: string; className?: string }) => {
   const t = useTranslations('pages.reverse_lookup.sign_up');
   const router = useRouter();
-  const locale = useLocale();
   const showErrorToast = useGenericErrorToast();
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -30,19 +27,18 @@ export const SignUpForm = ({ phoneNumber, className }: { phoneNumber: string; cl
     resolver: zodResolver(createSignUpSchema(t)),
     defaultValues: {
       email: '',
-      onboarding_phone_number: phoneNumber,
-      locale,
     },
   });
 
   const { mutate, isPending } = useSignUpMutation({
     onSuccess: () => {
       router.push(ROUTES.REVERSE_LOOKUP.SUMMARY);
+      router.refresh();
       setIsRedirecting(true);
       setIsSubmitting(false);
     },
-    onError: (error: ApiError) => {
-      if (error.name !== 'sign_in_error' && hasApiError(error, 'email', 'taken')) {
+    onError: (error: SignUpError) => {
+      if (error.reason === 'email_taken') {
         form.setError('email', {
           type: 'server',
           message: t('errors.email_exists'),

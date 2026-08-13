@@ -8,7 +8,7 @@ import {
   SESSION_TTL_SECONDS,
 } from './session.constants';
 import type { SessionCookieWriter } from './session.cookies';
-import { performSignIn, performSignOut } from './session.operations';
+import { performRegistration, performSignIn, performSignOut } from './session.operations';
 import type { SessionData } from './session.types';
 
 const API = 'https://api.ignastrace.test';
@@ -189,6 +189,87 @@ describe('performSignIn', () => {
     serveApi({ '/api/v1/auth/login': { status: 500, body: { message: 'Server error' } } });
 
     const result = await performSignIn(jar, { email: 'member@example.com', password: 'secret' });
+
+    expect(result).toEqual({ success: false, error: 'unavailable' });
+    expect(jar.names()).toEqual([]);
+  });
+});
+
+describe('performRegistration', () => {
+  it('writes both cookies, so the new account continues into the app signed in', async () => {
+    const jar = createCookieJar();
+    const token = accessToken(FULL_CLAIMS);
+    serveApi({ '/api/v1/auth/register': { status: 201, body: { token, refreshToken: 'refresh-1' } } });
+
+    const result = await performRegistration(jar, { email: 'new@example.com' });
+
+    expect(result).toEqual({ success: true });
+    expect(jar.names()).toEqual([ACCESS_TOKEN_COOKIE_NAME, SESSION_COOKIE_NAME].sort());
+    expect(jar.entry(ACCESS_TOKEN_COOKIE_NAME)?.value).toBe(token);
+  });
+
+  it('seals the same session sign-in would have sealed', async () => {
+    const jar = createCookieJar();
+    const token = accessToken(FULL_CLAIMS);
+    serveApi({ '/api/v1/auth/register': { status: 201, body: { token, refreshToken: 'refresh-1' } } });
+
+    await performRegistration(jar, { email: 'new@example.com' });
+
+    expect(await sealedSession(jar)).toEqual({
+      isLoggedIn: true,
+      accessToken: token,
+      accessTokenExpiresAt: IN_A_DAY * 1000,
+      refreshToken: 'refresh-1',
+      user: { id: 'user-1', email: 'member@example.com', type: 'USER', roles: ['STANDARD_USER'] },
+    });
+  });
+
+  it('asks the API for the account in the visitor’s language', async () => {
+    const jar = createCookieJar();
+    const api = serveApi({
+      '/api/v1/auth/register': { status: 201, body: { token: accessToken(FULL_CLAIMS), refreshToken: 'refresh-1' } },
+    });
+
+    await performRegistration(jar, { email: 'new@example.com', locale: 'es' });
+
+    expect(api).toHaveBeenCalledWith(
+      `${API}/api/v1/auth/register`,
+      expect.objectContaining({
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-locale': 'es' },
+        body: JSON.stringify({ email: 'new@example.com' }),
+      }),
+    );
+  });
+
+  it('reports a taken email address without leaving a session behind', async () => {
+    const jar = createCookieJar();
+    serveApi({ '/api/v1/auth/register': { status: 409, body: { message: 'User already exists' } } });
+
+    const result = await performRegistration(jar, { email: 'member@example.com' });
+
+    expect(result).toEqual({ success: false, error: 'email_taken' });
+    expect(jar.names()).toEqual([]);
+  });
+
+  it('leaves no session behind when the API is unavailable', async () => {
+    const jar = createCookieJar();
+    serveApi({ '/api/v1/auth/register': { status: 500, body: { message: 'Server error' } } });
+
+    const result = await performRegistration(jar, { email: 'new@example.com' });
+
+    expect(result).toEqual({ success: false, error: 'unavailable' });
+    expect(jar.names()).toEqual([]);
+  });
+
+  it('leaves no session behind when the account cannot be identified', async () => {
+    const jar = createCookieJar();
+    serveApi({
+      '/api/v1/auth/register': { status: 201, body: { token: accessToken({ exp: IN_A_DAY }), refreshToken: 'r' } },
+      '/api/v1/user/me': { status: 500, body: { message: 'Server error' } },
+    });
+
+    const result = await performRegistration(jar, { email: 'new@example.com' });
 
     expect(result).toEqual({ success: false, error: 'unavailable' });
     expect(jar.names()).toEqual([]);
