@@ -1,0 +1,165 @@
+name: ralph-subissues-v2
+description: Ralph loop — one sub-issue of the parent issue per iteration, until
+  none are open. The iteration is split into pick / implement / land / close so
+  that a killed or forgetful implement step cannot lose the commit and the close.
+steps:
+  - id: pick
+    name: Pick next ready sub-issue
+    prompt: |
+      Ralph loop over the sub-issues of parent issue #{{task}}. This step ONLY decides what the
+      iteration will work on. Write no code, run no build, touch no git.
+
+      Every step is a FRESH session. The handoff file is the only memory between them.
+
+      1. Reset the per-iteration state — a stale sentinel from an earlier run would end the loop
+         on the spot:
+
+           mkdir -p .ai/cezar/ralph && rm -f .ai/cezar/ralph/stop .ai/cezar/ralph/current .ai/cezar/ralph/comment.md
+
+      2. Build the queue of READY sub-issues: open, and with no OPEN blocker.
+         - Sub-issue membership comes from the GraphQL sub-issue edge on the parent.
+         - "Blocked by" is NOT in that API — it is prose in the issue body:
+             gh issue view <n> --json body,title,state -q .body | grep -A5 -i '^## Blocked by'
+         - `gh issue view <n> --comments` prints nothing here (pager). Always use `--json`.
+
+      3. Terminal cases — write the sentinel, write NOTHING else, and end the step:
+         - No sub-issue is open any more:
+
+             printf 'DONE\n' > .ai/cezar/ralph/stop
+
+         - Some are open but the ready list is empty (everything is blocked):
+
+             printf 'BLOCKED: %s\n' '#<n> blocked_by #<m>, ...' > .ai/cezar/ralph/stop
+
+      4. Otherwise take the FIRST entry of the ready list and record it — the number alone,
+         no prefix, no newline noise:
+
+           printf '%s\n' '<n>' > .ai/cezar/ralph/current
+
+         Exactly one number. Never two sub-issues in one iteration, even if they look related.
+         A sub-issue that is not on the ready list is blocked or already closed — leave it alone.
+
+      5. Append one line to the handoff saying which issue you picked, or which terminal case
+         you hit and on what evidence.
+
+  - id: implement
+    name: Implement it
+    prompt: |
+      Implement ONE sub-issue of parent issue #{{task}}. Nothing else.
+
+      Bail out immediately, with no work and no file writes, if either is true:
+        - `.ai/cezar/ralph/stop` exists (the loop is over)
+        - `.ai/cezar/ralph/current` is missing or empty
+      In that case just say so and end the step.
+
+      Otherwise: `N=$(cat .ai/cezar/ralph/current)`, read it with
+      `gh issue view "$N" --json body,title,state -q .body`, and implement THAT issue against
+      its acceptance criteria. Read the handoff first — a previous run of this step may have
+      been killed mid-way and left work on disk.
+
+      This step does NOT close the iteration. Do not commit, do not `gh issue close`, do not
+      write or remove the sentinel, do not decide anything about the loop. The next steps do
+      that, and they run in fresh sessions with their own time budget — so stopping here with
+      the work on disk is safe and expected.
+
+      Before you finish, append to the handoff: what you actually changed, what you verified and
+      how, and — this one matters most — what is still MISSING for the acceptance criteria to be
+      met. Say "nothing" only if you checked. The next step trusts this note as a starting point
+      and re-verifies it.
+    skill: implement
+
+  - id: land
+    name: Verify and commit
+    prompt: |
+      Land the work of the current iteration on parent issue #{{task}}.
+
+      Bail out immediately, with no work and no file writes, if either is true:
+        - `.ai/cezar/ralph/stop` exists
+        - `.ai/cezar/ralph/current` is missing or empty
+      In that case just say so and end the step.
+
+      Otherwise `N=$(cat .ai/cezar/ralph/current)` and:
+
+      1. Re-verify the previous step's claims against the TREE, not against its prose. Every
+         number it quoted is cheap to re-derive; iterations that took such claims on trust have
+         shipped wrong ones before. `git status --porcelain` and `git diff` are the ground truth.
+      2. Finish any small remainder the implement step left. If what remains is NOT small,
+         go to step 5.
+      3. Run the project checks and compare them against the pre-existing baselines recorded in
+         the handoff — a failure that predates this branch is not yours to fix.
+      4. Commit on the current branch. Stage files EXPLICITLY — never `git add -A`:
+         `.ai/cezar/` is untracked and must not be committed. Then write the close comment,
+         one paragraph, for the next step to post:
+
+           printf '%s\n' '<one-paragraph summary>' > .ai/cezar/ralph/comment.md
+
+         Leave the worktree clean. The next step refuses to close the issue if it is not.
+      5. If the issue genuinely cannot be finished: commit what exists as `wip(#<n>): ...` so the
+         tree is clean, then end the loop loudly instead of burning iterations on it:
+
+           printf 'BLOCKED: #%s <reason>\n' "$N" > .ai/cezar/ralph/stop
+
+      6. Append one note to the handoff: what you committed (sha), what you re-verified and what
+         you found wrong, and anything the next iteration must know.
+
+  - id: close
+    name: Close the sub-issue
+    command: |
+      set -eu
+      R=.ai/cezar/ralph
+      if [ -f "$R/stop" ]; then
+        echo "sentinel present — nothing to close"
+        exit 0
+      fi
+      if [ ! -s "$R/current" ]; then
+        printf 'BLOCKED: no issue recorded in %s/current\n' "$R" > "$R/stop"
+        echo "no current issue — ending loop"
+        exit 0
+      fi
+      N=$(tr -dc '0-9' < "$R/current")
+
+      # A dirty tree means the work never landed. Closing here is what made earlier runs
+      # re-do the same sub-issue; end the loop instead.
+      if ! git diff --quiet || ! git diff --cached --quiet; then
+        printf 'BLOCKED: #%s left uncommitted changes after the land step\n' "$N" > "$R/stop"
+        git status --porcelain
+        exit 0
+      fi
+
+      # GH_TOKEN in this environment is a read-only account; issue writes need the owner token.
+      T=$(gh auth token --user piotrlenczyk 2>/dev/null || true)
+      if [ -n "$T" ]; then export GH_TOKEN="$T"; fi
+
+      C="closed by ralph loop"
+      if [ -s "$R/comment.md" ]; then C=$(cat "$R/comment.md"); fi
+      gh issue close "$N" --comment "$C" || true
+
+      # A close that printed nothing may still have failed — verify the state.
+      STATE=$(gh issue view "$N" --json state -q .state)
+      if [ "$STATE" != "CLOSED" ]; then
+        printf 'BLOCKED: #%s close failed (state=%s) — check the gh token\n' "$N" "$STATE" > "$R/stop"
+        exit 0
+      fi
+      rm -f "$R/current" "$R/comment.md"
+      echo "closed #$N"
+
+  - id: loop-guard
+    name: More sub-issues?
+    command: test -f .ai/cezar/ralph/stop
+    onFail:
+      retry: pick
+      max: 30
+
+  - id: loop-outcome
+    name: Loop outcome
+    command: |
+      set -eu
+      STOP=.ai/cezar/ralph/stop
+      cat "$STOP"
+      if grep -q '^DONE' "$STOP"; then
+        rm -f "$STOP"
+        echo "OK: every sub-issue of the parent is closed"
+        exit 0
+      fi
+      rm -f "$STOP"
+      exit 1
