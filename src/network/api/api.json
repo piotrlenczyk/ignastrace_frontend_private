@@ -1,0 +1,4210 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/v1/healthcheck": {
+      "get": {
+        "operationId": "checkHealth",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Health Check is successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "ok" },
+                    "info": {
+                      "type": "object",
+                      "example": { "database": { "status": "up" } },
+                      "additionalProperties": {
+                        "type": "object",
+                        "required": ["status"],
+                        "properties": { "status": { "type": "string" } },
+                        "additionalProperties": true
+                      },
+                      "nullable": true
+                    },
+                    "error": {
+                      "type": "object",
+                      "example": {},
+                      "additionalProperties": {
+                        "type": "object",
+                        "required": ["status"],
+                        "properties": { "status": { "type": "string" } },
+                        "additionalProperties": true
+                      },
+                      "nullable": true
+                    },
+                    "details": {
+                      "type": "object",
+                      "example": { "database": { "status": "up" } },
+                      "additionalProperties": {
+                        "type": "object",
+                        "required": ["status"],
+                        "properties": { "status": { "type": "string" } },
+                        "additionalProperties": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The Health Check is not successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "error" },
+                    "info": {
+                      "type": "object",
+                      "example": { "database": { "status": "up" } },
+                      "additionalProperties": {
+                        "type": "object",
+                        "required": ["status"],
+                        "properties": { "status": { "type": "string" } },
+                        "additionalProperties": true
+                      },
+                      "nullable": true
+                    },
+                    "error": {
+                      "type": "object",
+                      "example": { "redis": { "status": "down", "message": "Could not connect" } },
+                      "additionalProperties": {
+                        "type": "object",
+                        "required": ["status"],
+                        "properties": { "status": { "type": "string" } },
+                        "additionalProperties": true
+                      },
+                      "nullable": true
+                    },
+                    "details": {
+                      "type": "object",
+                      "example": {
+                        "database": { "status": "up" },
+                        "redis": { "status": "down", "message": "Could not connect" }
+                      },
+                      "additionalProperties": {
+                        "type": "object",
+                        "required": ["status"],
+                        "properties": { "status": { "type": "string" } },
+                        "additionalProperties": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Healthcheck"]
+      }
+    },
+    "/api/metrics": {
+      "get": {
+        "operationId": "getMetricsPrometheus",
+        "parameters": [
+          { "name": "token", "required": false, "in": "query", "schema": { "type": "string" } },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["Prometheus"]
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "description": "\n  Authenticates administrators using email and password credentials.\n  \n  Authentication Flow:\n  1. Verifies credentials against admin database\n  2. Generates new JWT session tokens\n  \n  Security Features:\n  - Rate limiting for failed attempts (WIP)\n  - Password strength validation\n  - Secure token generation\n  \n  Notes:\n  - Access token has limited lifetime (24 hours)\n  - Refresh token can be used to extend session\n    ",
+        "operationId": "loginAuth",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/LoginDto" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "Login successful",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/JWTSessionResponse" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          },
+          "404": {
+            "description": "The requested resource could not be found. Resource may be deleted, have an incorrect identifier, or be inaccessible.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/NotFoundErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Admin Login",
+        "tags": ["Auth"]
+      }
+    },
+    "/api/v1/auth/refresh-token": {
+      "post": {
+        "description": "\n  Extends an active session by generating new access and refresh tokens.\n  \n  Flow:\n  1. Validates provided refresh token\n  2. Checks token expiration and revocation status\n  3. Generates new token pair\n  \n  Token Handling:\n  - Old refresh token is invalidated\n  - New token pair has fresh expiration times\n  - All token claims are preserved\n  - Session metadata is updated\n    ",
+        "operationId": "refreshTokenAuth",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/RefreshTokenDto" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "Token refreshed successfully",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/JWTSessionResponse" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Refresh Session",
+        "tags": ["Auth"]
+      }
+    },
+    "/api/v1/auth/logout": {
+      "post": {
+        "description": "\n  Terminates the current session and invalidates associated tokens.\n  \n  Actions Performed:\n  1. Revokes current access token\n  2. Invalidates associated refresh token\n  3. Cleans up session metadata\n  4. Logs session termination\n  \n  Security Measures:\n  - Immediate token invalidation\n  - All related refresh tokens are revoked\n  - Session data is cleaned up\n    ",
+        "operationId": "logoutAuth",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "201": { "description": "Logged out successfully" },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Logout",
+        "tags": ["Auth"]
+      }
+    },
+    "/api/v1/auth/sso/{provider}/register": {
+      "post": {
+        "description": "\n  Creates a new user account or authenticates existing user using SSO provider authorization.\n  Supports automatic account linking and guest session merging.\n  \n  Flow:\n  1. Client obtains authorization code from SSO provider\n  2. Client sends code and redirect URI\n  3. Server exchanges code for SSO provider tokens\n  4. Server checks if user with SSO email exists:\n      - If exists: Links SSO provider to account (if not linked)\n      - If new: Creates account with SSO profile data\n  5. Merges any existing guest session data if JWT provided\n  \n  Account Handling:\n  - For existing users: Links new SSO provider if not already linked\n  - For new users: Creates account with verified email\n  - Profile information is populated from SSO provider\n  - SSO connection is established for future logins\n  \n  Session Merging:\n  - If a guest JWT token is provided, all associated resources are transferred\n  - Merged resources include: preferences, saved items etc.\n  - Guest session is cleaned up after successful merge\n  - Original resource IDs and timestamps are preserved\n  \n  Notes:\n  - Seamlessly handles both new and existing users (SUSI pattern)\n  - Multiple SSO providers can be linked to single account\n    ",
+        "operationId": "registerAuthSSO",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Optional JWT token for guest session conversion (format: Bearer <token>)",
+            "required": false,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "provider",
+            "required": true,
+            "in": "path",
+            "description": "SSO provider name",
+            "schema": { "enum": ["google", "facebook"], "type": "string" }
+          },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/LoginSSODto" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "SSO registration successful",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/JWTSessionResponse" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          },
+          "404": {
+            "description": "The requested resource could not be found. Resource may be deleted, have an incorrect identifier, or be inaccessible.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/NotFoundErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "SSO Registration/Login (SUSI)",
+        "tags": ["Auth - Sso"]
+      }
+    },
+    "/api/v1/auth/sso/facebook/data-deletion": {
+      "post": {
+        "description": "\n  Handles Facebook data deletion requests as required by Facebook Platform Policy.\n  \n  When users request to delete their data from Facebook, Facebook sends a signed request\n  to this endpoint containing the user's Facebook ID. The system will:\n  \n  1. Validate the signed request from Facebook\n  2. Find the associated user account by Facebook ID or email\n  3. Delete the user's account and all associated data\n  4. Return a confirmation code and status URL for tracking\n  \n  This endpoint is called directly by Facebook's systems when users initiate\n  data deletion through their Facebook settings.\n  \n  The signed request contains the user's Facebook ID and is cryptographically\n  signed by Facebook using the app secret to ensure authenticity.\n    ",
+        "operationId": "handleFacebookDataDeletionAuthSSO",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/FacebookDataDeletionDto" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "Data deletion request processed successfully",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/FacebookDataDeletionResponse" } }
+            }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          },
+          "404": {
+            "description": "The requested resource could not be found. Resource may be deleted, have an incorrect identifier, or be inaccessible.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/NotFoundErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Facebook Data Deletion Callback",
+        "tags": ["Auth - Sso"]
+      }
+    },
+    "/api/v1/auth/sso/facebook/data-deletion/status/{confirmationCode}": {
+      "get": {
+        "description": "\n  Allows users to check the status of their Facebook data deletion request.\n  \n  Users can visit this URL (provided in the initial deletion response) to check\n  whether their data has been successfully deleted or if the deletion is still pending.\n  \n  Possible statuses:\n  - 'completed': User data has been successfully deleted\n  - 'pending': Deletion request is being processed\n  - 'not_found': No deletion request found for the confirmation code\n    ",
+        "operationId": "getFacebookDataDeletionStatusAuthSSO",
+        "parameters": [
+          {
+            "name": "confirmationCode",
+            "required": true,
+            "in": "path",
+            "description": "Confirmation code from the initial deletion request",
+            "schema": { "example": "abc123def456", "type": "string" }
+          },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deletion status retrieved successfully",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/FacebookDataDeletionStatusResponse" } }
+            }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Check Facebook Data Deletion Status",
+        "tags": ["Auth - Sso"]
+      }
+    },
+    "/api/v1/auth/guest-session": {
+      "post": {
+        "description": "\n  Creates a temporary guest session that allows limited access to the application.\n  No credentials required. Useful for be able to connect resources created before registration with future account.\n  \n  Features:\n  - Generates temporary user JWT token\n  - Allows accessing public resources\n  - Can be converted to permanent account later\n  \n  Guest Session Conversion:\n  - Guest data can be transferred to permanent account via:\n    * SSO registration/login\n    * Magic link verification\n  - All associated data is preserved during conversion\n  \n  Limitations:\n  - Some features may be restricted\n  - Session has extended but finite validity\n  - Must be converted to retain data long-term\n    ",
+        "operationId": "guestSessionAuthGuest",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GuestSessionDto" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "Guest session created successfully",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/JWTSessionResponse" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Create Guest Session",
+        "tags": ["Auth"]
+      }
+    },
+    "/api/v1/auth/register": {
+      "post": {
+        "description": "\n    Creates a new user account with the provided email address.\n    \n    - User is registered with a randomly generated secure password\n    - Password is sent to the user's email address\n    - If user already exists, an error is returned\n    - If a guest JWT token is provided, resources are migrated to the new account\n    \n    This endpoint provides a more traditional registration flow compared to the magic link approach.\n    ",
+        "operationId": "registerAuthEmail",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Optional JWT token for guest session conversion (format: Bearer <token>)",
+            "required": false,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/RegisterDto" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "User registered successfully, credentials sent by email",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/JWTSessionResponse" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          },
+          "409": {
+            "description": "User already exists",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ConflictErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Register a new user",
+        "tags": ["Auth"]
+      }
+    },
+    "/api/v1/auth/magic-link": {
+      "post": {
+        "description": "\n    Sends a magic sign-in link to the provided email address.\n\n    - If the email belongs to an existing user, a one-time sign-in link is delivered.\n    - If the email is new, a pending user is created and the link is still sent.\n    - If a guest JWT token is supplied, the resulting account will absorb the guest's\n      resources when the link is verified.\n\n    For security reasons this endpoint always returns a success-shaped response and\n    does not disclose whether a given email is registered.\n    ",
+        "operationId": "sendMagicLinkAuthEmail",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Optional JWT token for guest session conversion (format: Bearer <token>)",
+            "required": false,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/EmailDto" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "Magic link request accepted",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/StatusResponse" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Send magic link",
+        "tags": ["Auth"]
+      }
+    },
+    "/api/v1/auth/magic-link/verify": {
+      "post": {
+        "description": "\n    Verifies a magic link token that was delivered to the user's email and opens a session.\n\n    - Validates the signed one-time token\n    - Migrates any associated guest data onto the account\n    - Returns a fresh JWT session (access + refresh tokens)\n\n    The token is single-use: once verified it is revoked and cannot be replayed.\n    ",
+        "operationId": "verifyMagicLinkAuthEmail",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/MagicLinkVerifyDto" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "Magic link verified, session created",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/JWTSessionResponse" } } }
+          },
+          "401": {
+            "description": "Invalid or expired magic link token",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Verify magic link token",
+        "tags": ["Auth"]
+      }
+    },
+    "/api/v1/auth/get-user-by-email": {
+      "post": {
+        "description": "\n    Retrieves user information by email address.\n    \n    Returns basic user information including ID and email if the user exists.\n    Returns 404 error if no user is found with the provided email address.\n    ",
+        "operationId": "getUserByEmailAuthEmail",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BaseEmailDto" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "User found successfully",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UserEmailInfoResponse" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          },
+          "404": {
+            "description": "The requested resource could not be found. Resource may be deleted, have an incorrect identifier, or be inaccessible.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/NotFoundErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Get user by email",
+        "tags": ["Auth"]
+      }
+    },
+    "/api/v1/activity-feed": {
+      "get": {
+        "description": "Cursor-paginated, sorted by updatedAt desc across both sources — a just-resolved location request surfaces above an older still-pending one, not buried under it. Zero activity of either kind is a normal 200 with an empty list.",
+        "operationId": "listActivityFeed",
+        "parameters": [
+          {
+            "name": "cursor",
+            "required": false,
+            "in": "query",
+            "description": "Opaque pagination cursor from a previous page's nextCursor",
+            "schema": { "nullable": true, "type": "string" }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Page size, 1-50, defaults to 20",
+            "schema": { "minimum": 1, "maximum": 50, "default": 20, "type": "number" }
+          },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ActivityFeedResponse" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "The caller's own location requests and reverse-lookup reports, merged into one feed",
+        "tags": ["Activity-feed"]
+      }
+    },
+    "/api/v1/activity-feed/{id}/retry": {
+      "post": {
+        "description": "Re-dispatches the same report row for another attempt — never creates a new report. 400 for a LOCATION_REQUEST kind (no retry concept exists for it) or for a report not currently FAILED.",
+        "operationId": "retryActivityFeed",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Path parameter",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ActivityFeedRetryResponse" } }
+            }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Retry a FAILED reverse-lookup report",
+        "tags": ["Activity-feed"]
+      }
+    },
+    "/api/v1/features": {
+      "get": {
+        "operationId": "getFeaturesFeatures",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": { "type": "boolean" },
+                  "example": { "sexOffenderReport": false }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "List every declared feature flag and its current on/off state",
+        "tags": ["Features"]
+      }
+    },
+    "/api/v1/klaviyo/checkout-started": {
+      "post": {
+        "operationId": "checkoutStartedKlaviyo",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/KlaviyoEventDto" } } }
+        },
+        "responses": {
+          "200": { "description": "Event accepted" },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Send Checkout Started event to Klaviyo",
+        "tags": ["Klaviyo"]
+      }
+    },
+    "/api/v1/klaviyo/order-confirmed": {
+      "post": {
+        "operationId": "orderConfirmedKlaviyo",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/KlaviyoEventDto" } } }
+        },
+        "responses": {
+          "200": { "description": "Event accepted" },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Send Order Confirmed event to Klaviyo",
+        "tags": ["Klaviyo"]
+      }
+    },
+    "/api/v1/location-requests": {
+      "post": {
+        "description": "Never dispatches an SMS as a side effect — FIND_BY_NUMBER SMS is always a separate, explicit send-sms call.",
+        "operationId": "createLocationRequest",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CreateLocationRequestDto" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/CreateLocationRequestResponse" } }
+            }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Create a location request",
+        "tags": ["Location-requests"]
+      },
+      "get": {
+        "description": "Ordered updatedAt desc.",
+        "operationId": "listLocationRequest",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/LocationRequestResponse" } }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "List the caller's own location requests",
+        "tags": ["Location-requests"]
+      }
+    },
+    "/api/v1/location-requests/sms-count": {
+      "get": {
+        "description": "Raw counter value for the current 24h cycle, read without incrementing it.",
+        "operationId": "smsCountLocationRequest",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SmsCountResponse" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "The caller's current sms-dispatch cycle usage",
+        "tags": ["Location-requests"]
+      }
+    },
+    "/api/v1/location-requests/{id}": {
+      "get": {
+        "operationId": "getByIdLocationRequest",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Path parameter",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/LocationRequestResponse" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Get a location request owned by the caller",
+        "tags": ["Location-requests"]
+      }
+    },
+    "/api/v1/location-requests/{id}/send-sms": {
+      "post": {
+        "description": "Rate-limited to 5 sends per 24h cycle (spec 08). Every call counts against the budget, whether or not the underlying carrier call succeeds.",
+        "operationId": "sendSmsLocationRequest",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Path parameter",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "" },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Send (or resend) the consent-link SMS for a FIND_BY_NUMBER request",
+        "tags": ["Location-requests"]
+      }
+    },
+    "/api/v1/consent-links/{token}": {
+      "get": {
+        "description": "Anti-enumeration: never distinguishes a consumed link's actual outcome. Increments sms_link_follow.",
+        "operationId": "getStateConsentLink",
+        "parameters": [
+          {
+            "name": "token",
+            "required": true,
+            "in": "path",
+            "description": "Path parameter",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ConsentLinkStateResponse" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Check a consent link state",
+        "tags": ["Consent-links"]
+      }
+    },
+    "/api/v1/consent-links/{token}/grant": {
+      "post": {
+        "description": "Marks the request LOCATED, records coordinates/address, consumes the link. Notifies the sender (in-app + email) before returning. 410 if already consumed or expired.",
+        "operationId": "grantConsentLink",
+        "parameters": [
+          {
+            "name": "token",
+            "required": true,
+            "in": "path",
+            "description": "Path parameter",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GrantConsentDto" } } }
+        },
+        "responses": {
+          "204": { "description": "" },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Grant location consent",
+        "tags": ["Consent-links"]
+      }
+    },
+    "/api/v1/consent-links/{token}/decline": {
+      "post": {
+        "description": "Marks the request REJECTED, consumes the link. Notifies the sender (in-app + email) before returning. 410 if already consumed or expired.",
+        "operationId": "declineConsentLink",
+        "parameters": [
+          {
+            "name": "token",
+            "required": true,
+            "in": "path",
+            "description": "Path parameter",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "" },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Decline location consent",
+        "tags": ["Consent-links"]
+      }
+    },
+    "/api/v1/support/contact-us": {
+      "post": {
+        "description": "Send a message to the support team. Rate limited per client IP and per email address.",
+        "operationId": "contactUsSupport",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ContactUsDto" } } }
+        },
+        "responses": {
+          "204": { "description": "Message sent successfully" },
+          "400": {
+            "description": "Something wrong with request",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/BadRequestErrorResponseSchema" } }
+            }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "User does not have access to this action",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          },
+          "429": {
+            "description": "Too many contact requests from this IP or for this email address",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/TooManyRequestsErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Contact us",
+        "tags": ["Support"]
+      }
+    },
+    "/api/v1/carrier-lookup": {
+      "post": {
+        "operationId": "lookupCarrierLookup",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CarrierLookupDto" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CarrierLookupResponse" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Anonymous carrier / line-type pre-check for a phone number",
+        "tags": ["Reverse Lookup Reports"]
+      }
+    },
+    "/api/v1/reverse-lookup-reports/usage-count": {
+      "get": {
+        "description": "A live, read-only re-run of the exact same rolling 24h window POST /reverse-lookup-reports gates creation on — reading this never itself consumes or affects that budget.",
+        "operationId": "getUsageCountReverseLookupReportJob",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ReverseLookupReportUsageCountResponse" } }
+            }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Get the rolling reverse-lookup report usage for the current requester",
+        "tags": ["Reverse Lookup Reports"]
+      }
+    },
+    "/api/v1/reverse-lookup-reports": {
+      "post": {
+        "description": "Rate-limited to 5 reports per rolling 24h window per requester. Captures carrier/line-type synchronously; the rest of the data is filled by a background job — poll GET /:id for status.",
+        "operationId": "createReverseLookupReport",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/CreateReverseLookupReportDto" } }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/CreateReverseLookupReportResponse" } }
+            }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Create a reverse-lookup report",
+        "tags": ["Reverse Lookup Reports"]
+      }
+    },
+    "/api/v1/reverse-lookup-reports/{id}": {
+      "get": {
+        "description": "Report metadata only — the full sectioned view is a separate endpoint. Also the polling route while status is PENDING/PROCESSING.",
+        "operationId": "getByIdReverseLookupReport",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Path parameter",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ReverseLookupReportResponse" } }
+            }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Get a reverse-lookup report",
+        "tags": ["Reverse Lookup Reports"]
+      }
+    },
+    "/api/v1/reverse-lookup-reports/{reportId}/owners/{ownerId}/sex-offender": {
+      "get": {
+        "description": "The most legally sensitive data this product serves. Gated behind a compliance feature flag (404 when off), report/owner ownership (404), and the SEX_OFFENDERS upsell (403 when absent) — every read past the flag check is written to a mandatory SensitiveDataAccessLog row. Returns PENDING while spec 09's async fetch job hasn't landed yet.",
+        "operationId": "getDetailSexOffenderDetail",
+        "parameters": [
+          { "name": "reportId", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "ownerId", "required": true, "in": "path", "schema": { "type": "string" } },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/SexOffenderDetailResponse" } }
+            }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Read a report owner's sex-offender record",
+        "tags": ["Reverse Lookup Reports"]
+      }
+    },
+    "/api/v1/reverse-lookup-reports/{reportId}/sections": {
+      "get": {
+        "description": "profile/owners are always populated and never gated. socialMedia/dataBreach are gated per report; sexOffenders is gated per owner. dataBreach/sexOffenders never include record content here, even once RESULTS — only a count / a per-owner existence flag; the actual content is served by the dedicated data-leak/sex-offender endpoints. 409 while the report is still PENDING/PROCESSING; a FAILED report is a 200 with reportStatus: \"FAILED\" and every gated section NO_RESULTS/empty.",
+        "operationId": "getSectionsReverseLookupReportSections",
+        "parameters": [
+          { "name": "reportId", "required": true, "in": "path", "schema": { "type": "string" } },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SectionedReportResponse" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Get a reverse-lookup report as independently-gated sections",
+        "tags": ["Reverse Lookup Reports"]
+      }
+    },
+    "/api/v1/reverse-lookup-reports/{reportId}/data-breach": {
+      "get": {
+        "description": "Gated behind report ownership (404) and the DATA_LEAKS upsell (403 when absent). Returns the report phone number, its first report-level photo (if any), and every persisted data-leak record.",
+        "operationId": "getDetailDataBreachDetail",
+        "parameters": [
+          { "name": "reportId", "required": true, "in": "path", "schema": { "type": "string" } },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DataBreachDetailResponse" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Read a report's data-breach records",
+        "tags": ["Reverse Lookup Reports"]
+      }
+    },
+    "/api/v1/reverse-lookup-upsellings/consume": {
+      "post": {
+        "description": "Spends the caller's oldest unconsumed, unrefunded credit of `product` against `reportId`. `ownerId` is required for SEX_OFFENDERS and forbidden for every other product. Fires the product's side effect once the spend commits: SOCIAL_NETWORKS runs its expanded social search inline; SEX_OFFENDERS dispatches an async fetch job.",
+        "operationId": "consumeReverseLookupUpsellings",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ConsumeUpsellDto" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ConsumeUpsellResponse" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Spend one credit to unlock a paid report section",
+        "tags": ["Reverse Lookup Reports"]
+      }
+    },
+    "/api/v1/reverse-lookup-upsellings/credits": {
+      "get": {
+        "description": "Unconsumed, unrefunded credits per product — what decides \"offer consume\" vs \"offer purchase\".",
+        "operationId": "creditsReverseLookupUpsellings",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/UpsellCreditSummaryResponse" } }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "List the caller's spendable credit balances",
+        "tags": ["Reverse Lookup Reports"]
+      }
+    },
+    "/api/v1/reverse-lookup-reports/{reportId}/pdf": {
+      "post": {
+        "description": "409 if the underlying report is not COMPLETED yet.",
+        "operationId": "createReportPdf",
+        "parameters": [
+          { "name": "reportId", "required": true, "in": "path", "schema": { "type": "string" } },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CreatePdfExportResponse" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Request a PDF export of a completed reverse-lookup report",
+        "tags": ["Reverse Lookup Reports"]
+      }
+    },
+    "/api/v1/reverse-lookup-reports/{reportId}/pdf/status": {
+      "get": {
+        "description": "`downloadUrl` is present only once `status` is COMPLETED.",
+        "operationId": "getStatusReportPdf",
+        "parameters": [
+          { "name": "reportId", "required": true, "in": "path", "schema": { "type": "string" } },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PdfExportStatusResponse" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Poll the caller's most recent PDF export request for this report",
+        "tags": ["Reverse Lookup Reports"]
+      }
+    },
+    "/api/v1/user": {
+      "put": {
+        "description": "\n  Updates the authenticated user's profile information.\n  \n  Updatable Fields:\n  - Email address (must be unique)\n  - Password (if provided, must meet strength requirements)\n  \n  Password Requirements:\n  - Minimum 8 characters long\n  - At least one uppercase letter (A-Z)\n  - At least one lowercase letter (a-z)\n  - At least one number (0-9) or special character\n  \n  Validation Rules:\n  - Email must be valid and not already in use\n  - Previous sessions remain valid after password change\n  \n  Restrictions:\n  - Not available for guest users\n  \n  Note: Changing email or password does not affect current session\n    ",
+        "operationId": "updateUser",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UserUpdateDto" } } }
+        },
+        "responses": {
+          "200": { "description": "User updated successfully" },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Guest users cannot update profile",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Update User Profile",
+        "tags": ["User"]
+      }
+    },
+    "/api/v1/user/me/language": {
+      "post": {
+        "description": "\n  Updates the authenticated user's language preference.\n  Language options:\n  - en\n  - es\n    ",
+        "operationId": "updateLanguageUser",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UserLanguageUpdateDto" } } }
+        },
+        "responses": {
+          "200": { "description": "User language updated successfully" },
+          "400": {
+            "description": "Invalid request: missing required fields, invalid field values/formats, unmet validation constraints, or malformed request syntax.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ConflictErrorResponseSchema" } }
+            }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Guest users cannot update language",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Update User Language",
+        "tags": ["User"]
+      }
+    },
+    "/api/v1/user/me/password": {
+      "post": {
+        "description": "\n  Updates the authenticated user's password with old password verification.\n  \n  Requirements:\n  - Must provide current password for verification\n  - New password must meet strength requirements:\n    - Minimum 8 characters long\n    - At least one uppercase letter (A-Z)\n    - At least one lowercase letter (a-z)\n    - At least one number (0-9) or special character\n  \n  Security:\n  - Current password is verified before allowing update\n  - Password is securely hashed using Argon2\n  - Previous sessions remain valid after password change\n  \n  Restrictions:\n  - Not available for guest users\n    ",
+        "operationId": "updatePasswordUser",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UserPasswordUpdateDto" } } }
+        },
+        "responses": {
+          "200": { "description": "Password updated successfully" },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Guest users cannot update password",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Update User Password",
+        "tags": ["User"]
+      }
+    },
+    "/api/v1/user/me": {
+      "get": {
+        "description": "Retrieve authenticated user profile details",
+        "operationId": "meUser",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User profile retrieved successfully",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UserResponse" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Get current user",
+        "tags": ["User"]
+      }
+    },
+    "/api/v1/user/me/delete": {
+      "delete": {
+        "description": "\n  Deletes the authenticated user's account.\n\n  Processing:\n  - User account and associated data are removed\n  ",
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User account deleted successfully",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/StatusResponse" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Guest users cannot delete account",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Delete User Account",
+        "tags": ["User"]
+      }
+    },
+    "/api/v1/admin/users": {
+      "get": {
+        "description": "Returns a paginated list of all users in the system",
+        "operationId": "listUsersUsersAdmin",
+        "parameters": [
+          { "name": "page", "required": false, "in": "query", "schema": { "type": "number" } },
+          { "name": "limit", "required": false, "in": "query", "schema": { "type": "number" } },
+          {
+            "name": "orderBy",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "type": "string",
+              "enum": ["ID", "NAME", "FIRST_NAME", "LAST_NAME", "EMAIL", "CREATED_AT"]
+            }
+          },
+          {
+            "name": "orderDirection",
+            "required": false,
+            "in": "query",
+            "schema": { "nullable": true, "type": "string", "enum": ["ASC", "DESC"] }
+          },
+          { "name": "phrase", "required": false, "in": "query", "schema": { "nullable": true, "type": "string" } },
+          { "name": "id", "required": false, "in": "query", "schema": { "nullable": true, "type": "string" } },
+          { "name": "firstName", "required": false, "in": "query", "schema": { "nullable": true, "type": "string" } },
+          { "name": "lastName", "required": false, "in": "query", "schema": { "nullable": true, "type": "string" } },
+          { "name": "email", "required": false, "in": "query", "schema": { "nullable": true, "type": "string" } },
+          { "name": "filters", "required": false, "in": "query", "schema": { "nullable": true, "type": "string" } },
+          {
+            "name": "roles",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": { "type": "string", "enum": ["__GLOBAL_ADMIN", "ADMIN", "SUPPORT", "STANDARD_USER", "GUEST"] }
+            }
+          },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of users",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UsersAdminPaginatedResponse" } }
+            }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "OktaToken": [] }, { "x-api-key": [] }],
+        "summary": "List all users",
+        "tags": ["Admin - Users"]
+      }
+    },
+    "/api/v1/admin/users/{id}": {
+      "get": {
+        "description": "Returns detailed information about a specific user",
+        "operationId": "getUserDetailsUsersAdmin",
+        "parameters": [
+          { "name": "id", "required": true, "in": "path", "schema": { "type": "string" } },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User details",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UserResponse" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "OktaToken": [] }, { "x-api-key": [] }],
+        "summary": "Get user details",
+        "tags": ["Admin - Users"]
+      },
+      "patch": {
+        "description": "Updates user details including roles assignment",
+        "operationId": "updateUserUsersAdmin",
+        "parameters": [
+          { "name": "id", "required": true, "in": "path", "schema": { "type": "string" } },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UserUpdateDto" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated user details",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UserResponse" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "OktaToken": [] }, { "x-api-key": [] }],
+        "summary": "Update user",
+        "tags": ["Admin - Users"]
+      },
+      "delete": {
+        "description": "Deletes a user account. User data and sessions are removed.",
+        "operationId": "deleteUserUsersAdmin",
+        "parameters": [
+          { "name": "id", "required": true, "in": "path", "schema": { "type": "string" } },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User account deleted successfully",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/StatusResponse" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "OktaToken": [] }, { "x-api-key": [] }],
+        "summary": "Delete User Account",
+        "tags": ["Admin - Users"]
+      }
+    }
+  },
+  "info": {
+    "title": "Mobitrace API",
+    "description": "\n  Mobitrace backend API — phone number reverse-lookup and identity-protection reports.\n\n  Core Features:\n  - Reverse-lookup reports (carrier pre-check, data breach, sex offender, social network sections)\n  - Location requests with consent flow\n  - Async report generation and PDF export via background jobs\n  - Subscription-gated upsellings for paid report content\n  - Activity history feed and admin management panel\n\n  Authentication:\n  - JWT Bearer token required for authorized endpoints\n  - SSO support for seamless integration\n  - Okta SSO for admin endpoints\n\n  Data Management:\n  - PostgreSQL via Prisma; Redis-backed lookup rate limiting; S3-compatible file storage\n\n  API Access:\n  - Public endpoints: /api\n  - Yaml version: /api-yaml\n  - JSON version: /api-json\n  - Documentation: /docs\n  - Protected routes require authentication\n  - Rate limiting applies to all endpoints\n    ",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [
+    { "name": "Auth", "description": "Authentication and Authorization" },
+    { "name": "Auth - Sso", "description": "Single Sign-On Authentication" },
+    { "name": "User", "description": "User Account Management" },
+    {
+      "name": "Reverse Lookup Reports",
+      "description": "Carrier pre-check, report generation, and report detail sections"
+    },
+    { "name": "Location-requests", "description": "Location requests and consent flow" },
+    { "name": "Consent-links", "description": "Consent link resolution for location requests" },
+    { "name": "Activity-feed", "description": "User activity history feed" },
+    { "name": "Support", "description": "Contact and get-help endpoints" },
+    { "name": "Healthcheck", "description": "Service health checks" }
+  ],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": { "scheme": "bearer", "bearerFormat": "JWT", "type": "http" },
+      "x-api-key": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-api-key",
+        "description": "Enter API key for authorize api requests"
+      },
+      "OktaToken": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Enter your Okta JWT token for admin endpoints"
+      }
+    },
+    "schemas": {
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": false,
+            "description": "User email address",
+            "example": "user@example.com"
+          },
+          "password": {
+            "type": "string",
+            "nullable": false,
+            "description": "User password",
+            "example": "MySecurePass123!"
+          }
+        },
+        "required": ["email", "password"]
+      },
+      "JWTSessionResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "nullable": false,
+            "description": "JWT access token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          },
+          "refreshToken": {
+            "type": "string",
+            "nullable": false,
+            "description": "JWT refresh token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          }
+        },
+        "required": ["token", "refreshToken"]
+      },
+      "RefreshTokenDto": {
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string",
+            "nullable": false,
+            "description": "JWT refresh token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          }
+        },
+        "required": ["refreshToken"]
+      },
+      "LoginSSODto": {
+        "type": "object",
+        "properties": {
+          "exchangeCode": {
+            "type": "string",
+            "nullable": false,
+            "description": "Either exchange code or proxy token is required."
+          }
+        },
+        "required": ["exchangeCode"]
+      },
+      "FacebookDataDeletionDto": {
+        "type": "object",
+        "properties": { "signed_request": { "type": "string", "nullable": false } },
+        "required": ["signed_request"]
+      },
+      "FacebookDataDeletionResponse": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "nullable": false,
+            "description": "URL where the user can check the status of their data deletion request",
+            "example": "https://example.com/auth/sso/facebook/data-deletion/status/abc123"
+          },
+          "confirmation_code": {
+            "type": "string",
+            "nullable": false,
+            "description": "Confirmation code for tracking the deletion request",
+            "example": "abc123def456"
+          }
+        },
+        "required": ["url", "confirmation_code"]
+      },
+      "FacebookDataDeletionStatusResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "nullable": false,
+            "description": "Status of the data deletion request",
+            "example": "completed"
+          },
+          "message": {
+            "type": "string",
+            "nullable": false,
+            "description": "Message describing the current status",
+            "example": "User account and associated data have been successfully deleted."
+          }
+        },
+        "required": ["status", "message"]
+      },
+      "ISO6391LanguageCode": {
+        "type": "string",
+        "enum": [
+          "aa",
+          "ab",
+          "ae",
+          "af",
+          "ak",
+          "am",
+          "an",
+          "ar",
+          "as",
+          "av",
+          "ay",
+          "az",
+          "ba",
+          "be",
+          "bg",
+          "bi",
+          "bm",
+          "bn",
+          "bo",
+          "br",
+          "bs",
+          "ca",
+          "ce",
+          "ch",
+          "co",
+          "cr",
+          "cs",
+          "cu",
+          "cv",
+          "cy",
+          "da",
+          "de",
+          "dv",
+          "dz",
+          "ee",
+          "el",
+          "en",
+          "eo",
+          "es",
+          "et",
+          "eu",
+          "fa",
+          "ff",
+          "fi",
+          "fj",
+          "fo",
+          "fr",
+          "fy",
+          "ga",
+          "gd",
+          "gl",
+          "gn",
+          "gu",
+          "gv",
+          "ha",
+          "he",
+          "hi",
+          "ho",
+          "hr",
+          "ht",
+          "hu",
+          "hy",
+          "hz",
+          "ia",
+          "id",
+          "ie",
+          "ig",
+          "ii",
+          "ik",
+          "io",
+          "is",
+          "it",
+          "iu",
+          "ja",
+          "jv",
+          "ka",
+          "kg",
+          "ki",
+          "kj",
+          "kk",
+          "kl",
+          "km",
+          "kn",
+          "ko",
+          "kr",
+          "ks",
+          "ku",
+          "kv",
+          "kw",
+          "ky",
+          "la",
+          "lb",
+          "lg",
+          "li",
+          "ln",
+          "lo",
+          "lt",
+          "lu",
+          "lv",
+          "mg",
+          "mh",
+          "mi",
+          "mk",
+          "ml",
+          "mn",
+          "mr",
+          "ms",
+          "mt",
+          "my",
+          "na",
+          "nb",
+          "nd",
+          "ne",
+          "ng",
+          "nl",
+          "nn",
+          "no",
+          "nr",
+          "nv",
+          "ny",
+          "oc",
+          "oj",
+          "om",
+          "or",
+          "os",
+          "pa",
+          "pi",
+          "pl",
+          "ps",
+          "pt",
+          "qu",
+          "rm",
+          "rn",
+          "ro",
+          "ru",
+          "rw",
+          "sa",
+          "sc",
+          "sd",
+          "se",
+          "sg",
+          "si",
+          "sk",
+          "sl",
+          "sm",
+          "sn",
+          "so",
+          "sq",
+          "sr",
+          "ss",
+          "st",
+          "su",
+          "sv",
+          "sw",
+          "ta",
+          "te",
+          "tg",
+          "th",
+          "ti",
+          "tk",
+          "tl",
+          "tn",
+          "to",
+          "tr",
+          "ts",
+          "tt",
+          "tw",
+          "ty",
+          "ug",
+          "uk",
+          "ur",
+          "uz",
+          "ve",
+          "vi",
+          "vo",
+          "wa",
+          "wo",
+          "xh",
+          "yi",
+          "yo",
+          "za",
+          "zh",
+          "zu"
+        ],
+        "description": "Language code ISO6391"
+      },
+      "GuestSessionDto": {
+        "type": "object",
+        "properties": {
+          "language": {
+            "nullable": true,
+            "description": "Language code ISO6391",
+            "example": "en",
+            "allOf": [{ "$ref": "#/components/schemas/ISO6391LanguageCode" }]
+          }
+        }
+      },
+      "AuthRedirectTypes": {
+        "type": "string",
+        "enum": ["preview", "dashboard", "cancel"],
+        "description": "Redirect Type"
+      },
+      "RegisterDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": false,
+            "description": "Email address",
+            "example": "user@example.com"
+          },
+          "redirectFlow": {
+            "nullable": true,
+            "description": "Redirect Type",
+            "example": "preview",
+            "allOf": [{ "$ref": "#/components/schemas/AuthRedirectTypes" }]
+          }
+        },
+        "required": ["email"]
+      },
+      "EmailDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": false,
+            "description": "Email address",
+            "example": "user@example.com"
+          },
+          "redirectFlow": {
+            "nullable": true,
+            "description": "Redirect Type",
+            "example": "preview",
+            "allOf": [{ "$ref": "#/components/schemas/AuthRedirectTypes" }]
+          }
+        },
+        "required": ["email"]
+      },
+      "StatusResponse": {
+        "type": "object",
+        "properties": { "status": { "type": "string", "nullable": false } },
+        "required": ["status"]
+      },
+      "MagicLinkVerifyDto": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "nullable": false,
+            "description": "Magic link verification token delivered via email",
+            "example": "abc123.def456"
+          }
+        },
+        "required": ["token"]
+      },
+      "BaseEmailDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": false,
+            "description": "Email address",
+            "example": "user@example.com"
+          }
+        },
+        "required": ["email"]
+      },
+      "UserEmailInfoResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": false,
+            "description": "User unique identifier",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "email": {
+            "type": "string",
+            "nullable": false,
+            "description": "User email address",
+            "example": "user@example.com"
+          }
+        },
+        "required": ["id", "email"]
+      },
+      "ActivityItemResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": false,
+            "description": "The underlying LocationRequest or ReverseLookupReport id",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "kind": {
+            "enum": ["LOCATION_REQUEST", "REVERSE_LOOKUP_REPORT"],
+            "type": "string",
+            "nullable": false,
+            "example": "LOCATION_REQUEST"
+          },
+          "status": {
+            "type": "string",
+            "nullable": false,
+            "description": "The source's own status enum value, passed through unmapped",
+            "example": "COMPLETED"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string",
+            "nullable": false,
+            "description": "Creation timestamp"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "nullable": false,
+            "description": "The sort key — LocationRequest.updatedAt, or (for a ReverseLookupReport, which has no updatedAt column of its own) completedAt when set, else createdAt"
+          },
+          "retryable": {
+            "type": "boolean",
+            "nullable": false,
+            "description": "True only for a REVERSE_LOOKUP_REPORT in FAILED status"
+          }
+        },
+        "required": ["id", "kind", "status", "createdAt", "updatedAt", "retryable"]
+      },
+      "ActivityFeedResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "nullable": false,
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/ActivityItemResponse" }
+          },
+          "nextCursor": {
+            "type": "string",
+            "nullable": true,
+            "description": "Pass as ?cursor= to fetch the next page; absent once exhausted"
+          }
+        },
+        "required": ["data"]
+      },
+      "ActivityFeedRetryResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": false,
+            "description": "The retried report id (unchanged — a retry never creates a new row)"
+          },
+          "status": {
+            "enum": ["PENDING", "PROCESSING", "COMPLETED", "FAILED"],
+            "type": "string",
+            "nullable": false,
+            "description": "Always PENDING immediately after a successful retry",
+            "example": "PENDING"
+          }
+        },
+        "required": ["id", "status"]
+      },
+      "KlaviyoEventDto": {
+        "type": "object",
+        "properties": {
+          "flow": {
+            "type": "string",
+            "nullable": true,
+            "description": "Caller-supplied checkout flow context, forwarded verbatim to Klaviyo as an event property",
+            "example": "upsell"
+          },
+          "product": {
+            "type": "string",
+            "nullable": true,
+            "description": "Caller-supplied product context, forwarded verbatim to Klaviyo as an event property",
+            "example": "premium-report"
+          }
+        }
+      },
+      "CreateLocationRequestDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "enum": ["FIND_BY_NUMBER", "FIND_BY_LINK"],
+            "type": "string",
+            "nullable": false,
+            "description": "Whether this request is sent by SMS to a phone number or shared as a bare link",
+            "example": "FIND_BY_NUMBER"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true,
+            "description": "Required for FIND_BY_NUMBER, forbidden for FIND_BY_LINK",
+            "example": "+12025550123"
+          },
+          "linkName": {
+            "type": "string",
+            "nullable": true,
+            "description": "Required for FIND_BY_LINK, forbidden for FIND_BY_NUMBER",
+            "example": "Find my sister"
+          },
+          "message": {
+            "type": "string",
+            "maxLength": 160,
+            "nullable": true,
+            "description": "Sender-authored notice, sent as part of the SMS body. Allowed for FIND_BY_NUMBER only.",
+            "example": "Can you share your location with me?"
+          }
+        },
+        "required": ["type"]
+      },
+      "CreateLocationRequestResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": false,
+            "description": "Location request id",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "type": {
+            "enum": ["FIND_BY_NUMBER", "FIND_BY_LINK"],
+            "type": "string",
+            "nullable": false,
+            "description": "Request type"
+          },
+          "status": {
+            "enum": ["PENDING", "LOCATED", "REJECTED"],
+            "type": "string",
+            "nullable": false,
+            "description": "Always PENDING immediately after creation",
+            "example": "PENDING"
+          },
+          "shareLink": {
+            "type": "string",
+            "nullable": false,
+            "description": "The recipient-facing link — embeds the ConsentLink's opaque token, never the request's own id",
+            "example": "https://app.example.com/l/6f1ed002ab5595859014ebf0951522d9515002f7f5c9"
+          }
+        },
+        "required": ["id", "type", "status", "shareLink"]
+      },
+      "LocationRequestResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": false,
+            "description": "Location request id",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "type": {
+            "enum": ["FIND_BY_NUMBER", "FIND_BY_LINK"],
+            "type": "string",
+            "nullable": false,
+            "description": "Request type"
+          },
+          "status": {
+            "enum": ["PENDING", "LOCATED", "REJECTED"],
+            "type": "string",
+            "nullable": false,
+            "description": "Always PENDING immediately after creation",
+            "example": "PENDING"
+          },
+          "shareLink": {
+            "type": "string",
+            "nullable": false,
+            "description": "The recipient-facing link — embeds the ConsentLink's opaque token, never the request's own id",
+            "example": "https://app.example.com/l/6f1ed002ab5595859014ebf0951522d9515002f7f5c9"
+          },
+          "linkName": {
+            "type": "string",
+            "nullable": true,
+            "description": "Set for FIND_BY_LINK only",
+            "example": "Find my sister"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true,
+            "description": "Set for FIND_BY_NUMBER only",
+            "example": "+12025550123"
+          },
+          "capturedLatitude": { "type": "number", "nullable": true, "description": "Set only when status is LOCATED" },
+          "capturedLongitude": { "type": "number", "nullable": true, "description": "Set only when status is LOCATED" },
+          "resolvedAddress": { "type": "string", "nullable": true, "description": "Set only when status is LOCATED" },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "nullable": false,
+            "description": "List ordering key — most-recently status-changed first"
+          }
+        },
+        "required": ["id", "type", "status", "shareLink", "updatedAt"]
+      },
+      "SmsCountResponse": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "number",
+            "nullable": false,
+            "description": "The caller's raw sms-dispatch counter value for the current 24h cycle, read without incrementing it",
+            "example": 2
+          },
+          "limit": { "type": "number", "nullable": false, "description": "The sms-dispatch cycle budget", "example": 5 }
+        },
+        "required": ["count", "limit"]
+      },
+      "ConsentLinkStateResponse": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "enum": ["ACTIVE", "EXPIRED", "CONSUMED"],
+            "type": "string",
+            "nullable": false,
+            "description": "Never distinguishes a consumed link's actual outcome (located vs. rejected) — anti-enumeration measure.",
+            "example": "ACTIVE"
+          },
+          "linkName": {
+            "type": "string",
+            "nullable": true,
+            "description": "Set for FIND_BY_LINK requests only",
+            "example": "Find my sister"
+          }
+        },
+        "required": ["state"]
+      },
+      "GrantConsentDto": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "nullable": false,
+            "description": "Latitude resolved client-side — this backend never geocodes",
+            "example": 40.7128
+          },
+          "longitude": {
+            "type": "number",
+            "nullable": false,
+            "description": "Longitude resolved client-side — this backend never geocodes",
+            "example": -74.006
+          },
+          "address": {
+            "type": "string",
+            "nullable": false,
+            "description": "Human-readable address resolved client-side",
+            "example": "New York, NY, USA"
+          }
+        },
+        "required": ["latitude", "longitude", "address"]
+      },
+      "ContactUsDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "minLength": 1, "maxLength": 100, "nullable": false },
+          "surname": { "type": "string", "minLength": 1, "maxLength": 100, "nullable": false },
+          "email": { "type": "string", "maxLength": 100, "format": "email", "nullable": false },
+          "message": { "type": "string", "minLength": 1, "maxLength": 250, "nullable": false },
+          "subject": {
+            "enum": ["BILLING", "TECHNICAL", "SUGGESTION", "OTHER"],
+            "type": "string",
+            "nullable": false,
+            "description": "Subject of the contact message"
+          },
+          "locale": {
+            "type": "string",
+            "nullable": false,
+            "description": "Language the confirmation email should be sent in. Falls back to the default language when absent or unsupported.",
+            "example": "en"
+          }
+        },
+        "required": ["name", "surname", "email", "message", "subject"]
+      },
+      "BadRequestErrorCode": {
+        "type": "string",
+        "enum": ["VALIDATION_ERROR", "INVALID_TOKEN", "ENTITY_UPDATE_ERROR", "BE_INTERNAL_SERVER_ERROR"],
+        "description": "Specific error code that explains the particular issue that occurred."
+      },
+      "BadRequestHttpStatusCode": {
+        "type": "string",
+        "enum": ["BAD_REQUEST"],
+        "description": "HTTP status code that corresponds to the error."
+      },
+      "BadRequestErrorResponse": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string", "nullable": true, "description": "Additional information about the error." },
+          "errorCode": {
+            "nullable": false,
+            "description": "Specific error code that explains the particular issue that occurred.",
+            "allOf": [{ "$ref": "#/components/schemas/BadRequestErrorCode" }]
+          },
+          "code": {
+            "nullable": false,
+            "description": "HTTP status code that corresponds to the error.",
+            "allOf": [{ "$ref": "#/components/schemas/BadRequestHttpStatusCode" }]
+          },
+          "stacktrace": {
+            "nullable": false,
+            "description": "Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment.",
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "required": ["errorCode", "code", "stacktrace"]
+      },
+      "BadRequestErrorResponseSchema": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "nullable": false,
+            "description": "Contains error details including message, code, and additional context. Used consistently across all error responses to provide structured error information.",
+            "allOf": [{ "$ref": "#/components/schemas/BadRequestErrorResponse" }]
+          }
+        },
+        "required": ["error"]
+      },
+      "ForbiddenErrorCode": {
+        "type": "string",
+        "enum": [
+          "USER_IS_NOT_ACTIVE",
+          "INSUFFICIENT_PERMISSIONS",
+          "NOT_PERMITTED_ERROR",
+          "BE_INTERNAL_SERVER_ERROR",
+          "INSUFFICIENT_PERMISSIONS"
+        ],
+        "description": "Specific error code that explains the particular issue that occurred."
+      },
+      "ForbiddenHttpStatusCode": {
+        "type": "string",
+        "enum": ["FORBIDDEN"],
+        "description": "HTTP status code that corresponds to the error."
+      },
+      "ForbiddenErrorResponse": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string", "nullable": true, "description": "Additional information about the error." },
+          "errorCode": {
+            "nullable": false,
+            "description": "Specific error code that explains the particular issue that occurred.",
+            "allOf": [{ "$ref": "#/components/schemas/ForbiddenErrorCode" }]
+          },
+          "code": {
+            "nullable": false,
+            "description": "HTTP status code that corresponds to the error.",
+            "allOf": [{ "$ref": "#/components/schemas/ForbiddenHttpStatusCode" }]
+          },
+          "stacktrace": {
+            "nullable": false,
+            "description": "Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment.",
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "required": ["errorCode", "code", "stacktrace"]
+      },
+      "ForbiddenErrorResponseSchema": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "nullable": false,
+            "description": "Contains error details including message, code, and additional context. Used consistently across all error responses to provide structured error information.",
+            "allOf": [{ "$ref": "#/components/schemas/ForbiddenErrorResponse" }]
+          }
+        },
+        "required": ["error"]
+      },
+      "TooManyRequestsErrorCode": {
+        "type": "string",
+        "enum": ["TOO_MANY_REQUESTS"],
+        "description": "Specific error code that explains the particular issue that occurred."
+      },
+      "TooManyRequestsHttpStatusCode": {
+        "type": "string",
+        "enum": ["TOO_MANY_REQUESTS"],
+        "description": "HTTP status code that corresponds to the error."
+      },
+      "TooManyRequestsErrorResponse": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string", "nullable": true, "description": "Additional information about the error." },
+          "errorCode": {
+            "nullable": false,
+            "description": "Specific error code that explains the particular issue that occurred.",
+            "allOf": [{ "$ref": "#/components/schemas/TooManyRequestsErrorCode" }]
+          },
+          "code": {
+            "nullable": false,
+            "description": "HTTP status code that corresponds to the error.",
+            "allOf": [{ "$ref": "#/components/schemas/TooManyRequestsHttpStatusCode" }]
+          },
+          "stacktrace": {
+            "nullable": false,
+            "description": "Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment.",
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "required": ["errorCode", "code", "stacktrace"]
+      },
+      "TooManyRequestsErrorResponseSchema": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "nullable": false,
+            "description": "Contains error details including message, code, and additional context. Used consistently across all error responses to provide structured error information.",
+            "allOf": [{ "$ref": "#/components/schemas/TooManyRequestsErrorResponse" }]
+          }
+        },
+        "required": ["error"]
+      },
+      "CarrierLookupDto": {
+        "type": "object",
+        "properties": {
+          "phoneNumber": {
+            "type": "string",
+            "nullable": false,
+            "description": "Phone number to look up, in E.164 or a format normalizable to it",
+            "example": "+12025550123"
+          }
+        },
+        "required": ["phoneNumber"]
+      },
+      "CarrierLookupResponse": {
+        "type": "object",
+        "properties": {
+          "carrier": {
+            "type": "string",
+            "nullable": true,
+            "description": "Carrier name, or null when unknown",
+            "example": "AT&T"
+          },
+          "lineType": {
+            "enum": ["mobile", "landline", "unknown"],
+            "type": "string",
+            "nullable": false,
+            "description": "Line type",
+            "example": "mobile"
+          }
+        },
+        "required": ["carrier", "lineType"]
+      },
+      "ReverseLookupReportUsageCountResponse": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "number",
+            "nullable": false,
+            "description": "Reports created by this requester in the trailing rolling 24h window",
+            "example": 2
+          },
+          "limit": {
+            "type": "number",
+            "nullable": false,
+            "description": "Max reports allowed per rolling 24h window — the same limit POST / gates creation on",
+            "example": 5
+          }
+        },
+        "required": ["count", "limit"]
+      },
+      "CreateReverseLookupReportDto": {
+        "type": "object",
+        "properties": {
+          "phoneNumber": {
+            "type": "string",
+            "nullable": false,
+            "description": "Phone number to run a reverse lookup on, in E.164 or a format normalizable to it",
+            "example": "+12025550123"
+          }
+        },
+        "required": ["phoneNumber"]
+      },
+      "CreateReverseLookupReportResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": false,
+            "description": "Report id",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "status": {
+            "enum": ["PENDING", "PROCESSING", "COMPLETED", "FAILED"],
+            "type": "string",
+            "nullable": false,
+            "description": "Report status — PENDING immediately after creation",
+            "example": "PENDING"
+          },
+          "lineType": {
+            "enum": ["MOBILE", "LANDLINE", "UNKNOWN"],
+            "type": "string",
+            "nullable": false,
+            "description": "Line type, captured synchronously at creation",
+            "example": "MOBILE"
+          },
+          "carrier": {
+            "type": "string",
+            "nullable": true,
+            "description": "Carrier name, or null when the vendor had nothing for this number",
+            "example": "AT&T"
+          }
+        },
+        "required": ["id", "status", "lineType", "carrier"]
+      },
+      "ReverseLookupReportResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": false,
+            "description": "Report id",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "status": {
+            "enum": ["PENDING", "PROCESSING", "COMPLETED", "FAILED"],
+            "type": "string",
+            "nullable": false,
+            "description": "Report status — PENDING immediately after creation",
+            "example": "PENDING"
+          },
+          "lineType": {
+            "enum": ["MOBILE", "LANDLINE", "UNKNOWN"],
+            "type": "string",
+            "nullable": false,
+            "description": "Line type, captured synchronously at creation",
+            "example": "MOBILE"
+          },
+          "carrier": {
+            "type": "string",
+            "nullable": true,
+            "description": "Carrier name, or null when the vendor had nothing for this number",
+            "example": "AT&T"
+          },
+          "failureReason": {
+            "type": "string",
+            "nullable": true,
+            "description": "Set when status is FAILED",
+            "example": "Identity lookup provider unavailable"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string",
+            "nullable": false,
+            "description": "Creation timestamp"
+          },
+          "completedAt": {
+            "format": "date-time",
+            "type": "string",
+            "nullable": true,
+            "description": "Set once status reaches COMPLETED or FAILED"
+          }
+        },
+        "required": ["id", "status", "lineType", "carrier", "createdAt"]
+      },
+      "LocationResponse": {
+        "type": "object",
+        "properties": {
+          "address": { "type": "string", "nullable": true },
+          "city": { "type": "string", "nullable": true },
+          "county": { "type": "string", "nullable": true },
+          "state": { "type": "string", "nullable": true },
+          "postalCode": { "type": "string", "nullable": true },
+          "country": { "type": "string", "nullable": true },
+          "latitude": { "type": "number", "nullable": true },
+          "longitude": { "type": "number", "nullable": true },
+          "yearsOfResidence": { "type": "number", "nullable": true }
+        }
+      },
+      "SexOffenderDetailResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "enum": ["PENDING", "READY"], "type": "string", "nullable": false, "example": "READY" },
+          "isEmptyRecord": { "type": "boolean", "nullable": true },
+          "firstName": { "type": "string", "nullable": true },
+          "lastName": { "type": "string", "nullable": true },
+          "middleName": { "type": "string", "nullable": true },
+          "nickNames": { "nullable": true, "type": "array", "items": { "type": "string" } },
+          "dateOfBirth": { "format": "date-time", "type": "string", "nullable": true },
+          "sex": { "nullable": true, "enum": ["MALE", "FEMALE", "INTERSEX"], "type": "string" },
+          "eyeColor": {
+            "nullable": true,
+            "enum": ["OTHER", "AMBER", "BLUE", "BROWN", "GRAY", "GREEN", "HAZEL", "RED", "VIOLET"],
+            "type": "string"
+          },
+          "hairColor": {
+            "nullable": true,
+            "enum": ["OTHER", "BROWN", "GRAY", "RED", "BLACK", "BLONDE", "WHITE", "AUBURN", "CHESTNUT", "DYED", "BALD"],
+            "type": "string"
+          },
+          "race": {
+            "nullable": true,
+            "enum": [
+              "OTHER",
+              "WHITE",
+              "BLACK_OR_AFRICAN_AMERICAN",
+              "ASIAN",
+              "NATIVE_AMERICAN",
+              "PACIFIC_ISLANDER",
+              "MIXED"
+            ],
+            "type": "string"
+          },
+          "ethnicity": { "nullable": true, "enum": ["OTHER", "HISPANIC", "NON_HISPANIC"], "type": "string" },
+          "heightCm": { "type": "number", "nullable": true },
+          "weightKg": { "type": "number", "nullable": true },
+          "crime": { "type": "string", "nullable": true },
+          "jurisdiction": { "type": "string", "nullable": true },
+          "convictionDate": { "format": "date-time", "type": "string", "nullable": true },
+          "registrationDate": { "format": "date-time", "type": "string", "nullable": true },
+          "riskLevel": { "nullable": true, "enum": ["LOW", "MEDIUM", "HIGH"], "type": "string" },
+          "isAbsconder": { "type": "boolean", "nullable": true },
+          "isPredator": { "type": "boolean", "nullable": true },
+          "originalSourceUrl": { "type": "string", "nullable": true },
+          "location": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [{ "$ref": "#/components/schemas/LocationResponse" }]
+          },
+          "photos": { "nullable": true, "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["status"]
+      },
+      "PhoneFormatsResponse": {
+        "type": "object",
+        "properties": {
+          "international": { "type": "string", "nullable": false, "example": "+1 202-555-0123" },
+          "local": { "type": "string", "nullable": false, "example": "(202) 555-0123" }
+        },
+        "required": ["international", "local"]
+      },
+      "SectionedReportProfileResponse": {
+        "type": "object",
+        "properties": {
+          "phone": { "type": "string", "nullable": true },
+          "phoneFormats": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [{ "$ref": "#/components/schemas/PhoneFormatsResponse" }]
+          },
+          "lineType": {
+            "enum": ["MOBILE", "LANDLINE", "UNKNOWN"],
+            "type": "string",
+            "nullable": false,
+            "example": "MOBILE"
+          },
+          "carrier": { "type": "string", "nullable": true, "example": "AT&T" },
+          "country": { "type": "string", "nullable": true, "example": "US" }
+        },
+        "required": ["lineType", "carrier"]
+      },
+      "SectionedReportOwnerResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "nullable": false },
+          "name": { "type": "string", "nullable": true },
+          "source": {
+            "nullable": true,
+            "enum": ["SOCIAL_MEDIA", "PUBLIC_RECORDS", "DATA_BREACH", "OTHER"],
+            "type": "string"
+          },
+          "email": { "type": "string", "nullable": true },
+          "phone": { "type": "string", "nullable": true },
+          "usernames": { "nullable": false, "type": "array", "items": { "type": "string" } },
+          "countryCode": { "type": "string", "nullable": true },
+          "dateOfBirth": { "format": "date-time", "type": "string", "nullable": true },
+          "gender": { "nullable": true, "enum": ["MALE", "FEMALE", "INTERSEX"], "type": "string" },
+          "maritalStatus": {
+            "nullable": true,
+            "enum": [
+              "SINGLE",
+              "MARRIED",
+              "DIVORCED",
+              "WIDOWED",
+              "SEPARATED",
+              "IN_RELATIONSHIP",
+              "ENGAGED",
+              "DOMESTIC_PARTNERSHIP"
+            ],
+            "type": "string"
+          },
+          "incomeMin": { "type": "number", "nullable": true },
+          "incomeMax": { "type": "number", "nullable": true },
+          "hasChildren": { "type": "boolean", "nullable": true },
+          "numChildren": { "type": "number", "nullable": true },
+          "householdSize": { "type": "number", "nullable": true },
+          "jobs": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "OTHER",
+                "AGRICULTURE",
+                "CONSTRUCTION",
+                "EDUCATION",
+                "ENGINEERING",
+                "FINANCE",
+                "GOVERNMENT",
+                "HEALTHCARE",
+                "HOSPITALITY",
+                "INFORMATION_TECHNOLOGY",
+                "LEGAL",
+                "MANUFACTURING",
+                "MARKETING",
+                "MILITARY",
+                "NON_PROFIT",
+                "RETAIL",
+                "SALES",
+                "SCIENCE",
+                "SKILLED_TRADES",
+                "TRANSPORTATION",
+                "ARTS_AND_ENTERTAINMENT",
+                "MEDIA_AND_COMMUNICATIONS",
+                "REAL_ESTATE",
+                "TELECOMMUNICATIONS",
+                "LOGISTICS_AND_SUPPLY_CHAIN",
+                "ENERGY_AND_UTILITIES"
+              ]
+            },
+            "nullable": false,
+            "type": "array"
+          },
+          "education": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "OTHER",
+                "NO_FORMAL_EDUCATION",
+                "PRIMARY_SCHOOL",
+                "SECONDARY_SCHOOL",
+                "HIGH_SCHOOL",
+                "VOCATIONAL_TRAINING",
+                "ASSOCIATE_DEGREE",
+                "BACHELOR_DEGREE",
+                "MASTER_DEGREE",
+                "DOCTORAL_DEGREE"
+              ]
+            },
+            "nullable": false,
+            "type": "array"
+          },
+          "location": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [{ "$ref": "#/components/schemas/LocationResponse" }]
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "source",
+          "email",
+          "phone",
+          "usernames",
+          "countryCode",
+          "dateOfBirth",
+          "gender",
+          "maritalStatus",
+          "incomeMin",
+          "incomeMax",
+          "hasChildren",
+          "numChildren",
+          "householdSize",
+          "jobs",
+          "education"
+        ]
+      },
+      "SectionedReportSocialMediaAccountResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "nullable": false },
+          "kind": {
+            "enum": [
+              "BEHANCE",
+              "FACEBOOK",
+              "GITHUB",
+              "GITLAB",
+              "GOOGLE",
+              "INSTAGRAM",
+              "KICK",
+              "LINKEDIN",
+              "PINTEREST",
+              "REDDIT",
+              "SNAPCHAT",
+              "TELEGRAM",
+              "THREADS",
+              "TIKTOK",
+              "TUMBLR",
+              "TWITCH",
+              "X",
+              "YOUTUBE"
+            ],
+            "type": "string",
+            "nullable": false
+          },
+          "url": { "type": "string", "nullable": false }
+        },
+        "required": ["id", "kind", "url"]
+      },
+      "SectionedReportSocialMediaResponse": {
+        "type": "object",
+        "properties": {
+          "state": { "enum": ["LOCKED", "NO_RESULTS", "RESULTS"], "type": "string", "nullable": false },
+          "unlockPriceRef": { "type": "string", "nullable": true },
+          "accounts": {
+            "nullable": true,
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/SectionedReportSocialMediaAccountResponse" }
+          }
+        },
+        "required": ["state"]
+      },
+      "SectionedReportDataBreachResponse": {
+        "type": "object",
+        "properties": {
+          "state": { "enum": ["LOCKED", "NO_RESULTS", "RESULTS"], "type": "string", "nullable": false },
+          "unlockPriceRef": { "type": "string", "nullable": true },
+          "matchCount": { "type": "number", "nullable": true }
+        },
+        "required": ["state"]
+      },
+      "SectionedReportOwnerWithRecordResponse": {
+        "type": "object",
+        "properties": {
+          "ownerId": { "type": "string", "nullable": false },
+          "found": { "type": "boolean", "nullable": false }
+        },
+        "required": ["ownerId", "found"]
+      },
+      "SectionedReportSexOffendersResponse": {
+        "type": "object",
+        "properties": {
+          "state": { "enum": ["LOCKED", "NO_RESULTS", "RESULTS"], "type": "string", "nullable": false },
+          "ownersWithRecords": {
+            "nullable": true,
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/SectionedReportOwnerWithRecordResponse" }
+          }
+        },
+        "required": ["state"]
+      },
+      "SectionedReportResponse": {
+        "type": "object",
+        "properties": {
+          "reportStatus": { "enum": ["COMPLETED", "FAILED"], "type": "string", "nullable": false },
+          "profile": {
+            "nullable": false,
+            "allOf": [{ "$ref": "#/components/schemas/SectionedReportProfileResponse" }]
+          },
+          "owners": {
+            "nullable": false,
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/SectionedReportOwnerResponse" }
+          },
+          "socialMedia": {
+            "nullable": false,
+            "allOf": [{ "$ref": "#/components/schemas/SectionedReportSocialMediaResponse" }]
+          },
+          "dataBreach": {
+            "nullable": false,
+            "allOf": [{ "$ref": "#/components/schemas/SectionedReportDataBreachResponse" }]
+          },
+          "sexOffenders": {
+            "nullable": false,
+            "allOf": [{ "$ref": "#/components/schemas/SectionedReportSexOffendersResponse" }]
+          }
+        },
+        "required": ["reportStatus", "profile", "owners", "socialMedia", "dataBreach", "sexOffenders"]
+      },
+      "DataBreachLeakResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "nullable": false },
+          "serviceName": { "type": "string", "nullable": false },
+          "compromisedData": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "EMAIL",
+                "PHONE",
+                "NAME",
+                "USERNAME",
+                "PASSWORD",
+                "EDUCATION_LEVELS",
+                "GENDER",
+                "SOCIAL_MEDIA_PROFILES",
+                "GEO_LOCATION",
+                "DATE_OF_BIRTH"
+              ]
+            },
+            "nullable": false,
+            "type": "array"
+          },
+          "date": { "format": "date-time", "type": "string", "nullable": false },
+          "description": { "type": "string", "nullable": true }
+        },
+        "required": ["id", "serviceName", "compromisedData", "date", "description"]
+      },
+      "DataBreachDetailResponse": {
+        "type": "object",
+        "properties": {
+          "phone": { "type": "string", "nullable": false },
+          "photoUrl": { "type": "string", "nullable": true },
+          "dataLeaks": { "nullable": false, "allOf": [{ "$ref": "#/components/schemas/DataBreachLeakResponse" }] }
+        },
+        "required": ["phone", "photoUrl", "dataLeaks"]
+      },
+      "ConsumeUpsellDto": {
+        "type": "object",
+        "properties": {
+          "product": {
+            "enum": ["SEX_OFFENDERS", "DATA_LEAKS", "SOCIAL_NETWORKS"],
+            "type": "string",
+            "nullable": false,
+            "description": "Which upsell product to spend a credit against",
+            "example": "DATA_LEAKS"
+          },
+          "reportId": {
+            "type": "string",
+            "nullable": false,
+            "description": "The report to unlock this product's content on, owned by the caller",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "ownerId": {
+            "type": "string",
+            "nullable": true,
+            "description": "Required for SEX_OFFENDERS (the ReportOwner to unlock); forbidden for every other product",
+            "example": "123e4567-e89b-12d3-a456-426614174001"
+          }
+        },
+        "required": ["product", "reportId"]
+      },
+      "ConsumeUpsellResponse": {
+        "type": "object",
+        "properties": {
+          "product": {
+            "enum": ["SEX_OFFENDERS", "DATA_LEAKS", "SOCIAL_NETWORKS"],
+            "type": "string",
+            "nullable": false,
+            "description": "The product just unlocked",
+            "example": "DATA_LEAKS"
+          },
+          "reportId": { "type": "string", "nullable": false, "description": "The report this unlock applies to" },
+          "ownerId": {
+            "type": "string",
+            "nullable": true,
+            "description": "Set for SEX_OFFENDERS; null for every other product"
+          },
+          "grantedAt": {
+            "format": "date-time",
+            "type": "string",
+            "nullable": false,
+            "description": "When this unlock was granted"
+          }
+        },
+        "required": ["product", "reportId", "grantedAt"]
+      },
+      "UpsellCreditSummaryResponse": {
+        "type": "object",
+        "properties": {
+          "product": {
+            "enum": ["SEX_OFFENDERS", "DATA_LEAKS", "SOCIAL_NETWORKS"],
+            "type": "string",
+            "nullable": false,
+            "description": "Product this credit balance is for",
+            "example": "DATA_LEAKS"
+          },
+          "count": {
+            "type": "number",
+            "nullable": false,
+            "description": "Unconsumed, unrefunded credit count for this product",
+            "example": 1
+          }
+        },
+        "required": ["product", "count"]
+      },
+      "CreatePdfExportResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "nullable": false },
+          "status": {
+            "enum": ["PENDING", "PROCESSING", "COMPLETED", "FAILED"],
+            "type": "string",
+            "nullable": false,
+            "example": "PENDING"
+          }
+        },
+        "required": ["id", "status"]
+      },
+      "PdfExportStatusResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "nullable": false },
+          "status": {
+            "enum": ["PENDING", "PROCESSING", "COMPLETED", "FAILED"],
+            "type": "string",
+            "nullable": false,
+            "example": "COMPLETED"
+          },
+          "failureReason": { "type": "string", "nullable": true },
+          "downloadUrl": { "type": "string", "nullable": true }
+        },
+        "required": ["id", "status", "failureReason"]
+      },
+      "UserUpdateDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true,
+            "description": "User email address",
+            "example": "user@example.com"
+          },
+          "username": { "type": "string", "nullable": true, "description": "Username", "example": "johndoe123" },
+          "name": { "type": "string", "nullable": true, "description": "User name", "example": "John Doe" }
+        }
+      },
+      "UserLanguageUpdateDto": {
+        "type": "object",
+        "properties": {
+          "language": {
+            "nullable": false,
+            "description": "Language code ISO6391",
+            "example": "en",
+            "allOf": [{ "$ref": "#/components/schemas/ISO6391LanguageCode" }]
+          }
+        },
+        "required": ["language"]
+      },
+      "UserPasswordUpdateDto": {
+        "type": "object",
+        "properties": {
+          "oldPassword": {
+            "type": "string",
+            "nullable": false,
+            "description": "Current password",
+            "example": "OldPassword123!"
+          },
+          "newPassword": {
+            "type": "string",
+            "nullable": false,
+            "description": "New password",
+            "example": "NewStrongPass123!"
+          }
+        },
+        "required": ["oldPassword", "newPassword"]
+      },
+      "UserStatus": { "type": "string", "enum": ["ACTIVE", "PENDING"], "description": "User status" },
+      "visibleRoles": { "type": "string", "enum": ["STANDARD_USER", "SUPPORT", "ADMIN"], "description": "User roles" },
+      "PublicFileResponse": {
+        "type": "object",
+        "properties": {
+          "attachmentId": {
+            "type": "string",
+            "nullable": false,
+            "description": "Attachment ID",
+            "example": "550e8400-e29b-41d4-a716-446655440000",
+            "format": "uuid"
+          },
+          "url": {
+            "type": "string",
+            "nullable": false,
+            "description": "Public URL",
+            "example": "https://example.com/file.jpg"
+          }
+        },
+        "required": ["attachmentId", "url"]
+      },
+      "UserResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": false,
+            "description": "User unique identifier",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true,
+            "description": "User email address",
+            "example": "user@example.com"
+          },
+          "language": {
+            "nullable": true,
+            "description": "Language code",
+            "example": "en",
+            "allOf": [{ "$ref": "#/components/schemas/ISO6391LanguageCode" }]
+          },
+          "name": { "type": "string", "nullable": true, "description": "User name", "example": "John Doe" },
+          "isBlocked": {
+            "type": "boolean",
+            "nullable": false,
+            "description": "Whether user is blocked",
+            "example": false
+          },
+          "unlimitedPdfDownloadsUnlocked": {
+            "type": "boolean",
+            "nullable": false,
+            "description": "Whether the user has purchased the unlimited PDF downloads upsell",
+            "example": false
+          },
+          "type": {
+            "enum": ["GUEST", "USER"],
+            "type": "string",
+            "nullable": false,
+            "description": "Authentication type",
+            "example": "USER"
+          },
+          "status": {
+            "nullable": false,
+            "description": "User status",
+            "example": "ACTIVE",
+            "allOf": [{ "$ref": "#/components/schemas/UserStatus" }]
+          },
+          "forceChangePassword": {
+            "type": "boolean",
+            "nullable": true,
+            "description": "Whether user is forced to change password",
+            "example": false
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string",
+            "nullable": true,
+            "description": "Timestamp the user account was created",
+            "example": "2024-01-01T00:00:00.000Z"
+          },
+          "roles": {
+            "type": "array",
+            "nullable": false,
+            "items": { "$ref": "#/components/schemas/visibleRoles" },
+            "description": "User roles",
+            "example": ["STANDARD_USER", "SUPPORT", "ADMIN"]
+          },
+          "photo": {
+            "nullable": true,
+            "description": "User profile photo",
+            "type": "object",
+            "allOf": [{ "$ref": "#/components/schemas/PublicFileResponse" }]
+          }
+        },
+        "required": ["id", "email", "name", "isBlocked", "unlimitedPdfDownloadsUnlocked", "type", "status", "photo"]
+      },
+      "UserAdminResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "firstName": { "type": "string", "nullable": true },
+          "lastName": { "type": "string", "nullable": true },
+          "email": { "type": "string", "nullable": true },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "roles": { "type": "array", "items": { "type": "string" } },
+          "facebookUserId": { "type": "string", "nullable": true }
+        },
+        "required": ["id", "createdAt", "roles"]
+      },
+      "ResultPagePagination": {
+        "type": "object",
+        "properties": {
+          "page": { "type": "number", "nullable": false },
+          "limit": { "type": "number", "nullable": false },
+          "pageCount": { "type": "number", "nullable": false },
+          "totalSize": { "type": "number", "nullable": false },
+          "nextPage": { "type": "number", "nullable": true }
+        },
+        "required": ["page", "limit", "pageCount", "totalSize"]
+      },
+      "UsersAdminPaginatedResponse": {
+        "type": "object",
+        "properties": {
+          "data": { "nullable": false, "type": "array", "items": { "$ref": "#/components/schemas/UserAdminResponse" } },
+          "pagination": { "$ref": "#/components/schemas/ResultPagePagination" }
+        },
+        "required": ["data", "pagination"]
+      },
+      "ErrorResponseSchema": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string", "nullable": true, "description": "Additional information about the error." },
+          "errorCode": {
+            "type": "string",
+            "nullable": false,
+            "description": "Specific error code that explains the particular issue that occurred."
+          },
+          "code": {
+            "type": "string",
+            "nullable": false,
+            "description": "HTTP status code that corresponds to the error."
+          },
+          "stacktrace": {
+            "nullable": false,
+            "description": "Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment.",
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "required": ["errorCode", "code", "stacktrace"]
+      },
+      "UnauthorizedErrorCode": {
+        "type": "string",
+        "enum": ["UNAUTHORIZED", "TOKEN_EXPIRED", "INVALID_JWT_TOKEN"],
+        "description": "Specific error code that explains the particular issue that occurred."
+      },
+      "UnauthorizedHttpStatusCode": {
+        "type": "string",
+        "enum": ["UNAUTHORIZED"],
+        "description": "HTTP status code that corresponds to the error."
+      },
+      "UnauthorizedErrorResponse": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string", "nullable": true, "description": "Additional information about the error." },
+          "errorCode": {
+            "nullable": false,
+            "description": "Specific error code that explains the particular issue that occurred.",
+            "allOf": [{ "$ref": "#/components/schemas/UnauthorizedErrorCode" }]
+          },
+          "code": {
+            "nullable": false,
+            "description": "HTTP status code that corresponds to the error.",
+            "allOf": [{ "$ref": "#/components/schemas/UnauthorizedHttpStatusCode" }]
+          },
+          "stacktrace": {
+            "nullable": false,
+            "description": "Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment.",
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "required": ["errorCode", "code", "stacktrace"]
+      },
+      "UnauthorizedErrorResponseSchema": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "nullable": false,
+            "description": "Contains error details including message, code, and additional context. Used consistently across all error responses to provide structured error information.",
+            "allOf": [{ "$ref": "#/components/schemas/UnauthorizedErrorResponse" }]
+          }
+        },
+        "required": ["error"]
+      },
+      "BusinessErrorCode": {
+        "type": "string",
+        "enum": [
+          "ENTITY_CREATION_ERROR",
+          "ENTITY_NOT_FOUND_ERROR",
+          "ENTITY_UPDATE_ERROR",
+          "ENTITY_EXISTS_ERROR",
+          "EXTERNAL_SERVICE_ERROR",
+          "PROVIDER_UNAVAILABLE_ERROR",
+          "PROVIDER_CONFIGURATION_ERROR",
+          "INTERNAL_SERVER_ERROR",
+          "HANDLED_INTERNAL_SERVER_ERROR",
+          "NO_ACCESS_ERROR",
+          "TOO_MANY_REQUESTS_ERROR",
+          "UNAUTHORIZED_ERROR",
+          "TOKEN_EXPIRED_ERROR",
+          "VALIDATION_ERROR",
+          "USER_DOES_NOT_EXIST_ERROR",
+          "USER_EXISTS_ERROR",
+          "EMAIL_EXISTS_ERROR",
+          "EMAIL_MISSMATCH_ERROR",
+          "NOT_PERMITTED_ERROR",
+          "CREDENTIALS_ERROR",
+          "SUBSCRIPTION_EXPIRED",
+          "SUBSCRIPTION_LIMIT",
+          "UPSELL_REQUIRED_ERROR",
+          "INVALID_TOKEN",
+          "INVALID_VERIFICATION_TOKEN",
+          "INVALID_JWT_TOKEN",
+          "MISSING_JWT_TOKEN",
+          "USER_MISSING_FROM_TOKEN",
+          "USER_MISSING_FROM_AUTH_CONTEXT",
+          "INVALID_SSO_PROXY_TOKEN",
+          "INVALID_SSO_TOKEN",
+          "INVALID_REFRESH_TOKEN",
+          "INVALID_RESET_PASSWORD_TOKEN",
+          "USER_ALREADY_ACTIVE",
+          "USER_IS_NOT_ACTIVE",
+          "INSUFFICIENT_PERMISSIONS",
+          "GONE_ERROR"
+        ]
+      },
+      "EnumRegisterCheapWorkaround": {
+        "type": "object",
+        "properties": {
+          "errorCode": { "nullable": false, "allOf": [{ "$ref": "#/components/schemas/BusinessErrorCode" }] }
+        },
+        "required": ["errorCode"]
+      },
+      "NotFoundErrorCode": {
+        "type": "string",
+        "enum": ["ENTITY_NOT_FOUND_ERROR", "USER_DOES_NOT_EXIST_ERROR"],
+        "description": "Specific error code that explains the particular issue that occurred."
+      },
+      "NotFoundHttpStatusCode": {
+        "type": "string",
+        "enum": ["NOT_FOUND"],
+        "description": "HTTP status code that corresponds to the error."
+      },
+      "NotFoundErrorResponse": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string", "nullable": true, "description": "Additional information about the error." },
+          "errorCode": {
+            "nullable": false,
+            "description": "Specific error code that explains the particular issue that occurred.",
+            "allOf": [{ "$ref": "#/components/schemas/NotFoundErrorCode" }]
+          },
+          "code": {
+            "nullable": false,
+            "description": "HTTP status code that corresponds to the error.",
+            "allOf": [{ "$ref": "#/components/schemas/NotFoundHttpStatusCode" }]
+          },
+          "stacktrace": {
+            "nullable": false,
+            "description": "Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment.",
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "required": ["errorCode", "code", "stacktrace"]
+      },
+      "NotFoundErrorResponseSchema": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "nullable": false,
+            "description": "Contains error details including message, code, and additional context. Used consistently across all error responses to provide structured error information.",
+            "allOf": [{ "$ref": "#/components/schemas/NotFoundErrorResponse" }]
+          }
+        },
+        "required": ["error"]
+      },
+      "InternalServerErrorCode": {
+        "type": "string",
+        "enum": ["INTERNAL_SERVER_ERROR", "BE_INTERNAL_SERVER_ERROR"],
+        "description": "Specific error code that explains the particular issue that occurred."
+      },
+      "InternalServerErrorHttpStatusCode": {
+        "type": "string",
+        "enum": ["INTERNAL_SERVER_ERROR"],
+        "description": "HTTP status code that corresponds to the error."
+      },
+      "InternalServerErrorResponse": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string", "nullable": true, "description": "Additional information about the error." },
+          "errorCode": {
+            "nullable": false,
+            "description": "Specific error code that explains the particular issue that occurred.",
+            "allOf": [{ "$ref": "#/components/schemas/InternalServerErrorCode" }]
+          },
+          "code": {
+            "nullable": false,
+            "description": "HTTP status code that corresponds to the error.",
+            "allOf": [{ "$ref": "#/components/schemas/InternalServerErrorHttpStatusCode" }]
+          },
+          "stacktrace": {
+            "nullable": false,
+            "description": "Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment.",
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "required": ["errorCode", "code", "stacktrace"]
+      },
+      "InternalServerErrorResponseSchema": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "nullable": false,
+            "description": "Contains error details including message, code, and additional context. Used consistently across all error responses to provide structured error information.",
+            "allOf": [{ "$ref": "#/components/schemas/InternalServerErrorResponse" }]
+          }
+        },
+        "required": ["error"]
+      },
+      "ConflictErrorCode": {
+        "type": "string",
+        "enum": ["USER_EXISTS_ERROR"],
+        "description": "Specific error code that explains the particular issue that occurred."
+      },
+      "ConflictHttpStatusCode": {
+        "type": "string",
+        "enum": ["CONFLICT"],
+        "description": "HTTP status code that corresponds to the error."
+      },
+      "ConflictErrorResponse": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string", "nullable": true, "description": "Additional information about the error." },
+          "errorCode": {
+            "nullable": false,
+            "description": "Specific error code that explains the particular issue that occurred.",
+            "allOf": [{ "$ref": "#/components/schemas/ConflictErrorCode" }]
+          },
+          "code": {
+            "nullable": false,
+            "description": "HTTP status code that corresponds to the error.",
+            "allOf": [{ "$ref": "#/components/schemas/ConflictHttpStatusCode" }]
+          },
+          "stacktrace": {
+            "nullable": false,
+            "description": "Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment.",
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "required": ["errorCode", "code", "stacktrace"]
+      },
+      "ConflictErrorResponseSchema": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "nullable": false,
+            "description": "Contains error details including message, code, and additional context. Used consistently across all error responses to provide structured error information.",
+            "allOf": [{ "$ref": "#/components/schemas/ConflictErrorResponse" }]
+          }
+        },
+        "required": ["error"]
+      }
+    }
+  }
+}
