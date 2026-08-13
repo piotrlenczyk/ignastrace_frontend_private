@@ -15,6 +15,11 @@ src/locales
 # Lockfile
 package-lock.json
 
+# Agent-runner state. Machine-written and mostly git-ignored, but Prettier does
+# not read .gitignore — without this, `format:check` fails on whatever the
+# runner happened to write last.
+.ai
+
 # Helm templates are Go templates that happen to end in .yaml — Prettier's YAML
 # parser cannot read them, and reformatting the chart is not this repository's
 # job anyway.

@@ -187,7 +187,7 @@ const CLASS_END = '(?:\\/[\\w.[\\]-]+)?!?$';
  * silent, which is correct rather than a gap: with the theme gone, every
  * surviving old class is an unknown one, and that rule is already on.
  */
-export function legacyClassRestrictions() {
+function legacyClassRestrictions() {
   if (!existsSync(LEGACY_THEME_PATH)) {
     return [];
   }

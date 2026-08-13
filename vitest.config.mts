@@ -23,8 +23,11 @@ const shared = {
   env: loadEnv('', process.cwd(), ''),
 };
 
+// A project does not inherit the root plugins, so each one repeats them.
+const plugins = () => [react(), tsconfigPaths()];
+
 export default defineConfig({
-  plugins: [react(), tsconfigPaths()],
+  plugins: plugins(),
   test: {
     coverage: {
       include: ['src/**/*'],
@@ -32,7 +35,7 @@ export default defineConfig({
     },
     projects: [
       {
-        plugins: [react(), tsconfigPaths()],
+        plugins: plugins(),
         test: {
           ...shared,
           name: 'node',
@@ -42,7 +45,7 @@ export default defineConfig({
         },
       },
       {
-        plugins: [react(), tsconfigPaths()],
+        plugins: plugins(),
         test: {
           ...shared,
           name: 'jsdom',
