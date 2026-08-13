@@ -1,29 +1,17 @@
 import { useMutation } from '@tanstack/react-query';
-import { signIn } from 'next-auth/react';
 
 import type { LoginFormValues } from '@/app/[locale]/login/types/login.types';
-import type { ApiError } from '@/libs/api-error';
+import { signIn } from '@/server/session/session.actions';
 
 async function loginFunction(data: LoginFormValues) {
-  const response = await signIn('credentials', {
-    email: data.email,
-    password: data.password,
-    redirect: false,
-  });
+  const result = await signIn({ email: data.email, password: data.password });
 
-  if (response?.error) {
-    const error = { error: response.error };
-    throw error;
+  if (!result.success) {
+    throw new Error(result.error);
   }
 }
 
-export function useLoginMutation({
-  onSuccess,
-  onError,
-}: {
-  onSuccess: () => void;
-  onError: (error: ApiError) => void;
-}) {
+export function useLoginMutation({ onSuccess, onError }: { onSuccess: () => void; onError: (error: Error) => void }) {
   return useMutation({
     mutationFn: loginFunction,
     onSuccess,

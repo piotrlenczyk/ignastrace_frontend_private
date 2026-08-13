@@ -96,32 +96,26 @@ export const ROUTES = {
   },
 } as const;
 
-export const AUTH_ROUTES = [ROUTES.SIGN_UP];
-export const PROTECTED_ROUTES = [
+/** The member area is guarded as a whole, by prefix, rather than route by route. */
+export const MEMBER_AREA_PREFIX = '/memberarea';
+
+/** Carries the page an anonymous visitor was trying to reach through the login. */
+export const REDIRECT_QUERY_PARAM = 'redirect';
+
+/*
+ * Route patterns for the guards, in `path-to-regexp` syntax. Every one carries
+ * an optional leading locale segment, so a locale-prefixed URL is guarded
+ * exactly as its unprefixed form is. Adding a guarded area is one edit here.
+ */
+const withOptionalLocale = (path: string) => `{/:locale}${path}`;
+
+export const PROTECTED_ROUTE_PATTERNS = [
+  `${MEMBER_AREA_PREFIX}{/*path}`,
   ROUTES.CHECKOUT,
   ROUTES.THANK_YOU,
-  ROUTES.MEMBER.ONBOARDING.STEP_1,
-  ROUTES.MEMBER.ONBOARDING.STEP_2,
-  ROUTES.MEMBER.ONBOARDING.STEP_3,
-  ROUTES.MEMBER.FIND_BY_NUMBER.HOME,
-  ROUTES.MEMBER.FIND_BY_NUMBER.MESSAGE_SENDING,
-  ROUTES.MEMBER.FIND_BY_NUMBER.SUCCESS,
-  ROUTES.MEMBER.FIND_BY_LINK.HOME,
-  ROUTES.MEMBER.FIND_BY_LINK.SUCCESS,
-  ROUTES.MEMBER.SEX_OFFENDERS_SEARCH.HOME,
-  ROUTES.MEMBER.SEX_OFFENDERS_SEARCH.RESULTS,
-  ROUTES.MEMBER.SEX_OFFENDERS_SEARCH.REPORT,
-  ROUTES.MEMBER.STATUS.HOME,
-  ROUTES.MEMBER.STATUS.DETAIL,
-  ROUTES.MEMBER.STATUS.REPORT,
-  ROUTES.MEMBER.STATUS.DATA_BREACH_HISTORY,
-  ROUTES.MEMBER.SETTINGS.HOME,
-  ROUTES.MEMBER.SETTINGS.ACCOUNT,
-  ROUTES.MEMBER.SETTINGS.PASSWORD,
-  ROUTES.MEMBER.SETTINGS.BILLING,
-  ROUTES.MEMBER.SETTINGS.RENEW,
-  ROUTES.MEMBER.SETTINGS.NOTIFICATIONS,
-  ROUTES.MEMBER.SETTINGS.OTHER,
-  ROUTES.MEMBER.SETTINGS.DELETE_ACCOUNT,
-  ROUTES.MEMBER.SETTINGS.GET_HELP,
-];
+  ROUTES.SUCCESS,
+].map(withOptionalLocale);
+
+export const AUTH_ROUTE_PATTERNS = [ROUTES.SIGN_IN, ROUTES.SIGN_UP, ROUTES.REVERSE_LOOKUP.SIGN_UP].map(
+  withOptionalLocale,
+);

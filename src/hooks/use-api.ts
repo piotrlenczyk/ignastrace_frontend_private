@@ -1,12 +1,14 @@
-import { signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 
 import { ROUTES } from '@/constants/routes';
 import { apiClient } from '@/libs/api-client';
 import { ApiError } from '@/libs/api-error';
+import { signOut } from '@/server/session/session.actions';
 
 async function handleError(error: unknown) {
   if (error instanceof ApiError && error.status === 401) {
-    await signOut({ callbackUrl: ROUTES.SIGN_IN });
+    await signOut();
+    window.location.assign(ROUTES.SIGN_IN);
   }
 }
 

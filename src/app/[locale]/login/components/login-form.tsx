@@ -1,6 +1,8 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import type { Route } from 'next';
+import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -11,8 +13,9 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { PasswordInput } from '@/components/ui/password-input';
-import { ROUTES } from '@/constants/routes';
+import { REDIRECT_QUERY_PARAM, ROUTES } from '@/constants/routes';
 import { useRouter } from '@/libs/i18n-routing';
+import { resolveRedirectTarget, stripLocalePrefix } from '@/libs/redirect-target';
 
 import { Separator } from '../../sign-up/components/separator';
 import { useLoginMutation } from '../hooks/api/use-login-mutation';
@@ -21,8 +24,17 @@ import { createLoginSchema, type LoginFormValues } from '../types/login.types';
 export const LoginForm = ({ error }: { error: boolean }) => {
   const t = useTranslations('components.forms.sign_in');
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  /*
+   * Where the guards said this visitor was headed, once it has been checked
+   * to be a path on this site rather than somewhere else.
+   */
+  const destination = stripLocalePrefix(
+    resolveRedirectTarget(searchParams.get(REDIRECT_QUERY_PARAM), ROUTES.CHECKOUT),
+  ) as Route;
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(createLoginSchema(t)),
@@ -35,7 +47,8 @@ export const LoginForm = ({ error }: { error: boolean }) => {
   const { mutate: logIn, isPending } = useLoginMutation({
     onSuccess: () => {
       setIsSubmitted(true);
-      router.push(ROUTES.CHECKOUT);
+      router.push(destination);
+      router.refresh();
     },
     onError: () => {
       form.setError('password', {

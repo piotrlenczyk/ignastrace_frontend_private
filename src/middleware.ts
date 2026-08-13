@@ -1,9 +1,16 @@
 import type { NextFetchEvent, NextRequest } from 'next/server';
 
-import handleAuthAndIntl from './middlewares/auth-intl.middleware';
 import { handleCaseNormalization } from './middlewares/case-normalization.middleware';
+import { handleIntl } from './middlewares/intl.middleware';
+import { handleRedirects } from './middlewares/redirects.middleware';
+import { handleSession } from './middlewares/session.middleware';
 import { handleTracking } from './middlewares/tracking.middleware';
 
+/*
+ * The chain, in order: case normalisation → session → redirects →
+ * internationalisation → tracking. Each step is named and lives in its own
+ * module, so a redirect can be traced back to the step that produced it.
+ */
 export default async function middleware(request: NextRequest, _event: NextFetchEvent) {
   if (request.nextUrl.pathname === '/health') {
     return new Response(null, { status: 200 });
@@ -15,7 +22,9 @@ export default async function middleware(request: NextRequest, _event: NextFetch
     return caseNormalizationResponse;
   }
 
-  const response = await handleAuthAndIntl(request);
+  const session = await handleSession(request);
+
+  const response = handleRedirects(request, session) ?? handleIntl(request);
 
   const trackedResponse = handleTracking(request, response);
 

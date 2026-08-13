@@ -1,12 +1,13 @@
 'use client';
 
-import { signOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
+import { useRouter } from '@/libs/i18n-routing';
 import { cn } from '@/libs/utils';
+import { signOut } from '@/server/session/session.actions';
 
 type LogoutButtonProps = {
   className?: string;
@@ -14,9 +15,12 @@ type LogoutButtonProps = {
 
 export const LogoutButton = ({ className }: LogoutButtonProps) => {
   const tCommon = useTranslations('common');
+  const router = useRouter();
 
   const handleLogout = async () => {
-    await signOut({ redirect: true, redirectTo: ROUTES.HOME });
+    await signOut();
+    router.push(ROUTES.HOME);
+    router.refresh();
   };
 
   return (

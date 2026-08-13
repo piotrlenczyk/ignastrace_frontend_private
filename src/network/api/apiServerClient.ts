@@ -1,11 +1,8 @@
-import createClient, {
-  wrapAsPathBasedClient,
-  type Middleware,
-} from 'openapi-fetch';
+import createClient, { type Middleware, wrapAsPathBasedClient } from 'openapi-fetch';
 
+import { getIP } from '@/server/lib/ip';
 
 import { type components, type paths } from './api';
-import { getIP } from '@/server/lib/ip';
 
 const { getLocale } = await import('next-intl/server');
 
@@ -57,4 +54,3 @@ const serverMiddleware: Middleware = {
 _client.use(serverMiddleware);
 
 export const apiServerClient = wrapAsPathBasedClient(_client);
-
