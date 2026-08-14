@@ -1,13 +1,16 @@
 import type { components } from '@/network/api/api';
+import { apiServerClient } from '@/network/api/apiServerClient';
+import { unwrapApiResponse } from '@/network/http-response-handler';
+
+import type { SessionData } from './session.types';
 
 type JWTSessionResponse = components['schemas']['JWTSessionResponse'];
 type UserResponse = components['schemas']['UserResponse'];
 
 /*
- * The session talks to the new API through plain `fetch` rather than the
- * generated client. The generated client resolves the caller's IP through a
- * request-scoped, server-only module, which is unavailable both in the
- * middleware runtime and to a sign-in that has no session yet.
+ * The calls this module has not moved onto the generated client yet talk to the
+ * API through plain `fetch`. Renewal has moved; sign-in, registration, sign-out
+ * and the identity top-up follow on issue #32.
  */
 const apiUrl = (path: string): string => `${process.env.API_BASE_URL ?? ''}${path}`;
 
@@ -16,7 +19,8 @@ const authorized = (accessToken: string) => ({ Authorization: `Bearer ${accessTo
 /**
  * What the generated client would otherwise derive from the request scope. In
  * the middleware runtime there is no such scope, so the caller reads both off
- * the incoming request and passes them in.
+ * the incoming request and passes them in. The client's headers are caller-wins,
+ * which is what makes stating them here an override rather than a special case.
  */
 export type ApiRequestContext = {
   locale?: string;
@@ -73,26 +77,29 @@ export const requestRegistration = async (
 };
 
 /**
- * Exchanges a refresh token for a fresh pair. Throws `AuthApiError` when the
- * refresh token is spent or rejected, which is the signal to stop treating the
- * visitor as signed in.
+ * Exchanges the session's refresh token for a fresh pair, through the generated
+ * client and typed against the specification. Rejects when the refresh token is
+ * spent or rejected, which is the signal to stop treating the visitor as signed
+ * in.
+ *
+ * Three things are stated rather than left to the client. The bearer is the
+ * session's *expired* access token, because the operation declares bearer or
+ * API-key authentication and this application configures no API key — so the
+ * only credential it has to present is the one that just ran out. The locale and
+ * the caller's address are stated because the one caller is the middleware,
+ * which runs before internationalisation has settled a locale and outside any
+ * request scope the client could read an address from.
  */
 export const requestTokenRefresh = async (
-  refreshToken: string,
+  { accessToken, refreshToken }: Pick<SessionData, 'accessToken' | 'refreshToken'>,
   context: ApiRequestContext = {},
-): Promise<JWTSessionResponse> => {
-  const response = await fetch(apiUrl('/api/v1/auth/refresh-token'), {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...contextHeaders(context) },
-    body: JSON.stringify({ refreshToken } satisfies components['schemas']['RefreshTokenDto']),
-  });
-
-  if (!response.ok) {
-    throw new AuthApiError(response.status);
-  }
-
-  return (await response.json()) as JWTSessionResponse;
-};
+): Promise<JWTSessionResponse> =>
+  unwrapApiResponse(
+    await apiServerClient['/api/v1/auth/refresh-token'].POST({
+      body: { refreshToken },
+      headers: { ...authorized(accessToken), ...contextHeaders(context) },
+    }),
+  );
 
 /** Revokes the token server-side. Callers treat a failure here as non-fatal. */
 export const requestLogout = async (accessToken: string): Promise<void> => {

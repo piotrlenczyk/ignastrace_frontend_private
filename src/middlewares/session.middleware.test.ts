@@ -1,17 +1,43 @@
 import { sealData, unsealData } from 'iron-session';
 import { NextRequest, NextResponse } from 'next/server';
-import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { getSessionPassword, SESSION_COOKIE_NAME, SESSION_TTL_SECONDS } from '@/server/session/session.constants';
 import type { SessionData } from '@/server/session/session.types';
-
-import { handleSession } from './session.middleware';
 
 const SITE = 'https://ignastrace.io';
 
 const API = 'https://api.ignastrace.test';
 
 const SESSION_PASSWORD = 'a-test-sealing-password-of-at-least-32-characters';
+
+vi.stubEnv('SESSION_PASSWORD', SESSION_PASSWORD);
+vi.stubEnv('API_BASE_URL', API);
+
+/*
+ * The network, substituted once and for the whole file rather than per test: the
+ * generated client the renewal goes through captures `globalThis.fetch` when it
+ * is created, so a stub installed later would never be the one it calls. Each
+ * test swaps what the API answers with instead of swapping the function.
+ */
+const upstreamRequests: Request[] = [];
+
+let respond: (request: Request) => Promise<Response> = async (request) => {
+  throw new Error(`Unexpected request to ${request.url}`);
+};
+
+vi.stubGlobal('fetch', async (request: Request) => {
+  upstreamRequests.push(request);
+
+  return respond(request);
+});
+
+/*
+ * Imported after the environment and the network are in place, for the same
+ * reason: the client reads the API's base URL and captures `fetch` the first time
+ * its module runs, and `.env` is not in the repository.
+ */
+const { handleSession } = await import('./session.middleware');
 
 const accessToken = (claims: Record<string, unknown>) => {
   const encode = (value: object) => Buffer.from(JSON.stringify(value)).toString('base64url');
@@ -55,14 +81,20 @@ const requestWith = async (session: SessionData | null, path = '/memberarea/find
 
 type Route = { status: number; body?: unknown };
 
-/** Serves the refresh endpoint; every other URL is a test failure. */
+/**
+ * Serves the refresh endpoint; every other URL is a test failure. Returns
+ * readers for the requests that actually left this process, so an assertion is
+ * about the request the API was sent rather than about the arguments a helper
+ * was called with.
+ */
 const serveApi = (routes: Record<string, Route>) => {
-  const fetchMock = vi.fn(async (input: RequestInfo | URL) => {
-    const url = String(input);
-    const path = Object.keys(routes).find((candidate) => url.endsWith(candidate));
+  upstreamRequests.length = 0;
+
+  respond = async (request) => {
+    const path = Object.keys(routes).find((candidate) => request.url.endsWith(candidate));
 
     if (!path) {
-      throw new Error(`Unexpected request to ${url}`);
+      throw new Error(`Unexpected request to ${request.url}`);
     }
 
     const { status, body } = routes[path] as Route;
@@ -71,11 +103,20 @@ const serveApi = (routes: Record<string, Route>) => {
       status,
       headers: { 'Content-Type': 'application/json' },
     });
-  });
+  };
 
-  vi.stubGlobal('fetch', fetchMock);
+  return {
+    upstreamRequest: () => {
+      const [request] = upstreamRequests;
 
-  return fetchMock;
+      if (!request) {
+        throw new Error('The API was not called.');
+      }
+
+      return request;
+    },
+    calls: () => upstreamRequests.length,
+  };
 };
 
 const unseal = (sealed: string) =>
@@ -91,13 +132,8 @@ const runStep = async (request: NextRequest) => {
   return { ...step, response };
 };
 
-beforeAll(() => {
-  vi.stubEnv('SESSION_PASSWORD', SESSION_PASSWORD);
-  vi.stubEnv('API_BASE_URL', API);
-});
-
-afterEach(() => {
-  vi.unstubAllGlobals();
+beforeEach(() => {
+  serveApi({});
 });
 
 describe('handleSession', () => {
@@ -123,7 +159,7 @@ describe('handleSession', () => {
 
       await runStep(await requestWith(VALID_SESSION));
 
-      expect(api).not.toHaveBeenCalled();
+      expect(api.calls()).toBe(0);
     });
   });
 
@@ -136,12 +172,20 @@ describe('handleSession', () => {
       const api = serveRenewal();
 
       const { session } = await runStep(await requestWith(EXPIRED_SESSION));
+      const upstream = api.upstreamRequest();
 
-      expect(api).toHaveBeenCalledWith(
-        `${API}/api/v1/auth/refresh-token`,
-        expect.objectContaining({ method: 'POST', body: JSON.stringify({ refreshToken: 'refresh-1' }) }),
-      );
+      expect(upstream.url).toBe(`${API}/api/v1/auth/refresh-token`);
+      expect(upstream.method).toBe('POST');
+      expect(await upstream.json()).toEqual({ refreshToken: 'refresh-1' });
       expect(session).toMatchObject({ accessToken: FRESH_TOKEN, refreshToken: 'refresh-2' });
+    });
+
+    it('presents the expired access token, the only credential the operation accepts', async () => {
+      const api = serveRenewal();
+
+      await runStep(await requestWith(EXPIRED_SESSION));
+
+      expect(api.upstreamRequest().headers.get('authorization')).toBe(`Bearer ${EXPIRED_SESSION.accessToken}`);
     });
 
     it('keeps the identity it already had rather than probing the current-user endpoint', async () => {
@@ -157,12 +201,10 @@ describe('handleSession', () => {
 
       await runStep(await requestWith(EXPIRED_SESSION, '/es/memberarea/find-by-number'));
 
-      expect(api).toHaveBeenCalledWith(
-        expect.anything(),
-        expect.objectContaining({
-          headers: expect.objectContaining({ 'x-locale': 'es', 'x-forwarded-for': '203.0.113.7' }),
-        }),
-      );
+      const { headers } = api.upstreamRequest();
+
+      expect(headers.get('x-locale')).toBe('es');
+      expect(headers.get('x-forwarded-for')).toBe('203.0.113.7');
     });
 
     it('rewrites the session cookie on the response', async () => {
@@ -221,12 +263,9 @@ describe('handleSession', () => {
     });
 
     it('clears it when the network call throws', async () => {
-      vi.stubGlobal(
-        'fetch',
-        vi.fn(async () => {
-          throw new Error('Network down');
-        }),
-      );
+      respond = async () => {
+        throw new Error('Network down');
+      };
 
       const { session, response } = await runStep(await requestWith(EXPIRED_SESSION));
 
@@ -243,7 +282,7 @@ describe('handleSession', () => {
 
       expect(session).toBeNull();
       expect(response.cookies.getAll()).toEqual([]);
-      expect(api).not.toHaveBeenCalled();
+      expect(api.calls()).toBe(0);
     });
   });
 });

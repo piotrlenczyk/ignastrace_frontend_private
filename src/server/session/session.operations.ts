@@ -107,7 +107,7 @@ export const performRenewal = async (
   context: ApiRequestContext = {},
 ): Promise<SessionData | null> => {
   try {
-    const renewed = renewSessionTokens(session, await requestTokenRefresh(session.refreshToken, context));
+    const renewed = renewSessionTokens(session, await requestTokenRefresh(session, context));
 
     await writeSession(cookies, renewed);
 
