@@ -1,10 +1,17 @@
+import type { HttpClientErrorData } from '../http-client-error';
 import { API_PATH_TEMPLATES } from './api-paths';
 import { _client } from './apiServerClient';
 
 /*
- * The browser's way onto the new API. Every call a page script makes goes
- * through here rather than to the backend directly, which is what lets the
- * access token stay in an http-only cookie the page cannot read.
+ * The browser's way onto the new API: a call a page script makes arrives here
+ * and is forwarded with the bearer attached server-side, so the script itself
+ * needs no credential.
+ *
+ * That is the door being built, not the removal of the old one. ADR 0008 still
+ * stands — the readable access-token cookie described there exists, and the
+ * legacy browser client still uses it. Taking it away is the work that follows
+ * this, once nothing in the browser needs a bearer any more; the decision
+ * record for the data layer as a whole is written at the end of that sequence.
  *
  * The upstream path is mounted verbatim — `/api/v1/user/me` here is
  * `/api/v1/user/me` there — so a path literal out of the generated
@@ -84,9 +91,12 @@ const pickHeaders = (headers: Headers, allowed: readonly string[]): Headers => {
 /**
  * A refusal by the proxy, written in the API's own error envelope so that the
  * browser reads it through the same parser as a refusal by the API itself.
+ *
+ * The envelope is named rather than spelled out positionally: `code` and
+ * `errorCode` are both strings and sit next to each other, so a swap between
+ * them is a mistake no type could catch.
  */
-const refuse = (status: number, code: string, errorCode: string, message: string): Response =>
-  Response.json({ error: { message, errorCode, code } }, { status });
+const refuse = (status: number, error: HttpClientErrorData): Response => Response.json({ error }, { status });
 
 /*
  * The one cast in this module, and the reason it is needed: the client's
@@ -104,7 +114,15 @@ const requestUpstream = _client.request as (
   init: { body?: unknown; headers: Headers; parseAs: 'stream' },
 ) => Promise<{ data?: ReadableStream<Uint8Array> | null; error?: unknown; response: Response }>;
 
-/** The request's JSON body, or `undefined` when it carries none. */
+/**
+ * The request's JSON body, or `undefined` when it carries none.
+ *
+ * JSON and nothing else: every operation the specification declares a body for
+ * takes one, and the client serialises whatever it is given back to JSON. A
+ * multipart upload would need its own way through here rather than a wider
+ * `catch` — which is why a body that is not JSON is refused rather than
+ * forwarded as something the API cannot read.
+ */
 const readJsonBody = async (request: Request): Promise<unknown> => {
   const body = await request.text();
 
@@ -123,6 +141,11 @@ const readJsonBody = async (request: Request): Promise<unknown> => {
  * What the client hands back on a refusal: the parsed envelope when the body
  * was JSON, the raw text when it was not. Either way the caller receives what
  * the API said, under the status the API said it with.
+ *
+ * A refusal is the one body that is re-serialised rather than passed through.
+ * The client reads it as text before this code sees it — it does that whatever
+ * `parseAs` says — so there is no stream left to forward. The fields survive;
+ * the upstream whitespace does not.
  */
 const refusalBody = (error: unknown): BodyInit | null => {
   if (error === undefined || error === null) {
@@ -138,11 +161,19 @@ const proxy =
     const { pathname, search } = new URL(request.url);
 
     if (pathname.startsWith(AUTH_PATH_PREFIX)) {
-      return refuse(403, 'FORBIDDEN', 'PROXY_PATH_FORBIDDEN', 'Authentication is handled by the session, not the API.');
+      return refuse(403, {
+        code: 'FORBIDDEN',
+        errorCode: 'PROXY_PATH_FORBIDDEN',
+        message: 'Authentication is handled by the session, not the API.',
+      });
     }
 
     if (!isPublishedPath(pathname)) {
-      return refuse(404, 'NOT_FOUND', 'PROXY_PATH_UNKNOWN', 'The API publishes no such path.');
+      return refuse(404, {
+        code: 'NOT_FOUND',
+        errorCode: 'PROXY_PATH_UNKNOWN',
+        message: 'The API publishes no such path.',
+      });
     }
 
     let body: unknown;
@@ -150,7 +181,11 @@ const proxy =
     try {
       body = await readJsonBody(request);
     } catch {
-      return refuse(400, 'BAD_REQUEST', 'PROXY_BODY_MALFORMED', 'The request body is not valid JSON.');
+      return refuse(400, {
+        code: 'BAD_REQUEST',
+        errorCode: 'PROXY_BODY_MALFORMED',
+        message: 'The request body is not valid JSON.',
+      });
     }
 
     /*

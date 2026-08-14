@@ -27,8 +27,6 @@ vi.mock('next/headers', () => ({
   headers: async () => ambientHeaders,
 }));
 
-vi.mock('next-intl/server', () => ({ getLocale: async () => 'en' }));
-
 vi.stubEnv('API_BASE_URL', API);
 vi.stubEnv('SESSION_PASSWORD', SESSION_PASSWORD);
 
