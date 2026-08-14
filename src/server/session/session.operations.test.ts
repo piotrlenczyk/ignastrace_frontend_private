@@ -1,12 +1,7 @@
 import { unsealData } from 'iron-session';
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 
-import {
-  ACCESS_TOKEN_COOKIE_NAME,
-  getSessionPassword,
-  SESSION_COOKIE_NAME,
-  SESSION_TTL_SECONDS,
-} from './session.constants';
+import { getSessionPassword, SESSION_COOKIE_NAME, SESSION_TTL_SECONDS } from './session.constants';
 import type { SessionCookieWriter } from './session.cookies';
 import { performEmailUpdate, performRegistration, performSignIn, performSignOut } from './session.operations';
 import type { SessionData } from './session.types';
@@ -108,7 +103,7 @@ afterEach(() => {
 });
 
 describe('performSignIn', () => {
-  it('writes both cookies when the API accepts the credentials', async () => {
+  it('writes the session cookie when the API accepts the credentials', async () => {
     const jar = createCookieJar();
     serveApi({
       '/api/v1/auth/login': { status: 201, body: { token: accessToken(FULL_CLAIMS), refreshToken: 'refresh-1' } },
@@ -117,7 +112,7 @@ describe('performSignIn', () => {
     const result = await performSignIn(jar, { email: 'member@example.com', password: 'secret' });
 
     expect(result).toEqual({ success: true });
-    expect(jar.names()).toEqual([ACCESS_TOKEN_COOKIE_NAME, SESSION_COOKIE_NAME].sort());
+    expect(jar.names()).toEqual([SESSION_COOKIE_NAME]);
   });
 
   it('seals the token pair and the identity into the session cookie', async () => {
@@ -136,7 +131,7 @@ describe('performSignIn', () => {
     });
   });
 
-  it('keeps the sealed cookie http-only and leaves the token cookie readable', async () => {
+  it('keeps the session cookie http-only, so no page script can read the token pair', async () => {
     const jar = createCookieJar();
     serveApi({
       '/api/v1/auth/login': { status: 201, body: { token: accessToken(FULL_CLAIMS), refreshToken: 'refresh-1' } },
@@ -145,22 +140,6 @@ describe('performSignIn', () => {
     await performSignIn(jar, { email: 'member@example.com', password: 'secret' });
 
     expect(jar.entry(SESSION_COOKIE_NAME)?.options).toMatchObject({ httpOnly: true, sameSite: 'lax', path: '/' });
-    expect(jar.entry(ACCESS_TOKEN_COOKIE_NAME)?.options).toMatchObject({
-      httpOnly: false,
-      sameSite: 'lax',
-      path: '/',
-      expires: new Date(IN_A_DAY * 1000),
-    });
-  });
-
-  it('exposes the raw access token in the companion cookie', async () => {
-    const jar = createCookieJar();
-    const token = accessToken(FULL_CLAIMS);
-    serveApi({ '/api/v1/auth/login': { status: 201, body: { token, refreshToken: 'refresh-1' } } });
-
-    await performSignIn(jar, { email: 'member@example.com', password: 'secret' });
-
-    expect(jar.entry(ACCESS_TOKEN_COOKIE_NAME)?.value).toBe(token);
   });
 
   it('fills identity the token does not carry from the current-user endpoint', async () => {
@@ -205,7 +184,7 @@ describe('performSignIn', () => {
 });
 
 describe('performRegistration', () => {
-  it('writes both cookies, so the new account continues into the app signed in', async () => {
+  it('writes the session cookie, so the new account continues into the app signed in', async () => {
     const jar = createCookieJar();
     const token = accessToken(FULL_CLAIMS);
     serveApi({ '/api/v1/auth/register': { status: 201, body: { token, refreshToken: 'refresh-1' } } });
@@ -213,8 +192,8 @@ describe('performRegistration', () => {
     const result = await performRegistration(jar, { email: 'new@example.com' });
 
     expect(result).toEqual({ success: true });
-    expect(jar.names()).toEqual([ACCESS_TOKEN_COOKIE_NAME, SESSION_COOKIE_NAME].sort());
-    expect(jar.entry(ACCESS_TOKEN_COOKIE_NAME)?.value).toBe(token);
+    expect(jar.names()).toEqual([SESSION_COOKIE_NAME]);
+    expect((await sealedSession(jar)).accessToken).toBe(token);
   });
 
   it('seals the same session sign-in would have sealed', async () => {
@@ -301,14 +280,14 @@ describe('performEmailUpdate', () => {
     });
   });
 
-  it('leaves the member signed in, with both cookies still in place', async () => {
+  it('leaves the member signed in, with the session cookie still in place', async () => {
     const jar = createCookieJar();
     await signedIn(jar);
 
     await performEmailUpdate(jar, 'renamed@example.com');
 
-    expect(jar.names()).toEqual([ACCESS_TOKEN_COOKIE_NAME, SESSION_COOKIE_NAME].sort());
-    expect(jar.entry(ACCESS_TOKEN_COOKIE_NAME)?.value).toBe(accessToken(FULL_CLAIMS));
+    expect(jar.names()).toEqual([SESSION_COOKIE_NAME]);
+    expect((await sealedSession(jar)).accessToken).toBe(accessToken(FULL_CLAIMS));
   });
 
   it('does nothing for a visitor without a session, rather than minting one', async () => {
@@ -321,7 +300,7 @@ describe('performEmailUpdate', () => {
 });
 
 describe('performSignOut', () => {
-  it('clears both cookies and revokes the token upstream', async () => {
+  it('clears the session cookie and revokes the token upstream', async () => {
     const jar = createCookieJar();
     await signedIn(jar);
 
@@ -335,7 +314,7 @@ describe('performSignOut', () => {
     );
   });
 
-  it('clears both cookies even when the revocation fails', async () => {
+  it('clears it even when the revocation fails', async () => {
     const jar = createCookieJar();
     await signedIn(jar);
 
@@ -345,7 +324,7 @@ describe('performSignOut', () => {
     expect(jar.names()).toEqual([]);
   });
 
-  it('clears both cookies when the network call throws', async () => {
+  it('clears it when the network call throws', async () => {
     const jar = createCookieJar();
     await signedIn(jar);
 

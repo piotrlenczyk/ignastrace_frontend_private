@@ -15,16 +15,23 @@ model looks like this.
 
 **Session**
 : What the application knows about the person making a request: their identity, the tokens
-that authenticate them, and when the access token expires. It lives in two cookies written
-together — a sealed, http-only one holding all of it, and a readable companion holding the
-access token alone. "The session" means the whole of that, and reading it always means
-reading the sealed cookie; the readable cookie is only ever a copy of one field.
+that authenticate them, and when the access token expires. It lives in one sealed, http-only
+cookie, so no part of it is legible to a page script. Client components learn who is signed
+in from the **session provider** the root layout renders out of that cookie — identity only,
+never a token.
 
 **Access token**
 : The short-lived credential sent to the API as a bearer token to prove who the caller is.
 It carries the identity in its own claims, which is where the session gets the account's id,
-email, account type and roles rather than asking an endpoint for them. It is the one part of
-the session a page script can read, because client code needs it to call the API directly.
+email, account type and roles rather than asking an endpoint for them. It never leaves the
+server: a call from the browser goes through a **proxy**, which attaches it on the way past.
+
+**Proxy**
+: A route handler in this application that forwards a browser's call to a backend with the
+session's bearer attached server-side. There are two — one onto the new API, which validates
+the path against the generated specification, and one onto the legacy backend, which has no
+specification and is bounded by the single host it forwards to. Both discard any
+`Authorization` the browser supplies, so the session's token is the only one presentable.
 
 **Refresh token**
 : The long-lived credential that buys a new access token when the current one expires. It

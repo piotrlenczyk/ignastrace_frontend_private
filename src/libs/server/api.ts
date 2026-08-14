@@ -2,6 +2,7 @@
 
 import { redirect } from 'next/navigation';
 
+import { legacyApiUrl } from '@/network/legacy/legacy-api-url';
 import { getSession } from '@/server/session/session.server';
 
 import { apiClient } from '../api-client';
@@ -15,10 +16,7 @@ async function handleError(error: unknown) {
 
 export async function getApi() {
   const session = await getSession();
-  const client = apiClient(
-    process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || '',
-    session && `Bearer ${session.accessToken}`,
-  );
+  const client = apiClient(legacyApiUrl(), session && `Bearer ${session.accessToken}`);
 
   return {
     async request<T>(endpoint: string, options?: Parameters<typeof client.request>[1]) {

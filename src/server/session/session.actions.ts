@@ -1,5 +1,6 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 
 import { actionClient } from '@/server/lib/safe-action';
@@ -18,15 +19,32 @@ import { registrationSchema, sessionEmailSchema, signInSchema } from './session.
  * nobody asked for.
  */
 
+/*
+ * The root layout renders the session provider out of the sealed cookie, so an
+ * action that changes who is signed in has to invalidate it — otherwise the
+ * client keeps the layout it already has and the tree goes on describing the
+ * previous visitor. It is the layout and everything under it, because any page
+ * may read the session.
+ */
+const revalidateRootLayout = () => revalidatePath('/', 'layout');
+
 /** Signs a visitor in against the new API. */
-export const signIn = actionClient
-  .inputSchema(signInSchema)
-  .action(async ({ parsedInput }) => performSignIn(await cookies(), parsedInput));
+export const signIn = actionClient.inputSchema(signInSchema).action(async ({ parsedInput }) => {
+  const result = await performSignIn(await cookies(), parsedInput);
+
+  revalidateRootLayout();
+
+  return result;
+});
 
 /** Creates an account on the new API and signs it in. */
-export const register = actionClient
-  .inputSchema(registrationSchema)
-  .action(async ({ parsedInput }) => performRegistration(await cookies(), parsedInput));
+export const register = actionClient.inputSchema(registrationSchema).action(async ({ parsedInput }) => {
+  const result = await performRegistration(await cookies(), parsedInput);
+
+  revalidateRootLayout();
+
+  return result;
+});
 
 /**
  * Carries a changed email address into the session, so a profile edit does not
@@ -38,4 +56,8 @@ export const updateSessionEmail = actionClient
   .action(async ({ parsedInput }) => performEmailUpdate(await cookies(), parsedInput.email));
 
 /** Ends the session: revoked upstream where possible, cleared locally always. */
-export const signOut = actionClient.action(async () => performSignOut(await cookies()));
+export const signOut = actionClient.action(async () => {
+  await performSignOut(await cookies());
+
+  revalidateRootLayout();
+});

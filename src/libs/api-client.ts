@@ -8,8 +8,9 @@ type RequestOptions = {
 
 /**
  * The legacy API's client. `authorization` is the header value to send, ready
- * to use — the caller decides where a token comes from, because the browser and
- * the server read the session from different places.
+ * to use — and only a server-side caller supplies one. A call from the browser
+ * is aimed at the legacy proxy instead, which attaches the session's bearer as
+ * the request passes through it.
  */
 export const apiClient = (baseUrl: string, authorization?: string | null) => ({
   async request<T>(endpoint: string, options: RequestOptions = {}): Promise<{ data: T; authHeader?: string }> {

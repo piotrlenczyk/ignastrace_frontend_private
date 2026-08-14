@@ -1,8 +1,6 @@
 import { sealData, unsealData } from 'iron-session';
 
 import {
-  ACCESS_TOKEN_COOKIE_NAME,
-  ACCESS_TOKEN_COOKIE_OPTIONS,
   getSessionPassword,
   SESSION_COOKIE_MAX_AGE_SECONDS,
   SESSION_COOKIE_NAME,
@@ -13,9 +11,9 @@ import type { SessionData } from './session.types';
 
 /*
  * The narrowest shape this module needs from a cookie jar. `cookies()` from
- * next/headers and `NextResponse.cookies` both satisfy it, which is what lets
- * the write-both-or-neither rule hold in a server action and in middleware
- * without two implementations of it.
+ * next/headers and `NextResponse.cookies` both satisfy it, which is what lets a
+ * server action and the middleware share one implementation of the session's
+ * reads and writes.
  */
 export type SessionCookieReader = {
   get(name: string): { value: string } | undefined;
@@ -57,10 +55,7 @@ export const readSession = async (cookies: SessionCookieReader): Promise<Session
   }
 };
 
-/**
- * Writes both cookies. The readable copy expires with the token it carries, so
- * a client that still has it is holding something the API will still accept.
- */
+/** Seals the session into the one cookie that carries it. */
 export const writeSession = async (cookies: SessionCookieWriter, session: SessionData): Promise<void> => {
   const sealed = await sealData(session, {
     password: getSessionPassword(),
@@ -71,15 +66,9 @@ export const writeSession = async (cookies: SessionCookieWriter, session: Sessio
     ...SESSION_COOKIE_OPTIONS,
     maxAge: SESSION_COOKIE_MAX_AGE_SECONDS,
   });
-
-  cookies.set(ACCESS_TOKEN_COOKIE_NAME, session.accessToken, {
-    ...ACCESS_TOKEN_COOKIE_OPTIONS,
-    expires: new Date(session.accessTokenExpiresAt),
-  });
 };
 
-/** Clears both cookies. There is no operation that clears only one. */
+/** Clears it. */
 export const clearSession = (cookies: SessionCookieWriter): void => {
   cookies.delete(SESSION_COOKIE_NAME);
-  cookies.delete(ACCESS_TOKEN_COOKIE_NAME);
 };

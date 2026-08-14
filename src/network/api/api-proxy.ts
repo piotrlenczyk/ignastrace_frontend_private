@@ -7,11 +7,10 @@ import { _client } from './apiServerClient';
  * and is forwarded with the bearer attached server-side, so the script itself
  * needs no credential.
  *
- * That is the door being built, not the removal of the old one. ADR 0008 still
- * stands — the readable access-token cookie described there exists, and the
- * legacy browser client still uses it. Taking it away is the work that follows
- * this, once nothing in the browser needs a bearer any more; the decision
- * record for the data layer as a whole is written at the end of that sequence.
+ * One of two such doors: `network/legacy/legacy-proxy.ts` is the same idea onto
+ * the legacy backend. Between them nothing in the browser needs a bearer any
+ * more, which is what allowed the readable access-token cookie ADR 0008
+ * described to be deleted.
  *
  * The upstream path is mounted verbatim — `/api/v1/user/me` here is
  * `/api/v1/user/me` there — so a path literal out of the generated

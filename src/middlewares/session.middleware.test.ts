@@ -2,12 +2,7 @@ import { sealData, unsealData } from 'iron-session';
 import { NextRequest, NextResponse } from 'next/server';
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 
-import {
-  ACCESS_TOKEN_COOKIE_NAME,
-  getSessionPassword,
-  SESSION_COOKIE_NAME,
-  SESSION_TTL_SECONDS,
-} from '@/server/session/session.constants';
+import { getSessionPassword, SESSION_COOKIE_NAME, SESSION_TTL_SECONDS } from '@/server/session/session.constants';
 import type { SessionData } from '@/server/session/session.types';
 
 import { handleSession } from './session.middleware';
@@ -52,7 +47,7 @@ const requestWith = async (session: SessionData | null, path = '/memberarea/find
   if (session) {
     const sealed = await sealData(session, { password: SESSION_PASSWORD, ttl: SESSION_TTL_SECONDS });
 
-    headers.set('cookie', `${SESSION_COOKIE_NAME}=${sealed}; ${ACCESS_TOKEN_COOKIE_NAME}=${session.accessToken}`);
+    headers.set('cookie', `${SESSION_COOKIE_NAME}=${sealed}`);
   }
 
   return new NextRequest(`${SITE}${path}`, { headers });
@@ -170,12 +165,11 @@ describe('handleSession', () => {
       );
     });
 
-    it('rewrites both cookies on the response', async () => {
+    it('rewrites the session cookie on the response', async () => {
       serveRenewal();
 
       const { response } = await runStep(await requestWith(EXPIRED_SESSION));
 
-      expect(response.cookies.get(ACCESS_TOKEN_COOKIE_NAME)?.value).toBe(FRESH_TOKEN);
       expect(await unseal(response.cookies.get(SESSION_COOKIE_NAME)!.value)).toMatchObject({
         accessToken: FRESH_TOKEN,
         refreshToken: 'refresh-2',
@@ -183,13 +177,12 @@ describe('handleSession', () => {
       });
     });
 
-    it('rewrites both cookies on the request, so the steps after it read the new token', async () => {
+    it('rewrites it on the request too, so the steps after it read the new token', async () => {
       serveRenewal();
 
       const request = await requestWith(EXPIRED_SESSION);
       await runStep(request);
 
-      expect(request.cookies.get(ACCESS_TOKEN_COOKIE_NAME)?.value).toBe(FRESH_TOKEN);
       expect(await unseal(request.cookies.get(SESSION_COOKIE_NAME)!.value)).toMatchObject({
         accessToken: FRESH_TOKEN,
       });
@@ -210,26 +203,24 @@ describe('handleSession', () => {
       expect(response.headers.get('location')).toBeNull();
     });
 
-    it('clears both cookies on the response', async () => {
+    it('clears the session cookie on the response', async () => {
       serveRefusal();
 
       const { response } = await runStep(await requestWith(EXPIRED_SESSION));
 
       expect(response.cookies.get(SESSION_COOKIE_NAME)?.value).toBe('');
-      expect(response.cookies.get(ACCESS_TOKEN_COOKIE_NAME)?.value).toBe('');
     });
 
-    it('clears both cookies on the request', async () => {
+    it('clears it on the request too', async () => {
       serveRefusal();
 
       const request = await requestWith(EXPIRED_SESSION);
       await runStep(request);
 
       expect(request.cookies.get(SESSION_COOKIE_NAME)).toBeUndefined();
-      expect(request.cookies.get(ACCESS_TOKEN_COOKIE_NAME)).toBeUndefined();
     });
 
-    it('clears both cookies when the network call throws', async () => {
+    it('clears it when the network call throws', async () => {
       vi.stubGlobal(
         'fetch',
         vi.fn(async () => {
@@ -241,7 +232,6 @@ describe('handleSession', () => {
 
       expect(session).toBeNull();
       expect(response.cookies.get(SESSION_COOKIE_NAME)?.value).toBe('');
-      expect(response.cookies.get(ACCESS_TOKEN_COOKIE_NAME)?.value).toBe('');
     });
   });
 

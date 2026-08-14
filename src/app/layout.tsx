@@ -11,9 +11,11 @@ import { Toaster } from '@/components/ui/toaster';
 import { ConsentProvider } from '@/contexts/consent-context';
 import { CountryProvider } from '@/contexts/country-context';
 import { FeaturesProvider } from '@/contexts/features-context';
+import { SessionProvider } from '@/contexts/session-context';
 import { getFeatures } from '@/libs/server/feature-flags';
 import { getUserCountry } from '@/libs/server/user-country';
 import { cn } from '@/libs/utils';
+import { getSession } from '@/server/session/session.server';
 import { getAlternates, getBaseUrl, getCurrentPath } from '@/utils/helpers';
 
 const interFont = Inter({
@@ -121,6 +123,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const messages = await getMessages();
   const country = await getUserCountry();
   const features = await getFeatures();
+  const session = await getSession();
   const isUSUser = country === 'US';
   const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
@@ -160,21 +163,22 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         )}
       </head>
       <body suppressHydrationWarning>
-        {/*
-          No session provider: `useSession` in `@/hooks/use-session` reads the
-          access-token cookie directly, so there is nothing above the tree for a
-          client component to subscribe to.
-        */}
         <QueryProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <CountryProvider country={country}>
-              <FeaturesProvider features={features}>
-                <ConsentProvider isUSUser={isUSUser}>
-                  {props.children}
-                  <Toaster />
-                </ConsentProvider>
-              </FeaturesProvider>
-            </CountryProvider>
+            {/*
+              The identity out of the sealed cookie, and only the identity: the
+              tokens stay on the server, where both proxies attach them.
+            */}
+            <SessionProvider user={session?.user ?? null}>
+              <CountryProvider country={country}>
+                <FeaturesProvider features={features}>
+                  <ConsentProvider isUSUser={isUSUser}>
+                    {props.children}
+                    <Toaster />
+                  </ConsentProvider>
+                </FeaturesProvider>
+              </CountryProvider>
+            </SessionProvider>
           </NextIntlClientProvider>
         </QueryProvider>
       </body>

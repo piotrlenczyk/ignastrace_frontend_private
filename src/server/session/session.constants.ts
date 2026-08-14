@@ -1,19 +1,15 @@
 /*
- * Cookie names, lifetimes and options for the session pair.
+ * Cookie name, lifetimes and options for the session.
  *
- * The session is two cookies that are always written together: a sealed,
- * http-only one holding the token pair and the identity, and a companion one
- * holding the raw access token so page scripts can call the API directly.
+ * The session is one sealed, http-only cookie holding the token pair and the
+ * identity. Nothing about it is legible to a page script: the browser reaches
+ * both backends through proxies that attach the bearer server-side, and learns
+ * who is signed in from the session provider the root layout renders.
  *
- * `session.cookies.ts` is the only place either of them is written. The
- * readable one is also read in the browser, and there `libs/session-cookie.ts`
- * is the only place that does it — a client component never reaches for
- * `document.cookie` itself.
+ * `session.cookies.ts` is the only place it is written.
  */
 
 export const SESSION_COOKIE_NAME = 'ignastrace_session';
-
-export const ACCESS_TOKEN_COOKIE_NAME = 'ignastrace_access_token';
 
 /** One month — how long the seal itself stays valid. */
 export const SESSION_TTL_SECONDS = 60 * 60 * 24 * 30;
@@ -38,18 +34,6 @@ export const ACCESS_TOKEN_EXPIRY_SKEW_MS = 30 * 1000;
 
 export const SESSION_COOKIE_OPTIONS = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === 'production',
-  sameSite: 'lax',
-  path: '/',
-} as const;
-
-/*
- * Deliberately not http-only: this is the copy client components read. It is
- * the only part of the session a page script can see, which is why the tokens
- * that can mint a new session live in the sealed cookie instead.
- */
-export const ACCESS_TOKEN_COOKIE_OPTIONS = {
-  httpOnly: false,
   secure: process.env.NODE_ENV === 'production',
   sameSite: 'lax',
   path: '/',
