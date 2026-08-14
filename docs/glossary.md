@@ -11,7 +11,9 @@ different things.
 ## Session and authentication
 
 Introduced by [ADR 0008](adr/0008-a-sealed-session-on-the-new-api.md), which records why the
-model looks like this.
+model looks like this. The **proxy** and everything that follows from closing the access token
+are recorded in [ADR 0009](adr/0009-one-proxy-for-every-browser-call.md), which also defines the
+vocabulary of the data layer around it.
 
 **Session**
 : What the application knows about the person making a request: their identity, the tokens

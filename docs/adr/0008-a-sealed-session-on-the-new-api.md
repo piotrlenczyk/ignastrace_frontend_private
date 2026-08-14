@@ -1,6 +1,7 @@
 # 0008 — A sealed session holding the new API's token pair, renewed in the middleware
 
-**Status:** Accepted — August 2026.
+**Status:** Accepted — August 2026. The second, readable cookie described below is superseded by
+[0009](0009-one-proxy-for-every-browser-call.md); the rest stands.
 
 ## Context
 
@@ -27,6 +28,12 @@ access token, the moment that token expires, the refresh token, and the identity
 access token's own claims. It is http-only and lasts a month; the cookie is set to expire slightly
 before the seal does, so the browser drops it rather than sending something that unseals to an
 error.
+
+> **Superseded by [0009](0009-one-proxy-for-every-browser-call.md).** The second cookie is gone. No
+> browser code holds a bearer any more: a call from the browser goes through a proxy in this
+> application, which attaches the session's token server-side, and client components read identity —
+> never a token — from a provider. The paragraph below records why the split existed, not what the
+> session is now.
 
 A **second cookie carries the raw access token and is deliberately readable by page scripts**. This
 is the point of the split. Client code needs a bearer token to call the API directly; it does not
