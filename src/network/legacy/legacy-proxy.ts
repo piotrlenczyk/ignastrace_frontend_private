@@ -1,5 +1,5 @@
 import { pickHeaders } from '@/network/proxy-headers';
-import { getSession } from '@/server/session/session.server';
+import { getSession } from '@/server/session/session';
 
 import { legacyApiUrl } from './legacy-api-url';
 import { LEGACY_PROXY_BASE_PATH } from './legacy-proxy-path';

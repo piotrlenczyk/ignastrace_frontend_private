@@ -9,7 +9,7 @@ import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { Link } from '@/libs/i18n-routing';
 import { getApi } from '@/libs/server/api';
-import { getSession } from '@/server/session/session.server';
+import { getSession } from '@/server/session/session';
 import type { Location } from '@/types/location';
 import type { Route } from '@/types/routes';
 

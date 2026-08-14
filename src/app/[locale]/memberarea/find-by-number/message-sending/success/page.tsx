@@ -8,7 +8,7 @@ import { ROUTES } from '@/constants/routes';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { Link } from '@/libs/i18n-routing';
-import { getSession } from '@/server/session/session.server';
+import { getSession } from '@/server/session/session';
 
 export default async function MessageSendingPage() {
   const session = await getSession();

@@ -4,7 +4,7 @@ import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getApi } from '@/libs/server/api';
 import { getFeatures } from '@/libs/server/feature-flags';
-import { getSession } from '@/server/session/session.server';
+import { getSession } from '@/server/session/session';
 import type { ReverseLookup } from '@/types/reverse-lookup.types';
 import type { User } from '@/types/user';
 

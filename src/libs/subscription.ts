@@ -1,4 +1,4 @@
-import { getSession } from '@/server/session/session.server';
+import { getSession } from '@/server/session/session';
 import type { User } from '@/types/user';
 
 import { getApi } from './server/api';

@@ -2,7 +2,7 @@ import type { Route } from 'next';
 import { redirect } from 'next/navigation';
 
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
-import { getSession } from '@/server/session/session.server';
+import { getSession } from '@/server/session/session';
 
 type AuthRedirectOptions = {
   routes: {

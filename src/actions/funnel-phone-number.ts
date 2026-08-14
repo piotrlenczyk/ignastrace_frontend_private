@@ -3,7 +3,7 @@
 import { cookies } from 'next/headers';
 
 import { getApi } from '@/libs/server/api';
-import { getSession } from '@/server/session/session.server';
+import { getSession } from '@/server/session/session';
 import type { User } from '@/types/user';
 
 export async function saveFunnelPhone(phoneNumber: string) {

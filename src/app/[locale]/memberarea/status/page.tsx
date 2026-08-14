@@ -5,7 +5,7 @@ import { getFunnelPhone } from '@/actions/funnel-phone-number';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getApi } from '@/libs/server/api';
-import { getSession } from '@/server/session/session.server';
+import { getSession } from '@/server/session/session';
 import type { ServiceRequest } from '@/types/service-request';
 
 import { EmptyState } from './_page/components/empty-state';

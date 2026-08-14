@@ -8,7 +8,7 @@ import { AnimatedLink } from '@/components/navigation/components/animated-link';
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
-import { getSession } from '@/server/session/session.server';
+import { getSession } from '@/server/session/session';
 
 import { OnboardingSteps } from './components/onboarding-steps';
 

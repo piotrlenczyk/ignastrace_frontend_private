@@ -5,13 +5,14 @@ import { cookies } from 'next/headers';
 
 import { actionClient } from '@/server/lib/safe-action';
 
-import { performEmailUpdate, performRegistration, performSignIn, performSignOut } from './session.operations';
+import { performEmailUpdate, performRegistration, performSignIn, performSignOut } from './session';
 import { registrationSchema, sessionEmailSchema, signInSchema } from './session.schemas';
 
 /*
  * The session's writes, as server actions on the one action client. They are
- * thin on purpose: everything that decides what lands in the cookie lives in
- * session.operations.ts.
+ * thin on purpose: all each one does is hand the request's cookie jar to the
+ * operation of the same name in session.ts, where everything that decides what
+ * lands in the cookie lives.
  *
  * None of them answers with an outcome of its own. A refusal from the API
  * propagates, and the action client shapes it into a structured action error

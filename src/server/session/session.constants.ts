@@ -6,7 +6,7 @@
  * both backends through proxies that attach the bearer server-side, and learns
  * who is signed in from the session provider the root layout renders.
  *
- * `session.cookies.ts` is the only place it is written.
+ * `session.ts` is the only place it is read or written.
  */
 
 export const SESSION_COOKIE_NAME = 'ignastrace_session';

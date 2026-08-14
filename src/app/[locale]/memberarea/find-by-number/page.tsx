@@ -7,7 +7,7 @@ import ProductLayout from '@/components/layouts/product-layout';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getUserCountry } from '@/libs/server/user-country';
-import { getSession } from '@/server/session/session.server';
+import { getSession } from '@/server/session/session';
 
 export default async function FindByNumberPage() {
   const country = await getUserCountry();

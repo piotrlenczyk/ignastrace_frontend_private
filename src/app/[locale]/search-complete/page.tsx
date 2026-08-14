@@ -5,7 +5,7 @@ import FunnelLayout from '@/components/layouts/funnel-layout';
 import { ROUTES } from '@/constants/routes';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
-import { getSession } from '@/server/session/session.server';
+import { getSession } from '@/server/session/session';
 
 import { SearchCompleteContent } from './components/content';
 

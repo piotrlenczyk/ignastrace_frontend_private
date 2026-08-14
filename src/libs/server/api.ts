@@ -3,7 +3,7 @@
 import { redirect } from 'next/navigation';
 
 import { legacyApiUrl } from '@/network/legacy/legacy-api-url';
-import { getSession } from '@/server/session/session.server';
+import { getSession } from '@/server/session/session';
 
 import { apiClient } from '../api-client';
 import { ApiError } from '../api-error';

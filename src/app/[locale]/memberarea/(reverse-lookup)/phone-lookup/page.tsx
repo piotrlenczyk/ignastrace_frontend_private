@@ -11,7 +11,7 @@ import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getApi } from '@/libs/server/api';
 import { getFeatures } from '@/libs/server/feature-flags';
 import { getUserCountry } from '@/libs/server/user-country';
-import { getSession } from '@/server/session/session.server';
+import { getSession } from '@/server/session/session';
 import type { RequestCountData } from '@/types/request_count_data';
 
 import { ReversePhoneLookupForm } from './components/reverse-phone-lookup-form';

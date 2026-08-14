@@ -1,9 +1,14 @@
 import type { NextRequest, NextResponse } from 'next/server';
 
-import { isAccessTokenExpired } from '@/server/session/session';
-import type { ApiRequestContext } from '@/server/session/session.api';
-import { clearSession, readSession, type SessionCookieWriter, writeSession } from '@/server/session/session.cookies';
-import { performRenewal } from '@/server/session/session.operations';
+import {
+  type ApiRequestContext,
+  clearSession,
+  isAccessTokenExpired,
+  performRenewal,
+  readSession,
+  type SessionCookieWriter,
+  writeSession,
+} from '@/server/session/session';
 import type { SessionData } from '@/server/session/session.types';
 import { SiteConfig } from '@/utils/config';
 

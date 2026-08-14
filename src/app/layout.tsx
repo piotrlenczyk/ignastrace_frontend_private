@@ -15,7 +15,7 @@ import { SessionProvider } from '@/contexts/session-context';
 import { getFeatures } from '@/libs/server/feature-flags';
 import { getUserCountry } from '@/libs/server/user-country';
 import { cn } from '@/libs/utils';
-import { getSession } from '@/server/session/session.server';
+import { getSession } from '@/server/session/session';
 import { getAlternates, getBaseUrl, getCurrentPath } from '@/utils/helpers';
 
 const interFont = Inter({

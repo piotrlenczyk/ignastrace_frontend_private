@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getApi } from '@/libs/server/api';
-import { getSession } from '@/server/session/session.server';
+import { getSession } from '@/server/session/session';
 import type { ReverseLookup } from '@/types/reverse-lookup.types';
 import type { ReverseLookupDataLeakResponse } from '@/types/reverse-lookup-data-leaks.types';
 import type { User } from '@/types/user';

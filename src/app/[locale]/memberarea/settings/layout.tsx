@@ -4,7 +4,7 @@ import { getFunnelPhone } from '@/actions/funnel-phone-number';
 import ProductLayout from '@/components/layouts/product-layout';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
-import { getSession } from '@/server/session/session.server';
+import { getSession } from '@/server/session/session';
 
 import { SettingsLayoutClient } from './layout.client';
 

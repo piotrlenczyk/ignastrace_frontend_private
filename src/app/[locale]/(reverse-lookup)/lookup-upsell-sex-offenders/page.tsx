@@ -7,7 +7,7 @@ import { ROUTES } from '@/constants/routes';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { getApi } from '@/libs/server/api';
 import { getUserCountry } from '@/libs/server/user-country';
-import { getSession } from '@/server/session/session.server';
+import { getSession } from '@/server/session/session';
 
 import type { Product } from '../../success/_types/product.type';
 import UpsellCard from '../_components/upsell-card';

@@ -6,7 +6,7 @@ import FunnelLayout from '@/components/layouts/funnel-layout';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getApi } from '@/libs/server/api';
-import { getSession } from '@/server/session/session.server';
+import { getSession } from '@/server/session/session';
 import type { User } from '@/types/user';
 
 import UpsellPageClient from './_components/upsell-page-client';

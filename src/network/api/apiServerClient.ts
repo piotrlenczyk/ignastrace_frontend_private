@@ -34,7 +34,7 @@ export const _client = createClient<paths>(baseClientConfig);
  */
 const sessionBearer = async (): Promise<string | null> => {
   try {
-    const { getSession } = await import('@/server/session/session.server');
+    const { getSession } = await import('@/server/session/session');
     const session = await getSession();
 
     return session ? `Bearer ${session.accessToken}` : null;

@@ -4,7 +4,7 @@ import { getTranslations } from 'next-intl/server';
 import ProductLayout from '@/components/layouts/product-layout';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
-import { getSession } from '@/server/session/session.server';
+import { getSession } from '@/server/session/session';
 
 import { SexOffenderSearchForm } from './search-form';
 

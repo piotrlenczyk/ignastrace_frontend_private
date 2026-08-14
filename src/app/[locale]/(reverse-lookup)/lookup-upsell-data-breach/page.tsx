@@ -5,7 +5,7 @@ import FunnelLayout from '@/components/layouts/funnel-layout';
 import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { getApi } from '@/libs/server/api';
-import { getSession } from '@/server/session/session.server';
+import { getSession } from '@/server/session/session';
 
 import type { Product } from '../../success/_types/product.type';
 import UpsellCard from '../_components/upsell-card';

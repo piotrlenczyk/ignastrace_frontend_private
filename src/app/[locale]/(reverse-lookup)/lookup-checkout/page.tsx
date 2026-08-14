@@ -8,7 +8,7 @@ import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { getCurrencyFromCountry } from '@/libs/currency';
 import { getApi } from '@/libs/server/api';
 import { getUserCountry } from '@/libs/server/user-country';
-import { getSession } from '@/server/session/session.server';
+import { getSession } from '@/server/session/session';
 import type { Products } from '@/types/products';
 
 import { LookupCheckoutPageClient } from './_page';
