@@ -69,6 +69,7 @@
     "next-intl": "^4.13.6",
     "next-safe-action": "^8.6.0",
     "openapi-fetch": "^0.17.0",
+    "openapi-react-query": "^0.5.4",
     "path-to-regexp": "^8.4.2",
     "private-ip": "^3.0.2",
     "puppeteer": "^24.22.2",

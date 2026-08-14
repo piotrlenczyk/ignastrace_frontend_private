@@ -4,6 +4,7 @@ import { getIP } from '@/server/lib/ip';
 import { getSession } from '@/server/session/session.server';
 
 import { type components, type paths } from './api';
+import { QUERY_SERIALIZER } from './api-query-serializer';
 
 const { getLocale } = await import('next-intl/server');
 
@@ -16,12 +17,7 @@ const baseClientConfig = {
   headers: {
     // 'x-api-key': env.API_KEY ?? '',
   },
-  querySerializer: {
-    array: {
-      style: 'form' as const,
-      explode: false,
-    },
-  },
+  querySerializer: QUERY_SERIALIZER,
 };
 
 // Create base client

@@ -1,26 +1,23 @@
-import { useMutation } from '@tanstack/react-query';
-
-import { useApi } from '@/hooks/use-api';
-import type { ApiError } from '@/libs/api-error';
+import { apiQueries } from '@/network/api/api-browser-client';
 
 import type { ContactUsFormValues } from '../types/contact-form.types';
 
-export function useContactUsMutation({
-  onSuccess,
-  onError,
-}: {
-  onSuccess: () => void;
-  onError: (error: ApiError) => void;
-}) {
-  const api = useApi();
+/**
+ * The contact form's submission, through the proxy onto the new API.
+ *
+ * The path is a literal out of the generated specification, so the body this
+ * takes and the failure it reports are both the API's own — `send` below is
+ * where the form's values are checked against `ContactUsDto`.
+ *
+ * Nothing here reacts to a 401. The form is public and the API accepts it
+ * anonymously; a caller behind the member area is the one that has to decide
+ * what a dead session means for it.
+ */
+export function useContactUsMutation({ onSuccess, onError }: { onSuccess: () => void; onError: () => void }) {
+  const { mutate, isPending } = apiQueries.useMutation('post', '/api/v1/support/contact-us', { onSuccess, onError });
 
-  function sendContactUs(data: ContactUsFormValues) {
-    return api.post('/contacts', data);
-  }
-
-  return useMutation({
-    mutationFn: sendContactUs,
-    onSuccess,
-    onError,
-  });
+  return {
+    isPending,
+    send: (values: ContactUsFormValues) => mutate({ body: values }),
+  };
 }
