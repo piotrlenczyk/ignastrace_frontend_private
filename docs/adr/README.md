@@ -22,7 +22,8 @@ moves. Describe things by their role instead.
 | [0005](0005-two-colour-systems-during-the-redesign.md)             | Two colour systems ship side by side for the length of the redesign              | Accepted                                          |
 | [0006](0006-lint-and-format-without-antfu.md)                      | Lint follows the framework; a formatter owns formatting                          | Accepted                                          |
 | [0007](0007-a-component-workbench-for-the-new-design-only.md)      | A component workbench, catalogued for the new design only                        | Accepted                                          |
-| [0008](0008-a-sealed-session-on-the-new-api.md)                    | A sealed session holding the new API's token pair, renewed in middleware         | Accepted; sections superseded by 0009 and 0010    |
+| [0008](0008-a-sealed-session-on-the-new-api.md)                    | A sealed session holding the new API's token pair, renewed in middleware         | Accepted; sections superseded by 0009, 0010, 0012 |
 | [0009](0009-one-proxy-for-every-browser-call.md)                   | Every browser call goes through this application's own server, and arrives typed | Accepted                                          |
-| [0010](0010-one-client-for-the-auth-calls-too.md)                  | The authentication calls go through the generated client too                     | Accepted; one interim consequence settled by 0011 |
+| [0010](0010-one-client-for-the-auth-calls-too.md)                  | The authentication calls go through the generated client too                     | Accepted; consequences settled by 0011 and 0012   |
 | [0011](0011-auth-failures-on-the-standard-action-error-channel.md) | Authentication failures travel the standard action-error channel                 | Accepted                                          |
+| [0012](0012-the-session-through-iron-session-s-own-api.md)         | The session through iron-session's own API, auth calls beside the actions        | Accepted                                          |

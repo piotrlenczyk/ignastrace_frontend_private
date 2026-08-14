@@ -1,5 +1,5 @@
 import { pickHeaders } from '@/network/proxy-headers';
-import { getSession } from '@/server/session/session';
+import { getSession } from '@/server/session/session.utils';
 
 import { legacyApiUrl } from './legacy-api-url';
 import { LEGACY_PROXY_BASE_PATH } from './legacy-proxy-path';
@@ -37,7 +37,8 @@ const proxy =
     const headers = pickHeaders(request.headers, FORWARDED_REQUEST_HEADERS);
     const session = await getSession();
 
-    if (session) {
+    // An empty session is an object without an access token, never `null`.
+    if (session.accessToken) {
       headers.set('authorization', `Bearer ${session.accessToken}`);
     }
 

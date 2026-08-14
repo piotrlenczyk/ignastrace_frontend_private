@@ -12,7 +12,7 @@ const sessionFor = (type: AccountType): SessionData => ({
   accessToken: 'access-token',
   accessTokenExpiresAt: 4102444800000,
   refreshToken: 'refresh-token',
-  user: { id: 'user-1', email: 'member@example.com', type },
+  user: { id: 'user-1', email: 'member@example.com', type, roles: ['STANDARD_USER'] },
 });
 
 const requestFor = (path: string, headers: Record<string, string> = {}) =>

@@ -5,14 +5,9 @@ export type AccountType = components['schemas']['UserResponse']['type'];
 
 export type SessionUser = {
   id: string;
-  /*
-   * Everything but the id is optional: the access token's claims are the
-   * primary source and the API is not contracted to emit any particular one.
-   * What is missing at sign-in is filled from the current-user endpoint.
-   */
   email?: string;
-  type?: AccountType;
-  roles?: string[];
+  type: AccountType;
+  roles: string[];
 };
 
 export type SessionData = {
@@ -25,18 +20,19 @@ export type SessionData = {
 };
 
 /**
- * The claims this application reads off an access token. Every one is optional
- * because the token is issued by the API, not by us — a claim that turns out
- * to be absent costs a call to the current-user endpoint, not a crash.
+ * The claims this application reads off an access token.
+ *
+ * Everything but the address is required: the token is the only source of the
+ * identity, so a token that does not carry one cannot produce a session. The
+ * decode raises rather than reaching for the current-user endpoint —
+ * see docs/adr/0012-the-session-through-iron-session-s-own-api.md.
  */
-export type AccessTokenClaims = {
-  sub?: string;
-  id?: string;
-  userId?: string;
+export type JWT = {
+  id: string;
   email?: string;
-  type?: string;
-  accountType?: string;
-  roles?: string[];
+  type: AccountType;
+  roles: string[];
   /** Epoch seconds, as per RFC 7519. */
-  exp?: number;
+  iat: number;
+  exp: number;
 };

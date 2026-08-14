@@ -1,4 +1,4 @@
-import { getSession } from '@/server/session/session';
+import { getServerSession } from '@/server/session/session.utils';
 import type { User } from '@/types/user';
 
 import { getApi } from './server/api';
@@ -17,7 +17,7 @@ type SubscriptionCheckOptions = {
 
 export const getUserForPoliciesCheck = async ({ user, allowUnauthenticated = false }: SubscriptionCheckOptions) => {
   if (allowUnauthenticated) {
-    const session = await getSession();
+    const session = await getServerSession();
     if (!session) {
       return undefined;
     }

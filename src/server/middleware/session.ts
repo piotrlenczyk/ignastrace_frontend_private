@@ -1,15 +1,16 @@
+import { sealData, unsealData } from 'iron-session';
 import type { NextRequest, NextResponse } from 'next/server';
 
+import { apiServerClient } from '@/network/api/apiServerClient';
+import { unwrapApiResponse } from '@/network/http-response-handler';
 import {
-  type ApiRequestContext,
-  clearSession,
-  isAccessTokenExpired,
-  performRenewal,
-  readSession,
-  type SessionCookieWriter,
-  writeSession,
-} from '@/server/session/session';
+  getSessionOptions,
+  SESSION_COOKIE_NAME,
+  SESSION_COOKIE_OPTIONS,
+  SESSION_TTL_SECONDS,
+} from '@/server/session/session.constants';
 import type { SessionData } from '@/server/session/session.types';
+import { createSessionObject, isUsableSession } from '@/server/session/session.utils';
 import { SiteConfig } from '@/utils/config';
 
 export type SessionStep = {
@@ -19,22 +20,43 @@ export type SessionStep = {
    * Repeats on the outgoing response whatever the step did to the request's
    * cookies. Nothing, in the common case where the token was still good.
    */
-  applyToResponse: (response: NextResponse) => Promise<void>;
+  applyToResponse: (response: NextResponse) => void;
 };
 
-const LEAVE_RESPONSE_ALONE = async () => {};
+const LEAVE_RESPONSE_ALONE = () => {};
 
 /*
- * A request's cookie jar carries names and values only, so the options a
- * response cookie takes are dropped here. Writing to it is still worth doing:
- * the internationalisation step builds its response out of this request, and
- * would otherwise build it from the token that just expired.
+ * This step seals and unseals by hand rather than going through
+ * `getIronSession` the way the rest of the application does.
+ *
+ * Reading could go either way — Next does give the middleware a request scope,
+ * so `cookies()` resolves here. Writing cannot: Next flushes a cookie written
+ * through `cookies()` in the middleware with `headers.set('set-cookie', …)`,
+ * which would drop the cookies the tracking step puts on the same response.
+ * A renewed session also has to land on the *request* as well, because the
+ * internationalisation step builds its response out of this request and would
+ * otherwise serve the token that just expired.
  */
-const asWriter = (cookies: NextRequest['cookies']): SessionCookieWriter => ({
-  get: (name) => cookies.get(name),
-  set: (name, value) => cookies.set(name, value),
-  delete: (name) => cookies.delete(name),
-});
+const readSession = async (cookies: NextRequest['cookies']): Promise<SessionData | null> => {
+  const sealed = cookies.get(SESSION_COOKIE_NAME)?.value;
+
+  if (!sealed) {
+    return null;
+  }
+
+  // Read outside the catch: a missing password is a misconfigured deployment,
+  // not a visitor without a session, and must not be swallowed as one.
+  const { password } = getSessionOptions();
+
+  try {
+    const session = await unsealData<SessionData>(sealed, { password, ttl: SESSION_TTL_SECONDS });
+
+    return isUsableSession(session) ? session : null;
+  } catch {
+    // A seal from a rotated password or a truncated cookie: no session.
+    return null;
+  }
+};
 
 /*
  * The locale this request is being served in, for the API's `x-locale`. Read
@@ -64,10 +86,33 @@ const localeOf = (request: NextRequest): string => {
 const forwardedForOf = (request: NextRequest): string | undefined =>
   request.headers.get('cf-connecting-ip') ?? request.headers.get('x-forwarded-for')?.split(',')[0]?.trim();
 
-const contextOf = (request: NextRequest): ApiRequestContext => ({
-  locale: localeOf(request),
-  forwardedFor: forwardedForOf(request),
-});
+/**
+ * Exchanges the session's refresh token for a fresh pair. Raises when the
+ * refresh token is spent or rejected, which is the signal to stop treating the
+ * visitor as signed in.
+ *
+ * Three headers are stated rather than left to the client. The bearer is the
+ * session's *expired* access token, because the operation declares bearer or
+ * API-key authentication and this application configures no API key — so the
+ * only credential it has to present is the one that just ran out. The locale and
+ * the caller's address are stated because this runs before internationalisation
+ * has settled a locale, and `getIP` needs a scope the client cannot reach from
+ * here.
+ */
+const requestTokenRefresh = async (request: NextRequest, session: SessionData) => {
+  const forwardedFor = forwardedForOf(request);
+
+  return unwrapApiResponse(
+    await apiServerClient['/api/v1/auth/refresh-token'].POST({
+      body: { refreshToken: session.refreshToken },
+      headers: {
+        Authorization: `Bearer ${session.accessToken}`,
+        'x-locale': localeOf(request),
+        ...(forwardedFor ? { 'x-forwarded-for': forwardedFor } : {}),
+      },
+    }),
+  );
+};
 
 /**
  * The session step of the middleware chain.
@@ -75,29 +120,43 @@ const contextOf = (request: NextRequest): ApiRequestContext => ({
  * Unseals the session the request arrived with and, when its access token has
  * run out, exchanges the refresh token for a new pair before the request is
  * served — so a member working inside the app is never interrupted by an
- * expiry. A refusal is not a redirect: both cookies go and the request carries
+ * expiry. A refusal is not a redirect: the cookie goes and the request carries
  * on anonymously, leaving the guards to decide what that means for the route.
  * Middleware redirects are swallowed by server actions, which is why the
  * decision belongs to the redirects step and not to this one.
+ *
+ * Concurrent renewals are knowingly unguarded: the refresh token rotates, so
+ * two requests arriving together can invalidate each other and sign the member
+ * out. Deduplicating them is out of scope for now (see issue #16).
  */
 export const session = async (request: NextRequest): Promise<SessionStep> => {
   const current = await readSession(request.cookies);
 
-  if (!current || !isAccessTokenExpired(current)) {
+  if (!current) {
+    return { session: null, applyToResponse: LEAVE_RESPONSE_ALONE };
+  }
+
+  if (Date.now() < current.accessTokenExpiresAt) {
     return { session: current, applyToResponse: LEAVE_RESPONSE_ALONE };
   }
 
-  const renewed = await performRenewal(asWriter(request.cookies), current, contextOf(request));
+  try {
+    const { token, refreshToken } = await requestTokenRefresh(request, current);
+    const renewed = createSessionObject({ access: token, refresh: refreshToken });
+    const sealed = await sealData(renewed, getSessionOptions());
 
-  if (!renewed) {
+    request.cookies.set(SESSION_COOKIE_NAME, sealed);
+
+    return {
+      session: renewed,
+      applyToResponse: (response) => response.cookies.set(SESSION_COOKIE_NAME, sealed, SESSION_COOKIE_OPTIONS),
+    };
+  } catch {
+    request.cookies.delete(SESSION_COOKIE_NAME);
+
     return {
       session: null,
-      applyToResponse: async (response) => clearSession(response.cookies),
+      applyToResponse: (response) => response.cookies.delete(SESSION_COOKIE_NAME),
     };
   }
-
-  return {
-    session: renewed,
-    applyToResponse: (response) => writeSession(response.cookies, renewed),
-  };
 };

@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { useAction } from 'next-safe-action/hooks';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -14,8 +14,8 @@ import { Input } from '@/components/ui/input';
 import { ROUTES } from '@/constants/routes';
 import { useGenericErrorToast } from '@/hooks/use-generic-error-toast';
 import { useRouter } from '@/libs/i18n-routing';
-import { isEmailTakenActionError } from '@/server/lib/auth-action-error';
 import { actionRegister } from '@/server/actions/auth.actions';
+import { isEmailTakenActionError } from '@/server/lib/auth-action-error';
 import { createSignUpSchema, type SignUpFormValues } from '@/types/sign-up.types';
 
 import { Separator } from './separator';
@@ -24,7 +24,6 @@ export const SignUpForm = () => {
   const t = useTranslations('pages.sign_up.components.sign_up_form');
   const showErrorToast = useGenericErrorToast();
   const router = useRouter();
-  const locale = useLocale();
 
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -58,7 +57,7 @@ export const SignUpForm = () => {
 
   const handleSubmit = ({ email }: SignUpFormValues) => {
     setIsSubmitting(true);
-    signUp({ email, locale });
+    signUp({ email });
   };
 
   return (

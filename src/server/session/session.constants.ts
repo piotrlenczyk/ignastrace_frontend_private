@@ -1,3 +1,5 @@
+import type { SessionOptions } from 'iron-session';
+
 /*
  * Cookie name, lifetimes and options for the session.
  *
@@ -6,7 +8,8 @@
  * both backends through proxies that attach the bearer server-side, and learns
  * who is signed in from the session provider the root layout renders.
  *
- * `session.ts` is the only place it is read or written.
+ * `session.utils.ts` and the middleware's session step are the only places it
+ * is read or written.
  */
 
 export const SESSION_COOKIE_NAME = 'ignastrace_session';
@@ -21,35 +24,31 @@ export const SESSION_TTL_SECONDS = 60 * 60 * 24 * 30;
  */
 export const SESSION_COOKIE_MAX_AGE_SECONDS = SESSION_TTL_SECONDS - 60 * 60;
 
-/** The access token's own lifetime, used when its claims carry no expiry. */
-export const ACCESS_TOKEN_FALLBACK_TTL_SECONDS = 60 * 60 * 24;
-
-/*
- * How far ahead of the recorded expiry a token is already treated as expired.
- * The API's clock and this one need not agree, and a token renewed a few
- * seconds early costs nothing next to a request refused for being a second
- * late.
- */
-export const ACCESS_TOKEN_EXPIRY_SKEW_MS = 30 * 1000;
-
-export const SESSION_COOKIE_OPTIONS = {
+export const SESSION_COOKIE_OPTIONS: SessionOptions['cookieOptions'] = {
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',
   sameSite: 'lax',
+  maxAge: SESSION_COOKIE_MAX_AGE_SECONDS,
   path: '/',
-} as const;
+};
 
 /**
- * The sealing password. Read through a function rather than a module constant
- * so that the process can be started without it for anything that never
- * touches a session, and so tests can set it before the first seal.
+ * Everything iron-session needs, assembled on each call rather than held as a
+ * module constant. The sealing password is read at that moment so the process
+ * can be started without it for anything that never touches a session, and so
+ * a test can set it after this module has been imported.
  */
-export const getSessionPassword = (): string => {
+export const getSessionOptions = (): SessionOptions => {
   const password = process.env.SESSION_PASSWORD;
 
   if (!password || password.length < 32) {
     throw new Error('SESSION_PASSWORD must be set to at least 32 characters to seal the session cookie.');
   }
 
-  return password;
+  return {
+    password,
+    cookieName: SESSION_COOKIE_NAME,
+    ttl: SESSION_TTL_SECONDS,
+    cookieOptions: SESSION_COOKIE_OPTIONS,
+  };
 };

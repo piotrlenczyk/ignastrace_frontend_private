@@ -7,7 +7,7 @@ import { ROUTES } from '@/constants/routes';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getApi } from '@/libs/server/api';
-import { getSession } from '@/server/session/session';
+import { getServerSession } from '@/server/session/session.utils';
 import type { RequestCountData } from '@/types/request_count_data';
 import { firstValue } from '@/utils/search-params';
 
@@ -17,7 +17,7 @@ export default async function MessageSendingPage(
   props: PageProps<'/[locale]/memberarea/find-by-number/message-sending'>,
 ) {
   const searchParams = await props.searchParams;
-  const session = await getSession();
+  const session = await getServerSession();
   const isAuthenticated = !!session;
   const api = await getApi();
 

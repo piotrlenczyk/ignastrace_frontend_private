@@ -3,7 +3,6 @@ import { NextResponse } from 'next/server';
 import { match } from 'path-to-regexp';
 
 import { AUTH_ROUTE_PATTERNS, PROTECTED_ROUTE_PATTERNS, REDIRECT_QUERY_PARAM, ROUTES } from '@/constants/routes';
-import { isFullUserSession } from '@/server/session/session';
 import type { SessionData } from '@/server/session/session.types';
 import { SiteConfig } from '@/utils/config';
 
@@ -53,7 +52,12 @@ export const redirects = (request: NextRequest, session: SessionData | null): Ne
   }
 
   const { pathname, search } = request.nextUrl;
-  const signedIn = isFullUserSession(session);
+  /*
+   * Guest-typed sessions exist in the API's model and are carried here, but
+   * they are not admitted to the member area — the guards treat one exactly as
+   * they treat no session at all.
+   */
+  const signedIn = session?.user.type === 'USER';
 
   if (!signedIn && matches(protectedRoutes, pathname)) {
     const url = request.nextUrl.clone();

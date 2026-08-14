@@ -34,10 +34,12 @@ describe('useSession', () => {
     expect(result.current).toEqual({ session: { user: MEMBER }, isSignedIn: true });
   });
 
-  it('reports a session carrying nothing but an id as signed in all the same', () => {
-    const { result } = rendered({ id: 'user-1' });
+  it('reports a session whose token carried no address as signed in all the same', () => {
+    const anonymous: SessionUser = { id: 'user-1', type: 'USER', roles: [] };
 
-    expect(result.current).toEqual({ session: { user: { id: 'user-1' } }, isSignedIn: true });
+    const { result } = rendered(anonymous);
+
+    expect(result.current).toEqual({ session: { user: anonymous }, isSignedIn: true });
   });
 
   it('carries nothing a page script could authenticate with', () => {

@@ -4,8 +4,10 @@
 client" consequence of [0008](0008-a-sealed-session-on-the-new-api.md), and extends
 [0009](0009-one-proxy-for-every-browser-call.md)'s typed-client rule to the last layer that was
 exempt from it. The interim recorded in the "forms still see what they saw" consequence below is
-over, settled by [0011](0011-auth-failures-on-the-standard-action-error-channel.md); the rest
-stands.
+over, settled by [0011](0011-auth-failures-on-the-standard-action-error-channel.md). The
+current-user call this record introduced to complete an identity is removed by
+[0012](0012-the-session-through-iron-session-s-own-api.md), which also moves each auth request out
+of the session module and into the write that makes it; the client rule itself stands.
 
 ## Context
 

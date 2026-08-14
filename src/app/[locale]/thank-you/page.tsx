@@ -11,11 +11,11 @@ import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { Link } from '@/libs/i18n-routing';
 import { getApi } from '@/libs/server/api';
-import { getSession } from '@/server/session/session';
+import { getServerSession } from '@/server/session/session.utils';
 import type { User } from '@/types/user';
 
 const ThankYouPage = async () => {
-  const session = await getSession();
+  const session = await getServerSession();
   const isAuthenticated = !!session;
 
   if (!isAuthenticated) {

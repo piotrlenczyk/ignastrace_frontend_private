@@ -8,7 +8,7 @@ import { AnimatedLink } from '@/components/navigation/components/animated-link';
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
-import { getSession } from '@/server/session/session';
+import { getServerSession } from '@/server/session/session.utils';
 
 import { OnboardingSteps } from './components/onboarding-steps';
 
@@ -16,7 +16,7 @@ export default async function MemberAreaOnboardingStep1Page(
   props: PageProps<'/[locale]/memberarea/[onboarding-step]'>,
 ) {
   const params = await props.params;
-  const session = await getSession();
+  const session = await getServerSession();
   const isAuthenticated = !!session;
 
   if (!isAuthenticated) {

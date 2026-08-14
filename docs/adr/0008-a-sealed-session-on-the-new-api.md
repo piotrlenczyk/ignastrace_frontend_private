@@ -3,7 +3,12 @@
 **Status:** Accepted — August 2026. The second, readable cookie described below is superseded by
 [0009](0009-one-proxy-for-every-browser-call.md), and the consequence that renewal cannot use the
 ordinary server-side API client is reversed by
-[0010](0010-one-client-for-the-auth-calls-too.md); the rest stands.
+[0010](0010-one-client-for-the-auth-calls-too.md). The premise that the middleware runtime has no
+request scope — and the cookie-jar parameter every session operation took because of it — is
+reversed by [0012](0012-the-session-through-iron-session-s-own-api.md), which also drops this
+record's clock-skew allowance and the upstream revocation on sign-out. The shape of the session,
+the renewal in the middleware and the refusal to probe a current-user endpoint per request all
+stand.
 
 ## Context
 

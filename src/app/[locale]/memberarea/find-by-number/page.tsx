@@ -7,14 +7,14 @@ import ProductLayout from '@/components/layouts/product-layout';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getUserCountry } from '@/libs/server/user-country';
-import { getSession } from '@/server/session/session';
+import { getServerSession } from '@/server/session/session.utils';
 
 export default async function FindByNumberPage() {
   const country = await getUserCountry();
   const t = await getTranslations('components.phone_input');
   const tFindByNumber = await getTranslations('pages.find_by_number_send_message');
 
-  const session = await getSession();
+  const session = await getServerSession();
   const isAuthenticated = !!session;
 
   if (!isAuthenticated) {

@@ -3,7 +3,7 @@
 import { redirect } from 'next/navigation';
 
 import { legacyApiUrl } from '@/network/legacy/legacy-api-url';
-import { getSession } from '@/server/session/session';
+import { getSession } from '@/server/session/session.utils';
 
 import { apiClient } from '../api-client';
 import { ApiError } from '../api-error';
@@ -16,7 +16,7 @@ async function handleError(error: unknown) {
 
 export async function getApi() {
   const session = await getSession();
-  const client = apiClient(legacyApiUrl(), session && `Bearer ${session.accessToken}`);
+  const client = apiClient(legacyApiUrl(), session.accessToken ? `Bearer ${session.accessToken}` : null);
 
   return {
     async request<T>(endpoint: string, options?: Parameters<typeof client.request>[1]) {

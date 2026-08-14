@@ -5,12 +5,12 @@ import { getFunnelPhone } from '@/actions/funnel-phone-number';
 import ProductLayout from '@/components/layouts/product-layout';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
-import { getSession } from '@/server/session/session';
+import { getServerSession } from '@/server/session/session.utils';
 
 import { CreateCustomLinkForm } from './create-link-form';
 
 const FindByLinkPage = async () => {
-  const session = await getSession();
+  const session = await getServerSession();
   const isAuthenticated = !!session;
 
   if (!isAuthenticated) {

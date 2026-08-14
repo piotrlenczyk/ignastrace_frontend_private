@@ -7,13 +7,13 @@ import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getApi } from '@/libs/server/api';
 import { getFeatures } from '@/libs/server/feature-flags';
-import { getSession } from '@/server/session/session';
+import { getServerSession } from '@/server/session/session.utils';
 import type { User } from '@/types/user';
 
 import { SearchCompleteContent } from './_components/search-complete-content';
 
 export default async function LookupSearchCompletePage() {
-  const session = await getSession();
+  const session = await getServerSession();
   const isAuthenticated = !!session;
 
   if (!isAuthenticated) {

@@ -4,12 +4,12 @@ import { getTranslations } from 'next-intl/server';
 import ProductLayout from '@/components/layouts/product-layout';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
-import { getSession } from '@/server/session/session';
+import { getServerSession } from '@/server/session/session.utils';
 
 import { SexOffenderSearchForm } from './search-form';
 
 const SexOffendersSearchPage = async () => {
-  const session = await getSession();
+  const session = await getServerSession();
   const isAuthenticated = !!session;
 
   if (!isAuthenticated) {

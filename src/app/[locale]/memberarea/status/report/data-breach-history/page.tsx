@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getApi } from '@/libs/server/api';
-import { getSession } from '@/server/session/session';
+import { getServerSession } from '@/server/session/session.utils';
 import type { ReverseLookup } from '@/types/reverse-lookup.types';
 import type { ReverseLookupDataLeakResponse } from '@/types/reverse-lookup-data-leaks.types';
 import type { User } from '@/types/user';
@@ -15,7 +15,7 @@ export default async function DataBreachHistoryPage(
   props: PageProps<'/[locale]/memberarea/status/report/data-breach-history'>,
 ) {
   const searchParams = await props.searchParams;
-  const session = await getSession();
+  const session = await getServerSession();
   const isAuthenticated = !!session;
 
   if (!isAuthenticated) {

@@ -14,8 +14,6 @@ export const signInSchema = z.object({
 
 export const registrationSchema = z.object({
   email: z.email(),
-  /** Which language the API should write the account's welcome mail in. */
-  locale: z.string().optional(),
 });
 
 export const sessionEmailSchema = z.object({

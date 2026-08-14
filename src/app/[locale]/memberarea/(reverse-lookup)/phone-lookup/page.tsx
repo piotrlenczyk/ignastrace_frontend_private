@@ -11,7 +11,7 @@ import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getApi } from '@/libs/server/api';
 import { getFeatures } from '@/libs/server/feature-flags';
 import { getUserCountry } from '@/libs/server/user-country';
-import { getSession } from '@/server/session/session';
+import { getServerSession } from '@/server/session/session.utils';
 import type { RequestCountData } from '@/types/request_count_data';
 
 import { ReversePhoneLookupForm } from './components/reverse-phone-lookup-form';
@@ -20,7 +20,7 @@ export default async function FindByNumberPage() {
   const country = await getUserCountry();
   const t = await getTranslations('pages.reverse_lookup.member_area.phone_lookup');
 
-  const session = await getSession();
+  const session = await getServerSession();
   const isAuthenticated = !!session;
   const api = await getApi();
 

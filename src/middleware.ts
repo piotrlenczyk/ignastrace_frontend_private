@@ -45,7 +45,7 @@ export default async function middleware(request: NextRequest, _event: NextFetch
     const { applyToResponse } = await session(request);
     const response = NextResponse.next({ request });
 
-    await applyToResponse(response);
+    applyToResponse(response);
 
     return response;
   }
@@ -72,7 +72,7 @@ export default async function middleware(request: NextRequest, _event: NextFetch
     response = intl(request);
   }
 
-  await applyToResponse(response);
+  applyToResponse(response);
 
   const trackedResponse = tracking(request, response);
 

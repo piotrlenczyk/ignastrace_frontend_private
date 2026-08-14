@@ -3,7 +3,7 @@
 import { cookies } from 'next/headers';
 
 import { getApi } from '@/libs/server/api';
-import { getSession } from '@/server/session/session';
+import { getServerSession } from '@/server/session/session.utils';
 import type { User } from '@/types/user';
 
 export async function saveFunnelPhone(phoneNumber: string) {
@@ -17,7 +17,7 @@ export async function getFunnelPhone() {
     return cookiePhoneNumber;
   }
 
-  const session = await getSession();
+  const session = await getServerSession();
 
   if (!session) {
     return;

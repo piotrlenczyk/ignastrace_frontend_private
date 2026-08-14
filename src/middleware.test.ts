@@ -3,7 +3,7 @@ import { type NextFetchEvent, NextRequest } from 'next/server';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { TRACKING_PREFIX } from '@/constants/tracking';
-import { getSessionPassword, SESSION_COOKIE_NAME, SESSION_TTL_SECONDS } from '@/server/session/session.constants';
+import { SESSION_COOKIE_NAME, SESSION_TTL_SECONDS } from '@/server/session/session.constants';
 import type { SessionData } from '@/server/session/session.types';
 
 const SITE = 'https://ignastrace.io';
@@ -50,7 +50,14 @@ const IN_AN_HOUR = Math.floor(Date.now() / 1000) + 60 * 60;
 
 const AN_HOUR_AGO = Math.floor(Date.now() / 1000) - 60 * 60;
 
-const FRESH_TOKEN = accessToken({ sub: 'user-1', email: 'member@example.com', type: 'USER', exp: IN_AN_HOUR });
+const FRESH_TOKEN = accessToken({
+  id: 'user-1',
+  email: 'member@example.com',
+  type: 'USER',
+  roles: ['STANDARD_USER'],
+  iat: AN_HOUR_AGO,
+  exp: IN_AN_HOUR,
+});
 
 const sessionWith = (token: string, expiresAt: number): SessionData => ({
   isLoggedIn: true,
@@ -63,7 +70,14 @@ const sessionWith = (token: string, expiresAt: number): SessionData => ({
 const VALID_SESSION = sessionWith(FRESH_TOKEN, IN_AN_HOUR * 1000);
 
 const EXPIRED_SESSION = sessionWith(
-  accessToken({ sub: 'user-1', email: 'member@example.com', type: 'USER', exp: AN_HOUR_AGO }),
+  accessToken({
+    id: 'user-1',
+    email: 'member@example.com',
+    type: 'USER',
+    roles: ['STANDARD_USER'],
+    iat: AN_HOUR_AGO,
+    exp: AN_HOUR_AGO,
+  }),
   AN_HOUR_AGO * 1000,
 );
 
@@ -123,7 +137,7 @@ const upstreamRequest = () => {
 const run = (request: NextRequest) => middleware(request, {} as NextFetchEvent);
 
 const unseal = (sealed: string) =>
-  unsealData<SessionData>(sealed, { password: getSessionPassword(), ttl: SESSION_TTL_SECONDS });
+  unsealData<SessionData>(sealed, { password: SESSION_PASSWORD, ttl: SESSION_TTL_SECONDS });
 
 const sessionCookieOf = (response: Response) => {
   const header = response.headers.getSetCookie().find((cookie) => cookie.startsWith(`${SESSION_COOKIE_NAME}=`));
@@ -245,6 +259,20 @@ describe('middleware', () => {
       expect(await unseal(request.cookies.get(SESSION_COOKIE_NAME)!.value)).toMatchObject({
         accessToken: FRESH_TOKEN,
         refreshToken: 'refresh-2',
+      });
+    });
+
+    it('reads the identity back out of the renewed token, so the next request still finds a session', async () => {
+      serveRenewalSuccess();
+
+      const response = await run(await requestWith(EXPIRED_SESSION, '/pricing'));
+
+      expect(await unseal(sessionCookieOf(response)!)).toEqual({
+        isLoggedIn: true,
+        accessToken: FRESH_TOKEN,
+        accessTokenExpiresAt: IN_AN_HOUR * 1000,
+        refreshToken: 'refresh-2',
+        user: { id: 'user-1', email: 'member@example.com', type: 'USER', roles: ['STANDARD_USER'] },
       });
     });
 

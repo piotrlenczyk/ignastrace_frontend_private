@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getApi } from '@/libs/server/api';
-import { getSession } from '@/server/session/session';
+import { getServerSession } from '@/server/session/session.utils';
 import type { SexOffenderData } from '@/types/sex-offenders.types';
 import type { User } from '@/types/user';
 
@@ -11,7 +11,7 @@ import { ReportDetails } from './components/report-details';
 
 const SexOffendersPage = async (props: PageProps<'/[locale]/memberarea/status/report/sex-offenders'>) => {
   const searchParams = await props.searchParams;
-  const session = await getSession();
+  const session = await getServerSession();
   const isAuthenticated = !!session;
 
   if (!isAuthenticated) {

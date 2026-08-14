@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { useAction } from 'next-safe-action/hooks';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -15,14 +15,13 @@ import { Input } from '@/components/ui/input';
 import { ROUTES } from '@/constants/routes';
 import { useGenericErrorToast } from '@/hooks/use-generic-error-toast';
 import { cn } from '@/libs/utils';
-import { isEmailTakenActionError } from '@/server/lib/auth-action-error';
 import { actionRegister } from '@/server/actions/auth.actions';
+import { isEmailTakenActionError } from '@/server/lib/auth-action-error';
 import { createSignUpSchema, type SignUpFormValues } from '@/types/sign-up.types';
 
 export const SignUpForm = ({ phoneNumber, className }: { phoneNumber: string; className?: string }) => {
   const t = useTranslations('pages.reverse_lookup.sign_up');
   const router = useRouter();
-  const locale = useLocale();
   const showErrorToast = useGenericErrorToast();
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -55,7 +54,7 @@ export const SignUpForm = ({ phoneNumber, className }: { phoneNumber: string; cl
 
   const handleSubmit = ({ email }: SignUpFormValues) => {
     setIsSubmitting(true);
-    signUp({ email, locale });
+    signUp({ email });
   };
 
   return (

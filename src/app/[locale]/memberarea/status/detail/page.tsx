@@ -4,14 +4,14 @@ import { getFunnelPhone } from '@/actions/funnel-phone-number';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getApi } from '@/libs/server/api';
-import { getSession } from '@/server/session/session';
+import { getServerSession } from '@/server/session/session.utils';
 import type { Location } from '@/types/location';
 
 import { DetailStatusClientPage } from './_page';
 
 const DetailStatusPage = async (props: PageProps<'/[locale]/memberarea/status/detail'>) => {
   const searchParams = await props.searchParams;
-  const session = await getSession();
+  const session = await getServerSession();
   const isAuthenticated = !!session;
 
   if (!searchParams?.id) {

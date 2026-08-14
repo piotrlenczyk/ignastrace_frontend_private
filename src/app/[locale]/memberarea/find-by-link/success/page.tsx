@@ -9,7 +9,7 @@ import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { Link } from '@/libs/i18n-routing';
 import { getApi } from '@/libs/server/api';
-import { getSession } from '@/server/session/session';
+import { getServerSession } from '@/server/session/session.utils';
 import type { Location } from '@/types/location';
 import type { Route } from '@/types/routes';
 
@@ -17,7 +17,7 @@ import { CopyToClipBoard } from './components/copy-to-clipboard';
 
 export default async function Page(props: PageProps<'/[locale]/memberarea/find-by-link/success'>) {
   const searchParams = await props.searchParams;
-  const session = await getSession();
+  const session = await getServerSession();
   const isAuthenticated = !!session;
 
   if (!isAuthenticated) {

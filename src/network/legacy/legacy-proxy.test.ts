@@ -48,7 +48,7 @@ const SESSION: SessionData = {
   accessToken: 'access-token-1',
   accessTokenExpiresAt: Date.now() + 60 * 60 * 1000,
   refreshToken: 'refresh-token-1',
-  user: { id: 'user-1', email: 'member@example.com' },
+  user: { id: 'user-1', email: 'member@example.com', type: 'USER', roles: ['STANDARD_USER'] },
 };
 
 const signedIn = async () => {

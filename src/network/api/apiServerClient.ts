@@ -34,10 +34,11 @@ export const _client = createClient<paths>(baseClientConfig);
  */
 const sessionBearer = async (): Promise<string | null> => {
   try {
-    const { getSession } = await import('@/server/session/session');
+    const { getSession } = await import('@/server/session/session.utils');
     const session = await getSession();
 
-    return session ? `Bearer ${session.accessToken}` : null;
+    // An empty session is an object without an access token, never `null`.
+    return session.accessToken ? `Bearer ${session.accessToken}` : null;
   } catch {
     return null;
   }

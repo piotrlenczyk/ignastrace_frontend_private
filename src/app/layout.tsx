@@ -15,7 +15,7 @@ import { SessionProvider } from '@/contexts/session-context';
 import { getFeatures } from '@/libs/server/feature-flags';
 import { getUserCountry } from '@/libs/server/user-country';
 import { cn } from '@/libs/utils';
-import { getSession } from '@/server/session/session';
+import { getServerSession } from '@/server/session/session.utils';
 import { getAlternates, getBaseUrl, getCurrentPath } from '@/utils/helpers';
 
 const interFont = Inter({
@@ -123,7 +123,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const messages = await getMessages();
   const country = await getUserCountry();
   const features = await getFeatures();
-  const session = await getSession();
+  const session = await getServerSession();
   const isUSUser = country === 'US';
   const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 

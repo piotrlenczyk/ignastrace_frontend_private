@@ -2,10 +2,11 @@ import { unsealData } from 'iron-session';
 import { DEFAULT_SERVER_ERROR_MESSAGE } from 'next-safe-action';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { ROUTES } from '@/constants/routes';
 import { isEmailTakenActionError } from '@/server/lib/auth-action-error';
 import { isHttpClientActionError } from '@/server/lib/safe-action';
 
-import { getSessionPassword, SESSION_COOKIE_NAME, SESSION_TTL_SECONDS } from './session.constants';
+import { SESSION_COOKIE_NAME, SESSION_TTL_SECONDS } from './session.constants';
 import type { SessionData } from './session.types';
 
 const API = 'https://api.ignastrace.test';
@@ -24,7 +25,7 @@ vi.stubEnv('API_BASE_URL', API);
  * Two things are substituted, both framework boundaries rather than anything of
  * this application's: the request's cookie jar, and the cache invalidation the
  * actions ask for. The network is stubbed at `fetch`, so the request the API
- * would have received is a real one.
+ * would have received is a real one, and iron-session does its own sealing.
  */
 const upstreamRequests: Request[] = [];
 
@@ -45,7 +46,8 @@ vi.stubGlobal('fetch', async (request: Request) => {
 
 /**
  * A cookie jar with the surface `cookies()` hands a server action, standing in
- * for the request's. Nothing else about the session is substituted.
+ * for the request's. Nothing else about the session is substituted — iron-session
+ * writes into this through `getIronSession` exactly as it would in a request.
  */
 type Entry = { value: string; options: Record<string, unknown> };
 
@@ -56,9 +58,9 @@ const createCookieJar = () => {
     get: (name: string) => {
       const entry = jar.get(name);
 
-      return entry ? { value: entry.value } : undefined;
+      return entry ? { name, value: entry.value } : undefined;
     },
-    set: (name: string, value: string, options: Record<string, unknown>) => {
+    set: (name: string, value: string, options: Record<string, unknown> = {}) => {
       jar.set(name, { value, options });
     },
     delete: (name: string) => {
@@ -73,15 +75,33 @@ let cookieJar = createCookieJar();
 
 const revalidatePath = vi.fn();
 
+/*
+ * `redirect` interrupts a render by throwing, and a caller must not be able to
+ * carry on past one — so the stub throws too, rather than returning.
+ */
+const REDIRECTED = 'NEXT_REDIRECT';
+
+const redirect = vi.fn((path: string) => {
+  throw new Error(`${REDIRECTED}: ${path}`);
+});
+
 vi.doMock('next/headers', () => ({ cookies: async () => cookieJar }));
 vi.doMock('next/cache', () => ({ revalidatePath }));
+vi.doMock('next/navigation', () => ({ redirect }));
 
 /*
  * Imported after the environment, the network and the two framework modules are
  * in place: the client reads the API's base URL and captures `fetch` the first
  * time its module runs, and `.env` is not in the repository.
  */
-const { actionRegister: register, actionSignIn: signIn, actionLogout: signOut, actionUpdateSessionEmail: updateSessionEmail } = await import('../actions/auth.actions');
+const {
+  actionRegister: register,
+  actionSignIn: signIn,
+  actionLogout: signOut,
+  actionUpdateSessionEmail: updateSessionEmail,
+} = await import('../actions/auth.actions');
+
+const { getServerSession } = await import('./session.utils');
 
 const accessToken = (claims: Record<string, unknown>) => {
   const encode = (value: object) => Buffer.from(JSON.stringify(value)).toString('base64url');
@@ -92,10 +112,11 @@ const accessToken = (claims: Record<string, unknown>) => {
 const IN_A_DAY = Math.floor(Date.now() / 1000) + 60 * 60 * 24;
 
 const FULL_CLAIMS = {
-  sub: 'user-1',
+  id: 'user-1',
   email: 'member@example.com',
   type: 'USER',
   roles: ['STANDARD_USER'],
+  iat: Math.floor(Date.now() / 1000),
   exp: IN_A_DAY,
 };
 
@@ -148,7 +169,7 @@ const refusal = (errorCode: string, code: string, message: string) => ({ error: 
 
 const sealedSession = async (): Promise<SessionData> =>
   unsealData<SessionData>(cookieJar.entry(SESSION_COOKIE_NAME)!.value, {
-    password: getSessionPassword(),
+    password: SESSION_PASSWORD,
     ttl: SESSION_TTL_SECONDS,
   });
 
@@ -159,9 +180,12 @@ const signedIn = async () => {
   await signIn(CREDENTIALS);
 };
 
+const MEMBER = { id: 'user-1', email: 'member@example.com', type: 'USER', roles: ['STANDARD_USER'] };
+
 beforeEach(() => {
   cookieJar = createCookieJar();
   revalidatePath.mockClear();
+  redirect.mockClear();
   serveApi({});
 });
 
@@ -178,7 +202,7 @@ describe('signIn', () => {
       accessToken: TOKEN_PAIR.token,
       accessTokenExpiresAt: IN_A_DAY * 1000,
       refreshToken: 'refresh-1',
-      user: { id: 'user-1', email: 'member@example.com', type: 'USER', roles: ['STANDARD_USER'] },
+      user: MEMBER,
     });
   });
 
@@ -239,13 +263,29 @@ describe('signIn', () => {
     expect(serverError).toMatchObject({ status: 404, data: { errorCode: 'USER_DOES_NOT_EXIST_ERROR' } });
   });
 
-  it('answers with the default server error when the pair cannot be turned into a session', async () => {
+  it('answers with the default server error when the token the API issued cannot be decoded', async () => {
+    serveApi({ '/api/v1/auth/login': { status: 201, body: { token: 'not-a-jwt', refreshToken: 'refresh-1' } } });
+
+    const { serverError } = await signIn(CREDENTIALS);
+
+    expect(serverError).toBe(DEFAULT_SERVER_ERROR_MESSAGE);
+    expect(cookieJar.names()).toEqual([]);
+  });
+
+  /*
+   * A token that decodes but carries no identity is the failure worth being
+   * loud about: sealed unchecked, one without `exp` would give an expiry of
+   * `NaN` that every comparison reads as "still valid", and one without `id`
+   * would seal into a cookie that reads back as an anonymous visitor.
+   */
+  it.each([
+    ['no id', { ...FULL_CLAIMS, id: undefined }],
+    ['no expiry', { ...FULL_CLAIMS, exp: undefined }],
+    ['no account type', { ...FULL_CLAIMS, type: undefined }],
+    ['no roles', { ...FULL_CLAIMS, roles: undefined }],
+  ])('refuses a token that decodes but carries %s, rather than sealing a broken session', async (_, claims) => {
     serveApi({
-      '/api/v1/auth/login': { status: 201, body: { token: accessToken({ exp: IN_A_DAY }), refreshToken: 'refresh-1' } },
-      '/api/v1/user/me': {
-        status: 500,
-        body: refusal('INTERNAL_SERVER_ERROR', 'INTERNAL_SERVER_ERROR', 'Server error'),
-      },
+      '/api/v1/auth/login': { status: 201, body: { token: accessToken(claims), refreshToken: 'refresh-1' } },
     });
 
     const { serverError } = await signIn(CREDENTIALS);
@@ -285,14 +325,14 @@ describe('register', () => {
     expect((await sealedSession()).accessToken).toBe(TOKEN_PAIR.token);
   });
 
-  it('asks the API for the account in the visitor’s language', async () => {
+  it('sends nothing but the address, and lets the client state the language the mail is written in', async () => {
     const api = serveApi({ '/api/v1/auth/register': { status: 201, body: TOKEN_PAIR } });
 
-    await register({ email: 'new@example.com', locale: 'es' });
+    await register({ email: 'new@example.com' });
     const upstream = api.upstreamRequest();
 
     expect(upstream.url).toBe(`${API}/api/v1/auth/register`);
-    expect(upstream.headers.get('x-locale')).toBe('es');
+    expect(upstream.headers.get('x-locale')).toBe('en');
     expect(await upstream.json()).toEqual({ email: 'new@example.com' });
   });
 
@@ -345,7 +385,7 @@ describe('updateSessionEmail', () => {
       accessToken: TOKEN_PAIR.token,
       accessTokenExpiresAt: IN_A_DAY * 1000,
       refreshToken: 'refresh-1',
-      user: { id: 'user-1', email: 'renamed@example.com', type: 'USER', roles: ['STANDARD_USER'] },
+      user: { ...MEMBER, email: 'renamed@example.com' },
     });
   });
 
@@ -357,53 +397,102 @@ describe('updateSessionEmail', () => {
 });
 
 describe('signOut', () => {
-  it('clears the session cookie and revokes the token upstream', async () => {
+  it('clears the session cookie', async () => {
     await signedIn();
-
-    const api = serveApi({ '/api/v1/auth/logout': { status: 201 } });
-    await signOut();
-    const upstream = api.upstreamRequest();
-
-    expect(cookieJar.names()).toEqual([]);
-    expect(upstream.url).toBe(`${API}/api/v1/auth/logout`);
-    expect(upstream.method).toBe('POST');
-    expect(upstream.headers.get('authorization')).toBe(`Bearer ${TOKEN_PAIR.token}`);
-  });
-
-  it('clears it even when the revocation is refused, rather than leaving a half-signed-in visitor', async () => {
-    await signedIn();
-
-    serveApi({
-      '/api/v1/auth/logout': {
-        status: 500,
-        body: refusal('INTERNAL_SERVER_ERROR', 'INTERNAL_SERVER_ERROR', 'Server error'),
-      },
-    });
+    const api = serveApi({});
 
     const { serverError } = await signOut();
 
     expect(serverError).toBeUndefined();
-    expect(cookieJar.names()).toEqual([]);
+    expect(await getServerSession()).toBeNull();
+    expect(api.calls()).toBe(0);
   });
 
-  it('clears it when the revocation call never reaches the API', async () => {
+  it('invalidates the layout, so the tree stops describing the member who left', async () => {
     await signedIn();
-
-    respond = async () => {
-      throw new Error('Network down');
-    };
+    revalidatePath.mockClear();
 
     await signOut();
 
-    expect(cookieJar.names()).toEqual([]);
+    expect(revalidatePath).toHaveBeenCalledWith('/', 'layout');
   });
 
-  it('spends no request on a visitor who was never signed in', async () => {
+  it('leaves a visitor who was never signed in with no session either', async () => {
     const api = serveApi({});
 
     await signOut();
 
-    expect(cookieJar.names()).toEqual([]);
+    expect(await getServerSession()).toBeNull();
     expect(api.calls()).toBe(0);
+  });
+});
+
+describe('getServerSession', () => {
+  it('reports the session a sign-in left behind', async () => {
+    await signedIn();
+
+    expect(await getServerSession()).toEqual({
+      isLoggedIn: true,
+      accessToken: TOKEN_PAIR.token,
+      accessTokenExpiresAt: IN_A_DAY * 1000,
+      refreshToken: 'refresh-1',
+      user: MEMBER,
+    });
+  });
+
+  it('reports no session for a visitor without one', async () => {
+    expect(await getServerSession()).toBeNull();
+  });
+
+  it('withholds a guest-typed session, which is not admitted to the member area', async () => {
+    const guest = { ...FULL_CLAIMS, type: 'GUEST' };
+
+    serveApi({
+      '/api/v1/auth/login': { status: 201, body: { token: accessToken(guest), refreshToken: 'refresh-1' } },
+    });
+    await signIn(CREDENTIALS);
+
+    expect(await getServerSession()).toBeNull();
+  });
+
+  it('hands the same guest session over when the caller says it accepts one', async () => {
+    const guest = { ...FULL_CLAIMS, type: 'GUEST' };
+
+    serveApi({
+      '/api/v1/auth/login': { status: 201, body: { token: accessToken(guest), refreshToken: 'refresh-1' } },
+    });
+    await signIn(CREDENTIALS);
+
+    expect(await getServerSession({ acceptGuest: true })).toMatchObject({ user: { type: 'GUEST' } });
+  });
+
+  it('sends a visitor without a session to the login page when the caller asks it to', async () => {
+    await expect(getServerSession({ shouldRedirect: true })).rejects.toThrow(REDIRECTED);
+
+    expect(redirect).toHaveBeenCalledWith(ROUTES.SIGN_IN);
+  });
+
+  it('sends them where the caller says instead, when the caller names a path', async () => {
+    await expect(getServerSession({ shouldRedirect: true, redirectPath: '/pricing' })).rejects.toThrow(REDIRECTED);
+
+    expect(redirect).toHaveBeenCalledWith('/pricing');
+  });
+
+  it('redirects a guest too, when guests are not accepted', async () => {
+    const guest = { ...FULL_CLAIMS, type: 'GUEST' };
+
+    serveApi({
+      '/api/v1/auth/login': { status: 201, body: { token: accessToken(guest), refreshToken: 'refresh-1' } },
+    });
+    await signIn(CREDENTIALS);
+
+    await expect(getServerSession({ shouldRedirect: true })).rejects.toThrow(REDIRECTED);
+  });
+
+  it('redirects nobody who has a session', async () => {
+    await signedIn();
+
+    await expect(getServerSession({ shouldRedirect: true })).resolves.toMatchObject({ user: MEMBER });
+    expect(redirect).not.toHaveBeenCalled();
   });
 });
