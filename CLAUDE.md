@@ -91,6 +91,12 @@ read before contradicting any of it. The rules:
   `src/server/lib/safe-action.ts`. It turns a parsed API error into a structured action error, so a
   failure arrives at the form as data. `'use server'` modules may only export async functions, so
   input schemas live in a sibling module.
+- **A form calls a server action through `useAction`** from `next-safe-action/hooks` — not through a
+  query-library mutation wrapping it — and reads a refusal through `isHttpClientActionError`.
+  An action returns nothing on success and answers a refusal with `serverError`; don't reintroduce a
+  success/error outcome object. Branch on the API's `errorCode`, never on the HTTP status, and keep a
+  generic fallback for a failure that carries no envelope
+  (`docs/adr/0011-auth-failures-on-the-standard-action-error-channel.md`).
 - **Read a response through `unwrapApiResponse`** (`src/network/http-response-handler.ts`), not by
   poking at the client's result. Parsers and the parser manager sit behind it; leave them alone —
   the interface is deliberately the reference repository's, not the smallest thing that works.

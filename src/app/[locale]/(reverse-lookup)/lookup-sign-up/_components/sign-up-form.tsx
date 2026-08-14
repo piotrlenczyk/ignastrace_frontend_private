@@ -2,7 +2,8 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { useAction } from 'next-safe-action/hooks';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -12,14 +13,16 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Icon } from '@/components/ui/icon';
 import { Input } from '@/components/ui/input';
 import { ROUTES } from '@/constants/routes';
-import { type SignUpError, useSignUpMutation } from '@/hooks/api/use-sign-up-mutation';
 import { useGenericErrorToast } from '@/hooks/use-generic-error-toast';
 import { cn } from '@/libs/utils';
+import { isEmailTakenActionError } from '@/server/lib/auth-action-error';
+import { register } from '@/server/session/session.actions';
 import { createSignUpSchema, type SignUpFormValues } from '@/types/sign-up.types';
 
 export const SignUpForm = ({ phoneNumber, className }: { phoneNumber: string; className?: string }) => {
   const t = useTranslations('pages.reverse_lookup.sign_up');
   const router = useRouter();
+  const locale = useLocale();
   const showErrorToast = useGenericErrorToast();
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -30,15 +33,15 @@ export const SignUpForm = ({ phoneNumber, className }: { phoneNumber: string; cl
     },
   });
 
-  const { mutate, isPending } = useSignUpMutation({
+  const { execute: signUp, isPending } = useAction(register, {
     onSuccess: () => {
       router.push(ROUTES.REVERSE_LOOKUP.SUMMARY);
       router.refresh();
       setIsRedirecting(true);
       setIsSubmitting(false);
     },
-    onError: (error: SignUpError) => {
-      if (error.reason === 'email_taken') {
+    onError: ({ error }) => {
+      if (isEmailTakenActionError(error.serverError)) {
         form.setError('email', {
           type: 'server',
           message: t('errors.email_exists'),
@@ -50,9 +53,9 @@ export const SignUpForm = ({ phoneNumber, className }: { phoneNumber: string; cl
     },
   });
 
-  const handleSubmit = (data: SignUpFormValues) => {
+  const handleSubmit = ({ email }: SignUpFormValues) => {
     setIsSubmitting(true);
-    mutate(data);
+    signUp({ email, locale });
   };
 
   return (

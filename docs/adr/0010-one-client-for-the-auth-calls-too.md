@@ -3,7 +3,9 @@
 **Status:** Accepted — August 2026. Reverses the "renewal cannot use the ordinary server-side API
 client" consequence of [0008](0008-a-sealed-session-on-the-new-api.md), and extends
 [0009](0009-one-proxy-for-every-browser-call.md)'s typed-client rule to the last layer that was
-exempt from it.
+exempt from it. The interim recorded in the "forms still see what they saw" consequence below is
+over, settled by [0011](0011-auth-failures-on-the-standard-action-error-channel.md); the rest
+stands.
 
 ## Context
 
@@ -102,6 +104,12 @@ that is what the operation declares and what the sibling codebase sends. An API 
 expired bearer outright rather than ignoring it would refuse a renewal it previously served. This
 follows from reading the specification rather than from this record's structure, but it is a live
 behavioural change and not a refactor, and it is worth confirming against a deployment.
+
+> **Settled by [0011](0011-auth-failures-on-the-standard-action-error-channel.md).** The interim the
+> paragraph below describes is over: the outcome objects are gone, a refusal propagates as the
+> standard error all the way to the form, and a form branches on the API's error code. The
+> envelope-less refusal it flags still degrades — it now arrives as the generic failure rather than
+> as a status-derived guess.
 
 **The forms still see what they saw.** The two operations that answer their callers with an outcome
 object rather than by raising keep doing so, and they read a status off the standard error to choose

@@ -11,12 +11,13 @@ import { registrationSchema, sessionEmailSchema, signInSchema } from './session.
 /*
  * The session's writes, as server actions on the one action client. They are
  * thin on purpose: everything that decides what lands in the cookie lives in
- * session.operations.ts, which is where it can be driven directly by a test.
+ * session.operations.ts.
  *
- * Sign-in and registration answer with an outcome rather than throwing, so a
- * form can render a refused password or a taken address in place. That outcome
- * arrives as the action's `data`; `serverError` stays reserved for a failure
- * nobody asked for.
+ * None of them answers with an outcome of its own. A refusal from the API
+ * propagates, and the action client shapes it into a structured action error
+ * carrying the API's envelope and status — the same channel every other API
+ * failure in this application travels. A form branches on the API's error code;
+ * anything that is not a refusal arrives as the library's default server error.
  */
 
 /*
@@ -30,20 +31,16 @@ const revalidateRootLayout = () => revalidatePath('/', 'layout');
 
 /** Signs a visitor in against the new API. */
 export const signIn = actionClient.inputSchema(signInSchema).action(async ({ parsedInput }) => {
-  const result = await performSignIn(await cookies(), parsedInput);
+  await performSignIn(await cookies(), parsedInput);
 
   revalidateRootLayout();
-
-  return result;
 });
 
 /** Creates an account on the new API and signs it in. */
 export const register = actionClient.inputSchema(registrationSchema).action(async ({ parsedInput }) => {
-  const result = await performRegistration(await cookies(), parsedInput);
+  await performRegistration(await cookies(), parsedInput);
 
   revalidateRootLayout();
-
-  return result;
 });
 
 /**

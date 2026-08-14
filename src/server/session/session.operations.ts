@@ -1,5 +1,3 @@
-import { HttpClientError } from '@/network/http-client-error';
-
 import { createSession, renewSessionTokens, type TokenPair } from './session';
 import {
   type ApiRequestContext,
@@ -11,18 +9,10 @@ import {
 import { clearSession, readSession, type SessionCookieWriter, writeSession } from './session.cookies';
 import type { SessionData } from './session.types';
 
-export type SignInError = 'invalid_credentials' | 'unavailable';
-
-export type SignInResult = { success: true } | { success: false; error: SignInError };
-
 export type Credentials = {
   email: string;
   password: string;
 };
-
-export type RegistrationError = 'email_taken' | 'unavailable';
-
-export type RegistrationResult = { success: true } | { success: false; error: RegistrationError };
 
 export type Registration = {
   email: string;
@@ -34,53 +24,35 @@ export type Registration = {
  * Sign-in, registration and sign-out expressed against a cookie jar rather than
  * against `cookies()`. The server actions in `session.actions.ts` are the
  * wrappers that supply the request's jar; everything that decides what lands in
- * the two cookies lives here, so each operation can be driven directly in a
- * test.
+ * the two cookies lives here.
+ *
+ * A refusal is not caught and not translated: it travels as the standard API
+ * error, which the one action client shapes into a structured action error the
+ * form reads the API's own code off. See
+ * docs/adr/0011-auth-failures-on-the-standard-action-error-channel.md.
  */
 
-/*
- * The status of a refusal the API described, for the two operations that still
- * answer with an outcome of their own. Anything else — a gateway's HTML, a
- * connection that never opened — has no status to read and is unavailability.
- * Issue #33 replaces these outcomes with the standard action error, at which
- * point the branching goes and the API's own error code reaches the form.
+/**
+ * Turns a freshly issued token pair into the session cookie.
+ *
+ * A pair the API issued that yields no identity is an internal fault rather
+ * than anything the visitor can act on, so it raises a plain error and reaches
+ * the form as the action library's default server error — not as a
+ * credentials-shaped one.
  */
-const refusalStatus = (error: unknown): number | null =>
-  error instanceof HttpClientError ? error.response.status : null;
-
-/** Turns a freshly issued token pair into the two cookies, or into neither. */
-const establishSession = async (cookies: SessionCookieWriter, tokens: TokenPair): Promise<boolean> => {
+const establishSession = async (cookies: SessionCookieWriter, tokens: TokenPair): Promise<void> => {
   const session = await createSession(tokens);
 
   if (!session) {
-    return false;
+    throw new Error('The token pair the API issued describes no user.');
   }
 
   await writeSession(cookies, session);
-
-  return true;
 };
 
-/** Exchanges credentials for a session and writes both cookies, or neither. */
-export const performSignIn = async (
-  cookies: SessionCookieWriter,
-  { email, password }: Credentials,
-): Promise<SignInResult> => {
-  let tokens;
-
-  try {
-    tokens = await requestLogin(email, password);
-  } catch (error) {
-    const status = refusalStatus(error);
-
-    return {
-      success: false,
-      error: status === 401 || status === 404 ? 'invalid_credentials' : 'unavailable',
-    };
-  }
-
-  return (await establishSession(cookies, tokens)) ? { success: true } : { success: false, error: 'unavailable' };
-};
+/** Exchanges credentials for a session and writes the cookie, or raises. */
+export const performSignIn = async (cookies: SessionCookieWriter, { email, password }: Credentials): Promise<void> =>
+  establishSession(cookies, await requestLogin(email, password));
 
 /**
  * Creates the account and signs it in in the same step: registration returns a
@@ -90,17 +62,7 @@ export const performSignIn = async (
 export const performRegistration = async (
   cookies: SessionCookieWriter,
   { email, locale }: Registration,
-): Promise<RegistrationResult> => {
-  let tokens;
-
-  try {
-    tokens = await requestRegistration(email, { locale });
-  } catch (error) {
-    return { success: false, error: refusalStatus(error) === 409 ? 'email_taken' : 'unavailable' };
-  }
-
-  return (await establishSession(cookies, tokens)) ? { success: true } : { success: false, error: 'unavailable' };
-};
+): Promise<void> => establishSession(cookies, await requestRegistration(email, { locale }));
 
 /**
  * Exchanges the refresh token for a new pair and writes it into the jar given.

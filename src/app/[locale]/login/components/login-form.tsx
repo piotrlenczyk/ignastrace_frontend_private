@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import type { Route } from 'next';
 import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { useAction } from 'next-safe-action/hooks';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -16,9 +17,9 @@ import { PasswordInput } from '@/components/ui/password-input';
 import { REDIRECT_QUERY_PARAM, ROUTES } from '@/constants/routes';
 import { useRouter } from '@/libs/i18n-routing';
 import { resolveRedirectTarget, stripLocalePrefix } from '@/libs/redirect-target';
+import { signIn } from '@/server/session/session.actions';
 
 import { Separator } from '../../sign-up/components/separator';
-import { useLoginMutation } from '../hooks/api/use-login-mutation';
 import { createLoginSchema, type LoginFormValues } from '../types/login.types';
 
 export const LoginForm = ({ error }: { error: boolean }) => {
@@ -44,7 +45,13 @@ export const LoginForm = ({ error }: { error: boolean }) => {
     },
   });
 
-  const { mutate: logIn, isPending } = useLoginMutation({
+  /*
+   * Every failure renders the same message on the password field, whatever the
+   * API's error code says. Telling a missing account apart from a wrong password
+   * would change what the visitor reads and turn this form into a way of finding
+   * out which addresses have accounts.
+   */
+  const { execute: logIn, isPending } = useAction(signIn, {
     onSuccess: () => {
       setIsSubmitted(true);
       router.push(destination);
@@ -58,8 +65,8 @@ export const LoginForm = ({ error }: { error: boolean }) => {
     },
   });
 
-  const handleSubmit = (data: LoginFormValues) => {
-    logIn(data);
+  const handleSubmit = ({ email, password }: LoginFormValues) => {
+    logIn({ email, password });
   };
 
   return (
