@@ -1,14 +1,41 @@
 import { unsealData } from 'iron-session';
-import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { getSessionPassword, SESSION_COOKIE_NAME, SESSION_TTL_SECONDS } from './session.constants';
 import type { SessionCookieWriter } from './session.cookies';
-import { performEmailUpdate, performRegistration, performSignIn, performSignOut } from './session.operations';
 import type { SessionData } from './session.types';
 
 const API = 'https://api.ignastrace.test';
 
 const SESSION_PASSWORD = 'a-test-sealing-password-of-at-least-32-characters';
+
+vi.stubEnv('SESSION_PASSWORD', SESSION_PASSWORD);
+vi.stubEnv('API_BASE_URL', API);
+
+/*
+ * The network, substituted once and for the whole file rather than per test: the
+ * generated client the auth calls go through captures `globalThis.fetch` when it
+ * is created, so a stub installed later would never be the one it calls. Each
+ * test swaps what the API answers with instead of swapping the function.
+ */
+const upstreamRequests: Request[] = [];
+
+let respond: (request: Request) => Promise<Response> = async (request) => {
+  throw new Error(`Unexpected request to ${request.url}`);
+};
+
+vi.stubGlobal('fetch', async (request: Request) => {
+  upstreamRequests.push(request);
+
+  return respond(request);
+});
+
+/*
+ * Imported after the environment and the network are in place, for the same
+ * reason: the client reads the API's base URL and captures `fetch` the first time
+ * its module runs, and `.env` is not in the repository.
+ */
+const { performEmailUpdate, performRegistration, performSignIn, performSignOut } = await import('./session.operations');
 
 /*
  * A cookie jar with the same surface `cookies()` and `NextResponse.cookies`
@@ -55,14 +82,20 @@ const FULL_CLAIMS = {
 
 type Route = { status: number; body?: unknown };
 
-/** Serves the new API's auth endpoints; every other URL is a test failure. */
+/**
+ * Serves the new API's auth endpoints; every other URL is a test failure.
+ * Returns readers for the requests that actually left this process, so an
+ * assertion is about the request the API was sent rather than about the
+ * arguments a helper was called with.
+ */
 const serveApi = (routes: Record<string, Route>) => {
-  const fetchMock = vi.fn(async (input: RequestInfo | URL) => {
-    const url = String(input);
-    const path = Object.keys(routes).find((candidate) => url.endsWith(candidate));
+  upstreamRequests.length = 0;
+
+  respond = async (request) => {
+    const path = Object.keys(routes).find((candidate) => request.url.endsWith(candidate));
 
     if (!path) {
-      throw new Error(`Unexpected request to ${url}`);
+      throw new Error(`Unexpected request to ${request.url}`);
     }
 
     const { status, body } = routes[path] as Route;
@@ -71,12 +104,24 @@ const serveApi = (routes: Record<string, Route>) => {
       status,
       headers: { 'Content-Type': 'application/json' },
     });
-  });
+  };
 
-  vi.stubGlobal('fetch', fetchMock);
+  return {
+    upstreamRequest: (path?: string) => {
+      const request = path ? upstreamRequests.find((candidate) => candidate.url.endsWith(path)) : upstreamRequests[0];
 
-  return fetchMock;
+      if (!request) {
+        throw new Error(`The API was not called${path ? ` on ${path}` : ''}.`);
+      }
+
+      return request;
+    },
+    calls: () => upstreamRequests.length,
+  };
 };
+
+/** The API's error envelope, as every refusal the specification declares arrives. */
+const refusal = (errorCode: string, code: string, message: string) => ({ error: { errorCode, code, message } });
 
 /** A jar holding the session a successful sign-in would have left in it. */
 const signedIn = async (jar: ReturnType<typeof createCookieJar>) => {
@@ -93,13 +138,8 @@ const sealedSession = async (jar: ReturnType<typeof createCookieJar>): Promise<S
     ttl: SESSION_TTL_SECONDS,
   });
 
-beforeAll(() => {
-  vi.stubEnv('SESSION_PASSWORD', SESSION_PASSWORD);
-  vi.stubEnv('API_BASE_URL', API);
-});
-
-afterEach(() => {
-  vi.unstubAllGlobals();
+beforeEach(() => {
+  serveApi({});
 });
 
 describe('performSignIn', () => {
@@ -113,6 +153,20 @@ describe('performSignIn', () => {
 
     expect(result).toEqual({ success: true });
     expect(jar.names()).toEqual([SESSION_COOKIE_NAME]);
+  });
+
+  it('sends the credentials to the API as the specification declares them', async () => {
+    const jar = createCookieJar();
+    const api = serveApi({
+      '/api/v1/auth/login': { status: 201, body: { token: accessToken(FULL_CLAIMS), refreshToken: 'refresh-1' } },
+    });
+
+    await performSignIn(jar, { email: 'member@example.com', password: 'secret' });
+    const upstream = api.upstreamRequest();
+
+    expect(upstream.url).toBe(`${API}/api/v1/auth/login`);
+    expect(upstream.method).toBe('POST');
+    expect(await upstream.json()).toEqual({ email: 'member@example.com', password: 'secret' });
   });
 
   it('seals the token pair and the identity into the session cookie', async () => {
@@ -162,9 +216,24 @@ describe('performSignIn', () => {
     });
   });
 
+  it('presents the freshly issued token when it tops the identity up', async () => {
+    const jar = createCookieJar();
+    const token = accessToken({ exp: IN_A_DAY });
+    const api = serveApi({
+      '/api/v1/auth/login': { status: 201, body: { token, refreshToken: 'refresh-1' } },
+      '/api/v1/user/me': { status: 200, body: { id: 'user-2', type: 'USER' } },
+    });
+
+    await performSignIn(jar, { email: 'fetched@example.com', password: 'secret' });
+
+    expect(api.upstreamRequest('/api/v1/user/me').headers.get('authorization')).toBe(`Bearer ${token}`);
+  });
+
   it('leaves no session behind when the credentials are refused', async () => {
     const jar = createCookieJar();
-    serveApi({ '/api/v1/auth/login': { status: 401, body: { message: 'Unauthorized' } } });
+    serveApi({
+      '/api/v1/auth/login': { status: 401, body: refusal('CREDENTIALS_ERROR', 'UNAUTHORIZED', 'Invalid credentials') },
+    });
 
     const result = await performSignIn(jar, { email: 'member@example.com', password: 'wrong' });
 
@@ -174,7 +243,22 @@ describe('performSignIn', () => {
 
   it('leaves no session behind when the API is unavailable', async () => {
     const jar = createCookieJar();
-    serveApi({ '/api/v1/auth/login': { status: 500, body: { message: 'Server error' } } });
+    serveApi({
+      '/api/v1/auth/login': {
+        status: 500,
+        body: refusal('INTERNAL_SERVER_ERROR', 'INTERNAL_SERVER_ERROR', 'Server error'),
+      },
+    });
+
+    const result = await performSignIn(jar, { email: 'member@example.com', password: 'secret' });
+
+    expect(result).toEqual({ success: false, error: 'unavailable' });
+    expect(jar.names()).toEqual([]);
+  });
+
+  it('reports unavailability when the refusal is not one the API described', async () => {
+    const jar = createCookieJar();
+    serveApi({ '/api/v1/auth/login': { status: 502, body: '<html>Bad gateway</html>' } });
 
     const result = await performSignIn(jar, { email: 'member@example.com', password: 'secret' });
 
@@ -219,20 +303,22 @@ describe('performRegistration', () => {
     });
 
     await performRegistration(jar, { email: 'new@example.com', locale: 'es' });
+    const upstream = api.upstreamRequest();
 
-    expect(api).toHaveBeenCalledWith(
-      `${API}/api/v1/auth/register`,
-      expect.objectContaining({
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-locale': 'es' },
-        body: JSON.stringify({ email: 'new@example.com' }),
-      }),
-    );
+    expect(upstream.url).toBe(`${API}/api/v1/auth/register`);
+    expect(upstream.method).toBe('POST');
+    expect(upstream.headers.get('x-locale')).toBe('es');
+    expect(await upstream.json()).toEqual({ email: 'new@example.com' });
   });
 
   it('reports a taken email address without leaving a session behind', async () => {
     const jar = createCookieJar();
-    serveApi({ '/api/v1/auth/register': { status: 409, body: { message: 'User already exists' } } });
+    serveApi({
+      '/api/v1/auth/register': {
+        status: 409,
+        body: refusal('EMAIL_EXISTS_ERROR', 'CONFLICT', 'User already exists'),
+      },
+    });
 
     const result = await performRegistration(jar, { email: 'member@example.com' });
 
@@ -242,7 +328,12 @@ describe('performRegistration', () => {
 
   it('leaves no session behind when the API is unavailable', async () => {
     const jar = createCookieJar();
-    serveApi({ '/api/v1/auth/register': { status: 500, body: { message: 'Server error' } } });
+    serveApi({
+      '/api/v1/auth/register': {
+        status: 500,
+        body: refusal('INTERNAL_SERVER_ERROR', 'INTERNAL_SERVER_ERROR', 'Server error'),
+      },
+    });
 
     const result = await performRegistration(jar, { email: 'new@example.com' });
 
@@ -254,7 +345,10 @@ describe('performRegistration', () => {
     const jar = createCookieJar();
     serveApi({
       '/api/v1/auth/register': { status: 201, body: { token: accessToken({ exp: IN_A_DAY }), refreshToken: 'r' } },
-      '/api/v1/user/me': { status: 500, body: { message: 'Server error' } },
+      '/api/v1/user/me': {
+        status: 500,
+        body: refusal('INTERNAL_SERVER_ERROR', 'INTERNAL_SERVER_ERROR', 'Server error'),
+      },
     });
 
     const result = await performRegistration(jar, { email: 'new@example.com' });
@@ -306,19 +400,24 @@ describe('performSignOut', () => {
 
     const api = serveApi({ '/api/v1/auth/logout': { status: 201 } });
     await performSignOut(jar);
+    const upstream = api.upstreamRequest();
 
     expect(jar.names()).toEqual([]);
-    expect(api).toHaveBeenCalledWith(
-      `${API}/api/v1/auth/logout`,
-      expect.objectContaining({ method: 'POST', headers: { Authorization: `Bearer ${accessToken(FULL_CLAIMS)}` } }),
-    );
+    expect(upstream.url).toBe(`${API}/api/v1/auth/logout`);
+    expect(upstream.method).toBe('POST');
+    expect(upstream.headers.get('authorization')).toBe(`Bearer ${accessToken(FULL_CLAIMS)}`);
   });
 
   it('clears it even when the revocation fails', async () => {
     const jar = createCookieJar();
     await signedIn(jar);
 
-    serveApi({ '/api/v1/auth/logout': { status: 500, body: { message: 'Server error' } } });
+    serveApi({
+      '/api/v1/auth/logout': {
+        status: 500,
+        body: refusal('INTERNAL_SERVER_ERROR', 'INTERNAL_SERVER_ERROR', 'Server error'),
+      },
+    });
     await performSignOut(jar);
 
     expect(jar.names()).toEqual([]);
@@ -328,12 +427,9 @@ describe('performSignOut', () => {
     const jar = createCookieJar();
     await signedIn(jar);
 
-    vi.stubGlobal(
-      'fetch',
-      vi.fn(async () => {
-        throw new Error('Network down');
-      }),
-    );
+    respond = async () => {
+      throw new Error('Network down');
+    };
     await performSignOut(jar);
 
     expect(jar.names()).toEqual([]);
@@ -346,6 +442,6 @@ describe('performSignOut', () => {
     await performSignOut(jar);
 
     expect(jar.names()).toEqual([]);
-    expect(api).not.toHaveBeenCalled();
+    expect(api.calls()).toBe(0);
   });
 });

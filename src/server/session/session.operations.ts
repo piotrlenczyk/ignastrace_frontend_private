@@ -1,7 +1,8 @@
+import { HttpClientError } from '@/network/http-client-error';
+
 import { createSession, renewSessionTokens, type TokenPair } from './session';
 import {
   type ApiRequestContext,
-  AuthApiError,
   requestLogin,
   requestLogout,
   requestRegistration,
@@ -37,6 +38,16 @@ export type Registration = {
  * test.
  */
 
+/*
+ * The status of a refusal the API described, for the two operations that still
+ * answer with an outcome of their own. Anything else — a gateway's HTML, a
+ * connection that never opened — has no status to read and is unavailability.
+ * Issue #33 replaces these outcomes with the standard action error, at which
+ * point the branching goes and the API's own error code reaches the form.
+ */
+const refusalStatus = (error: unknown): number | null =>
+  error instanceof HttpClientError ? error.response.status : null;
+
 /** Turns a freshly issued token pair into the two cookies, or into neither. */
 const establishSession = async (cookies: SessionCookieWriter, tokens: TokenPair): Promise<boolean> => {
   const session = await createSession(tokens);
@@ -60,9 +71,12 @@ export const performSignIn = async (
   try {
     tokens = await requestLogin(email, password);
   } catch (error) {
-    const refused = error instanceof AuthApiError && (error.status === 401 || error.status === 404);
+    const status = refusalStatus(error);
 
-    return { success: false, error: refused ? 'invalid_credentials' : 'unavailable' };
+    return {
+      success: false,
+      error: status === 401 || status === 404 ? 'invalid_credentials' : 'unavailable',
+    };
   }
 
   return (await establishSession(cookies, tokens)) ? { success: true } : { success: false, error: 'unavailable' };
@@ -82,9 +96,7 @@ export const performRegistration = async (
   try {
     tokens = await requestRegistration(email, { locale });
   } catch (error) {
-    const taken = error instanceof AuthApiError && error.status === 409;
-
-    return { success: false, error: taken ? 'email_taken' : 'unavailable' };
+    return { success: false, error: refusalStatus(error) === 409 ? 'email_taken' : 'unavailable' };
   }
 
   return (await establishSession(cookies, tokens)) ? { success: true } : { success: false, error: 'unavailable' };

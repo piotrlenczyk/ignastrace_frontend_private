@@ -1,7 +1,9 @@
 # 0008 — A sealed session holding the new API's token pair, renewed in the middleware
 
 **Status:** Accepted — August 2026. The second, readable cookie described below is superseded by
-[0009](0009-one-proxy-for-every-browser-call.md); the rest stands.
+[0009](0009-one-proxy-for-every-browser-call.md), and the consequence that renewal cannot use the
+ordinary server-side API client is reversed by
+[0010](0010-one-client-for-the-auth-calls-too.md); the rest stands.
 
 ## Context
 
@@ -88,6 +90,11 @@ address through a module needing a request scope the middleware runtime does not
 uses a separate minimal client that takes the locale and the forwarded address from the request it
 was given. Two clients against one API is a cost of the runtime split, and it means a change to
 request headers has two places to land.
+
+> **Reversed by [0010](0010-one-client-for-the-auth-calls-too.md).** The claim in this paragraph is
+> wrong: the ordinary client resolves each request-scoped value behind a guard at the point it is
+> used, and leaves alone any header the caller already set, so one client serves the middleware
+> runtime as well. There is no second client.
 
 **Nothing enforces the server boundary on the session modules.** The sealed cookie's reader and
 writer are ordinary modules; a future client component that imported one would fail at runtime
