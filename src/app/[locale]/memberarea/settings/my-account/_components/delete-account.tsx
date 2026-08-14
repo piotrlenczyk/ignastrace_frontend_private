@@ -16,7 +16,7 @@ import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { useRouter } from '@/libs/i18n-routing';
 import { cn } from '@/libs/utils';
-import { signOut } from '@/server/session/session.actions';
+import { actionLogout } from '@/server/actions/auth.actions';
 
 import { useDeleteAccountMutation } from '../_hooks/api/use-delete-account-mutation';
 
@@ -30,7 +30,7 @@ export function DeleteAccount({ className, disabled = false }: { className?: str
   const { mutate: deleteAccount, isPending } = useDeleteAccountMutation({
     onSuccess: () => {
       setIsDeleted(true);
-      signOut();
+      actionLogout();
     },
     onError: () => {
       setIsDeleted(false);

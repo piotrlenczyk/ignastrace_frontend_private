@@ -7,7 +7,7 @@ import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { useRouter } from '@/libs/i18n-routing';
 import { cn } from '@/libs/utils';
-import { signOut } from '@/server/session/session.actions';
+import { actionLogout } from '@/server/actions/auth.actions';
 
 type LogoutButtonProps = {
   className?: string;
@@ -18,7 +18,7 @@ export const LogoutButton = ({ className }: LogoutButtonProps) => {
   const router = useRouter();
 
   const handleLogout = async () => {
-    await signOut();
+    await actionLogout();
     router.push(ROUTES.HOME);
     router.refresh();
   };

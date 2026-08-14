@@ -15,7 +15,7 @@ import { ROUTES } from '@/constants/routes';
 import { useGenericErrorToast } from '@/hooks/use-generic-error-toast';
 import { useRouter } from '@/libs/i18n-routing';
 import { isEmailTakenActionError } from '@/server/lib/auth-action-error';
-import { register } from '@/server/session/session.actions';
+import { actionRegister } from '@/server/actions/auth.actions';
 import { createSignUpSchema, type SignUpFormValues } from '@/types/sign-up.types';
 
 import { Separator } from './separator';
@@ -36,7 +36,7 @@ export const SignUpForm = () => {
     },
   });
 
-  const { execute: signUp, isPending } = useAction(register, {
+  const { execute: signUp, isPending } = useAction(actionRegister, {
     onSuccess: () => {
       router.push(ROUTES.CHECKOUT);
       router.refresh();

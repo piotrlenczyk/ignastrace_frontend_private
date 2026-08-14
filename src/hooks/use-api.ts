@@ -2,11 +2,11 @@ import { ROUTES } from '@/constants/routes';
 import { apiClient } from '@/libs/api-client';
 import { ApiError } from '@/libs/api-error';
 import { LEGACY_PROXY_BASE_PATH } from '@/network/legacy/legacy-proxy-path';
-import { signOut } from '@/server/session/session.actions';
+import { actionLogout } from '@/server/actions/auth.actions';
 
 async function handleError(error: unknown) {
   if (error instanceof ApiError && error.status === 401) {
-    await signOut();
+    await actionLogout();
     window.location.assign(ROUTES.SIGN_IN);
   }
 }

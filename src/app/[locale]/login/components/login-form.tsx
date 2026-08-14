@@ -17,7 +17,7 @@ import { PasswordInput } from '@/components/ui/password-input';
 import { REDIRECT_QUERY_PARAM, ROUTES } from '@/constants/routes';
 import { useRouter } from '@/libs/i18n-routing';
 import { resolveRedirectTarget, stripLocalePrefix } from '@/libs/redirect-target';
-import { signIn } from '@/server/session/session.actions';
+import { actionSignIn } from '@/server/actions/auth.actions';
 
 import { Separator } from '../../sign-up/components/separator';
 import { createLoginSchema, type LoginFormValues } from '../types/login.types';
@@ -51,7 +51,7 @@ export const LoginForm = ({ error }: { error: boolean }) => {
    * would change what the visitor reads and turn this form into a way of finding
    * out which addresses have accounts.
    */
-  const { execute: logIn, isPending } = useAction(signIn, {
+  const { execute: logIn, isPending } = useAction(actionSignIn, {
     onSuccess: () => {
       setIsSubmitted(true);
       router.push(destination);

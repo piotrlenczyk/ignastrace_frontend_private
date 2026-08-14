@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useApi } from '@/hooks/use-api';
 import { useCountry } from '@/hooks/useCountry';
 import type { ApiError } from '@/libs/api-error';
-import { updateSessionEmail } from '@/server/session/session.actions';
+import { actionUpdateSessionEmail } from '@/server/actions/auth.actions';
 
 import type { MyAccountFormValues } from '../../_types/my-account.types';
 
@@ -37,7 +37,7 @@ export function useMyAccountMutation({
      * the refresh is what re-renders the tree with the rewritten cookie. The
      * tokens are untouched, so the member stays signed in.
      */
-    await updateSessionEmail({ email: data.email });
+    await actionUpdateSessionEmail({ email: data.email });
   }
 
   return useMutation({

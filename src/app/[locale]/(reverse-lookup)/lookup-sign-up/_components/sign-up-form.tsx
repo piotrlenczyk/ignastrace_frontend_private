@@ -16,7 +16,7 @@ import { ROUTES } from '@/constants/routes';
 import { useGenericErrorToast } from '@/hooks/use-generic-error-toast';
 import { cn } from '@/libs/utils';
 import { isEmailTakenActionError } from '@/server/lib/auth-action-error';
-import { register } from '@/server/session/session.actions';
+import { actionRegister } from '@/server/actions/auth.actions';
 import { createSignUpSchema, type SignUpFormValues } from '@/types/sign-up.types';
 
 export const SignUpForm = ({ phoneNumber, className }: { phoneNumber: string; className?: string }) => {
@@ -33,7 +33,7 @@ export const SignUpForm = ({ phoneNumber, className }: { phoneNumber: string; cl
     },
   });
 
-  const { execute: signUp, isPending } = useAction(register, {
+  const { execute: signUp, isPending } = useAction(actionRegister, {
     onSuccess: () => {
       router.push(ROUTES.REVERSE_LOOKUP.SUMMARY);
       router.refresh();

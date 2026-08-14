@@ -5,8 +5,8 @@ import { cookies } from 'next/headers';
 
 import { actionClient } from '@/server/lib/safe-action';
 
-import { performEmailUpdate, performRegistration, performSignIn, performSignOut } from './session';
-import { registrationSchema, sessionEmailSchema, signInSchema } from './session.schemas';
+import { performEmailUpdate, performRegistration, performSignIn, performSignOut } from '../session/session';
+import { registrationSchema, sessionEmailSchema, signInSchema } from '../session/session.schemas';
 
 /*
  * The session's writes, as server actions on the one action client. They are
@@ -31,14 +31,14 @@ import { registrationSchema, sessionEmailSchema, signInSchema } from './session.
 const revalidateRootLayout = () => revalidatePath('/', 'layout');
 
 /** Signs a visitor in against the new API. */
-export const signIn = actionClient.inputSchema(signInSchema).action(async ({ parsedInput }) => {
+export const actionSignIn = actionClient.inputSchema(signInSchema).action(async ({ parsedInput }) => {
   await performSignIn(await cookies(), parsedInput);
 
   revalidateRootLayout();
 });
 
 /** Creates an account on the new API and signs it in. */
-export const register = actionClient.inputSchema(registrationSchema).action(async ({ parsedInput }) => {
+export const actionRegister = actionClient.inputSchema(registrationSchema).action(async ({ parsedInput }) => {
   await performRegistration(await cookies(), parsedInput);
 
   revalidateRootLayout();
@@ -49,12 +49,12 @@ export const register = actionClient.inputSchema(registrationSchema).action(asyn
  * leave the member looking at a stale address — or signed out. The caller
  * refreshes the router afterwards to re-render with the rewritten cookie.
  */
-export const updateSessionEmail = actionClient
+export const actionUpdateSessionEmail = actionClient
   .inputSchema(sessionEmailSchema)
   .action(async ({ parsedInput }) => performEmailUpdate(await cookies(), parsedInput.email));
 
 /** Ends the session: revoked upstream where possible, cleared locally always. */
-export const signOut = actionClient.action(async () => {
+export const actionLogout = actionClient.action(async () => {
   await performSignOut(await cookies());
 
   revalidateRootLayout();

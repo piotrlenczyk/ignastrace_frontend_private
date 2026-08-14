@@ -81,7 +81,7 @@ vi.doMock('next/cache', () => ({ revalidatePath }));
  * in place: the client reads the API's base URL and captures `fetch` the first
  * time its module runs, and `.env` is not in the repository.
  */
-const { register, signIn, signOut, updateSessionEmail } = await import('./session.actions');
+const { actionRegister: register, actionSignIn: signIn, actionLogout: signOut, actionUpdateSessionEmail: updateSessionEmail } = await import('../actions/auth.actions');
 
 const accessToken = (claims: Record<string, unknown>) => {
   const encode = (value: object) => Buffer.from(JSON.stringify(value)).toString('base64url');

@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 
 import { ROUTES } from '@/constants/routes';
-import { signOut } from '@/server/session/session.actions';
+import { actionLogout } from '@/server/actions/auth.actions';
 
 /*
  * A thin wrapper over the sign-out action. Server-side error handling already
@@ -9,7 +9,7 @@ import { signOut } from '@/server/session/session.actions';
  * be reached with a plain navigation.
  */
 export async function GET() {
-  await signOut();
+  await actionLogout();
 
   redirect(ROUTES.SIGN_IN);
 }
