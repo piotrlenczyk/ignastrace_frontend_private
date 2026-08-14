@@ -1,6 +1,7 @@
 import type { HttpClientErrorData } from '../http-client-error';
 import { pickHeaders } from '../proxy-headers';
 import { API_PATH_TEMPLATES } from './api-paths';
+import { API_PROXY_BASE_PATH } from './api-proxy-path';
 import { _client } from './apiServerClient';
 
 /*
@@ -144,7 +145,16 @@ const refusalBody = (error: unknown): BodyInit | null => {
 const proxy =
   (method: ProxyMethod) =>
   async (request: Request): Promise<Response> => {
-    const { pathname, search } = new URL(request.url);
+    const { pathname: mountedPath, search } = new URL(request.url);
+
+    /*
+     * The mount comes off and what is left is the API's own path, unchanged:
+     * `/api-proxy/api/v1/user/me` here is `/api/v1/user/me` there. Stripping the
+     * prefix is the only rewriting that happens — the browser client adds the
+     * same constant, so a specification path literal still describes both sides
+     * of the hop.
+     */
+    const pathname = mountedPath.slice(API_PROXY_BASE_PATH.length);
 
     if (pathname.startsWith(AUTH_PATH_PREFIX)) {
       return refuse(403, {

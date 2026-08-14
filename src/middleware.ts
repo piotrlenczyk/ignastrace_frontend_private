@@ -8,11 +8,19 @@ import { handleSession } from './middlewares/session.middleware';
 import { handleTracking } from './middlewares/tracking.middleware';
 
 /*
+ * Where this application serves route handlers rather than pages: its own
+ * endpoints under `/api`, and the browser's door onto the new API, which is
+ * mounted beside them rather than under them.
+ */
+const ROUTE_HANDLER_PREFIXES = ['/api/', '/api-proxy/'];
+
+/*
  * Route handlers take the session step and nothing else. They need the renewed
  * token as much as a page does, but a guard redirect or a locale rewrite would
  * replace the response their caller is waiting for with a navigation.
  */
-const isRouteHandler = (request: NextRequest): boolean => request.nextUrl.pathname.startsWith('/api/');
+const isRouteHandler = (request: NextRequest): boolean =>
+  ROUTE_HANDLER_PREFIXES.some((prefix) => request.nextUrl.pathname.startsWith(prefix));
 
 /*
  * The chain, in order: case normalisation → session → redirects →

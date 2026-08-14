@@ -3,6 +3,8 @@ import { renderHook, waitFor } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { API_PROXY_BASE_PATH } from './api-proxy-path';
+
 /*
  * A relative URL resolves against the document in a browser. jsdom implements no
  * fetch, so these tests are handed Node's `Request` instead, and that one rejects
@@ -39,6 +41,9 @@ vi.stubGlobal('fetch', async (request: Request) => {
 const { apiQueries } = await import('./api-browser-client');
 
 const CONTACT_PATH = '/api/v1/support/contact-us';
+
+/** Where that path is answered from: this origin, under the proxy's mount. */
+const CONTACT_URL = `${window.location.origin}${API_PROXY_BASE_PATH}${CONTACT_PATH}`;
 
 const MESSAGE = {
   name: 'Ada',
@@ -86,11 +91,11 @@ beforeEach(() => {
 });
 
 describe('the browser client', () => {
-  it('sends a specification path to this origin, where the proxy answers', async () => {
+  it("sends a specification path to this origin, under the proxy's mount", async () => {
     await sendMessage();
 
     expect(sentRequests).toHaveLength(1);
-    expect(sentRequest().url).toBe(`${window.location.origin}${CONTACT_PATH}`);
+    expect(sentRequest().url).toBe(CONTACT_URL);
     expect(sentRequest().method).toBe('POST');
   });
 

@@ -4,6 +4,8 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { SESSION_COOKIE_NAME, SESSION_TTL_SECONDS } from '@/server/session/session.constants';
 import type { SessionData } from '@/server/session/session.types';
 
+import { API_PROXY_BASE_PATH } from './api-proxy-path';
+
 const API = 'https://api.ignastrace.test';
 const APP = 'https://app.ignastrace.test';
 const SESSION_PASSWORD = 'a-test-sealing-password-of-at-least-32-characters';
@@ -99,8 +101,13 @@ const serve = ({ status = 200, body = { id: 'user-1' }, headers = {} }: Upstream
   };
 };
 
-/** A request as the browser would make it, against this application's origin. */
-const fromBrowser = (path: string, init?: RequestInit) => new Request(`${APP}${path}`, init);
+/**
+ * A request as the browser would make it: a specification path, against this
+ * application's origin, under the proxy's mount. Every test below names the
+ * upstream path and nothing else, so an assertion that the mount came back off
+ * is an assertion about the path the API was actually sent.
+ */
+const fromBrowser = (path: string, init?: RequestInit) => new Request(`${APP}${API_PROXY_BASE_PATH}${path}`, init);
 
 const json = (init?: RequestInit) => ({
   method: 'POST',
@@ -114,7 +121,7 @@ beforeEach(() => {
 });
 
 describe('the API proxy', () => {
-  it('mounts the upstream path verbatim', async () => {
+  it('strips its own mount and forwards the upstream path verbatim', async () => {
     const api = serve();
 
     await GET(fromBrowser('/api/v1/user/me'));

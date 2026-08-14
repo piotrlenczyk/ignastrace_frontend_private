@@ -4,6 +4,7 @@ import createClient, { type Middleware } from 'openapi-fetch';
 import createQueryClient from 'openapi-react-query';
 
 import { type paths } from './api';
+import { API_PROXY_BASE_PATH } from './api-proxy-path';
 import { QUERY_SERIALIZER } from './api-query-serializer';
 
 /*
@@ -18,13 +19,14 @@ import { QUERY_SERIALIZER } from './api-query-serializer';
  */
 
 /*
- * No base URL, so a path from the specification goes out as it is written and
- * resolves against the current origin. That works because the proxy mounts the
- * upstream path verbatim: `/api/v1/support/contact-us` here is the same path
- * there. Naming the origin would only make the client wrong behind a preview
+ * The base URL is the proxy's mount and nothing more, so a path from the
+ * specification goes out as it is written under `/api-proxy` and resolves
+ * against the current origin. The handler strips that prefix and forwards the
+ * rest verbatim, so `/api/v1/support/contact-us` here is the same path there.
+ * Naming the origin would only make the client wrong behind a preview
  * deployment or a tunnel.
  */
-const browserClient = createClient<paths>({ querySerializer: QUERY_SERIALIZER });
+const browserClient = createClient<paths>({ querySerializer: QUERY_SERIALIZER, baseUrl: API_PROXY_BASE_PATH });
 
 /**
  * The locale, stated by the browser because the server cannot state it here.
