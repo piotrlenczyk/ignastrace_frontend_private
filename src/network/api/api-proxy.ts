@@ -1,4 +1,5 @@
 import type { HttpClientErrorData } from '../http-client-error';
+import { pickHeaders } from '../proxy-headers';
 import { API_PATH_TEMPLATES } from './api-paths';
 import { _client } from './apiServerClient';
 
@@ -72,20 +73,6 @@ const PATH_MATCHERS = API_PATH_TEMPLATES.map(
 );
 
 const isPublishedPath = (pathname: string): boolean => PATH_MATCHERS.some((matcher) => matcher.test(pathname));
-
-const pickHeaders = (headers: Headers, allowed: readonly string[]): Headers => {
-  const picked = new Headers();
-
-  for (const name of allowed) {
-    const value = headers.get(name);
-
-    if (value !== null) {
-      picked.set(name, value);
-    }
-  }
-
-  return picked;
-};
 
 /**
  * A refusal by the proxy, written in the API's own error envelope so that the

@@ -30,8 +30,9 @@ const revalidateRootLayout = () => revalidatePath('/', 'layout');
 
 /** Signs a visitor in against the new API. */
 export const signIn = actionClient.inputSchema(signInSchema).action(async ({ parsedInput }) => {
+  console.log('parsedInput', parsedInput);
   const result = await performSignIn(await cookies(), parsedInput);
-
+  console.log('result', result);
   revalidateRootLayout();
 
   return result;

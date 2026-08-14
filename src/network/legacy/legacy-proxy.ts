@@ -1,3 +1,4 @@
+import { pickHeaders } from '@/network/proxy-headers';
 import { getSession } from '@/server/session/session.server';
 
 import { legacyApiUrl } from './legacy-api-url';
@@ -28,20 +29,6 @@ const FORWARDED_REQUEST_HEADERS = ['content-type', 'accept'] as const;
 
 /** The methods the legacy client uses. */
 type ProxyMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
-
-const pickHeaders = (headers: Headers, allowed: readonly string[]): Headers => {
-  const picked = new Headers();
-
-  for (const name of allowed) {
-    const value = headers.get(name);
-
-    if (value !== null) {
-      picked.set(name, value);
-    }
-  }
-
-  return picked;
-};
 
 const proxy =
   (method: ProxyMethod) =>
