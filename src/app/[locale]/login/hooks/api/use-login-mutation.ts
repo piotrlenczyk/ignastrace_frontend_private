@@ -4,10 +4,15 @@ import type { LoginFormValues } from '@/app/[locale]/login/types/login.types';
 import { signIn } from '@/server/session/session.actions';
 
 async function loginFunction(data: LoginFormValues) {
-  const result = await signIn({ email: data.email, password: data.password });
+  const { data: result } = await signIn({ email: data.email, password: data.password });
 
-  if (!result.success) {
-    throw new Error(result.error);
+  /*
+   * A missing result is the action itself having failed — a rejected input or
+   * an unhandled throw. Either way there is no session, which is what the form
+   * needs to know.
+   */
+  if (!result?.success) {
+    throw new Error(result?.error ?? 'unavailable');
   }
 }
 

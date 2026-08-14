@@ -31,10 +31,15 @@ export function useSignUpMutation({
   const locale = useLocale();
 
   async function signUpFunction({ email }: SignUpFormValues) {
-    const result = await register({ email, locale });
+    const { data: result } = await register({ email, locale });
 
-    if (!result.success) {
-      throw new SignUpError(result.error);
+    /*
+     * A missing result is the action itself having failed — a rejected input or
+     * an unhandled throw — which the form treats the same as the API being
+     * unavailable.
+     */
+    if (!result?.success) {
+      throw new SignUpError(result?.error ?? 'unavailable');
     }
   }
 

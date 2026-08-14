@@ -37,7 +37,7 @@ export function useMyAccountMutation({
      * the refresh is what re-renders the tree with the rewritten cookie. The
      * tokens are untouched, so the member stays signed in.
      */
-    await updateSessionEmail(data.email);
+    await updateSessionEmail({ email: data.email });
   }
 
   return useMutation({

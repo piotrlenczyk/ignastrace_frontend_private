@@ -2,43 +2,40 @@
 
 import { cookies } from 'next/headers';
 
-import {
-  type Credentials,
-  performEmailUpdate,
-  performRegistration,
-  performSignIn,
-  performSignOut,
-  type Registration,
-  type RegistrationResult,
-  type SignInResult,
-} from './session.operations';
+import { actionClient } from '@/server/lib/safe-action';
 
-/**
- * Signs a visitor in against the new API. Returns the outcome rather than
- * throwing, so a form can render the failure without a round trip.
- */
-export async function signIn(credentials: Credentials): Promise<SignInResult> {
-  return performSignIn(await cookies(), credentials);
-}
+import { performEmailUpdate, performRegistration, performSignIn, performSignOut } from './session.operations';
+import { registrationSchema, sessionEmailSchema, signInSchema } from './session.schemas';
 
-/**
- * Creates an account on the new API and signs it in. Like `signIn`, the outcome
- * comes back as a value so the form can show a taken address in place.
+/*
+ * The session's writes, as server actions on the one action client. They are
+ * thin on purpose: everything that decides what lands in the cookie lives in
+ * session.operations.ts, which is where it can be driven directly by a test.
+ *
+ * Sign-in and registration answer with an outcome rather than throwing, so a
+ * form can render a refused password or a taken address in place. That outcome
+ * arrives as the action's `data`; `serverError` stays reserved for a failure
+ * nobody asked for.
  */
-export async function register(registration: Registration): Promise<RegistrationResult> {
-  return performRegistration(await cookies(), registration);
-}
+
+/** Signs a visitor in against the new API. */
+export const signIn = actionClient
+  .inputSchema(signInSchema)
+  .action(async ({ parsedInput }) => performSignIn(await cookies(), parsedInput));
+
+/** Creates an account on the new API and signs it in. */
+export const register = actionClient
+  .inputSchema(registrationSchema)
+  .action(async ({ parsedInput }) => performRegistration(await cookies(), parsedInput));
 
 /**
  * Carries a changed email address into the session, so a profile edit does not
  * leave the member looking at a stale address — or signed out. The caller
- * refreshes the router afterwards to re-render with the rewritten cookies.
+ * refreshes the router afterwards to re-render with the rewritten cookie.
  */
-export async function updateSessionEmail(email: string): Promise<void> {
-  await performEmailUpdate(await cookies(), email);
-}
+export const updateSessionEmail = actionClient
+  .inputSchema(sessionEmailSchema)
+  .action(async ({ parsedInput }) => performEmailUpdate(await cookies(), parsedInput.email));
 
 /** Ends the session: revoked upstream where possible, cleared locally always. */
-export async function signOut(): Promise<void> {
-  return performSignOut(await cookies());
-}
+export const signOut = actionClient.action(async () => performSignOut(await cookies()));
