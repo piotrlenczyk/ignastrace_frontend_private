@@ -47,7 +47,7 @@ const isServerAction = (request: NextRequest): boolean => request.headers.get('n
  * Returns the redirect a request needs, or `null` when the request may carry
  * on to internationalisation.
  */
-export const handleRedirects = (request: NextRequest, session: SessionData | null): NextResponse | null => {
+export const redirects = (request: NextRequest, session: SessionData | null): NextResponse | null => {
   if (isServerAction(request)) {
     return null;
   }

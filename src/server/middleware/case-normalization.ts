@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from 'next/server';
 
-export const handleCaseNormalization = (request: NextRequest) => {
+export const caseNormalization = (request: NextRequest) => {
   const pathname = request.nextUrl.pathname;
   const lowercasePathname = pathname.toLowerCase();
 

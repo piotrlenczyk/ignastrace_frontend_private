@@ -80,14 +80,14 @@ const contextOf = (request: NextRequest): ApiRequestContext => ({
  * Middleware redirects are swallowed by server actions, which is why the
  * decision belongs to the redirects step and not to this one.
  */
-export const handleSession = async (request: NextRequest): Promise<SessionStep> => {
-  const session = await readSession(request.cookies);
+export const session = async (request: NextRequest): Promise<SessionStep> => {
+  const current = await readSession(request.cookies);
 
-  if (!session || !isAccessTokenExpired(session)) {
-    return { session, applyToResponse: LEAVE_RESPONSE_ALONE };
+  if (!current || !isAccessTokenExpired(current)) {
+    return { session: current, applyToResponse: LEAVE_RESPONSE_ALONE };
   }
 
-  const renewed = await performRenewal(asWriter(request.cookies), session, contextOf(request));
+  const renewed = await performRenewal(asWriter(request.cookies), current, contextOf(request));
 
   if (!renewed) {
     return {

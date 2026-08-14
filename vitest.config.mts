@@ -21,6 +21,13 @@ const shared = {
   globals: true, // This is needed by @testing-library to be cleaned up after each test
   setupFiles: ['./vitest-setup.ts'],
   env: loadEnv('', process.cwd(), ''),
+  /*
+   * next-intl's middleware is published as ESM that imports `next/server`
+   * extensionless, which Node cannot resolve on its own. Processing it through
+   * Vite rather than leaving it external hands that import to Vite's resolver,
+   * which can.
+   */
+  server: { deps: { inline: [/next-intl/] } },
 };
 
 // A project does not inherit the root plugins, so each one repeats them.

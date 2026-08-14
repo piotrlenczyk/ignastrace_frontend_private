@@ -1,11 +1,14 @@
 import type { NextFetchEvent, NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
-import { handleCaseNormalization } from './middlewares/case-normalization.middleware';
-import { handleIntl } from './middlewares/intl.middleware';
-import { handleRedirects } from './middlewares/redirects.middleware';
-import { handleSession } from './middlewares/session.middleware';
-import { handleTracking } from './middlewares/tracking.middleware';
+import { caseNormalization } from './server/middleware/case-normalization';
+import { intl } from './server/middleware/intl';
+import { redirects } from './server/middleware/redirects';
+import { session } from './server/middleware/session';
+import { tracking } from './server/middleware/tracking';
+
+/** Answered before anything else, so a probe never waits on the API. */
+const HEALTH_PATH = '/health';
 
 /*
  * Where this application serves route handlers rather than pages: its own
@@ -22,18 +25,24 @@ const ROUTE_HANDLER_PREFIXES = ['/api/', '/api-proxy/'];
 const isRouteHandler = (request: NextRequest): boolean =>
   ROUTE_HANDLER_PREFIXES.some((prefix) => request.nextUrl.pathname.startsWith(prefix));
 
-/*
+/**
  * The chain, in order: case normalisation → session → redirects →
- * internationalisation → tracking. Each step is named and lives in its own
- * module, so a redirect can be traced back to the step that produced it.
+ * internationalisation → tracking. Each step is named for what it is and lives
+ * in its own module under `server/middleware`, so a redirect can be traced back
+ * to the step that produced it.
+ *
+ * The session step hands back the session it settled on together with a
+ * callback to apply to the outgoing response. That shape is what lets the guard
+ * see a renewed session while the renewed cookie still lands on the redirect the
+ * guard produces.
  */
 export default async function middleware(request: NextRequest, _event: NextFetchEvent) {
-  if (request.nextUrl.pathname === '/health') {
+  if (request.nextUrl.pathname === HEALTH_PATH) {
     return new Response(null, { status: 200 });
   }
 
   if (isRouteHandler(request)) {
-    const { applyToResponse } = await handleSession(request);
+    const { applyToResponse } = await session(request);
     const response = NextResponse.next({ request });
 
     await applyToResponse(response);
@@ -41,19 +50,31 @@ export default async function middleware(request: NextRequest, _event: NextFetch
     return response;
   }
 
-  const caseNormalizationResponse = handleCaseNormalization(request);
+  const normalizedCase = caseNormalization(request);
 
-  if (caseNormalizationResponse) {
-    return caseNormalizationResponse;
+  if (normalizedCase) {
+    return normalizedCase;
   }
 
-  const { session, applyToResponse } = await handleSession(request);
+  const { session: currentSession, applyToResponse } = await session(request);
 
-  const response = handleRedirects(request, session) ?? handleIntl(request);
+  /*
+   * A guarded request never reaches internationalisation: the guard's redirect
+   * is the response, and the locale step would only rewrite a URL nobody is
+   * going to be served.
+   */
+  const guardRedirect = redirects(request, currentSession);
+  let response: NextResponse;
+
+  if (guardRedirect) {
+    response = guardRedirect;
+  } else {
+    response = intl(request);
+  }
 
   await applyToResponse(response);
 
-  const trackedResponse = handleTracking(request, response);
+  const trackedResponse = tracking(request, response);
 
   trackedResponse.headers.set('x-pathname', request.nextUrl.pathname);
 

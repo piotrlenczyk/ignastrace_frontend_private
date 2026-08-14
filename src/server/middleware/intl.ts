@@ -30,5 +30,4 @@ const redirectDisabledLocale = (request: NextRequest) => {
  * locale handling only — the route guards it used to be fused with are the
  * redirects step now.
  */
-export const handleIntl = (request: NextRequest): NextResponse =>
-  redirectDisabledLocale(request) ?? intlMiddleware(request);
+export const intl = (request: NextRequest): NextResponse => redirectDisabledLocale(request) ?? intlMiddleware(request);

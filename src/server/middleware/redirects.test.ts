@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 
 import type { AccountType, SessionData } from '@/server/session/session.types';
 
-import { handleRedirects } from './redirects.middleware';
+import { redirects } from './redirects';
 
 const SITE = 'https://ignastrace.io';
 
@@ -19,9 +19,9 @@ const requestFor = (path: string, headers: Record<string, string> = {}) =>
   new NextRequest(`${SITE}${path}`, { headers });
 
 const locationOf = (path: string, session: SessionData | null, headers?: Record<string, string>) =>
-  handleRedirects(requestFor(path, headers), session)?.headers.get('location') ?? null;
+  redirects(requestFor(path, headers), session)?.headers.get('location') ?? null;
 
-describe('handleRedirects', () => {
+describe('redirects', () => {
   describe('protected routes', () => {
     it.each(['/memberarea/find-by-number', '/memberarea/settings/billing', '/checkout', '/thank-you', '/success'])(
       'sends an anonymous visitor on %s to the login page',
