@@ -15,7 +15,7 @@ import type {
 const RESULTS_TO_INCLUDE = 6;
 
 // Subcomponent for user information
-export const UserInfo: React.FC<UserInfoProps> = ({ phoneNumber, carrierResponse, lineType, t }) => (
+export const UserInfo: React.FC<UserInfoProps> = ({ phoneNumber, carrier, lineType, t }) => (
   <ul>
     <li>
       <Image
@@ -28,7 +28,7 @@ export const UserInfo: React.FC<UserInfoProps> = ({ phoneNumber, carrierResponse
     </li>
     <li className="text-lg font-bold">{phoneNumber}</li>
     <li className="text-sm text-weak">
-      {t('carrier')}: {carrierResponse || 'Unknown'}
+      {t('carrier')}: {carrier || 'Unknown'}
     </li>
     <li className="text-sm text-weak">
       {t('line_type')}: {lineType}

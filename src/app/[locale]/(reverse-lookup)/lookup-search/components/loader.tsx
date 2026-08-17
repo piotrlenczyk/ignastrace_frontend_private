@@ -8,8 +8,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { cn } from '@/libs/utils';
+import { useCarrierLookupQuery } from '@/network/api/hooks/use-carrier-lookup-query';
 
-import { useCarrierQuery } from '../hooks/api/use-carrier-query';
 import { LoadingBar } from './loading-bar';
 
 const loadingTimePerStep = 2000;
@@ -26,8 +26,8 @@ export const Loader = ({
 }) => {
   const [loadedSteps, setLoadedSteps] = useState(0);
   const t = useTranslations('pages.reverse_lookup.search.components.loader.step_1');
-  const { data: carrierResponse } = useCarrierQuery({ phone: rawPhone });
-  const carrier = carrierResponse || t('carrier.loadedDefaultText');
+  const { data: carrierLookup } = useCarrierLookupQuery(rawPhone);
+  const carrier = carrierLookup?.carrier || t('carrier.loadedDefaultText');
   const isFirstStep = loadedSteps < 1;
 
   const router = useRouter();
