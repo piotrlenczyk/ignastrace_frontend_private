@@ -4,7 +4,7 @@ export type SummaryReportProps = {
 
 export type UserInfoProps = {
   phoneNumber: string;
-  carrierResponse?: string;
+  carrier?: string | null;
   lineType: string;
   t: any;
 };
@@ -31,7 +31,7 @@ export type SummaryReportData = {
     number: string;
     country?: string;
   };
-  carrierResponse?: string;
+  carrier?: string | null;
   lineType: string;
   formattedLineType: string;
 };

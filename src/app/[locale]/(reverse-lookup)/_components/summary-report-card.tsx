@@ -11,7 +11,7 @@ import type { SummaryReportProps } from './types/summary-report.types';
 
 const SummaryReportCard: React.FC<SummaryReportProps> = ({ phoneNumber }) => {
   const t = useTranslations('pages.reverse_lookup.components.summary_report_card');
-  const { phoneNumberFormatted, carrierResponse, formattedLineType } = useSummaryReport(phoneNumber);
+  const { phoneNumberFormatted, carrier, formattedLineType } = useSummaryReport(phoneNumber);
 
   const title = t.rich('title', {
     phoneNumber: phoneNumberFormatted.number,
@@ -29,7 +29,7 @@ const SummaryReportCard: React.FC<SummaryReportProps> = ({ phoneNumber }) => {
               <AvatarWithLock animate={false} />
               <UserInfo
                 phoneNumber={phoneNumberFormatted.number}
-                carrierResponse={carrierResponse}
+                carrier={carrier}
                 lineType={formattedLineType}
                 t={t}
               />
