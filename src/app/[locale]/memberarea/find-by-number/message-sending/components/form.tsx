@@ -11,10 +11,10 @@ import { ConsentModal } from '@/components/ui/consent-modal';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
 import { ROUTES } from '@/constants/routes';
-import { useGetUser } from '@/hooks/api/use-user';
 import { useConsent } from '@/hooks/use-consent';
 import { useGenericErrorToast } from '@/hooks/use-generic-error-toast';
 import { useMessageErrorToast } from '@/hooks/use-message-error-toast';
+import { useSession } from '@/hooks/use-session';
 import { useRouter } from '@/libs/i18n-routing';
 import type { RequestCountData } from '@/types/request_count_data';
 
@@ -35,7 +35,7 @@ export const MessageSendingForm = ({
   const showErrorToast = useGenericErrorToast();
   const showErrorToastWithMessage = useMessageErrorToast();
   const { shouldShowConsent, setConsentGiven } = useConsent();
-  const { data: user, error } = useGetUser();
+  const { isSignedIn } = useSession();
 
   const [showConsentModal, setShowConsentModal] = useState(false);
   const [pendingData, setPendingData] = useState<MessageSendingFormValues | null>(null);
@@ -76,10 +76,10 @@ export const MessageSendingForm = ({
   });
 
   const handleSubmit = (data: MessageSendingFormValues) => {
-    // Check if consent is needed for US users (only for anonymous users)
-    // If there's an error getting user data, assume user is not authenticated
-    const isAuthenticated = user && !error;
-    if (shouldShowConsent && !isAuthenticated) {
+    // Check if consent is needed for US users (only for anonymous users).
+    // The sealed session is what says who is signed in, so the answer is here
+    // before the first paint rather than after a round trip that could fail.
+    if (shouldShowConsent && !isSignedIn) {
       setPendingData(data);
       setShowConsentModal(true);
       return;

@@ -3,7 +3,7 @@
   "version": "1.5.31",
   "author": "MarsBased",
   "scripts": {
-    "dev:next": "next dev --experimental-https",
+    "dev:next": "next dev",
     "dev": "run-p dev:*",
     "build": "next build",
     "start": "next start",

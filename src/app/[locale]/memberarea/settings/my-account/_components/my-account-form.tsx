@@ -15,26 +15,29 @@ import { toast } from '@/hooks/use-toast';
 import { hasApiError } from '@/libs/api-client';
 import type { ApiError } from '@/libs/api-error';
 import { useRouter } from '@/libs/i18n-routing';
+import type { schemas } from '@/network/api/apiServerClient';
 
 import { LogoutButton } from '../../_components/logout-button';
 import { useMyAccountMutation } from '../_hooks/api/use-my-account-mutation';
 import { createMyAccountFormSchema, type MyAccountFormValues } from '../_types/my-account.types';
-import type { User } from '../_types/user.types';
 import { DeleteAccount } from './delete-account';
 
-function getFormValues(user: User) {
+function getFormValues(user: schemas['UserResponse']) {
   return {
-    name: user.name,
-    email: user.email,
-    notify_status_changes: user.notify_status_changes,
-    notify_user_located: user.notify_user_located,
+    name: user.name ?? '',
+    email: user.email ?? '',
+    // TODO: [refactor] get notify_status_changes and notify_user_located from new API
+    // notify_status_changes: user.notify_status_changes,
+    // notify_user_located: user.notify_user_located,
+    notify_status_changes: false,
+    notify_user_located: false,
     current_password: '',
     password: '',
     confirm_password: '',
   };
 }
 
-export const MyAccountForm = ({ user }: { user: User }) => {
+export const MyAccountForm = ({ user }: { user: schemas['UserResponse'] }) => {
   const t = useTranslations('pages.settings.my_account');
   const showErrorToast = useGenericErrorToast();
   const router = useRouter();

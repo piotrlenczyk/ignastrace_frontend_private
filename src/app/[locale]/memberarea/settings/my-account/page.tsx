@@ -1,13 +1,18 @@
-import { getApi } from '@/libs/server/api';
+import { redirect } from 'next/navigation';
+
+import { ROUTES } from '@/constants/routes';
+import { apiServerClient } from '@/network/api/apiServerClient';
 
 import { MyAccountForm } from './_components/my-account-form';
-import type { User } from './_types/user.types';
 
 const MyAccountPage = async () => {
-  const api = await getApi();
-  const user = await api.get<User>('/user');
+  const { data } = await apiServerClient['/api/v1/user/me'].GET();
 
-  return <MyAccountForm user={user} />;
+  if (!data) {
+    redirect(ROUTES.HOME);
+  }
+
+  return <MyAccountForm user={data} />;
 };
 
 export default MyAccountPage;

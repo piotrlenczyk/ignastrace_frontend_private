@@ -5,7 +5,6 @@ import type { Route } from 'next';
 import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useAction } from 'next-safe-action/hooks';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { ForgotPasswordForm } from '@/app/[locale]/login/components/forgot-password-form';
@@ -27,14 +26,14 @@ export const LoginForm = ({ error }: { error: boolean }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
   /*
    * Where the guards said this visitor was headed, once it has been checked
    * to be a path on this site rather than somewhere else.
    */
+  // TODO: [refactor] routes checkout wat in previous version was used
+  const nextRoute = ROUTES.MEMBER.CONTACT_US || ROUTES.CHECKOUT;
   const destination = stripLocalePrefix(
-    resolveRedirectTarget(searchParams.get(REDIRECT_QUERY_PARAM), ROUTES.CHECKOUT),
+    resolveRedirectTarget(searchParams.get(REDIRECT_QUERY_PARAM), nextRoute),
   ) as Route;
 
   const form = useForm<LoginFormValues>({
@@ -53,7 +52,6 @@ export const LoginForm = ({ error }: { error: boolean }) => {
    */
   const { execute: logIn, isPending } = useAction(actionSignIn, {
     onSuccess: () => {
-      setIsSubmitted(true);
       router.push(destination);
       router.refresh();
     },
@@ -117,7 +115,7 @@ export const LoginForm = ({ error }: { error: boolean }) => {
             form="sign-in-form"
             type="submit"
             className="h-auto w-full px-6 py-4 text-lg leading-5"
-            disabled={isPending || isSubmitted}
+            disabled={isPending}
           >
             {t('submit_button')}
           </Button>
