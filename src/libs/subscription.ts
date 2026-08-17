@@ -1,13 +1,22 @@
+import { apiServerClient } from '@/network/api/apiServerClient';
+import { unwrapApiResponse } from '@/network/http-response-handler';
 import { getServerSession } from '@/server/session/session.utils';
 import type { User } from '@/types/user';
 
-import { getApi } from './server/api';
+import { composeMember } from './membership-mock';
 
-export const getUser = async () => {
-  const api = await getApi();
-  const user = await api.get<User>('/user');
+/**
+ * The signed-in member as a server render sees one: the account read from the
+ * new API, stitched together with the membership facts no endpoint publishes yet.
+ *
+ * This is the server-side composer. Every screen that used to fetch the funnel's
+ * aggregate calls it, so there is one place to rewrite when the commercial
+ * endpoints exist — see the mock module, and the ADR it points at.
+ */
+export const getUser = async (): Promise<User> => {
+  const account = await apiServerClient['/api/v1/user/me'].GET().then(unwrapApiResponse);
 
-  return user;
+  return composeMember(account);
 };
 
 type SubscriptionCheckOptions = {
@@ -18,7 +27,10 @@ type SubscriptionCheckOptions = {
 export const getUserForPoliciesCheck = async ({ user, allowUnauthenticated = false }: SubscriptionCheckOptions) => {
   if (allowUnauthenticated) {
     const session = await getServerSession();
-    if (!session) {
+
+    // The sealed session's own flag, rather than the object — an empty session is
+    // an object, so testing truthiness admits a visitor who has none.
+    if (!session?.isLoggedIn) {
       return undefined;
     }
   }

@@ -27,3 +27,4 @@ moves. Describe things by their role instead.
 | [0010](0010-one-client-for-the-auth-calls-too.md)                  | The authentication calls go through the generated client too                     | Accepted; consequences settled by 0011 and 0012   |
 | [0011](0011-auth-failures-on-the-standard-action-error-channel.md) | Authentication failures travel the standard action-error channel                 | Accepted                                          |
 | [0012](0012-the-session-through-iron-session-s-own-api.md)         | The session through iron-session's own API, auth calls beside the actions        | Accepted                                          |
+| [0013](0013-a-mocked-membership-until-the-api-publishes-one.md)    | A mocked membership stands in until the API publishes one                        | Accepted; temporary by construction               |

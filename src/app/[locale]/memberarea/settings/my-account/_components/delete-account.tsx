@@ -1,6 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+import { useAction } from 'next-safe-action/hooks';
 import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -16,9 +17,7 @@ import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { useRouter } from '@/libs/i18n-routing';
 import { cn } from '@/libs/utils';
-import { actionLogout } from '@/server/actions/auth.actions';
-
-import { useDeleteAccountMutation } from '../_hooks/api/use-delete-account-mutation';
+import { actionDeleteAccount } from '@/server/actions/account.actions';
 
 export function DeleteAccount({ className, disabled = false }: { className?: string; disabled?: boolean }) {
   const t = useTranslations('pages.settings.my_account');
@@ -27,10 +26,15 @@ export function DeleteAccount({ className, disabled = false }: { className?: str
   const [isOpen, setIsOpen] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
 
-  const { mutate: deleteAccount, isPending } = useDeleteAccountMutation({
+  /*
+   * The action ends the session itself and deliberately does not redirect, so the
+   * dialog can show its confirmation. Leaving is this component's business: the
+   * member reads the confirmation, closes the dialog, and the effect below sends
+   * them home.
+   */
+  const { execute: deleteAccount, isPending } = useAction(actionDeleteAccount, {
     onSuccess: () => {
       setIsDeleted(true);
-      actionLogout();
     },
     onError: () => {
       setIsDeleted(false);

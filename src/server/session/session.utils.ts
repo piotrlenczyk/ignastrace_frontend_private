@@ -148,3 +148,23 @@ export const setSession = async (tokens: TokenPair): Promise<void> => {
 
   await session.save();
 };
+
+/**
+ * Carries a changed email address into the request's session.
+ *
+ * The tokens are left exactly as they were — the address is identity, not
+ * authentication — so a member who has just edited their profile stays signed in.
+ * A visitor without a usable session gets nothing written, rather than a session
+ * minted out of an edit.
+ */
+export const setSessionEmail = async (email: string): Promise<void> => {
+  const session = await getSession();
+
+  if (!isUsableSession(session)) {
+    return;
+  }
+
+  session.user = { ...session.user, email };
+
+  await session.save();
+};

@@ -9,7 +9,7 @@ import type {
 import { useMutation } from '@tanstack/react-query';
 import validator from 'validator';
 
-import { useCountry } from '@/hooks/useCountry';
+import { $api } from '@/network/api/api-browser-client';
 import type { StripeFormValues } from '@/types/stripe-form.types';
 import type { Subscription } from '@/types/subscription';
 import type { SubscriptionIntent } from '@/types/subscription-intent';
@@ -33,18 +33,26 @@ export function useConfirmStripePaymentMutation({
   onError: (error: StripeError) => void;
 }) {
   const api = useApi();
-  const country = useCountry();
+  const { mutate: updateProfile } = $api.useMutation('put', '/api/v1/user');
 
-  async function updateUserInfo(name?: string, zip?: string) {
-    if (!name && !zip) {
+  /*
+   * The name from the card, carried onto the account so it has one even when the
+   * member never typed it into a form. Fire-and-forget, as it has always been:
+   * a payment that went through is not undone by a profile that did not.
+   *
+   * TODO: [refactor] the postal code and the country stop reaching the backend
+   * here — the new profile request body has no field for either. The postal code
+   * still reaches Stripe through the payment method's billing details, and the
+   * country was derived from geolocation rather than entered, so nothing the
+   * member typed is lost; but nothing is written to the account either. Restore
+   * both when the endpoint grows the fields.
+   */
+  function updateUserInfo(name?: string) {
+    if (!name) {
       return;
     }
 
-    try {
-      return api.put('/user', { name, zip, country });
-    } catch (error) {
-      return error;
-    }
+    updateProfile({ body: { name } });
   }
 
   async function syncSubscription(paymentIntentStripeId: string) {
@@ -105,7 +113,7 @@ export function useConfirmStripePaymentMutation({
       await updatePaymentMethod(paymentMethodId);
 
       if (!isReactivate) {
-        updateUserInfo(data.cardName, data.zipCode);
+        updateUserInfo(data.cardName);
       }
 
       return { paymentIntent: { id: 'update_payment_method_success' } as PaymentIntent };
@@ -118,7 +126,7 @@ export function useConfirmStripePaymentMutation({
       });
 
       if (!isReactivate) {
-        updateUserInfo(data.cardName, data.zipCode);
+        updateUserInfo(data.cardName);
       }
 
       const result = await stripe.confirmCardPayment(subscription.client_secret, { payment_method: paymentMethodId });

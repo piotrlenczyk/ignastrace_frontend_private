@@ -11,8 +11,8 @@ import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { Link } from '@/libs/i18n-routing';
 import { getApi } from '@/libs/server/api';
+import { getUser } from '@/libs/subscription';
 import { getServerSession } from '@/server/session/session.utils';
-import type { User } from '@/types/user';
 
 import TrustPilot from './_components/trustPilot';
 
@@ -34,7 +34,7 @@ const ThankYouPage = async () => {
 
   const t = await getTranslations('pages.reverse_lookup.thank_you');
   const api = await getApi();
-  const user = await api.get<User>('/user?expand=purchase_info');
+  const user = await getUser();
 
   await Promise.all([api.post('/user/send_order_confirm_email', {}), api.post('/klaviyo/order_confirmed')]);
 

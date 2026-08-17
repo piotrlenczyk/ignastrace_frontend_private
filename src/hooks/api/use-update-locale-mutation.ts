@@ -1,34 +1,39 @@
-import { useMutation } from '@tanstack/react-query';
-
-import { useApi } from '@/hooks/use-api';
 import { useSession } from '@/hooks/use-session';
-import type { ApiError } from '@/libs/api-error';
+import type { components } from '@/network/api/api';
+import { $api } from '@/network/api/api-browser-client';
 
+type ISO6391LanguageCode = components['schemas']['ISO6391LanguageCode'];
+
+/**
+ * Stores the language a member picked against their account.
+ *
+ * The interface switches either way. Whether the preference outlives the visit is
+ * the backend's business — a visitor with no account has nowhere to store one, and
+ * a language the API refuses is still a language this site is translated into — so
+ * the switch is not made to wait on the answer, and a refusal goes to `onError`.
+ *
+ * The locale is sent as the application holds it. The operation's description
+ * mentions two languages, but the generated type is the full ISO-639-1 set, so
+ * every locale this site offers is a value the request may legally carry.
+ */
 export function useUpdateLocaleMutation({
   onSuccess,
   onError,
 }: {
   onSuccess: (locale: string) => void;
-  onError: (error: ApiError) => void;
+  onError: (error: unknown) => void;
 }) {
-  const api = useApi();
   const { isSignedIn } = useSession();
 
-  async function updateLocale(locale: string) {
-    // A visitor with no account has nowhere to store a language preference; the
-    // switch still works, it just does not outlive the visit.
-    if (!isSignedIn) {
-      return locale;
+  const { mutate } = $api.useMutation('post', '/api/v1/user/me/language', { onError });
+
+  const updateLocale = (locale: string) => {
+    if (isSignedIn) {
+      mutate({ body: { language: locale as ISO6391LanguageCode } });
     }
 
-    await api.put('/user', { locale });
+    onSuccess(locale);
+  };
 
-    return locale;
-  }
-
-  return useMutation({
-    mutationFn: updateLocale,
-    onSuccess,
-    onError,
-  });
+  return { mutate: updateLocale };
 }

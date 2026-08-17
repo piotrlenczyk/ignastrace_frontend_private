@@ -10,10 +10,9 @@ import LimitedOfferTag from '@/components/reverse-lookup/limited-offer-tag';
 import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
-import { useApi } from '@/hooks/use-api';
 import { useMessageErrorToast } from '@/hooks/use-message-error-toast';
 import { useCountry } from '@/hooks/useCountry';
-import type { User } from '@/types/user';
+import { useCurrentMember } from '@/network/api/hooks/use-current-member';
 
 import { useUpsellingMutation } from '../../success/_hooks/api/use-upselling-mutation';
 import type { Product } from '../../success/_types/product.type';
@@ -43,7 +42,13 @@ const UpsellCard = ({
   const t = useTranslations('pages.reverse_lookup.upsell');
   const tStripeForm = useTranslations('components.forms.stripe_form');
 
-  const api = useApi();
+  /*
+   * Read at render rather than inside the click handler, which is what fetching
+   * the member imperatively used to allow. `isLoading` is false both once the
+   * answer is in and for a visitor with no session — the query does not fire for
+   * one — so it gates the button only while there is genuinely an answer coming.
+   */
+  const { data: member, isLoading: isLoadingMember } = useCurrentMember();
   const router = useRouter();
   const locale = useLocale();
   const country = useCountry();
@@ -80,20 +85,13 @@ const UpsellCard = ({
     return purchaseButtonText;
   };
 
-  const handlePurchaseUpsell = async () => {
-    setIsSubmitted(true);
-
-    try {
-      const user = await api.get<User>('/user?expand=purchase_info');
-      if (user.upsellings.includes(product.key)) {
-        setIsPurchased(true);
-        setIsSubmitted(false);
-        return;
-      }
-    } catch (error) {
-      console.error('Error checking user purchase info', error);
-      setIsSubmitted(false);
+  const handlePurchaseUpsell = () => {
+    if (member?.upsellings.includes(product.key)) {
+      setIsPurchased(true);
+      return;
     }
+
+    setIsSubmitted(true);
     createUpselling([product.key]);
   };
 
@@ -124,7 +122,7 @@ const UpsellCard = ({
           <Button
             className="font-semibold lg:hidden"
             onClick={handlePurchaseUpsell}
-            disabled={isPending || isPurchased || isSubmitted}
+            disabled={isPending || isPurchased || isSubmitted || isLoadingMember}
           >
             {getButtonContent()}
           </Button>
@@ -157,7 +155,7 @@ const UpsellCard = ({
           <Button
             className="hidden font-semibold lg:flex lg:flex-1 lg:text-lg"
             onClick={handlePurchaseUpsell}
-            disabled={isPending || isPurchased || isSubmitted || isSkipped}
+            disabled={isPending || isPurchased || isSubmitted || isSkipped || isLoadingMember}
           >
             {getButtonContent()}
           </Button>

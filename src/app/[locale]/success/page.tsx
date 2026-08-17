@@ -6,8 +6,8 @@ import FunnelLayout from '@/components/layouts/funnel-layout';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getApi } from '@/libs/server/api';
+import { getUser } from '@/libs/subscription';
 import { getServerSession } from '@/server/session/session.utils';
-import type { User } from '@/types/user';
 
 import UpsellPageClient from './_components/upsell-page-client';
 import type { Product } from './_types/product.type';
@@ -37,10 +37,7 @@ const UpsellPage = async () => {
   }
 
   const api = await getApi();
-  const [products, user] = await Promise.all([
-    api.get<Product[]>('/upsellings'),
-    api.get<User>('/user?expand=purchase_info'),
-  ]);
+  const [products, user] = await Promise.all([api.get<Product[]>('/upsellings'), getUser()]);
 
   if (user.upsellings.length > 0) {
     redirect(ROUTES.MEMBER.STATUS.HOME);

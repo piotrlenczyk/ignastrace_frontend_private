@@ -15,7 +15,3 @@ export const signInSchema = z.object({
 export const registrationSchema = z.object({
   email: z.email(),
 });
-
-export const sessionEmailSchema = z.object({
-  email: z.email(),
-});

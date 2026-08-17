@@ -98,10 +98,9 @@ const {
   actionRegister: register,
   actionSignIn: signIn,
   actionLogout: signOut,
-  actionUpdateSessionEmail: updateSessionEmail,
 } = await import('../actions/auth.actions');
 
-const { getServerSession } = await import('./session.utils');
+const { getServerSession, setSessionEmail } = await import('./session.utils');
 
 const accessToken = (claims: Record<string, unknown>) => {
   const encode = (value: object) => Buffer.from(JSON.stringify(value)).toString('base64url');
@@ -373,11 +372,11 @@ describe('register', () => {
   });
 });
 
-describe('updateSessionEmail', () => {
+describe('setSessionEmail', () => {
   it('records the new address without disturbing the tokens', async () => {
     await signedIn();
 
-    await updateSessionEmail({ email: 'renamed@example.com' });
+    await setSessionEmail('renamed@example.com');
 
     expect(cookieJar.names()).toEqual([SESSION_COOKIE_NAME]);
     expect(await sealedSession()).toEqual({
@@ -390,7 +389,7 @@ describe('updateSessionEmail', () => {
   });
 
   it('mints no session for a visitor who has none', async () => {
-    await updateSessionEmail({ email: 'renamed@example.com' });
+    await setSessionEmail('renamed@example.com');
 
     expect(cookieJar.names()).toEqual([]);
   });

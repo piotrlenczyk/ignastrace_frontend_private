@@ -6,8 +6,8 @@ import { apiServerClient } from '@/network/api/apiServerClient';
 import { unwrapApiResponse } from '@/network/http-response-handler';
 import { actionClient } from '@/server/lib/safe-action';
 
-import { registrationSchema, sessionEmailSchema, signInSchema } from '../session/session.schemas';
-import { getSession, isUsableSession, setSession } from '../session/session.utils';
+import { registrationSchema, signInSchema } from '../session/session.schemas';
+import { getSession, setSession } from '../session/session.utils';
 
 /*
  * The session's writes, as server actions on the one action client. Each one
@@ -60,24 +60,6 @@ export const actionRegister = actionClient.inputSchema(registrationSchema).actio
   await setSession({ access: token, refresh: refreshToken });
 
   revalidateRootLayout();
-});
-
-/**
- * Carries a changed email address into the session, so a profile edit does not
- * leave the member looking at a stale address — or signed out. The token pair
- * is left exactly as it was: the address is identity, not authentication. The
- * caller refreshes the router afterwards to re-render with the rewritten cookie.
- */
-export const actionUpdateSessionEmail = actionClient.inputSchema(sessionEmailSchema).action(async ({ parsedInput }) => {
-  const session = await getSession();
-
-  if (!isUsableSession(session)) {
-    return;
-  }
-
-  session.user = { ...session.user, email: parsedInput.email };
-
-  await session.save();
 });
 
 /** Ends the session. */

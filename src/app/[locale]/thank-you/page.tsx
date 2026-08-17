@@ -11,8 +11,8 @@ import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { Link } from '@/libs/i18n-routing';
 import { getApi } from '@/libs/server/api';
+import { getUser } from '@/libs/subscription';
 import { getServerSession } from '@/server/session/session.utils';
-import type { User } from '@/types/user';
 
 const ThankYouPage = async () => {
   const session = await getServerSession();
@@ -32,7 +32,7 @@ const ThankYouPage = async () => {
 
   const t = await getTranslations('pages.success');
   const api = await getApi();
-  const user = await api.get<User>('/user?expand=purchase_info');
+  const user = await getUser();
 
   const gtmEventName = process.env.ENABLE_UPSELLS === 'true' ? 'upsell_purchase' : 'purchase';
   const gtmEventValue =

@@ -2,7 +2,7 @@
 
 import { cookies } from 'next/headers';
 
-import { apiServerClient } from '@/network/api/apiServerClient';
+import { getUser } from '@/libs/subscription';
 import { getServerSession } from '@/server/session/session.utils';
 
 export async function saveFunnelPhone(phoneNumber: string) {
@@ -22,11 +22,7 @@ export async function getFunnelPhone() {
     return;
   }
 
-  const { error, data } = await apiServerClient['/api/v1/user/me'].GET();
+  const member = await getUser();
 
-  // TODO: [refactor] get onboarding phone number from new API
-  void error;
-  void data;
-  // return data?.onboarding_phone_number ?? undefined;
-  return undefined;
+  return member.onboarding_phone_number || undefined;
 }

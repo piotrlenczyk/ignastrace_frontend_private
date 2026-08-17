@@ -23,3 +23,17 @@ const EMAIL_TAKEN_CODES: readonly BusinessErrorCode[] = ['USER_EXISTS_ERROR', 'E
  */
 export const isEmailTakenActionError = (serverError: unknown): boolean =>
   isHttpClientActionError(serverError) && EMAIL_TAKEN_CODES.some((code) => code === serverError.data.errorCode);
+
+const WRONG_PASSWORD_CODE: BusinessErrorCode = 'CREDENTIALS_ERROR';
+
+/**
+ * Whether an action's `serverError` is the API refusing a password change because
+ * the current password supplied with it was wrong — the one refusal on the
+ * settings form a field can be pointed at.
+ *
+ * Read off the code and never off the status: the password endpoint answers 401
+ * both for a wrong current password and for a session that has died, so the
+ * status alone cannot tell the member which of the two happened.
+ */
+export const isWrongPasswordActionError = (serverError: unknown): boolean =>
+  isHttpClientActionError(serverError) && serverError.data.errorCode === WRONG_PASSWORD_CODE;

@@ -3,10 +3,10 @@ import { redirect } from 'next/navigation';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getApi } from '@/libs/server/api';
+import { getUser } from '@/libs/subscription';
 import { getServerSession } from '@/server/session/session.utils';
 import type { ReverseLookup } from '@/types/reverse-lookup.types';
 import type { ReverseLookupDataLeakResponse } from '@/types/reverse-lookup-data-leaks.types';
-import type { User } from '@/types/user';
 import { firstValue } from '@/utils/search-params';
 
 import { ReportDetails } from './components/report-details';
@@ -44,7 +44,7 @@ export default async function DataBreachHistoryPage(
   const [reverseLookupDataLeaksResponse, reverseLookup, user] = await Promise.all([
     api.get<ReverseLookupDataLeakResponse>(`/reverse_lookups/${reverseLookupId}/data_leaks`),
     api.get<ReverseLookup>(`/reverse_lookups/${reverseLookupId}`),
-    api.get<User>('/user?expand=purchase_info'),
+    getUser(),
   ]);
 
   if (!reverseLookup.reverse_lookup_data_leaks_upsell_purchased) {

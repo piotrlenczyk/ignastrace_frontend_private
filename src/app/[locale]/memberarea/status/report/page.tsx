@@ -4,9 +4,9 @@ import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getApi } from '@/libs/server/api';
 import { getFeatures } from '@/libs/server/feature-flags';
+import { getUser } from '@/libs/subscription';
 import { getServerSession } from '@/server/session/session.utils';
 import type { ReverseLookup } from '@/types/reverse-lookup.types';
-import type { User } from '@/types/user';
 
 import CarrierDetails from './components/carrier-details';
 import DataBreachHistory from './components/data-breach-history';
@@ -59,7 +59,7 @@ const ReportStatusPage = async (props: PageProps<'/[locale]/memberarea/status/re
   const api = await getApi();
   const [reverseLookup, user] = await Promise.all([
     api.get<ReverseLookup>(`/reverse_lookups/${searchParams?.id}`),
-    api.get<User>('/user?expand=purchase_info'),
+    getUser(),
   ]);
 
   return (

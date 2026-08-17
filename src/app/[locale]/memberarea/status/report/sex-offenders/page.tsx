@@ -3,9 +3,9 @@ import { redirect } from 'next/navigation';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getApi } from '@/libs/server/api';
+import { getUser } from '@/libs/subscription';
 import { getServerSession } from '@/server/session/session.utils';
 import type { SexOffenderData } from '@/types/sex-offenders.types';
-import type { User } from '@/types/user';
 
 import { ReportDetails } from './components/report-details';
 
@@ -37,7 +37,7 @@ const SexOffendersPage = async (props: PageProps<'/[locale]/memberarea/status/re
 
   const [sexOffenderData, user] = await Promise.all([
     api.get<SexOffenderData>(`/sex_offenders_data/${searchParams.id}`),
-    api.get<User>('/user?expand=purchase_info'),
+    getUser(),
   ]);
 
   if (!sexOffenderData.upsell_purchased) {

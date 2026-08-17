@@ -63,3 +63,52 @@ form for something already done is not worth showing.
 : An account type the session carries and the guards refuse, treating it as anonymous on a
 protected route. No guest session is ever created by this application. The type is honoured
 because the API can issue one, not because anything here produces one.
+
+## The member and what they have bought
+
+One legacy call used to answer all of this at once, which is why the two halves below are easy
+to confuse. [ADR 0013](adr/0013-a-mocked-membership-until-the-api-publishes-one.md) records why
+one of them is currently invented.
+
+**Account**
+: Who someone is, as the account service holds it: an identifier, an email address, a display
+name, a language, a photo, an account type. It is the thing authentication issues a token for,
+and the only part of a member the new API answers questions about.
+
+**Membership**
+: The commercial relationship — whether a subscription was ever bought and what state it is in,
+what has been paid, what extras are owned, what a member has asked to be notified about. It is
+_not_ part of the account, no endpoint publishes it, and every screen that gates on it currently
+reads a fixture.
+
+**Member**
+: The account and the membership seen as one object, which is the shape every screen in the
+member area reads. It exists because the legacy call answered in that shape and a dozen screens
+were written against it; it is composed rather than fetched.
+
+**Subscription status**
+: The funnel's vocabulary for where a member stands: never bought, incomplete, active, cancelled
+but still running, expired. The gating decisions are expressed in these terms — no subscription
+sends someone to checkout, an ended one sends them to billing.
+
+**Upselling**
+: **Two different things, and they do not map onto each other.**
+
+In the funnel, an upselling is one of seven product keys held as a list on the member — the
+extras someone bought alongside the subscription. Owning one is what lets a report screen
+unlock the corresponding section, and having any at all is what sends a member past the upsell
+offer instead of into it.
+
+In the new API, an upselling is a per-product **credit balance** over three products on an
+endpoint of its own: how many of a thing a member may still spend, not which things they own.
+
+There is no one-to-one translation between the two, and adopting the second means remodelling
+the report and upsell screens rather than renaming a field. The single overlapping concept is
+**unlimited PDF downloads**, which the new API publishes as a boolean entitlement on the
+current-user response — the one commercial fact the account service does answer.
+
+**Purchase information**
+: What a member paid and what they may still spend: the trial price, the total, what the extras
+came to, and a flag per extra saying whether there is anything left to spend on it. The prices
+are what the thank-you and upsell screens report to analytics; the flags are what the report
+screens unlock on.

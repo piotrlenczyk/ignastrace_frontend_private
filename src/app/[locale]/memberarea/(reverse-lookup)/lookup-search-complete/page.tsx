@@ -5,10 +5,9 @@ import ProductLayout from '@/components/layouts/product-layout';
 import { ROUTES } from '@/constants/routes';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
-import { getApi } from '@/libs/server/api';
 import { getFeatures } from '@/libs/server/feature-flags';
+import { getUser } from '@/libs/subscription';
 import { getServerSession } from '@/server/session/session.utils';
-import type { User } from '@/types/user';
 
 import { SearchCompleteContent } from './_components/search-complete-content';
 
@@ -46,8 +45,7 @@ export default async function LookupSearchCompletePage() {
 
   const formattedNumber = formatPhoneNumber(phoneNumber);
 
-  const api = await getApi();
-  const user = await api.get<User>('/user?expand=purchase_info');
+  const user = await getUser();
 
   return (
     <ProductLayout>

@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
+import { useAction } from 'next-safe-action/hooks';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -12,32 +13,37 @@ import { PasswordInput } from '@/components/ui/password-input';
 import { Switch } from '@/components/ui/switch';
 import { useGenericErrorToast } from '@/hooks/use-generic-error-toast';
 import { toast } from '@/hooks/use-toast';
-import { hasApiError } from '@/libs/api-client';
-import type { ApiError } from '@/libs/api-error';
 import { useRouter } from '@/libs/i18n-routing';
-import type { schemas } from '@/network/api/apiServerClient';
+import { ACTIVE_MEMBERSHIP } from '@/libs/membership-mock';
+import type { components } from '@/network/api/api';
+import { actionUpdateAccount } from '@/server/actions/account.actions';
+import { isEmailTakenActionError, isWrongPasswordActionError } from '@/server/lib/auth-action-error';
 
 import { LogoutButton } from '../../_components/logout-button';
-import { useMyAccountMutation } from '../_hooks/api/use-my-account-mutation';
 import { createMyAccountFormSchema, type MyAccountFormValues } from '../_types/my-account.types';
 import { DeleteAccount } from './delete-account';
 
-function getFormValues(user: schemas['UserResponse']) {
+type Account = components['schemas']['UserResponse'];
+
+/*
+ * The name and the address are the account's own, read from the account service.
+ * The two notification switches are not: no endpoint publishes or accepts them,
+ * so they show the mocked membership's value and return to it after a save. See
+ * the mock module for why that is preferred to hiding the feature mid-migration.
+ */
+function getFormValues(account: Account) {
   return {
-    name: user.name ?? '',
-    email: user.email ?? '',
-    // TODO: [refactor] get notify_status_changes and notify_user_located from new API
-    // notify_status_changes: user.notify_status_changes,
-    // notify_user_located: user.notify_user_located,
-    notify_status_changes: false,
-    notify_user_located: false,
+    name: account.name ?? '',
+    email: account.email ?? '',
+    notify_status_changes: ACTIVE_MEMBERSHIP.notify_status_changes,
+    notify_user_located: ACTIVE_MEMBERSHIP.notify_user_located,
     current_password: '',
     password: '',
     confirm_password: '',
   };
 }
 
-export const MyAccountForm = ({ user }: { user: schemas['UserResponse'] }) => {
+export const MyAccountForm = ({ user }: { user: Account }) => {
   const t = useTranslations('pages.settings.my_account');
   const showErrorToast = useGenericErrorToast();
   const router = useRouter();
@@ -52,7 +58,7 @@ export const MyAccountForm = ({ user }: { user: schemas['UserResponse'] }) => {
 
   const { handleSubmit, control } = form;
 
-  const { mutate, isPending } = useMyAccountMutation({
+  const { execute: updateAccount, isPending } = useAction(actionUpdateAccount, {
     onSuccess: () => {
       toast({
         description: t('success_title'),
@@ -64,12 +70,14 @@ export const MyAccountForm = ({ user }: { user: schemas['UserResponse'] }) => {
         password: '',
         confirm_password: '',
       });
+      // The session carries the address the member just changed; the refresh is
+      // what re-renders the tree from the rewritten cookie.
       router.refresh();
     },
-    onError: (error: ApiError) => {
-      if (hasApiError(error, 'current_password', 'invalid')) {
+    onError: ({ error: { serverError } }) => {
+      if (isWrongPasswordActionError(serverError)) {
         form.setError('current_password', { message: t('errors.current_password_invalid') });
-      } else if (hasApiError(error, 'email', 'taken')) {
+      } else if (isEmailTakenActionError(serverError)) {
         form.setError('email', {
           type: 'server',
           message: t('errors.email_taken'),
@@ -81,7 +89,12 @@ export const MyAccountForm = ({ user }: { user: schemas['UserResponse'] }) => {
   });
 
   const onSubmit = (data: MyAccountFormValues) => {
-    mutate(data);
+    updateAccount({
+      name: data.name,
+      email: data.email,
+      currentPassword: data.current_password || undefined,
+      newPassword: data.password || undefined,
+    });
   };
 
   return (
