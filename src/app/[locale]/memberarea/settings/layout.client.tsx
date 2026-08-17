@@ -1,6 +1,5 @@
 'use client';
 
-import { signOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 
@@ -10,6 +9,7 @@ import { Icon } from '@/components/ui/icon';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ROUTES } from '@/constants/routes';
 import { usePathname, useRouter } from '@/libs/i18n-routing';
+import { actionLogout } from '@/server/actions/auth.actions';
 
 const settingsTabs: { title: 'my_account' | 'billing' | 'get_help'; value: string }[] = [
   {
@@ -41,7 +41,9 @@ export function SettingsLayoutClient({ children }: SettingsLayoutClientProps) {
   };
 
   const handleLogout = async () => {
-    await signOut({ redirect: true, redirectTo: ROUTES.HOME });
+    await actionLogout();
+    router.push(ROUTES.HOME);
+    router.refresh();
   };
 
   const getCurrentTabValue = () => {

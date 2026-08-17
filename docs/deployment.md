@@ -20,11 +20,8 @@ The following environment variables are required at build time. They will be mad
 
 There are some additional runtime environment variables required when running the application containers:
 
-- `AUTH_SECRET`: The secret used to sign the JWT tokens. This can be any random string of at least 32 characters.
-- `AUTH_GOOGLE_ID`: The Google OAuth client ID.
-- `AUTH_GOOGLE_SECRET`: The Google OAuth client secret.
-- `AUTH_FACEBOOK_ID`: The Facebook OAuth client ID.
-- `AUTH_FACEBOOK_SECRET`: The Facebook OAuth client secret.
+- `SESSION_PASSWORD`: The secret the session cookie is sealed with. Any random string of at least 32 characters. Rotating it invalidates every existing session, signing everyone out.
+- `API_BASE_URL`: The base URL of the API that issues the session's access and refresh tokens, e.g. `https://api.ignastrace.io`.
 - `IPSTACK_API_KEY`: The Ipstack API key.
 - `INTERNAL_API_URL`: The URL for the backend API that uses the internal container host. If this is not set, the NEXT_PUBLIC_API_URL will be used.
 - `PDF_GENERATION_APP_HOST`: This is the HOST that will be requested to generate the PDF. In this host the app needs to be running. Usually this will be http://localhost:3000.

@@ -1,4 +1,4 @@
-import { type NextRequest, NextResponse } from 'next/server';
+import type { NextRequest, NextResponse } from 'next/server';
 import { UAParser } from 'ua-parser-js';
 
 import { INTERNAL_QUERY_PARAMS, TRACKING_PREFIX } from '@/constants/tracking';
@@ -61,9 +61,11 @@ function getTrackingDataToSet(request: NextRequest): Record<string, string> | nu
   };
 }
 
-export function handleTracking(request: NextRequest, _response?: NextResponse): NextResponse {
-  const response = _response || NextResponse.next({ request });
-
+/**
+ * The tracking step of the middleware chain: the marketing parameters a visitor
+ * arrived with, stored as cookies on the response the steps before it produced.
+ */
+export function tracking(request: NextRequest, response: NextResponse): NextResponse {
   const trackingData = getTrackingDataToSet(request);
 
   if (trackingData) {

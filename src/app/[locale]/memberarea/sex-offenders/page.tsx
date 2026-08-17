@@ -1,15 +1,15 @@
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 
-import { auth } from '@/auth';
 import ProductLayout from '@/components/layouts/product-layout';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
+import { getServerSession } from '@/server/session/session.utils';
 
 import { SexOffenderSearchForm } from './search-form';
 
 const SexOffendersSearchPage = async () => {
-  const session = await auth();
+  const session = await getServerSession();
   const isAuthenticated = !!session;
 
   if (!isAuthenticated) {

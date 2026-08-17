@@ -3,19 +3,19 @@ import '@/styles/application.css';
 import type { Metadata } from 'next';
 import { Bebas_Neue, Inter } from 'next/font/google';
 import Script from 'next/script';
-import { SessionProvider } from 'next-auth/react';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 
-import { auth } from '@/auth';
 import { QueryProvider } from '@/components/navigation/providers/query-client-provider';
 import { Toaster } from '@/components/ui/toaster';
 import { ConsentProvider } from '@/contexts/consent-context';
 import { CountryProvider } from '@/contexts/country-context';
 import { FeaturesProvider } from '@/contexts/features-context';
+import { SessionProvider } from '@/contexts/session-context';
 import { getFeatures } from '@/libs/server/feature-flags';
 import { getUserCountry } from '@/libs/server/user-country';
 import { cn } from '@/libs/utils';
+import { getServerSession } from '@/server/session/session.utils';
 import { getAlternates, getBaseUrl, getCurrentPath } from '@/utils/helpers';
 
 const interFont = Inter({
@@ -121,9 +121,9 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   setRequestLocale(locale);
 
   const messages = await getMessages();
-  const session = await auth();
   const country = await getUserCountry();
   const features = await getFeatures();
+  const session = await getServerSession();
   const isUSUser = country === 'US';
   const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
@@ -163,9 +163,13 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         )}
       </head>
       <body suppressHydrationWarning>
-        <SessionProvider session={session}>
-          <QueryProvider>
-            <NextIntlClientProvider locale={locale} messages={messages}>
+        <QueryProvider>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            {/*
+              The identity out of the sealed cookie, and only the identity: the
+              tokens stay on the server, where both proxies attach them.
+            */}
+            <SessionProvider user={session?.user ?? null}>
               <CountryProvider country={country}>
                 <FeaturesProvider features={features}>
                   <ConsentProvider isUSUser={isUSUser}>
@@ -174,9 +178,9 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
                   </ConsentProvider>
                 </FeaturesProvider>
               </CountryProvider>
-            </NextIntlClientProvider>
-          </QueryProvider>
-        </SessionProvider>
+            </SessionProvider>
+          </NextIntlClientProvider>
+        </QueryProvider>
       </body>
     </html>
   );

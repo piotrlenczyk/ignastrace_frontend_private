@@ -1,19 +1,19 @@
 import { redirect } from 'next/navigation';
 
 import { getFunnelPhone } from '@/actions/funnel-phone-number';
-import { auth } from '@/auth';
 import ProductLayout from '@/components/layouts/product-layout';
 import { ROUTES } from '@/constants/routes';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getApi } from '@/libs/server/api';
 import { getFeatures } from '@/libs/server/feature-flags';
+import { getServerSession } from '@/server/session/session.utils';
 import type { User } from '@/types/user';
 
 import { SearchCompleteContent } from './_components/search-complete-content';
 
 export default async function LookupSearchCompletePage() {
-  const session = await auth();
+  const session = await getServerSession();
   const isAuthenticated = !!session;
 
   if (!isAuthenticated) {

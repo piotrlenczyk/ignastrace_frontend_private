@@ -1,11 +1,11 @@
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 
-import { auth } from '@/auth';
 import FunnelLayout from '@/components/layouts/funnel-layout';
 import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { getApi } from '@/libs/server/api';
+import { getServerSession } from '@/server/session/session.utils';
 
 import type { Product } from '../../success/_types/product.type';
 import UpsellCard from '../_components/upsell-card';
@@ -13,7 +13,7 @@ import UpsellProgressSteps from '../_components/upsell-progress-steps';
 
 const UpsellDataBreachPage = async () => {
   const t = await getTranslations('pages.reverse_lookup.upsell.data_breach');
-  const session = await auth();
+  const session = await getServerSession();
   const isAuthenticated = !!session;
 
   if (!isAuthenticated) {

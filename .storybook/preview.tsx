@@ -1,10 +1,10 @@
 import './preview.css';
 
 import type { Preview } from '@storybook/nextjs-vite';
-import { SessionProvider } from 'next-auth/react';
 import { NextIntlClientProvider } from 'next-intl';
 
 import { QueryProvider } from '../src/components/navigation/providers/query-client-provider';
+import { SessionProvider } from '../src/contexts/session-context';
 import messages from '../src/locales/en.json';
 
 /*
@@ -39,16 +39,16 @@ const preview: Preview = {
   /*
    * The app's client providers, in the app's order, minus the ones no v2
    * component reads (country, features, consent). Without the intl provider any
-   * component calling `useTranslations` throws; without the session and query
-   * providers the language selector's mutation hook does. `session={null}`
-   * renders the signed-out state and stops NextAuth from calling an API route
-   * that does not exist here.
+   * component calling `useTranslations` throws; without the query provider and
+   * the session provider the language selector's mutation hook does. The
+   * session is rendered signed out, since there is no request here to read one
+   * from — a story that needs a member supplies its own provider.
    */
   decorators: [
     (Story) => (
-      <SessionProvider session={null} refetchOnWindowFocus={false}>
-        <QueryProvider>
-          <NextIntlClientProvider locale="en" messages={messages} timeZone="UTC">
+      <QueryProvider>
+        <NextIntlClientProvider locale="en" messages={messages} timeZone="UTC">
+          <SessionProvider user={null}>
             <div
               style={{
                 fontFamily: 'var(--font-body)',
@@ -58,9 +58,9 @@ const preview: Preview = {
             >
               <Story />
             </div>
-          </NextIntlClientProvider>
-        </QueryProvider>
-      </SessionProvider>
+          </SessionProvider>
+        </NextIntlClientProvider>
+      </QueryProvider>
     ),
   ],
 

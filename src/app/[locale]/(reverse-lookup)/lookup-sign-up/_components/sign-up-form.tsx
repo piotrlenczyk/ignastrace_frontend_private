@@ -2,8 +2,8 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { useLocale, useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { useAction } from 'next-safe-action/hooks';
 import { useForm } from 'react-hook-form';
 
 import AvatarWithLock from '@/components/reverse-lookup/avatar-with-lock';
@@ -12,37 +12,31 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Icon } from '@/components/ui/icon';
 import { Input } from '@/components/ui/input';
 import { ROUTES } from '@/constants/routes';
-import { useSignUpMutation } from '@/hooks/api/use-sign-up-mutation';
 import { useGenericErrorToast } from '@/hooks/use-generic-error-toast';
-import { hasApiError } from '@/libs/api-client';
-import type { ApiError } from '@/libs/api-error';
 import { cn } from '@/libs/utils';
+import { actionRegister } from '@/server/actions/auth.actions';
+import { isEmailTakenActionError } from '@/server/lib/auth-action-error';
 import { createSignUpSchema, type SignUpFormValues } from '@/types/sign-up.types';
 
 export const SignUpForm = ({ phoneNumber, className }: { phoneNumber: string; className?: string }) => {
   const t = useTranslations('pages.reverse_lookup.sign_up');
   const router = useRouter();
-  const locale = useLocale();
   const showErrorToast = useGenericErrorToast();
-  const [isRedirecting, setIsRedirecting] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const form = useForm<SignUpFormValues>({
     resolver: zodResolver(createSignUpSchema(t)),
     defaultValues: {
       email: '',
-      onboarding_phone_number: phoneNumber,
-      locale,
     },
   });
 
-  const { mutate, isPending } = useSignUpMutation({
+  const { execute: signUp, isPending } = useAction(actionRegister, {
     onSuccess: () => {
       router.push(ROUTES.REVERSE_LOOKUP.SUMMARY);
-      setIsRedirecting(true);
-      setIsSubmitting(false);
+      router.refresh();
     },
-    onError: (error: ApiError) => {
-      if (error.name !== 'sign_in_error' && hasApiError(error, 'email', 'taken')) {
+    onError: ({ error }) => {
+      if (isEmailTakenActionError(error.serverError)) {
         form.setError('email', {
           type: 'server',
           message: t('errors.email_exists'),
@@ -50,14 +44,10 @@ export const SignUpForm = ({ phoneNumber, className }: { phoneNumber: string; cl
       } else {
         showErrorToast();
       }
-      setIsSubmitting(false);
     },
   });
 
-  const handleSubmit = (data: SignUpFormValues) => {
-    setIsSubmitting(true);
-    mutate(data);
-  };
+  const handleSubmit = (data: SignUpFormValues) => signUp(data);
 
   return (
     <main className={cn('s-main overflow-hidden py-10', className)}>
@@ -105,11 +95,11 @@ export const SignUpForm = ({ phoneNumber, className }: { phoneNumber: string; cl
             <Button
               form="sign-up-form"
               type="submit"
-              disabled={isPending || isRedirecting}
+              disabled={isPending}
               className="h-auto w-full px-6 py-4 text-lg leading-5"
             >
               {t('submit_button')}
-              {isSubmitting ? <Icon name="reload" className="ms-2 animate-spin" /> : ''}
+              {isPending ? <Icon name="reload" className="ms-2 animate-spin" /> : ''}
             </Button>
           </form>
         </Form>

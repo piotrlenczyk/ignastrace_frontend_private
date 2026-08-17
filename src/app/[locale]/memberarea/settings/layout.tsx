@@ -1,15 +1,15 @@
 import { redirect } from 'next/navigation';
 
 import { getFunnelPhone } from '@/actions/funnel-phone-number';
-import { auth } from '@/auth';
 import ProductLayout from '@/components/layouts/product-layout';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
+import { getServerSession } from '@/server/session/session.utils';
 
 import { SettingsLayoutClient } from './layout.client';
 
 export default async function SettingsLayout({ children }: { children: React.ReactNode }) {
-  const session = await auth();
+  const session = await getServerSession();
   const isAuthenticated = !!session;
 
   if (!isAuthenticated) {

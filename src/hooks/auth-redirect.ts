@@ -1,8 +1,8 @@
 import type { Route } from 'next';
 import { redirect } from 'next/navigation';
 
-import { auth } from '@/auth';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
+import { getServerSession } from '@/server/session/session.utils';
 
 type AuthRedirectOptions = {
   routes: {
@@ -20,7 +20,7 @@ export const redirectBySubscriptionStatus = async (options: AuthRedirectOptions)
   const { routes, allowUnauthenticated = true, redirectIfAuthenticated = true } = options;
 
   try {
-    const session = await auth();
+    const session = await getServerSession();
     const isAuthenticated = !!session;
 
     if (isAuthenticated && redirectIfAuthenticated) {

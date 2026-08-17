@@ -1,19 +1,19 @@
 import { redirect } from 'next/navigation';
 
 import ThankYouPage from '@/app/[locale]/thank-you/page';
-import { auth } from '@/auth';
 import GTMPurchaseEvent from '@/components/gtm-purchase-event';
 import FunnelLayout from '@/components/layouts/funnel-layout';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getApi } from '@/libs/server/api';
+import { getServerSession } from '@/server/session/session.utils';
 import type { User } from '@/types/user';
 
 import UpsellPageClient from './_components/upsell-page-client';
 import type { Product } from './_types/product.type';
 
 const UpsellPage = async () => {
-  const session = await auth();
+  const session = await getServerSession();
   const isAuthenticated = !!session;
 
   if (!isAuthenticated) {

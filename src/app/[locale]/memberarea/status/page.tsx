@@ -2,17 +2,17 @@ import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 
 import { getFunnelPhone } from '@/actions/funnel-phone-number';
-import { auth } from '@/auth';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getApi } from '@/libs/server/api';
+import { getServerSession } from '@/server/session/session.utils';
 import type { ServiceRequest } from '@/types/service-request';
 
 import { EmptyState } from './_page/components/empty-state';
 import { ServiceRequests } from './_page/components/service-requests';
 
 const StatusPage = async () => {
-  const session = await auth();
+  const session = await getServerSession();
   const isAuthenticated = !!session;
 
   if (!isAuthenticated) {

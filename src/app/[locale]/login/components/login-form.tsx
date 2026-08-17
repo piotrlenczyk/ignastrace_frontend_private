@@ -1,7 +1,10 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import type { Route } from 'next';
+import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { useAction } from 'next-safe-action/hooks';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -11,18 +14,28 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { PasswordInput } from '@/components/ui/password-input';
-import { ROUTES } from '@/constants/routes';
+import { REDIRECT_QUERY_PARAM, ROUTES } from '@/constants/routes';
 import { useRouter } from '@/libs/i18n-routing';
+import { resolveRedirectTarget, stripLocalePrefix } from '@/libs/redirect-target';
+import { actionSignIn } from '@/server/actions/auth.actions';
 
 import { Separator } from '../../sign-up/components/separator';
-import { useLoginMutation } from '../hooks/api/use-login-mutation';
 import { createLoginSchema, type LoginFormValues } from '../types/login.types';
 
 export const LoginForm = ({ error }: { error: boolean }) => {
   const t = useTranslations('components.forms.sign_in');
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  /*
+   * Where the guards said this visitor was headed, once it has been checked
+   * to be a path on this site rather than somewhere else.
+   */
+  const destination = stripLocalePrefix(
+    resolveRedirectTarget(searchParams.get(REDIRECT_QUERY_PARAM), ROUTES.CHECKOUT),
+  ) as Route;
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(createLoginSchema(t)),
@@ -32,10 +45,17 @@ export const LoginForm = ({ error }: { error: boolean }) => {
     },
   });
 
-  const { mutate: logIn, isPending } = useLoginMutation({
+  /*
+   * Every failure renders the same message on the password field, whatever the
+   * API's error code says. Telling a missing account apart from a wrong password
+   * would change what the visitor reads and turn this form into a way of finding
+   * out which addresses have accounts.
+   */
+  const { execute: logIn, isPending } = useAction(actionSignIn, {
     onSuccess: () => {
       setIsSubmitted(true);
-      router.push(ROUTES.CHECKOUT);
+      router.push(destination);
+      router.refresh();
     },
     onError: () => {
       form.setError('password', {
@@ -60,7 +80,7 @@ export const LoginForm = ({ error }: { error: boolean }) => {
           </div>
         )}
 
-        <SocialSignIn redirectTo={ROUTES.CHECKOUT} />
+        <SocialSignIn />
 
         <Separator>{t('or')}</Separator>
         <form id="sign-in-form" onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col gap-4">

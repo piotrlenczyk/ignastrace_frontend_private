@@ -1,13 +1,13 @@
 import { redirect } from 'next/navigation';
 import { getLocale, getTranslations } from 'next-intl/server';
 
-import { auth } from '@/auth';
 import FunnelLayout from '@/components/layouts/funnel-layout';
 import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { getApi } from '@/libs/server/api';
 import { getUserCountry } from '@/libs/server/user-country';
+import { getServerSession } from '@/server/session/session.utils';
 
 import type { Product } from '../../success/_types/product.type';
 import UpsellCard from '../_components/upsell-card';
@@ -15,7 +15,7 @@ import UpsellProgressSteps from '../_components/upsell-progress-steps';
 
 const UpsellSexOffendersPage = async () => {
   const t = await getTranslations('pages.reverse_lookup.upsell.sex_offenders');
-  const session = await auth();
+  const session = await getServerSession();
   const isAuthenticated = !!session;
 
   if (!isAuthenticated) {

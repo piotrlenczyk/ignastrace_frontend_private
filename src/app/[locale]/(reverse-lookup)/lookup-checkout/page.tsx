@@ -1,7 +1,6 @@
 import { redirect } from 'next/navigation';
 
 import { getFunnelPhone } from '@/actions/funnel-phone-number';
-import { auth } from '@/auth';
 import FunnelLayout from '@/components/layouts/funnel-layout';
 import { ROUTES } from '@/constants/routes';
 import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
@@ -9,12 +8,13 @@ import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { getCurrencyFromCountry } from '@/libs/currency';
 import { getApi } from '@/libs/server/api';
 import { getUserCountry } from '@/libs/server/user-country';
+import { getServerSession } from '@/server/session/session.utils';
 import type { Products } from '@/types/products';
 
 import { LookupCheckoutPageClient } from './_page';
 
 const Index = async () => {
-  const session = await auth();
+  const session = await getServerSession();
   const isAuthenticated = !!session;
 
   if (!isAuthenticated) {

@@ -2,7 +2,6 @@ import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 
 import { getFunnelPhone } from '@/actions/funnel-phone-number';
-import { auth } from '@/auth';
 import GTMPurchaseEvent from '@/components/gtm-purchase-event';
 import FunnelLayout from '@/components/layouts/funnel-layout';
 import TrustPilot from '@/components/success/trustPilot';
@@ -12,10 +11,11 @@ import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { Link } from '@/libs/i18n-routing';
 import { getApi } from '@/libs/server/api';
+import { getServerSession } from '@/server/session/session.utils';
 import type { User } from '@/types/user';
 
 const ThankYouPage = async () => {
-  const session = await auth();
+  const session = await getServerSession();
   const isAuthenticated = !!session;
 
   if (!isAuthenticated) {

@@ -120,8 +120,6 @@ affinity: {}
 environment: dev
 
 settings:
-  AUTH_GOOGLE_ID: 1023161985505-37rj0393fb6njl8hki4kklaa1vd6tn48.apps.googleusercontent.com
-  AUTH_FACEBOOK_ID: '650145790912874'
   NODE_ENV: production
   ENV: production
   PORT: 3000

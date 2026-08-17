@@ -1,6 +1,5 @@
 'use client';
 
-import { signOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
@@ -17,6 +16,7 @@ import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { useRouter } from '@/libs/i18n-routing';
 import { cn } from '@/libs/utils';
+import { actionLogout } from '@/server/actions/auth.actions';
 
 import { useDeleteAccountMutation } from '../_hooks/api/use-delete-account-mutation';
 
@@ -30,9 +30,7 @@ export function DeleteAccount({ className, disabled = false }: { className?: str
   const { mutate: deleteAccount, isPending } = useDeleteAccountMutation({
     onSuccess: () => {
       setIsDeleted(true);
-      signOut({
-        redirect: false,
-      });
+      actionLogout();
     },
     onError: () => {
       setIsDeleted(false);

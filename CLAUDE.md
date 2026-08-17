@@ -13,9 +13,11 @@ The programme of work has two parts:
    new components).
 2. **Wire it up to the new API.**
 
-**Right now only part 1 is in scope.** Focus on design and UI implementation. Do not build API
-clients, change data fetching, or refactor server actions unless explicitly asked — existing
-data plumbing stays as it is until the design work lands.
+**Both parts are in scope now.** The design work is the bulk of it, but the data layer described
+below has landed and is the pattern new code follows. What is still out of scope is migrating
+legacy screens onto the new API for its own sake: legacy data plumbing dies with the screen it
+serves, when that screen is redesigned. Don't rewrite a screen's fetching unless you are
+redesigning the screen or a ticket asks for it.
 
 ## Design implementation rules
 
@@ -63,6 +65,49 @@ Components in `src/components/ui` are the **old** design system. For design work
   the current screen happens to use.
 - Compose classes through `cn` from `@/libs/utils` so token-aware merging works.
 - Keep behaviour on Radix primitives where the old component already used them.
+
+## Data layer
+
+`docs/adr/0009-one-proxy-for-every-browser-call.md` records why this shape, and is the record to
+read before contradicting any of it. The rules:
+
+- **The browser never calls a backend directly, and holds no token.** Every browser call goes
+  through a catch-all proxy in this application, which attaches the session's bearer server-side.
+  The session is one sealed, http-only cookie; client components read identity — never a token —
+  from the session provider in the root layout.
+- **Server components and server actions read through the server-side client**
+  (`src/network/api/apiServerClient.ts`), typed from the generated specification in
+  `src/network/api/api.d.ts`.
+- **Client components read and write through the query hooks**
+  (`src/network/api/api-browser-client.ts`, `openapi-react-query` over the proxy). A call is typed
+  end to end — path, body, response and error — because the proxy mounts the upstream path
+  verbatim. Use the generated path literal; don't add a prefix.
+- **A write is a server action when it must set a cookie, redirect, or invalidate the Next cache**
+  — sign-in, sign-out, registration and anything of that shape. Everything else is a TanStack Query
+  mutation through the hooks. After a mutation, invalidate deliberately at the call site: query
+  keys for client-held data, `router.refresh()` only where the change shows in server-rendered
+  output.
+- **Server actions are built on `next-safe-action`**, on the one action client in
+  `src/server/lib/safe-action.ts`. It turns a parsed API error into a structured action error, so a
+  failure arrives at the form as data. `'use server'` modules may only export async functions, so
+  input schemas live in a sibling module.
+- **A form calls a server action through `useAction`** from `next-safe-action/hooks` — not through a
+  query-library mutation wrapping it — and reads a refusal through `isHttpClientActionError`.
+  An action returns nothing on success and answers a refusal with `serverError`; don't reintroduce a
+  success/error outcome object. Branch on the API's `errorCode`, never on the HTTP status, and keep a
+  generic fallback for a failure that carries no envelope
+  (`docs/adr/0011-auth-failures-on-the-standard-action-error-channel.md`).
+- **Read a response through `unwrapApiResponse`** (`src/network/http-response-handler.ts`), not by
+  poking at the client's result. Parsers and the parser manager sit behind it; leave them alone —
+  the interface is deliberately the reference repository's, not the smallest thing that works.
+- **New code must not import the legacy clients** — `src/libs/api-client.ts`, `src/hooks/use-api.ts`
+  and `src/libs/server/api.ts`. They are frozen and deleted with the screens they serve. The
+  browser-side one now goes through its own proxy under `/api/legacy`; that whole layer is
+  temporary.
+- **A new endpoint needs no route handler.** Regenerate — `scripts/api-build.sh` emits both the
+  types and the proxy's path allow-list — and add a hook.
+- Don't add a global 401 handler, a prefetch, or a hydration boundary without a ticket; all three
+  were deliberately left out.
 
 ## Translations
 

@@ -1,5 +1,3 @@
-import type { Session } from 'next-auth';
-
 import { ApiError } from './api-error';
 
 type RequestOptions = {
@@ -8,7 +6,13 @@ type RequestOptions = {
   headers?: Record<string, string>;
 };
 
-export const apiClient = (baseUrl: string, session?: Session | null) => ({
+/**
+ * The legacy API's client. `authorization` is the header value to send, ready
+ * to use — and only a server-side caller supplies one. A call from the browser
+ * is aimed at the legacy proxy instead, which attaches the session's bearer as
+ * the request passes through it.
+ */
+export const apiClient = (baseUrl: string, authorization?: string | null) => ({
   async request<T>(endpoint: string, options: RequestOptions = {}): Promise<{ data: T; authHeader?: string }> {
     const { method = 'GET', body, headers = {} } = options;
 
@@ -16,7 +20,7 @@ export const apiClient = (baseUrl: string, session?: Session | null) => ({
       method,
       headers: {
         'Content-Type': 'application/json',
-        ...(session && { Authorization: session.apiToken }),
+        ...(authorization && { Authorization: authorization }),
         ...headers,
       },
       body: body ? JSON.stringify(body) : undefined,

@@ -11,9 +11,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { useGenericErrorToast } from '@/hooks/use-generic-error-toast';
 import { useToast } from '@/hooks/use-toast';
+import { $api } from '@/network/api/api-browser-client';
 
-import { useContactUsMutation } from './hooks/contact-us-mutation';
-import { contactUsCreateSchema, type ContactUsFormValues } from './types/contact-form.types';
+import {
+  CONTACT_SUBJECT_LABEL_KEYS,
+  CONTACT_SUBJECTS,
+  contactUsCreateSchema,
+  type ContactUsFormValues,
+} from './types/contact-form.types';
 
 export const ContactForm = ({
   className,
@@ -32,15 +37,16 @@ export const ContactForm = ({
     defaultValues: {
       name: '',
       surname: '',
+      // No default: the API accepts four subjects and none of them is "unchosen".
+      subject: undefined,
       email: '',
-      subject: '',
       message: '',
       locale,
     },
     mode: 'onChange', // Activates validation while the user types
   });
 
-  const { mutate, isPending } = useContactUsMutation({
+  const { mutate, isPending } = $api.useMutation('post', '/api/v1/support/contact-us', {
     onSuccess: () => {
       form.reset();
       toast({
@@ -54,9 +60,7 @@ export const ContactForm = ({
     },
   });
 
-  const handleSubmit = (data: ContactUsFormValues) => {
-    mutate(data);
-  };
+  const handleSubmit = (data: ContactUsFormValues) => mutate({ body: data });
 
   const {
     formState: { isValid, isDirty },
@@ -121,15 +125,21 @@ export const ContactForm = ({
                   <FormLabel>{t('subject_label')} *</FormLabel>
                   <div className="rounded-md">
                     <FormControl>
-                      <Select onValueChange={field.onChange} value={field.value}>
+                      {/*
+                       * The options are the API's subject codes against the labels
+                       * they already had, so the visitor sees the same four in the
+                       * same order and the form posts what the specification declares.
+                       */}
+                      <Select onValueChange={field.onChange} value={field.value ?? ''}>
                         <SelectTrigger className="h-[50px] bg-white p-3 text-base">
                           <SelectValue placeholder={t('subject_placeholder')} />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="billing_question">{t('billing_question')}</SelectItem>
-                          <SelectItem value="technical_issue">{t('technical_issue')}</SelectItem>
-                          <SelectItem value="suggested_improvement">{t('suggested_improvement')}</SelectItem>
-                          <SelectItem value="other">{t('other')}</SelectItem>
+                          {CONTACT_SUBJECTS.map((subject) => (
+                            <SelectItem key={subject} value={subject}>
+                              {t(CONTACT_SUBJECT_LABEL_KEYS[subject])}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                     </FormControl>
