@@ -28,3 +28,4 @@ moves. Describe things by their role instead.
 | [0011](0011-auth-failures-on-the-standard-action-error-channel.md) | Authentication failures travel the standard action-error channel                 | Accepted                                          |
 | [0012](0012-the-session-through-iron-session-s-own-api.md)         | The session through iron-session's own API, auth calls beside the actions        | Accepted                                          |
 | [0013](0013-a-mocked-membership-until-the-api-publishes-one.md)    | A mocked membership stands in until the API publishes one                        | Accepted; temporary by construction               |
+| [0014](0014-a-two-source-activity-list.md)                         | The activity list is composed from two sources                                   | Accepted; temporary by construction               |

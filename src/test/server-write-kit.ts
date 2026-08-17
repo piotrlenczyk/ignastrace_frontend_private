@@ -31,8 +31,17 @@ let respond: (request: Request) => Promise<Response> = async (request) => {
   throw new Error(`Unexpected request to ${request.url}`);
 };
 
-/** Substituted once for the file, for the reason above. */
-vi.stubGlobal('fetch', async (request: Request) => {
+/**
+ * Substituted once for the file, for the reason above.
+ *
+ * `fetch` is called both ways it may be called: the generated client hands it a
+ * `Request` it built itself, the legacy one hands it a URL and an init pair. Both
+ * are normalised to a `Request` here so that an assertion is always about the same
+ * thing, whichever client made the call.
+ */
+vi.stubGlobal('fetch', async (input: Request | string | URL, init?: RequestInit) => {
+  const request = input instanceof Request ? input : new Request(input, init);
+
   upstreamRequests.push(request);
 
   return respond(request);
