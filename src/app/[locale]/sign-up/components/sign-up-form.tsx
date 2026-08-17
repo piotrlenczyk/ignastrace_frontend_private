@@ -3,7 +3,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import { useAction } from 'next-safe-action/hooks';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { SocialSignIn } from '@/components/forms/social-sign-in';
@@ -25,9 +24,6 @@ export const SignUpForm = () => {
   const showErrorToast = useGenericErrorToast();
   const router = useRouter();
 
-  const [isRedirecting, setIsRedirecting] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   const form = useForm<SignUpFormValues>({
     resolver: zodResolver(createSignUpSchema(t)),
     defaultValues: {
@@ -39,8 +35,6 @@ export const SignUpForm = () => {
     onSuccess: () => {
       router.push(ROUTES.CHECKOUT);
       router.refresh();
-      setIsRedirecting(true);
-      setIsSubmitting(false);
     },
     onError: ({ error }) => {
       if (isEmailTakenActionError(error.serverError)) {
@@ -51,13 +45,11 @@ export const SignUpForm = () => {
       } else {
         showErrorToast();
       }
-      setIsSubmitting(false);
     },
   });
 
-  const handleSubmit = ({ email }: SignUpFormValues) => {
-    setIsSubmitting(true);
-    signUp({ email });
+  const handleSubmit = (data: SignUpFormValues) => {
+    signUp(data);
   };
 
   return (
@@ -87,11 +79,11 @@ export const SignUpForm = () => {
             form="sign-up-form"
             size="lg"
             type="submit"
-            disabled={isPending || isRedirecting}
+            disabled={isPending}
             className="inline-block h-auto min-h-12 py-2 whitespace-normal"
           >
             {t('continue_with_email')}
-            {isSubmitting ? <Icon name="reload" className="ms-2 animate-spin" /> : ''}
+            {isPending ? <Icon name="reload" className="ms-2 animate-spin" /> : ''}
           </Button>
         </Form>
       </div>

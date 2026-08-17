@@ -35,9 +35,9 @@ const revalidateRootLayout = () => revalidatePath('/', 'layout');
 
 /** Signs a visitor in against the new API. */
 export const actionSignIn = actionClient.inputSchema(signInSchema).action(async ({ parsedInput }) => {
-  const { token, refreshToken } = await unwrapApiResponse(
-    await apiServerClient['/api/v1/auth/login'].POST({ body: parsedInput }),
-  );
+  const { token, refreshToken } = await apiServerClient['/api/v1/auth/login']
+    .POST({ body: parsedInput })
+    .then(unwrapApiResponse);
 
   await setSession({ access: token, refresh: refreshToken });
 
@@ -53,9 +53,9 @@ export const actionSignIn = actionClient.inputSchema(signInSchema).action(async 
  * `x-locale` the client attaches from the request being served.
  */
 export const actionRegister = actionClient.inputSchema(registrationSchema).action(async ({ parsedInput }) => {
-  const { token, refreshToken } = await unwrapApiResponse(
-    await apiServerClient['/api/v1/auth/register'].POST({ body: parsedInput }),
-  );
+  const { token, refreshToken } = await apiServerClient['/api/v1/auth/register']
+    .POST({ body: parsedInput })
+    .then(unwrapApiResponse);
 
   await setSession({ access: token, refresh: refreshToken });
 

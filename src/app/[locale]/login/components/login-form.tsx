@@ -65,8 +65,8 @@ export const LoginForm = ({ error }: { error: boolean }) => {
     },
   });
 
-  const handleSubmit = ({ email, password }: LoginFormValues) => {
-    logIn({ email, password });
+  const handleSubmit = (data: LoginFormValues) => {
+    logIn(data);
   };
 
   return (

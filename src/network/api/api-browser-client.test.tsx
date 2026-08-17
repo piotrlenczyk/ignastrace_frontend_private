@@ -38,7 +38,7 @@ vi.stubGlobal('fetch', async (request: Request) => {
 });
 
 /** Imported after the network is in place, for the reason above. */
-const { apiQueries } = await import('./api-browser-client');
+const { $api: apiQueries } = await import('./api-browser-client');
 
 const CONTACT_PATH = '/api/v1/support/contact-us';
 

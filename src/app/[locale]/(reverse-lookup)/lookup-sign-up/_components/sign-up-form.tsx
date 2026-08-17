@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useAction } from 'next-safe-action/hooks';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import AvatarWithLock from '@/components/reverse-lookup/avatar-with-lock';
@@ -23,8 +22,7 @@ export const SignUpForm = ({ phoneNumber, className }: { phoneNumber: string; cl
   const t = useTranslations('pages.reverse_lookup.sign_up');
   const router = useRouter();
   const showErrorToast = useGenericErrorToast();
-  const [isRedirecting, setIsRedirecting] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const form = useForm<SignUpFormValues>({
     resolver: zodResolver(createSignUpSchema(t)),
     defaultValues: {
@@ -36,8 +34,6 @@ export const SignUpForm = ({ phoneNumber, className }: { phoneNumber: string; cl
     onSuccess: () => {
       router.push(ROUTES.REVERSE_LOOKUP.SUMMARY);
       router.refresh();
-      setIsRedirecting(true);
-      setIsSubmitting(false);
     },
     onError: ({ error }) => {
       if (isEmailTakenActionError(error.serverError)) {
@@ -48,14 +44,10 @@ export const SignUpForm = ({ phoneNumber, className }: { phoneNumber: string; cl
       } else {
         showErrorToast();
       }
-      setIsSubmitting(false);
     },
   });
 
-  const handleSubmit = ({ email }: SignUpFormValues) => {
-    setIsSubmitting(true);
-    signUp({ email });
-  };
+  const handleSubmit = (data: SignUpFormValues) => signUp(data);
 
   return (
     <main className={cn('s-main overflow-hidden py-10', className)}>
@@ -103,11 +95,11 @@ export const SignUpForm = ({ phoneNumber, className }: { phoneNumber: string; cl
             <Button
               form="sign-up-form"
               type="submit"
-              disabled={isPending || isRedirecting}
+              disabled={isPending}
               className="h-auto w-full px-6 py-4 text-lg leading-5"
             >
               {t('submit_button')}
-              {isSubmitting ? <Icon name="reload" className="ms-2 animate-spin" /> : ''}
+              {isPending ? <Icon name="reload" className="ms-2 animate-spin" /> : ''}
             </Button>
           </form>
         </Form>

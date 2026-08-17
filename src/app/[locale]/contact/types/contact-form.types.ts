@@ -11,7 +11,9 @@ type ContactUsDto = components['schemas']['ContactUsDto'];
  * message under the field, which is what the visitor can act on, instead of a
  * 400 read back as a generic failure toast.
  */
+// TODO: [refactor] previously was 500, now is 250
 const MAX_MESSAGE_CHARACTERS = 250;
+// TODO: [refactor] previously was 150, now is 100
 const MAX_FIELD_CHARACTERS = 100;
 
 /**

@@ -4,7 +4,7 @@ import { type components, type paths } from './api';
 import { QUERY_SERIALIZER } from './api-query-serializer';
 
 export type schemas = components['schemas'];
-export type ResumeLanguage = schemas['ISO6391LanguageCode'];
+export type LanguageCode = schemas['ISO6391LanguageCode'];
 
 /** The locale the API is told about when nothing else states one. */
 const FALLBACK_LOCALE = 'en';

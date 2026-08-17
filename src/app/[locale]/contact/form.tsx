@@ -11,8 +11,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { useGenericErrorToast } from '@/hooks/use-generic-error-toast';
 import { useToast } from '@/hooks/use-toast';
+import { $api } from '@/network/api/api-browser-client';
 
-import { useContactUsMutation } from './hooks/contact-us-mutation';
 import {
   CONTACT_SUBJECT_LABEL_KEYS,
   CONTACT_SUBJECTS,
@@ -46,7 +46,7 @@ export const ContactForm = ({
     mode: 'onChange', // Activates validation while the user types
   });
 
-  const { send, isPending } = useContactUsMutation({
+  const { mutate, isPending } = $api.useMutation('post', '/api/v1/support/contact-us', {
     onSuccess: () => {
       form.reset();
       toast({
@@ -60,9 +60,7 @@ export const ContactForm = ({
     },
   });
 
-  const handleSubmit = (data: ContactUsFormValues) => {
-    send(data);
-  };
+  const handleSubmit = (data: ContactUsFormValues) => mutate({ body: data });
 
   const {
     formState: { isValid, isDirty },

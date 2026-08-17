@@ -102,16 +102,16 @@ const forwardedForOf = (request: NextRequest): string | undefined =>
 const requestTokenRefresh = async (request: NextRequest, session: SessionData) => {
   const forwardedFor = forwardedForOf(request);
 
-  return unwrapApiResponse(
-    await apiServerClient['/api/v1/auth/refresh-token'].POST({
+  return await apiServerClient['/api/v1/auth/refresh-token']
+    .POST({
       body: { refreshToken: session.refreshToken },
       headers: {
         Authorization: `Bearer ${session.accessToken}`,
         'x-locale': localeOf(request),
         ...(forwardedFor ? { 'x-forwarded-for': forwardedFor } : {}),
       },
-    }),
-  );
+    })
+    .then(unwrapApiResponse);
 };
 
 /**

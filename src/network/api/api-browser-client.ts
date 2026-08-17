@@ -65,4 +65,4 @@ browserClient.use(localeMiddleware);
  * different things on a public form and behind the member area, so each call
  * site decides.
  */
-export const apiQueries = createQueryClient(browserClient);
+export const $api = createQueryClient(browserClient);
