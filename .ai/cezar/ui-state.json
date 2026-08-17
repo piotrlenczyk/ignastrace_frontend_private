@@ -10,15 +10,15 @@
     },
     {
       "source": "skill",
-      "ref": "figma-screen-redesign"
+      "ref": "implement"
     },
     {
       "source": "skill",
-      "ref": "implement"
+      "ref": "figma-screen-redesign"
     }
   ],
   "skillUsage": {
-    "implement": 2,
+    "implement": 3,
     "figma-screen-redesign": 1
   }
 }

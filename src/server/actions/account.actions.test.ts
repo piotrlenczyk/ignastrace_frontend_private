@@ -1,19 +1,24 @@
-import { unsealData } from 'iron-session';
 import { DEFAULT_SERVER_ERROR_MESSAGE } from 'next-safe-action';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import { isEmailTakenActionError } from '@/server/lib/auth-action-error';
 import { isHttpClientActionError } from '@/server/lib/safe-action';
-
-import { SESSION_COOKIE_NAME, SESSION_TTL_SECONDS } from '../session/session.constants';
-import type { SessionData } from '../session/session.types';
-
-const API = 'https://api.ignastrace.test';
-
-const SESSION_PASSWORD = 'a-test-sealing-password-of-at-least-32-characters';
-
-vi.stubEnv('SESSION_PASSWORD', SESSION_PASSWORD);
-vi.stubEnv('API_BASE_URL', API);
+/*
+ * The kit installs the substitutions on import, so it comes before the module
+ * under test — which is pulled in with `await import(...)` below for the same
+ * reason.
+ */
+import {
+  IN_A_DAY,
+  OK,
+  redirect,
+  refusal,
+  resetKit,
+  sealedSession,
+  serveApi,
+  signedIn,
+  TOKEN_PAIR,
+} from '@/test/server-write-kit';
 
 /*
  * The account writes, driven the way the settings form drives them: an input in,
@@ -21,151 +26,20 @@ vi.stubEnv('API_BASE_URL', API);
  * and cannot see from inside a mutation — that the password is verified before
  * anything is saved, that a refusal arrives carrying the API's own code, and that
  * a changed address reaches the sealed session.
- *
- * The substitutions are the same three the session actions test makes, all of
- * them framework boundaries: `fetch`, the request's cookie jar, and the router.
- * iron-session seals for real, and the requests asserted on are the ones that
- * left the process.
  */
-const upstreamRequests: Request[] = [];
-
-let respond: (request: Request) => Promise<Response> = async (request) => {
-  throw new Error(`Unexpected request to ${request.url}`);
-};
-
-/** Substituted once for the file: the generated client captures `fetch` on creation. */
-vi.stubGlobal('fetch', async (request: Request) => {
-  upstreamRequests.push(request);
-
-  return respond(request);
-});
-
-type Entry = { value: string; options: Record<string, unknown> };
-
-const createCookieJar = () => {
-  const jar = new Map<string, Entry>();
-
-  return {
-    get: (name: string) => {
-      const entry = jar.get(name);
-
-      return entry ? { name, value: entry.value } : undefined;
-    },
-    set: (name: string, value: string, options: Record<string, unknown> = {}) => {
-      jar.set(name, { value, options });
-    },
-    delete: (name: string) => {
-      jar.delete(name);
-    },
-    entry: (name: string) => jar.get(name),
-    names: () => [...jar.keys()].sort(),
-  };
-};
-
-let cookieJar = createCookieJar();
-
-const revalidatePath = vi.fn();
-
-const REDIRECTED = 'NEXT_REDIRECT';
-
-const redirect = vi.fn((path: string) => {
-  throw new Error(`${REDIRECTED}: ${path}`);
-});
-
-vi.doMock('next/headers', () => ({ cookies: async () => cookieJar }));
-vi.doMock('next/cache', () => ({ revalidatePath }));
-vi.doMock('next/navigation', () => ({ redirect }));
-
-/** Imported after the environment, the network and the framework modules are in place. */
 const { actionDeleteAccount, actionUpdateAccount } = await import('./account.actions');
-const { actionSignIn } = await import('./auth.actions');
 const { getServerSession } = await import('../session/session.utils');
-
-const accessToken = (claims: Record<string, unknown>) => {
-  const encode = (value: object) => Buffer.from(JSON.stringify(value)).toString('base64url');
-
-  return `${encode({ alg: 'HS256', typ: 'JWT' })}.${encode(claims)}.signature`;
-};
-
-const IN_A_DAY = Math.floor(Date.now() / 1000) + 60 * 60 * 24;
-
-const TOKEN_PAIR = {
-  token: accessToken({
-    id: 'user-1',
-    email: 'member@example.com',
-    type: 'USER',
-    roles: ['STANDARD_USER'],
-    exp: IN_A_DAY,
-  }),
-  refreshToken: 'refresh-1',
-};
-
-type Route = { status: number; body?: unknown };
-
-const serveApi = (routes: Record<string, Route>) => {
-  upstreamRequests.length = 0;
-
-  respond = async (request) => {
-    const path = Object.keys(routes).find((candidate) => new URL(request.url).pathname === candidate);
-
-    if (!path) {
-      throw new Error(`Unexpected request to ${request.url}`);
-    }
-
-    const { status, body } = routes[path] as Route;
-
-    return new Response(body === undefined ? null : JSON.stringify(body), {
-      status,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  };
-
-  return {
-    /** The paths the API was called on, in the order it was called on them. */
-    paths: () => upstreamRequests.map((request) => new URL(request.url).pathname),
-    request: (path: string) => {
-      const request = upstreamRequests.find((candidate) => new URL(candidate.url).pathname === path);
-
-      if (!request) {
-        throw new Error(`The API was not called on ${path}.`);
-      }
-
-      return request;
-    },
-  };
-};
 
 const PROFILE_PATH = '/api/v1/user';
 const PASSWORD_PATH = '/api/v1/user/me/password';
 const DELETE_PATH = '/api/v1/user/me/delete';
-const LOGIN_PATH = '/api/v1/auth/login';
-
-const OK: Route = { status: 200 };
-
-/** The API's error envelope, as every refusal the specification declares arrives. */
-const refusal = (errorCode: string, code: string, message: string) => ({ error: { errorCode, code, message } });
-
-const sealedSession = async (): Promise<SessionData> =>
-  unsealData<SessionData>(cookieJar.entry(SESSION_COOKIE_NAME)!.value, {
-    password: SESSION_PASSWORD,
-    ttl: SESSION_TTL_SECONDS,
-  });
-
-/** The jar a successful sign-in would have left behind. */
-const signedIn = async () => {
-  serveApi({ [LOGIN_PATH]: { status: 201, body: TOKEN_PAIR } });
-
-  await actionSignIn({ email: 'member@example.com', password: 'secret' });
-};
 
 const PROFILE = { name: 'Jane Member', email: 'member@example.com' };
 
 const PASSWORD_CHANGE = { currentPassword: 'OldPassword123!', newPassword: 'NewStrongPass123!' };
 
 beforeEach(async () => {
-  cookieJar = createCookieJar();
-  revalidatePath.mockClear();
-  redirect.mockClear();
+  resetKit();
   await signedIn();
 });
 

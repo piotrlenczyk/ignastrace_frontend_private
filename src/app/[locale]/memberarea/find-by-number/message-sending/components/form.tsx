@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
+import { useAction } from 'next-safe-action/hooks';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -10,16 +11,14 @@ import { Button } from '@/components/ui/button';
 import { ConsentModal } from '@/components/ui/consent-modal';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
-import { ROUTES } from '@/constants/routes';
 import { useConsent } from '@/hooks/use-consent';
 import { useGenericErrorToast } from '@/hooks/use-generic-error-toast';
 import { useMessageErrorToast } from '@/hooks/use-message-error-toast';
 import { useSession } from '@/hooks/use-session';
-import { useRouter } from '@/libs/i18n-routing';
+import { actionCreateNumberLocationRequest } from '@/server/actions/location-request.actions';
+import { isDispatchLimitActionError } from '@/server/lib/location-request-action-error';
 import type { RequestCountData } from '@/types/request_count_data';
 
-import { useCreatePhoneLocationMutation } from '../hooks/api/use-create-phone-location-mutation';
-import { useSendSmsMutation } from '../hooks/api/use-send-sms-mutation';
 import { createMessageSendingSchema, type MessageSendingFormValues } from '../types/message-sending.types';
 
 export const MessageSendingForm = ({
@@ -31,7 +30,6 @@ export const MessageSendingForm = ({
 }) => {
   const t = useTranslations('pages.find_by_number_send_message');
   const tCommon = useTranslations('common.errors');
-  const router = useRouter();
   const showErrorToast = useGenericErrorToast();
   const showErrorToastWithMessage = useMessageErrorToast();
   const { shouldShowConsent, setConsentGiven } = useConsent();
@@ -45,35 +43,28 @@ export const MessageSendingForm = ({
     defaultValues: { message: '', phone: rawPhoneNumber },
   });
 
-  const sendSmsMutation = useSendSmsMutation({
-    onSuccess: () => router.push(ROUTES.MEMBER.FIND_BY_NUMBER.SUCCESS),
-    onError: (error) => {
-      switch (error.status) {
-        case 429:
-          showErrorToastWithMessage(tCommon('rate_limit_error'), tCommon('rate_limit_error_title'));
-          break;
-        default:
-          showErrorToast();
-          break;
+  /*
+   * One action creates the Location request and dispatches its SMS, and it navigates
+   * on success — so there is no success branch here, only the two things a refusal
+   * can be. The dispatch limit is the one a member can act on, so it gets its own
+   * message; everything else is the generic one.
+   *
+   * Only dispatch is limited: creating a Location request costs nothing against the
+   * SMS dispatch cycle, so there is no second place this branch has to be made.
+   */
+  const { execute, isPending } = useAction(actionCreateNumberLocationRequest, {
+    onError: ({ error }) => {
+      if (isDispatchLimitActionError(error.serverError)) {
+        showErrorToastWithMessage(tCommon('rate_limit_error'), tCommon('rate_limit_error_title'));
+      } else {
+        showErrorToast();
       }
     },
   });
 
-  const createPhoneLocationMutation = useCreatePhoneLocationMutation({
-    onSuccess: (data) => {
-      sendSmsMutation.mutate(data.id);
-    },
-    onError: (error) => {
-      switch (error.status) {
-        case 429:
-          showErrorToastWithMessage(tCommon('rate_limit_error'), tCommon('rate_limit_error_title'));
-          break;
-        default:
-          showErrorToast();
-          break;
-      }
-    },
-  });
+  const askByNumber = ({ phone, message }: MessageSendingFormValues) => {
+    execute({ phoneNumber: phone, message });
+  };
 
   const handleSubmit = (data: MessageSendingFormValues) => {
     // Check if consent is needed for US users (only for anonymous users).
@@ -86,14 +77,14 @@ export const MessageSendingForm = ({
     }
 
     // For non-US users, logged-in users, or when consent is already given, proceed directly
-    createPhoneLocationMutation.mutate(data);
+    askByNumber(data);
   };
 
   const handleConsentAccept = () => {
     setConsentGiven(true);
     setShowConsentModal(false);
     if (pendingData) {
-      createPhoneLocationMutation.mutate(pendingData);
+      askByNumber(pendingData);
     }
   };
 
@@ -101,8 +92,6 @@ export const MessageSendingForm = ({
     setShowConsentModal(false);
     setPendingData(null);
   };
-
-  const isPending = createPhoneLocationMutation.isPending || sendSmsMutation.isPending;
 
   return (
     <>

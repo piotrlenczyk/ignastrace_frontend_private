@@ -112,3 +112,23 @@ current-user response — the one commercial fact the account service does answe
 came to, and a flag per extra saying whether there is anything left to spend on it. The prices
 are what the thank-you and upsell screens report to analytics; the flags are what the report
 screens unlock on.
+
+## Location requests
+
+**Location request**
+: What a member creates when they ask someone where they are. It is either a request sent by SMS
+to a phone number, or one shared as a bare link the member passes on themselves. Its status is
+pending, located or refused.
+
+**Consent link**
+: The recipient-facing grant that belongs to a Location request. It is addressed by an opaque
+token, never by the request's own id, and it has its own lifetime and its own state: active,
+expired, or consumed. Its state never reveals whether a consumed link was answered or refused.
+
+**Share link**
+: The absolute URL that embeds a Consent link's token. The backend composes it; this application
+never assembles one.
+
+**SMS dispatch cycle**
+: The rolling window the member's SMS dispatch counter and its limit belong to. Creating a
+Location request costs nothing against it; dispatching an SMS does.

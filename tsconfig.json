@@ -13,7 +13,14 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noUnusedLocals": true,
+    /*
+     * `noUnusedLocals` has no ignore pattern, so it cannot express "this binding
+     * is parked on purpose" — the leading-underscore convention only applies to
+     * parameters and destructured elements. Unused locals are reported by
+     * `@typescript-eslint/no-unused-vars` instead, which is configured with
+     * `varsIgnorePattern: '^_'` in `eslint.config.mjs`. `noUnusedParameters`
+     * stays on: TypeScript already honours the underscore there.
+     */
     "noUnusedParameters": true,
     "allowUnreachableCode": false,
     "noFallthroughCasesInSwitch": true,

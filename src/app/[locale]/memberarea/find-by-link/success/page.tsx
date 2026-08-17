@@ -8,9 +8,8 @@ import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { Link } from '@/libs/i18n-routing';
-import { getApi } from '@/libs/server/api';
+import { apiServerClient } from '@/network/api/apiServerClient';
 import { getServerSession } from '@/server/session/session.utils';
-import type { Location } from '@/types/location';
 import type { Route } from '@/types/routes';
 
 import { CopyToClipBoard } from './components/copy-to-clipboard';
@@ -24,7 +23,8 @@ export default async function Page(props: PageProps<'/[locale]/memberarea/find-b
     redirect(ROUTES.HOME);
   }
 
-  const id = searchParams?.id;
+  // A query string may repeat a key, and the id is one value — the first one.
+  const [id] = [searchParams?.id].flat();
 
   if (!id) {
     redirect(ROUTES.MEMBER.FIND_BY_LINK.HOME);
@@ -43,8 +43,17 @@ export default async function Page(props: PageProps<'/[locale]/memberarea/find-b
     redirect(redirectUrl);
   }
 
-  const api = await getApi();
-  const { link } = await api.get<Location>(`/locations/${id}`);
+  /*
+   * The Share link is read here rather than carried from the creation, because it
+   * embeds the Consent link's opaque token — and a token in a query string ends up
+   * in the browser's history. What arrives is the request's own id; the link is
+   * fetched behind it.
+   */
+  const { data } = await apiServerClient['/api/v1/location-requests/{id}'].GET({ params: { path: { id } } });
+  if (!data) {
+    return null;
+  }
+  const { shareLink } = data;
 
   const t = await getTranslations('pages.find_by_link_success');
   const tFindByLink = await getTranslations('pages.find_by_link');
@@ -62,8 +71,8 @@ export default async function Page(props: PageProps<'/[locale]/memberarea/find-b
             <p className="text-sm text-strong">{t('body')}</p>
           </div>
           <div className="input-animated-border input-animated-border-secondary flex rounded-xl p-1">
-            <input className="flex-1 px-3 text-sm text-ellipsis text-strong" type="text" readOnly value={link} />
-            <CopyToClipBoard content={link} />
+            <input className="flex-1 px-3 text-sm text-ellipsis text-strong" type="text" readOnly value={shareLink} />
+            <CopyToClipBoard content={shareLink} />
           </div>
           <Button size="lg" asChild>
             <Link href={ROUTES.MEMBER.STATUS.HOME}>{t('statusCTA')}</Link>

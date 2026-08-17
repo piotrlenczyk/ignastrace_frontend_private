@@ -2,22 +2,20 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
+import { useAction } from 'next-safe-action/hooks';
 import { useForm } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { ROUTES } from '@/constants/routes';
 import { useGenericErrorToast } from '@/hooks/use-generic-error-toast';
-import { useRouter } from '@/libs/i18n-routing';
 import { cn } from '@/libs/utils';
+import { actionCreateLinkLocationRequest } from '@/server/actions/location-request.actions';
 
-import { useCreateLinkLocationMutation } from './hooks/api/use-create-link-location-mutation';
 import { type CreateLinkFormValues, createLinkLocationSchema } from './types/create-link.types';
 
 export const CreateCustomLinkForm = ({ className }: { className?: string }) => {
   const t = useTranslations('pages.find_by_link.form');
-  const router = useRouter();
   const showErrorToast = useGenericErrorToast();
 
   const form = useForm<CreateLinkFormValues>({
@@ -27,17 +25,20 @@ export const CreateCustomLinkForm = ({ className }: { className?: string }) => {
     },
   });
 
-  const { mutate, isPending } = useCreateLinkLocationMutation({
-    onSuccess: (data) => {
-      router.push(`${ROUTES.MEMBER.FIND_BY_LINK.SUCCESS}?id=${data.id}`);
-    },
+  /*
+   * There is no success branch: the action navigates to the screen that shows the
+   * Share link, so the only thing left for the form to do is say when the API
+   * refused. Nothing on this screen distinguishes one refusal from another, so
+   * every one of them is the generic message.
+   */
+  const { execute, isPending } = useAction(actionCreateLinkLocationRequest, {
     onError: () => {
       showErrorToast();
     },
   });
 
   const handleSubmit = (data: CreateLinkFormValues) => {
-    mutate(data);
+    execute({ linkName: data.name });
   };
 
   return (

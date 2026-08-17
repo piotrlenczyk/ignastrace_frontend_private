@@ -1,6 +1,9 @@
 import { z } from 'zod';
 
-const MAX_CHARACTERS = 255;
+import { LINK_NAME_MAX_CHARACTERS } from '@/server/actions/location-request.schemas';
+
+/** The action's bound, worded for the member. The number itself is stated once. */
+const MAX_CHARACTERS = LINK_NAME_MAX_CHARACTERS;
 
 export const createLinkLocationSchema = (t: (...args: any[]) => string) =>
   z.object({

@@ -6,9 +6,9 @@ import ProductLayout from '@/components/layouts/product-layout';
 import { ROUTES } from '@/constants/routes';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
-import { getApi } from '@/libs/server/api';
+import { apiServerClient } from '@/network/api/apiServerClient';
+import { unwrapApiResponse } from '@/network/http-response-handler';
 import { getServerSession } from '@/server/session/session.utils';
-import type { RequestCountData } from '@/types/request_count_data';
 import { firstValue } from '@/utils/search-params';
 
 import { MessageSendingForm } from './components/form';
@@ -19,7 +19,6 @@ export default async function MessageSendingPage(
   const searchParams = await props.searchParams;
   const session = await getServerSession();
   const isAuthenticated = !!session;
-  const api = await getApi();
 
   if (!isAuthenticated) {
     redirect(ROUTES.HOME);
@@ -41,8 +40,15 @@ export default async function MessageSendingPage(
     redirect(redirectUrl);
   }
 
-  const requestCountData = await api.get<RequestCountData>(`/locations/sms_count`);
+  /*
+   * Where the member is in the current SMS dispatch cycle, read server-side. The
+   * counter is read without being incremented — only a dispatch spends anything —
+   * and the action that dispatches invalidates this page so the number the member
+   * comes back to is the one the API now holds.
+   */
+  const { data } = await apiServerClient['/api/v1/location-requests/sms-count'].GET();
 
+  const smsCount = data ?? { count: 0, limit: 5 };
   const t = await getTranslations('pages.find_by_number_send_message');
 
   if (!phoneNumber) {
@@ -60,7 +66,7 @@ export default async function MessageSendingPage(
         <h1 className="h3 font-bold">{t('find_by_number')}</h1>
         <div className="container-content flex flex-1 flex-col justify-center gap-8">
           <div className="h4 text-center font-bold">{title}</div>
-          <MessageSendingForm rawPhoneNumber={phoneNumber} requestCountData={requestCountData} />
+          <MessageSendingForm rawPhoneNumber={phoneNumber} requestCountData={smsCount} />
           <ul className="list-disc pl-4 text-sm">
             <li>{t('extra_info.bullet_1')}</li>
             <li>{t('extra_info.bullet_2')}</li>

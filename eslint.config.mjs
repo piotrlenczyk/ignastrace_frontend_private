@@ -397,6 +397,27 @@ const config = [
        * no trace of how many there were.
        */
       '@typescript-eslint/no-explicit-any': 'warn',
+
+      /*
+       * A leading underscore is the conventional way of saying "this binding
+       * exists for its position, not for its value" — a skipped destructured
+       * field, an argument a signature forces on a handler, a caught error
+       * nothing reads. Only the ignore patterns are added here; the severity
+       * stays the `warn` Next's config already set, so restating the options
+       * does not turn the existing backlog into a gate.
+       */
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          args: 'after-used',
+          argsIgnorePattern: '^_',
+          caughtErrors: 'all',
+          caughtErrorsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^_',
+          ignoreRestSiblings: true,
+          varsIgnorePattern: '^_',
+        },
+      ],
     },
   },
 
