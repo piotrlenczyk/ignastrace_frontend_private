@@ -72,11 +72,18 @@ export const revalidatePath = vi.fn();
 /*
  * `redirect` interrupts a render by throwing, and a caller must not be able to
  * carry on past one — so the substitute throws too, rather than returning.
+ *
+ * What it throws carries a digest in Next's own format, because that digest is
+ * how everything between a write and the framework tells a navigation apart from
+ * a failure. next-safe-action is the case that matters here: without one it reads
+ * a redirect as a server error and answers a successful write with a failure.
  */
 export const REDIRECTED = 'NEXT_REDIRECT';
 
 export const redirect = vi.fn((path: string) => {
-  throw new Error(`${REDIRECTED}: ${path}`);
+  throw Object.assign(new Error(`${REDIRECTED}: ${path}`), {
+    digest: `${REDIRECTED};replace;${path};303;`,
+  });
 });
 
 vi.doMock('next/headers', () => ({ cookies: async () => cookieJar }));
