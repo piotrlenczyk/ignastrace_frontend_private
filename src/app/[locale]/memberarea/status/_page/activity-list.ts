@@ -60,10 +60,10 @@ type LegacyServiceRequest = {
   status_updated_at: string;
 };
 
-const isLegacyKind = (request: LegacyServiceRequest): request is LegacyServiceRequest & { source_type: LegacyKind } =>
+const _isLegacyKind = (request: LegacyServiceRequest): request is LegacyServiceRequest & { source_type: LegacyKind } =>
   request.source_type in LEGACY_KINDS;
 
-const fromServiceRequest = (request: LegacyServiceRequest & { source_type: LegacyKind }): ActivityRow => ({
+const _fromServiceRequest = (request: LegacyServiceRequest & { source_type: LegacyKind }): ActivityRow => ({
   id: request.id,
   kind: LEGACY_KINDS[request.source_type],
   status: LEGACY_STATUSES[request.status],
@@ -79,7 +79,7 @@ const fromServiceRequest = (request: LegacyServiceRequest & { source_type: Legac
   updatedAt: request.status_updated_at,
 });
 
-const readServiceRequests = async () => {
+const _readServiceRequests = async () => {
   const api = await getApi();
 
   return api.get<LegacyServiceRequest[]>('/service_requests');
@@ -110,13 +110,14 @@ const fromLocationRequest = (request: LocationRequest): ActivityRow => ({
  * one list rather than one appended to the other.
  */
 export const readActivityList = async (): Promise<ActivityRow[]> => {
-  const [locationRequests, serviceRequests] = await Promise.all([
+  const [locationRequests] = await Promise.all([
     apiServerClient['/api/v1/location-requests'].GET().then(unwrapApiResponse),
-    readServiceRequests(),
+    // TODO: [refactor]
+    // _readServiceRequests(),
   ]);
 
   return [
     ...locationRequests.map(fromLocationRequest),
-    ...serviceRequests.filter(isLegacyKind).map(fromServiceRequest),
+    // ...serviceRequests.filter(isLegacyKind).map(fromServiceRequest),
   ].sort((one, other) => Date.parse(other.updatedAt) - Date.parse(one.updatedAt));
 };

@@ -19,7 +19,7 @@ export const ActivityItem = ({ row }: { row: ActivityRow }) => {
   const locale = useLocale();
   const t = useTranslations('pages.status');
 
-  const settled = isSettled(row.status);
+  const settled = !isSettled(row.status);
   const ContainerElement = settled ? 'button' : 'div';
 
   const handleViewDetail = () => {

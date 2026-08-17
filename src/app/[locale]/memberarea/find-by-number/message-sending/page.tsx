@@ -46,8 +46,9 @@ export default async function MessageSendingPage(
    * and the action that dispatches invalidates this page so the number the member
    * comes back to is the one the API now holds.
    */
-  const smsCount = await apiServerClient['/api/v1/location-requests/sms-count'].GET().then(unwrapApiResponse);
+  const { data } = await apiServerClient['/api/v1/location-requests/sms-count'].GET();
 
+  const smsCount = data ?? { count: 0, limit: 5 };
   const t = await getTranslations('pages.find_by_number_send_message');
 
   if (!phoneNumber) {

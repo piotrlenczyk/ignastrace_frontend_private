@@ -4,7 +4,6 @@ import { getFunnelPhone } from '@/actions/funnel-phone-number';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { apiServerClient } from '@/network/api/apiServerClient';
-import { unwrapApiResponse } from '@/network/http-response-handler';
 import { getServerSession } from '@/server/session/session.utils';
 
 import { DetailStatusClientPage } from './_page';
@@ -43,11 +42,13 @@ const DetailStatusPage = async (props: PageProps<'/[locale]/memberarea/status/de
    * position and the resolved address travel with it, so the screen has everything
    * it renders by the time it is handed over and geocodes nothing in the browser.
    */
-  const locationRequest = await apiServerClient['/api/v1/location-requests/{id}']
-    .GET({ params: { path: { id } } })
-    .then(unwrapApiResponse);
+  const { data } = await apiServerClient['/api/v1/location-requests/{id}'].GET({ params: { path: { id } } });
 
-  return <DetailStatusClientPage locationRequest={locationRequest} />;
+  if (!data) {
+    return null;
+  }
+
+  return <DetailStatusClientPage locationRequest={data} />;
 };
 
 export default DetailStatusPage;

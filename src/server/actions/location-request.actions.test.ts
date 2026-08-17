@@ -188,14 +188,14 @@ describe('createNumberLocationRequest', () => {
       [CREATE_PATH]: { status: 201, body: NUMBER_CREATED },
       [DISPATCH_PATH]: {
         status: 429,
-        body: refusal('TOO_MANY_REQUESTS_ERROR', 'TOO_MANY_REQUESTS', 'Dispatch budget spent'),
+        body: refusal('TOO_MANY_REQUESTS', 'TOO_MANY_REQUESTS', 'Dispatch budget spent'),
       },
     });
 
     const { serverError } = await createByNumber();
 
     expect(isDispatchLimitActionError(serverError)).toBe(true);
-    expect(serverError).toMatchObject({ status: 429, data: { errorCode: 'TOO_MANY_REQUESTS_ERROR' } });
+    expect(serverError).toMatchObject({ status: 429, data: { errorCode: 'TOO_MANY_REQUESTS' } });
     expect(redirect).not.toHaveBeenCalled();
   });
 

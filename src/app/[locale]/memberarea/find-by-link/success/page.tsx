@@ -9,7 +9,6 @@ import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { Link } from '@/libs/i18n-routing';
 import { apiServerClient } from '@/network/api/apiServerClient';
-import { unwrapApiResponse } from '@/network/http-response-handler';
 import { getServerSession } from '@/server/session/session.utils';
 import type { Route } from '@/types/routes';
 
@@ -50,9 +49,11 @@ export default async function Page(props: PageProps<'/[locale]/memberarea/find-b
    * in the browser's history. What arrives is the request's own id; the link is
    * fetched behind it.
    */
-  const { shareLink } = await apiServerClient['/api/v1/location-requests/{id}']
-    .GET({ params: { path: { id } } })
-    .then(unwrapApiResponse);
+  const { data } = await apiServerClient['/api/v1/location-requests/{id}'].GET({ params: { path: { id } } });
+  if (!data) {
+    return null;
+  }
+  const { shareLink } = data;
 
   const t = await getTranslations('pages.find_by_link_success');
   const tFindByLink = await getTranslations('pages.find_by_link');

@@ -1,8 +1,6 @@
-import type { components } from '@/network/api/api';
+import type { schemas } from '@/network/api/apiServerClient';
 
 import { isHttpClientActionError } from './safe-action';
-
-type BusinessErrorCode = components['schemas']['BusinessErrorCode'];
 
 /*
  * The SMS dispatch limit, read off the API's own error code.
@@ -21,7 +19,7 @@ type BusinessErrorCode = components['schemas']['BusinessErrorCode'];
  * dispatch operation with the code it really sends; until then this constant is the
  * one place that knows the difference.
  */
-const DISPATCH_LIMIT_CODE: BusinessErrorCode = 'TOO_MANY_REQUESTS_ERROR';
+const DISPATCH_LIMIT_CODE: schemas['TooManyRequestsErrorCode'] = 'TOO_MANY_REQUESTS';
 
 /**
  * Whether an action's `serverError` is the API refusing to dispatch an SMS because
