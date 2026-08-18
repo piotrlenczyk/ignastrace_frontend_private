@@ -44,6 +44,10 @@ const { $paymentsApi: paymentsQueries } = await import('./payments-api-browser-c
 
 const PRODUCTS_PATH = '/products';
 const CANCEL_PATH = '/subscriptions/cancel';
+const PAYMENT_METHODS_PATH = '/subscriptions/adyen/paymentMethods';
+
+/** Both required by the operation, `locale` among them — the specification asks, not a middleware. */
+const PAYMENT_METHODS_QUERY = { priceId: 'price-monthly', locale: 'pl-PL' } as const;
 
 /** Where a payments path is answered from: this origin, under the payments mount. */
 const PRODUCTS_URL = `${window.location.origin}${PAYMENTS_API_PROXY_BASE_PATH}${PRODUCTS_PATH}`;
@@ -68,8 +72,8 @@ const readProducts = async () => {
 };
 
 /** A write, driven the same way. */
-const cancelSubscription = async () => {
-  const { result } = renderHook(() => paymentsQueries.useMutation('post', CANCEL_PATH), { wrapper });
+const cancelSubscription = async (options: { onError?: () => void } = {}) => {
+  const { result } = renderHook(() => paymentsQueries.useMutation('post', CANCEL_PATH, options), { wrapper });
 
   result.current.mutate({ body: CANCELLATION });
 
@@ -120,17 +124,39 @@ describe('the payments browser client', () => {
   });
 
   /*
-   * The API's browser client states the document's language because its own
-   * server client asks next-intl for one. The payments service publishes no
-   * locale parameter and the payments server client states none, so a browser
-   * that stated one would make the same call differ by where it was made.
+   * The API's browser client sets `x-locale` from the document because its own
+   * server client asks next-intl for a locale. This specification declares no
+   * such header — where it wants a locale it asks for one in the operation, so
+   * the document's language must not leak in beside it.
    */
-  it('states no language, as the payments server client states none', async () => {
+  it('adds no language header, whatever the document says', async () => {
     document.documentElement.lang = 'es';
 
     await readProducts();
 
     expect(sentRequest().headers.has('x-locale')).toBe(false);
+  });
+
+  /*
+   * The locale this service does ask for: a required query parameter, which the
+   * generated types oblige the call site to state. It has to arrive as the caller
+   * wrote it — a client that substituted the document's language would answer a
+   * question about one payment with the locale of the page that asked.
+   */
+  it("sends the specification's own locale parameter as the caller stated it", async () => {
+    document.documentElement.lang = 'es';
+
+    const { result } = renderHook(
+      () => paymentsQueries.useQuery('get', PAYMENT_METHODS_PATH, { params: { query: PAYMENT_METHODS_QUERY } }),
+      { wrapper },
+    );
+
+    await waitFor(() => expect(result.current.isPending).toBe(false));
+
+    const { searchParams } = new URL(sentRequest().url);
+
+    expect(searchParams.get('locale')).toBe(PAYMENT_METHODS_QUERY.locale);
+    expect(searchParams.get('priceId')).toBe(PAYMENT_METHODS_QUERY.priceId);
   });
 });
 
@@ -155,6 +181,22 @@ describe('a call through the payments query hooks', () => {
 
     expect(result.current.isError).toBe(true);
     expect(result.current.error).toEqual(refusal);
+  });
+
+  /*
+   * A dead session reaches the call site like any other refusal. This client
+   * installs no 401 handler, and for a stronger reason than the API's: an
+   * unauthenticated caller is a normal case here, because public pricing is read
+   * before anybody has an account. What a 401 means is the call site's to decide.
+   */
+  it('reports a 401 to the call site rather than handling it centrally', async () => {
+    respond = async () => Response.json({ message: 'Unauthorized', statusCode: 401 }, { status: 401 });
+
+    const onError = vi.fn();
+
+    await cancelSubscription({ onError });
+
+    expect(onError).toHaveBeenCalledOnce();
   });
 });
 

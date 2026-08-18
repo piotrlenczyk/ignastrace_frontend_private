@@ -38,11 +38,17 @@ import { PAYMENTS_API_PROXY_BASE_PATH } from './payments-api-proxy-path';
  * by default too. The API client overrides it because its specification asks for
  * the other convention.
  *
- * No locale middleware either. The API's browser client states the document's
- * language because the API's server client asks next-intl for one and cannot
- * inside a route handler; the payments specification declares no locale
- * parameter and the payments server client states none, so a browser that stated
- * one would make the same call differ by where in the application it was made.
+ * No locale middleware either, though not because this service is indifferent to
+ * language. The API's browser client sets an `x-locale` header because the API's
+ * server client asks next-intl for a locale and cannot inside a route handler.
+ * The payments specification declares no such header. Where it does want a
+ * locale it asks for one *in the operation*: `locale` is a required query
+ * parameter of `GET /subscriptions/adyen/paymentMethods`, and a body field of an
+ * Adyen payment. Those the generated types oblige the call site to state, and a
+ * middleware could only guess at them — overriding an argument the caller passed
+ * explicitly, or inventing one the compiler already demanded. So the locale
+ * travels as the specification's own parameter, from the call site that knows
+ * which payment it is describing, and this client adds nothing to it.
  */
 const paymentsBrowserClient = createClient<paths>({ baseUrl: PAYMENTS_API_PROXY_BASE_PATH });
 
