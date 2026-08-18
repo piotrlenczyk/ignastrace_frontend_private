@@ -59,15 +59,53 @@ const offSpecRefusal = (
  * for that status does not compile.
  */
 const REFUSALS: [number, Envelope][] = [
-  [400, { error: { message: 'Nope.', errorCode: 'VALIDATION_ERROR', code: 'BAD_REQUEST', stacktrace: [] } }],
-  [401, { error: { message: 'Nope.', errorCode: 'TOKEN_EXPIRED', code: 'UNAUTHORIZED', stacktrace: [] } }],
-  [403, { error: { message: 'Nope.', errorCode: 'INSUFFICIENT_PERMISSIONS', code: 'FORBIDDEN', stacktrace: [] } }],
-  [404, { error: { message: 'Nope.', errorCode: 'ENTITY_NOT_FOUND_ERROR', code: 'NOT_FOUND', stacktrace: [] } }],
-  [409, { error: { message: 'Nope.', errorCode: 'USER_EXISTS_ERROR', code: 'CONFLICT', stacktrace: [] } }],
-  [429, { error: { message: 'Nope.', errorCode: 'TOO_MANY_REQUESTS', code: 'TOO_MANY_REQUESTS', stacktrace: [] } }],
+  [
+    400,
+    { error: { message: 'Nope.', errorCode: 'VALIDATION_ERROR', code: 'BAD_REQUEST', details: [], stacktrace: [] } },
+  ],
+  [401, { error: { message: 'Nope.', errorCode: 'TOKEN_EXPIRED', code: 'UNAUTHORIZED', details: [], stacktrace: [] } }],
+  [
+    403,
+    {
+      error: {
+        message: 'Nope.',
+        errorCode: 'INSUFFICIENT_PERMISSIONS',
+        code: 'FORBIDDEN',
+        details: [],
+        stacktrace: [],
+      },
+    },
+  ],
+  [
+    404,
+    {
+      error: { message: 'Nope.', errorCode: 'ENTITY_NOT_FOUND_ERROR', code: 'NOT_FOUND', details: [], stacktrace: [] },
+    },
+  ],
+  [409, { error: { message: 'Nope.', errorCode: 'USER_EXISTS_ERROR', code: 'CONFLICT', details: [], stacktrace: [] } }],
+  [
+    429,
+    {
+      error: {
+        message: 'Nope.',
+        errorCode: 'TOO_MANY_REQUESTS',
+        code: 'TOO_MANY_REQUESTS',
+        details: [],
+        stacktrace: [],
+      },
+    },
+  ],
   [
     500,
-    { error: { message: null, errorCode: 'INTERNAL_SERVER_ERROR', code: 'INTERNAL_SERVER_ERROR', stacktrace: [] } },
+    {
+      error: {
+        message: null,
+        errorCode: 'INTERNAL_SERVER_ERROR',
+        code: 'INTERNAL_SERVER_ERROR',
+        details: [],
+        stacktrace: [],
+      },
+    },
   ],
 ];
 
@@ -94,9 +132,17 @@ describe('unwrapApiResponse', () => {
 
   it.each(REFUSALS)('rejects a %i with the envelope it carried', async (status, envelope) => {
     const error = await rejection(unwrapApiResponse(refusal(status, envelope)));
+    const { message, errorCode, code, stacktrace } = envelope.error;
 
     expect(error).toBeInstanceOf(HttpClientError);
-    expect((error as HttpClientError).data).toEqual(envelope.error);
+    /*
+     * The four fields the flattened error is declared to carry, rather than the
+     * envelope entire: the parser picks what it recognises, so a field the API
+     * adds upstream is not relayed until this layer is taught about it. Asserting
+     * on equality with the whole envelope would make every such addition a
+     * failure here, and the addition is the API's business, not this layer's.
+     */
+    expect((error as HttpClientError).data).toEqual({ message, errorCode, code, stacktrace });
     expect((error as HttpClientError).response.status).toBe(status);
   });
 

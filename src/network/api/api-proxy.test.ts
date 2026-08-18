@@ -173,13 +173,42 @@ describe('the API proxy', () => {
     expect(api.calls()).toBe(0);
   });
 
-  it('refuses the authentication endpoints, without calling the API', async () => {
+  it('refuses every path that issues a session, without calling the API', async () => {
+    const issuesASession = [
+      '/api/v1/auth/login',
+      '/api/v1/auth/register',
+      '/api/v1/auth/refresh-token',
+      '/api/v1/auth/guest-session',
+      '/api/v1/auth/magic-link/verify',
+      '/api/v1/auth/sso/google/register',
+    ];
+
+    for (const path of issuesASession) {
+      const api = serve();
+
+      const response = await POST(fromBrowser(path, json()));
+
+      expect(response.status, path).toBe(403);
+      expect(api.calls(), path).toBe(0);
+    }
+  });
+
+  it('refuses the address lookup, without calling the API', async () => {
     const api = serve();
 
-    const response = await POST(fromBrowser('/api/v1/auth/login', json()));
+    const response = await POST(fromBrowser('/api/v1/auth/get-user-by-email', json()));
 
     expect(response.status).toBe(403);
     expect(api.calls()).toBe(0);
+  });
+
+  it('forwards an authentication path that issues no session', async () => {
+    const api = serve({ body: { status: 'If the email is valid, a new password has been sent' } });
+
+    const response = await POST(fromBrowser('/api/v1/auth/forgot-password', json({ body: '{"email":"a@b.test"}' })));
+
+    expect(response.status).toBe(200);
+    expect(api.upstreamRequest().url).toBe(`${API}/api/v1/auth/forgot-password`);
   });
 
   it('describes its own refusals in the API error envelope', async () => {

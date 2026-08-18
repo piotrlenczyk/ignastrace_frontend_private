@@ -5,8 +5,8 @@ import { useState } from 'react';
 
 import { Dialog, DialogContent, DialogPortal, DialogTrigger } from '@/components/ui/dialog';
 import { cn } from '@/libs/utils';
+import { useForgotPasswordMutation } from '@/network/api/hooks/use-forgot-password-mutation';
 
-import { useForgotPasswordMutation } from '../hooks/api/use-forgot-password-mutation';
 import type { ForgotPasswordFormValues } from '../types/reset-password-form.types';
 import { ForgotPasswordEndContent } from './forgot-password-end-content';
 import { ForgotPasswordFormContent } from './forgot-password-form-content';
@@ -16,29 +16,40 @@ export const ForgotPasswordForm = ({ className, onOpen }: { className?: string; 
   const commonT = useTranslations('common');
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [email, setEmail] = useState('');
+  const [submittedEmail, setSubmittedEmail] = useState('');
   const [serverError, setServerError] = useState('');
 
-  const { mutate, isPending } = useForgotPasswordMutation({
-    onSuccess: (email) => {
-      setIsSubmitted(true);
-      setEmail(email);
-    },
-    onError: () => {
-      setServerError(commonT('errors.server_error_description'));
-    },
-  });
+  const { mutate, isPending } = useForgotPasswordMutation();
 
   const toggle = () => {
     setServerError('');
     setIsOpen(!isOpen);
     setIsSubmitted(false);
-    setEmail('');
+    setSubmittedEmail('');
   };
 
-  const handleSubmit = (data: ForgotPasswordFormValues) => {
+  /*
+   * The address shown on the confirmation comes from what was typed, not from the
+   * response: the API answers with a status and nothing else, on purpose. The
+   * confirmation is reached for every address it accepts — an address with no
+   * account is answered exactly like one that has it — so `onError` is left with
+   * the failures that are genuinely this application's to report.
+   */
+  const handleSubmit = ({ email }: ForgotPasswordFormValues) => {
     setServerError('');
-    mutate(data);
+
+    mutate(
+      { body: { email } },
+      {
+        onSuccess: () => {
+          setIsSubmitted(true);
+          setSubmittedEmail(email);
+        },
+        onError: () => {
+          setServerError(commonT('errors.server_error_description'));
+        },
+      },
+    );
   };
 
   return (
@@ -51,7 +62,7 @@ export const ForgotPasswordForm = ({ className, onOpen }: { className?: string; 
       <DialogPortal>
         <DialogContent className="max-w-[480px]">
           {isSubmitted ? (
-            <ForgotPasswordEndContent email={email} onClose={toggle} />
+            <ForgotPasswordEndContent email={submittedEmail} onClose={toggle} />
           ) : (
             <ForgotPasswordFormContent
               isPending={isPending}

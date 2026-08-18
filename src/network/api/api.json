@@ -1,6 +1,131 @@
 {
   "openapi": "3.0.0",
   "paths": {
+    "/api/v1/notification/center": {
+      "get": {
+        "operationId": "getUserNotificationsNotification",
+        "parameters": [
+          { "name": "cursor", "required": false, "in": "query", "schema": { "nullable": true, "type": "string" } },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": { "minimum": 1, "maximum": 100, "nullable": true, "default": 1, "type": "number" }
+          },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "" },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "tags": ["Notification"]
+      }
+    },
+    "/api/v1/notification/center/unread/count": {
+      "get": {
+        "operationId": "getUnreadCountNotification",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "" },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "tags": ["Notification"]
+      }
+    },
+    "/api/v1/notification/center/read": {
+      "put": {
+        "operationId": "markAsReadNotification",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/MarkAsRead" } } }
+        },
+        "responses": {
+          "200": { "description": "" },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "tags": ["Notification"]
+      }
+    },
     "/api/v1/healthcheck": {
       "get": {
         "operationId": "checkHealth",
@@ -144,7 +269,7 @@
     },
     "/api/v1/auth/login": {
       "post": {
-        "description": "\n  Authenticates administrators using email and password credentials.\n  \n  Authentication Flow:\n  1. Verifies credentials against admin database\n  2. Generates new JWT session tokens\n  \n  Security Features:\n  - Rate limiting for failed attempts (WIP)\n  - Password strength validation\n  - Secure token generation\n  \n  Notes:\n  - Access token has limited lifetime (24 hours)\n  - Refresh token can be used to extend session\n    ",
+        "description": "\n  Authenticates a user using email and password credentials.\n\n  Authentication Flow:\n  1. Verifies credentials against the user database\n  2. Generates new JWT session tokens\n\n  Security Features:\n  - Rate limiting for failed attempts (WIP)\n  - Password strength validation\n  - Secure token generation\n\n  Notes:\n  - Access token has limited lifetime (24 hours)\n  - Refresh token can be used to extend session\n    ",
         "operationId": "loginAuth",
         "parameters": [
           {
@@ -191,7 +316,7 @@
           }
         },
         "security": [{ "bearer": [] }, { "x-api-key": [] }],
-        "summary": "Admin Login",
+        "summary": "Login",
         "tags": ["Auth"]
       }
     },
@@ -661,6 +786,53 @@
         },
         "security": [{ "bearer": [] }, { "x-api-key": [] }],
         "summary": "Verify magic link token",
+        "tags": ["Auth"]
+      }
+    },
+    "/api/v1/auth/forgot-password": {
+      "post": {
+        "description": "\n    Regenerates the account's password and emails it, matching old backend's forgot-password\n    behavior 1:1 — no reset token or link.\n\n    - Always returns 200, regardless of whether the email matches an account, to avoid\n      leaking which emails are registered.\n    - Social-only accounts with no usable password are treated the same as \"not found\".\n    - Repeated requests for the same email within a short cooldown window are silently\n      no-op'd to prevent abuse.\n    ",
+        "operationId": "forgotPasswordAuthEmail",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ForgotPasswordDto" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "Request accepted; a new password was emailed if the account is eligible",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/StatusResponse" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Request a new password by email",
         "tags": ["Auth"]
       }
     },
@@ -2383,6 +2555,11 @@
       }
     },
     "schemas": {
+      "MarkAsRead": {
+        "type": "object",
+        "properties": { "ids": { "nullable": false, "type": "array", "items": { "type": "string" } } },
+        "required": ["ids"]
+      },
       "LoginDto": {
         "type": "object",
         "properties": {
@@ -2741,6 +2918,18 @@
         },
         "required": ["token"]
       },
+      "ForgotPasswordDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": false,
+            "description": "Email address",
+            "example": "user@example.com"
+          }
+        },
+        "required": ["email"]
+      },
       "BaseEmailDto": {
         "type": "object",
         "properties": {
@@ -3080,6 +3269,11 @@
             "description": "HTTP status code that corresponds to the error.",
             "allOf": [{ "$ref": "#/components/schemas/BadRequestHttpStatusCode" }]
           },
+          "details": {
+            "nullable": false,
+            "description": "Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages.",
+            "oneOf": [{ "type": "array", "items": { "type": "string" } }, { "type": "string" }]
+          },
           "stacktrace": {
             "nullable": false,
             "description": "Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment.",
@@ -3087,7 +3281,7 @@
             "items": { "type": "string" }
           }
         },
-        "required": ["errorCode", "code", "stacktrace"]
+        "required": ["errorCode", "code", "details"]
       },
       "BadRequestErrorResponseSchema": {
         "type": "object",
@@ -3130,6 +3324,11 @@
             "description": "HTTP status code that corresponds to the error.",
             "allOf": [{ "$ref": "#/components/schemas/ForbiddenHttpStatusCode" }]
           },
+          "details": {
+            "nullable": false,
+            "description": "Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages.",
+            "oneOf": [{ "type": "array", "items": { "type": "string" } }, { "type": "string" }]
+          },
           "stacktrace": {
             "nullable": false,
             "description": "Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment.",
@@ -3137,7 +3336,7 @@
             "items": { "type": "string" }
           }
         },
-        "required": ["errorCode", "code", "stacktrace"]
+        "required": ["errorCode", "code", "details"]
       },
       "ForbiddenErrorResponseSchema": {
         "type": "object",
@@ -3174,6 +3373,11 @@
             "description": "HTTP status code that corresponds to the error.",
             "allOf": [{ "$ref": "#/components/schemas/TooManyRequestsHttpStatusCode" }]
           },
+          "details": {
+            "nullable": false,
+            "description": "Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages.",
+            "oneOf": [{ "type": "array", "items": { "type": "string" } }, { "type": "string" }]
+          },
           "stacktrace": {
             "nullable": false,
             "description": "Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment.",
@@ -3181,7 +3385,7 @@
             "items": { "type": "string" }
           }
         },
-        "required": ["errorCode", "code", "stacktrace"]
+        "required": ["errorCode", "code", "details"]
       },
       "TooManyRequestsErrorResponseSchema": {
         "type": "object",
@@ -3971,6 +4175,11 @@
             "nullable": false,
             "description": "HTTP status code that corresponds to the error."
           },
+          "details": {
+            "nullable": false,
+            "description": "Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages.",
+            "oneOf": [{ "type": "array", "items": { "type": "string" } }, { "type": "string" }]
+          },
           "stacktrace": {
             "nullable": false,
             "description": "Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment.",
@@ -3978,7 +4187,7 @@
             "items": { "type": "string" }
           }
         },
-        "required": ["errorCode", "code", "stacktrace"]
+        "required": ["errorCode", "code", "details"]
       },
       "UnauthorizedErrorCode": {
         "type": "string",
@@ -4004,6 +4213,11 @@
             "description": "HTTP status code that corresponds to the error.",
             "allOf": [{ "$ref": "#/components/schemas/UnauthorizedHttpStatusCode" }]
           },
+          "details": {
+            "nullable": false,
+            "description": "Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages.",
+            "oneOf": [{ "type": "array", "items": { "type": "string" } }, { "type": "string" }]
+          },
           "stacktrace": {
             "nullable": false,
             "description": "Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment.",
@@ -4011,7 +4225,7 @@
             "items": { "type": "string" }
           }
         },
-        "required": ["errorCode", "code", "stacktrace"]
+        "required": ["errorCode", "code", "details"]
       },
       "UnauthorizedErrorResponseSchema": {
         "type": "object",
@@ -4097,6 +4311,11 @@
             "description": "HTTP status code that corresponds to the error.",
             "allOf": [{ "$ref": "#/components/schemas/NotFoundHttpStatusCode" }]
           },
+          "details": {
+            "nullable": false,
+            "description": "Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages.",
+            "oneOf": [{ "type": "array", "items": { "type": "string" } }, { "type": "string" }]
+          },
           "stacktrace": {
             "nullable": false,
             "description": "Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment.",
@@ -4104,7 +4323,7 @@
             "items": { "type": "string" }
           }
         },
-        "required": ["errorCode", "code", "stacktrace"]
+        "required": ["errorCode", "code", "details"]
       },
       "NotFoundErrorResponseSchema": {
         "type": "object",
@@ -4141,6 +4360,11 @@
             "description": "HTTP status code that corresponds to the error.",
             "allOf": [{ "$ref": "#/components/schemas/InternalServerErrorHttpStatusCode" }]
           },
+          "details": {
+            "nullable": false,
+            "description": "Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages.",
+            "oneOf": [{ "type": "array", "items": { "type": "string" } }, { "type": "string" }]
+          },
           "stacktrace": {
             "nullable": false,
             "description": "Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment.",
@@ -4148,7 +4372,7 @@
             "items": { "type": "string" }
           }
         },
-        "required": ["errorCode", "code", "stacktrace"]
+        "required": ["errorCode", "code", "details"]
       },
       "InternalServerErrorResponseSchema": {
         "type": "object",
@@ -4185,6 +4409,11 @@
             "description": "HTTP status code that corresponds to the error.",
             "allOf": [{ "$ref": "#/components/schemas/ConflictHttpStatusCode" }]
           },
+          "details": {
+            "nullable": false,
+            "description": "Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages.",
+            "oneOf": [{ "type": "array", "items": { "type": "string" } }, { "type": "string" }]
+          },
           "stacktrace": {
             "nullable": false,
             "description": "Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment.",
@@ -4192,7 +4421,7 @@
             "items": { "type": "string" }
           }
         },
-        "required": ["errorCode", "code", "stacktrace"]
+        "required": ["errorCode", "code", "details"]
       },
       "ConflictErrorResponseSchema": {
         "type": "object",

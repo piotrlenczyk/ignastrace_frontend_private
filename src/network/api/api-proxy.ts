@@ -25,11 +25,37 @@ import { _client } from './apiServerClient';
  */
 
 /**
- * The API's authentication prefix. Minting, refreshing and revoking a session
- * belong to the session module, which talks to the API from the server; a page
- * script has no business reaching them, so the whole subtree is refused.
+ * The paths this door is closed to, whatever the specification publishes.
+ *
+ * What they have in common is a token pair in the success body. The proxy
+ * filters response headers, so the API cannot write a cookie into this origin —
+ * but a body passes through as it is, and a body carrying `token` and
+ * `refreshToken` would put a readable credential back in the browser, which is
+ * exactly what the sealed session exists to prevent. Minting, renewing and
+ * exchanging a session therefore stay server-side, where the pair is sealed the
+ * moment it arrives.
+ *
+ * The address lookup is here for a different reason: it answers whether an
+ * address has an account, which from a page script is an account enumerator.
+ *
+ * Listed rather than derived. The generator that emits the allow-list could work
+ * these out from the response schema, and does not — so **a regeneration of the
+ * specification needs this list read again**: an operation added upstream that
+ * answers with a token pair is forwarded until its path is written here.
+ *
+ * Deliberately narrower than the authentication prefix it replaces. Requesting a
+ * new password by mail issues nothing and reveals nothing, so there is no reason
+ * for it to be unreachable from the page that offers it.
  */
-const AUTH_PATH_PREFIX = '/api/v1/auth';
+const REFUSED_PATHS: readonly string[] = [
+  '/api/v1/auth/login',
+  '/api/v1/auth/register',
+  '/api/v1/auth/refresh-token',
+  '/api/v1/auth/guest-session',
+  '/api/v1/auth/magic-link/verify',
+  '/api/v1/auth/sso/{provider}/register',
+  '/api/v1/auth/get-user-by-email',
+];
 
 /**
  * The only request headers the browser gets to influence. Everything else the
@@ -63,17 +89,26 @@ const escapeLiteral = (literal: string): string => literal.replace(/[.*+?^${}()|
  * `/api/v1/admin/users/{id}` covers `/api/v1/admin/users/7` and not
  * `/api/v1/admin/users/7/sessions`.
  */
-const PATH_MATCHERS = API_PATH_TEMPLATES.map(
-  (template) =>
-    new RegExp(
-      `^${template
-        .split(/\{[^{}]+\}/)
-        .map(escapeLiteral)
-        .join('[^/]+')}$`,
-    ),
-);
+const toMatcher = (template: string): RegExp =>
+  new RegExp(
+    `^${template
+      .split(/\{[^{}]+\}/)
+      .map(escapeLiteral)
+      .join('[^/]+')}$`,
+  );
+
+const PATH_MATCHERS = API_PATH_TEMPLATES.map(toMatcher);
 
 const isPublishedPath = (pathname: string): boolean => PATH_MATCHERS.some((matcher) => matcher.test(pathname));
+
+/*
+ * The refusals are matched the same way as the allow-list, template and all, so
+ * that a parameterised path — the social registration is one — is refused for
+ * every provider rather than for a spelling of one.
+ */
+const REFUSED_MATCHERS = REFUSED_PATHS.map(toMatcher);
+
+const isRefusedPath = (pathname: string): boolean => REFUSED_MATCHERS.some((matcher) => matcher.test(pathname));
 
 /**
  * A refusal by the proxy, written in the API's own error envelope so that the
@@ -156,11 +191,11 @@ const proxy =
      */
     const pathname = mountedPath.slice(API_PROXY_BASE_PATH.length);
 
-    if (pathname.startsWith(AUTH_PATH_PREFIX)) {
+    if (isRefusedPath(pathname)) {
       return refuse(403, {
         code: 'FORBIDDEN',
         errorCode: 'PROXY_PATH_FORBIDDEN',
-        message: 'Authentication is handled by the session, not the API.',
+        message: 'This path is not served to the browser.',
       });
     }
 
