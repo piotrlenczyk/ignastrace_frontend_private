@@ -460,6 +460,46 @@ const config = [
       '@typescript-eslint/consistent-type-definitions': 'off',
     },
   },
+
+  {
+    /*
+     * The checkout island (issue #62) is a faithful, parked copy of resumewise's
+     * Stripe/Adyen checkout, imports aside. It deliberately carries resumewise's
+     * own frozen legacy styling, which ignastrace's theme does not define — so
+     * `no-unknown-classes` would flag every one, and the class-order/wrapping
+     * fixers would rewrite copies that are meant to diff cleanly against their
+     * originals. Turning the Tailwind rules off here is the redesign ratchet's
+     * exclusion in spirit: the island is styled from scratch, not linted into,
+     * the new design when a later task rebuilds it. `consistent-type-definitions`
+     * is off for the one generated file it carries — the copied payments-schema
+     * types (`_shared/types/paymentsApi.d.ts`), which are openapi `interface`
+     * output. Nothing renders the island; none of this reaches shipped markup.
+     */
+    files: ['src/components/checkout/**'],
+    rules: {
+      'better-tailwindcss/enforce-consistent-class-order': 'off',
+      'better-tailwindcss/enforce-consistent-important-position': 'off',
+      'better-tailwindcss/enforce-consistent-variable-syntax': 'off',
+      'better-tailwindcss/enforce-consistent-line-wrapping': 'off',
+      'better-tailwindcss/enforce-shorthand-classes': 'off',
+      'better-tailwindcss/no-conflicting-classes': 'off',
+      'better-tailwindcss/no-deprecated-classes': 'off',
+      'better-tailwindcss/no-duplicate-classes': 'off',
+      'better-tailwindcss/no-restricted-classes': 'off',
+      'better-tailwindcss/no-unnecessary-whitespace': 'off',
+      'better-tailwindcss/no-unknown-classes': 'off',
+      '@typescript-eslint/consistent-type-definitions': 'off',
+      /*
+       * react-hooks 7's React Compiler analyses are advice, not a gate, on this
+       * codebase (see the block above demoting `purity`/`set-state-in-effect`/
+       * `static-components` to warn). `refs` is another such analysis — it flags
+       * resumewise's `stripePromiseRef.current` read during render — and the
+       * island is a parked copy not to be rewritten here, so it is demoted to
+       * warn for the same reason, rather than restructured.
+       */
+      'react-hooks/refs': 'warn',
+    },
+  },
 ];
 
 export default config;

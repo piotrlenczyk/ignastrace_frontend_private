@@ -3,10 +3,23 @@ import { useEffect, useState } from 'react';
 
 const WALLET_COUNTRY = 'AE';
 
+/**
+ * Wallets this hook does not surface. stripe-js v5 widened
+ * `AvailablePaymentMethods` with `amazonPay`, `link` and `paypal`; the
+ * PaymentRequest flow here only reports Apple Pay and Google Pay, so the rest
+ * stay off.
+ */
+const UNSUPPORTED_WALLETS = {
+  amazonPay: false,
+  link: false,
+  paypal: false,
+} as const;
+
 export const useAvailableWallets = (stripe: Stripe | null, currency: string) => {
   const [availablePaymentMethods, setAvailablePaymentMethods] = useState<AvailablePaymentMethods>({
     applePay: false,
     googlePay: false,
+    ...UNSUPPORTED_WALLETS,
   });
 
   useEffect(() => {
@@ -29,6 +42,7 @@ export const useAvailableWallets = (stripe: Stripe | null, currency: string) => 
       setAvailablePaymentMethods({
         applePay: !!result?.applePay,
         googlePay: !!result?.googlePay,
+        ...UNSUPPORTED_WALLETS,
       });
     };
 
