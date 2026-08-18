@@ -1,7 +1,10 @@
 # 0009 — Every browser call goes through this application's own server, and arrives typed
 
 **Status:** Accepted — August 2026. Supersedes the second-cookie section of
-[0008](0008-a-sealed-session-on-the-new-api.md).
+[0008](0008-a-sealed-session-on-the-new-api.md). The "refuses the authentication endpoints
+outright" decision below is superseded by
+[0015](0015-the-proxy-refuses-session-issuing-paths-not-a-prefix.md), which refuses by what a path
+hands back rather than by the prefix it sits under; the rest of this record stands.
 
 ## Context
 

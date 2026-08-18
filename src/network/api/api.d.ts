@@ -4,6 +4,54 @@
  */
 
 export type paths = {
+  '/api/v1/notification/center': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['getUserNotificationsNotification'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/v1/notification/center/unread/count': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['getUnreadCountNotification'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/v1/notification/center/read': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put: operations['markAsReadNotification'];
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/api/v1/healthcheck': {
     parameters: {
       query?: never;
@@ -46,11 +94,11 @@ export type paths = {
     get?: never;
     put?: never;
     /**
-     * Admin Login
-     * @description Authenticates administrators using email and password credentials.
+     * Login
+     * @description Authenticates a user using email and password credentials.
      *
      *       Authentication Flow:
-     *       1. Verifies credentials against admin database
+     *       1. Verifies credentials against the user database
      *       2. Generates new JWT session tokens
      *
      *       Security Features:
@@ -351,6 +399,33 @@ export type paths = {
      *         The token is single-use: once verified it is revoked and cannot be replayed.
      */
     post: operations['verifyMagicLinkAuthEmail'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/v1/auth/forgot-password': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Request a new password by email
+     * @description Regenerates the account's password and emails it, matching old backend's forgot-password
+     *         behavior 1:1 — no reset token or link.
+     *
+     *         - Always returns 200, regardless of whether the email matches an account, to avoid
+     *           leaking which emails are registered.
+     *         - Social-only accounts with no usable password are treated the same as "not found".
+     *         - Repeated requests for the same email within a short cooldown window are silently
+     *           no-op'd to prevent abuse.
+     */
+    post: operations['forgotPasswordAuthEmail'];
     delete?: never;
     options?: never;
     head?: never;
@@ -1042,6 +1117,9 @@ export type paths = {
 export type webhooks = Record<string, never>;
 export type components = {
   schemas: {
+    MarkAsRead: {
+      ids: string[];
+    };
     LoginDto: {
       /**
        * @description User email address
@@ -1338,6 +1416,13 @@ export type components = {
        */
       token: string;
     };
+    ForgotPasswordDto: {
+      /**
+       * @description Email address
+       * @example user@example.com
+       */
+      email: string;
+    };
     BaseEmailDto: {
       /**
        * @description Email address
@@ -1579,8 +1664,10 @@ export type components = {
       errorCode: components['schemas']['BadRequestErrorCode'];
       /** @description HTTP status code that corresponds to the error. */
       code: components['schemas']['BadRequestHttpStatusCode'];
+      /** @description Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages. */
+      details: string[] | string;
       /** @description Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment. */
-      stacktrace: string[];
+      stacktrace?: string[];
     };
     BadRequestErrorResponseSchema: {
       /** @description Contains error details including message, code, and additional context. Used consistently across all error responses to provide structured error information. */
@@ -1608,8 +1695,10 @@ export type components = {
       errorCode: components['schemas']['ForbiddenErrorCode'];
       /** @description HTTP status code that corresponds to the error. */
       code: components['schemas']['ForbiddenHttpStatusCode'];
+      /** @description Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages. */
+      details: string[] | string;
       /** @description Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment. */
-      stacktrace: string[];
+      stacktrace?: string[];
     };
     ForbiddenErrorResponseSchema: {
       /** @description Contains error details including message, code, and additional context. Used consistently across all error responses to provide structured error information. */
@@ -1632,8 +1721,10 @@ export type components = {
       errorCode: components['schemas']['TooManyRequestsErrorCode'];
       /** @description HTTP status code that corresponds to the error. */
       code: components['schemas']['TooManyRequestsHttpStatusCode'];
+      /** @description Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages. */
+      details: string[] | string;
       /** @description Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment. */
-      stacktrace: string[];
+      stacktrace?: string[];
     };
     TooManyRequestsErrorResponseSchema: {
       /** @description Contains error details including message, code, and additional context. Used consistently across all error responses to provide structured error information. */
@@ -2197,8 +2288,10 @@ export type components = {
       errorCode: string;
       /** @description HTTP status code that corresponds to the error. */
       code: string;
+      /** @description Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages. */
+      details: string[] | string;
       /** @description Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment. */
-      stacktrace: string[];
+      stacktrace?: string[];
     };
     /**
      * @description Specific error code that explains the particular issue that occurred.
@@ -2217,8 +2310,10 @@ export type components = {
       errorCode: components['schemas']['UnauthorizedErrorCode'];
       /** @description HTTP status code that corresponds to the error. */
       code: components['schemas']['UnauthorizedHttpStatusCode'];
+      /** @description Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages. */
+      details: string[] | string;
       /** @description Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment. */
-      stacktrace: string[];
+      stacktrace?: string[];
     };
     UnauthorizedErrorResponseSchema: {
       /** @description Contains error details including message, code, and additional context. Used consistently across all error responses to provide structured error information. */
@@ -2283,8 +2378,10 @@ export type components = {
       errorCode: components['schemas']['NotFoundErrorCode'];
       /** @description HTTP status code that corresponds to the error. */
       code: components['schemas']['NotFoundHttpStatusCode'];
+      /** @description Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages. */
+      details: string[] | string;
       /** @description Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment. */
-      stacktrace: string[];
+      stacktrace?: string[];
     };
     NotFoundErrorResponseSchema: {
       /** @description Contains error details including message, code, and additional context. Used consistently across all error responses to provide structured error information. */
@@ -2307,8 +2404,10 @@ export type components = {
       errorCode: components['schemas']['InternalServerErrorCode'];
       /** @description HTTP status code that corresponds to the error. */
       code: components['schemas']['InternalServerErrorHttpStatusCode'];
+      /** @description Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages. */
+      details: string[] | string;
       /** @description Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment. */
-      stacktrace: string[];
+      stacktrace?: string[];
     };
     InternalServerErrorResponseSchema: {
       /** @description Contains error details including message, code, and additional context. Used consistently across all error responses to provide structured error information. */
@@ -2331,8 +2430,10 @@ export type components = {
       errorCode: components['schemas']['ConflictErrorCode'];
       /** @description HTTP status code that corresponds to the error. */
       code: components['schemas']['ConflictHttpStatusCode'];
+      /** @description Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages. */
+      details: string[] | string;
       /** @description Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment. */
-      stacktrace: string[];
+      stacktrace?: string[];
     };
     ConflictErrorResponseSchema: {
       /** @description Contains error details including message, code, and additional context. Used consistently across all error responses to provide structured error information. */
@@ -2347,6 +2448,133 @@ export type components = {
 };
 export type $defs = Record<string, never>;
 export type operations = {
+  getUserNotificationsNotification: {
+    parameters: {
+      query?: {
+        cursor?: string | null;
+        limit?: number | null;
+      };
+      header?: {
+        /** @description Language locale for localized content. Supported values: en, es */
+        'x-locale'?: 'en' | 'es';
+        /** @description Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically. */
+        'x-trace-id'?: string;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UnauthorizedErrorResponseSchema'];
+        };
+      };
+      /** @description Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action. */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ForbiddenErrorResponseSchema'];
+        };
+      };
+    };
+  };
+  getUnreadCountNotification: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @description Language locale for localized content. Supported values: en, es */
+        'x-locale'?: 'en' | 'es';
+        /** @description Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically. */
+        'x-trace-id'?: string;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UnauthorizedErrorResponseSchema'];
+        };
+      };
+      /** @description Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action. */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ForbiddenErrorResponseSchema'];
+        };
+      };
+    };
+  };
+  markAsReadNotification: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @description Language locale for localized content. Supported values: en, es */
+        'x-locale'?: 'en' | 'es';
+        /** @description Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically. */
+        'x-trace-id'?: string;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['MarkAsRead'];
+      };
+    };
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UnauthorizedErrorResponseSchema'];
+        };
+      };
+      /** @description Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action. */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ForbiddenErrorResponseSchema'];
+        };
+      };
+    };
+  };
   checkHealth: {
     parameters: {
       query?: never;
@@ -2983,6 +3211,53 @@ export type operations = {
         };
       };
       /** @description Invalid or expired magic link token */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UnauthorizedErrorResponseSchema'];
+        };
+      };
+      /** @description Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action. */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ForbiddenErrorResponseSchema'];
+        };
+      };
+    };
+  };
+  forgotPasswordAuthEmail: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @description Language locale for localized content. Supported values: en, es */
+        'x-locale'?: 'en' | 'es';
+        /** @description Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically. */
+        'x-trace-id'?: string;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['ForgotPasswordDto'];
+      };
+    };
+    responses: {
+      /** @description Request accepted; a new password was emailed if the account is eligible */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['StatusResponse'];
+        };
+      };
+      /** @description Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication. */
       401: {
         headers: {
           [name: string]: unknown;
