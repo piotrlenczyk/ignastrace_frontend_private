@@ -1,0 +1,4715 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/admin/provider-accounts": {
+      "post": {
+        "operationId": "AdminApiController_getAdminProviderAccounts",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/AdminProviderAccountsRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminProviderAccountsResponseDto" } }
+            }
+          },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminProviderAccountsResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "okta": [] }],
+        "summary": "Get all provider accounts",
+        "tags": ["Admin API"]
+      }
+    },
+    "/admin/routing-rule-sets": {
+      "get": {
+        "operationId": "AdminApiController_listRoutingRuleSets",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminRoutingRuleSetsListResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "okta": [] }],
+        "summary": "List all routing rule sets",
+        "tags": ["Admin API"]
+      },
+      "post": {
+        "operationId": "AdminApiController_createRoutingRuleSet",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/AdminCreateRoutingRuleSetRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminCreateRoutingRuleSetResponseDto" } }
+            }
+          },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminCreateRoutingRuleSetResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "okta": [] }],
+        "summary": "Publish a new routing rule set",
+        "tags": ["Admin API"]
+      }
+    },
+    "/admin/routing-rule-sets/validate": {
+      "post": {
+        "operationId": "AdminApiController_validateRoutingRuleSet",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/AdminValidateRoutingRuleSetRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AdminValidateRoutingRuleSetResponseDto" }
+              }
+            }
+          },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AdminValidateRoutingRuleSetResponseDto" }
+              }
+            }
+          }
+        },
+        "security": [{ "okta": [] }],
+        "summary": "Validate a routing rule set before publishing",
+        "tags": ["Admin API"]
+      }
+    },
+    "/admin/rate-limits/endpoints": {
+      "get": {
+        "operationId": "AdminApiController_listRateLimitEndpoints",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminRateLimitEndpointsResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "okta": [] }],
+        "summary": "List code-owned rate-limit endpoints available for policy publication",
+        "tags": ["Admin API"]
+      }
+    },
+    "/admin/rate-limits": {
+      "post": {
+        "operationId": "AdminApiController_listRateLimitHistory",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminRateLimitHistoryResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "okta": [] }],
+        "summary": "List rate-limit policy and block-action history with live runtime for current policies",
+        "tags": ["Admin API"]
+      }
+    },
+    "/admin/rate-limits/publish": {
+      "post": {
+        "operationId": "AdminApiController_publishRateLimitPolicy",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/AdminPublishRateLimitPolicyRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminRateLimitOperationResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "okta": [] }],
+        "summary": "Publish an endpoint policy or atomically transition a group scope",
+        "tags": ["Admin API"]
+      }
+    },
+    "/admin/rate-limits/unset": {
+      "post": {
+        "description": "Retires the current policy as an audit tombstone. Does NOT reset its Redis counters or clear an active block: counters expire by TTL, and an active block persists until it expires or is lifted via unblock.",
+        "operationId": "AdminApiController_unsetRateLimitPolicy",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/AdminUnsetRateLimitPolicyRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminRateLimitOperationResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "okta": [] }],
+        "summary": "Close one current rate-limit policy while retaining its terminal audit policy",
+        "tags": ["Admin API"]
+      }
+    },
+    "/admin/rate-limits/blocks": {
+      "post": {
+        "operationId": "AdminApiController_blockRateLimit",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/AdminBlockRateLimitRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminRateLimitOperationResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "okta": [] }],
+        "summary": "Create a manual block at the current policy scope",
+        "tags": ["Admin API"]
+      }
+    },
+    "/admin/rate-limits/blocks/extend": {
+      "post": {
+        "operationId": "AdminApiController_extendRateLimitBlock",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/AdminBlockRateLimitRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminRateLimitOperationResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "okta": [] }],
+        "summary": "Replace the duration of an active current-scope rate-limit block",
+        "tags": ["Admin API"]
+      }
+    },
+    "/admin/rate-limits/blocks/unblock": {
+      "post": {
+        "operationId": "AdminApiController_unblockRateLimit",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/AdminRateLimitBlockActionRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminRateLimitOperationResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "okta": [] }],
+        "summary": "Remove the active rate-limit block at the current policy scope",
+        "tags": ["Admin API"]
+      }
+    },
+    "/admin/transactions": {
+      "post": {
+        "operationId": "AdminApiController_getAdminBillingTransactions",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/AdminBillingTransactionsRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminBillingTransactionsResponseDto" } }
+            }
+          },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminBillingTransactionsResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "okta": [] }],
+        "summary": "Get all transactions",
+        "tags": ["Admin API"]
+      }
+    },
+    "/admin/transactions/count": {
+      "post": {
+        "operationId": "AdminApiController_getAdminBillingTransactionsCount",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/AdminBillingTransactionsRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AdminCountResponseDto" } } }
+          },
+          "201": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AdminCountResponseDto" } } }
+          }
+        },
+        "security": [{ "okta": [] }],
+        "summary": "Get the total count of transactions matching the filters",
+        "tags": ["Admin API"]
+      }
+    },
+    "/admin/transactions/refund": {
+      "post": {
+        "operationId": "AdminApiController_adminRefundTransaction",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/AdminRefundBillingTransactionRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AdminRefundBillingTransactionResponseDto" }
+              }
+            }
+          },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AdminRefundBillingTransactionResponseDto" }
+              }
+            }
+          }
+        },
+        "security": [{ "okta": [] }],
+        "summary": "Refund a billing transaction",
+        "tags": ["Admin API"]
+      }
+    },
+    "/admin/transactions/invoice": {
+      "post": {
+        "operationId": "AdminApiController_getAdminBillingTransactionInvoice",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/AdminBillingTransactionInvoiceRequestDto" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AdminBillingTransactionInvoiceResponseDto" }
+              }
+            }
+          },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AdminBillingTransactionInvoiceResponseDto" }
+              }
+            }
+          }
+        },
+        "security": [{ "okta": [] }],
+        "summary": "Get invoice details for a billing transaction",
+        "tags": ["Admin API"]
+      }
+    },
+    "/admin/recurrent/prices": {
+      "post": {
+        "operationId": "AdminApiController_getAdminRecurrentPrices",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/AdminRecurrentPricesRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminRecurrentPricesResponseDto" } }
+            }
+          },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminRecurrentPricesResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "okta": [] }],
+        "summary": "Get all recurrent prices",
+        "tags": ["Admin API"]
+      }
+    },
+    "/admin/recurrent/products": {
+      "post": {
+        "operationId": "AdminApiController_getAdminRecurrentProducts",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/AdminRecurrentProductsRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminRecurrentProductsResponseDto" } }
+            }
+          },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminRecurrentProductsResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "okta": [] }],
+        "summary": "Get all recurrent products",
+        "tags": ["Admin API"]
+      }
+    },
+    "/admin/one-off/prices": {
+      "post": {
+        "operationId": "AdminApiController_getAdminOneOffPrices",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/AdminOneOffPricesRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminOneOffPricesResponseDto" } }
+            }
+          },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminOneOffPricesResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "okta": [] }],
+        "summary": "Get all one-off prices",
+        "tags": ["Admin API"]
+      }
+    },
+    "/admin/one-off/products": {
+      "post": {
+        "operationId": "AdminApiController_getAdminOneOffProducts",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/AdminOneOffProductsRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminOneOffProductsResponseDto" } }
+            }
+          },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminOneOffProductsResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "okta": [] }],
+        "summary": "Get all one-off products",
+        "tags": ["Admin API"]
+      }
+    },
+    "/admin/subscriptions": {
+      "post": {
+        "operationId": "AdminApiController_getAdminSubscriptions",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/AdminSubscriptionsRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminSubscriptionsResponseDto" } }
+            }
+          },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminSubscriptionsResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "okta": [] }],
+        "summary": "Get all subscriptions",
+        "tags": ["Admin API"]
+      }
+    },
+    "/admin/subscriptions/count": {
+      "post": {
+        "operationId": "AdminApiController_getAdminSubscriptionsCount",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/AdminSubscriptionsRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AdminCountResponseDto" } } }
+          },
+          "201": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AdminCountResponseDto" } } }
+          }
+        },
+        "security": [{ "okta": [] }],
+        "summary": "Get the total count of subscriptions matching the filters",
+        "tags": ["Admin API"]
+      }
+    },
+    "/admin/subscriptions/cancel": {
+      "post": {
+        "operationId": "AdminApiController_adminCancelSubscription",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/AdminCancelSubscriptionRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminCancelSubscriptionResponseDto" } }
+            }
+          },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminCancelSubscriptionResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "okta": [] }],
+        "summary": "Cancel a subscription by ID",
+        "tags": ["Admin API"]
+      }
+    },
+    "/admin/users": {
+      "post": {
+        "operationId": "AdminApiController_getAdminUsers",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AdminUsersRequestDto" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AdminUsersResponseDto" } } }
+          },
+          "201": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AdminUsersResponseDto" } } }
+          }
+        },
+        "security": [{ "okta": [] }],
+        "summary": "Get all users",
+        "tags": ["Admin API"]
+      }
+    },
+    "/admin/users/count": {
+      "post": {
+        "operationId": "AdminApiController_getAdminUsersCount",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AdminUsersRequestDto" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AdminCountResponseDto" } } }
+          },
+          "201": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AdminCountResponseDto" } } }
+          }
+        },
+        "security": [{ "okta": [] }],
+        "summary": "Get the total count of users matching the filters",
+        "tags": ["Admin API"]
+      }
+    },
+    "/admin/descriptors/publish": {
+      "post": {
+        "operationId": "AdminApiController_adminPublishDescriptor",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/AdminPublishDescriptorRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminPublishDescriptorResponseDto" } }
+            }
+          },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminPublishDescriptorResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "okta": [] }],
+        "summary": "Publish a new statement descriptor",
+        "tags": ["Admin API"]
+      }
+    },
+    "/admin/descriptors": {
+      "post": {
+        "operationId": "AdminApiController_getAdminDescriptors",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AdminDescriptorsRequestDto" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminDescriptorsResponseDto" } }
+            }
+          },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdminDescriptorsResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "okta": [] }],
+        "summary": "Get all descriptors",
+        "tags": ["Admin API"]
+      }
+    },
+    "/billing/transactions": {
+      "get": {
+        "operationId": "BillingApiController_getUserBillingTransactions",
+        "parameters": [
+          {
+            "name": "transactionTypes",
+            "required": false,
+            "in": "query",
+            "description": "Filter by transaction types",
+            "schema": {
+              "minItems": 1,
+              "example": ["recurrent", "upsell"],
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["trial_full", "trial_part_1", "trial_part_2", "recurrent", "upsell"]
+              }
+            }
+          },
+          {
+            "name": "isSuccessful",
+            "required": false,
+            "in": "query",
+            "description": "Filter by whether the transaction was successful",
+            "schema": { "example": true, "type": "boolean" }
+          },
+          {
+            "name": "isRefunded",
+            "required": false,
+            "in": "query",
+            "description": "Filter by whether the transaction was refunded",
+            "schema": { "example": true, "type": "boolean" }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Which page to return",
+            "schema": { "minimum": 1, "example": 1, "type": "number" }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "How many items per page",
+            "schema": { "maximum": 1000, "example": 20, "type": "number" }
+          },
+          {
+            "name": "sortBy",
+            "required": false,
+            "in": "query",
+            "description": "Field to sort by",
+            "schema": { "$ref": "#/components/schemas/UserBillingTransactionsSortByEnum" }
+          },
+          {
+            "name": "sortOrder",
+            "required": false,
+            "in": "query",
+            "description": "Sort order",
+            "schema": { "$ref": "#/components/schemas/SortOrderEnum" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/BillingTransactionsResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "cookie": [] }],
+        "summary": "Get all user billing transactions",
+        "tags": ["Billing API"]
+      }
+    },
+    "/billing/transactions/{id}": {
+      "get": {
+        "operationId": "BillingApiController_getUserBillingTransactionById",
+        "parameters": [{ "name": "id", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/BillingTransactionResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "cookie": [] }],
+        "summary": "Get user billing transaction by id",
+        "tags": ["Billing API"]
+      }
+    },
+    "/bot/search": {
+      "post": {
+        "operationId": "BotApiController_search",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BotSearchRequestDto" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BotSearchResponseDto" } } }
+          }
+        },
+        "security": [{ "bot-api-auth": [] }],
+        "summary": "Search user subscription data for CS AI automation",
+        "tags": ["Bot API"]
+      }
+    },
+    "/bot/subscriptions/cancel": {
+      "post": {
+        "operationId": "BotApiController_cancelSubscription",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/BotCancelSubscriptionRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/BotCancelSubscriptionResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "bot-api-auth": [] }],
+        "summary": "Cancel subscription at end of period or immediately",
+        "tags": ["Bot API"]
+      }
+    },
+    "/bot/transactions/refund": {
+      "post": {
+        "operationId": "BotApiController_refundTransaction",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/BotRefundTransactionRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/BotRefundTransactionResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "bot-api-auth": [] }],
+        "summary": "Refund a billing transaction",
+        "tags": ["Bot API"]
+      }
+    },
+    "/products": {
+      "get": {
+        "operationId": "ProductsApiController_getProducts",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/GetProductWithAllPricesResponseDto" }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get guest available products",
+        "tags": ["Products API"]
+      }
+    },
+    "/products/user": {
+      "get": {
+        "operationId": "ProductsApiController_getUserProducts",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/GetProductWithOnePriceResponseDto" }
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "cookie": [] }],
+        "summary": "Get user available products (for resubscription)",
+        "tags": ["Products API"]
+      }
+    },
+    "/subscriptions": {
+      "get": {
+        "operationId": "SubscriptionsApiController_getUserCurrentSubscription",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SubscriptionResponseDto" } } }
+          }
+        },
+        "security": [{ "cookie": [] }],
+        "summary": "Get user current subscription",
+        "tags": ["Subscriptions API"]
+      }
+    },
+    "/subscriptions/stripe": {
+      "post": {
+        "operationId": "SubscriptionsApiController_createStripeSubscription",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/CreateStripeSubscriptionRequestDto" } }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/CreateStripeSubscriptionResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "cookie": [] }],
+        "summary": "Create stripe subscription",
+        "tags": ["Subscriptions API"]
+      }
+    },
+    "/subscriptions/stripe/payment-method": {
+      "post": {
+        "operationId": "SubscriptionsApiController_updateStripeSubscriptionPaymentMethod",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/UpdateStripeSubscriptionRequestDto" } }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/CreateStripeSubscriptionResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "cookie": [] }],
+        "summary": "Update user current stripe subscription payment method (attempts to charge immediately)",
+        "tags": ["Subscriptions API"]
+      }
+    },
+    "/subscriptions/stripe/sync": {
+      "post": {
+        "operationId": "SubscriptionsApiController_syncStripeSubscription",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/SyncStripeSubscriptionResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "cookie": [] }],
+        "summary": "Sync user current stripe subscription",
+        "tags": ["Subscriptions API"]
+      }
+    },
+    "/subscriptions/paypal": {
+      "post": {
+        "operationId": "SubscriptionsApiController_createPaypalInitialSubscription",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/CreatePaypalSubscriptionRequestDto" } }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/CreatePaypalSubscriptionResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "cookie": [] }],
+        "summary": "Create paypal subscription (Deprecated)",
+        "tags": ["Subscriptions API"]
+      }
+    },
+    "/subscriptions/paypal/sync": {
+      "post": {
+        "operationId": "SubscriptionsApiController_createPaypalSubscription",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/CreatePaypalSubscriptionRequestDto" } }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/CreatePaypalSubscriptionResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "cookie": [] }],
+        "summary": "Sync user current paypal subscription (Deprecated)",
+        "tags": ["Subscriptions API"]
+      }
+    },
+    "/subscriptions/cancel": {
+      "post": {
+        "operationId": "SubscriptionsApiController_cancelSubscription",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/CancelSubscriptionRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BaseResponseDto" } } }
+          },
+          "201": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BaseResponseDto" } } }
+          }
+        },
+        "security": [{ "cookie": [] }],
+        "summary": "Cancel subscription",
+        "tags": ["Subscriptions API"]
+      }
+    },
+    "/subscriptions/reactivate": {
+      "post": {
+        "operationId": "SubscriptionsApiController_reactivateSubscription",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BaseResponseDto" } } }
+          },
+          "201": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BaseResponseDto" } } }
+          }
+        },
+        "security": [{ "cookie": [] }],
+        "summary": "Reactivate subscription",
+        "tags": ["Subscriptions API"]
+      }
+    },
+    "/subscriptions/nmi": {
+      "post": {
+        "operationId": "SubscriptionsApiController_createNmiSubscription",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/CreateNmiCustomerRequestDto" } }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/CreateNmiCustomerResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "cookie": [] }],
+        "summary": "Create NMI subscription using payment token",
+        "tags": ["Subscriptions API"]
+      }
+    },
+    "/subscriptions/payrails": {
+      "post": {
+        "operationId": "SubscriptionsApiController_payrailsPay",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PayrailsPayRequestDto" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PayrailsPayResponseDto" } } }
+          }
+        },
+        "security": [{ "cookie": [] }],
+        "summary": "Create Payrails subscription initial payment",
+        "tags": ["Subscriptions API"]
+      }
+    },
+    "/subscriptions/payrails/confirm": {
+      "post": {
+        "operationId": "SubscriptionsApiController_payrailsConfirm",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/PayrailsConfirmResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "cookie": [] }],
+        "summary": "Reconcile Payrails subscription after 3DS or redirect return",
+        "tags": ["Subscriptions API"]
+      }
+    },
+    "/subscriptions/payrails/sdk-config": {
+      "get": {
+        "operationId": "SubscriptionsApiController_payrailsSdkConfig",
+        "parameters": [
+          {
+            "name": "providerAccountId",
+            "required": true,
+            "in": "query",
+            "description": "Payrails provider account id",
+            "schema": { "format": "uuid", "type": "string" }
+          },
+          {
+            "name": "paymentMethodSurface",
+            "required": true,
+            "in": "query",
+            "description": "Checkout UI surface — card uses secureFields, wallet uses tokenization",
+            "schema": { "$ref": "#/components/schemas/PayrailsPaymentMethodSurfaceEnum" }
+          },
+          {
+            "name": "host",
+            "required": false,
+            "in": "query",
+            "description": "Checkout page hostname — required for Apple Pay merchant validation",
+            "schema": { "example": "payments-service-dev.mgmt-efuturemedia.com", "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/PayrailsSdkConfigResponseDto" } }
+            }
+          }
+        },
+        "summary": "Load Payrails SDK client init configuration",
+        "tags": ["Subscriptions API"]
+      }
+    },
+    "/subscriptions/adyen/paymentMethods": {
+      "get": {
+        "operationId": "SubscriptionsApiController_adyenPaymentMethods",
+        "parameters": [
+          { "name": "priceId", "required": true, "in": "query", "schema": { "type": "string" } },
+          { "name": "locale", "required": true, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdyenPaymentMethodsResponseDto" } }
+            }
+          },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/AdyenPaymentMethodsResponseDto" } }
+            }
+          }
+        },
+        "summary": "Load Payment Methods for SDK",
+        "tags": ["Subscriptions API"]
+      }
+    },
+    "/subscriptions/adyen": {
+      "post": {
+        "operationId": "SubscriptionsApiController_adyenPay",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AdyenPayRequestDto" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AdyenPayResponseDto" } } }
+          }
+        },
+        "security": [{ "cookie": [] }],
+        "summary": "Submit initial payment",
+        "tags": ["Subscriptions API"]
+      }
+    },
+    "/subscriptions/adyen/confirm": {
+      "post": {
+        "operationId": "SubscriptionsApiController_adyenSubmitCompletionDetails",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AdyenConfirmRequestDto" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AdyenConfirmResponseDto" } } }
+          }
+        },
+        "security": [{ "cookie": [] }],
+        "summary": "Submit additional action result",
+        "tags": ["Subscriptions API"]
+      }
+    },
+    "/products/upsell": {
+      "get": {
+        "operationId": "UpsellProductsApiController_getUserAvailableUpsellProducts",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/GetUpsellProductResponseDto" } }
+              }
+            }
+          }
+        },
+        "security": [{ "cookie": [] }],
+        "summary": "Get user available upsell products",
+        "tags": ["Upsell Products API"]
+      }
+    },
+    "/products/upsell/user": {
+      "get": {
+        "operationId": "UpsellProductsApiController_getUserPurchasedUpsellProducts",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/GetPurchasedUpsellProductResponseDto" }
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "cookie": [] }],
+        "summary": "Get user purchased upsell products",
+        "tags": ["Upsell Products API"]
+      }
+    },
+    "/products/upsell/stripe/buy": {
+      "post": {
+        "operationId": "UpsellProductsApiController_stripeBuyUpsellProduct",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BuyUpsellProductRequestDto" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/BuyUpsellProductResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "cookie": [] }],
+        "summary": "Buy Stripe upsell product (Deprecated)",
+        "tags": ["Upsell Products API"]
+      }
+    },
+    "/products/upsell/buy": {
+      "post": {
+        "operationId": "UpsellProductsApiController_buyUpsellProduct",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BuyUpsellProductRequestDto" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/BuyUpsellProductResponseDto" } }
+            }
+          }
+        },
+        "security": [{ "cookie": [] }],
+        "summary": "Buy upsell product",
+        "tags": ["Upsell Products API"]
+      }
+    },
+    "/webhook/stripe": {
+      "post": {
+        "operationId": "WebhooksApiController_handleIncomingStripeEvents",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "query",
+            "description": "ID of Stripe account sending webhook events to this endpoint",
+            "schema": { "example": "acct_abcdefghijklmnop", "type": "string" }
+          },
+          {
+            "name": "version",
+            "required": false,
+            "in": "query",
+            "description": "Stripe API version of the auto-managed webhook endpoint the events are sent through. Absent on legacy hand-made endpoints.",
+            "schema": { "example": "2026-06-24.dahlia", "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/StripeResponseDto" } } }
+          }
+        },
+        "summary": "Webhook for Stripe",
+        "tags": ["Webhooks API"]
+      }
+    },
+    "/webhook/paypal": {
+      "post": {
+        "operationId": "WebhooksApiController_handleIncomingPayPalEvents",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BaseResponseDto" } } }
+          }
+        },
+        "summary": "Webhook for PayPal",
+        "tags": ["Webhooks API"]
+      }
+    },
+    "/webhook/adyen": {
+      "post": {
+        "operationId": "WebhooksApiController_handleIncomingAdyenEvents",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BaseResponseDto" } } }
+          }
+        },
+        "summary": "Webhook for Adyen",
+        "tags": ["Webhooks API"]
+      }
+    },
+    "/webhook/payrails": {
+      "post": {
+        "operationId": "WebhooksApiController_handleIncomingPayrailsEvents",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "query",
+            "description": "Payrails workspace UUID (provider_accounts.providerId) for the account receiving this webhook",
+            "schema": { "example": "7f9f1882-a103-408d-ac96-46a7021e537a", "type": "string" }
+          },
+          { "name": "x-signature", "required": true, "in": "header", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BaseResponseDto" } } }
+          }
+        },
+        "summary": "Webhook for Payrails",
+        "tags": ["Webhooks API"]
+      }
+    },
+    "/users": {
+      "put": {
+        "operationId": "UsersApiController_updateUser",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdateUserRequestDto" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdateUserResponseDto" } } }
+          }
+        },
+        "security": [{ "cookie": [] }],
+        "summary": "Update user information",
+        "tags": ["Users API"]
+      }
+    },
+    "/docs/events": {
+      "get": {
+        "operationId": "EventsApiController_getSchema",
+        "parameters": [],
+        "responses": { "200": { "description": "" } },
+        "summary": "Events JSON Schema",
+        "tags": ["Events API"]
+      }
+    },
+    "/price-configurator/products/apply": {
+      "post": {
+        "operationId": "PriceConfiguratorApiController_applyMainProductsConfiguration",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ApplyMainProductsConfigurationRequestDto" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BaseResponseDto" } } }
+          },
+          "201": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } }
+        },
+        "summary": "Validate and Apply Main Products Configuration",
+        "tags": ["Price Configurator API"]
+      }
+    },
+    "/price-configurator/products/upsell/apply": {
+      "post": {
+        "operationId": "PriceConfiguratorApiController_applyUpsellProductsConfiguration",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ApplyUpsellProductsConfigurationRequestDto" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BaseResponseDto" } } }
+          },
+          "201": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } }
+        },
+        "summary": "Validate and Apply Upsell Products Configuration",
+        "tags": ["Price Configurator API"]
+      }
+    },
+    "/price-configurator/products/campaign/update": {
+      "post": {
+        "operationId": "PriceConfiguratorApiController_updateMainPricingCampaign",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/UpdateMainPricingCampaignRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BaseResponseDto" } } }
+          },
+          "201": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } }
+        },
+        "summary": "Update Current Pricing Campaign",
+        "tags": ["Price Configurator API"]
+      }
+    },
+    "/price-configurator/products/upsell/campaign/update": {
+      "post": {
+        "operationId": "PriceConfiguratorApiController_updateUpsellPricingCampaign",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/UpdateUpsellPricingCampaignRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BaseResponseDto" } } }
+          },
+          "201": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } }
+        },
+        "summary": "Update Current Upsell Pricing Campaign",
+        "tags": ["Price Configurator API"]
+      }
+    },
+    "/price-configurator/products/validate": {
+      "post": {
+        "operationId": "PriceConfiguratorApiController_validateMainProductsConfiguration",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ApplyMainProductsConfigurationRequestDto" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BaseResponseDto" } } }
+          },
+          "201": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } }
+        },
+        "summary": "Validate Main Products Configuration",
+        "tags": ["Price Configurator API"]
+      }
+    },
+    "/price-configurator/products/upsell/validate": {
+      "post": {
+        "operationId": "PriceConfiguratorApiController_validateUpsellProductsConfiguration",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ApplyUpsellProductsConfigurationRequestDto" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BaseResponseDto" } } }
+          },
+          "201": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } }
+        },
+        "summary": "Validate Upsell Products Configuration",
+        "tags": ["Price Configurator API"]
+      }
+    },
+    "/chargeback-experts/refundTransactionByProviderId": {
+      "post": {
+        "operationId": "ChargebackExpertsApiController_refundTransactionByProviderId",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ChargebackExpertsRefundTransactionRequestDto" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ChargebackExpertsRefundTransactionResponseDto" }
+              }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }],
+        "summary": "Refund a billing transaction by provider transaction id; optionally cancel subscription",
+        "tags": ["Chargeback Experts API"]
+      }
+    },
+    "/internal/billing/transactions": {
+      "get": {
+        "operationId": "BillingApiController_getUserBillingTransactionsInternal",
+        "parameters": [
+          {
+            "name": "transactionDateFrom",
+            "required": false,
+            "in": "query",
+            "description": "Filter transactions from this date (ISO 8601)",
+            "schema": { "example": "2025-01-01T00:00:00.000Z", "type": "string" }
+          },
+          {
+            "name": "transactionDateTo",
+            "required": false,
+            "in": "query",
+            "description": "Filter transactions up to this date (ISO 8601)",
+            "schema": { "example": "2025-12-31T23:59:59.999Z", "type": "string" }
+          },
+          {
+            "name": "userId",
+            "required": true,
+            "in": "query",
+            "description": "User ID to retrieve transactions for",
+            "schema": { "example": "473ec52e-fe53-42f5-97ca-1042c945f866", "type": "string" }
+          },
+          {
+            "name": "isRefunded",
+            "required": false,
+            "in": "query",
+            "description": "Filter by refund status. true = refunded, false = not refunded",
+            "schema": { "example": false, "type": "boolean" }
+          },
+          {
+            "name": "isSuccessful",
+            "required": false,
+            "in": "query",
+            "description": "Filter by whether the transaction was successful",
+            "schema": { "example": true, "type": "boolean" }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Which page to return",
+            "schema": { "minimum": 1, "example": 1, "type": "number" }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "How many items per page",
+            "schema": { "minimum": 1, "maximum": 1000, "example": 20, "type": "number" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/BillingTransactionsResponseDto" } }
+            }
+          }
+        },
+        "summary": "Get user billing transactions by user id without user authentication",
+        "tags": ["Internal Billing API"]
+      }
+    },
+    "/internal/billing/transactions/{id}": {
+      "get": {
+        "operationId": "BillingApiController_getUserBillingTransactionById",
+        "parameters": [{ "name": "id", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/BillingTransactionResponseDto" } }
+            }
+          }
+        },
+        "summary": "Get billing transaction by id",
+        "tags": ["Internal Billing API"]
+      }
+    },
+    "/internal/subscriptions": {
+      "get": {
+        "operationId": "SubscriptionsApiController_getUserCurrentSubscriptionInternal",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "query",
+            "description": "Id of the user to get the subscription for",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SubscriptionResponseDto" } } }
+          }
+        },
+        "summary": "Get current user subscription by user id without user authentication.",
+        "tags": ["Internal Subscriptions API"]
+      }
+    },
+    "/internal/subscriptions/cancel": {
+      "post": {
+        "operationId": "SubscriptionsApiController_cancelSubscriptionInternal",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/CancelSubscriptionInternalRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BaseResponseDto" } } }
+          }
+        },
+        "summary": "Cancel subscription by user id without user authentication. Use with caution!",
+        "tags": ["Internal Subscriptions API"]
+      }
+    },
+    "/internal/products/upsell/user": {
+      "get": {
+        "operationId": "UpsellProductsApiController_getUserPurchasedUpsellProductsInternal",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "query",
+            "description": "Id of the user to get purchased upsell products for",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/GetPurchasedUpsellProductResponseDto" }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get user purchased upsell products by user id without user authentication.",
+        "tags": ["Internal Upsell Products API"]
+      }
+    },
+    "/internal/users": {
+      "put": {
+        "operationId": "UsersApiController_updateUserInternal",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/UpdateUserInternalRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UpdateUserInternalResponseDto" } }
+            }
+          }
+        },
+        "summary": "Update user personal data",
+        "tags": ["Internal Users API"]
+      }
+    }
+  },
+  "info": {
+    "title": "Payments API",
+    "description": "Documentation for the Payments API",
+    "version": "0.5.20260817084255+0c1d2164",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [{ "url": "/api/payments/v1" }],
+  "components": {
+    "securitySchemes": {
+      "cookie": { "type": "apiKey", "in": "cookie", "name": "access-token" },
+      "okta": { "scheme": "bearer", "bearerFormat": "JWT", "type": "http", "in": "header" },
+      "bot-api-auth": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http",
+        "description": "Bot API Key for CS automation",
+        "in": "header"
+      }
+    },
+    "schemas": {
+      "PaymentProviderEnum": {
+        "type": "string",
+        "enum": ["stripe", "paypal_subscription", "nmi", "adyen", "payrails"],
+        "description": "Filter by payment provider"
+      },
+      "ProviderAccountsSortByEnum": { "type": "string", "enum": ["name"], "description": "Field to sort by" },
+      "SortOrderEnum": { "type": "string", "enum": ["asc", "desc"], "description": "Sort order" },
+      "AdminProviderAccountsRequestDto": {
+        "type": "object",
+        "properties": {
+          "page": { "type": "number", "minimum": 1, "description": "Which page to return", "example": 1 },
+          "limit": { "type": "number", "maximum": 1000, "description": "How many items per page", "example": 20 },
+          "providerAccountId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Filter by provider account UUID",
+            "example": "473ec52e-fe53-42f5-97ca-1042c945f866"
+          },
+          "providerId": {
+            "type": "string",
+            "description": "Filter by native provider id (e.g. Stripe account id)",
+            "example": "acct_abcdefghijklmnop"
+          },
+          "provider": {
+            "description": "Filter by payment provider",
+            "allOf": [{ "$ref": "#/components/schemas/PaymentProviderEnum" }]
+          },
+          "name": { "type": "string", "description": "Name of provider account", "example": "Project Name Inc." },
+          "isDefault": { "type": "boolean", "description": "Whether provider account is default" },
+          "sortBy": {
+            "description": "Field to sort by",
+            "default": "name",
+            "allOf": [{ "$ref": "#/components/schemas/ProviderAccountsSortByEnum" }]
+          },
+          "sortOrder": {
+            "description": "Sort order",
+            "default": "asc",
+            "allOf": [{ "$ref": "#/components/schemas/SortOrderEnum" }]
+          }
+        }
+      },
+      "AdminProviderAccountResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Provider account UUID",
+            "example": "473ec52e-fe53-42f5-97ca-1042c945f866"
+          },
+          "provider": { "allOf": [{ "$ref": "#/components/schemas/PaymentProviderEnum" }] },
+          "providerId": {
+            "type": "string",
+            "description": "Native provider account id",
+            "example": "acct_abcdefghijklmnop"
+          },
+          "name": { "type": "string", "example": "Project Name Inc." },
+          "countryCode": { "type": "string", "example": "US" },
+          "isDefault": { "type": "boolean" },
+          "configuration": { "type": "object", "description": "Public configuration fields only" }
+        },
+        "required": ["id", "provider", "providerId", "name", "countryCode", "isDefault", "configuration"]
+      },
+      "PaginationMetaDto": {
+        "type": "object",
+        "properties": {
+          "itemCount": { "type": "number", "description": "The amount of items on this specific page", "example": 10 },
+          "itemsPerPage": {
+            "type": "number",
+            "description": "The amount of items that were requested per page",
+            "example": 10
+          },
+          "currentPage": {
+            "type": "number",
+            "description": "The current page this paginator \"points\" to",
+            "example": 1
+          },
+          "totalItems": { "type": "number", "description": "Total items matching the query", "example": 100 },
+          "totalPages": {
+            "type": "number",
+            "description": "The total amount of pages in this paginator",
+            "example": 10
+          }
+        },
+        "required": ["itemCount", "itemsPerPage", "currentPage", "totalItems", "totalPages"]
+      },
+      "AdminProviderAccountsResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": { "type": "array", "items": { "$ref": "#/components/schemas/AdminProviderAccountResponseDto" } },
+          "meta": { "$ref": "#/components/schemas/PaginationMetaDto" }
+        },
+        "required": ["items", "meta"]
+      },
+      "AdminProviderAccountSummaryDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Provider account UUID",
+            "example": "473ec52e-fe53-42f5-97ca-1042c945f866"
+          },
+          "provider": {
+            "description": "Payment provider",
+            "allOf": [{ "$ref": "#/components/schemas/PaymentProviderEnum" }]
+          },
+          "providerId": {
+            "type": "string",
+            "description": "Native provider account id (the MID)",
+            "example": "acct_abcdefghijklmnop"
+          },
+          "name": { "type": "string", "description": "Provider account name", "example": "Stripe US" }
+        },
+        "required": ["id", "provider", "providerId", "name"]
+      },
+      "AdminRoutingRuleSnapshotDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "Routing rule id" },
+          "countryCode": { "type": "string", "nullable": true, "description": "ISO country code or null for global" },
+          "trafficPercentage": { "type": "integer", "description": "Traffic share percent" },
+          "providerAccountId": { "type": "string", "nullable": true },
+          "providerAccount": {
+            "nullable": true,
+            "description": "Provider account summary (name, MID, provider) for this rule",
+            "allOf": [{ "$ref": "#/components/schemas/AdminProviderAccountSummaryDto" }]
+          },
+          "createdAt": { "type": "string", "description": "Created at" }
+        },
+        "required": ["id", "countryCode", "trafficPercentage", "providerAccountId", "providerAccount", "createdAt"]
+      },
+      "AdminRoutingRuleSetListItemDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "note": { "type": "string" },
+          "createdBy": { "type": "string" },
+          "createdAt": { "type": "string" },
+          "validTo": {
+            "type": "string",
+            "nullable": true,
+            "description": "End of this rule set’s validity (exclusive upper bound), null for the current set"
+          },
+          "rules": { "type": "array", "items": { "$ref": "#/components/schemas/AdminRoutingRuleSnapshotDto" } }
+        },
+        "required": ["id", "note", "createdBy", "createdAt", "validTo", "rules"]
+      },
+      "AdminRoutingRuleSetsListResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": { "type": "array", "items": { "$ref": "#/components/schemas/AdminRoutingRuleSetListItemDto" } }
+        },
+        "required": ["items"]
+      },
+      "AdminRoutingRuleSetRuleBodyDto": {
+        "type": "object",
+        "properties": {
+          "countryCode": {
+            "type": "string",
+            "nullable": true,
+            "description": "ISO 3166-1 alpha-2 country code, or omit / null for global (all countries)"
+          },
+          "trafficPercentage": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 100,
+            "description": "Traffic share for this rule (integer percent)"
+          },
+          "providerAccountId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Provider account id to route traffic to"
+          }
+        },
+        "required": ["trafficPercentage", "providerAccountId"]
+      },
+      "AdminValidateRoutingRuleSetRequestDto": {
+        "type": "object",
+        "properties": {
+          "rules": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/AdminRoutingRuleSetRuleBodyDto" }
+          }
+        },
+        "required": ["rules"]
+      },
+      "AdminValidateRoutingRuleSetResponseDto": {
+        "type": "object",
+        "properties": { "valid": { "type": "boolean" }, "errors": { "type": "array", "items": { "type": "string" } } },
+        "required": ["valid"]
+      },
+      "AdminCreateRoutingRuleSetRequestDto": {
+        "type": "object",
+        "properties": {
+          "note": { "type": "string", "minLength": 1, "description": "Business note for this rule set" },
+          "rules": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/AdminRoutingRuleSetRuleBodyDto" }
+          }
+        },
+        "required": ["note", "rules"]
+      },
+      "AdminCreateRoutingRuleSetResponseDto": {
+        "type": "object",
+        "properties": { "id": { "type": "string" } },
+        "required": ["id"]
+      },
+      "AdminRateLimitEndpointDto": {
+        "type": "object",
+        "properties": {
+          "group": { "type": "string", "example": "bot" },
+          "endpoint": { "type": "string", "example": "search" },
+          "method": { "type": "string", "example": "POST" },
+          "path": { "type": "string", "example": "/bot/search" },
+          "summary": { "type": "string", "example": "Search user subscription data for CS AI automation" },
+          "configured": { "type": "boolean" }
+        },
+        "required": ["group", "endpoint", "method", "path", "summary", "configured"]
+      },
+      "AdminRateLimitEndpointsResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": { "type": "array", "items": { "$ref": "#/components/schemas/AdminRateLimitEndpointDto" } }
+        },
+        "required": ["items"]
+      },
+      "RateLimitPolicyActionEnum": {
+        "type": "string",
+        "enum": [
+          "POLICY_PUBLISHED",
+          "MANUAL_BLOCKED",
+          "BLOCK_EXTENDED",
+          "UNBLOCKED",
+          "AUTOMATIC_BLOCKED",
+          "POLICY_UNSET"
+        ]
+      },
+      "RateLimitBlockScopeEnum": { "type": "string", "enum": ["GROUP", "ENDPOINT"] },
+      "AdminRateLimitHistoryItemDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "operationId": { "type": "string", "format": "uuid" },
+          "action": { "allOf": [{ "$ref": "#/components/schemas/RateLimitPolicyActionEnum" }] },
+          "group": { "type": "string" },
+          "endpoint": { "type": "string" },
+          "minute": { "type": "number", "minimum": 1 },
+          "hourly": { "type": "number", "minimum": 1 },
+          "daily": { "type": "number", "minimum": 1 },
+          "blockSeconds": { "type": "number", "minimum": 1 },
+          "blockActionScope": { "allOf": [{ "$ref": "#/components/schemas/RateLimitBlockScopeEnum" }] },
+          "appliedBlockSeconds": { "type": "number", "nullable": true, "minimum": 1 },
+          "blockExpiresAt": { "type": "string", "nullable": true, "format": "date-time" },
+          "note": { "type": "string" },
+          "createdBy": { "type": "string" },
+          "createdAt": { "type": "string" },
+          "updatedAt": { "type": "string" },
+          "validTo": { "type": "string", "nullable": true },
+          "blocked": {
+            "type": "boolean",
+            "nullable": true,
+            "description": "Effective current block state; null for a historical policy."
+          },
+          "minuteCount": {
+            "type": "number",
+            "nullable": true,
+            "minimum": 0,
+            "description": "Current minute counter; null for a historical policy."
+          },
+          "minuteRemainingSeconds": {
+            "type": "number",
+            "nullable": true,
+            "minimum": 0,
+            "description": "Remaining minute window seconds; null for a missing counter or historical policy."
+          },
+          "hourlyCount": {
+            "type": "number",
+            "nullable": true,
+            "minimum": 0,
+            "description": "Current hourly counter; null for a historical policy."
+          },
+          "hourlyRemainingSeconds": {
+            "type": "number",
+            "nullable": true,
+            "minimum": 0,
+            "description": "Remaining hourly window seconds; null for a missing counter or historical policy."
+          },
+          "dailyCount": {
+            "type": "number",
+            "nullable": true,
+            "minimum": 0,
+            "description": "Current daily counter; null for a historical policy."
+          },
+          "dailyRemainingSeconds": {
+            "type": "number",
+            "nullable": true,
+            "minimum": 0,
+            "description": "Remaining daily window seconds; null for a missing counter or historical policy."
+          }
+        },
+        "required": [
+          "id",
+          "operationId",
+          "action",
+          "group",
+          "endpoint",
+          "minute",
+          "hourly",
+          "daily",
+          "blockSeconds",
+          "blockActionScope",
+          "appliedBlockSeconds",
+          "blockExpiresAt",
+          "note",
+          "createdBy",
+          "createdAt",
+          "updatedAt",
+          "validTo",
+          "blocked",
+          "minuteCount",
+          "minuteRemainingSeconds",
+          "hourlyCount",
+          "hourlyRemainingSeconds",
+          "dailyCount",
+          "dailyRemainingSeconds"
+        ]
+      },
+      "AdminRateLimitHistoryResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": { "type": "array", "items": { "$ref": "#/components/schemas/AdminRateLimitHistoryItemDto" } }
+        },
+        "required": ["items"]
+      },
+      "AdminPublishRateLimitPolicyRequestDto": {
+        "type": "object",
+        "properties": {
+          "group": { "type": "string", "maxLength": 64, "pattern": "^[a-z][\\d_a-z-]{0,63}$", "example": "bot" },
+          "endpoint": { "type": "string", "maxLength": 64, "pattern": "^[a-z][\\d_a-z-]{0,63}$", "example": "search" },
+          "minute": { "type": "number", "minimum": 1, "maximum": 1000000000, "example": 20 },
+          "hourly": { "type": "number", "minimum": 1, "maximum": 1000000000, "example": 150 },
+          "daily": { "type": "number", "minimum": 1, "maximum": 1000000000, "example": 1500 },
+          "blockSeconds": { "type": "number", "minimum": 1, "maximum": 31536000, "example": 86400 },
+          "blockActionScope": {
+            "example": "GROUP",
+            "description": "Enforcement mode for this endpoint only. GROUP: blocked together with the other GROUP-scoped endpoints in the group. ENDPOINT: blocked only by its own endpoint block. Changing it never modifies sibling policies; rejected while the endpoint is blocked.",
+            "allOf": [{ "$ref": "#/components/schemas/RateLimitBlockScopeEnum" }]
+          },
+          "note": { "type": "string", "maxLength": 500, "example": "Raise the search threshold after incident review." }
+        },
+        "required": ["group", "endpoint", "minute", "hourly", "daily", "blockSeconds", "blockActionScope", "note"]
+      },
+      "AdminRateLimitHistoryDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "operationId": { "type": "string", "format": "uuid" },
+          "action": { "allOf": [{ "$ref": "#/components/schemas/RateLimitPolicyActionEnum" }] },
+          "group": { "type": "string" },
+          "endpoint": { "type": "string" },
+          "minute": { "type": "number", "minimum": 1 },
+          "hourly": { "type": "number", "minimum": 1 },
+          "daily": { "type": "number", "minimum": 1 },
+          "blockSeconds": { "type": "number", "minimum": 1 },
+          "blockActionScope": { "allOf": [{ "$ref": "#/components/schemas/RateLimitBlockScopeEnum" }] },
+          "appliedBlockSeconds": { "type": "number", "nullable": true, "minimum": 1 },
+          "blockExpiresAt": { "type": "string", "nullable": true, "format": "date-time" },
+          "note": { "type": "string" },
+          "createdBy": { "type": "string" },
+          "createdAt": { "type": "string" },
+          "updatedAt": { "type": "string" },
+          "validTo": { "type": "string", "nullable": true }
+        },
+        "required": [
+          "id",
+          "operationId",
+          "action",
+          "group",
+          "endpoint",
+          "minute",
+          "hourly",
+          "daily",
+          "blockSeconds",
+          "blockActionScope",
+          "appliedBlockSeconds",
+          "blockExpiresAt",
+          "note",
+          "createdBy",
+          "createdAt",
+          "updatedAt",
+          "validTo"
+        ]
+      },
+      "AdminRateLimitOperationResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string", "example": "Rate-limit block updated successfully." },
+          "operationId": { "type": "string", "format": "uuid" },
+          "items": {
+            "description": "Committed policy-history records; may be empty when Redis succeeded but PostgreSQL history was not recorded.",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/AdminRateLimitHistoryDto" }
+          }
+        },
+        "required": ["message", "operationId", "items"]
+      },
+      "AdminUnsetRateLimitPolicyRequestDto": {
+        "type": "object",
+        "properties": {
+          "group": { "type": "string", "maxLength": 64, "pattern": "^[a-z][\\d_a-z-]{0,63}$", "example": "bot" },
+          "endpoint": { "type": "string", "maxLength": 64, "pattern": "^[a-z][\\d_a-z-]{0,63}$", "example": "search" },
+          "note": { "type": "string", "maxLength": 500, "example": "Retire the obsolete policy after route migration." }
+        },
+        "required": ["group", "endpoint", "note"]
+      },
+      "AdminBlockRateLimitRequestDto": {
+        "type": "object",
+        "properties": {
+          "group": { "type": "string", "maxLength": 64, "pattern": "^[a-z][\\d_a-z-]{0,63}$", "example": "bot" },
+          "endpoint": {
+            "type": "string",
+            "maxLength": 64,
+            "pattern": "^[a-z][\\d_a-z-]{0,63}$",
+            "description": "Omit to apply a GROUP action across the GROUP-scoped endpoints in the group; provide it to target one ENDPOINT-scoped endpoint."
+          },
+          "note": { "type": "string", "maxLength": 500, "example": "Temporarily block during partner incident." },
+          "requestedBlockSeconds": { "type": "number", "minimum": 1, "maximum": 31536000, "example": 3600 }
+        },
+        "required": ["group", "note", "requestedBlockSeconds"]
+      },
+      "AdminRateLimitBlockActionRequestDto": {
+        "type": "object",
+        "properties": {
+          "group": { "type": "string", "maxLength": 64, "pattern": "^[a-z][\\d_a-z-]{0,63}$", "example": "bot" },
+          "endpoint": {
+            "type": "string",
+            "maxLength": 64,
+            "pattern": "^[a-z][\\d_a-z-]{0,63}$",
+            "description": "Omit to apply a GROUP action across the GROUP-scoped endpoints in the group; provide it to target one ENDPOINT-scoped endpoint."
+          },
+          "note": { "type": "string", "maxLength": 500, "example": "Temporarily block during partner incident." }
+        },
+        "required": ["group", "note"]
+      },
+      "BillingTransactionsSortByEnum": {
+        "type": "string",
+        "enum": ["transactionDate", "amount", "refundedAt"],
+        "description": "Field to sort by"
+      },
+      "BillingTransactionTypeEnum": {
+        "type": "string",
+        "enum": ["trial_full", "trial_part_1", "trial_part_2", "recurrent", "upsell"],
+        "description": "Filter by transaction types"
+      },
+      "AdminBillingTransactionsRequestDto": {
+        "type": "object",
+        "properties": {
+          "page": { "type": "number", "minimum": 1, "description": "Which page to return", "example": 1 },
+          "limit": { "type": "number", "maximum": 1000, "description": "How many items per page", "example": 20 },
+          "transactionId": { "type": "string", "format": "uuid", "description": "Filter by transaction ID" },
+          "transactionDateFrom": { "type": "string", "description": "Start date for transaction filter (ISO 8601)" },
+          "transactionDateTo": { "type": "string", "description": "End date for transaction filter (ISO 8601)" },
+          "amountMin": { "type": "number", "description": "Minimum amount filter (in smallest units)" },
+          "amountMax": { "type": "number", "description": "Maximum amount filter (in smallest units)" },
+          "currency": { "type": "string", "description": "Currency code (e.g., usd)" },
+          "invoiceNumber": { "type": "string", "description": "Invoice number" },
+          "providerTransactionId": {
+            "type": "string",
+            "description": "Payment provider reference: matches providerTransactionId (e.g. Stripe charge id, Adyen PSP reference) or Payrails orchestrated processorReference when routed through Payrails"
+          },
+          "isSuccessful": { "type": "boolean", "description": "Whether transaction was successful" },
+          "subscriptionId": {
+            "type": "string",
+            "nullable": true,
+            "format": "uuid",
+            "description": "Subscription ID (If null provided, filters transactions not linked to any subscription)"
+          },
+          "userId": { "type": "string", "description": "User ID" },
+          "paymentDetailsEmail": {
+            "type": "string",
+            "description": "Email from payment details (exact match, case-sensitive)"
+          },
+          "paymentDetailsName": {
+            "type": "string",
+            "description": "Cardholder/billing name from payment details (exact match, case-sensitive)"
+          },
+          "paymentDetailsLast4": { "type": "string", "description": "Last 4 card digits from payment details" },
+          "paymentDetailsFingerprint": { "type": "string", "description": "Card fingerprint from payment details" },
+          "paymentDetailsAuthCode": { "type": "string", "description": "Authorization code from payment details" },
+          "paymentDetailsCardBin": { "type": "string", "description": "Card BIN (6-digit) from payment details" },
+          "paymentDetailsNetworkTxReference": {
+            "type": "string",
+            "description": "Network transaction ID from payment details"
+          },
+          "paymentDetailsSaleARN": {
+            "type": "string",
+            "description": "Sale ARN (Acquirer Reference Number) from payment details"
+          },
+          "isRefunded": { "type": "boolean", "description": "Filter by refund status" },
+          "refundId": { "type": "string", "description": "Filter by specific refund ID" },
+          "refundARN": {
+            "type": "string",
+            "description": "Refund ARN (Acquirer Reference Number) from refund metadata"
+          },
+          "refundedDateFrom": { "type": "string", "description": "Start date for refund date filter (ISO 8601)" },
+          "refundedDateTo": { "type": "string", "description": "End date for refund date filter (ISO 8601)" },
+          "providerAccountId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Filter by provider account ID",
+            "example": "473ec52e-fe53-42f5-97ca-1042c945f866"
+          },
+          "provider": {
+            "description": "Filter by payment provider",
+            "allOf": [{ "$ref": "#/components/schemas/PaymentProviderEnum" }]
+          },
+          "descriptor": {
+            "type": "string",
+            "maxLength": 22,
+            "description": "Filter by statement descriptor (case-insensitive substring match; descriptors are 5-22 chars)"
+          },
+          "sortBy": {
+            "description": "Field to sort by",
+            "default": "transactionDate",
+            "allOf": [{ "$ref": "#/components/schemas/BillingTransactionsSortByEnum" }]
+          },
+          "sortOrder": {
+            "description": "Sort order",
+            "default": "desc",
+            "allOf": [{ "$ref": "#/components/schemas/SortOrderEnum" }]
+          },
+          "transactionTypes": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/BillingTransactionTypeEnum" },
+            "description": "Filter by transaction types",
+            "example": ["trial_full", "recurrent"]
+          }
+        }
+      },
+      "RefundSourceEnum": {
+        "type": "string",
+        "enum": [
+          "cs_automation",
+          "admin_panel",
+          "admin_panel_chargeback_expert",
+          "stripe_dashboard",
+          "chargeback_experts_api"
+        ],
+        "description": "Source of the refund"
+      },
+      "RefundAlertSourceEnum": {
+        "type": "string",
+        "enum": ["ethoca", "cdrn"],
+        "description": "Reason the refund was issued - fraud-alert network"
+      },
+      "AdminBillingTransactionResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "Entity uuid", "example": "473ec52e-fe53-42f5-97ca-1042c945f866" },
+          "invoiceNumber": {
+            "type": "string",
+            "description": "Invoice number of transaction",
+            "example": "A9C58C8F-0832"
+          },
+          "currency": { "type": "string", "description": "Currency of transaction", "example": "USD" },
+          "amount": {
+            "type": "number",
+            "description": "Amount of transaction (converted to decimal if needed)",
+            "example": 1.95
+          },
+          "isSuccessful": { "type": "boolean", "description": "Whether transaction was successful", "example": true },
+          "transactionDate": {
+            "type": "string",
+            "description": "Datetime of transaction",
+            "example": "2022-07-01T14:26:50.514Z"
+          },
+          "paymentDetails": {
+            "type": "object",
+            "properties": {
+              "type": { "type": "string", "required": false, "example": "visa" },
+              "last4": { "type": "string", "required": false, "example": "1234" },
+              "provider": { "type": "string", "required": true, "example": "stripe" },
+              "wallet": { "type": "string", "required": false, "example": "google_pay" },
+              "email": { "type": "string", "required": false, "example": "john_doe@example.com" },
+              "name": { "type": "string", "required": false, "example": "John Doe" },
+              "fingerprint": { "type": "string", "required": false, "example": "hfdaFEGKf2mBjOSd" },
+              "expMonth": { "type": "number", "required": false, "example": 2 },
+              "expYear": { "type": "number", "required": false, "example": 2035 },
+              "issuer": { "type": "string", "required": false, "example": "Chase" },
+              "authCode": { "type": "string", "required": false, "example": "123456" },
+              "cardBin": { "type": "string", "required": false, "example": "498843" },
+              "networkTxReference": { "type": "string", "required": false, "example": "MCC123456789" },
+              "saleARN": { "type": "string", "required": false, "example": "74512345678901234567890" }
+            },
+            "description": "Payment details of transaction"
+          },
+          "subscriptionId": {
+            "type": "string",
+            "nullable": true,
+            "description": "Id of the subscription this transaction belongs to",
+            "example": "473ec52e-fe53-42f5-97ca-1042c945f866"
+          },
+          "oneOffPriceId": {
+            "type": "string",
+            "nullable": true,
+            "description": "Id of the one-off price this transaction belongs to",
+            "example": "473ec52e-fe53-42f5-97ca-1042c945f866"
+          },
+          "userId": {
+            "type": "string",
+            "description": "Id of the user this transaction belongs to",
+            "example": "473ec52e-fe53-42f5-97ca-1042c945f866"
+          },
+          "onTrial": {
+            "type": "boolean",
+            "description": "Whether this transaction was created during a trial period",
+            "example": false
+          },
+          "type": {
+            "description": "Transaction type (trial, recurrent, upsell, etc.)",
+            "example": "recurrent",
+            "allOf": [{ "$ref": "#/components/schemas/BillingTransactionTypeEnum" }]
+          },
+          "isRefunded": { "type": "boolean", "description": "Whether this transaction was refunded", "example": false },
+          "refundId": {
+            "type": "string",
+            "nullable": true,
+            "description": "Id of the refund this transaction belongs to",
+            "example": "473ec52e-fe53-42f5-97ca-1042c945f866"
+          },
+          "refundedAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "If refunded - datetime when refund is initiated",
+            "example": "2022-07-01T14:26:50.514Z"
+          },
+          "hasChargeback": {
+            "type": "boolean",
+            "description": "Whether a provider chargeback has been opened on this transaction",
+            "example": false
+          },
+          "chargebackOpenedAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "Datetime when the chargeback was first recorded, or null if none",
+            "example": "2022-07-01T14:26:50.514Z"
+          },
+          "refundMetadata": {
+            "type": "object",
+            "nullable": true,
+            "description": "If refunded - additional refund data, including ARN",
+            "properties": {
+              "referenceNumber": { "type": "string", "required": false, "example": "12345" },
+              "referenceType": { "type": "string", "required": false, "example": "acquirer_reference_number" },
+              "actionType": { "type": "string", "required": false, "example": "refund" }
+            }
+          },
+          "refundSource": {
+            "nullable": true,
+            "description": "Source of the refund",
+            "example": "admin_panel",
+            "allOf": [{ "$ref": "#/components/schemas/RefundSourceEnum" }]
+          },
+          "refundAlertSource": {
+            "nullable": true,
+            "description": "Reason the refund was issued - fraud-alert network",
+            "example": "ethoca",
+            "allOf": [{ "$ref": "#/components/schemas/RefundAlertSourceEnum" }]
+          },
+          "refundReason": {
+            "type": "string",
+            "nullable": true,
+            "enum": ["fraudulent", "requested_by_customer"],
+            "description": "Processor-facing refund reason",
+            "example": "fraudulent"
+          },
+          "providerTransactionId": {
+            "type": "string",
+            "nullable": true,
+            "description": "Id of the provider transaction this transaction belongs to",
+            "example": "473ec52e-fe53-42f5-97ca-1042c945f866"
+          },
+          "providerAccountId": {
+            "type": "string",
+            "description": "Provider account ID associated with this transaction",
+            "example": "473ec52e-fe53-42f5-97ca-1042c945f866"
+          },
+          "providerAccount": {
+            "description": "Provider account summary (name, MID, provider) for this transaction",
+            "allOf": [{ "$ref": "#/components/schemas/AdminProviderAccountSummaryDto" }]
+          },
+          "failureMetadata": {
+            "type": "object",
+            "nullable": true,
+            "description": "Provider-reported failure snapshot. Populated only when isSuccessful is false and the provider exposes a reason; null otherwise. ",
+            "properties": {
+              "reason": {
+                "type": "string",
+                "required": false,
+                "nullable": true,
+                "example": "Your card was declined.",
+                "maxLength": 500
+              },
+              "code": {
+                "type": "string",
+                "required": false,
+                "nullable": true,
+                "example": "card_declined",
+                "maxLength": 100
+              }
+            }
+          },
+          "descriptor": {
+            "type": "string",
+            "nullable": true,
+            "description": "Snapshot of the statement descriptor sent to the payment provider at charge creation time. NULL for transactions created before the descriptor feature rollout OR when no active descriptor was configured for the resolved account.",
+            "example": "brainiqtest.com",
+            "maxLength": 50
+          },
+          "providerMetadata": {
+            "type": "object",
+            "nullable": true,
+            "description": "Provider-specific metadata. For Payrails-orchestrated payments includes downstream PSP audit (processorReference, routedProcessor, etc.).",
+            "properties": {
+              "payrails": {
+                "type": "object",
+                "properties": {
+                  "executionId": { "type": "string" },
+                  "paymentId": { "type": "string" },
+                  "instrumentId": { "type": "string" },
+                  "actionId": { "type": "string" },
+                  "routedProcessor": { "type": "string", "example": "stripe" },
+                  "processorProviderId": { "type": "string" },
+                  "nativeProviderAccountId": { "type": "string", "example": "acct_1234567890" },
+                  "processorReference": { "type": "string", "example": "ch_1234567890" },
+                  "processorOtherReference": { "type": "string", "example": "pi_1234567890" }
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "id",
+          "invoiceNumber",
+          "currency",
+          "amount",
+          "isSuccessful",
+          "transactionDate",
+          "paymentDetails",
+          "subscriptionId",
+          "oneOffPriceId",
+          "userId",
+          "onTrial",
+          "type",
+          "isRefunded",
+          "refundId",
+          "refundedAt",
+          "hasChargeback",
+          "chargebackOpenedAt",
+          "refundMetadata",
+          "refundSource",
+          "refundAlertSource",
+          "refundReason",
+          "providerTransactionId",
+          "providerAccountId",
+          "providerAccount",
+          "failureMetadata",
+          "descriptor",
+          "providerMetadata"
+        ]
+      },
+      "DeferredPaginationMetaDto": {
+        "type": "object",
+        "properties": {
+          "itemCount": { "type": "number", "description": "The amount of items on this specific page", "example": 10 },
+          "itemsPerPage": {
+            "type": "number",
+            "description": "The amount of items that were requested per page",
+            "example": 10
+          },
+          "currentPage": {
+            "type": "number",
+            "description": "The current page this paginator \"points\" to",
+            "example": 1
+          },
+          "totalItems": { "type": "number", "description": "Total items matching the query", "example": 100 },
+          "hasMore": {
+            "type": "boolean",
+            "description": "Whether more items exist beyond this page (exact; detected via limit+1).",
+            "example": true
+          },
+          "totalIsEstimate": {
+            "type": "boolean",
+            "description": "Whether `totalItems` is an approximate planner estimate (true → render \"~\") or an exact count (false).",
+            "example": false
+          }
+        },
+        "required": ["itemCount", "itemsPerPage", "currentPage", "totalItems", "hasMore", "totalIsEstimate"]
+      },
+      "AdminBillingTransactionsResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": { "type": "array", "items": { "$ref": "#/components/schemas/AdminBillingTransactionResponseDto" } },
+          "meta": { "$ref": "#/components/schemas/DeferredPaginationMetaDto" }
+        },
+        "required": ["items", "meta"]
+      },
+      "AdminCountResponseDto": {
+        "type": "object",
+        "properties": {
+          "totalItems": {
+            "type": "number",
+            "description": "Total number of records matching the supplied filters",
+            "example": 12345
+          }
+        },
+        "required": ["totalItems"]
+      },
+      "AdminRefundBillingTransactionRequestDto": {
+        "type": "object",
+        "properties": {
+          "transactionId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Transaction ID to refund",
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          "refundAlertSource": {
+            "description": "Reason the refund was issued - fraud-alert network",
+            "allOf": [{ "$ref": "#/components/schemas/RefundAlertSourceEnum" }]
+          }
+        },
+        "required": ["transactionId"]
+      },
+      "AdminRefundBillingTransactionResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Success message",
+            "example": "Billing transaction refunded successfully"
+          },
+          "billingTransaction": {
+            "description": "The refunded billing transaction details",
+            "allOf": [{ "$ref": "#/components/schemas/AdminBillingTransactionResponseDto" }]
+          }
+        },
+        "required": ["message", "billingTransaction"]
+      },
+      "AdminBillingTransactionInvoiceRequestDto": {
+        "type": "object",
+        "properties": {
+          "transactionId": { "type": "string", "format": "uuid", "description": "Billing transaction ID" }
+        },
+        "required": ["transactionId"]
+      },
+      "AdminBillingTransactionInvoiceResponseDto": {
+        "type": "object",
+        "properties": {
+          "hostedInvoiceUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "URL to view the invoice online (hosted by Stripe)"
+          },
+          "invoicePdfUrl": { "type": "string", "nullable": true, "description": "URL to download the invoice PDF" },
+          "hostedReceiptUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "URL to view the hosted receipt (from Stripe charge)"
+          }
+        }
+      },
+      "SubscriptionDurationUnitEnum": {
+        "type": "string",
+        "enum": ["days", "weeks", "months", "years"],
+        "description": "Filter by duration unit"
+      },
+      "RecurrentPriceSortByEnum": {
+        "type": "string",
+        "enum": ["createdAt", "amount", "trialAmount"],
+        "description": "Sort by field"
+      },
+      "AdminRecurrentPricesRequestDto": {
+        "type": "object",
+        "properties": {
+          "page": { "type": "number", "minimum": 1, "description": "Page number", "example": 1 },
+          "limit": { "type": "number", "maximum": 1000, "description": "Items per page", "example": 20 },
+          "id": { "type": "string", "format": "uuid", "description": "Filter by price ID" },
+          "currency": { "type": "string", "description": "Filter by currency", "example": "USD" },
+          "providerId": { "type": "string", "description": "Filter by provider ID" },
+          "productId": { "type": "string", "format": "uuid", "description": "Filter by product ID" },
+          "providerAccountId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Filter by provider account ID",
+            "example": "473ec52e-fe53-42f5-97ca-1042c945f866"
+          },
+          "duration": { "type": "number", "description": "Filter by duration value" },
+          "durationUnits": {
+            "description": "Filter by duration unit",
+            "allOf": [{ "$ref": "#/components/schemas/SubscriptionDurationUnitEnum" }]
+          },
+          "createdAfter": { "type": "string", "description": "Only include prices created after this date" },
+          "createdBefore": { "type": "string", "description": "Only include prices created before this date" },
+          "sortBy": {
+            "description": "Sort by field",
+            "default": "createdAt",
+            "allOf": [{ "$ref": "#/components/schemas/RecurrentPriceSortByEnum" }]
+          },
+          "sortOrder": {
+            "description": "Sort order",
+            "default": "desc",
+            "allOf": [{ "$ref": "#/components/schemas/SortOrderEnum" }]
+          }
+        }
+      },
+      "AdminRecurrentPriceResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Recurrent Price ID",
+            "example": "473ec52e-fe53-42f5-97ca-1042c945f866"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "When the price was created",
+            "example": "2025-07-01T10:00:00.000Z"
+          },
+          "currency": { "type": "string", "description": "Currency code", "example": "USD" },
+          "amount": { "type": "number", "description": "Base amount (in smallest units)", "example": 999 },
+          "duration": { "type": "number", "description": "Subscription duration value", "example": 1 },
+          "durationUnits": {
+            "description": "Duration units (e.g., days, months)",
+            "example": "weeks",
+            "allOf": [{ "$ref": "#/components/schemas/SubscriptionDurationUnitEnum" }]
+          },
+          "trialAmount": { "type": "number", "description": "Trial amount (in smallest units)", "example": 0 },
+          "trialDays": { "type": "number", "description": "Number of trial days", "example": 7 },
+          "provider": {
+            "description": "Catalog / billing provider for this price row",
+            "allOf": [{ "$ref": "#/components/schemas/PaymentProviderEnum" }]
+          },
+          "providerId": {
+            "type": "string",
+            "description": "Provider price ID (stripe or paypal)",
+            "example": "price_abc123"
+          },
+          "productId": {
+            "type": "string",
+            "description": "Product ID this Price is attached to",
+            "example": "473ec52e-fe53-42f5-97ca-1042c945f866"
+          },
+          "providerAccountId": {
+            "type": "string",
+            "description": "ID of the provider account",
+            "example": "473ec52e-fe53-42f5-97ca-1042c945f866"
+          },
+          "shown": { "type": "boolean", "description": "Whether the price is shown to users", "example": true },
+          "trialSplitOneOffPriceId": {
+            "type": "string",
+            "description": "ID of the trial split one-off price",
+            "example": "473ec52e-fe53-42f5-97ca-1042c945f866"
+          },
+          "metadata": { "type": "object", "description": "Metadata object" }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "currency",
+          "amount",
+          "duration",
+          "durationUnits",
+          "trialAmount",
+          "trialDays",
+          "provider",
+          "productId",
+          "shown",
+          "metadata"
+        ]
+      },
+      "AdminRecurrentPricesResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": { "type": "array", "items": { "$ref": "#/components/schemas/AdminRecurrentPriceResponseDto" } },
+          "meta": { "$ref": "#/components/schemas/PaginationMetaDto" }
+        },
+        "required": ["items", "meta"]
+      },
+      "RecurrentProductSortByEnum": {
+        "type": "string",
+        "enum": ["createdAt", "priority"],
+        "description": "Sort by field"
+      },
+      "AdminRecurrentProductsRequestDto": {
+        "type": "object",
+        "properties": {
+          "page": { "type": "number", "minimum": 1, "description": "Page number", "example": 1 },
+          "limit": { "type": "number", "maximum": 1000, "description": "Items per page", "example": 20 },
+          "id": { "type": "string", "format": "uuid", "description": "Filter by product ID" },
+          "sku": { "type": "string", "description": "Filter by SKU" },
+          "campaign": { "type": "string", "description": "Filter by campaign", "example": "default" },
+          "createdAfter": { "type": "string", "description": "Only include products created after this date" },
+          "createdBefore": { "type": "string", "description": "Only include products created before this date" },
+          "shownOnFirstPurchase": { "type": "boolean", "description": "Filter by first purchase visibility" },
+          "shownOnRecurrentPurchase": { "type": "boolean", "description": "Filter by recurrent purchase visibility" },
+          "sortBy": {
+            "description": "Sort by field",
+            "default": "createdAt",
+            "allOf": [{ "$ref": "#/components/schemas/RecurrentProductSortByEnum" }]
+          },
+          "sortOrder": {
+            "description": "Sort order",
+            "default": "desc",
+            "allOf": [{ "$ref": "#/components/schemas/SortOrderEnum" }]
+          }
+        }
+      },
+      "AdminRecurrentProductResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "Product ID", "example": "6aa64f51-876c-4700-8b86-87d3ac9a6d3f" },
+          "createdAt": {
+            "type": "string",
+            "description": "When the product was created",
+            "example": "2025-07-01T10:00:00.000Z"
+          },
+          "sku": {
+            "type": "string",
+            "description": "Unique SKU identifier for the product",
+            "example": "default_monthly_trial"
+          },
+          "campaign": { "type": "string", "description": "Campaign the product belongs to", "example": "default" },
+          "priority": { "type": "number", "description": "Display order (ASC)", "example": 1 },
+          "shownOnFirstPurchase": { "type": "boolean", "description": "Shown on first purchase", "example": true },
+          "shownOnRecurrentPurchase": {
+            "type": "boolean",
+            "description": "Shown on recurrent purchase",
+            "example": true
+          },
+          "metadata": { "type": "object", "description": "Optional metadata object" }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "sku",
+          "campaign",
+          "priority",
+          "shownOnFirstPurchase",
+          "shownOnRecurrentPurchase"
+        ]
+      },
+      "AdminRecurrentProductsResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": { "type": "array", "items": { "$ref": "#/components/schemas/AdminRecurrentProductResponseDto" } },
+          "meta": { "$ref": "#/components/schemas/PaginationMetaDto" }
+        },
+        "required": ["items", "meta"]
+      },
+      "OneOffPriceSortByEnum": { "type": "string", "enum": ["createdAt", "amount"], "description": "Sort by field" },
+      "AdminOneOffPricesRequestDto": {
+        "type": "object",
+        "properties": {
+          "page": { "type": "number", "minimum": 1, "description": "Page number", "example": 1 },
+          "limit": { "type": "number", "maximum": 1000, "description": "Items per page", "example": 20 },
+          "id": { "type": "string", "format": "uuid", "description": "Filter by upsell price ID" },
+          "currency": { "type": "string", "description": "Filter by currency", "example": "USD" },
+          "providerId": { "type": "string", "description": "Filter by provider ID" },
+          "productId": { "type": "string", "format": "uuid", "description": "Filter by upsell product ID" },
+          "providerAccountId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Filter by provider account ID",
+            "example": "473ec52e-fe53-42f5-97ca-1042c945f866"
+          },
+          "createdAfter": { "type": "string", "description": "Only include prices created after this date" },
+          "createdBefore": { "type": "string", "description": "Only include prices created before this date" },
+          "sortBy": {
+            "description": "Sort by field",
+            "default": "createdAt",
+            "allOf": [{ "$ref": "#/components/schemas/OneOffPriceSortByEnum" }]
+          },
+          "sortOrder": {
+            "description": "Sort order",
+            "default": "desc",
+            "allOf": [{ "$ref": "#/components/schemas/SortOrderEnum" }]
+          }
+        }
+      },
+      "AdminOneOffPriceResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Upsell Price ID",
+            "example": "473ec52e-fe53-42f5-97ca-1042c945f866"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "When the upsell price was created",
+            "example": "2025-07-01T10:00:00.000Z"
+          },
+          "currency": { "type": "string", "description": "Currency code", "example": "USD" },
+          "amount": { "type": "number", "description": "Base amount (in smallest units)", "example": 999 },
+          "provider": {
+            "description": "Catalog / billing provider for this price row",
+            "allOf": [{ "$ref": "#/components/schemas/PaymentProviderEnum" }]
+          },
+          "providerId": {
+            "type": "string",
+            "description": "Provider price ID (stripe or paypal)",
+            "example": "price_abc123"
+          },
+          "productId": {
+            "type": "string",
+            "description": "Upsell Product ID this Upsell Price is attached to",
+            "example": "473ec52e-fe53-42f5-97ca-1042c945f866"
+          },
+          "shown": { "type": "boolean", "description": "Whether the upsell price is shown to users", "example": true },
+          "providerAccountId": {
+            "type": "string",
+            "description": "ID of the provider account",
+            "example": "473ec52e-fe53-42f5-97ca-1042c945f866"
+          },
+          "metadata": { "type": "object", "description": "Optional metadata object" }
+        },
+        "required": ["id", "createdAt", "currency", "amount", "provider", "productId", "shown"]
+      },
+      "AdminOneOffPricesResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": { "type": "array", "items": { "$ref": "#/components/schemas/AdminOneOffPriceResponseDto" } },
+          "meta": { "$ref": "#/components/schemas/PaginationMetaDto" }
+        },
+        "required": ["items", "meta"]
+      },
+      "OneOffProductSortByEnum": {
+        "type": "string",
+        "enum": ["createdAt", "priority"],
+        "description": "Sort by field"
+      },
+      "AdminOneOffProductsRequestDto": {
+        "type": "object",
+        "properties": {
+          "page": { "type": "number", "minimum": 1, "description": "Page number", "example": 1 },
+          "limit": { "type": "number", "maximum": 1000, "description": "Items per page", "example": 20 },
+          "id": { "type": "string", "format": "uuid", "description": "Filter by upsell product ID" },
+          "sku": { "type": "string", "description": "Filter by SKU" },
+          "campaign": { "type": "string", "description": "Filter by campaign", "example": "default" },
+          "createdAfter": { "type": "string", "description": "Only include upsell products created after this date" },
+          "createdBefore": { "type": "string", "description": "Only include upsell products created before this date" },
+          "hidden": { "type": "boolean", "description": "Filter by upsell product visibility" },
+          "sortBy": {
+            "description": "Sort by field",
+            "default": "createdAt",
+            "allOf": [{ "$ref": "#/components/schemas/OneOffProductSortByEnum" }]
+          },
+          "sortOrder": {
+            "description": "Sort order",
+            "default": "desc",
+            "allOf": [{ "$ref": "#/components/schemas/SortOrderEnum" }]
+          }
+        }
+      },
+      "AdminOneOffProductResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Upsell Product ID",
+            "example": "6aa64f51-876c-4700-8b86-87d3ac9a6d3f"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "When the upsell product was created",
+            "example": "2025-07-01T10:00:00.000Z"
+          },
+          "sku": {
+            "type": "string",
+            "description": "Unique SKU identifier for the upsell product",
+            "example": "default_upsell_1"
+          },
+          "campaign": {
+            "type": "string",
+            "description": "Campaign the upsell product belongs to",
+            "example": "default"
+          },
+          "priority": { "type": "number", "description": "Display order (ASC)", "example": 1 },
+          "hidden": { "type": "boolean", "description": "Hidden from users to purchase", "example": false },
+          "purchaseLimit": {
+            "type": "number",
+            "description": "Maximum number of times a user can purchase this upsell product",
+            "example": 1
+          },
+          "metadata": { "type": "object", "description": "Optional metadata object" }
+        },
+        "required": ["id", "createdAt", "sku", "campaign", "priority", "hidden", "purchaseLimit"]
+      },
+      "AdminOneOffProductsResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": { "type": "array", "items": { "$ref": "#/components/schemas/AdminOneOffProductResponseDto" } },
+          "meta": { "$ref": "#/components/schemas/PaginationMetaDto" }
+        },
+        "required": ["items", "meta"]
+      },
+      "SubscriptionStatusEnum": {
+        "type": "string",
+        "enum": ["initial", "incomplete", "active", "cancelled", "expired"],
+        "description": "Filter by subscription status"
+      },
+      "SubscriptionSortByEnum": {
+        "type": "string",
+        "enum": ["createdAt", "expiresAt", "cancelledAt", "nextPaymentAttemptAt", "paymentRetryAttempts"],
+        "description": "Sort by field"
+      },
+      "AdminSubscriptionsRequestDto": {
+        "type": "object",
+        "properties": {
+          "page": { "type": "number", "minimum": 1, "description": "Page number", "example": 1 },
+          "limit": { "type": "number", "maximum": 1000, "description": "Items per page", "example": 20 },
+          "status": {
+            "description": "Filter by subscription status",
+            "allOf": [{ "$ref": "#/components/schemas/SubscriptionStatusEnum" }]
+          },
+          "provider": {
+            "description": "Filter by payment provider",
+            "allOf": [{ "$ref": "#/components/schemas/PaymentProviderEnum" }]
+          },
+          "onTrial": { "type": "boolean", "description": "Filter by trial status" },
+          "subscriptionId": { "type": "string", "format": "uuid", "description": "Subscription ID to filter by" },
+          "userId": { "type": "string", "description": "User ID to filter by" },
+          "priceId": { "type": "string", "format": "uuid", "description": "Price ID to filter by" },
+          "providerSubscriptionId": {
+            "type": "string",
+            "description": "Filter by provider subscription ID (e.g., Stripe sub_xxx)"
+          },
+          "createdAfter": { "type": "string", "description": "Only include subscriptions created after this date" },
+          "createdBefore": { "type": "string", "description": "Only include subscriptions created before this date" },
+          "expiresAfter": { "type": "string", "description": "Only include subscriptions expiring after this date" },
+          "expiresBefore": { "type": "string", "description": "Only include subscriptions expiring before this date" },
+          "cancelledAfter": { "type": "string", "description": "Only include subscriptions cancelled after this date" },
+          "cancelledBefore": {
+            "type": "string",
+            "description": "Only include subscriptions cancelled before this date"
+          },
+          "nextPaymentAfter": {
+            "type": "string",
+            "description": "Only include subscriptions with next payment attempt after this date"
+          },
+          "nextPaymentBefore": {
+            "type": "string",
+            "description": "Only include subscriptions with next payment attempt before this date"
+          },
+          "sortBy": {
+            "description": "Sort by field",
+            "default": "createdAt",
+            "allOf": [{ "$ref": "#/components/schemas/SubscriptionSortByEnum" }]
+          },
+          "sortOrder": {
+            "description": "Sort order",
+            "default": "desc",
+            "allOf": [{ "$ref": "#/components/schemas/SortOrderEnum" }]
+          }
+        }
+      },
+      "CancellationSourceEnum": {
+        "type": "string",
+        "enum": [
+          "app_dashboard",
+          "public_cancellation",
+          "admin_panel",
+          "admin_panel_chargeback_expert",
+          "internal_script",
+          "expiration",
+          "stripe_dashboard",
+          "cs_automation",
+          "chatbot",
+          "chargeback_experts_api",
+          "provider_chargeback"
+        ],
+        "description": "Source of the subscription cancellation"
+      },
+      "AdminSubscriptionResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "UUID of the subscription",
+            "example": "a3f6d2f0-6c9a-412d-a73c-05d27434d788"
+          },
+          "provider": {
+            "description": "Payment provider (e.g., stripe, paypal)",
+            "example": "stripe",
+            "allOf": [{ "$ref": "#/components/schemas/PaymentProviderEnum" }]
+          },
+          "providerSubscriptionId": {
+            "type": "string",
+            "nullable": true,
+            "description": "Subscription ID from the payment provider",
+            "example": "sub_1NNT0oC0sC1I7Hd7V6eD6nTC"
+          },
+          "status": {
+            "description": "Current status of the subscription",
+            "example": "active",
+            "allOf": [{ "$ref": "#/components/schemas/SubscriptionStatusEnum" }]
+          },
+          "onTrial": {
+            "type": "boolean",
+            "description": "Whether this subscription is currently in trial mode",
+            "example": true
+          },
+          "paymentRetryAttempts": {
+            "type": "number",
+            "description": "Number of failed payment retry attempts",
+            "example": 2
+          },
+          "expiresAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "Timestamp when the subscription will expire (or expired)",
+            "example": "2025-08-01T12:00:00.000Z"
+          },
+          "cancelledAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "Timestamp when the subscription was cancelled",
+            "example": "2025-07-01T10:30:00.000Z"
+          },
+          "nextPaymentAttemptAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "When the next payment attempt will happen (if applicable)",
+            "example": "2025-07-15T08:00:00.000Z"
+          },
+          "userId": {
+            "type": "string",
+            "description": "ID of the associated user",
+            "example": "b1423f62-df6a-4e9d-9c1e-2aef781be719"
+          },
+          "priceId": {
+            "type": "string",
+            "description": "ID of the associated recurrent price",
+            "example": "price_ABC123"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Creation date and time",
+            "example": "2022-02-13T19:28:00.5000Z"
+          },
+          "cancellationSource": {
+            "nullable": true,
+            "description": "Source of the subscription cancellation",
+            "example": "admin_panel",
+            "allOf": [{ "$ref": "#/components/schemas/CancellationSourceEnum" }]
+          },
+          "cancellationReason": {
+            "type": "string",
+            "nullable": true,
+            "description": "Reason the subscription was cancelled, as stated by the product that requested the cancellation. ",
+            "example": "Too expensive",
+            "maxLength": 256
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Subscription metadata (e.g. trialDaysOverride, paymentProviderOverride)"
+          }
+        },
+        "required": [
+          "id",
+          "provider",
+          "providerSubscriptionId",
+          "status",
+          "onTrial",
+          "paymentRetryAttempts",
+          "expiresAt",
+          "cancelledAt",
+          "nextPaymentAttemptAt",
+          "userId",
+          "priceId",
+          "createdAt",
+          "cancellationSource",
+          "cancellationReason"
+        ]
+      },
+      "AdminSubscriptionsResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": { "type": "array", "items": { "$ref": "#/components/schemas/AdminSubscriptionResponseDto" } },
+          "meta": { "$ref": "#/components/schemas/DeferredPaginationMetaDto" }
+        },
+        "required": ["items", "meta"]
+      },
+      "AdminCancelSubscriptionRequestDto": {
+        "type": "object",
+        "properties": {
+          "subscriptionId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Subscription ID to cancel",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "cancelImmediately": {
+            "type": "boolean",
+            "description": "Whether to cancel immediately (true) or at the end of the current period (false)",
+            "example": true
+          }
+        },
+        "required": ["subscriptionId", "cancelImmediately"]
+      },
+      "AdminCancelSubscriptionResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Success message",
+            "example": "Subscription cancelled successfully"
+          },
+          "subscription": {
+            "description": "The cancelled subscription details",
+            "allOf": [{ "$ref": "#/components/schemas/AdminSubscriptionResponseDto" }]
+          }
+        },
+        "required": ["message", "subscription"]
+      },
+      "UserSortByEnum": { "type": "string", "enum": ["createdAt"], "description": "Sort by field" },
+      "AdminUsersRequestDto": {
+        "type": "object",
+        "properties": {
+          "page": { "type": "number", "minimum": 1, "description": "Page number", "example": 1 },
+          "limit": { "type": "number", "maximum": 1000, "description": "Items per page", "example": 20 },
+          "id": { "type": "string", "description": "Filter by user ID" },
+          "email": { "type": "string", "description": "Search by email" },
+          "name": { "type": "string", "description": "Search by name" },
+          "stripeCustomerId": { "type": "string", "description": "Filter by Stripe customer ID" },
+          "paypalCustomerId": { "type": "string", "description": "Filter by PayPal customer ID" },
+          "nmiCustomerId": { "type": "string", "description": "Filter by NMI customer vault ID" },
+          "nmiInitialTransactionId": { "type": "string", "description": "Filter by initial NMI transaction ID" },
+          "providerCustomerId": {
+            "type": "string",
+            "description": "Search across all provider customer IDs (Stripe, PayPal, NMI, Adyen, Payrails)"
+          },
+          "provider": {
+            "description": "Filter by payment provider",
+            "allOf": [{ "$ref": "#/components/schemas/PaymentProviderEnum" }]
+          },
+          "campaign": { "type": "string", "description": "Pricing campaign identifier", "example": "default" },
+          "currency": { "type": "string", "description": "Filter by preferred currency", "example": "USD" },
+          "createdAfter": { "type": "string", "description": "Only include users created after this date" },
+          "createdBefore": { "type": "string", "description": "Only include users created before this date" },
+          "paymentDetailsEmail": {
+            "type": "string",
+            "description": "Email from payment details (substring, case-insensitive)"
+          },
+          "paymentDetailsName": {
+            "type": "string",
+            "description": "Cardholder/billing name from payment details (exact match, case-sensitive)"
+          },
+          "paymentDetailsLast4": { "type": "string", "description": "Last 4 card digits from payment details" },
+          "paymentDetailsFingerprint": { "type": "string", "description": "Card fingerprint from payment details" },
+          "providerAccountId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Filter by provider account ID",
+            "example": "473ec52e-fe53-42f5-97ca-1042c945f866"
+          },
+          "sortBy": {
+            "description": "Sort by field",
+            "default": "createdAt",
+            "allOf": [{ "$ref": "#/components/schemas/UserSortByEnum" }]
+          },
+          "sortOrder": {
+            "description": "Sort order",
+            "default": "desc",
+            "allOf": [{ "$ref": "#/components/schemas/SortOrderEnum" }]
+          }
+        }
+      },
+      "AdminUserLatestSubscriptionDto": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "description": "Subscription status", "example": "active" },
+          "expiresAt": {
+            "type": "string",
+            "description": "When the subscription expires",
+            "example": "2025-07-01T10:00:00.000Z"
+          },
+          "nextPaymentAttemptAt": {
+            "type": "string",
+            "description": "Next payment attempt time",
+            "example": "2025-07-08T10:00:00.000Z"
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Subscription metadata (e.g. trialDaysOverride, paymentProviderOverride)"
+          }
+        },
+        "required": ["status"]
+      },
+      "AdminUserResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "User ID", "example": "123e4567-e89b-12d3-a456-426614174000" },
+          "createdAt": {
+            "type": "string",
+            "description": "When the user account was created",
+            "example": "2025-06-01T10:00:00.000Z"
+          },
+          "name": { "type": "string", "description": "User name", "example": "Alice" },
+          "email": { "type": "string", "description": "User email", "example": "alice@example.com" },
+          "campaign": { "type": "string", "description": "Campaign identifier", "example": "default" },
+          "stripeCustomerId": { "type": "string", "description": "Stripe customer ID", "example": "cus_abc123" },
+          "paypalCustomerId": { "type": "string", "description": "PayPal customer ID", "example": "IL1234567890" },
+          "nmiCustomerId": { "type": "string", "description": "NMI customer vault ID", "example": "cust_abc123" },
+          "nmiInitialTransactionId": {
+            "type": "string",
+            "description": "Initial NMI transaction ID used for stored credential charges",
+            "example": "1234567890"
+          },
+          "adyenCustomerId": {
+            "type": "string",
+            "description": "shopperReference saved in Adyen",
+            "example": "user:bb9ca9de-6407-4c53-bcb2-db3c714547c6"
+          },
+          "adyenPaymentMethodId": {
+            "type": "string",
+            "description": "Payment method ID from Adyen",
+            "example": "8415995473721340"
+          },
+          "payrailsCustomerId": {
+            "type": "string",
+            "description": "Payrails holder reference (merchant customer id)",
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          "payrailsInstrumentId": {
+            "type": "string",
+            "description": "Stored Payrails payment instrument ID",
+            "example": "instrument_abc123"
+          },
+          "paymentDetails": {
+            "type": "object",
+            "properties": {
+              "type": { "type": "string", "required": false, "example": "visa" },
+              "last4": { "type": "string", "required": false, "example": "1234" },
+              "provider": { "type": "string", "required": true, "example": "stripe" },
+              "wallet": { "type": "string", "required": false, "example": "google_pay" },
+              "email": { "type": "string", "required": false, "example": "john_doe@example.com" },
+              "name": { "type": "string", "required": false, "example": "John Doe" },
+              "fingerprint": { "type": "string", "required": false, "example": "hfdaFEGKf2mBjOSd" },
+              "expMonth": { "type": "number", "required": false, "example": 2 },
+              "expYear": { "type": "number", "required": false, "example": 2035 },
+              "issuer": { "type": "string", "required": false, "example": "Chase" },
+              "cardBin": { "type": "string", "required": false, "example": "498843" }
+            },
+            "description": "Billing details (e.g., card, wallet info)"
+          },
+          "currency": { "type": "string", "description": "Preferred currency", "example": "USD" },
+          "zipCode": { "type": "string", "description": "User zip code", "example": "12345" },
+          "isZipCodeValid": { "type": "boolean", "description": "Indicates if the zip code is valid", "example": true },
+          "providerAccountId": {
+            "type": "string",
+            "description": "ID of the provider account",
+            "example": "473ec52e-fe53-42f5-97ca-1042c945f866"
+          },
+          "subscription": {
+            "nullable": true,
+            "description": "Latest subscription of the user (by createdAt). Null if the user has no subscriptions.",
+            "allOf": [{ "$ref": "#/components/schemas/AdminUserLatestSubscriptionDto" }]
+          },
+          "providerAccount": {
+            "description": "Provider account summary (name, MID, provider) when providerAccountId exists",
+            "allOf": [{ "$ref": "#/components/schemas/AdminProviderAccountSummaryDto" }]
+          }
+        },
+        "required": ["id", "createdAt", "email", "subscription"]
+      },
+      "AdminUsersResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": { "type": "array", "items": { "$ref": "#/components/schemas/AdminUserResponseDto" } },
+          "meta": { "$ref": "#/components/schemas/DeferredPaginationMetaDto" }
+        },
+        "required": ["items", "meta"]
+      },
+      "AdminPublishDescriptorRequestDto": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": "New descriptor value. Must be lowercase. 5-22 chars, must contain at least one letter, no edge whitespace, common charset [a-z0-9 _&*,.-]. Stripe accounts have one extra restriction: `*` is not allowed (Stripe API rejects it). Adyen accounts have one extra restriction: `&` is not allowed (Adyen rejects it). NMI accepts the full charset.",
+            "example": "project.co llc"
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "Audit note explaining why this publish is being performed. Required for compliance.",
+            "example": "Brand refresh from project.co to row for Q3 launch"
+          },
+          "providerAccountId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Provider account id to publish the descriptor for"
+          }
+        },
+        "required": ["value", "note", "providerAccountId"]
+      },
+      "AdminDescriptorDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "value": { "type": "string" },
+          "note": { "type": "string" },
+          "createdBy": { "type": "string" },
+          "createdAt": { "type": "string" },
+          "validTo": { "type": "string", "nullable": true },
+          "providerAccountId": { "type": "string" },
+          "providerAccount": {
+            "description": "Provider account summary (name, MID, provider) for this descriptor",
+            "allOf": [{ "$ref": "#/components/schemas/AdminProviderAccountSummaryDto" }]
+          }
+        },
+        "required": ["id", "value", "note", "createdBy", "createdAt", "validTo", "providerAccountId"]
+      },
+      "AdminPublishDescriptorResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string" },
+          "descriptor": { "$ref": "#/components/schemas/AdminDescriptorDto" },
+          "previous": { "nullable": true, "allOf": [{ "$ref": "#/components/schemas/AdminDescriptorDto" }] }
+        },
+        "required": ["message", "descriptor", "previous"]
+      },
+      "AdminDescriptorsRequestDto": {
+        "type": "object",
+        "properties": {
+          "page": { "type": "number", "minimum": 1, "example": 1 },
+          "limit": { "type": "number", "minimum": 1, "maximum": 1000, "example": 50 },
+          "value": {
+            "type": "string",
+            "maxLength": 22,
+            "description": "Substring match on the descriptor value (descriptors are 5-22 chars)",
+            "example": "help"
+          },
+          "createdBy": {
+            "type": "string",
+            "maxLength": 320,
+            "description": "Substring match on createdBy (admin email)"
+          },
+          "providerAccountId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Filter by provider account id",
+            "example": "00000000-0000-4000-8000-000000000001"
+          }
+        }
+      },
+      "AdminDescriptorsResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": { "type": "array", "items": { "$ref": "#/components/schemas/AdminDescriptorDto" } },
+          "meta": { "$ref": "#/components/schemas/PaginationMetaDto" }
+        },
+        "required": ["items", "meta"]
+      },
+      "UserBillingTransactionsSortByEnum": { "type": "string", "enum": ["transactionDate"] },
+      "StripeAccountResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Native Stripe account id",
+            "example": "acct_abcdefghijklmnop",
+            "deprecated": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the Stripe account",
+            "example": "Project Name Inc.",
+            "deprecated": true
+          },
+          "publicKey": {
+            "type": "string",
+            "description": "Public key of the Stripe account (use to load Stripe SDK)",
+            "example": "pk_test_********************************",
+            "deprecated": true
+          },
+          "countryCode": {
+            "type": "string",
+            "description": "Two-letter ISO country code of the Stripe account (use to create payment requests)",
+            "example": "US",
+            "deprecated": true
+          },
+          "invoiceData": {
+            "type": "string",
+            "description": "Invoice data of the Stripe account (deprecated, no longer populated)",
+            "deprecated": true
+          }
+        },
+        "required": ["id", "name", "publicKey", "countryCode"]
+      },
+      "NmiAccountResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Native NMI account id",
+            "example": "nmi_account_123",
+            "deprecated": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the NMI account",
+            "example": "Project Name Inc.",
+            "deprecated": true
+          },
+          "publicTokenizationKey": {
+            "type": "string",
+            "description": "Public tokenization key of the NMI account",
+            "example": "pk_test_********************************",
+            "deprecated": true
+          },
+          "publicCheckoutKey": {
+            "type": "string",
+            "description": "Public checkout key of the NMI account",
+            "example": "pk_test_********************************",
+            "deprecated": true
+          },
+          "countryCode": {
+            "type": "string",
+            "description": "Two-letter ISO country code of the NMI account",
+            "example": "US",
+            "deprecated": true
+          }
+        },
+        "required": ["id", "name", "publicTokenizationKey"]
+      },
+      "AdyenAccountResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Native Adyen account id",
+            "example": "473ec52e-fe53-42f5-97ca-1042c945f866",
+            "deprecated": true
+          },
+          "publicClientKey": {
+            "type": "string",
+            "description": "Public client key of the Adyen account",
+            "example": "test_A9a...xyz",
+            "deprecated": true
+          },
+          "sdkEnvironment": {
+            "type": "string",
+            "description": "SDK Environment of Adyen account",
+            "example": "live-apse",
+            "deprecated": true
+          },
+          "acquiringCountryCode": {
+            "type": "string",
+            "description": "The country where the transaction is being processed",
+            "example": "US",
+            "deprecated": true
+          },
+          "googleMerchantId": {
+            "type": "string",
+            "description": "Google merchant ID (deprecated, no longer populated)",
+            "deprecated": true
+          },
+          "googleMerchantName": {
+            "type": "string",
+            "description": "Google merchant Name (deprecated, no longer populated)",
+            "deprecated": true
+          },
+          "googleGatewayMerchantId": {
+            "type": "string",
+            "description": "Adyen-related google merchant id (deprecated, no longer populated)",
+            "deprecated": true
+          }
+        },
+        "required": ["id", "publicClientKey", "sdkEnvironment", "acquiringCountryCode"]
+      },
+      "ProviderAccountResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Provider account UUID",
+            "example": "473ec52e-fe53-42f5-97ca-1042c945f866"
+          },
+          "provider": { "allOf": [{ "$ref": "#/components/schemas/PaymentProviderEnum" }] },
+          "providerId": { "type": "string", "description": "Native provider account id" },
+          "name": { "type": "string" },
+          "countryCode": { "type": "string", "example": "US" },
+          "configuration": { "type": "object", "description": "Public configuration fields only" },
+          "currentDescriptor": {
+            "type": "string",
+            "nullable": true,
+            "description": "Current active statement descriptor for this provider account. Use to render the checkout legal note: `Your payment will appear as \"{currentDescriptor}\" on your statement.` NULL when no descriptor is configured.",
+            "example": "BRAINIQTEST.COM",
+            "maxLength": 50
+          }
+        },
+        "required": ["id", "provider", "providerId", "name", "countryCode", "configuration"]
+      },
+      "GetUpsellProductResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "Entity uuid", "example": "473ec52e-fe53-42f5-97ca-1042c945f866" },
+          "sku": { "type": "string", "description": "Sku of product", "example": "annual_1" },
+          "price": {
+            "description": "Price of product",
+            "allOf": [{ "$ref": "#/components/schemas/OneOffPriceResponseDto" }]
+          },
+          "campaign": { "type": "string", "description": "Upsell campaign of product", "example": "default" },
+          "priority": { "type": "number", "description": "Order in which product should be shown (ASC)" },
+          "metadata": { "type": "object", "properties": {}, "description": "Metadata of product" }
+        },
+        "required": ["id", "sku", "campaign", "priority"]
+      },
+      "OneOffPriceResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "Entity uuid", "example": "473ec52e-fe53-42f5-97ca-1042c945f866" },
+          "currency": { "type": "string", "description": "Price currency", "example": "USD" },
+          "amount": { "type": "integer", "description": "Price amount, in cents", "example": 5900 },
+          "provider": {
+            "description": "Catalog / billing provider for this price row",
+            "allOf": [{ "$ref": "#/components/schemas/PaymentProviderEnum" }]
+          },
+          "stripeId": {
+            "type": "string",
+            "description": "StripeId of price",
+            "example": "price_1L5VV6EFZlD1Czhu0l6N6ViQ",
+            "deprecated": true
+          },
+          "providerId": {
+            "type": "string",
+            "description": "StripeId or paypalId of price",
+            "example": "price_1L5VV6EFZlD1Czhu0l6N6ViQ"
+          },
+          "stripeAccount": {
+            "description": "Stripe account associated with the price (provided if Stripe is selected via routing rules)",
+            "deprecated": true,
+            "allOf": [{ "$ref": "#/components/schemas/StripeAccountResponseDto" }]
+          },
+          "nmiAccount": {
+            "description": "NMI account data associated with the price (provided if NMI is selected via routing rules)",
+            "deprecated": true,
+            "allOf": [{ "$ref": "#/components/schemas/NmiAccountResponseDto" }]
+          },
+          "adyenAccount": {
+            "description": "Adyen account data associated with the price (provided if Adyen is selected via routing rules)",
+            "deprecated": true,
+            "allOf": [{ "$ref": "#/components/schemas/AdyenAccountResponseDto" }]
+          },
+          "providerAccount": {
+            "description": "Provider account selected by routing rules for this price",
+            "allOf": [{ "$ref": "#/components/schemas/ProviderAccountResponseDto" }]
+          },
+          "metadata": { "type": "object", "properties": {}, "description": "Metadata of price" },
+          "product": {
+            "description": "One-off product",
+            "allOf": [{ "$ref": "#/components/schemas/GetUpsellProductResponseDto" }]
+          },
+          "descriptor": {
+            "type": "string",
+            "nullable": true,
+            "deprecated": true,
+            "description": "Deprecated: use providerAccount.currentDescriptor instead. Active statement descriptor resolved for the picked payment provider account.",
+            "example": "brainiqtest.com",
+            "maxLength": 50
+          }
+        },
+        "required": ["id", "currency", "amount", "provider", "providerAccount", "descriptor"]
+      },
+      "UserSubscriptionStatusEnum": {
+        "type": "string",
+        "enum": ["initial", "incomplete", "active", "cancelled", "expired"],
+        "description": "Status of subscription"
+      },
+      "GetPriceResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "Entity uuid", "example": "473ec52e-fe53-42f5-97ca-1042c945f866" },
+          "currency": { "type": "string", "description": "Price currency", "example": "USD" },
+          "amount": { "type": "integer", "description": "Price amount, in cents", "example": 5900 },
+          "trialAmount": { "type": "integer", "description": "Price trial amount, in cents", "example": 195 },
+          "finalTrialAmount": {
+            "type": "integer",
+            "description": "Final trial price amount. Contains the trial amount plus the upsell amount (if any) in cents.",
+            "example": 1950
+          },
+          "trialDays": { "type": "integer", "description": "Duration of trial period, days", "example": 7 },
+          "duration": {
+            "type": "integer",
+            "description": "Regular (after trial) billing cycle duration (in duration units)",
+            "example": 4
+          },
+          "durationUnits": {
+            "description": "Duration unit of billing cycle",
+            "example": "weeks",
+            "allOf": [{ "$ref": "#/components/schemas/SubscriptionDurationUnitEnum" }]
+          },
+          "provider": {
+            "description": "Catalog / billing provider for this price row (stripe, PayPal variants, nmi, adyen, payrails)",
+            "allOf": [{ "$ref": "#/components/schemas/PaymentProviderEnum" }]
+          },
+          "stripeId": {
+            "type": "string",
+            "description": "StripeId of price",
+            "example": "price_1L5VV6EFZlD1Czhu0l6N6ViQ",
+            "deprecated": true
+          },
+          "providerId": {
+            "type": "string",
+            "description": "providerId of price",
+            "example": "P-5RH47839VA817280SMKLR3DY"
+          },
+          "isDefault": {
+            "type": "boolean",
+            "description": "Is price default for a user based on his location or previous purchases"
+          },
+          "stripeAccount": {
+            "description": "Stripe account associated with the price (provided if Stripe is selected via routing rules)",
+            "deprecated": true,
+            "allOf": [{ "$ref": "#/components/schemas/StripeAccountResponseDto" }]
+          },
+          "nmiAccount": {
+            "description": "NMI account data associated with the price (provided if NMI is selected via routing rules)",
+            "deprecated": true,
+            "allOf": [{ "$ref": "#/components/schemas/NmiAccountResponseDto" }]
+          },
+          "adyenAccount": {
+            "nullable": true,
+            "description": "Adyen account data (provided when Adyen is selected via routing rules)",
+            "deprecated": true,
+            "allOf": [{ "$ref": "#/components/schemas/AdyenAccountResponseDto" }]
+          },
+          "providerAccount": {
+            "description": "Provider account selected by routing rules for this price",
+            "allOf": [{ "$ref": "#/components/schemas/ProviderAccountResponseDto" }]
+          },
+          "metadata": { "type": "object", "properties": {}, "description": "Metadata of price" },
+          "descriptor": {
+            "type": "string",
+            "nullable": true,
+            "deprecated": true,
+            "description": "Deprecated: use providerAccount.currentDescriptor instead. Active statement descriptor resolved for the picked payment provider account.",
+            "example": "BRAINIQTEST.COM",
+            "maxLength": 50
+          },
+          "paypalSubscriptionPrice": {
+            "type": "object",
+            "nullable": true,
+            "description": "PayPal price for the same currency, if available",
+            "properties": {
+              "id": { "type": "string", "description": "PayPal price entity UUID" },
+              "providerId": { "type": "string", "description": "PayPal plan ID" },
+              "providerAccount": { "description": "PayPal provider account with public configuration" }
+            }
+          }
+        },
+        "required": [
+          "id",
+          "currency",
+          "amount",
+          "trialAmount",
+          "finalTrialAmount",
+          "trialDays",
+          "duration",
+          "durationUnits",
+          "provider",
+          "isDefault",
+          "providerAccount"
+        ]
+      },
+      "GetProductWithOnePriceResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "Entity uuid", "example": "473ec52e-fe53-42f5-97ca-1042c945f866" },
+          "sku": { "type": "string", "description": "Sku of product", "example": "annual_1" },
+          "price": {
+            "description": "Price of product",
+            "allOf": [{ "$ref": "#/components/schemas/GetPriceResponseDto" }]
+          },
+          "campaign": { "type": "string", "description": "Campaign of product", "example": "default" },
+          "priority": { "type": "number", "description": "Order in which product should be shown (ASC)" },
+          "metadata": { "type": "object", "properties": {}, "description": "Metadata of product" }
+        },
+        "required": ["id", "sku", "price", "campaign", "priority"]
+      },
+      "SubscriptionResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "Entity uuid", "example": "473ec52e-fe53-42f5-97ca-1042c945f866" },
+          "provider": {
+            "description": "Provider",
+            "example": "stripe",
+            "allOf": [{ "$ref": "#/components/schemas/PaymentProviderEnum" }]
+          },
+          "status": {
+            "description": "Status of subscription",
+            "example": "active",
+            "allOf": [{ "$ref": "#/components/schemas/UserSubscriptionStatusEnum" }]
+          },
+          "onTrial": { "type": "boolean", "description": "Is subscription on trial", "example": false },
+          "providerSubscriptionId": {
+            "type": "string",
+            "description": "Payment provider sub id",
+            "example": "sub_1NiybOExYvlWir54VD73AXXF"
+          },
+          "expiresAt": {
+            "type": "string",
+            "description": "Expiration date and time",
+            "example": "2022-02-13T19:28:00.5000Z"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Creation date and time",
+            "example": "2022-02-13T19:28:00.5000Z"
+          },
+          "cancelledAt": {
+            "type": "string",
+            "description": "Cancellation date and time",
+            "example": "2022-02-13T19:28:00.5000Z"
+          },
+          "cancellationReason": {
+            "type": "string",
+            "nullable": true,
+            "description": "Reason the subscription was cancelled, as stated by the product that requested the cancellation. ",
+            "example": "Too expensive",
+            "maxLength": 256
+          },
+          "nextPaymentAttemptAt": {
+            "type": "string",
+            "description": "Next payment attempt date and time",
+            "example": "2022-02-13T19:28:00.5000Z"
+          },
+          "product": {
+            "description": "Product",
+            "allOf": [{ "$ref": "#/components/schemas/GetProductWithOnePriceResponseDto" }]
+          }
+        },
+        "required": [
+          "id",
+          "provider",
+          "status",
+          "onTrial",
+          "providerSubscriptionId",
+          "expiresAt",
+          "createdAt",
+          "product"
+        ]
+      },
+      "BillingTransactionResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "Entity uuid", "example": "473ec52e-fe53-42f5-97ca-1042c945f866" },
+          "invoiceNumber": {
+            "type": "string",
+            "description": "Invoice number of transaction",
+            "example": "A9C58C8F-0832"
+          },
+          "validFrom": {
+            "type": "string",
+            "description": "Only for subscription transactions - valid period beginning",
+            "example": "2022-07-01T14:26:50.514Z"
+          },
+          "validTo": {
+            "type": "string",
+            "description": "Only for subscription transactions - valid period end",
+            "example": "2022-07-01T14:26:50.514Z"
+          },
+          "onTrial": {
+            "type": "boolean",
+            "description": "Only for subscription transactions - whether its a payment for trial",
+            "example": true
+          },
+          "isRefunded": { "type": "boolean", "description": "Whether this transaction was refunded", "example": false },
+          "refundedAt": {
+            "type": "string",
+            "description": "If refunded - datetime when refund is initiated,",
+            "example": "2022-10-01T10:19:00.000Z"
+          },
+          "currency": { "type": "string", "description": "Currency of transaction", "example": "USD" },
+          "amount": { "type": "number", "description": "Amount of transaction", "example": 1.95 },
+          "isSuccessful": { "type": "boolean", "description": "Whether transaction was successful", "example": true },
+          "transactionDate": {
+            "type": "string",
+            "description": "Datetime of transaction",
+            "example": "2022-07-01T14:26:50.514Z"
+          },
+          "paymentDetails": {
+            "type": "object",
+            "properties": {
+              "type": { "type": "string", "required": false, "example": "visa" },
+              "last4": { "type": "string", "required": false, "example": "1234" },
+              "provider": { "type": "string", "required": true, "example": "stripe" },
+              "wallet": { "type": "string", "required": false, "example": "google_pay" },
+              "email": { "type": "string", "required": false, "example": "john_doe@example.com" },
+              "name": { "type": "string", "required": false, "example": "John Doe" }
+            },
+            "description": "Payment details of transaction"
+          },
+          "type": {
+            "description": "Transaction type (trial, recurrent, upsell, etc.)",
+            "example": "recurrent",
+            "allOf": [{ "$ref": "#/components/schemas/BillingTransactionTypeEnum" }]
+          },
+          "descriptor": {
+            "type": "string",
+            "nullable": true,
+            "description": "Snapshot of the statement descriptor sent to the payment provider at charge creation time. NULL for transactions created before the descriptor feature rollout OR when no active descriptor was configured for the resolved account.",
+            "example": "BRAINIQTEST.COM",
+            "maxLength": 50
+          },
+          "upsellPrice": {
+            "description": "Upsell price associated with the transaction",
+            "allOf": [{ "$ref": "#/components/schemas/OneOffPriceResponseDto" }]
+          },
+          "subscription": {
+            "description": "Subscription associated with the transaction",
+            "allOf": [{ "$ref": "#/components/schemas/SubscriptionResponseDto" }]
+          }
+        },
+        "required": [
+          "id",
+          "invoiceNumber",
+          "isRefunded",
+          "currency",
+          "amount",
+          "isSuccessful",
+          "transactionDate",
+          "paymentDetails",
+          "type"
+        ]
+      },
+      "BillingTransactionsResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": { "type": "array", "items": { "$ref": "#/components/schemas/BillingTransactionResponseDto" } },
+          "meta": { "$ref": "#/components/schemas/PaginationMetaDto" }
+        },
+        "required": ["items", "meta"]
+      },
+      "BotSearchRequestDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "User email address (case-insensitive)",
+            "example": "user@example.com"
+          },
+          "includeTransactionsLast30Days": {
+            "type": "boolean",
+            "description": "Include successful transactions from the last 30 days",
+            "example": true
+          },
+          "includeTransactionsRefundsHistory": {
+            "type": "boolean",
+            "description": "Include all-time refunded transactions history",
+            "example": true
+          }
+        },
+        "required": ["email"]
+      },
+      "BillingTransactionLegacyTypeEnum": {
+        "type": "string",
+        "enum": ["no_split_trial", "trial", "recurrent", "upsell", "split_trial"],
+        "description": "Transaction type"
+      },
+      "BotSearchProviderDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "description": "Payment provider type",
+            "example": "stripe",
+            "allOf": [{ "$ref": "#/components/schemas/PaymentProviderEnum" }]
+          },
+          "id": { "type": "string", "description": "Payment provider account ID", "example": "acct_1ABC" }
+        },
+        "required": ["type", "id"]
+      },
+      "BotSearchTransactionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Transaction ID",
+            "example": "1e414527-cec5-462a-b331-aadc089ff3a5"
+          },
+          "type": {
+            "description": "Transaction type",
+            "example": "no_split_trial",
+            "allOf": [{ "$ref": "#/components/schemas/BillingTransactionLegacyTypeEnum" }]
+          },
+          "transactionDate": {
+            "type": "string",
+            "description": "Transaction date (ISO 8601)",
+            "example": "2026-01-26T12:23:42.000Z"
+          },
+          "provider": {
+            "description": "Payment provider that processed this transaction",
+            "allOf": [{ "$ref": "#/components/schemas/BotSearchProviderDto" }]
+          }
+        },
+        "required": ["id", "type", "transactionDate", "provider"]
+      },
+      "DerivedSubscriptionStatusEnum": {
+        "type": "string",
+        "enum": ["initial", "incomplete", "active", "cancelled", "expired", "cancelling", "pending_payment"],
+        "description": "Subscription status of the returned subscriptionId (null when no subscription)"
+      },
+      "BotSearchResponseDto": {
+        "type": "object",
+        "properties": {
+          "subscriptionId": {
+            "type": "string",
+            "nullable": true,
+            "description": "Subscription ID (null when no active subscription)",
+            "example": "770e5880-fcd5-4a92-adfc-1a87926d3c1c"
+          },
+          "transactions": {
+            "description": "Successful transactions from the last 30 days (empty array when not requested or no transactions)",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/BotSearchTransactionDto" }
+          },
+          "refundedTransactions": {
+            "description": "All-time refunded transactions history",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/BotSearchTransactionDto" }
+          },
+          "provider": {
+            "nullable": true,
+            "description": "Payment provider details of the active/last active subscription",
+            "allOf": [{ "$ref": "#/components/schemas/BotSearchProviderDto" }]
+          },
+          "subscriptionStatus": {
+            "nullable": true,
+            "description": "Subscription status of the returned subscriptionId (null when no subscription)",
+            "example": "cancelling",
+            "allOf": [{ "$ref": "#/components/schemas/DerivedSubscriptionStatusEnum" }]
+          }
+        },
+        "required": ["subscriptionId", "transactions", "refundedTransactions", "provider", "subscriptionStatus"]
+      },
+      "BotCancelSubscriptionRequestDto": {
+        "type": "object",
+        "properties": {
+          "subscriptionId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Subscription ID to cancel",
+            "example": "770e5880-fcd5-4a92-adfc-1a87926d3c1c"
+          },
+          "cancelImmediately": {
+            "type": "boolean",
+            "description": "Whether to cancel immediately (true) or at end of current period (false). Defaults to false.",
+            "example": false
+          }
+        },
+        "required": ["subscriptionId"]
+      },
+      "BotCancelSubscriptionResponseDto": {
+        "type": "object",
+        "properties": { "message": { "type": "string", "example": "api.messages.bot.subscriptionCancelled" } },
+        "required": ["message"]
+      },
+      "BotRefundTransactionRequestDto": {
+        "type": "object",
+        "properties": {
+          "transactionId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Billing transaction ID to refund",
+            "example": "1e414527-cec5-462a-b331-aadc089ff3a5"
+          }
+        },
+        "required": ["transactionId"]
+      },
+      "BotRefundTransactionResponseDto": {
+        "type": "object",
+        "properties": { "message": { "type": "string", "example": "api.messages.bot.transactionRefunded" } },
+        "required": ["message"]
+      },
+      "GetProductWithAllPricesResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "Entity uuid", "example": "473ec52e-fe53-42f5-97ca-1042c945f866" },
+          "sku": { "type": "string", "description": "Sku of product", "example": "annual_1" },
+          "prices": {
+            "description": "Prices of product",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/GetPriceResponseDto" }
+          },
+          "campaign": { "type": "string", "description": "Campaign of product", "example": "default" },
+          "priority": { "type": "number", "description": "Order in which product should be shown (ASC)" },
+          "metadata": { "type": "object", "properties": {}, "description": "Metadata of product" }
+        },
+        "required": ["id", "sku", "prices", "campaign", "priority"]
+      },
+      "CreateStripeSubscriptionRequestDto": {
+        "type": "object",
+        "properties": {
+          "priceId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Recurrent price id",
+            "example": "d5a68081-d18e-4690-84e6-a96268686e8d"
+          },
+          "paymentMethodId": {
+            "type": "string",
+            "description": "Stripe payment method id",
+            "example": "pm_1L7bEDEFZlD1Czhu55Vkrkwr"
+          },
+          "trackingMetadata": {
+            "type": "object",
+            "description": "Customer tracking metadata",
+            "properties": {},
+            "example": {
+              "utm_source": "google",
+              "utm_medium": "cpc",
+              "utm_campaign": "spring_sale",
+              "browser_name": "Chrome",
+              "os_name": "macOS"
+            }
+          },
+          "zipCode": { "type": "string", "description": "Zip Code", "example": "420000" }
+        },
+        "required": ["priceId", "paymentMethodId"]
+      },
+      "CreateStripeSubscriptionResponseDto": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "description": "Status of stripe subscription", "example": "active" },
+          "clientSecret": {
+            "type": "string",
+            "description": "Client secret, if applicable, for further actions like 3DS confirmation",
+            "example": "client-secret"
+          },
+          "paymentIntentId": { "type": "string", "description": "Stripe payment intent ID", "example": "pi_123456789" }
+        },
+        "required": ["status"]
+      },
+      "UpdateStripeSubscriptionRequestDto": {
+        "type": "object",
+        "properties": {
+          "paymentMethodId": {
+            "type": "string",
+            "description": "Stripe payment method id",
+            "example": "pm_1L7bEDEFZlD1Czhu55Vkrkwr"
+          }
+        },
+        "required": ["paymentMethodId"]
+      },
+      "SyncStripeSubscriptionResponseDto": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "description": "Status of Stripe subscription", "example": "active" }
+        },
+        "required": ["status"]
+      },
+      "CreatePaypalSubscriptionRequestDto": {
+        "type": "object",
+        "properties": {
+          "priceId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Price id",
+            "example": "d5a68081-d18e-4690-84e6-a96268686e8d"
+          },
+          "subscriptionId": { "type": "string", "description": "Paypal sub ID", "example": "I-3fdsfe" }
+        },
+        "required": ["priceId", "subscriptionId"]
+      },
+      "CreatePaypalSubscriptionResponseDto": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "description": "Status of paypal subscription", "example": "ACTIVE" },
+          "approveLink": {
+            "type": "string",
+            "description": "Approve link to redirect client to",
+            "example": "https://www.sandbox.paypal.com/webapps/billing/subscriptions?ba_token=BA-32A00284US0527349"
+          }
+        },
+        "required": ["status", "approveLink"]
+      },
+      "CancelSubscriptionRequestDto": {
+        "type": "object",
+        "properties": {
+          "cancellationReason": {
+            "type": "string",
+            "maxLength": 256,
+            "description": "Why the user cancelled. Content is product-defined, stored as free text. Omit the field entirely when no reason was given.",
+            "example": "Too expensive"
+          }
+        }
+      },
+      "BaseResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string", "description": "Result message", "example": "Operation success" }
+        },
+        "required": ["message"]
+      },
+      "CreateNmiCustomerRequestDto": {
+        "type": "object",
+        "properties": {
+          "trackingMetadata": {
+            "type": "object",
+            "description": "Customer tracking metadata",
+            "properties": {},
+            "example": {
+              "utm_source": "google",
+              "utm_medium": "cpc",
+              "utm_campaign": "spring_sale",
+              "browser_name": "Chrome",
+              "os_name": "macOS"
+            }
+          },
+          "paymentToken": { "type": "string" },
+          "priceId": { "type": "string" }
+        },
+        "required": ["paymentToken", "priceId"]
+      },
+      "CreateNmiCustomerResponseDto": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "description": "Status of NMI subscription", "example": "active" },
+          "transactionId": {
+            "type": "string",
+            "description": "NMI transaction ID of the initial charge (for reference and support)",
+            "example": "1234567890"
+          }
+        },
+        "required": ["status"]
+      },
+      "PayrailsPayRequestDto": {
+        "type": "object",
+        "properties": {
+          "priceId": { "type": "string" },
+          "paymentInstrumentId": {
+            "type": "string",
+            "description": "Payrails payment instrument id from SDK tokenization",
+            "example": "384279fe-fee4-441d-9836-d2ef663551ad"
+          },
+          "returnUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "Return URL after 3DS or redirect flows",
+            "example": "https://checkout.example.com/return"
+          },
+          "trackingMetadata": {
+            "type": "object",
+            "description": "Customer tracking metadata",
+            "properties": {},
+            "example": { "utm_source": "google", "utm_medium": "cpc" }
+          }
+        },
+        "required": ["priceId", "paymentInstrumentId", "returnUrl"]
+      },
+      "PayrailsPayResponseDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "description": "Subscription status after initial pay (active when frictionless authorize succeeded; incomplete when 3DS is required)",
+            "example": "incomplete",
+            "allOf": [{ "$ref": "#/components/schemas/SubscriptionStatusEnum" }]
+          },
+          "redirectUrl": {
+            "type": "string",
+            "description": "3DS or payment-method challenge URL when customer action is still required",
+            "example": "https://api.staging.payrails.io/public/redirect/e2e-3ds"
+          },
+          "transactionId": {
+            "type": "string",
+            "description": "Payrails workflow execution id when initial authorize succeeded and subscription is active",
+            "example": "e2e-payrails-execution-id"
+          }
+        },
+        "required": ["status"]
+      },
+      "PayrailsConfirmResponseDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "description": "Subscription status after 3DS return reconciliation (active when authorize succeeded)",
+            "example": "active",
+            "allOf": [{ "$ref": "#/components/schemas/SubscriptionStatusEnum" }]
+          },
+          "transactionId": {
+            "type": "string",
+            "description": "Payrails workflow execution id when authorize succeeded and subscription is active",
+            "example": "e2e-payrails-execution-id"
+          }
+        },
+        "required": ["status"]
+      },
+      "PayrailsPaymentMethodSurfaceEnum": { "type": "string", "enum": ["card", "wallet"] },
+      "PayrailsSdkConfigResponseDto": {
+        "type": "object",
+        "properties": {
+          "clientInit": {
+            "type": "object",
+            "description": "Payrails client/init payload — pass verbatim to Payrails.init()",
+            "example": { "version": "1.2.3", "data": "base64-encoded-config" }
+          }
+        },
+        "required": ["clientInit"]
+      },
+      "PaymentMethodsResponse": { "type": "object", "properties": {} },
+      "AdyenPaymentMethodsResponseDto": {
+        "type": "object",
+        "properties": {
+          "paymentMethodsResponse": {
+            "description": "Result from Adyen API call - pass to SDK",
+            "allOf": [{ "$ref": "#/components/schemas/PaymentMethodsResponse" }]
+          },
+          "countryCode": { "type": "string", "description": "User country - pass to SDK", "example": "US" },
+          "environment": { "type": "string", "description": "Adyen environment - pass to SDK", "example": "TEST" }
+        },
+        "required": ["paymentMethodsResponse", "countryCode", "environment"]
+      },
+      "PaymentDataDto": {
+        "type": "object",
+        "properties": {
+          "paymentMethod": { "type": "object", "additionalProperties": true },
+          "browserInfo": { "type": "object", "nullable": true, "additionalProperties": true },
+          "riskData": { "type": "object", "nullable": true, "additionalProperties": true },
+          "origin": { "type": "string" },
+          "returnUrl": { "type": "string" }
+        },
+        "required": ["paymentMethod", "origin", "returnUrl"]
+      },
+      "WalletDataDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "description": "Name from wallet", "example": "John Smith" },
+          "email": { "type": "string", "description": "Email from wallet", "example": "john@example.com" }
+        }
+      },
+      "AdyenPayRequestDto": {
+        "type": "object",
+        "properties": {
+          "priceId": { "type": "string" },
+          "locale": {
+            "type": "string",
+            "default": "en-US",
+            "description": "Language of the payment (including 3DS challenge)"
+          },
+          "paymentData": { "$ref": "#/components/schemas/PaymentDataDto" },
+          "trackingMetadata": {
+            "type": "object",
+            "description": "Customer tracking metadata",
+            "properties": {},
+            "example": {
+              "utm_source": "google",
+              "utm_medium": "cpc",
+              "utm_campaign": "spring_sale",
+              "browser_name": "Chrome",
+              "os_name": "macOS"
+            }
+          },
+          "walletData": {
+            "description": "User data from Google / Apple wallet (name and email)",
+            "example": { "name": "John Smith", "email": "john@example.com" },
+            "allOf": [{ "$ref": "#/components/schemas/WalletDataDto" }]
+          }
+        },
+        "required": ["priceId", "paymentData"]
+      },
+      "AdyenPayResponseDto": {
+        "type": "object",
+        "properties": {
+          "paymentResult": { "type": "object", "description": "Payment result properties for Adyen SDK" },
+          "result": {
+            "enum": ["completed", "challenge", "failed", "pending"],
+            "type": "string",
+            "description": "Result of payment in simple terms",
+            "example": true
+          },
+          "transactionId": {
+            "type": "string",
+            "description": "Adyen transaction id (pspReference) when returned by Adyen, e.g. when payment is authorised",
+            "example": "XBVGZTQL83TL5QT5"
+          }
+        },
+        "required": ["paymentResult", "result"]
+      },
+      "AdyenConfirmRequestDto": {
+        "type": "object",
+        "properties": {
+          "actionData": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {},
+            "description": "Contents of state.data from Adyen SDK"
+          },
+          "redirectResult": { "type": "string" }
+        }
+      },
+      "AdyenConfirmResponseDto": {
+        "type": "object",
+        "properties": {
+          "paymentResult": { "type": "object", "description": "Payment result properties for Adyen SDK" },
+          "result": {
+            "enum": ["completed", "challenge", "failed", "pending"],
+            "type": "string",
+            "description": "Result of payment in simple terms",
+            "example": true
+          },
+          "transactionId": {
+            "type": "string",
+            "description": "Adyen transaction id (pspReference) when returned by Adyen, e.g. when payment is authorised",
+            "example": "XBVGZTQL83TL5QT5"
+          }
+        },
+        "required": ["paymentResult", "result"]
+      },
+      "GetPurchasedUpsellProductResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "Entity uuid", "example": "473ec52e-fe53-42f5-97ca-1042c945f866" },
+          "sku": { "type": "string", "description": "Sku of product", "example": "annual_1" },
+          "price": {
+            "description": "Price of product",
+            "allOf": [{ "$ref": "#/components/schemas/OneOffPriceResponseDto" }]
+          },
+          "campaign": { "type": "string", "description": "Upsell campaign of product", "example": "default" },
+          "priority": { "type": "number", "description": "Order in which product should be shown (ASC)" },
+          "metadata": { "type": "object", "properties": {}, "description": "Metadata of product" },
+          "purchasedCount": { "type": "integer", "description": "Count of purchased upsell product", "example": 1 }
+        },
+        "required": ["id", "sku", "campaign", "priority", "purchasedCount"]
+      },
+      "BuyUpsellProductRequestDto": {
+        "type": "object",
+        "properties": {
+          "priceId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Price id of the upsell product",
+            "example": "d5a68081-d18e-4690-84e6-a96268686e8d"
+          }
+        },
+        "required": ["priceId"]
+      },
+      "BuyUpsellProductResponseDto": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "Indicates if the purchase was successful", "example": true },
+          "clientSecret": {
+            "type": "string",
+            "description": "Client secret, if applicable, for further actions like 3DS confirmation",
+            "example": "client-secret"
+          },
+          "transactionId": {
+            "type": "string",
+            "description": "Provider transaction ID (Stripe payment_intent ID or NMI transaction ID) for reference",
+            "example": "pi_1234567890"
+          }
+        },
+        "required": ["success"]
+      },
+      "StripeResponseDto": {
+        "type": "object",
+        "properties": { "received": { "type": "boolean", "description": "Result of reading a message" } },
+        "required": ["received"]
+      },
+      "UpdateUserRequestDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email of user",
+            "example": "email@example.com"
+          },
+          "name": { "type": "string", "description": "Name of user", "example": "John Doe" }
+        }
+      },
+      "UpdateUserResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "User ID", "example": "473ec52e-fe53-42f5-97ca-1042c945f866" },
+          "email": { "type": "string", "description": "Email of user", "example": "email@example.com" },
+          "name": { "type": "string", "description": "Name of user", "example": "John Doe" }
+        },
+        "required": ["id", "email"]
+      },
+      "ApplyMainProductsConfigurationRequestDto": {
+        "type": "object",
+        "properties": {
+          "pricingCampaign": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}-\\d$" },
+          "mainProducts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["trial", "non_trial", "trial_with_split"],
+                  "x-enumNames": ["TRIAL", "NON_TRIAL", "TRIAL_WITH_SPLIT"]
+                },
+                "scope": {
+                  "type": "string",
+                  "enum": [
+                    "for_initial_subscription_only",
+                    "for_resubscription_only",
+                    "for_initial_subscription_and_resubscription"
+                  ],
+                  "x-enumNames": [
+                    "FOR_INITIAL_SUBSCRIPTION_ONLY",
+                    "FOR_RESUBSCRIPTION_ONLY",
+                    "FOR_INITIAL_SUBSCRIPTION_AND_RESUBSCRIPTION"
+                  ]
+                },
+                "sku": { "type": "string" },
+                "priority": { "type": "integer", "minimum": 0, "exclusiveMinimum": false },
+                "name": { "type": "string" },
+                "description": { "type": "string" },
+                "splitName": { "type": "string" },
+                "splitDescription": { "type": "string" },
+                "billingConfiguration": {
+                  "type": "object",
+                  "properties": {
+                    "interval": { "type": "integer", "minimum": 0, "exclusiveMinimum": true },
+                    "intervalUnits": {
+                      "type": "string",
+                      "enum": ["days", "weeks", "months", "years"],
+                      "x-enumNames": ["DAYS", "WEEKS", "MONTHS", "YEARS"]
+                    }
+                  },
+                  "required": ["interval", "intervalUnits"]
+                },
+                "trialConfiguration": {
+                  "type": "object",
+                  "properties": { "trialDays": { "type": "integer", "minimum": 0, "exclusiveMinimum": true } },
+                  "required": ["trialDays"]
+                },
+                "prices": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object",
+                    "properties": {
+                      "amount": { "type": "integer", "minimum": 0, "exclusiveMinimum": false },
+                      "trialAmount": { "type": "integer", "minimum": 0, "exclusiveMinimum": false },
+                      "splitAmount": { "type": "integer", "minimum": 0, "exclusiveMinimum": false },
+                      "metadata": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "oneOf": [
+                            { "type": "string" },
+                            { "type": "number" },
+                            { "type": "boolean" },
+                            {
+                              "type": "array",
+                              "items": { "oneOf": [{ "type": "string" }, { "type": "number" }, { "type": "boolean" }] }
+                            }
+                          ]
+                        },
+                        "default": {}
+                      }
+                    },
+                    "required": ["amount"]
+                  }
+                },
+                "metadata": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "oneOf": [
+                      { "type": "string" },
+                      { "type": "number" },
+                      { "type": "boolean" },
+                      {
+                        "type": "array",
+                        "items": { "oneOf": [{ "type": "string" }, { "type": "number" }, { "type": "boolean" }] }
+                      }
+                    ]
+                  },
+                  "default": {}
+                }
+              },
+              "required": ["type", "scope", "sku", "priority", "name", "description", "billingConfiguration", "prices"]
+            }
+          }
+        },
+        "required": ["pricingCampaign", "mainProducts"]
+      },
+      "ApplyUpsellProductsConfigurationRequestDto": {
+        "type": "object",
+        "properties": {
+          "pricingCampaign": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}-\\d$" },
+          "upsellProducts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "sku": { "type": "string" },
+                "name": { "type": "string" },
+                "description": { "type": "string" },
+                "priority": { "type": "integer", "minimum": 0, "exclusiveMinimum": false },
+                "purchaseLimit": { "type": "integer", "minimum": 0, "exclusiveMinimum": false },
+                "prices": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object",
+                    "properties": {
+                      "amount": { "type": "integer", "minimum": 0, "exclusiveMinimum": false },
+                      "metadata": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "oneOf": [
+                            { "type": "string" },
+                            { "type": "number" },
+                            { "type": "boolean" },
+                            {
+                              "type": "array",
+                              "items": { "oneOf": [{ "type": "string" }, { "type": "number" }, { "type": "boolean" }] }
+                            }
+                          ]
+                        },
+                        "default": {}
+                      }
+                    },
+                    "required": ["amount"]
+                  }
+                },
+                "metadata": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "oneOf": [
+                      { "type": "string" },
+                      { "type": "number" },
+                      { "type": "boolean" },
+                      {
+                        "type": "array",
+                        "items": { "oneOf": [{ "type": "string" }, { "type": "number" }, { "type": "boolean" }] }
+                      }
+                    ]
+                  },
+                  "default": {}
+                }
+              },
+              "required": ["sku", "name", "description", "priority", "purchaseLimit", "prices"]
+            }
+          }
+        },
+        "required": ["pricingCampaign", "upsellProducts"]
+      },
+      "UpdateMainPricingCampaignRequestDto": {
+        "type": "object",
+        "properties": { "pricingCampaign": { "type": "string", "description": "New pricing campaign" } },
+        "required": ["pricingCampaign"]
+      },
+      "UpdateUpsellPricingCampaignRequestDto": {
+        "type": "object",
+        "properties": { "upsellPricingCampaign": { "type": "string", "description": "New upsell pricing campaign" } },
+        "required": ["upsellPricingCampaign"]
+      },
+      "ChargebackExpertsRefundTransactionRequestDto": {
+        "type": "object",
+        "properties": {
+          "providerTransactionId": {
+            "type": "string",
+            "description": "External dispute/charge reference (e.g. Stripe charge id, Adyen PSP reference, Payrails processorReference)",
+            "example": "ch_123"
+          },
+          "cancelSubscription": {
+            "type": "boolean",
+            "description": "When true, cancel the subscription linked to this transaction (if any), immediately. Omit for default true."
+          },
+          "provider": {
+            "description": "Payment provider to scope the transaction lookup. Used with global API keys; ignored when using legacy per-account tokens.",
+            "allOf": [{ "$ref": "#/components/schemas/PaymentProviderEnum" }]
+          },
+          "providerId": {
+            "type": "string",
+            "description": "Provider account id to scope the transaction lookup (Stripe acct_xxx or Adyen account id). Used with global API keys; ignored when using legacy per-account tokens.",
+            "example": "acct_123"
+          },
+          "refundAlertSource": {
+            "description": "Reason the refund was issued (fraud-alert network that drove it).",
+            "allOf": [{ "$ref": "#/components/schemas/RefundAlertSourceEnum" }]
+          }
+        },
+        "required": ["providerTransactionId"]
+      },
+      "ChargebackExpertsRefundTransactionResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Success message",
+            "example": "Billing transaction refunded successfully"
+          },
+          "providerRefundId": {
+            "type": "string",
+            "description": "Provider refund ID",
+            "example": "Refund ID from Stipe (refund ID) / Adyen (refund PSP reference)"
+          },
+          "subscriptionCancelled": {
+            "type": "boolean",
+            "description": "Whether an associated subscription was cancelled as part of this request"
+          }
+        },
+        "required": ["message", "providerRefundId"]
+      },
+      "AllowedCancellationSources": {
+        "type": "string",
+        "enum": ["public_cancellation", "app_dashboard", "admin_panel", "chatbot"],
+        "description": "Source of the cancellation:\n1. app_dashboard - User initiated (cancel subscription & delete user),\n2. admin_panel - CS agent (cancel subscription & delete user),\n3. public_cancellation,\n4. chatbot - Chatbot initiated cancellation"
+      },
+      "CancelSubscriptionInternalRequestDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "Id of the user to cancel the subscription for" },
+          "cancellationSource": {
+            "description": "Source of the cancellation:\n1. app_dashboard - User initiated (cancel subscription & delete user),\n2. admin_panel - CS agent (cancel subscription & delete user),\n3. public_cancellation,\n4. chatbot - Chatbot initiated cancellation",
+            "example": "app_dashboard",
+            "allOf": [{ "$ref": "#/components/schemas/AllowedCancellationSources" }]
+          },
+          "cancellationReason": {
+            "type": "string",
+            "maxLength": 256,
+            "description": "Why the subscription was cancelled. Content is product-defined, stored as free text",
+            "example": "Too expensive"
+          }
+        },
+        "required": ["id"]
+      },
+      "UpdateUserInternalRequestDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "User ID", "example": "473ec52e-fe53-42f5-97ca-1042c945f866" },
+          "name": { "type": "string", "description": "User name" },
+          "email": { "type": "string", "format": "email", "description": "User email" }
+        },
+        "required": ["id"]
+      },
+      "UpdateUserInternalResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "User ID", "example": "473ec52e-fe53-42f5-97ca-1042c945f866" },
+          "email": { "type": "string", "description": "Email of user", "example": "email@example.com" },
+          "name": { "type": "string", "description": "Name of user", "example": "John Doe" }
+        },
+        "required": ["id", "email"]
+      }
+    }
+  }
+}

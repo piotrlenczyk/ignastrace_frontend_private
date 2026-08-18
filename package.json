@@ -15,6 +15,7 @@
     "check-types": "next typegen && tsc --noEmit --pretty",
     "test": "vitest run",
     "generate:api": "./scripts/api-get.sh && ./scripts/api-build.sh",
+    "generate:payments-api": "./scripts/payments-api-get.sh && ./scripts/payments-api-build.sh",
     "generate:tokens-css": "node scripts/generate-tokens-css.mjs",
     "generate:icons": "svgr --config-file .svgrrc.js --out-dir src/components/ui/icon/icons -- src/components/ui/icon/svgs && prettier --write src/components/ui/icon/icons && eslint --fix src/components/ui/icon/icons",
     "lokalise:upload": "tsx src/tasks/upload-translations.ts",
