@@ -31,3 +31,4 @@ moves. Describe things by their role instead.
 | [0014](0014-a-two-source-activity-list.md)                                    | The activity list is composed from two sources                                          | Accepted; temporary by construction               |
 | [0015](0015-the-proxy-refuses-session-issuing-paths-not-a-prefix.md)          | The proxy refuses the paths that issue a session, not the authentication prefix         | Accepted                                          |
 | [0016](0016-a-second-upstream-with-its-own-client-proxy-and-specification.md) | The payments service is a second upstream, with its own client, proxy and specification | Accepted; the host is temporary                   |
+| [0017](0017-the-pricing-page-quotes-one-trial-product.md)                     | The pricing page quotes one trial product, in a currency this application picks         | Accepted                                          |

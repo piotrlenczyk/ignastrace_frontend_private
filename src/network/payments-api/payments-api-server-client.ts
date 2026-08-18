@@ -12,9 +12,13 @@ export type paymentsSchemas = components['schemas'];
  * arrive with the request. Both names are the ones the edge in front of this
  * application already uses — the service reads them under those names, and its
  * specification documents neither.
+ *
+ * The country one is exported because a caller that resolves the market itself
+ * states it rather than letting the raw edge header through, and there should be
+ * one spelling of the name.
  */
 const CALLER_ADDRESS_HEADER = 'x-forwarded-for';
-const CALLER_COUNTRY_HEADER = 'cf-ipcountry';
+export const CALLER_COUNTRY_HEADER = 'cf-ipcountry';
 
 /*
  * The Payments API declares its paths bare — `/products`, `/subscriptions` — and

@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import { getFunnelPhone } from '@/actions/funnel-phone-number';
 import FunnelLayout from '@/components/layouts/funnel-layout';
 import { ROUTES } from '@/constants/routes';
-import { getCurrencyFromCountry } from '@/libs/currency';
+import { getCurrencyByCountryCode } from '@/libs/currency';
 import { getApi } from '@/libs/server/api';
 import { getUserCountry } from '@/libs/server/user-country';
 import type { Products } from '@/types/products';
@@ -20,7 +20,7 @@ const SummaryPage = async () => {
   const api = await getApi();
   const phoneNumber = await getFunnelPhone();
   const country = await getUserCountry();
-  const currency = getCurrencyFromCountry(country);
+  const currency = getCurrencyByCountryCode(country);
   const product = await api.get<Products>(`/products?currency=${currency}`);
 
   if (!phoneNumber) {

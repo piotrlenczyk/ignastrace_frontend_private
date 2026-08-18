@@ -1,16 +1,16 @@
 {
   "lastTask": {
-    "source": "workflow",
-    "ref": "ralph-subissues"
+    "source": "skill",
+    "ref": "implement"
   },
   "recentSources": [
     {
-      "source": "workflow",
-      "ref": "ralph-subissues"
-    },
-    {
       "source": "skill",
       "ref": "implement"
+    },
+    {
+      "source": "workflow",
+      "ref": "ralph-subissues"
     },
     {
       "source": "skill",
@@ -18,7 +18,7 @@
     }
   ],
   "skillUsage": {
-    "implement": 3,
+    "implement": 4,
     "figma-screen-redesign": 1
   }
 }

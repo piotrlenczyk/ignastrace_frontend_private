@@ -1,15 +1,11 @@
-const formatCurrencyOptions = (amount: number) => {
-  const hasMoreThanOneIntegerDigit = Math.floor(Math.abs(amount)) >= 10;
-  const hasDecimals = amount % 1 !== 0;
-  const showDecimals = !hasMoreThanOneIntegerDigit || hasDecimals;
-
+const formatCurrencyOptions = (amount: number, isZeroDecimal: boolean): Intl.NumberFormatOptions => {
   return {
-    minimumFractionDigits: showDecimals ? 2 : 0,
-    maximumFractionDigits: 2,
+    minimumFractionDigits: isZeroDecimal ? 0 : amount % 1 === 0 ? 0 : 2,
+    maximumFractionDigits: isZeroDecimal ? 0 : 2,
   };
 };
 
-const zeroDecimalCurrency = (currency: string) => {
+const isZeroDecimalCurrency = (currency: string) => {
   return [
     'BIF',
     'CLP',
@@ -38,16 +34,24 @@ export const createPriceFormatter = () => {
     locale: string,
     currencyDisplay: 'narrowSymbol' | 'symbol' = 'symbol',
   ) => {
-    const amount = zeroDecimalCurrency(currency) ? price : price / 100;
+    const isZeroDecimal = isZeroDecimalCurrency(currency);
+    const amount = isZeroDecimal ? price : price / 100;
 
-    const formatOptions = formatCurrencyOptions(amount);
+    const formatOptions = formatCurrencyOptions(amount, isZeroDecimal);
 
-    if (locale === 'ro' && country === 'RO' && currency === 'ron') {
+    /*
+     * Case-insensitive on purpose: the legacy aggregate publishes a lower-case
+     * code and the payments service an upper-case one, and both reach this
+     * formatter while the screens migrate one at a time.
+     */
+    const currencyCode = currency.toLowerCase();
+
+    if (locale === 'ro' && country === 'RO' && currencyCode === 'ron') {
       const formatPrice = new Intl.NumberFormat(`${locale}-${country}`, formatOptions).format(amount);
       return `${formatPrice} lei`;
     }
 
-    if (currency === 'sgd') {
+    if (currencyCode === 'sgd') {
       const formatPrice = new Intl.NumberFormat(`${locale}-${country}`, formatOptions).format(amount);
       return `S$${formatPrice}`;
     }
