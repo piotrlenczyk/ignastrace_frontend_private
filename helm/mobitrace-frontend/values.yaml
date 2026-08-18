@@ -129,6 +129,12 @@ settings:
   NEXT_PUBLIC_LANGUAGES_VERSION: 3
   PDF_GENERATION_APP_HOST: http://localhost:3000
 
+  # The Payments microservice, prefix included: its specification declares paths bare and keeps
+  # `/api/payments/v1` in its `servers` field. Not a secret — no credential is presented to it,
+  # the visitor's own session token is.
+  # TEMPORARY: the resumewise development instance is the only payments instance that answers today.
+  PAYMENTS_API_BASE_URL: https://dev.resumewise.com/api/payments/v1
+
   OTEL_EXPORTER_OTLP_ENDPOINT: 'http://groundcover-sensor.groundcover:4318'
   OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
 

@@ -22,6 +22,7 @@ There are some additional runtime environment variables required when running th
 
 - `SESSION_PASSWORD`: The secret the session cookie is sealed with. Any random string of at least 32 characters. Rotating it invalidates every existing session, signing everyone out.
 - `API_BASE_URL`: The base URL of the API that issues the session's access and refresh tokens, e.g. `https://api.ignastrace.io`.
+- `PAYMENTS_API_BASE_URL`: The base URL of the Payments microservice, prefix included, e.g. `https://dev.resumewise.com/api/payments/v1`. The specification declares its paths bare and keeps the prefix in its `servers` field, so the prefix belongs here. TEMPORARY: the resumewise development instance is the only payments instance that answers today.
 - `IPSTACK_API_KEY`: The Ipstack API key.
 - `INTERNAL_API_URL`: The URL for the backend API that uses the internal container host. If this is not set, the NEXT_PUBLIC_API_URL will be used.
 - `PDF_GENERATION_APP_HOST`: This is the HOST that will be requested to generate the PDF. In this host the app needs to be running. Usually this will be http://localhost:3000.
