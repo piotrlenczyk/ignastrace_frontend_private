@@ -8,6 +8,7 @@ import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { Link, useRouter } from '@/libs/i18n-routing';
+import type { ProductWithPrice } from '@/types/pricing.types';
 import type { Subscription } from '@/types/subscription';
 
 import { localeFormatDate } from '../../../status/_page/utils';
@@ -20,9 +21,15 @@ import { CancelSubscription } from './cancel-subscription';
 export type BillingPageClientProps = {
   subscription: Subscription;
   country: string;
+  /** The reactivation price, present exactly when the server read one to offer. */
+  activationProduct?: ProductWithPrice;
 };
 
-export function BillingPageClient({ subscription: defaultSubscription, country }: BillingPageClientProps) {
+export function BillingPageClient({
+  subscription: defaultSubscription,
+  country,
+  activationProduct,
+}: BillingPageClientProps) {
   const locale = useLocale();
   const t = useTranslations('pages.settings.billing');
   const [subscription, setSubscription] = useState<Subscription>(defaultSubscription);
@@ -98,7 +105,9 @@ export function BillingPageClient({ subscription: defaultSubscription, country }
                   {t('expired_date', { date: localeFormatDate(expiredSubscriptionCancelAt, locale) })}
                 </p>
                 <p className="text-destructive">{t('expired_description')}</p>
-                <ActivateSubscription buttonText={t('expired_cta')} country={country} />
+                {activationProduct && (
+                  <ActivateSubscription buttonText={t('expired_cta')} country={country} product={activationProduct} />
+                )}
               </>
             )}
             {subscription.status === 'cancelled' && subscription.canceled_at && (

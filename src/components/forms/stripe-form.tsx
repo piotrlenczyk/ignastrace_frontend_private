@@ -6,13 +6,11 @@ import { useState } from 'react';
 
 import { useCreateReverseLookupMutation } from '@/app/[locale]/memberarea/(reverse-lookup)/phone-lookup/hooks/api/use-create-reverse-lookup-mutation';
 import { useSendOrderConfirmEmailMutation } from '@/app/[locale]/success/_hooks/api/use-send-order-confirm-email-mutation';
-import type { Product } from '@/app/[locale]/success/_types/product.type';
 import { Icon } from '@/components/ui/icon';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useConfirmStripePaymentMutation } from '@/hooks/api/use-confirm-stripe-payment-mutation';
 import { useSession } from '@/hooks/use-session';
 import { useRouter } from '@/libs/i18n-routing';
-import type { Products } from '@/types/products';
 import type { StripeFormValues } from '@/types/stripe-form.types';
 
 import WalletSubscriptionPayment from '../wallet-subscription-payment';
@@ -36,7 +34,7 @@ const StyledTabsTrigger = ({ value, children }: { value: string; children: React
 export const StripeForm = ({
   buttonText,
   currency,
-  product,
+  amount,
   isReactivate = false,
   skipTrial = isReactivate,
   isUpdatePaymentMethod = false,
@@ -50,7 +48,8 @@ export const StripeForm = ({
 }: {
   buttonText: string;
   currency: string;
-  product: Products | Product;
+  /** What falls due now, in minor units — the wallet sheet shows this figure. */
+  amount: number;
   isReactivate?: boolean;
   skipTrial?: boolean;
   isUpdatePaymentMethod?: boolean;
@@ -180,9 +179,8 @@ export const StripeForm = ({
       <TabsContent value="apple_pay">
         <WalletSubscriptionPayment
           method="applePay"
-          product={product}
+          amount={amount}
           currency={currency}
-          useTrialPrice={!skipTrial}
           shouldLoad
           getWalletPaymentHandler={handleWalletPayment}
           validateInput={() => true}
@@ -192,9 +190,8 @@ export const StripeForm = ({
       <TabsContent value="google_pay">
         <WalletSubscriptionPayment
           method="googlePay"
-          product={product}
+          amount={amount}
           currency={currency}
-          useTrialPrice={!skipTrial}
           shouldLoad
           getWalletPaymentHandler={handleWalletPayment}
           validateInput={() => true}

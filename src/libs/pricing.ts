@@ -1,3 +1,5 @@
+import type { FunnelPlan } from '@/actions/funnel-plan';
+import { DEFAULT_CURRENCY } from '@/constants/currencies';
 import type { paymentsSchemas } from '@/network/payments-api/payments-api-server-client';
 import {
   type Price,
@@ -93,6 +95,105 @@ export const transformProductFromPaymentsApi = (product: paymentsSchemas['GetPro
   };
 };
 
+/**
+ * The resubscription catalogue in the guest catalogue's shape.
+ *
+ * The payments service answers a signed-in member with one already-resolved
+ * price per product rather than a price list. Wrapping that single price in a
+ * list lets the member read and the guest read resolve through one mapping into
+ * one view type, so the screens sharing a payment form share a source of truth
+ * without either learning which read it came from.
+ */
+export const transformUserProductsFromPaymentsApi = (
+  data: paymentsSchemas['GetProductWithOnePriceResponseDto'][],
+): Pricing => transformProductsFromPaymentsApi(data.map(({ price, ...product }) => ({ ...product, prices: [price] })));
+
+/**
+ * The currency a screen opens in: the market's own when the catalogue publishes
+ * a price in it, US dollars otherwise.
+ *
+ * Bounding the choice by the catalogue is what keeps the currency a selector
+ * shows and the amount beside it in step — a market currency the catalogue never
+ * priced would otherwise label a US dollar amount as something else.
+ */
+export const getInitialCurrency = ({
+  supportedCurrencies,
+  marketCurrency,
+}: {
+  supportedCurrencies: string[];
+  marketCurrency: string;
+}): string => {
+  const currency = marketCurrency.toUpperCase();
+
+  return supportedCurrencies.includes(currency) ? currency : DEFAULT_CURRENCY;
+};
+
+/**
+ * The currency a returning member's reactivation price is quoted in.
+ *
+ * The resubscription catalogue answers with one already-resolved price per
+ * product, so there is little to select — but a member who subscribed before has
+ * a currency of their own, and it is kept while the catalogue still sells in it.
+ * Falling back to what the service resolved, rather than only to US dollars, is
+ * what stops a member whose market has moved being quoted nothing at all.
+ */
+export const getMemberCurrency = ({
+  supportedCurrencies,
+  previousCurrency,
+}: {
+  supportedCurrencies: string[];
+  previousCurrency?: string;
+}): string => {
+  const currency = previousCurrency?.toUpperCase();
+
+  if (currency && supportedCurrencies.includes(currency)) {
+    return currency;
+  }
+
+  if (supportedCurrencies.includes(DEFAULT_CURRENCY)) {
+    return DEFAULT_CURRENCY;
+  }
+
+  return supportedCurrencies[0] ?? DEFAULT_CURRENCY;
+};
+
+/**
+ * The one product checkout quotes, priced in one currency.
+ *
+ * The catalogue publishes a single four-week plan, so there is nothing to choose
+ * between: the plan the funnel stored decides which of the row's two amounts is
+ * due, not which product is quoted.
+ */
+export const getCheckoutProduct = ({ pricing, currency }: { pricing: Pricing; currency: string }): ProductWithPrice => {
+  const product = getDefaultPricingProduct(getCurrencyProducts({ products: pricing.products, currency }));
+
+  /*
+   * The currency fold above asserts a row it has not looked for — the catalogue
+   * is trusted to publish US dollars. Checkout is where money changes hands, so
+   * it checks: a product priced in neither the selected currency nor US dollars
+   * is a misconfigured catalogue, and saying so beats rendering a payment form
+   * with no amount on it.
+   */
+  const price: Price | undefined = product.price;
+
+  if (!price) {
+    throw new Error(`Cannot find a ${product.name} price in ${currency.toUpperCase()} or ${DEFAULT_CURRENCY}`);
+  }
+
+  return { ...product, price };
+};
+
+/**
+ * Which of a price row's two amounts is due now.
+ *
+ * One product carries both: the trial charge for a visitor taking the trial, the
+ * full four-week amount for one subscribing outright. The catalogue's
+ * upsell-inclusive final trial amount is deliberately unused, so that checkout
+ * quotes the same number the pricing page quoted.
+ */
+export const getAmountDue = ({ plan, price }: { plan: FunnelPlan; price: Price }): number =>
+  plan === 'subscription' ? price.amount : price.trialAmount;
+
 export const transformProductsFromPaymentsApi = (
   data: paymentsSchemas['GetProductWithAllPricesResponseDto'][],
 ): Pricing => {
@@ -114,7 +215,13 @@ export const transformProductsFromPaymentsApi = (
   // Remove products without a name and assert name type
   const allProducts = products.filter((product): product is ProductWithPrices => product.name !== undefined);
 
-  const supportedCurrencies = Object.keys(products[0]?.prices ?? {});
+  /*
+   * The currencies of a product this application actually quotes, rather than of
+   * whichever product the catalogue happened to answer first. With one product on
+   * sale the two are the same list; they part company the moment the catalogue
+   * carries a product under a plan name this application does not know.
+   */
+  const supportedCurrencies = Object.keys(allProducts[0]?.prices ?? {});
 
   // Extract the unified provider account from the first available price
   // Note: Assumes all prices resolve to the same provider account

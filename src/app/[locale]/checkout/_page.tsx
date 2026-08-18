@@ -7,30 +7,35 @@ import type { FunnelPlan } from '@/actions/funnel-plan';
 import CurrencySelector from '@/components/currency-selector';
 import CheckoutForm from '@/components/forms/checkout-form';
 import { ROUTES } from '@/constants/routes';
-import type { Products } from '@/types/products';
+import { getCheckoutProduct } from '@/libs/pricing';
+import type { Pricing } from '@/types/pricing.types';
 
 import { CancelDescription } from './_components/cancel-description';
 
 type CheckoutPageClientProps = {
-  currency: string;
+  initialCurrency: string;
   formattedNumber: { number: string; valid: boolean };
   country: string;
-  defaultProduct: Products;
+  pricing: Pricing;
   enableUpsells: boolean;
   plan: FunnelPlan;
 };
 
 export const CheckoutPageClient = ({
-  currency,
+  initialCurrency,
   formattedNumber,
   country,
-  defaultProduct,
+  pricing,
   enableUpsells,
   plan,
 }: CheckoutPageClientProps) => {
   const t = useTranslations('pages.checkout');
 
-  const [selectedCurrency, setSelectedCurrency] = useState(currency);
+  const [selectedCurrency, setSelectedCurrency] = useState(initialCurrency);
+
+  // Every currency on offer is one the catalogue already priced, so changing it
+  // is a selection among prices in hand rather than another request.
+  const product = getCheckoutProduct({ pricing, currency: selectedCurrency });
 
   return (
     <>
@@ -40,14 +45,17 @@ export const CheckoutPageClient = ({
             <h1 className="mb-1 text-2xl font-bold lg:h3">{t('title')}</h1>
             <div className="text-2xl font-bold text-primary lg:h3 lg:text-primary">{formattedNumber.number}</div>
           </div>
-          <CurrencySelector value={selectedCurrency} onChange={setSelectedCurrency} />
+          <CurrencySelector
+            value={selectedCurrency}
+            currencies={pricing.supportedCurrencies}
+            onChange={setSelectedCurrency}
+          />
         </div>
       </div>
       <div className="container-content relative px-6 pt-12 lg:rounded-2xl lg:p-12 lg:shadow-raised-lg">
         <CheckoutForm
-          currency={selectedCurrency}
           country={country}
-          defaultProduct={defaultProduct}
+          product={product}
           buttonText={t('action_form')}
           routeToRedirect={enableUpsells ? ROUTES.SUCCESS_WITH_UPSELLS : ROUTES.SUCCESS}
           plan={plan}
