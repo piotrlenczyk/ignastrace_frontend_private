@@ -69,10 +69,30 @@ Components in `src/components/ui` are the **old** design system. For design work
 ## Data layer
 
 `docs/adr/0009-one-proxy-for-every-browser-call.md` records why this shape, and is the record to
-read before contradicting any of it. The rules:
+read before contradicting any of it.
+
+**There are two upstreams.** The new API is one. The payments service — products, prices,
+subscriptions, transactions, payment providers — is a second, with its own generated specification,
+its own two clients and its own proxy;
+`docs/adr/0016-a-second-upstream-with-its-own-client-proxy-and-specification.md` records why it is
+separate rather than folded in. Server-side, the API is read through
+`src/network/api/apiServerClient.ts` and payments through
+`src/network/payments-api/payments-api-server-client.ts`, and neither client can serve the other's
+paths. A browser call to payments goes through the payments query hooks (`$paymentsApi` in
+`src/network/payments-api/payments-api-browser-client.ts`) onto the payments proxy at
+`/payments-api-proxy`, as an API call goes through `$api` onto the API's at `/api-proxy`. The
+payments door attaches the session's token as the **cookie** that service authenticates with — it
+offers a member no bearer — and refuses the back-office path families outright. A payments refusal
+arrives in the same flattened envelope as an API one, discriminated by `source: 'payments-api'`.
+Regenerate its specification with `npm run generate:payments-api`. The payments host is temporarily a
+resumewise development instance, the only one that answers today; when an Ignastrace one exists the
+change is that environment variable's value and a regeneration against the new host, not code.
+
+The rules:
 
 - **The browser never calls a backend directly, and holds no token.** Every browser call goes
-  through a catch-all proxy in this application, which attaches the session's bearer server-side.
+  through a catch-all proxy in this application, which attaches the session's token server-side, in
+  the form the upstream it fronts authenticates with — a bearer for the API, a cookie for payments.
   The session is one sealed, http-only cookie; client components read identity — never a token —
   from the session provider in the root layout.
 - **Server components and server actions read through the server-side client**

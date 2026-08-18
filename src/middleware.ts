@@ -1,6 +1,8 @@
 import type { NextFetchEvent, NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
+import { API_PROXY_BASE_PATH } from './network/api/api-proxy-path';
+import { PAYMENTS_API_PROXY_BASE_PATH } from './network/payments-api/payments-api-proxy-path';
 import { caseNormalization } from './server/middleware/case-normalization';
 import { intl } from './server/middleware/intl';
 import { redirects } from './server/middleware/redirects';
@@ -12,10 +14,14 @@ const HEALTH_PATH = '/health';
 
 /*
  * Where this application serves route handlers rather than pages: its own
- * endpoints under `/api`, and the browser's door onto the new API, which is
+ * endpoints under `/api`, and the browser's doors onto the two upstreams, each
  * mounted beside them rather than under them.
+ *
+ * A door added here has to be added to this list too. It is not optional: a
+ * mount left off takes the page chain, and the locale step rewrites the JSON
+ * response its caller is waiting for into a navigation.
  */
-const ROUTE_HANDLER_PREFIXES = ['/api/', '/api-proxy/'];
+const ROUTE_HANDLER_PREFIXES = ['/api/', `${API_PROXY_BASE_PATH}/`, `${PAYMENTS_API_PROXY_BASE_PATH}/`];
 
 /*
  * Route handlers take the session step and nothing else. They need the renewed

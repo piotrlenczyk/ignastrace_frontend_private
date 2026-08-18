@@ -176,27 +176,33 @@ describe('middleware', () => {
   });
 
   describe('a route handler', () => {
-    it.each(['/api/checkout/session', '/api-proxy/api/v1/users/me'])(
-      'renews the token on %s and returns the handler its own response',
-      async (path) => {
-        serveRenewalSuccess();
+    /*
+     * One case per door this application serves: its own endpoints, the browser's
+     * door onto the API, and the browser's door onto the Payments API. Each is a
+     * separate mount, so each has to be named in the middleware's prefixes — a
+     * door left off the list takes the page chain instead, and the locale step
+     * rewrites the response its caller is waiting for into a navigation.
+     */
+    const ROUTE_HANDLERS = ['/api/checkout/session', '/api-proxy/api/v1/users/me', '/payments-api-proxy/products'];
 
-        const response = await run(await requestWith(EXPIRED_SESSION, path));
+    it.each(ROUTE_HANDLERS)('renews the token on %s and returns the handler its own response', async (path) => {
+      serveRenewalSuccess();
 
-        expect(response.status).toBe(200);
-        expect(response.headers.get('location')).toBeNull();
-        expect(await unseal(sessionCookieOf(response)!)).toMatchObject({ refreshToken: 'refresh-2' });
-      },
-    );
+      const response = await run(await requestWith(EXPIRED_SESSION, path));
 
-    it('is not rewritten by the locale step', async () => {
-      const response = await run(await requestWith(VALID_SESSION, '/api-proxy/api/v1/users/me'));
+      expect(response.status).toBe(200);
+      expect(response.headers.get('location')).toBeNull();
+      expect(await unseal(sessionCookieOf(response)!)).toMatchObject({ refreshToken: 'refresh-2' });
+    });
+
+    it.each(ROUTE_HANDLERS)('is not rewritten by the locale step on %s', async (path) => {
+      const response = await run(await requestWith(VALID_SESSION, path));
 
       expect(response.headers.get('x-middleware-rewrite')).toBeNull();
     });
 
-    it('is not redirected by the guard, even anonymously', async () => {
-      const response = await run(await requestWith(null, '/api-proxy/api/v1/users/me'));
+    it.each(ROUTE_HANDLERS)('is not redirected by the guard on %s, even anonymously', async (path) => {
+      const response = await run(await requestWith(null, path));
 
       expect(response.status).toBe(200);
       expect(response.headers.get('location')).toBeNull();

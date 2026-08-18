@@ -221,6 +221,8 @@ describe('the API proxy', () => {
         message: 'The API publishes no such path.',
         errorCode: 'PROXY_PATH_UNKNOWN',
         code: 'NOT_FOUND',
+        details: [],
+        source: 'api',
       },
     });
   });
