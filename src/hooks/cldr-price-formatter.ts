@@ -1,15 +1,11 @@
-const formatCurrencyOptions = (amount: number) => {
-  const hasMoreThanOneIntegerDigit = Math.floor(Math.abs(amount)) >= 10;
-  const hasDecimals = amount % 1 !== 0;
-  const showDecimals = !hasMoreThanOneIntegerDigit || hasDecimals;
-
+const formatCurrencyOptions = (amount: number, isZeroDecimal: boolean): Intl.NumberFormatOptions => {
   return {
-    minimumFractionDigits: showDecimals ? 2 : 0,
-    maximumFractionDigits: 2,
+    minimumFractionDigits: isZeroDecimal ? 0 : amount % 1 === 0 ? 0 : 2,
+    maximumFractionDigits: isZeroDecimal ? 0 : 2,
   };
 };
 
-const zeroDecimalCurrency = (currency: string) => {
+const isZeroDecimalCurrency = (currency: string) => {
   return [
     'BIF',
     'CLP',
@@ -38,9 +34,10 @@ export const createPriceFormatter = () => {
     locale: string,
     currencyDisplay: 'narrowSymbol' | 'symbol' = 'symbol',
   ) => {
-    const amount = zeroDecimalCurrency(currency) ? price : price / 100;
+    const isZeroDecimal = isZeroDecimalCurrency(currency);
+    const amount = isZeroDecimal ? price : price / 100;
 
-    const formatOptions = formatCurrencyOptions(amount);
+    const formatOptions = formatCurrencyOptions(amount, isZeroDecimal);
 
     /*
      * Case-insensitive on purpose: the legacy aggregate publishes a lower-case

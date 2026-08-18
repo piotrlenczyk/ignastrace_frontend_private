@@ -57,6 +57,6 @@ export const AVAILABLE_CURRENCIES_DATA = Object.fromEntries(
 
 export const CURRENCIES = Object.keys(AVAILABLE_CURRENCIES_DATA) as Array<keyof typeof AVAILABLE_CURRENCIES_DATA>;
 
-export const DEFAULT_CURRENCY = 'usd';
+export const DEFAULT_CURRENCY = 'USD';
 
 export type Currency = keyof typeof AVAILABLE_CURRENCIES_DATA;

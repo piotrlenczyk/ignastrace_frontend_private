@@ -5,7 +5,7 @@ import FunnelLayout from '@/components/layouts/funnel-layout';
 import { ROUTES } from '@/constants/routes';
 import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
-import { getCurrencyFromCountry } from '@/libs/currency';
+import { getCurrencyByCountryCode } from '@/libs/currency';
 import { getApi } from '@/libs/server/api';
 import { getUserCountry } from '@/libs/server/user-country';
 import { getServerSession } from '@/server/session/session.utils';
@@ -23,7 +23,7 @@ const Index = async () => {
 
   const [api, country, phoneNumber] = await Promise.all([getApi(), getUserCountry(), getFunnelPhone()]);
 
-  const currency = getCurrencyFromCountry(country);
+  const currency = getCurrencyByCountryCode(country);
   const formattedNumber = formatPhoneNumber(phoneNumber);
 
   let defaultProduct: Products;
