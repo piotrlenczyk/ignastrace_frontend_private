@@ -117,6 +117,10 @@ const isRefusedPath = (pathname: string): boolean => REFUSED_MATCHERS.some((matc
  * The envelope is named rather than spelled out positionally: `code` and
  * `errorCode` are both strings and sit next to each other, so a swap between
  * them is a mistake no type could catch.
+ *
+ * The refusal names this API as its source. The proxy speaks for the API it
+ * fronts, so a call site branching on which upstream said no gets the same
+ * answer whether the door or the service behind it was the one to refuse.
  */
 const refuse = (status: number, error: HttpClientErrorData): Response => Response.json({ error }, { status });
 
@@ -196,6 +200,8 @@ const proxy =
         code: 'FORBIDDEN',
         errorCode: 'PROXY_PATH_FORBIDDEN',
         message: 'This path is not served to the browser.',
+        details: [],
+        source: 'api',
       });
     }
 
@@ -204,6 +210,8 @@ const proxy =
         code: 'NOT_FOUND',
         errorCode: 'PROXY_PATH_UNKNOWN',
         message: 'The API publishes no such path.',
+        details: [],
+        source: 'api',
       });
     }
 
@@ -216,6 +224,8 @@ const proxy =
         code: 'BAD_REQUEST',
         errorCode: 'PROXY_BODY_MALFORMED',
         message: 'The request body is not valid JSON.',
+        details: [],
+        source: 'api',
       });
     }
 

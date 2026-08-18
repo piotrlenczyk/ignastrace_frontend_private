@@ -11,13 +11,14 @@ type ApiErrorBody = {
   message?: string | null;
   errorCode: string;
   code: string;
+  details?: string[] | string;
   stacktrace?: string[];
 };
 
 /**
  * The new API's single error envelope: `{ error: { message, errorCode, code,
- * stacktrace } }`. It is the only parser registered — the legacy backend keeps
- * its own, unrelated error type and does not come through here.
+ * details, stacktrace } }`. The legacy backend keeps its own, unrelated error
+ * type and does not come through here.
  */
 export class ApiErrorParser implements HttpClientErrorParser {
   canHandle(data: unknown): data is { error: ApiErrorBody } {
@@ -29,9 +30,9 @@ export class ApiErrorParser implements HttpClientErrorParser {
       return undefined;
     }
 
-    const { message, errorCode, code, stacktrace } = data.error;
+    const { message, errorCode, code, details, stacktrace } = data.error;
 
-    return { message, errorCode, code, stacktrace };
+    return { message, errorCode, code, details, stacktrace, source: 'api' };
   }
 
   getErrorMessage(data: unknown): string {

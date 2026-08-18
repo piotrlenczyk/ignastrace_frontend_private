@@ -132,17 +132,20 @@ describe('unwrapApiResponse', () => {
 
   it.each(REFUSALS)('rejects a %i with the envelope it carried', async (status, envelope) => {
     const error = await rejection(unwrapApiResponse(refusal(status, envelope)));
-    const { message, errorCode, code, stacktrace } = envelope.error;
+    const { message, errorCode, code, details, stacktrace } = envelope.error;
 
     expect(error).toBeInstanceOf(HttpClientError);
     /*
-     * The four fields the flattened error is declared to carry, rather than the
+     * The fields the flattened error is declared to carry, rather than the
      * envelope entire: the parser picks what it recognises, so a field the API
      * adds upstream is not relayed until this layer is taught about it. Asserting
      * on equality with the whole envelope would make every such addition a
      * failure here, and the addition is the API's business, not this layer's.
+     *
+     * `source` is not in the envelope and never will be — it says which upstream
+     * refused, which only this side of the hop knows.
      */
-    expect((error as HttpClientError).data).toEqual({ message, errorCode, code, stacktrace });
+    expect((error as HttpClientError).data).toEqual({ message, errorCode, code, details, stacktrace, source: 'api' });
     expect((error as HttpClientError).response.status).toBe(status);
   });
 
