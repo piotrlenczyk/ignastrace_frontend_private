@@ -4,27 +4,19 @@ import { useLocale, useTranslations } from 'next-intl';
 import { FAQs } from '@/components/homepage/faqs';
 import { InstantLocator } from '@/components/homepage/instantLocator';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
-import type { Products } from '@/types/products';
+import type { TrialPricing } from '@/libs/pricing';
 
 import { PricingHero } from './hero';
 import { PricingCard } from './pricing-card';
 
-export function PricingContent({
-  country,
-  currency,
-  products,
-}: {
-  country: CountryCode;
-  currency: string;
-  products: Products;
-}) {
+export function PricingContent({ country, pricing }: { country: CountryCode; pricing: TrialPricing }) {
   const t = useTranslations('pages.pricing.cards');
   const formatPrice = createPriceFormatter();
   const locale = useLocale();
 
-  const trialPrice = formatPrice(products.trial_charge_price, currency, country, locale);
-  const subscriptionPrice = formatPrice(products.subscription_price, currency, country, locale);
-  const trialDays = products.trial_days;
+  const { currency, trialDays } = pricing;
+  const trialPrice = formatPrice(pricing.trialAmount, currency, country, locale);
+  const subscriptionPrice = formatPrice(pricing.fullAmount, currency, country, locale);
 
   return (
     <>

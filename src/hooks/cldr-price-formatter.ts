@@ -42,12 +42,19 @@ export const createPriceFormatter = () => {
 
     const formatOptions = formatCurrencyOptions(amount);
 
-    if (locale === 'ro' && country === 'RO' && currency === 'ron') {
+    /*
+     * Case-insensitive on purpose: the legacy aggregate publishes a lower-case
+     * code and the payments service an upper-case one, and both reach this
+     * formatter while the screens migrate one at a time.
+     */
+    const currencyCode = currency.toLowerCase();
+
+    if (locale === 'ro' && country === 'RO' && currencyCode === 'ron') {
       const formatPrice = new Intl.NumberFormat(`${locale}-${country}`, formatOptions).format(amount);
       return `${formatPrice} lei`;
     }
 
-    if (currency === 'sgd') {
+    if (currencyCode === 'sgd') {
       const formatPrice = new Intl.NumberFormat(`${locale}-${country}`, formatOptions).format(amount);
       return `S$${formatPrice}`;
     }
