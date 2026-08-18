@@ -1,18 +1,20 @@
 import createClient, { type Middleware, wrapAsPathBasedClient } from 'openapi-fetch';
 
 import { type components, type paths } from './payments-api';
+import { ACCESS_TOKEN_COOKIE, upstreamOverrideCookies } from './payments-api-override-cookies';
 
 export type paymentsSchemas = components['schemas'];
 
 /**
- * The name of the cookie the Payments API authenticates a member with.
+ * The two headers the payments service is told where the caller is by.
  *
- * The service takes no user bearer: its specification declares an `access-token`
- * cookie for everything user-facing, and reserves its bearer schemes for Okta
- * and for bot automation. So this is not a stylistic difference from the API —
- * the header the other upstream reads is not read here at all.
+ * It chooses prices and payment providers per market, so the market has to
+ * arrive with the request. Both names are the ones the edge in front of this
+ * application already uses — the service reads them under those names, and its
+ * specification documents neither.
  */
-const ACCESS_TOKEN_COOKIE = 'access-token';
+const CALLER_ADDRESS_HEADER = 'x-forwarded-for';
+const CALLER_COUNTRY_HEADER = 'cf-ipcountry';
 
 /*
  * The Payments API declares its paths bare — `/products`, `/subscriptions` — and
@@ -31,10 +33,10 @@ const ACCESS_TOKEN_COOKIE = 'access-token';
 export const _paymentsClient = createClient<paths>({ baseUrl: process.env.PAYMENTS_API_BASE_URL });
 
 /*
- * Read behind a `try` and imported at the point of use rather than at the top of
- * this module, for the reason the API client's getters give: there is no request
- * scope in every runtime this client can be reached from, and a static import
- * would still have to resolve there.
+ * The four request-scoped values, each read behind a `try` and each imported at
+ * the point of use rather than at the top of this module, for the reason the API
+ * client's getters give: there is no request scope in every runtime this client
+ * can be reached from, and a static import would still have to resolve there.
  */
 const sessionAccessToken = async (): Promise<string | null> => {
   try {
@@ -48,19 +50,61 @@ const sessionAccessToken = async (): Promise<string | null> => {
   }
 };
 
-/**
- * The credential no call site should have to remember: the session's access
- * token, presented as the cookie the payments service authenticates with.
- *
- * Caller-wins, as on the API client. A request that already states a `Cookie`
- * header is left exactly as it is, so a flow that must present something other
- * than the session's token still can.
- *
- * A caller without a session simply goes out without a cookie, which is what
- * lets public pricing be read before anybody has an account — an unauthenticated
- * call is a normal case here, not a failure to be refused early.
+const callerAddress = async (): Promise<string | null> => {
+  try {
+    const { getIP } = await import('@/server/lib/ip');
+
+    return (await getIP()) ?? null;
+  } catch {
+    return null;
+  }
+};
+
+const callerCountry = async (): Promise<string | null> => {
+  try {
+    const { getIPCountry } = await import('@/server/lib/ip');
+
+    return (await getIPCountry()) ?? null;
+  } catch {
+    return null;
+  }
+};
+
+/*
+ * Read server-side, out of the request's own cookie store, and never relayed
+ * from a browser-supplied header: the proxy in front of this client discards a
+ * `Cookie` the browser sent, precisely so that the credential cannot be chosen
+ * by a page script. The overrides arrive here the same way the session does.
  */
-const sessionCookieMiddleware: Middleware = {
+const overrideCookies = async (): Promise<string[]> => {
+  try {
+    const { cookies } = await import('next/headers');
+
+    return upstreamOverrideCookies((await cookies()).getAll());
+  } catch {
+    return [];
+  }
+};
+
+/**
+ * Everything the payments service is sent that no call site should have to
+ * remember: the session's access token as the cookie it authenticates with, the
+ * caller's address and country, and the QA override cookies repackaged for it.
+ *
+ * The credential and the two context headers are caller-wins, as on the API
+ * client. A header already on the request is left exactly as it is, so a flow
+ * that must present something other than the session's token still can, and a
+ * caller without a request scope can state the context itself.
+ *
+ * A caller without a session simply goes out without a token, which is what lets
+ * public pricing be read before anybody has an account — an unauthenticated call
+ * is a normal case here, not a failure to be refused early.
+ *
+ * The overrides are the exception, and last on purpose: they are merged onto
+ * whatever `Cookie` the request ends up with rather than substituted for it, so
+ * pinning a provider never signs the caller out.
+ */
+const requestScopeMiddleware: Middleware = {
   async onRequest({ request }) {
     if (!request.headers.has('Cookie')) {
       const accessToken = await sessionAccessToken();
@@ -70,11 +114,35 @@ const sessionCookieMiddleware: Middleware = {
       }
     }
 
+    if (!request.headers.has(CALLER_ADDRESS_HEADER)) {
+      const address = await callerAddress();
+
+      if (address) {
+        request.headers.set(CALLER_ADDRESS_HEADER, address);
+      }
+    }
+
+    if (!request.headers.has(CALLER_COUNTRY_HEADER)) {
+      const country = await callerCountry();
+
+      if (country) {
+        request.headers.set(CALLER_COUNTRY_HEADER, country);
+      }
+    }
+
+    const overrides = await overrideCookies();
+
+    if (overrides.length > 0) {
+      const stated = request.headers.get('Cookie');
+
+      request.headers.set('Cookie', (stated ? [stated, ...overrides] : overrides).join('; '));
+    }
+
     return request;
   },
 };
 
-_paymentsClient.use(sessionCookieMiddleware);
+_paymentsClient.use(requestScopeMiddleware);
 
 /**
  * The Payments API as a server component or a server action reads it: typed from

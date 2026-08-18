@@ -25,6 +25,13 @@ vi.mock('next/headers', () => ({
 
       return value === undefined ? undefined : { name, value };
     },
+    /*
+     * Decoded on the way out, as the real store decodes: what the jar holds is
+     * what the browser's `Cookie` header carried, and Next hands a reader the
+     * percent-decoded value. A test that skipped this step would prove the
+     * upstream header round-trips when it does not.
+     */
+    getAll: () => [...cookieJar].map(([name, value]) => ({ name, value: decodeURIComponent(value) })),
   }),
   headers: async () => ambientHeaders,
 }));
@@ -246,6 +253,117 @@ describe('the payments proxy', () => {
     await GET(fromBrowser('/products', { headers: { cookie: 'access-token=a-token-of-my-own' } }));
 
     expect(payments.upstreamRequest().headers.get('cookie')).toBeNull();
+  });
+
+  it("attaches the caller's address, as the server client does for any call", async () => {
+    ambientHeaders = new Headers({ 'cf-connecting-ip': '203.0.113.7' });
+    const payments = serve();
+
+    await GET(fromBrowser('/products'));
+
+    expect(payments.upstreamRequest().headers.get('x-forwarded-for')).toBe('203.0.113.7');
+  });
+
+  it("attaches the caller's country, which is what a market is chosen by", async () => {
+    ambientHeaders = new Headers({ 'cf-ipcountry': 'ES' });
+    const payments = serve();
+
+    await GET(fromBrowser('/products'));
+
+    expect(payments.upstreamRequest().headers.get('cf-ipcountry')).toBe('ES');
+  });
+
+  it('states neither when the request scope knows nothing about the caller', async () => {
+    const payments = serve();
+
+    await GET(fromBrowser('/products'));
+
+    const forwarded = payments.upstreamRequest().headers;
+
+    expect(forwarded.get('x-forwarded-for')).toBeNull();
+    expect(forwarded.get('cf-ipcountry')).toBeNull();
+  });
+
+  it('sends the override cookies upstream with their prefix stripped', async () => {
+    cookieJar.set('payments_paymentProvider', 'stripe');
+    cookieJar.set('payments_trialDays', '7');
+    const payments = serve();
+
+    await GET(fromBrowser('/products'));
+
+    expect(payments.upstreamRequest().headers.get('cookie')).toBe('paymentProvider=stripe; trialDays=7');
+  });
+
+  it('merges the override cookies with the session cookie rather than displacing it', async () => {
+    await signedIn();
+    cookieJar.set('payments_splitPayment', 'true');
+    const payments = serve();
+
+    await GET(fromBrowser('/products/user'));
+
+    expect(payments.upstreamRequest().headers.get('cookie')).toBe(
+      `access-token=${SESSION.accessToken}; splitPayment=true`,
+    );
+  });
+
+  it('sends the override cookies for a caller with no session at all', async () => {
+    cookieJar.set('payments_paypalDisabled', 'true');
+    const payments = serve();
+
+    await GET(fromBrowser('/products'));
+
+    expect(payments.upstreamRequest().headers.get('cookie')).toBe('paypalDisabled=true');
+  });
+
+  it('leaves every cookie without the payments prefix in the browser', async () => {
+    cookieJar.set('NEXT_LOCALE', 'es');
+    cookieJar.set('not_payments_trialDays', '14');
+    cookieJar.set('prefix_payments_other', 'value');
+    cookieJar.set('payments_', 'nothing-follows-the-prefix');
+    const payments = serve();
+
+    await GET(fromBrowser('/products'));
+
+    expect(payments.upstreamRequest().headers.get('cookie')).toBeNull();
+  });
+
+  it('refuses an override that would name the credential upstream', async () => {
+    cookieJar.set('payments_access-token', 'a-token-of-the-page-script-s-choosing');
+    const payments = serve();
+
+    await GET(fromBrowser('/products'));
+
+    expect(payments.upstreamRequest().headers.get('cookie')).toBeNull();
+  });
+
+  it("never lets an override displace the session's own token", async () => {
+    await signedIn();
+    cookieJar.set('payments_access-token', 'a-token-of-the-page-script-s-choosing');
+    const payments = serve();
+
+    await GET(fromBrowser('/products/user'));
+
+    expect(payments.upstreamRequest().headers.get('cookie')).toBe(`access-token=${SESSION.accessToken}`);
+  });
+
+  it('re-encodes an override value the cookie store decoded, so one override stays one cookie', async () => {
+    cookieJar.set('payments_paymentProvider', 'stripe%3B%20trialDays%3D999');
+    const payments = serve();
+
+    await GET(fromBrowser('/products'));
+
+    expect(payments.upstreamRequest().headers.get('cookie')).toBe('paymentProvider=stripe%3B%20trialDays%3D999');
+  });
+
+  it("sends the session's token and the overrides, and no other cookie of this origin", async () => {
+    await signedIn();
+    cookieJar.set('NEXT_LOCALE', 'es');
+    cookieJar.set('payments_trialDays', '7');
+    const payments = serve();
+
+    await GET(fromBrowser('/products/user'));
+
+    expect(payments.upstreamRequest().headers.get('cookie')).toBe(`access-token=${SESSION.accessToken}; trialDays=7`);
   });
 
   it('discards an Authorization header the browser supplied', async () => {
