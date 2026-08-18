@@ -1,6 +1,7 @@
 import type { NextFetchEvent, NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
+import { API_PROXY_BASE_PATH } from './network/api/api-proxy-path';
 import { PAYMENTS_API_PROXY_BASE_PATH } from './network/payments-api/payments-api-proxy-path';
 import { caseNormalization } from './server/middleware/case-normalization';
 import { intl } from './server/middleware/intl';
@@ -20,7 +21,7 @@ const HEALTH_PATH = '/health';
  * mount left off takes the page chain, and the locale step rewrites the JSON
  * response its caller is waiting for into a navigation.
  */
-const ROUTE_HANDLER_PREFIXES = ['/api/', '/api-proxy/', `${PAYMENTS_API_PROXY_BASE_PATH}/`];
+const ROUTE_HANDLER_PREFIXES = ['/api/', `${API_PROXY_BASE_PATH}/`, `${PAYMENTS_API_PROXY_BASE_PATH}/`];
 
 /*
  * Route handlers take the session step and nothing else. They need the renewed
