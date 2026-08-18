@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 import { Dialog, DialogContent, DialogPortal, DialogTrigger } from '@/components/ui/dialog';
 import { cn } from '@/libs/utils';
-import { useForgotPasswordMutation } from '@/network/api/hooks/use-forgot-password-mutation';
+import { $api } from '@/network/api/api-browser-client';
 
 import type { ForgotPasswordFormValues } from '../types/reset-password-form.types';
 import { ForgotPasswordEndContent } from './forgot-password-end-content';
@@ -19,7 +19,7 @@ export const ForgotPasswordForm = ({ className, onOpen }: { className?: string; 
   const [submittedEmail, setSubmittedEmail] = useState('');
   const [serverError, setServerError] = useState('');
 
-  const { mutate, isPending } = useForgotPasswordMutation();
+  const { mutate, isPending } = $api.useMutation('post', '/api/v1/auth/forgot-password');
 
   const toggle = () => {
     setServerError('');
