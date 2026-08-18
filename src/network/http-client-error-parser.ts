@@ -1,5 +1,6 @@
 import { ApiErrorParser } from './api/api-error-parser';
 import type { HttpClientErrorData } from './http-client-error';
+import { PaymentsApiErrorParser } from './payments-api/payments-api-error-parser';
 
 /** Turns one backend's error body into the shape `HttpClientError` carries. */
 export type HttpClientErrorParser = {
@@ -11,11 +12,19 @@ export type HttpClientErrorParser = {
 
 /**
  * Tries the registered parsers in order and takes the first that recognises the
- * body. One is registered today; the list is what keeps a second backend's
- * envelope from being bolted onto the first parser when one arrives.
+ * body. Both upstreams are registered, which is what the list was written for:
+ * neither envelope was bolted onto the other's parser.
+ *
+ * The order is the tie-break, and it is load-bearing. The two guards look at
+ * different places — the API at a nested `error` key, the payments service at a
+ * message and a status at the top level — but neither excludes the other's keys,
+ * so a body stating both satisfies both. The API goes first because its guard is
+ * the one describing an envelope a service promises, where the other describes a
+ * framework default that anything might answer with. A body satisfying neither
+ * falls through to a plain failure.
  */
 export class HttpClientErrorParserManager {
-  private static parsers: HttpClientErrorParser[] = [new ApiErrorParser()];
+  private static parsers: HttpClientErrorParser[] = [new ApiErrorParser(), new PaymentsApiErrorParser()];
 
   static parse(data: unknown): HttpClientErrorData | undefined {
     for (const parser of this.parsers) {

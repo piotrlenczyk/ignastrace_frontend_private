@@ -26,7 +26,11 @@ export type HttpClientErrorData = {
    * service answers with a message and a status and nothing more.
    */
   errorCode?: string;
-  /** The HTTP status restated in the body, as a name rather than a number. */
+  /**
+   * The HTTP status restated in the body. A string because the API states it as
+   * a name (`UNAUTHORIZED`); the payments service states the number, so for that
+   * upstream it is the digits. Which of the two it is follows from `source`.
+   */
   code: string;
   /**
    * Whatever extra context the service sent. A validation failure carries a

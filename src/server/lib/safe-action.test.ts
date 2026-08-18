@@ -30,7 +30,7 @@ describe('isHttpClientActionError', () => {
    * is recognised on the same channel — the point of widening the envelope.
    */
   it('recognises a refusal that names the payments service', () => {
-    const serverError = { data: { message: 'Nope.', code: 'BAD_REQUEST', source: 'payments-api' }, status: 400 };
+    const serverError = asServerError({ message: 'Card declined.', statusCode: 402 }, 402);
 
     expect(isHttpClientActionError(serverError)).toBe(true);
   });
