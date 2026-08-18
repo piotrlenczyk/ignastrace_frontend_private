@@ -5,21 +5,20 @@ import type { Appearance, StripeElementLocale, StripeElementsOptions } from '@st
 import Image from 'next/image';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import type { FunnelPlan } from '@/actions/funnel-plan';
 import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
-import { useGetProduct } from '@/hooks/api/use-get-product';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
-import { getStripePromise } from '@/libs/stripe';
-import type { Products } from '@/types/products';
+import { getAmountDue } from '@/libs/pricing';
+import { getStripePromiseForKey } from '@/libs/stripe';
+import type { ProductWithPrice } from '@/types/pricing.types';
 
 import { StripeForm } from './stripe-form';
 
 const CheckoutForm = ({
-  currency: currentCurrency,
-  defaultProduct,
+  product,
   country,
   isReactivate = false,
   buttonText,
@@ -29,8 +28,7 @@ const CheckoutForm = ({
   phoneNumber,
   plan = 'trial',
 }: {
-  currency: string;
-  defaultProduct: Products;
+  product: ProductWithPrice;
   isReactivate?: boolean;
   country: string;
   buttonText: string;
@@ -44,24 +42,31 @@ const CheckoutForm = ({
 
   const formatPrice = createPriceFormatter();
   const locale = useLocale();
-  const stripePromise = useMemo(() => getStripePromise(locale as StripeElementLocale), [locale]);
+
+  const { price } = product;
+
+  /*
+   * Reactivation is quoted like an outright subscription: someone who has
+   * subscribed before is not offered the trial again, so the full four-week
+   * amount is what falls due.
+   */
+  const effectivePlan: FunnelPlan = isReactivate || plan === 'subscription' ? 'subscription' : 'trial';
+  const skipTrial = effectivePlan === 'subscription';
+
+  /*
+   * The currency comes off the price row rather than off the selection, so the
+   * amount, the symbol beside it and the currency the legacy API is asked to
+   * charge in can never disagree.
+   */
+  const currency = price.currency;
+  const amountDue = getAmountDue({ plan: effectivePlan, price });
+
+  const stripePromise = useMemo(
+    () => getStripePromiseForKey(locale as StripeElementLocale, price.providerAccount.clientKey),
+    [locale, price.providerAccount.clientKey],
+  );
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [product, setProduct] = useState<Products>(defaultProduct);
-  const [currency, setCurrency] = useState(currentCurrency);
-
-  const trialDays = product.trial_days;
-  const skipTrial = isReactivate || plan === 'subscription';
-
-  const { mutate: getProduct } = useGetProduct({
-    onSuccess: (data) => {
-      setCurrency(data.currency);
-      setProduct(data);
-    },
-    onError: (error) => {
-      console.error(error);
-    },
-  });
 
   const appearance: Appearance = {
     theme: 'stripe',
@@ -74,16 +79,9 @@ const CheckoutForm = ({
     locale: locale as StripeElementLocale,
   };
 
-  useEffect(() => {
-    if (currentCurrency && currentCurrency !== currency) {
-      getProduct(currentCurrency);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentCurrency]);
-
-  const conditions = t.rich(trialDays === 1 ? 'agree_description_24' : 'agree_description', {
-    trialPrice: formatPrice(product?.trial_charge_price || 0, currency, country, locale),
-    subscriptionPrice: formatPrice(product?.subscription_price || 0, currency, country, locale),
+  const conditions = t.rich(price.trialDays === 1 ? 'agree_description_24' : 'agree_description', {
+    trialPrice: formatPrice(price.trialAmount, currency, country, locale),
+    subscriptionPrice: formatPrice(price.amount, currency, country, locale),
     terms: (chunks) => (
       <Link target="_blank" href="/terms">
         {chunks}
@@ -100,22 +98,14 @@ const CheckoutForm = ({
     <>
       <div className="flex items-center justify-between gap-6">
         <div className="text-xl text-weak">{t('total')}</div>
-        {skipTrial ? (
-          <div className="h4 leading-loose font-bold">
-            {formatPrice(product?.subscription_price || 0, currency, country, locale)}
-          </div>
-        ) : (
-          <div className="h4 leading-loose font-bold">
-            {formatPrice(product?.trial_charge_price || 0, currency, country, locale)}
-          </div>
-        )}
+        <div className="h4 leading-loose font-bold">{formatPrice(amountDue, currency, country, locale)}</div>
       </div>
       <hr className="separator mt-4 mb-6" />
       <Elements stripe={stripePromise} options={stripeOptions}>
         <StripeForm
           buttonText={buttonText}
           currency={currency}
-          product={product}
+          amount={amountDue}
           isReactivate={isReactivate}
           skipTrial={skipTrial}
           isSubmitting={isSubmitting}
@@ -129,11 +119,11 @@ const CheckoutForm = ({
       <p className="mt-6 text-center text-sm">
         {isReactivate
           ? t('agree_description_reactivate', {
-              subscriptionPrice: formatPrice(product?.subscription_price || 0, currency, country, locale),
+              subscriptionPrice: formatPrice(price.amount, currency, country, locale),
             })
           : skipTrial
             ? t.rich('agree_description_subscription', {
-                subscriptionPrice: formatPrice(product?.subscription_price || 0, currency, country, locale),
+                subscriptionPrice: formatPrice(price.amount, currency, country, locale),
                 terms: (chunks) => (
                   <Link target="_blank" href="/terms">
                     {chunks}

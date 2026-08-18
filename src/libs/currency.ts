@@ -23,8 +23,15 @@ export function getCurrencyByCountryCode(_countryCode?: string) {
       return 'EUR';
     }
 
-    if (CURRENCIES.includes(currencyCode as Currency)) {
-      return currencyCode as string;
+    /*
+     * The currency table is keyed in lower case and this function answers in
+     * upper case, the way the payments catalogue publishes a currency. The
+     * comparison therefore has to state its own case: matching the answer
+     * against the table directly silently matched nothing, and every market
+     * fell through to US dollars.
+     */
+    if (CURRENCIES.includes(currency.toLowerCase() as Currency)) {
+      return currencyCode;
     }
   }
 

@@ -68,7 +68,7 @@ const UpsellCheckoutForm = ({
         <StripeForm
           buttonText={buttonText}
           currency={product.currency}
-          product={product}
+          amount={product.price}
           isUpdatePaymentMethod
           shouldSendOrderConfirmEmail={false}
           isSubmitting={isSubmitting}

@@ -24,3 +24,35 @@ export const getStripePromise = (locale: StripeElementLocale) => {
 
   return promise;
 };
+
+const stripePromiseByLocaleAndKey = new Map<string, Promise<Stripe | null>>();
+
+/**
+ * Stripe initialized from the account the payments catalogue publishes with the
+ * price, rather than from a build-time environment variable.
+ *
+ * A screen quoting a payments price follows the catalogue onto another provider
+ * account as a configuration change. The cache is keyed on the key as well as
+ * the language, because caching by language alone would hand back an instance
+ * built on whichever key loaded first — the 3D Secure localization above is the
+ * reason a cache exists at all, and it must not cost correctness.
+ *
+ * The environment-variable entry point above stays for the upsell purchase form,
+ * which has no payments price to read a key from.
+ */
+export const getStripePromiseForKey = (locale: StripeElementLocale, publishableKey?: string) => {
+  if (!publishableKey) {
+    throw new Error('The price the payments catalogue published carries no provider public key');
+  }
+
+  const cacheKey = `${locale}:${publishableKey}`;
+  const cached = stripePromiseByLocaleAndKey.get(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
+  const promise = loadStripe(publishableKey, { locale });
+  stripePromiseByLocaleAndKey.set(cacheKey, promise);
+
+  return promise;
+};

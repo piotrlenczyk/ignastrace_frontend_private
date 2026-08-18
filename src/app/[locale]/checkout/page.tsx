@@ -6,11 +6,10 @@ import FunnelLayout from '@/components/layouts/funnel-layout';
 import { ROUTES } from '@/constants/routes';
 import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
-import { getCurrencyByCountryCode } from '@/libs/currency';
 import { getApi } from '@/libs/server/api';
 import { getUserCountry } from '@/libs/server/user-country';
+import { getCheckoutPricing } from '@/server/getters/pricing.getters';
 import { getServerSession } from '@/server/session/session.utils';
-import type { Products } from '@/types/products';
 
 import { CheckoutPageClient } from './_page';
 
@@ -29,17 +28,9 @@ const CheckoutPage = async () => {
     getFunnelPlan(),
   ]);
 
-  const currency = getCurrencyByCountryCode(country);
   const formattedNumber = formatPhoneNumber(phoneNumber);
 
-  let defaultProduct: Products;
-  try {
-    defaultProduct = await api.get<Products>(`/products?currency=${currency}`);
-  } catch (error) {
-    console.error('Error fetching products:', error);
-
-    redirect(ROUTES.HOME);
-  }
+  const { pricing, initialCurrency } = await getCheckoutPricing(country);
 
   await redirectIfAuthenticated({
     activeSubscriptionRoute: ROUTES.MEMBER.FIND_BY_NUMBER.HOME,
@@ -55,10 +46,10 @@ const CheckoutPage = async () => {
     <FunnelLayout positionMobileHeader="static" showLogoLink={false}>
       <main className="s-main flex flex-col">
         <CheckoutPageClient
-          currency={currency}
+          initialCurrency={initialCurrency}
           formattedNumber={formattedNumber}
           country={country}
-          defaultProduct={defaultProduct}
+          pricing={pricing}
           enableUpsells={enableUpsells}
           plan={plan}
         />

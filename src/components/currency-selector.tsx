@@ -6,9 +6,26 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Icon } from '@/components/ui/icon';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { AVAILABLE_CURRENCIES_DATA } from '@/constants/currencies';
+import { CURRENCIES_DATA } from '@/constants/currencies';
 
-export default function CurrencySelector({ value, onChange }: { value: string; onChange: (c: string) => void }) {
+/**
+ * The currencies offered are the ones the caller was told are on sale, not the
+ * ones this application knows how to render. A currency the catalogue publishes
+ * and the symbol table does not is still offered, under its code — opening a
+ * market is a catalogue change, and the selector must not be what holds it up.
+ */
+const currencySymbol = (currency: string) =>
+  CURRENCIES_DATA[currency.toLowerCase() as keyof typeof CURRENCIES_DATA]?.symbol;
+
+export default function CurrencySelector({
+  value,
+  currencies,
+  onChange,
+}: {
+  value: string;
+  currencies: string[];
+  onChange: (c: string) => void;
+}) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -22,9 +39,9 @@ export default function CurrencySelector({ value, onChange }: { value: string; o
       </DropdownMenuTrigger>
       <DropdownMenuContent className="min-w-[4.5rem] grid-cols-1">
         <ScrollArea className="h-40 px-2">
-          {Object.entries(AVAILABLE_CURRENCIES_DATA).map(([key, { symbol }]) => (
-            <DropdownMenuItem className="justify-end" key={key} onSelect={() => onChange(key)}>
-              {symbol} {key.toUpperCase()}
+          {currencies.map((currency) => (
+            <DropdownMenuItem className="justify-end" key={currency} onSelect={() => onChange(currency)}>
+              {currencySymbol(currency)} {currency.toUpperCase()}
             </DropdownMenuItem>
           ))}
         </ScrollArea>

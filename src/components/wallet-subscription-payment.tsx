@@ -4,26 +4,22 @@ import { useTranslations } from 'next-intl';
 import type { MouseEventHandler } from 'react';
 import { useEffect, useState } from 'react';
 
-import type { Product } from '@/app/[locale]/success/_types/product.type';
-import type { Products } from '@/types/products';
-
 import { WalletPaymentButton } from './wallet-payment-button';
 
 const WALLET_COUNTRY = 'AE';
 
 export default function WalletSubscriptionPayment({
   method,
-  product,
+  amount,
   currency,
-  useTrialPrice,
   shouldLoad,
   getWalletPaymentHandler,
   validateInput,
 }: {
   method: string;
-  product: Products | Product;
+  /** What falls due now, in minor units, as the sheet is to show it. */
+  amount: number;
   currency: string;
-  useTrialPrice: boolean;
   shouldLoad: boolean;
   getWalletPaymentHandler: (data: PaymentRequestPaymentMethodEvent) => void;
   validateInput?: () => boolean;
@@ -41,23 +37,15 @@ export default function WalletSubscriptionPayment({
   useEffect(() => {
     const createPaymentRequest = async () => {
       if (stripe) {
-        const getAmount = () => {
-          if ('price' in product) {
-            // This is a Product (upsell) - single price
-            return product.price;
-          } else {
-            // This is Products (subscription) - has trial and subscription prices
-            return useTrialPrice ? product.trial_charge_price : product.subscription_price;
-          }
-        };
-
         const stripePaymentRequest = stripe.paymentRequest({
           requestPayerName: true,
           country: WALLET_COUNTRY,
-          currency,
+          // Stripe documents this one as a lower-case ISO code; the payments
+          // catalogue publishes currencies upper-cased.
+          currency: currency.toLowerCase(),
           total: {
             label: 'Total',
-            amount: getAmount(),
+            amount,
           },
         });
 
@@ -77,7 +65,7 @@ export default function WalletSubscriptionPayment({
     if (shouldLoad) {
       createPaymentRequest();
     }
-  }, [shouldLoad, method, product, currency, setPaymentRequest, stripe, useTrialPrice]);
+  }, [shouldLoad, method, amount, currency, setPaymentRequest, stripe]);
 
   useEffect(() => {
     const handlePaymentMethod = (event: PaymentRequestPaymentMethodEvent) => {
