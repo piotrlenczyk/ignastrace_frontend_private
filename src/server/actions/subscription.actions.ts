@@ -1,7 +1,12 @@
 'use server';
 
+import { env } from 'process';
+import { z } from 'zod';
+
 import { paymentsApiServerClient } from '@/network/payments-api/payments-api-server-client';
 import type { SubscriptionDetails } from '@/types/pricing.types';
+
+import { actionClient } from '../lib/safe-action';
 
 export const getSubscription = async () => {
   const result = await paymentsApiServerClient['/subscriptions'].GET({
@@ -33,3 +38,30 @@ export const getSubscription = async () => {
 
   return result;
 };
+
+export const actionSendPlacedOrderEvent = actionClient
+  .inputSchema(
+    z.object({
+      amount: z.number(),
+      currency: z.string(),
+      transactionId: z.string(),
+      email: z.string(),
+      plan: z.string(),
+    }),
+  )
+  .action(async ({ parsedInput }) => {
+    const klaviyoEnabled = env.PUBLIC_FEATURE_KLAVIYO === '1';
+    if (!env.PRIVATE_KLAVIYO_API_KEY || !klaviyoEnabled) {
+      return;
+    }
+    console.log('actionSendPlacedOrderEvent', parsedInput);
+    return true;
+    // TODO: [refactor] add klaviyo integration
+    // return klaviyoEventsApiService.sendPlacedOrderEvent({
+    //   amount: parsedInput.amount,
+    //   currency: parsedInput.currency,
+    //   transactionId: parsedInput.transactionId,
+    //   email: parsedInput.email,
+    //   plan: parsedInput.plan,
+    // });
+  });

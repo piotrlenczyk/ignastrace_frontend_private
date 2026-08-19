@@ -5,10 +5,10 @@ import { createContext, type ReactNode, useCallback, useContext, useMemo, useSta
 
 import { buildRoute } from '@/components/checkout/_shared/stubs/routes';
 import { useSettings } from '@/components/checkout/_shared/stubs/settings';
-import { actionSendPlacedOrderEvent } from '@/components/checkout/_shared/stubs/subscription.actions';
 import { type ProductWithPrice, type ProviderAccount } from '@/components/checkout/_shared/types/pricing.types';
 import { deleteCheckoutCookie, getCheckoutCookie } from '@/components/checkout/_shared/utils/checkoutCookie.utils';
 import type { paymentsSchemas } from '@/network/payments-api/payments-api-server-client';
+import { actionSendPlacedOrderEvent } from '@/server/actions/subscription.actions';
 
 export const SUPPORTED_PAYMENT_PROVIDERS = [
   'stripe' satisfies paymentsSchemas['PaymentProviderEnum'],
@@ -95,7 +95,7 @@ export const CheckoutProvider = ({
       const route = getPaymentSuccessRoute(transactionId);
       router.push(route);
     },
-    [email, getPaymentSuccessRoute, product.price, router, provider],
+    [email, getPaymentSuccessRoute, product.price, router],
   );
 
   const value = useMemo(
