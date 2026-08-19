@@ -8,7 +8,7 @@ import { getServerSettings } from '@/settings/settings.server';
 const Actions = async () => {
   const t = await getTranslations('pages.memberArea.navigation');
 
-  const { reverseLookupEnabled: enableReverseLookup } = await getServerSettings();
+  const { reverseLookupEnabled } = await getServerSettings();
 
   return (
     <div className="mx-auto flex max-w-[1200px] flex-wrap justify-center gap-6">
@@ -26,7 +26,7 @@ const Actions = async () => {
           href={ROUTES.MEMBER.FIND_BY_LINK.HOME}
         />
       </div>
-      {enableReverseLookup && (
+      {reverseLookupEnabled && (
         <div className="w-full md:w-[360px]">
           <ToolItem
             icon={<Icon name="phone" className="text-primary" />}

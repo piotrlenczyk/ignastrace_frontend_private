@@ -45,9 +45,8 @@ export const PricingCard = async ({
     colors[type].badge.bg,
   );
 
-  const isReverseLookupVisible = reverseLookupEnabled;
-  const features = Array.from(isReverseLookupVisible ? { length: 5 } : { length: type === 'trial' ? 3 : 4 }, (_, i) =>
-    t(`${translationKey}.${isReverseLookupVisible ? 'new_features' : 'features'}.feature_${i + 1}` as any),
+  const features = Array.from(reverseLookupEnabled ? { length: 5 } : { length: type === 'trial' ? 3 : 4 }, (_, i) =>
+    t(`${translationKey}.${reverseLookupEnabled ? 'new_features' : 'features'}.feature_${i + 1}` as any),
   );
 
   return (

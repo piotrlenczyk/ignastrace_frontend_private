@@ -47,7 +47,7 @@ export const HeaderNav = ({ unreadCount }: { unreadCount: number }) => {
 
   const pathname = usePathname();
   const [fullPath, setFullPath] = useState<string>(pathname);
-  const { reverseLookupEnabled: enableReverseLookup, countryCode: country } = useSettings();
+  const { reverseLookupEnabled, countryCode: country } = useSettings();
 
   useEffect(() => {
     setFullPath(pathname + window.location.hash);
@@ -73,7 +73,7 @@ export const HeaderNav = ({ unreadCount }: { unreadCount: number }) => {
             <Icon name="link" />
             {t('find_by_link')}
           </Item>
-          {enableReverseLookup && (
+          {reverseLookupEnabled && (
             <Item
               path={fullPath}
               href={[

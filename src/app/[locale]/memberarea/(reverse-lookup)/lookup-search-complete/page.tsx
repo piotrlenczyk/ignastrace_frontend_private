@@ -19,9 +19,9 @@ export default async function LookupSearchCompletePage() {
     redirect(ROUTES.HOME);
   }
 
-  const { reverseLookupEnabled: enableReverseLookup } = await getServerSettings();
+  const { reverseLookupEnabled } = await getServerSettings();
 
-  if (!enableReverseLookup) {
+  if (!reverseLookupEnabled) {
     redirect(ROUTES.MEMBER.STATUS.HOME);
   }
 

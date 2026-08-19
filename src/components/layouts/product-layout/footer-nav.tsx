@@ -42,7 +42,7 @@ const Item = ({ className, href, children, active }: ItemProps) => {
 };
 
 export const FooterNav = () => {
-  const { reverseLookupEnabled: enableReverseLookup } = useSettings();
+  const { reverseLookupEnabled } = useSettings();
   const [isToolsOpen, setIsToolsOpen] = useState(false);
   const t = useTranslations('pages.memberArea.navigation');
 
@@ -87,7 +87,7 @@ export const FooterNav = () => {
               href={ROUTES.MEMBER.FIND_BY_LINK.HOME}
               onClick={handleToolClick}
             />
-            {enableReverseLookup && (
+            {reverseLookupEnabled && (
               <ToolItem
                 icon={<Icon name="phone" className="text-primary" />}
                 label={t('phone_lookup')}

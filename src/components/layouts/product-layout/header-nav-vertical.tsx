@@ -44,7 +44,7 @@ const HeaderNavVertical = ({ unreadCount }: { unreadCount: number }) => {
   const t = useTranslations('pages.memberArea.navigation');
   const pathname = usePathname();
   const [fullPath, setFullPath] = useState<string>(pathname);
-  const { reverseLookupEnabled: enableReverseLookup, countryCode: country } = useSettings();
+  const { reverseLookupEnabled, countryCode: country } = useSettings();
 
   useEffect(() => {
     setFullPath(pathname + window.location.hash);
@@ -77,7 +77,7 @@ const HeaderNavVertical = ({ unreadCount }: { unreadCount: number }) => {
       href: [ROUTES.REVERSE_LOOKUP.MEMBER.PHONE_LOOKUP.FORM, ROUTES.REVERSE_LOOKUP.MEMBER.PHONE_LOOKUP.PROGRESS],
       icon: <Icon name="phone" />,
       label: t('phone_lookup'),
-      enabled: enableReverseLookup,
+      enabled: reverseLookupEnabled,
     },
     {
       key: 'sex_offenders_search',
