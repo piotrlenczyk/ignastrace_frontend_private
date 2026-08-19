@@ -40,6 +40,13 @@ vi.stubGlobal('fetch', async (input: Request | string, init?: RequestInit) =>
 );
 
 /*
+ * The host the generated client addresses, stated before the import below rather
+ * than in `beforeEach`: the client reads it when its module first runs, so a stub
+ * installed per test would come too late to be the base URL it uses.
+ */
+vi.stubEnv('API_BASE_URL', 'https://api.ignastrace.test');
+
+/*
  * Imported after the request scope and the network are in place, so the module
  * under test never runs against the ambient ones.
  */
@@ -66,7 +73,6 @@ beforeEach(() => {
    * file: `unstubAllEnvs` below would otherwise leave the later tests reading the
    * developer's own `.env`, which vitest loads.
    */
-  vi.stubEnv('INTERNAL_API_URL', 'https://legacy.ignastrace.test/api/v1');
   vi.stubEnv('FEATURE_UPSELLS', '');
   vi.stubEnv('FEATURE_REQUEST_ZIP', '');
   vi.stubEnv('FEATURE_ADYEN_GPAY', '');
@@ -106,24 +112,36 @@ describe('the country a request is asking from', () => {
 
 describe('the flags the API owns', () => {
   it('arrive under the names this application uses for them', async () => {
-    features({ ENABLE_REVERSE_LOOKUP: true, ENABLE_SMS_CONSENT: true });
+    features({ reverseLookup: true, smsConsent: true, sexOffenderReport: true });
 
     const settings = await _readServerSettings();
 
     expect(settings.reverseLookupEnabled).toBe(true);
     expect(settings.smsConsentEnabled).toBe(true);
+    expect(settings.sexOffenderReportEnabled).toBe(true);
   });
 
-  it('are off when the API does not mention them', async () => {
-    features({ SOMETHING_ELSE: true });
+  it('are what the API says, where the API says off', async () => {
+    features({ reverseLookup: false, smsConsent: false, sexOffenderReport: false });
 
     const settings = await _readServerSettings();
 
     expect(settings.reverseLookupEnabled).toBe(false);
     expect(settings.smsConsentEnabled).toBe(false);
+    expect(settings.sexOffenderReportEnabled).toBe(false);
   });
 
-  it('asks the backend that publishes them once, and nothing else', async () => {
+  it('fall back to their declared defaults for a flag the API does not publish', async () => {
+    features({ somethingElse: true });
+
+    const settings = await _readServerSettings();
+
+    expect(settings.reverseLookupEnabled).toBe(true);
+    expect(settings.smsConsentEnabled).toBe(true);
+    expect(settings.sexOffenderReportEnabled).toBe(false);
+  });
+
+  it('asks the API that publishes them once, and nothing else', async () => {
     const requests: Request[] = [];
 
     respond = async (request) => {
@@ -135,7 +153,7 @@ describe('the flags the API owns', () => {
     await _readServerSettings();
 
     expect(requests).toHaveLength(1);
-    expect(requests[0]?.url).toBe('https://legacy.ignastrace.test/api/v1/features');
+    expect(requests[0]?.url).toBe('https://api.ignastrace.test/api/v1/features');
   });
 });
 
@@ -148,8 +166,9 @@ describe('when the API cannot answer', () => {
 
     const settings = await _readServerSettings();
 
-    expect(settings.reverseLookupEnabled).toBe(false);
-    expect(settings.smsConsentEnabled).toBe(false);
+    expect(settings.reverseLookupEnabled).toBe(true);
+    expect(settings.smsConsentEnabled).toBe(true);
+    expect(settings.sexOffenderReportEnabled).toBe(false);
     expect(settings.countryCode).toBe('GB');
     expect(settings.upsellsEnabled).toBe(true);
   });
@@ -167,7 +186,10 @@ describe('when the API cannot answer', () => {
     vi.spyOn(console, 'error').mockImplementation(() => {});
     features({ message: 'Forbidden' } as unknown as Record<string, boolean>, 403);
 
-    expect((await _readServerSettings()).reverseLookupEnabled).toBe(false);
+    const settings = await _readServerSettings();
+
+    expect(settings.reverseLookupEnabled).toBe(true);
+    expect(settings.sexOffenderReportEnabled).toBe(false);
   });
 });
 
@@ -213,17 +235,24 @@ describe('the ZIP code the card form asks for', () => {
 
 describe('the override cookies', () => {
   it('turn a flag the API owns on over the API', async () => {
-    features({ ENABLE_REVERSE_LOOKUP: false });
+    features({ reverseLookup: false });
     cookieJar.set(SETTINGS_OVERRIDE_COOKIES.reverseLookupEnabled, '1');
 
     expect((await _readServerSettings()).reverseLookupEnabled).toBe(true);
   });
 
   it('turn a flag the API owns off over the API', async () => {
-    features({ ENABLE_REVERSE_LOOKUP: true });
+    features({ reverseLookup: true });
     cookieJar.set(SETTINGS_OVERRIDE_COOKIES.reverseLookupEnabled, '0');
 
     expect((await _readServerSettings()).reverseLookupEnabled).toBe(false);
+  });
+
+  it('turn a flag the API publishes off on over the default it falls back to', async () => {
+    features({});
+    cookieJar.set(SETTINGS_OVERRIDE_COOKIES.sexOffenderReportEnabled, '1');
+
+    expect((await _readServerSettings()).sexOffenderReportEnabled).toBe(true);
   });
 
   it('turn a flag the environment owns on over the environment', async () => {

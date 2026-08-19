@@ -147,8 +147,8 @@ the answer came from.
 
 **Flag**
 : One switch in the Settings, named for what it turns on rather than for the variable or the API
-key behind it. A flag exists here only if something reads it; a switch the API publishes and no
-screen asks about is not a flag in this codebase.
+key behind it. A flag is declared because something reads it, or because a screen being rebuilt is
+about to — a switch the API publishes that nothing will ask about is not a flag in this codebase.
 
 **Override cookie**
 : A cookie that answers for a flag instead of its source. It has three states where a source has

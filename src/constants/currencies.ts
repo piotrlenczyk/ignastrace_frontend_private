@@ -49,13 +49,9 @@ export const CURRENCIES_DATA = {
   vnd: { code: 'vnd', symbol: '₫', version: 3 },
 } as const;
 
-const CURRENCY_VERSION = Number(process.env.NEXT_PUBLIC_CURRENCY_VERSION || '1');
+export const AVAILABLE_CURRENCIES_DATA = Object.fromEntries(Object.entries(CURRENCIES_DATA)) as typeof CURRENCIES_DATA;
 
-export const AVAILABLE_CURRENCIES_DATA = Object.fromEntries(
-  Object.entries(CURRENCIES_DATA).filter(([_, data]) => data.version <= CURRENCY_VERSION),
-) as typeof CURRENCIES_DATA;
-
-export const CURRENCIES = Object.keys(AVAILABLE_CURRENCIES_DATA) as Array<keyof typeof AVAILABLE_CURRENCIES_DATA>;
+export const CURRENCIES = Object.keys(CURRENCIES_DATA) as Array<keyof typeof AVAILABLE_CURRENCIES_DATA>;
 
 export const DEFAULT_CURRENCY = 'USD';
 

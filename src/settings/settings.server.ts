@@ -3,7 +3,7 @@ import { cookies, headers } from 'next/headers';
 import { cache } from 'react';
 
 import { COUNTRIES_REQUESTING_ZIP, DEV_COUNTRY_COOKIE_NAME, FALLBACK_COUNTRY } from '@/constants/countries';
-import { legacyApiUrl } from '@/network/legacy/legacy-api-url';
+import { apiServerClient } from '@/network/api/apiServerClient';
 
 import { type OverridableSetting, SETTINGS_OVERRIDE_COOKIES } from './settings.cookies';
 import { SETTINGS_DEFAULTS } from './settings.defaults';
@@ -18,21 +18,24 @@ import type { Settings } from './settings.types';
  */
 
 /**
- * The key each backend-owned flag is published under.
+ * The key each backend-owned flag is published under, in the API's own
+ * vocabulary — `camelCase`, since its flag registry declares them that way.
  *
- * TEMPORARY, and the reason this read is not on the new API's generated client:
- * the two backends publish different flag sets under the same endpoint name. The
- * new API's is camel-cased, needs a bearer, and does not carry these two at all —
- * its specification's example is a single unrelated switch. Asking it for these
- * would mean both features reading off for everyone, which the fail-closed
- * defaults would make silent.
+ * The API publishes one of these today: `sexOffenderReport`, the compliance gate
+ * on the sex-offender report. The other two are declared here ahead of it, in the
+ * shape the registry gives a flag, so that the day the backend adds them the
+ * change is a deployment rather than a code change. Until then the response
+ * simply does not mention them and each falls back to its declared default.
  *
- * So the flags stay on the backend that publishes them until the new API does,
- * and the change at that point is this constant plus the read below.
+ * The endpoint answers an open record of booleans, so a key that is absent and a
+ * key that is misspelled look alike from here. That is what the defaults are for,
+ * and why every one of these settings is named for its intent on the other side
+ * of this map.
  */
 const BACKEND_FLAG_KEYS = {
-  reverseLookupEnabled: 'ENABLE_REVERSE_LOOKUP',
-  smsConsentEnabled: 'ENABLE_SMS_CONSENT',
+  reverseLookupEnabled: 'reverseLookup',
+  smsConsentEnabled: 'smsConsent',
+  sexOffenderReportEnabled: 'sexOffenderReport',
 } as const;
 
 /** The environment variable each flag it owns is configured by. */
@@ -70,28 +73,31 @@ const readCountryCode = async (): Promise<CountryCode> => {
 };
 
 /**
- * The flags the backend publishes, or nothing if it could not be asked.
+ * The flags the API publishes, or nothing if it could not be asked.
  *
- * A refusal and an unreachable host are the same answer here — this is not a
- * screen's own read, it is one input to a page that has to render either way. The
- * incident is logged and the caller falls back to the declared defaults; notably
- * there is no sign-out, which the frozen legacy client did on a 401 and which
- * turned a flag lookup in the root layout into a redirect for every visitor.
+ * A refusal, an unreadable body and an unreachable host are the same answer here
+ * — this is not a screen's own read, it is one input to a page that has to render
+ * either way. The incident is logged and the caller falls back to the declared
+ * defaults; notably nothing redirects and nothing signs anybody out, which the
+ * frozen legacy client did on a 401 and which turned a flag lookup in the root
+ * layout into a redirect for every visitor.
  *
- * A bare request rather than either generated client: the new API's client cannot
- * address this backend, and the frozen one is closed to new code. The endpoint
- * takes no credential — it answers the same for a visitor and a member — so there
- * is nothing here for a client to attach.
+ * Read through the generated server-side client like every other server read.
+ * The endpoint needs no credential — it answers a visitor and a member alike —
+ * but the client attaches the session's bearer where there is one, which costs
+ * nothing and keeps this call the same shape as its neighbours. The `try` is not
+ * decoration: the client throws on a transport failure rather than reporting one
+ * as an error, and this read may not take a layout down with it.
  */
 const readBackendFlags = async (): Promise<Record<string, boolean> | null> => {
   try {
-    const response = await fetch(`${legacyApiUrl()}/features`, { headers: { accept: 'application/json' } });
+    const { data, error } = await apiServerClient['/api/v1/features'].GET();
 
-    if (!response.ok) {
-      throw new Error(`The features endpoint answered ${response.status}.`);
+    if (error) {
+      throw new Error('The features endpoint refused the read.');
     }
 
-    return (await response.json()) as Record<string, boolean>;
+    return data;
   } catch (error) {
     console.error('The features endpoint could not be read; settings fall back to their defaults.', error);
 
@@ -100,7 +106,7 @@ const readBackendFlags = async (): Promise<Record<string, boolean> | null> => {
 };
 
 /**
- * The settings for this request, read from the backend's flags, the environment,
+ * The settings for this request, read from the API's flags, the environment,
  * the override cookies and the edge, and reconciled into one answer.
  *
  * Exported for its tests. Application code takes the cached export below, so that
@@ -132,6 +138,7 @@ export const _readServerSettings = async (): Promise<Settings> => {
     countryCode,
     reverseLookupEnabled: fromBackend('reverseLookupEnabled'),
     smsConsentEnabled: fromBackend('smsConsentEnabled'),
+    sexOffenderReportEnabled: fromBackend('sexOffenderReportEnabled'),
     upsellsEnabled: fromEnv('upsellsEnabled'),
     /*
      * The one derived flag, and the reason it is spelled out rather than read like

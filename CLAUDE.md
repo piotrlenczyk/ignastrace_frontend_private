@@ -143,17 +143,19 @@ cookies — and a reader is never told which.
   flags. A switch therefore needs no `NEXT_PUBLIC_` prefix: new ones are `FEATURE_*`, read on the
   server and delivered as a computed field.
 - **Add a flag by adding a named field**, in the intent's vocabulary (`reverseLookupEnabled`),
-  never the source's (`ENABLE_REVERSE_LOOKUP`), with a declared default in the defaults module.
-  Every default is off: a source that cannot be read leaves the page rendering with the feature
-  hidden, and the incident logged.
+  never the source's (`reverseLookup`), with a declared default in the defaults module.
+  A switch defaults off: a source that cannot be read leaves the page rendering with the feature
+  hidden, and the incident logged. `reverseLookupEnabled` and `smsConsentEnabled` are the two
+  documented exceptions — live features the API does not publish a flag for yet, so they default on
+  until it does.
 - Both `1` and `true` count as on. An override cookie is tri-state — on, off, or absent — and only
   absent defers to the source. The QA widget that sets these cookies is environment-gated and
   cookie-proof by design.
-- **The backend flags are the one read that goes through neither generated client.** The new API's
-  `/features` publishes a different, camel-cased set that does not include them, so they are read
-  with a bare server-side request to the legacy backend, credential-free. It is marked temporary in
-  place; don't copy the pattern, and don't "fix" it onto `apiServerClient` until that endpoint
-  actually publishes them.
+- **The backend flags come from the new API's `/features`, through `apiServerClient`** — no bare
+  request and no legacy client. Its registry is `camelCase` and deploy-time only; today it declares
+  `sexOffenderReport` alone, and the keys for `reverseLookup` and `smsConsent` are mapped ahead of
+  it. Adding a flag on that side is a `FEATURE_FLAG_*` variable plus a line in the backend's
+  `features.config.ts`, and only the exact string `true` turns it on there.
 
 ## Translations
 

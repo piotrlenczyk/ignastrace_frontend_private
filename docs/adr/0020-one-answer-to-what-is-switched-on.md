@@ -37,16 +37,21 @@ reaches a variable or an endpoint of its own. The previous features and country 
 hooks and their server getters are gone rather than wrapped, so there is one vocabulary and no
 deprecated second one to drift.
 
-**The two flags a backend owns keep being read from the backend that publishes them.** The intent was
-to read them through the new API's generated client, as the data-layer record requires of a
-server-side read. They are not there: the two backends answer a same-named endpoint with different
-vocabularies — the new API's is camel-cased, takes a bearer, and publishes an unrelated switch —
-so asking it for these would turn both features off for everyone, which the fail-closed defaults
-would make silent. The read is therefore a bare server-side request to the backend that has them,
-credential-free because that endpoint answers a visitor and a member alike, and deliberately not
-routed through the frozen legacy client that new code may not import. This is the one temporary
-seam in the layer: when the new API publishes these flags, the change is the key map and that one
-request.
+**The backend-owned flags are read from the new API, through the generated client.** This was the
+intent from the start and is what the data-layer record requires of a server-side read; the first
+version of this module could not do it, because the two backends answered a same-named endpoint with
+different vocabularies and the new API published none of the switches this application asked about.
+That endpoint now has a flag registry — `camelCase` keys, declared in code, deploy-time only — so the
+read moves onto `apiServerClient['/api/v1/features']` and the bare request to the legacy backend is
+gone. The temporary seam this record used to describe is closed; nothing in the settings layer reads
+outside a generated client any more.
+
+**A flag the API does not publish yet is still a declared field.** The registry carries one of the
+three this application asks about — the sex-offender report's compliance gate. The other two are
+declared here in the shape the registry gives a flag, so the day the backend adds them the change is
+a deployment and not a code change; until then the response does not mention them and each resolves
+to its default. An absent key and an unreadable endpoint deliberately look alike from the reader's
+side, which is what makes those defaults the whole answer to both.
 
 **Every setting is a named, intentional field, and the backend's keys stop at the boundary.**
 Translating the API's open record into declared fields is what makes a misspelling a type error, and
@@ -54,12 +59,16 @@ it is why the flag list is short and explicit: a flag the backend publishes and 
 not appear. The cost is deliberate — a new backend flag needs a line here before a screen can read
 it, which is the same cost as a new endpoint needing a hook.
 
-**A read that fails is a page that still renders.** Every field has a declared default, and they are
-all off. When the flags endpoint cannot be read the two fields it owns fall back to those defaults,
-the incident is logged, and nothing redirects — the endpoint is one input to a layout that has to
-render for a signed-out visitor, not a screen's own read. Failing closed is chosen over failing open
-because a feature that quietly disappears is visible to whoever looks at the screen, where a
-half-built one that quietly appears is not.
+**A read that fails is a page that still renders.** Every field has a declared default. When the
+flags endpoint cannot be read — refused, unparseable, or unreachable, which are one answer here — the
+fields it owns fall back to those defaults, the incident is logged, and nothing redirects: the
+endpoint is one input to a layout that has to render for a signed-out visitor, not a screen's own
+read. A switch defaults off, because a feature that quietly disappears is visible to whoever looks at
+the screen where a half-built one that quietly appears is not. **Reverse lookup and the SMS consent
+step default on, and are the deliberate exception.** They are shipped product areas whose flags the
+API's registry does not carry, so failing closed on them would take two live features off for
+everyone on the strength of a switch nobody has declared. They stay on until the registry has them,
+after which the API's answer wins as it does for every other flag.
 
 **One override cookie contract, tri-state, and it wins.** One name shape, one vocabulary of values,
 and three answers where the source has two: on, off, or absent — only the last defers to the source.

@@ -14,6 +14,7 @@
 export const SETTINGS_OVERRIDE_COOKIES = {
   reverseLookupEnabled: 'overwrite_feature_reverse_lookup',
   smsConsentEnabled: 'overwrite_feature_sms_consent',
+  sexOffenderReportEnabled: 'overwrite_feature_sex_offender_report',
   upsellsEnabled: 'overwrite_feature_upsells',
   checkoutZipCodeEnabled: 'overwrite_feature_checkout_zip_code',
   adyenGPayEnabled: 'overwrite_feature_adyen_gpay',

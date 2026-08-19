@@ -11,17 +11,19 @@ import type { CountryCode } from 'libphonenumber-js';
  * `settings.server.ts` alone.
  *
  * Every field is named for the intent, never for its source: `reverseLookupEnabled`,
- * not `ENABLE_REVERSE_LOOKUP`. The API hands back an untyped bag of
- * `SCREAMING_SNAKE` keys, and translating it here is what makes a misspelt flag
- * fail the type-check instead of quietly reading `undefined`.
+ * not `reverseLookup`. The API hands back an untyped bag of booleans keyed by its
+ * own flag names, and translating it here is what makes a misspelt flag fail the
+ * type-check instead of quietly reading `undefined`.
  */
 export type Settings = {
   /** Where the request came from: the `dev-country` cookie, then Cloudflare, then the fallback. */
   countryCode: CountryCode;
-  /** Reverse lookup — the whole product area, from the API. */
+  /** Reverse lookup — the whole product area, from the API. On until the API says otherwise. */
   reverseLookupEnabled: boolean;
-  /** The SMS consent step, from the API. */
+  /** The SMS consent step, from the API. On until the API says otherwise. */
   smsConsentEnabled: boolean;
+  /** The sex-offender report, from the API — its compliance gate, and off unless the API opens it. */
+  sexOffenderReportEnabled: boolean;
   /** The post-purchase upsell flow. */
   upsellsEnabled: boolean;
   /** The card form asks for a ZIP code — on where the country expects one. */
