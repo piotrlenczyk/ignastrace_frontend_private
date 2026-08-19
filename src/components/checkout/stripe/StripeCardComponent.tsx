@@ -9,7 +9,7 @@ import {
 } from '@stripe/stripe-js';
 import { useRef } from 'react';
 
-import { cn } from '@/components/checkout/_shared/utils/style.utils';
+import { cn } from '@/libs/utils';
 
 import { type CardFieldErrors } from '../cardForm.types';
 

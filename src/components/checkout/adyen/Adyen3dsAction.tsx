@@ -11,7 +11,6 @@ import {
 } from '@adyen/adyen-web';
 import { useEffect, useRef } from 'react';
 
-import { cn } from '@/components/checkout/_shared/utils/style.utils';
 import { useCallbackRef } from '@/hooks/use-callback-ref';
 import { actionSubmitAdyenCompletionDetails } from '@/server/actions/adyen.actions';
 
@@ -137,7 +136,7 @@ export const Adyen3dsAction = ({
       >
         cancel
       </button>
-      <div ref={containerRef} className={cn('h-full w-full')} />
+      <div ref={containerRef} className={'h-full w-full'} />
     </>
   );
 };

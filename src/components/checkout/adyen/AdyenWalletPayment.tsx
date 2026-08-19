@@ -18,10 +18,10 @@ import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { getTrackingData } from '@/components/checkout/_shared/stubs/tracking.client';
-import { cn } from '@/components/checkout/_shared/utils/style.utils';
 import { Spinner } from '@/components/ui/v2/spinner/spinner';
 import { useCallbackRef } from '@/hooks/use-callback-ref';
 import { useGenericErrorToast as useUnexpectedErrorToast } from '@/hooks/use-generic-error-toast';
+import { cn } from '@/libs/utils';
 import { actionCreateAdyenSubscription } from '@/server/actions/adyen.actions';
 import type { ProductWithPrice } from '@/types/pricing.types';
 
