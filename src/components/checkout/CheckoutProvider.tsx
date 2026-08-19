@@ -3,10 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { createContext, type ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 
-import { buildRoute } from '@/components/checkout/_shared/stubs/routes';
-import { deleteCheckoutCookie, getCheckoutCookie } from '@/libs/checkout-cookie';
 import type { paymentsSchemas } from '@/network/payments-api/payments-api-server-client';
-import { actionSendPlacedOrderEvent } from '@/server/actions/subscription.actions';
 import { useSettings } from '@/settings/settings.provider';
 import type { ProductWithPrice, ProviderAccount } from '@/types/pricing.types';
 
@@ -28,25 +25,32 @@ type CheckoutContextType = {
   paymentMethod: PaymentMethod;
   setPaymentMethod: (paymentMethod: PaymentMethod) => void;
   product: ProductWithPrice;
-  shouldShowUpsell?: boolean;
-  handlePaymentSuccess: (transactionId?: string) => void;
-  isCoverLetter?: boolean;
+  submitLabel: string;
+  handlePaymentSuccess: () => void;
 };
 
 const CheckoutContext = createContext<CheckoutContextType | undefined>(undefined);
 
+/**
+ * What every payment component in the island shares: the product being bought,
+ * the provider account that will raise the charge, the method the visitor picked
+ * and where a completed payment goes.
+ *
+ * The success route and the submit-button label are inputs rather than
+ * derivations. A second screen adopting this island supplies its own two values
+ * instead of teaching the provider a new route, and no route constant has to be
+ * reachable from here.
+ */
 export const CheckoutProvider = ({
   children,
-  email,
   product,
-  shouldShowUpsell = false,
-  isCoverLetter = false,
+  successRoute,
+  submitLabel,
 }: {
   children: ReactNode;
-  email: string;
   product: ProductWithPrice;
-  shouldShowUpsell?: boolean;
-  isCoverLetter?: boolean;
+  successRoute: string;
+  submitLabel: string;
 }) => {
   const router = useRouter();
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('card');
@@ -56,47 +60,20 @@ export const CheckoutProvider = ({
 
   const showGooglePay = provider !== 'adyen' || adyenGPayEnabled;
 
-  const getPaymentSuccessRoute = useCallback(
-    (transactionId?: string) => {
-      return shouldShowUpsell
-        ? buildRoute.billingCheckoutSuccess({
-            transactionId,
-          })
-        : buildRoute.billingCheckoutThankYou({
-            transactionId,
-          });
-    },
-    [shouldShowUpsell],
-  );
-
-  const handlePaymentSuccess = useCallback(
-    (transactionId?: string) => {
-      // TODO: [refactor] add GTM tracking
-      // GTMService.trackPurchase({
-      //   transactionId: transactionId ?? '',
-      //   actualValue: product.price.finalAmount,
-      //   currency: product.price.currency,
-      //   email,
-      //   provider,
-      // });
-
-      const checkoutData = getCheckoutCookie();
-      if (checkoutData) {
-        deleteCheckoutCookie();
-        void actionSendPlacedOrderEvent({
-          amount: product.price.finalAmount,
-          currency: product.price.currency,
-          transactionId: transactionId ?? '',
-          plan: checkoutData.plan,
-          email,
-        });
-      }
-
-      const route = getPaymentSuccessRoute(transactionId);
-      router.push(route);
-    },
-    [email, getPaymentSuccessRoute, product.price, router],
-  );
+  /*
+   * Navigation and nothing else. The purchase event this used to send returns
+   * with the tracking layer — it read a checkout cookie nothing in this
+   * application writes, behind an action that is itself a placeholder, so the
+   * branch could not execute and is not kept as a trap.
+   *
+   * The transaction identifier the payment components pass is deliberately
+   * dropped rather than appended to the route: nothing reads one, and the
+   * upsell success route already carries a query string that appending would
+   * corrupt.
+   */
+  const handlePaymentSuccess = useCallback(() => {
+    router.push(successRoute);
+  }, [router, successRoute]);
 
   const value = useMemo(
     () => ({
@@ -105,20 +82,10 @@ export const CheckoutProvider = ({
       paymentMethod,
       setPaymentMethod,
       product,
-      shouldShowUpsell,
+      submitLabel,
       handlePaymentSuccess,
-      isCoverLetter,
     }),
-    [
-      isCoverLetter,
-      provider,
-      showGooglePay,
-      paymentMethod,
-      setPaymentMethod,
-      product,
-      shouldShowUpsell,
-      handlePaymentSuccess,
-    ],
+    [provider, showGooglePay, paymentMethod, setPaymentMethod, product, submitLabel, handlePaymentSuccess],
   );
 
   return <CheckoutContext.Provider value={value}>{children}</CheckoutContext.Provider>;

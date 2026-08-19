@@ -40,17 +40,45 @@ export const getCurrencyProducts = ({ products, currency }: { products: Pricing[
   }));
 };
 
+/**
+ * The catalogue product a funnel plan is quoted and charged from.
+ *
+ * Two different things are called a plan here: the funnel plan the visitor chose
+ * — trial or outright subscription — and the product name the catalogue
+ * publishes. The payments service derives the amount from a price identifier and
+ * accepts nothing that could express "skip the trial", so the plan has to select
+ * a *product* rather than one of two amounts on a single row. A catalogue that
+ * publishes no non-trial four-week product therefore quotes the trial one to
+ * someone subscribing outright, by `getPricingProduct`'s fallback; that is the
+ * catalogue's answer, not a decision taken here.
+ */
+export const getPlanProductName = (plan: FunnelPlan): SubscriptionPlan =>
+  plan === 'subscription' ? 'FOUR_WEEKS' : 'FOUR_WEEKS_TRIAL';
+
 export const getPricingProduct = ({
   plan,
   currencyProducts,
+  currency,
 }: {
   plan: SubscriptionPlan;
   currencyProducts: ProductWithPrice[];
-}) => {
-  const pricing = currencyProducts.find((product) => product.name === plan);
-  if (!pricing) {
-    return getDefaultPricingProduct(currencyProducts);
+  currency: string;
+}): ProductWithPrice => {
+  const pricing =
+    currencyProducts.find((product) => product.name === plan) ?? getDefaultPricingProduct(currencyProducts);
+
+  /*
+   * The currency fold asserts a row it has not looked for — the catalogue is
+   * trusted to publish US dollars. Checkout is where money changes hands, so the
+   * assertion is checked here too: a product priced in neither the selected
+   * currency nor US dollars is a misconfigured catalogue, and saying so beats
+   * rendering a payment form with no amount on it. Same rule, same words, as
+   * `getCheckoutProduct` states for the screens still reading that one.
+   */
+  if (!pricing.price) {
+    throw new Error(`Cannot find a ${pricing.name} price in ${currency.toUpperCase()} or ${DEFAULT_CURRENCY}`);
   }
+
   return pricing;
 };
 

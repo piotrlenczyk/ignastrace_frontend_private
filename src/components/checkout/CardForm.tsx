@@ -38,9 +38,8 @@ export const CardForm = ({
   onZipCodeChange,
 }: CardFormProps) => {
   const settings = useSettings();
-  const t = useTranslations('__NEW__.checkout.CheckoutPage');
   const tCard = useTranslations('__NEW__.checkout.components.payments.card');
-  const { isCoverLetter } = useCheckout();
+  const { submitLabel } = useCheckout();
 
   return (
     <form className="flex w-full flex-col gap-4" onSubmit={onSubmit}>
@@ -48,9 +47,9 @@ export const CardForm = ({
         <div className="flex items-center justify-between">
           <p>{tCard('label')}</p>
           <div className="flex gap-2">
-            <Image src="/payments-border/visa.svg" width={34} height={24} alt="Visa" />
-            <Image src="/payments-border/mastercard.svg" width={34} height={24} alt="Mastercard" />
-            <Image src="/payments-border/amex.svg" width={34} height={24} alt="Amex" />
+            <Image src="/images/payment-visa.svg" width={34} height={24} alt="Visa" />
+            <Image src="/images/payment-mastercard.svg" width={34} height={24} alt="Mastercard" />
+            <Image src="/images/payment-amex.svg" width={34} height={24} alt="Amex" />
           </div>
         </div>
         <div className="flex flex-col gap-2">
@@ -86,10 +85,9 @@ export const CardForm = ({
         type="submit"
         className="w-full"
         size="lg"
-        disabled={isSubmitDisabled || isFieldsLoading}
+        disabled={isSubmitDisabled || isFieldsLoading || isSubmitLoading}
       >
-        {isCoverLetter ? t('getMyCoverLetter') : t('getMyResume')}
-        {isSubmitLoading ? 'loading' : undefined}
+        {submitLabel}
       </ButtonV2>
 
       {serverError ? (

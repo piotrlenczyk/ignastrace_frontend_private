@@ -1,12 +1,17 @@
 import { describe, expect, it } from 'vitest';
 
+import type { FunnelPlan } from '@/actions/funnel-plan';
 import type { paymentsSchemas } from '@/network/payments-api/payments-api-server-client';
+import type { Pricing } from '@/types/pricing.types';
 
 import {
   getAmountDue,
   getCheckoutProduct,
+  getCurrencyProducts,
   getInitialCurrency,
   getMemberCurrency,
+  getPlanProductName,
+  getPricingProduct,
   transformProductsFromPaymentsApi,
   transformUserProductsFromPaymentsApi,
 } from './pricing';
@@ -290,5 +295,75 @@ describe('getAmountDue', () => {
 
   it('never quotes the upsell-inclusive final trial amount', () => {
     expect(getAmountDue({ plan: 'trial', price: quoted })).not.toBe(quoted.finalTrialAmount);
+  });
+});
+
+describe('the funnel plan choosing a catalogue product', () => {
+  /*
+   * The composition the checkout screen makes: fold the catalogue into one
+   * currency, then pick the product the funnel's plan names. Asserted through
+   * the reader's public surface, because that composition is the rule — a
+   * change to either half moves what someone is charged.
+   */
+  const quote = ({ pricing, currency, plan }: { pricing: Pricing; currency: string; plan: FunnelPlan }) =>
+    getPricingProduct({
+      plan: getPlanProductName(plan),
+      currencyProducts: getCurrencyProducts({ products: pricing.products, currency }),
+      currency,
+    });
+
+  const catalogue = transformProductsFromPaymentsApi([
+    trialProduct,
+    product({
+      planName: 'FOUR_WEEKS',
+      prices: [
+        price({ currency: 'USD', amount: 5900, trialAmount: 0, trialDays: 0 }),
+        price({ currency: 'EUR', amount: 5400, trialAmount: 0, trialDays: 0 }),
+      ],
+      priority: 2,
+      sku: 'four_weeks',
+    }),
+  ]);
+
+  it('quotes the non-trial four-week product for the outright-subscription plan', () => {
+    expect(quote({ pricing: catalogue, currency: 'USD', plan: 'subscription' }).name).toBe('FOUR_WEEKS');
+  });
+
+  it('quotes the four-week trial product for the trial plan', () => {
+    expect(quote({ pricing: catalogue, currency: 'USD', plan: 'trial' }).name).toBe('FOUR_WEEKS_TRIAL');
+  });
+
+  it('falls back to the default product rather than throwing when the catalogue publishes no match', () => {
+    const trialOnly = transformProductsFromPaymentsApi([trialProduct]);
+
+    expect(quote({ pricing: trialOnly, currency: 'USD', plan: 'subscription' }).name).toBe('FOUR_WEEKS_TRIAL');
+  });
+
+  it('charges the trial amount of the trial product it resolved', () => {
+    expect(quote({ pricing: catalogue, currency: 'USD', plan: 'trial' }).price.finalAmount).toBe(195);
+  });
+
+  it('charges the full four-week amount of the non-trial product it resolved', () => {
+    expect(quote({ pricing: catalogue, currency: 'USD', plan: 'subscription' }).price.finalAmount).toBe(5900);
+  });
+
+  it('quotes that product in the currency asked for', () => {
+    expect(quote({ pricing: catalogue, currency: 'EUR', plan: 'subscription' }).price.currency).toBe('EUR');
+  });
+});
+
+describe('getPricingProduct', () => {
+  it('fails, naming the condition, when the product it picked is priced in neither the currency nor US dollars', () => {
+    const pricing = transformProductsFromPaymentsApi([
+      product({ planName: 'FOUR_WEEKS_TRIAL', prices: [price({ currency: 'EUR', amount: 5400, trialAmount: 175 })] }),
+    ]);
+
+    expect(() =>
+      getPricingProduct({
+        plan: 'FOUR_WEEKS_TRIAL',
+        currencyProducts: getCurrencyProducts({ products: pricing.products, currency: 'PLN' }),
+        currency: 'PLN',
+      }),
+    ).toThrow(/PLN/);
   });
 });
