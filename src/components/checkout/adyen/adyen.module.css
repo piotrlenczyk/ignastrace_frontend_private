@@ -1,0 +1,73 @@
+/* Source: adapted from https://github.com/QR-CODE-App/payments-client-kickstart/ with modifications */
+@reference "../../../../styles/globals.css";
+
+.adyenCardComponent
+  :global(
+    :is(
+      .adyen-checkout-form-instruction,
+      .adyen-checkout__field__exp-date_hint_wrapper,
+      .adyen-checkout__label,
+      .adyen-checkout__card__cvc__hint__wrapper,
+      .adyen-checkout-contextual-text,
+      .adyen-checkout-input__inline-validation,
+      .adyen-checkout__card__cardNumber__brandIcon,
+      .adyen-checkout__card__brands
+    )
+  ) {
+  @apply hidden;
+}
+
+.adyenCardComponent :global(.adyen-checkout__input-wrapper) {
+  @apply border-0 shadow-none block bg-background-base rounded-lg transition w-full;
+}
+
+.adyenCardComponent :global(.adyen-checkout__input:read-only) {
+  @apply cursor-text;
+}
+
+.adyenCardComponent
+  :global(
+    :is(.adyen-checkout__input-wrapper:focus-within, .adyen-checkout__label--focused + .adyen-checkout__input-wrapper)
+  ) {
+  @apply border-0! shadow-none!;
+}
+
+.adyenCardComponent :global(.adyen-checkout__input) {
+  @apply ring-1 ring-inset ring-stroke-weak hover:ring-1 hover:ring-stroke-strong border-0 h-12 py-2 px-0 transition rounded-lg cursor-text;
+}
+
+.adyenCardComponent :global(.adyen-checkout__field.adyen-checkout__field--error .adyen-checkout__input-wrapper) {
+  @apply bg-fill-error-weak;
+}
+
+.adyenCardComponent :global(.adyen-checkout__input:active) {
+  @apply border-0! shadow-none!;
+}
+
+.adyenCardComponent :global(.adyen-checkout__input--focus) {
+  @apply ring-2! ring-stroke-focus! border-none! outline-none! shadow-none!;
+}
+
+.adyenCardComponent :global(.adyen-checkout__field.adyen-checkout__field--error .adyen-checkout__input) {
+  @apply ring-2 ring-stroke-error-strong hover:ring-1 hover:ring-stroke-strong;
+}
+
+.adyenCardComponent :global(.adyen-checkout-contextual-text--error) {
+  @apply hidden;
+}
+
+.adyenCardComponent :global(.adyen-checkout__field--cardNumber) {
+  @apply flex flex-3 m-0!;
+}
+
+.adyenCardComponent :global(.adyen-checkout__card__exp-cvc) {
+  @apply flex flex-2 gap-2 w-full;
+}
+
+.adyenCardComponent :global(:is(.adyen-checkout__field__exp-date, .adyen-checkout__field__cvc)) {
+  @apply flex-1;
+}
+
+.adyenCardComponent :global(:is(.adyen-checkout__card__form)) {
+  @apply flex flex-col gap-2 md:flex-row;
+}

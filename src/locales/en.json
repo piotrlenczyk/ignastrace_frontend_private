@@ -1,5 +1,29 @@
 {
   "__NEW__": {
+    "checkout": {
+      "CheckoutPage": {
+        "getMyCoverLetter": "Get my cover letter",
+        "getMyResume": "Get My Resume",
+        "paymentGenericError": "Something went wrong, please try again later"
+      },
+      "components": {
+        "payments": {
+          "notSupported": "You don't have this payment method enabled for this device or browser. Please choose another payment method.",
+          "applePay": {
+            "label": "Apple Pay"
+          },
+          "googlePay": {
+            "label": "Google Pay"
+          },
+          "card": {
+            "label": "Credit card",
+            "zipCode": {
+              "placeholder": "ZIP code (optional)"
+            }
+          }
+        }
+      }
+    },
     "navigation": {
       "home": "IgnasTrace.io home",
       "about_us": "About us",
