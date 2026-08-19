@@ -6,11 +6,11 @@ import { PhoneInput } from '@/components/homepage/phoneInput';
 import ProductLayout from '@/components/layouts/product-layout';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
-import { getUserCountry } from '@/libs/server/user-country';
 import { getServerSession } from '@/server/session/session.utils';
+import { getServerSettings } from '@/settings/settings.server';
 
 export default async function FindByNumberPage() {
-  const country = await getUserCountry();
+  const country = (await getServerSettings()).countryCode;
   const t = await getTranslations('components.phone_input');
   const tFindByNumber = await getTranslations('pages.find_by_number_send_message');
 

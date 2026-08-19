@@ -5,7 +5,7 @@ import WebsiteLayout from '@/components/layouts/website-layout';
 import { Icon, type IconName } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
-import { getUserCountry } from '@/libs/server/user-country';
+import { getServerSettings } from '@/settings/settings.server';
 
 type CardType = {
   id: string;
@@ -41,7 +41,7 @@ export default async function About() {
     endedSubscriptionRoute: ROUTES.MEMBER.SETTINGS.BILLING,
   });
 
-  const country = await getUserCountry();
+  const country = (await getServerSettings()).countryCode;
   const t = await getTranslations('pages.about');
 
   return (

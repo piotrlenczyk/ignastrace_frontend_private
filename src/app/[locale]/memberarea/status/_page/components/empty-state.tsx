@@ -3,12 +3,12 @@ import { getTranslations } from 'next-intl/server';
 import ToolItem from '@/components/layouts/product-layout/tool-item';
 import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
-import { getFeatures } from '@/libs/server/feature-flags';
+import { getServerSettings } from '@/settings/settings.server';
 
 const Actions = async () => {
   const t = await getTranslations('pages.memberArea.navigation');
 
-  const { ENABLE_REVERSE_LOOKUP: enableReverseLookup } = await getFeatures();
+  const { reverseLookupEnabled } = await getServerSettings();
 
   return (
     <div className="mx-auto flex max-w-[1200px] flex-wrap justify-center gap-6">
@@ -26,7 +26,7 @@ const Actions = async () => {
           href={ROUTES.MEMBER.FIND_BY_LINK.HOME}
         />
       </div>
-      {enableReverseLookup && (
+      {reverseLookupEnabled && (
         <div className="w-full md:w-[360px]">
           <ToolItem
             icon={<Icon name="phone" className="text-primary" />}

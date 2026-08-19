@@ -129,6 +129,34 @@ The rules:
 - Don't add a global 401 handler, a prefetch, or a hydration boundary without a ticket; all three
   were deliberately left out.
 
+## Settings — what is switched on
+
+`docs/adr/0020-one-answer-to-what-is-switched-on.md` records the shape;
+`docs/glossary.md` defines the words.
+
+One object answers it, settled once per request in `src/settings`. Three sources feed it — the
+backend's `/features`, this application's environment, and the `overwrite_feature_*` override
+cookies — and a reader is never told which.
+
+- **A server component or action reads `getServerSettings()`; a client component reads
+  `useSettings()`.** Neither reads `process.env` for a switch, and no client component fetches
+  flags. A switch therefore needs no `NEXT_PUBLIC_` prefix: new ones are `FEATURE_*`, read on the
+  server and delivered as a computed field.
+- **Add a flag by adding a named field**, in the intent's vocabulary (`reverseLookupEnabled`),
+  never the source's (`reverseLookup`), with a declared default in the defaults module.
+  A switch defaults off: a source that cannot be read leaves the page rendering with the feature
+  hidden, and the incident logged. `reverseLookupEnabled` and `smsConsentEnabled` are the two
+  documented exceptions — live features the API does not publish a flag for yet, so they default on
+  until it does.
+- Both `1` and `true` count as on. An override cookie is tri-state — on, off, or absent — and only
+  absent defers to the source. The QA widget that sets these cookies is environment-gated and
+  cookie-proof by design.
+- **The backend flags come from the new API's `/features`, through `apiServerClient`** — no bare
+  request and no legacy client. Its registry is `camelCase` and deploy-time only; today it declares
+  `sexOffenderReport` alone, and the keys for `reverseLookup` and `smsConsent` are mapped ahead of
+  it. Adding a flag on that side is a `FEATURE_FLAG_*` variable plus a line in the backend's
+  `features.config.ts`, and only the exact string `true` turns it on there.
+
 ## Translations
 
 - All copy coming from the new designs goes under the **`__NEW__`** top-level key in

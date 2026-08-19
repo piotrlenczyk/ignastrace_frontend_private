@@ -11,8 +11,8 @@ import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { useMessageErrorToast } from '@/hooks/use-message-error-toast';
-import { useCountry } from '@/hooks/useCountry';
 import { useCurrentMember } from '@/network/api/hooks/use-current-member';
+import { useSettings } from '@/settings/settings.provider';
 
 import { useUpsellingMutation } from '../../success/_hooks/api/use-upselling-mutation';
 import type { Product } from '../../success/_types/product.type';
@@ -51,7 +51,7 @@ const UpsellCard = ({
   const { data: member, isLoading: isLoadingMember } = useCurrentMember();
   const router = useRouter();
   const locale = useLocale();
-  const country = useCountry();
+  const { countryCode: country } = useSettings();
   const formatPrice = createPriceFormatter();
   const showErrorToast = useMessageErrorToast();
 

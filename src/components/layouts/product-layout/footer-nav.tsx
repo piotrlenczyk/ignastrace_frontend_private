@@ -6,9 +6,9 @@ import { useState } from 'react';
 import { Icon } from '@/components/ui/icon';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { ROUTES } from '@/constants/routes';
-import { useFeatures } from '@/hooks/use-features';
 import { Link, usePathname } from '@/libs/i18n-routing';
 import { cn } from '@/libs/utils';
+import { useSettings } from '@/settings/settings.provider';
 
 import ToolItem from './tool-item';
 
@@ -42,7 +42,7 @@ const Item = ({ className, href, children, active }: ItemProps) => {
 };
 
 export const FooterNav = () => {
-  const { ENABLE_REVERSE_LOOKUP: enableReverseLookup } = useFeatures();
+  const { reverseLookupEnabled } = useSettings();
   const [isToolsOpen, setIsToolsOpen] = useState(false);
   const t = useTranslations('pages.memberArea.navigation');
 
@@ -87,7 +87,7 @@ export const FooterNav = () => {
               href={ROUTES.MEMBER.FIND_BY_LINK.HOME}
               onClick={handleToolClick}
             />
-            {enableReverseLookup && (
+            {reverseLookupEnabled && (
               <ToolItem
                 icon={<Icon name="phone" className="text-primary" />}
                 label={t('phone_lookup')}

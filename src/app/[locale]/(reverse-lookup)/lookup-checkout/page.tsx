@@ -6,9 +6,9 @@ import { ROUTES } from '@/constants/routes';
 import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { getApi } from '@/libs/server/api';
-import { getUserCountry } from '@/libs/server/user-country';
 import { getCheckoutPricing } from '@/server/getters/pricing.getters';
 import { getServerSession } from '@/server/session/session.utils';
+import { getServerSettings } from '@/settings/settings.server';
 
 import { LookupCheckoutPageClient } from './_page';
 
@@ -20,7 +20,8 @@ const Index = async () => {
     redirect(ROUTES.REVERSE_LOOKUP.SIGN_UP);
   }
 
-  const [api, country, phoneNumber] = await Promise.all([getApi(), getUserCountry(), getFunnelPhone()]);
+  const [api, settings, phoneNumber] = await Promise.all([getApi(), getServerSettings(), getFunnelPhone()]);
+  const country = settings.countryCode;
 
   const formattedNumber = formatPhoneNumber(phoneNumber);
 

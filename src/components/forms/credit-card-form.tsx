@@ -10,8 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Icon } from '@/components/ui/icon';
 import { Input } from '@/components/ui/input';
-import { COUNTRIES_REQUESTING_ZIP } from '@/constants/countries';
-import { useCountry } from '@/hooks/useCountry';
+import { useSettings } from '@/settings/settings.provider';
 import { stripeCreditCardSchema, type StripeFormValues } from '@/types/stripe-form.types';
 
 const cardStyle: StripeElementStyle = {
@@ -75,9 +74,7 @@ export const CreditCardForm = ({
     cardCvc: false,
   });
 
-  const country = useCountry();
-  const showZipCode =
-    process.env.NEXT_PUBLIC_REQUEST_ZIP === 'true' && COUNTRIES_REQUESTING_ZIP.includes(country.toUpperCase());
+  const { checkoutZipCodeEnabled: showZipCode } = useSettings();
 
   const handlePreSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

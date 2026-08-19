@@ -2,8 +2,8 @@ import { ExpressCheckoutElement } from '@stripe/react-stripe-js';
 import { type StripeExpressCheckoutElementReadyEvent } from '@stripe/stripe-js';
 import { useState } from 'react';
 
-import { useSettings } from '@/components/checkout/_shared/stubs/settings';
 import { Spinner } from '@/components/ui/v2/spinner/spinner';
+import { useSettings } from '@/settings/settings.provider';
 
 import { WalletForm } from '../WalletForm';
 

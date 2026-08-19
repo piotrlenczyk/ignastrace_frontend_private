@@ -4,10 +4,10 @@ import { useRouter } from 'next/navigation';
 import { createContext, type ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 
 import { buildRoute } from '@/components/checkout/_shared/stubs/routes';
-import { useSettings } from '@/components/checkout/_shared/stubs/settings';
 import { deleteCheckoutCookie, getCheckoutCookie } from '@/libs/checkout-cookie';
 import type { paymentsSchemas } from '@/network/payments-api/payments-api-server-client';
 import { actionSendPlacedOrderEvent } from '@/server/actions/subscription.actions';
+import { useSettings } from '@/settings/settings.provider';
 import type { ProductWithPrice, ProviderAccount } from '@/types/pricing.types';
 
 export const SUPPORTED_PAYMENT_PROVIDERS = [

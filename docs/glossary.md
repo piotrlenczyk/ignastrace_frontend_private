@@ -132,3 +132,36 @@ never assembles one.
 **SMS dispatch cycle**
 : The rolling window the member's SMS dispatch counter and its limit belong to. Creating a
 Location request costs nothing against it; dispatching an SMS does.
+
+## What is switched on
+
+Introduced by [ADR 0020](adr/0020-one-answer-to-what-is-switched-on.md), which records why there
+is one answer rather than three.
+
+**Settings**
+: What is switched on for one request, and where the person making it is asking from. Settled on
+the server before anything renders, and true for the whole of that request. Three sources feed
+it — the flags the API publishes, this application's own configuration, and the **override
+cookies** — and a screen is not told which fed which: it asks whether a thing is on, not where
+the answer came from.
+
+**Flag**
+: One switch in the Settings, named for what it turns on rather than for the variable or the API
+key behind it. A flag is declared because something reads it, or because a screen being rebuilt is
+about to — a switch the API publishes that nothing will ask about is not a flag in this codebase.
+
+**Override cookie**
+: A cookie that answers for a flag instead of its source. It has three states where a source has
+two — on, off, and absent — and only the last defers to the source. It is how testing turns a
+feature on where the configuration says off, and off where the configuration says on. Setting one
+is not privileged: it changes what the person holding it is served, never what anyone else is.
+
+**Country**
+: Where the request is asking from — part of the Settings rather than a thing of its own. It comes
+from the edge, and a development cookie can name a different one. It is a _value_ being
+overridden rather than a switch, which is why its override is not an **override cookie**.
+
+**QA widget**
+: The panel that reads the settled Settings back and sets the cookies that change them, including
+the ones the payments service honours. Turned on by configuration only — never by a cookie,
+because it discloses the configuration to whoever opens it.

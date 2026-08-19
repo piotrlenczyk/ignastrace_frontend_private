@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Icon } from '@/components/ui/icon';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
-import { useCountry } from '@/hooks/useCountry';
+import { useSettings } from '@/settings/settings.provider';
 
 import { useGetUpsellProductsMutation } from '../_hooks/api/use-get-upsell-products-mutation';
 import { type PurchaseUpsellResponse, usePurchaseUpsell } from '../_hooks/api/use-purchase-upsell-mutation';
@@ -65,7 +65,7 @@ const UpsellDialog = ({
   const t = useTranslations(translationNamespace);
   const formatPrice = createPriceFormatter();
   const locale = useLocale();
-  const country = useCountry();
+  const { countryCode: country } = useSettings();
 
   const [isSuccess, setIsSuccess] = useState(false);
   const [retryCount, setRetryCount] = useState(0);

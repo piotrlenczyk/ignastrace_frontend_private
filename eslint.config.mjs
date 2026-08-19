@@ -113,7 +113,7 @@ const LEGACY_THEME_PATH = fileURLToPath(new URL('./src/styles/_theme-legacy.css'
  * has nothing to say about what a file imports.
  */
 /** @type {string[]} */
-const MIGRATED_PATHS = [];
+const MIGRATED_PATHS = ['src/components/test-widget/**'];
 
 /*
  * Utility prefixes that resolve out of the `--color-*` namespace. Enumerated

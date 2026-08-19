@@ -3,7 +3,7 @@
 import { usePathname, useSearchParams } from 'next/navigation';
 import { createContext, type ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 
-import { useFeatures } from '@/hooks/use-features';
+import { useSettings } from '@/settings/settings.provider';
 
 type ConsentContextType = {
   shouldShowConsent: boolean;
@@ -15,16 +15,21 @@ export const ConsentContext = createContext<ConsentContextType | undefined>(unde
 
 type ConsentProviderProps = {
   children: ReactNode;
-  isUSUser?: boolean;
 };
 
 const CONSENT_STORAGE_KEY = 'mobitrace-consent-given';
 
-export function ConsentProvider({ children, isUSUser = false }: ConsentProviderProps) {
+export function ConsentProvider({ children }: ConsentProviderProps) {
   const [shouldShowConsent, setShouldShowConsent] = useState(false);
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { ENABLE_SMS_CONSENT: isSmsConsentEnabled } = useFeatures();
+  /*
+   * Both halves of the question come from the same place now. The country used to
+   * arrive as a prop because it lived in a provider of its own; there is one
+   * provider to ask, so there is no prop.
+   */
+  const { smsConsentEnabled, countryCode } = useSettings();
+  const isUSUser = countryCode === 'US';
 
   const checkConsentStatus = useCallback(() => {
     const hasQueryParams = searchParams.toString().length > 0;
@@ -37,13 +42,13 @@ export function ConsentProvider({ children, isUSUser = false }: ConsentProviderP
     } else if (isBaseUrl) {
       const consentGiven = sessionStorage.getItem(CONSENT_STORAGE_KEY);
       if (consentGiven !== 'true') {
-        const shouldShow = isUSUser && isSmsConsentEnabled;
+        const shouldShow = isUSUser && smsConsentEnabled;
         setShouldShowConsent(!!shouldShow);
       } else {
         setShouldShowConsent(false);
       }
     }
-  }, [searchParams, pathname, isUSUser, isSmsConsentEnabled]);
+  }, [searchParams, pathname, isUSUser, smsConsentEnabled]);
 
   const setConsentGiven = useCallback((given: boolean) => {
     sessionStorage.setItem(CONSENT_STORAGE_KEY, given.toString());

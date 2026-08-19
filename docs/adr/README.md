@@ -34,3 +34,4 @@ moves. Describe things by their role instead.
 | [0017](0017-the-pricing-page-quotes-one-trial-product.md)                     | The pricing page quotes one trial product, in a currency this application picks         | Accepted                                          |
 | [0018](0018-checkout-quotes-payments-and-charges-the-legacy-api.md)           | Checkout quotes the payments catalogue and charges the legacy API                       | Accepted; the split is temporary                  |
 | [0019](0019-the-parked-checkout-island.md)                                    | The resumewise Stripe/Adyen checkout is parked as a faithful, inert island              | Accepted; a staging step before integration       |
+| [0020](0020-one-answer-to-what-is-switched-on.md)                             | One settings object answers what is switched on, for every source                       | Accepted                                          |

@@ -3,8 +3,8 @@
 import { useTranslations } from 'next-intl';
 
 import { ROUTES } from '@/constants/routes';
-import { useFeatures } from '@/hooks/use-features';
 import { Link } from '@/libs/i18n-routing';
+import { useSettings } from '@/settings/settings.provider';
 
 import { Logotype } from './logotype';
 
@@ -68,7 +68,7 @@ type FooterLinksKeys = keyof typeof footerLinks.links;
 
 export function Footer() {
   const t = useTranslations('footer');
-  const { ENABLE_REVERSE_LOOKUP: isReverseLookupVisible } = useFeatures();
+  const { reverseLookupEnabled } = useSettings();
 
   return (
     <footer className="s-footer text-weak">
@@ -87,7 +87,7 @@ export function Footer() {
           {footerColumnsMobile.map((column, columnIndex) => (
             <ul key={columnIndex} className="space-y-2">
               {column.map(({ key, url }) =>
-                !isReverseLookupVisible && key === 'reverse_lookup' ? null : (
+                !reverseLookupEnabled && key === 'reverse_lookup' ? null : (
                   <li key={key}>
                     <Link href={url} className="hover:underline">
                       {t(`links.${key as FooterLinksKeys}`)}
@@ -104,7 +104,7 @@ export function Footer() {
           {footerColumnsDesktop.map((column, columnIndex) => (
             <ul key={columnIndex} className="space-y-2">
               {column.map(({ key, url }) =>
-                !isReverseLookupVisible && key === 'reverse_lookup' ? null : (
+                !reverseLookupEnabled && key === 'reverse_lookup' ? null : (
                   <li key={key}>
                     <Link href={url} className="hover:underline">
                       {t(`links.${key as FooterLinksKeys}`)}

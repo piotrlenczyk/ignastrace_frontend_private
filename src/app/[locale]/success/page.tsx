@@ -8,6 +8,7 @@ import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getApi } from '@/libs/server/api';
 import { getUser } from '@/libs/subscription';
 import { getServerSession } from '@/server/session/session.utils';
+import { getServerSettings } from '@/settings/settings.server';
 
 import UpsellPageClient from './_components/upsell-page-client';
 import type { Product } from './_types/product.type';
@@ -20,7 +21,9 @@ const UpsellPage = async () => {
     redirect(ROUTES.HOME);
   }
 
-  if (process.env.ENABLE_UPSELLS !== 'true') {
+  const { upsellsEnabled } = await getServerSettings();
+
+  if (!upsellsEnabled) {
     return <ThankYouPage />;
   }
 

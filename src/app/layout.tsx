@@ -7,15 +7,14 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 
 import { QueryProvider } from '@/components/navigation/providers/query-client-provider';
+import { TestWidget } from '@/components/test-widget/test-widget';
 import { Toaster } from '@/components/ui/toaster';
 import { ConsentProvider } from '@/contexts/consent-context';
-import { CountryProvider } from '@/contexts/country-context';
-import { FeaturesProvider } from '@/contexts/features-context';
 import { SessionProvider } from '@/contexts/session-context';
-import { getFeatures } from '@/libs/server/feature-flags';
-import { getUserCountry } from '@/libs/server/user-country';
 import { cn } from '@/libs/utils';
 import { getServerSession } from '@/server/session/session.utils';
+import { SettingsProvider } from '@/settings/settings.provider';
+import { getServerSettings } from '@/settings/settings.server';
 import { getAlternates, getBaseUrl, getCurrentPath } from '@/utils/helpers';
 
 const interFont = Inter({
@@ -121,10 +120,8 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   setRequestLocale(locale);
 
   const messages = await getMessages();
-  const country = await getUserCountry();
-  const features = await getFeatures();
+  const settings = await getServerSettings();
   const session = await getServerSession();
-  const isUSUser = country === 'US';
   const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
   // The `suppressHydrationWarning` attribute in <body> is used to prevent hydration errors caused by Sentry Overlay,
@@ -170,14 +167,18 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
               tokens stay on the server, where both proxies attach them.
             */}
             <SessionProvider user={session?.user ?? null}>
-              <CountryProvider country={country}>
-                <FeaturesProvider features={features}>
-                  <ConsentProvider isUSUser={isUSUser}>
-                    {props.children}
-                    <Toaster />
-                  </ConsentProvider>
-                </FeaturesProvider>
-              </CountryProvider>
+              {/*
+                What is switched on for this request, settled once on the server:
+                the API's flags, this application's environment and the override
+                cookies, reconciled before anything renders.
+              */}
+              <SettingsProvider settings={settings}>
+                <ConsentProvider>
+                  {props.children}
+                  <Toaster />
+                  <TestWidget />
+                </ConsentProvider>
+              </SettingsProvider>
             </SessionProvider>
           </NextIntlClientProvider>
         </QueryProvider>

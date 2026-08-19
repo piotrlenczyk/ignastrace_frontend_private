@@ -1,13 +1,12 @@
 import { redirect } from 'next/navigation';
 
 import { ROUTES } from '@/constants/routes';
-import { getFeatures } from '@/libs/server/feature-flags';
+import { getServerSettings } from '@/settings/settings.server';
 
 export default async function ReverseLookupLayout({ children }: { children: React.ReactNode }) {
-  const features = await getFeatures();
-  const { ENABLE_REVERSE_LOOKUP } = features;
+  const { reverseLookupEnabled } = await getServerSettings();
 
-  if (!ENABLE_REVERSE_LOOKUP) {
+  if (!reverseLookupEnabled) {
     redirect(ROUTES.HOME);
   }
   return <>{children}</>;

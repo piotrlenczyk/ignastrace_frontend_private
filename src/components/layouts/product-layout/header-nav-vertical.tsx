@@ -6,10 +6,9 @@ import { useEffect, useState } from 'react';
 import { Logotype } from '@/components/logotype';
 import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
-import { useFeatures } from '@/hooks/use-features';
-import { useCountry } from '@/hooks/useCountry';
 import { Link, usePathname } from '@/libs/i18n-routing';
 import { cn } from '@/libs/utils';
+import { useSettings } from '@/settings/settings.provider';
 
 import { NumericBadge } from './numeric-badge';
 
@@ -45,13 +44,11 @@ const HeaderNavVertical = ({ unreadCount }: { unreadCount: number }) => {
   const t = useTranslations('pages.memberArea.navigation');
   const pathname = usePathname();
   const [fullPath, setFullPath] = useState<string>(pathname);
-  const { ENABLE_REVERSE_LOOKUP: enableReverseLookup } = useFeatures();
+  const { reverseLookupEnabled, countryCode: country } = useSettings();
 
   useEffect(() => {
     setFullPath(pathname + window.location.hash);
   }, [pathname]);
-
-  const country = useCountry();
 
   const logoLink =
     country === 'US' || country === 'GB' ? ROUTES.MEMBER.FIND_BY_LINK.HOME : ROUTES.MEMBER.FIND_BY_NUMBER.HOME;
@@ -80,7 +77,7 @@ const HeaderNavVertical = ({ unreadCount }: { unreadCount: number }) => {
       href: [ROUTES.REVERSE_LOOKUP.MEMBER.PHONE_LOOKUP.FORM, ROUTES.REVERSE_LOOKUP.MEMBER.PHONE_LOOKUP.PROGRESS],
       icon: <Icon name="phone" />,
       label: t('phone_lookup'),
-      enabled: enableReverseLookup,
+      enabled: reverseLookupEnabled,
     },
     {
       key: 'sex_offenders_search',

@@ -1,5 +1,5 @@
 import WebsiteLayoutV2 from '@/components/layouts/website-layout-v2';
-import { getUserCountry } from '@/libs/server/user-country';
+import { getServerSettings } from '@/settings/settings.server';
 
 import { CustomerCarousel } from '../_components/customerCarousel';
 import { FAQs } from '../_components/faqs';
@@ -33,7 +33,7 @@ import { WhyUse } from '../_components/whyUse';
  * "How can a phone number lookup help?".
  */
 const Index = async () => {
-  const country = await getUserCountry();
+  const country = (await getServerSettings()).countryCode;
 
   return (
     <WebsiteLayoutV2>

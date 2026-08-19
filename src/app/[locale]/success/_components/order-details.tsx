@@ -6,8 +6,8 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { Icon } from '@/components/ui/icon';
 import { DEFAULT_CURRENCY } from '@/constants/currencies';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
-import { useCountry } from '@/hooks/useCountry';
 import { cn } from '@/libs/utils';
+import { useSettings } from '@/settings/settings.provider';
 
 import type { Product } from '../_types/product.type';
 import { isProductAdded } from '../_utils/isProductAdded';
@@ -31,7 +31,7 @@ export const OrderDetails = ({
   const total = addedProducts.reduce((acc, product) => acc + product.price, 0);
   const currency = products[0]?.currency || DEFAULT_CURRENCY;
   const locale = useLocale();
-  const country = useCountry();
+  const { countryCode: country } = useSettings();
 
   return (
     <div className={cn('container-content', className)}>
