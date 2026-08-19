@@ -5,9 +5,9 @@ import ProductLayout from '@/components/layouts/product-layout';
 import { ROUTES } from '@/constants/routes';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
-import { getFeatures } from '@/libs/server/feature-flags';
 import { getUser } from '@/libs/subscription';
 import { getServerSession } from '@/server/session/session.utils';
+import { getServerSettings } from '@/settings/settings.server';
 
 import { SearchCompleteContent } from './_components/search-complete-content';
 
@@ -19,8 +19,7 @@ export default async function LookupSearchCompletePage() {
     redirect(ROUTES.HOME);
   }
 
-  const features = await getFeatures();
-  const { ENABLE_REVERSE_LOOKUP: enableReverseLookup } = features;
+  const { reverseLookupEnabled: enableReverseLookup } = await getServerSettings();
 
   if (!enableReverseLookup) {
     redirect(ROUTES.MEMBER.STATUS.HOME);

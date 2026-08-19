@@ -3,8 +3,8 @@
 import { useTranslations } from 'next-intl';
 
 import { ROUTES } from '@/constants/routes';
-import { useFeatures } from '@/hooks/use-features';
 import { Link } from '@/libs/i18n-routing';
+import { useSettings } from '@/settings/settings.provider';
 
 import { Logotype } from './logotype';
 
@@ -68,7 +68,7 @@ type FooterLinksKeys = keyof typeof footerLinks.links;
 
 export function Footer() {
   const t = useTranslations('footer');
-  const { ENABLE_REVERSE_LOOKUP: isReverseLookupVisible } = useFeatures();
+  const { reverseLookupEnabled: isReverseLookupVisible } = useSettings();
 
   return (
     <footer className="s-footer text-weak">

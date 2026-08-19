@@ -3,8 +3,8 @@ import { redirect } from 'next/navigation';
 import { ROUTES } from '@/constants/routes';
 import { getCheckoutProduct, getMemberCurrency } from '@/libs/pricing';
 import { getApi } from '@/libs/server/api';
-import { getUserCountry } from '@/libs/server/user-country';
 import { getUserPricing } from '@/server/getters/pricing.getters';
+import { getServerSettings } from '@/settings/settings.server';
 import type { Subscription } from '@/types/subscription';
 
 import { BillingPageClient } from './_components/billing-page-client';
@@ -31,7 +31,7 @@ const BillingPage = async () => {
   const api = await getApi();
   const subscription = await api.get<Subscription>('/subscription');
 
-  const country = await getUserCountry();
+  const country = (await getServerSettings()).countryCode;
 
   if (!subscription) {
     redirect(ROUTES.HOME);

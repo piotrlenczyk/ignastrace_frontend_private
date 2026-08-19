@@ -5,10 +5,10 @@ import { useTranslations } from 'next-intl';
 import { useAction } from 'next-safe-action/hooks';
 import { type FormEvent, useState } from 'react';
 
-import { useSettings } from '@/components/checkout/_shared/stubs/settings';
 import { getTrackingData } from '@/components/checkout/_shared/stubs/tracking.client';
 import { actionStartStripeSubscription, actionSyncStripeSubscriptionStatus } from '@/server/actions/stripe.actions';
 import { isHttpClientActionError } from '@/server/lib/safe-action';
+import { useSettings } from '@/settings/settings.provider';
 
 import { CardForm } from '../CardForm';
 import { type CardFieldErrors } from '../cardForm.types';

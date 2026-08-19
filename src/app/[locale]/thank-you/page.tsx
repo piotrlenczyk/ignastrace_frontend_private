@@ -13,6 +13,7 @@ import { Link } from '@/libs/i18n-routing';
 import { getApi } from '@/libs/server/api';
 import { getUser } from '@/libs/subscription';
 import { getServerSession } from '@/server/session/session.utils';
+import { getServerSettings } from '@/settings/settings.server';
 
 const ThankYouPage = async () => {
   const session = await getServerSession();
@@ -34,11 +35,12 @@ const ThankYouPage = async () => {
   const api = await getApi();
   const user = await getUser();
 
-  const gtmEventName = process.env.ENABLE_UPSELLS === 'true' ? 'upsell_purchase' : 'purchase';
-  const gtmEventValue =
-    process.env.ENABLE_UPSELLS === 'true'
-      ? (user.purchase_info?.upsellings_price || 0) / 100
-      : (user.purchase_info?.trial_price || 0) / 100;
+  const { upsellsEnabled } = await getServerSettings();
+
+  const gtmEventName = upsellsEnabled ? 'upsell_purchase' : 'purchase';
+  const gtmEventValue = upsellsEnabled
+    ? (user.purchase_info?.upsellings_price || 0) / 100
+    : (user.purchase_info?.trial_price || 0) / 100;
 
   api.post('/klaviyo/order_confirmed');
 

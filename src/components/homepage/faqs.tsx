@@ -2,8 +2,8 @@ import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { getFeatures } from '@/libs/server/feature-flags';
 import { cn } from '@/libs/utils';
+import { getServerSettings } from '@/settings/settings.server';
 
 type Question = {
   id: string;
@@ -33,8 +33,8 @@ const Title = async ({ className, variant = 'section' }: { className?: string; v
 
 const Content = async ({ className }: { className?: string }) => {
   const t = await getTranslations('pages.index.faqs');
-  const { ENABLE_REVERSE_LOOKUP } = await getFeatures();
-  const faqs = !ENABLE_REVERSE_LOOKUP ? content.filter(({ id }) => id !== 'q7' && id !== 'q8' && id !== 'q9') : content;
+  const { reverseLookupEnabled } = await getServerSettings();
+  const faqs = !reverseLookupEnabled ? content.filter(({ id }) => id !== 'q7' && id !== 'q8' && id !== 'q9') : content;
 
   return (
     <Accordion

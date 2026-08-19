@@ -7,10 +7,9 @@ import { Logotype } from '@/components/logotype';
 import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
-import { useFeatures } from '@/hooks/use-features';
-import { useCountry } from '@/hooks/useCountry';
 import { Link, usePathname } from '@/libs/i18n-routing';
 import { cn } from '@/libs/utils';
+import { useSettings } from '@/settings/settings.provider';
 
 import { NumericBadge } from './numeric-badge';
 
@@ -48,13 +47,11 @@ export const HeaderNav = ({ unreadCount }: { unreadCount: number }) => {
 
   const pathname = usePathname();
   const [fullPath, setFullPath] = useState<string>(pathname);
-  const { ENABLE_REVERSE_LOOKUP: enableReverseLookup } = useFeatures();
+  const { reverseLookupEnabled: enableReverseLookup, countryCode: country } = useSettings();
 
   useEffect(() => {
     setFullPath(pathname + window.location.hash);
   }, [pathname]);
-
-  const country = useCountry();
 
   const logoLink =
     country === 'US' || country === 'GB' ? ROUTES.MEMBER.FIND_BY_LINK.HOME : ROUTES.MEMBER.FIND_BY_NUMBER.HOME;

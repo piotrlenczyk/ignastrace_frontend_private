@@ -5,7 +5,7 @@ import FunnelLayout from '@/components/layouts/funnel-layout';
 import { ROUTES } from '@/constants/routes';
 import { getCurrencyByCountryCode } from '@/libs/currency';
 import { getApi } from '@/libs/server/api';
-import { getUserCountry } from '@/libs/server/user-country';
+import { getServerSettings } from '@/settings/settings.server';
 import type { Products } from '@/types/products';
 
 import AsSeenOn from '../_components/as-seen-on';
@@ -19,7 +19,7 @@ import WhatYouGet from '../_components/whatYouGet';
 const SummaryPage = async () => {
   const api = await getApi();
   const phoneNumber = await getFunnelPhone();
-  const country = await getUserCountry();
+  const country = (await getServerSettings()).countryCode;
   const currency = getCurrencyByCountryCode(country);
   const product = await api.get<Products>(`/products?currency=${currency}`);
 

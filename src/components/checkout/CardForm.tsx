@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { type FormEvent, type ReactNode, type RefObject } from 'react';
 
-import { useSettings } from '@/components/checkout/_shared/stubs/settings';
+import { useSettings } from '@/settings/settings.provider';
 
 import { Input } from '../ui/input';
 import { ButtonV2 } from '../ui/v2/button';

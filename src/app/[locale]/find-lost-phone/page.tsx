@@ -10,7 +10,7 @@ import WebsiteLayout from '@/components/layouts/website-layout';
 import { ROUTES } from '@/constants/routes';
 import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
 import { resolveLocale } from '@/libs/i18n-routing';
-import { getUserCountry } from '@/libs/server/user-country';
+import { getServerSettings } from '@/settings/settings.server';
 
 export async function generateMetadata(props: PageProps<'/[locale]/find-lost-phone'>) {
   const t = await getTranslations({
@@ -28,7 +28,7 @@ export async function generateMetadata(props: PageProps<'/[locale]/find-lost-pho
 }
 
 const Index = async () => {
-  const country = await getUserCountry();
+  const country = (await getServerSettings()).countryCode;
 
   await redirectIfAuthenticated({
     activeSubscriptionRoute: ROUTES.MEMBER.FIND_BY_NUMBER.HOME,

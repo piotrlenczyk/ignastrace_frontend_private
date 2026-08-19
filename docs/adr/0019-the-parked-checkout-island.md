@@ -2,6 +2,9 @@
 
 **Status:** Accepted — August 2026. A staging step ahead of the payments-service checkout
 integration that [0018](0018-checkout-quotes-payments-and-charges-the-legacy-api.md) stopped short of.
+One seam has since closed ahead of that task: the settings stub is gone, replaced by the real
+settings layer [0020](0020-one-answer-to-what-is-switched-on.md) introduced. Every other stub stands
+as described below.
 
 ## Context
 

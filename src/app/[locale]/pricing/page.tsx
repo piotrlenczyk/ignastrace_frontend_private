@@ -3,8 +3,8 @@ import { ROUTES } from '@/constants/routes';
 import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
 import { getCurrencyByCountryCode } from '@/libs/currency';
 import { getCurrencyProducts } from '@/libs/pricing';
-import { getUserCountry } from '@/libs/server/user-country';
 import { getPricePagePricing } from '@/server/getters/pricing.getters';
+import { getServerSettings } from '@/settings/settings.server';
 
 import { PricingContent } from './_components/content';
 
@@ -14,7 +14,7 @@ export default async function PricingPage() {
     endedSubscriptionRoute: ROUTES.MEMBER.SETTINGS.BILLING,
   });
 
-  const countryCode = await getUserCountry();
+  const countryCode = (await getServerSettings()).countryCode;
   const currency = getCurrencyByCountryCode(countryCode);
   const pricing = await getPricePagePricing();
   const currencyProducts = getCurrencyProducts({

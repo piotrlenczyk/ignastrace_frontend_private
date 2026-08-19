@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
 import { Icon } from '@/components/ui/icon';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
-import { useCountry } from '@/hooks/useCountry';
+import { useSettings } from '@/settings/settings.provider';
 
 import type { Product } from '../_types/product.type';
 import { isProductAdded } from '../_utils/isProductAdded';
@@ -24,7 +24,7 @@ export const ProductCards = ({
   const t = useTranslations('pages.upsell');
   const formatPrice = createPriceFormatter();
   const locale = useLocale();
-  const country = useCountry();
+  const { countryCode: country } = useSettings();
 
   const toggleDialog = (product: Product) => {
     if (product === dialogProduct) {

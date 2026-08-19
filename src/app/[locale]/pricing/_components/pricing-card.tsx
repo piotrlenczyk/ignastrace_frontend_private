@@ -2,8 +2,8 @@ import { getTranslations } from 'next-intl/server';
 
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { getFeatures } from '@/libs/server/feature-flags';
 import { cn } from '@/libs/utils';
+import { getServerSettings } from '@/settings/settings.server';
 
 const colors = {
   trial: {
@@ -29,7 +29,7 @@ export const PricingCard = async ({
 }) => {
   const t = await getTranslations('pages.pricing.cards');
 
-  const { ENABLE_REVERSE_LOOKUP } = await getFeatures();
+  const { reverseLookupEnabled } = await getServerSettings();
 
   const translationKey = trialDays === 1 ? `${type}_24` : type;
 
@@ -45,7 +45,7 @@ export const PricingCard = async ({
     colors[type].badge.bg,
   );
 
-  const isReverseLookupVisible = ENABLE_REVERSE_LOOKUP;
+  const isReverseLookupVisible = reverseLookupEnabled;
   const features = Array.from(isReverseLookupVisible ? { length: 5 } : { length: type === 'trial' ? 3 : 4 }, (_, i) =>
     t(`${translationKey}.${isReverseLookupVisible ? 'new_features' : 'features'}.feature_${i + 1}` as any),
   );

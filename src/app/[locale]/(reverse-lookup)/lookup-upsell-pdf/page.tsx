@@ -6,8 +6,8 @@ import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { getApi } from '@/libs/server/api';
-import { getUserCountry } from '@/libs/server/user-country';
 import { getServerSession } from '@/server/session/session.utils';
+import { getServerSettings } from '@/settings/settings.server';
 
 import type { Product } from '../../success/_types/product.type';
 import UpsellCard from '../_components/upsell-card';
@@ -42,7 +42,7 @@ const UpsellPdfPage = async () => {
   ];
 
   const locale = await getLocale();
-  const country = await getUserCountry();
+  const country = (await getServerSettings()).countryCode;
   const formatPrice = await createPriceFormatter();
   const api = await getApi();
   const products = await api.get<Product[]>('/reverse_lookups_upsellings');

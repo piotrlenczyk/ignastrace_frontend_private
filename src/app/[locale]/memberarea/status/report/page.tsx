@@ -3,9 +3,9 @@ import { redirect } from 'next/navigation';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getApi } from '@/libs/server/api';
-import { getFeatures } from '@/libs/server/feature-flags';
 import { getUser } from '@/libs/subscription';
 import { getServerSession } from '@/server/session/session.utils';
+import { getServerSettings } from '@/settings/settings.server';
 import type { ReverseLookup } from '@/types/reverse-lookup.types';
 
 import CarrierDetails from './components/carrier-details';
@@ -31,9 +31,9 @@ const ReportStatusPage = async (props: PageProps<'/[locale]/memberarea/status/re
   const session = await getServerSession();
   const isAuthenticated = !!session;
 
-  const { ENABLE_REVERSE_LOOKUP } = await getFeatures();
+  const { reverseLookupEnabled } = await getServerSettings();
 
-  if (!ENABLE_REVERSE_LOOKUP) {
+  if (!reverseLookupEnabled) {
     redirect(ROUTES.MEMBER.STATUS.HOME);
   }
 
