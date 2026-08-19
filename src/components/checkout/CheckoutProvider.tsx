@@ -3,7 +3,6 @@
 import { useRouter } from 'next/navigation';
 import { createContext, type ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 
-import { GTMService } from '@/components/checkout/_shared/stubs/gtmService';
 import { buildRoute } from '@/components/checkout/_shared/stubs/routes';
 import { useSettings } from '@/components/checkout/_shared/stubs/settings';
 import { actionSendPlacedOrderEvent } from '@/components/checkout/_shared/stubs/subscription.actions';
@@ -72,13 +71,14 @@ export const CheckoutProvider = ({
 
   const handlePaymentSuccess = useCallback(
     (transactionId?: string) => {
-      GTMService.trackPurchase({
-        transactionId: transactionId ?? '',
-        actualValue: product.price.finalAmount,
-        currency: product.price.currency,
-        email,
-        provider,
-      });
+      // TODO: [refactor] add GTM tracking
+      // GTMService.trackPurchase({
+      //   transactionId: transactionId ?? '',
+      //   actualValue: product.price.finalAmount,
+      //   currency: product.price.currency,
+      //   email,
+      //   provider,
+      // });
 
       const checkoutData = getCheckoutCookie();
       if (checkoutData) {

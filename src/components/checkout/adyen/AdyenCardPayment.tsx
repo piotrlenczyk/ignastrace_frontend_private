@@ -4,7 +4,6 @@
 import { useTranslations } from 'next-intl';
 import { type FormEvent, useCallback, useRef, useState } from 'react';
 
-import { actionUpdateZipCode } from '@/components/checkout/_shared/stubs/me.actions';
 import { useSettings } from '@/components/checkout/_shared/stubs/settings';
 import { type ProductWithPrice } from '@/components/checkout/_shared/types/pricing.types';
 
@@ -67,7 +66,8 @@ export const AdyenCardPayment = ({ product, onPaymentSuccess }: AdyenCardPayment
 
       try {
         if (checkoutZipCodeEnabled) {
-          await actionUpdateZipCode({ zipCode });
+          // TODO: [refactor] add zip code update if required
+          // await actionUpdateZipCode({ zipCode });
         }
         const transactionId = await submitPayment();
         onPaymentSuccess(transactionId);
@@ -88,7 +88,7 @@ export const AdyenCardPayment = ({ product, onPaymentSuccess }: AdyenCardPayment
         setIsCheckoutLoading(false);
       }
     },
-    [t, checkoutZipCodeEnabled, setIsCheckoutLoading, submitPayment, zipCode, onPaymentSuccess],
+    [t, checkoutZipCodeEnabled, setIsCheckoutLoading, submitPayment, onPaymentSuccess],
   );
 
   return (

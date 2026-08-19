@@ -5,7 +5,6 @@ import { useTranslations } from 'next-intl';
 import { useAction } from 'next-safe-action/hooks';
 import { type FormEvent, useState } from 'react';
 
-import { actionUpdateZipCode } from '@/components/checkout/_shared/stubs/me.actions';
 import { useSettings } from '@/components/checkout/_shared/stubs/settings';
 import {
   actionStartStripeSubscription,
@@ -52,10 +51,14 @@ export const StripeCardPayment = ({ priceId, onPaymentSuccess }: StripeCheckoutC
     setServerError(undefined);
     setIsCheckoutLoading(true);
 
+    // TODO: [refactor] add zip code update if required
     const zipCodeResult = checkoutZipCodeEnabled
-      ? await actionUpdateZipCode({
-          zipCode,
-        })
+      ? {
+          data: {
+            isZipCodeValid: true,
+            zipCode: zipCode,
+          },
+        }
       : undefined;
 
     const resolvedZipCode = zipCodeResult?.data?.isZipCodeValid ? (zipCodeResult.data.zipCode ?? '') : '';
