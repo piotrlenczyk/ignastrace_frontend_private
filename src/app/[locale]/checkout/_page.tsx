@@ -47,7 +47,6 @@ export const CheckoutPageClient = ({
   const product = getPricingProduct({
     plan: getPlanProductName(plan),
     currencyProducts: getCurrencyProducts({ products: pricing.products, currency: selectedCurrency }),
-    currency: selectedCurrency,
   });
 
   return (

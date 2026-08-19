@@ -309,7 +309,6 @@ describe('the funnel plan choosing a catalogue product', () => {
     getPricingProduct({
       plan: getPlanProductName(plan),
       currencyProducts: getCurrencyProducts({ products: pricing.products, currency }),
-      currency,
     });
 
   const catalogue = transformProductsFromPaymentsApi([
@@ -362,8 +361,7 @@ describe('getPricingProduct', () => {
       getPricingProduct({
         plan: 'FOUR_WEEKS_TRIAL',
         currencyProducts: getCurrencyProducts({ products: pricing.products, currency: 'PLN' }),
-        currency: 'PLN',
       }),
-    ).toThrow(/PLN/);
+    ).toThrow(/Cannot find a FOUR_WEEKS_TRIAL price/);
   });
 });

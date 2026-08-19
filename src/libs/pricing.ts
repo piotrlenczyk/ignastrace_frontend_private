@@ -58,11 +58,9 @@ export const getPlanProductName = (plan: FunnelPlan): SubscriptionPlan =>
 export const getPricingProduct = ({
   plan,
   currencyProducts,
-  currency,
 }: {
   plan: SubscriptionPlan;
   currencyProducts: ProductWithPrice[];
-  currency: string;
 }): ProductWithPrice => {
   const pricing =
     currencyProducts.find((product) => product.name === plan) ?? getDefaultPricingProduct(currencyProducts);
@@ -76,7 +74,7 @@ export const getPricingProduct = ({
    * `getCheckoutProduct` states for the screens still reading that one.
    */
   if (!pricing.price) {
-    throw new Error(`Cannot find a ${pricing.name} price in ${currency.toUpperCase()} or ${DEFAULT_CURRENCY}`);
+    throw new Error(`Cannot find a ${pricing.name} price`);
   }
 
   return pricing;
