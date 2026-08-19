@@ -1,7 +1,7 @@
 import { deleteCookie, getCookie, setCookie } from 'cookies-next/client';
 import { z } from 'zod';
 
-import { SUBSCRIPTION_PLANS } from '@/components/checkout/_shared/types/pricing.types';
+import { SUBSCRIPTION_PLANS } from '@/types/pricing.types';
 
 export const CHECKOUT_COOKIE_KEY = 'checkout';
 

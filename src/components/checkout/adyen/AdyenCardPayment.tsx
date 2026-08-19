@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { type FormEvent, useCallback, useRef, useState } from 'react';
 
 import { useSettings } from '@/components/checkout/_shared/stubs/settings';
-import { type ProductWithPrice } from '@/components/checkout/_shared/types/pricing.types';
+import type { ProductWithPrice } from '@/types/pricing.types';
 
 import { CardForm } from '../CardForm';
 import { useCheckoutLoading } from '../CheckoutLoadingProvider';

@@ -4,8 +4,6 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { type ReactNode } from 'react';
 
-import { Text } from '@/components/checkout/_shared/ui/Text';
-
 type WalletProvider = 'applePay' | 'googlePay';
 
 const PROVIDER_CONFIG = {
@@ -39,17 +37,17 @@ export const WalletForm = ({ children, provider, isUnavailable, serverError }: W
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
-        <Text variant="bodyLarge">{t(config.labelKey)}</Text>
+        <p>{t(config.labelKey)}</p>
         <Image src={config.icon} width={config.width} height={config.height} alt={config.alt} />
       </div>
       <div className="relative min-h-12">
         {children}
-        {isUnavailable ? <Text className="text-center font-semibold">{t('notSupported')}</Text> : null}
+        {isUnavailable ? <p className="text-center font-semibold">{t('notSupported')}</p> : null}
       </div>
 
       {serverError ? (
         <div className="flex rounded-lg bg-fill-error-weak p-4">
-          <Text className="text-error">{serverError}</Text>
+          <p className="text-error">{serverError}</p>
         </div>
       ) : null}
     </div>

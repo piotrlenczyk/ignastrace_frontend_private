@@ -5,11 +5,10 @@ import { useTranslations } from 'next-intl';
 import { type FormEvent, type ReactNode, type RefObject } from 'react';
 
 import { useSettings } from '@/components/checkout/_shared/stubs/settings';
-import { Button } from '@/components/checkout/_shared/ui/Button';
-import { Input } from '@/components/checkout/_shared/ui/Input';
-import { Spinner } from '@/components/checkout/_shared/ui/Spinner';
-import { Text } from '@/components/checkout/_shared/ui/Text';
 
+import { Input } from '../ui/input';
+import { ButtonV2 } from '../ui/v2/button';
+import { Spinner } from '../ui/v2/spinner/spinner';
 import { type CardFieldErrors } from './cardForm.types';
 import { useCheckout } from './CheckoutProvider';
 
@@ -47,7 +46,7 @@ export const CardForm = ({
     <form className="flex w-full flex-col gap-4" onSubmit={onSubmit}>
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
-          <Text variant="bodyLarge">{tCard('label')}</Text>
+          <p>{tCard('label')}</p>
           <div className="flex gap-2">
             <Image src="/payments-border/visa.svg" width={34} height={24} alt="Visa" />
             <Image src="/payments-border/mastercard.svg" width={34} height={24} alt="Mastercard" />
@@ -62,7 +61,7 @@ export const CardForm = ({
                   absolute inset-0 flex flex-col items-center justify-center
                 `}
               >
-                <Spinner className="size-5 text-brand" />
+                <Spinner />
               </div>
             )}
             {children}
@@ -79,39 +78,27 @@ export const CardForm = ({
         ) : null}
         {fieldErrors.numberError || fieldErrors.expiryError || fieldErrors.cvcError ? (
           <div className="flex flex-col">
-            {fieldErrors.numberError ? (
-              <Text variant="caption" color="error">
-                {fieldErrors.numberError}
-              </Text>
-            ) : null}
-            {fieldErrors.expiryError ? (
-              <Text variant="caption" color="error">
-                {fieldErrors.expiryError}
-              </Text>
-            ) : null}
-            {fieldErrors.cvcError ? (
-              <Text variant="caption" color="error">
-                {fieldErrors.cvcError}
-              </Text>
-            ) : null}
+            {fieldErrors.numberError ? <p className="text-caption text-error">{fieldErrors.numberError}</p> : null}
+            {fieldErrors.expiryError ? <p className="text-caption text-error">{fieldErrors.expiryError}</p> : null}
+            {fieldErrors.cvcError ? <p className="text-caption text-error">{fieldErrors.cvcError}</p> : null}
           </div>
         ) : null}
       </div>
 
-      <Button
+      <ButtonV2
         ref={submitButtonRef as React.ForwardedRef<HTMLButtonElement>}
         type="submit"
         className="w-full"
         size="lg"
-        loading={isSubmitLoading}
         disabled={isSubmitDisabled || isFieldsLoading}
       >
         {isCoverLetter ? t('getMyCoverLetter') : t('getMyResume')}
-      </Button>
+        {isSubmitLoading ? 'loading' : undefined}
+      </ButtonV2>
 
       {serverError ? (
         <div className="flex rounded-lg bg-fill-error-weak p-4">
-          <Text className="text-error">{serverError}</Text>
+          <p className="text-error">{serverError}</p>
         </div>
       ) : null}
     </form>

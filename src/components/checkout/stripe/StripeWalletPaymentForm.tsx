@@ -3,7 +3,7 @@ import { type StripeExpressCheckoutElementReadyEvent } from '@stripe/stripe-js';
 import { useState } from 'react';
 
 import { useSettings } from '@/components/checkout/_shared/stubs/settings';
-import { Spinner } from '@/components/checkout/_shared/ui/Spinner';
+import { Spinner } from '@/components/ui/v2/spinner/spinner';
 
 import { WalletForm } from '../WalletForm';
 
@@ -29,7 +29,7 @@ export const StripeWalletPaymentForm = ({ error, onConfirm, provider }: StripeWa
   return (
     <WalletForm provider={provider} isUnavailable={!available && !isLoading} serverError={error}>
       <div className={`absolute inset-0 flex flex-col items-center justify-center`}>
-        {isLoading ? <Spinner className="size-5 text-brand" /> : null}
+        {isLoading ? <Spinner /> : null}
 
         <ExpressCheckoutElement
           onConfirm={onConfirm}

@@ -18,12 +18,12 @@ import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { getTrackingData } from '@/components/checkout/_shared/stubs/tracking.client';
-import { type ProductWithPrice } from '@/components/checkout/_shared/types/pricing.types';
-import { Spinner } from '@/components/checkout/_shared/ui/Spinner';
 import { cn } from '@/components/checkout/_shared/utils/style.utils';
+import { Spinner } from '@/components/ui/v2/spinner/spinner';
 import { useCallbackRef } from '@/hooks/use-callback-ref';
 import { useGenericErrorToast as useUnexpectedErrorToast } from '@/hooks/use-generic-error-toast';
 import { actionCreateAdyenSubscription } from '@/server/actions/adyen.actions';
+import type { ProductWithPrice } from '@/types/pricing.types';
 
 import { useCheckoutLoading } from '../CheckoutLoadingProvider';
 import { WalletForm } from '../WalletForm';
@@ -454,7 +454,7 @@ export const AdyenWalletPayment = ({ provider, product, onPaymentSuccess }: Adye
             `,
           )}
         >
-          <Spinner className={cn('size-5', 'text-white')} />
+          <Spinner />
         </div>
       ) : null}
     </WalletForm>
