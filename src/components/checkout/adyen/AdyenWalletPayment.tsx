@@ -17,12 +17,12 @@ import {
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { useCallbackRef } from '@/components/checkout/_shared/hooks/useCallbackRef';
 import { actionCreateAdyenSubscription } from '@/components/checkout/_shared/stubs/adyen.actions';
 import { getTrackingData } from '@/components/checkout/_shared/stubs/tracking.client';
 import { type ProductWithPrice } from '@/components/checkout/_shared/types/pricing.types';
 import { Spinner } from '@/components/checkout/_shared/ui/Spinner';
 import { cn } from '@/components/checkout/_shared/utils/style.utils';
+import { useCallbackRef } from '@/hooks/use-callback-ref';
 import { useGenericErrorToast as useUnexpectedErrorToast } from '@/hooks/use-generic-error-toast';
 
 import { useCheckoutLoading } from '../CheckoutLoadingProvider';

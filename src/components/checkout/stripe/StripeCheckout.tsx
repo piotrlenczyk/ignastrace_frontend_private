@@ -4,7 +4,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import { type StripeElementLocale } from '@stripe/stripe-js';
 import { useLocale } from 'next-intl';
 
-import { useStripePromiseRef } from '@/components/checkout/_shared/hooks/useStripePromiseRef';
+import { useStripePromiseRef } from '@/hooks/use-stripe-promise-ref';
 
 import { useCheckout } from '../CheckoutProvider';
 import { StripeCardPayment } from './StripeCardPayment';

@@ -11,9 +11,9 @@ import {
 } from '@adyen/adyen-web';
 import { useEffect, useRef } from 'react';
 
-import { useCallbackRef } from '@/components/checkout/_shared/hooks/useCallbackRef';
 import { actionSubmitAdyenCompletionDetails } from '@/components/checkout/_shared/stubs/adyen.actions';
 import { cn } from '@/components/checkout/_shared/utils/style.utils';
+import { useCallbackRef } from '@/hooks/use-callback-ref';
 
 import { useAdyenCheckout } from './AdyenCheckoutContext';
 import { FailedCardPaymentError } from './paymentErrors';

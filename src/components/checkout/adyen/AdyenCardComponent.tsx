@@ -4,8 +4,8 @@
 import { type AdyenCheckoutError, Card, type PaymentFailedData, type UIElement } from '@adyen/adyen-web';
 import { type RefObject, useEffect, useRef } from 'react';
 
-import { useCallbackRef } from '@/components/checkout/_shared/hooks/useCallbackRef';
 import { cn } from '@/components/checkout/_shared/utils/style.utils';
+import { useCallbackRef } from '@/hooks/use-callback-ref';
 
 import styles from './adyen.module.css';
 import { CARD_CONFIG_WITHOUT_CALLBACKS } from './adyenCardConfig';
