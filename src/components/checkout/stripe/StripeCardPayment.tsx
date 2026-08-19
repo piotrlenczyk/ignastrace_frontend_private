@@ -6,11 +6,8 @@ import { useAction } from 'next-safe-action/hooks';
 import { type FormEvent, useState } from 'react';
 
 import { useSettings } from '@/components/checkout/_shared/stubs/settings';
-import {
-  actionStartStripeSubscription,
-  actionSyncStripeSubscriptionStatus,
-} from '@/components/checkout/_shared/stubs/stripe.actions';
 import { getTrackingData } from '@/components/checkout/_shared/stubs/tracking.client';
+import { actionStartStripeSubscription, actionSyncStripeSubscriptionStatus } from '@/server/actions/stripe.actions';
 import { isHttpClientActionError } from '@/server/lib/safe-action';
 
 import { CardForm } from '../CardForm';

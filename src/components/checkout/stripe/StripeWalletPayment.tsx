@@ -3,8 +3,8 @@ import { useTranslations } from 'next-intl';
 import { useAction } from 'next-safe-action/hooks';
 import { useState } from 'react';
 
-import { actionStartStripeSubscription } from '@/components/checkout/_shared/stubs/stripe.actions';
 import { getTrackingData } from '@/components/checkout/_shared/stubs/tracking.client';
+import { actionStartStripeSubscription } from '@/server/actions/stripe.actions';
 import { isHttpClientActionError } from '@/server/lib/safe-action';
 
 import { useCheckoutLoading } from '../CheckoutLoadingProvider';

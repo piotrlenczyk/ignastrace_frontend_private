@@ -15,9 +15,9 @@ type CheckoutSettings = {
 };
 
 const CHECKOUT_SETTINGS: CheckoutSettings = {
-  adyenGPayEnabled: true,
-  checkoutZipCodeEnabled: true,
-  expressCheckoutDisplayAutoEnabled: true,
+  adyenGPayEnabled: false,
+  checkoutZipCodeEnabled: false,
+  expressCheckoutDisplayAutoEnabled: false,
 };
 
 export const useSettings = (): CheckoutSettings => CHECKOUT_SETTINGS;
