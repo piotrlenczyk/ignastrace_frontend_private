@@ -7,9 +7,9 @@ import { GTMService } from '@/components/checkout/_shared/stubs/gtmService';
 import { buildRoute } from '@/components/checkout/_shared/stubs/routes';
 import { useSettings } from '@/components/checkout/_shared/stubs/settings';
 import { actionSendPlacedOrderEvent } from '@/components/checkout/_shared/stubs/subscription.actions';
-import { type paymentsSchemas } from '@/components/checkout/_shared/types/paymentsClient';
 import { type ProductWithPrice, type ProviderAccount } from '@/components/checkout/_shared/types/pricing.types';
 import { deleteCheckoutCookie, getCheckoutCookie } from '@/components/checkout/_shared/utils/checkoutCookie.utils';
+import type { paymentsSchemas } from '@/network/payments-api/payments-api-server-client';
 
 export const SUPPORTED_PAYMENT_PROVIDERS = [
   'stripe' satisfies paymentsSchemas['PaymentProviderEnum'],

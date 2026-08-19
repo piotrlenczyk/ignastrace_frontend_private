@@ -2,9 +2,8 @@
 
 import { z } from 'zod';
 
+import type { paymentsSchemas } from '@/network/payments-api/payments-api-server-client';
 import { actionClient } from '@/server/lib/safe-action';
-
-import { type paymentsSchemas } from '../types/paymentsClient';
 
 /**
  * TODO: payments integration.

@@ -1,4 +1,4 @@
-import { type paymentsSchemas } from '@/components/checkout/_shared/types/paymentsClient';
+import type { paymentsSchemas } from '@/network/payments-api/payments-api-server-client';
 
 export const SUBSCRIPTION_PLANS = [
   'ANNUAL',

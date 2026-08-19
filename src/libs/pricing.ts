@@ -174,13 +174,12 @@ export const getCheckoutProduct = ({ pricing, currency }: { pricing: Pricing; cu
    * is a misconfigured catalogue, and saying so beats rendering a payment form
    * with no amount on it.
    */
-  const price: Price | undefined = product.price;
 
-  if (!price) {
+  if (!product.price) {
     throw new Error(`Cannot find a ${product.name} price in ${currency.toUpperCase()} or ${DEFAULT_CURRENCY}`);
   }
 
-  return { ...product, price };
+  return product;
 };
 
 /**
