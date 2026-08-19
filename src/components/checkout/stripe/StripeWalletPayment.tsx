@@ -17,7 +17,7 @@ type StripeWalletPaymentProps = {
 };
 
 export const StripeWalletPayment = ({ provider, priceId, onPaymentSuccess }: StripeWalletPaymentProps) => {
-  const t = useTranslations('__NEW__.checkout.CheckoutPage');
+  const t = useTranslations('__NEW__.checkout.Checkout');
   const stripe = useStripe();
   const elements = useElements();
 

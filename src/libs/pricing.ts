@@ -72,7 +72,7 @@ export const getPricingProduct = ({
    * assertion is checked here too: a product priced in neither the selected
    * currency nor US dollars is a misconfigured catalogue, and saying so beats
    * rendering a payment form with no amount on it. Same rule, same words, as
-   * `getCheckoutProduct` states for the screens still reading that one.
+   * `getReactivationProduct` states for the one purchase that resolves strictly.
    */
   if (!pricing.price) {
     throw new Error(`Cannot find a ${pricing.name} price`);
@@ -198,40 +198,42 @@ export const getMemberCurrency = ({
 };
 
 /**
- * The one product checkout quotes, priced in one currency.
+ * The product a returning member is charged to reactivate, priced in one
+ * currency.
  *
- * The catalogue publishes a single four-week plan, so there is nothing to choose
- * between: the plan the funnel stored decides which of the row's two amounts is
- * due, not which product is quoted.
+ * Reactivation is the one purchase where quoting the wrong product is a
+ * commercial error rather than a cosmetic one: someone who has subscribed before
+ * is not eligible for the trial, so the non-trial four-week product is selected
+ * strictly. There is deliberately no fallback to the default product — that one
+ * is the trial, and offering it here would sell a trial to somebody who has
+ * already had it. Where neither catalogue publishes a non-trial product this
+ * throws, and the screen that asked renders without the offer.
+ *
+ * The currency fold is the same one every other read uses, so the assertion it
+ * skips — that the catalogue publishes US dollars — is checked here as it is
+ * wherever money changes hands.
  */
-export const getCheckoutProduct = ({ pricing, currency }: { pricing: Pricing; currency: string }): ProductWithPrice => {
-  const product = getDefaultPricingProduct(getCurrencyProducts({ products: pricing.products, currency }));
+export const getReactivationProduct = ({
+  pricing,
+  currency,
+}: {
+  pricing: Pricing;
+  currency: string;
+}): ProductWithPrice => {
+  const product = getCurrencyProducts({ products: pricing.products, currency }).find(
+    (candidate) => candidate.name === 'FOUR_WEEKS',
+  );
 
-  /*
-   * The currency fold above asserts a row it has not looked for — the catalogue
-   * is trusted to publish US dollars. Checkout is where money changes hands, so
-   * it checks: a product priced in neither the selected currency nor US dollars
-   * is a misconfigured catalogue, and saying so beats rendering a payment form
-   * with no amount on it.
-   */
+  if (!product) {
+    throw new Error('Cannot find a FOUR_WEEKS product to reactivate a subscription on');
+  }
 
   if (!product.price) {
-    throw new Error(`Cannot find a ${product.name} price in ${currency.toUpperCase()} or ${DEFAULT_CURRENCY}`);
+    throw new Error(`Cannot find a FOUR_WEEKS price in ${currency.toUpperCase()} or ${DEFAULT_CURRENCY}`);
   }
 
   return product;
 };
-
-/**
- * Which of a price row's two amounts is due now.
- *
- * One product carries both: the trial charge for a visitor taking the trial, the
- * full four-week amount for one subscribing outright. The catalogue's
- * upsell-inclusive final trial amount is deliberately unused, so that checkout
- * quotes the same number the pricing page quoted.
- */
-export const getAmountDue = ({ plan, price }: { plan: FunnelPlan; price: Price }): number =>
-  plan === 'subscription' ? price.amount : price.trialAmount;
 
 export const transformProductsFromPaymentsApi = (
   data: paymentsSchemas['GetProductWithAllPricesResponseDto'][],

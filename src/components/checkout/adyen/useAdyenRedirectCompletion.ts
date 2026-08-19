@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useCallbackRef } from '@/hooks/use-callback-ref';
 import { actionSubmitAdyenCompletionDetails } from '@/server/actions/adyen.actions';
 
+import { useCheckout } from '../CheckoutProvider';
 import {
   type AdyenRedirectSource,
   clearAdyenRedirectSource,
@@ -46,6 +47,7 @@ export const useAdyenRedirectCompletion = ({
 }: UseAdyenRedirectCompletionParams): UseAdyenRedirectCompletionReturn => {
   const [isResolvingRedirectResult, setIsResolvingRedirectResult] = useState(false);
   const hasProcessedRedirectResultRef = useRef(false);
+  const { reportRedirectResolving } = useCheckout();
 
   const onStartRef = useCallbackRef(onStart);
   const onCompletedRef = useCallbackRef(onCompleted);
@@ -73,6 +75,7 @@ export const useAdyenRedirectCompletion = ({
     hasProcessedRedirectResultRef.current = true;
     onStartRef.current?.();
     setIsResolvingRedirectResult(true);
+    reportRedirectResolving(true);
 
     const completeRedirectPayment = async () => {
       try {
@@ -94,11 +97,19 @@ export const useAdyenRedirectCompletion = ({
       } finally {
         clearAdyenRedirectSource();
         setIsResolvingRedirectResult(false);
+        reportRedirectResolving(false);
       }
     };
 
     void completeRedirectPayment();
-  }, [failureMessage, logPrefix, onCompletedRef, onFailedRef, onStartRef, source]);
+
+    /*
+     * The report is cleared if this component goes away mid-resolution, so a
+     * screen holding a lock on it cannot be left holding one for a payment
+     * nothing is finishing any more.
+     */
+    return () => reportRedirectResolving(false);
+  }, [failureMessage, logPrefix, onCompletedRef, onFailedRef, onStartRef, reportRedirectResolving, source]);
 
   return { isResolvingRedirectResult };
 };

@@ -21,7 +21,7 @@ type StripeCheckoutCardFormProps = {
 };
 
 export const StripeCardPayment = ({ priceId, onPaymentSuccess }: StripeCheckoutCardFormProps) => {
-  const t = useTranslations('__NEW__.checkout.CheckoutPage');
+  const t = useTranslations('__NEW__.checkout.Checkout');
   const { checkoutZipCodeEnabled } = useSettings();
 
   const [isFieldsLoading, setIsFieldsLoading] = useState(true);

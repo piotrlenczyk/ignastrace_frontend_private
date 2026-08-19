@@ -1,14 +1,14 @@
 'use client';
 
-import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import { Checkout } from '@/components/checkout/Checkout';
 import CurrencySelector from '@/components/currency-selector';
-import { Icon } from '@/components/ui/icon';
+import { PaymentTrustRow } from '@/components/payment-trust-row';
 import { ROUTES } from '@/constants/routes';
 import { type FunnelPlan, setCheckoutCookie } from '@/libs/checkout-cookie';
+import { useRouter } from '@/libs/i18n-routing';
 import { getCurrencyProducts, getPlanProductName, getPricingProduct } from '@/libs/pricing';
 import type { Pricing } from '@/types/pricing.types';
 
@@ -33,6 +33,7 @@ export const CheckoutPageClient = ({
 }: CheckoutPageClientProps) => {
   const t = useTranslations('pages.checkout');
   const tCheckout = useTranslations('__NEW__.checkout.CheckoutPage');
+  const router = useRouter();
 
   const [selectedCurrency, setSelectedCurrency] = useState(initialCurrency);
 
@@ -79,22 +80,17 @@ export const CheckoutPageClient = ({
         <Checkout
           product={product}
           country={country}
-          successRoute={enableUpsells ? ROUTES.SUCCESS_WITH_UPSELLS : ROUTES.SUCCESS}
+          /*
+           * A completed payment means one thing on this screen: go to the success
+           * route, with the upsell query string where upsells are switched on.
+           * The transaction identifier is deliberately dropped — nothing on
+           * either success screen reads one, and the upsell route already carries
+           * a query string that appending would corrupt.
+           */
+          onSuccess={() => router.push(enableUpsells ? ROUTES.SUCCESS_WITH_UPSELLS : ROUTES.SUCCESS)}
           submitLabel={tCheckout('action')}
         />
-        <div className="mt-4 mb-6 flex items-center justify-between gap-5 text-xs text-weak">
-          <div className="flex items-center gap-2">
-            <Icon name="safe" className="text-2xl" />
-            <span>{t('trust_100')}</span>
-          </div>
-          <Image
-            src="/images/norton.jpg"
-            width="100"
-            height="28"
-            className="h-[23px] w-[82px] lg:h-[28px] lg:w-[100px]"
-            alt="Norton Secured powered by VeriSign"
-          />
-        </div>
+        <PaymentTrustRow />
       </div>
       <div className="flex-1 bg-background-alternate p-6 lg:bg-background">
         <div className="container-content flex flex-col gap-6 text-sm text-weak lg:flex-row">

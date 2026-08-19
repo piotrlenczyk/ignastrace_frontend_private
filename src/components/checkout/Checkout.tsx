@@ -17,8 +17,17 @@ type CheckoutProps = {
   product: ProductWithPrice;
   /** The market, for the price format only — the amount itself comes off the row. */
   country: string;
-  /** Where a completed payment goes. */
-  successRoute: string;
+  /**
+   * What the screen does once the sale is done. The island has already discarded
+   * the checkout attempt and reported the placed order by the time this is
+   * called; where the visitor goes next is the screen's own business.
+   */
+  onSuccess: (transactionId?: string) => void;
+  /**
+   * Told whether a redirect-based challenge is being resolved. Only a screen
+   * that can be dismissed under a payment — a dialog — needs to know.
+   */
+  onRedirectResolvingChange?: (isResolving: boolean) => void;
   /** The submit button's copy, so the island states no screen's wording of its own. */
   submitLabel: string;
 };
@@ -31,15 +40,20 @@ type CheckoutProps = {
  * here and the number the payments service charges are the same number — the
  * price identifier travels with the payment.
  */
-export const Checkout = ({ product, country, successRoute, submitLabel }: CheckoutProps) => {
-  const t = useTranslations('__NEW__.checkout.CheckoutPage');
+export const Checkout = ({ product, country, onSuccess, onRedirectResolvingChange, submitLabel }: CheckoutProps) => {
+  const t = useTranslations('__NEW__.checkout.Checkout');
   const locale = useLocale();
   const formatPrice = createPriceFormatter();
 
   const { price } = product;
 
   return (
-    <CheckoutProvider product={product} successRoute={successRoute} submitLabel={submitLabel}>
+    <CheckoutProvider
+      product={product}
+      onSuccess={onSuccess}
+      onRedirectResolvingChange={onRedirectResolvingChange}
+      submitLabel={submitLabel}
+    >
       <CheckoutLoadingProvider>
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between gap-6">
@@ -121,7 +135,7 @@ const RecurringChargeConsent = ({ product, country }: { product: ProductWithPric
  * and the overlay only has to say what is happening.
  */
 const CheckoutLoadingOverlay = () => {
-  const t = useTranslations('__NEW__.checkout.CheckoutPage');
+  const t = useTranslations('__NEW__.checkout.Checkout');
   const { isLoading } = useCheckoutLoading();
 
   if (!isLoading) {

@@ -91,6 +91,20 @@ were written against it; it is composed rather than fetched.
 but still running, expired. The gating decisions are expressed in these terms — no subscription
 sends someone to checkout, an ended one sends them to billing.
 
+**Reactivation**
+: Buying a subscription again after the previous one **expired**. A member in that state is not
+eligible for the trial, so the price they are offered is the non-trial four-week product, resolved
+strictly — where no catalogue publishes one, they are offered nothing rather than a trial. It is a
+purchase like any other: the payments service takes it through the checkout island, and it is
+reported as a placed order.
+
+It is **not** the payments service's own reactivate endpoint. That one resumes a subscription that
+was cancelled but has not expired yet, takes no payment, and is not adopted here. The two acts share
+a word and nothing else — one takes money for a new subscription, the other calls off a cancellation.
+The button on the billing screen that calls off a cancellation is a third thing again, on the legacy
+API. [ADR 0021](adr/0021-the-checkout-island-takes-every-payment-but-one.md) records why only the
+first of the three takes a payment here.
+
 **Upselling**
 : **Two different things, and they do not map onto each other.**
 

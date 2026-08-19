@@ -156,7 +156,7 @@ type AdyenWalletPaymentProps = {
 };
 
 export const AdyenWalletPayment = ({ provider, product, onPaymentSuccess }: AdyenWalletPaymentProps) => {
-  const t = useTranslations('__NEW__.checkout.CheckoutPage');
+  const t = useTranslations('__NEW__.checkout.Checkout');
   const {
     checkout,
     isReady,
