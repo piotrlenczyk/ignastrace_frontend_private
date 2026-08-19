@@ -129,14 +129,11 @@ export const Adyen3dsAction = ({
           onFailed(new FailedCardPaymentError(defaultErrorMessage));
           setAction(null);
         }}
-        className={`
-          absolute -top-4 right-0 -translate-y-full text-body-small leading-none
-          font-medium text-white/75 uppercase
-        `}
+        className={`absolute -top-4 right-0 -translate-y-full text-sm leading-none font-medium text-white/75 uppercase`}
       >
         cancel
       </button>
-      <div ref={containerRef} className={'h-full w-full'} />
+      <div ref={containerRef} className={'size-full'} />
     </>
   );
 };

@@ -70,6 +70,7 @@ const HAND_WRITTEN_CLASSES = [
   'search-radar',
   'separator',
   'span-green',
+  'stripeInput',
 ];
 
 /*

@@ -1,5 +1,6 @@
 import type { Stripe, StripeElementLocale } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import pRetry, { type RetryContext } from 'p-retry';
 
 const isUseLemonStripe = process.env.NEXT_PUBLIC_USE_LEMON_STRIPE === '1';
 const stripePublishableKey = isUseLemonStripe
@@ -39,6 +40,9 @@ const stripePromiseByLocaleAndKey = new Map<string, Promise<Stripe | null>>();
  *
  * The environment-variable entry point above stays for the upsell purchase form,
  * which has no payments price to read a key from.
+ *
+ * Stripe.js is served from a third party, so the load is retried: a single failed
+ * script fetch would otherwise leave the checkout without a payment form.
  */
 export const getStripePromiseForKey = (locale: StripeElementLocale, publishableKey?: string) => {
   if (!publishableKey) {
@@ -51,7 +55,14 @@ export const getStripePromiseForKey = (locale: StripeElementLocale, publishableK
     return cached;
   }
 
-  const promise = loadStripe(publishableKey, { locale });
+  const promise = pRetry(() => loadStripe(publishableKey, { locale }), {
+    retries: 5,
+    onFailedAttempt: (context: RetryContext) => {
+      if (context.retriesLeft === 0) {
+        console.error('Stripe load failed after 5 attempts', context.error);
+      }
+    },
+  });
   stripePromiseByLocaleAndKey.set(cacheKey, promise);
 
   return promise;

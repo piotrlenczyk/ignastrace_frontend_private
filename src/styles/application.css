@@ -27,3 +27,22 @@
 @import './_keyframes.css';
 @import './_components.css';
 @import './_utilities.css';
+
+.stripeInput {
+  /* TODO: [refactor] replace with tailwind classes */
+  /* @apply py-3 text-body-large font-body ring-1 rounded-lg ring-inset ring-stroke-strong transition-colors px-3 h-12; */
+}
+
+.StripeElement {
+  @apply w-full;
+}
+
+.StripeElement--focus {
+  /* TODO: [refactor] replace with tailwind classes */
+  /* @apply ring-2 ring-stroke-focus; */
+}
+
+.StripeElement--invalid {
+  /* TODO: [refactor] replace with tailwind classes */
+  /* @apply bg-fill-error-weak ring-2 ring-stroke-error-strong; */
+}

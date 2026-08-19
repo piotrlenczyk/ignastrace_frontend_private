@@ -56,11 +56,7 @@ export const CardForm = ({
         <div className="flex flex-col gap-2">
           <div className="relative">
             {isFieldsLoading && (
-              <div
-                className={`
-                  absolute inset-0 flex flex-col items-center justify-center
-                `}
-              >
+              <div className={`absolute inset-0 flex flex-col items-center justify-center`}>
                 <Spinner />
               </div>
             )}
@@ -97,7 +93,7 @@ export const CardForm = ({
       </ButtonV2>
 
       {serverError ? (
-        <div className="flex rounded-lg bg-fill-error-weak p-4">
+        <div className="flex rounded-lg bg-error p-4">
           <p className="text-error">{serverError}</p>
         </div>
       ) : null}

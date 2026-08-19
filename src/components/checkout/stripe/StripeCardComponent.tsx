@@ -67,12 +67,7 @@ export const StripeCardComponent = ({ isLoading, onLoadingChange, onFieldErrorsC
   };
 
   return (
-    <div
-      className={`
-        relative flex flex-col gap-2
-        md:flex-row
-      `}
-    >
+    <div className={`relative flex flex-col gap-2 md:flex-row`}>
       <div className="flex flex-3 flex-col gap-1">
         <CardNumberElement
           options={{

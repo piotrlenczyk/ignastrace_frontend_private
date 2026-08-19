@@ -3,8 +3,9 @@
 import { Elements } from '@stripe/react-stripe-js';
 import { type StripeElementLocale } from '@stripe/stripe-js';
 import { useLocale } from 'next-intl';
+import { useMemo } from 'react';
 
-import { useStripePromiseRef } from '@/hooks/use-stripe-promise-ref';
+import { getStripePromiseForKey } from '@/libs/stripe';
 
 import { useCheckout } from '../CheckoutProvider';
 import { StripeCardPayment } from './StripeCardPayment';
@@ -13,13 +14,15 @@ import { StripeWalletPayment } from './StripeWalletPayment';
 export const StripeCheckout = () => {
   const { product, paymentMethod, handlePaymentSuccess } = useCheckout();
   const locale = useLocale();
-  const stripePublicKey = product.price.providerAccount.clientKey ?? '';
-  const stripePromiseRef = useStripePromiseRef(stripePublicKey);
+  const stripePromise = useMemo(
+    () => getStripePromiseForKey(locale as StripeElementLocale, product.price.providerAccount.clientKey),
+    [locale, product.price.providerAccount.clientKey],
+  );
   const { id: priceId } = product.price;
 
   return (
     <Elements
-      stripe={stripePromiseRef.current}
+      stripe={stripePromise}
       options={{
         locale: locale as StripeElementLocale,
         amount: product.price.finalAmount,

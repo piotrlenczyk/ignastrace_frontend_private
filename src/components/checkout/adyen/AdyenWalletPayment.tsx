@@ -448,10 +448,7 @@ export const AdyenWalletPayment = ({ provider, product, onPaymentSuccess }: Adye
       {isLoading ? (
         <div
           className={cn(
-            `
-              pointer-events-none absolute inset-0 z-20 grid min-h-12
-              place-items-center rounded-[5px] bg-[#000]
-            `,
+            `pointer-events-none absolute inset-0 z-20 grid min-h-12 place-items-center rounded-[5px] bg-[#000]`,
           )}
         >
           <Spinner />

@@ -179,7 +179,7 @@ export const AdyenCardComponent = ({
   return (
     <div
       ref={containerRef}
-      className={cn('h-full w-full', className, styles.adyenCardComponent, isLoading && `invisible`)}
+      className={cn('size-full', className, styles.adyenCardComponent, isLoading && `invisible`)}
     />
   );
 };

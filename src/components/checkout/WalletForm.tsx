@@ -46,7 +46,8 @@ export const WalletForm = ({ children, provider, isUnavailable, serverError }: W
       </div>
 
       {serverError ? (
-        <div className="flex rounded-lg bg-fill-error-weak p-4">
+        // <div className="bg-fill-error-weak flex rounded-lg p-4">
+        <div className="flex rounded-lg p-4">
           <p className="text-error">{serverError}</p>
         </div>
       ) : null}
