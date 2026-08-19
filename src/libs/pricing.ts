@@ -1,4 +1,3 @@
-import type { FunnelPlan } from '@/actions/funnel-plan';
 import { DEFAULT_CURRENCY } from '@/constants/currencies';
 import type { paymentsSchemas } from '@/network/payments-api/payments-api-server-client';
 import {
@@ -10,6 +9,8 @@ import {
   SUBSCRIPTION_PLANS,
   type SubscriptionPlan,
 } from '@/types/pricing.types';
+
+import type { FunnelPlan } from './checkout-cookie';
 
 /**
  * Normalizes a raw provider account into the frontend shape, collapsing the
@@ -135,20 +136,33 @@ export const transformUserProductsFromPaymentsApi = (
 ): Pricing => transformProductsFromPaymentsApi(data.map(({ price, ...product }) => ({ ...product, prices: [price] })));
 
 /**
- * The currency a screen opens in: the market's own when the catalogue publishes
- * a price in it, US dollars otherwise.
+ * The currency a screen opens in: the one the visitor chose where the catalogue
+ * still publishes it, the market's own where it does not, US dollars where it
+ * publishes neither.
  *
  * Bounding the choice by the catalogue is what keeps the currency a selector
  * shows and the amount beside it in step — a market currency the catalogue never
- * priced would otherwise label a US dollar amount as something else.
+ * priced would otherwise label a US dollar amount as something else, and a
+ * currency someone chose before the catalogue dropped it would do the same. A
+ * choice outranks the market because it is the more recent answer to the same
+ * question; the catalogue outranks both, which is the same shape
+ * `getMemberCurrency` gives a returning member's own currency.
  */
 export const getInitialCurrency = ({
   supportedCurrencies,
   marketCurrency,
+  preferredCurrency,
 }: {
   supportedCurrencies: string[];
   marketCurrency: string;
+  preferredCurrency?: string;
 }): string => {
+  const chosen = preferredCurrency?.toUpperCase();
+
+  if (chosen && supportedCurrencies.includes(chosen)) {
+    return chosen;
+  }
+
   const currency = marketCurrency.toUpperCase();
 
   return supportedCurrencies.includes(currency) ? currency : DEFAULT_CURRENCY;

@@ -3,7 +3,9 @@
 import { useRouter } from 'next/navigation';
 import { createContext, type ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 
+import { deleteCheckoutCookie } from '@/libs/checkout-cookie';
 import type { paymentsSchemas } from '@/network/payments-api/payments-api-server-client';
+import { actionSendPlacedOrderEvent } from '@/server/actions/subscription.actions';
 import { useSettings } from '@/settings/settings.provider';
 import type { ProductWithPrice, ProviderAccount } from '@/types/pricing.types';
 
@@ -26,7 +28,7 @@ type CheckoutContextType = {
   setPaymentMethod: (paymentMethod: PaymentMethod) => void;
   product: ProductWithPrice;
   submitLabel: string;
-  handlePaymentSuccess: () => void;
+  handlePaymentSuccess: (transactionId?: string) => void;
 };
 
 const CheckoutContext = createContext<CheckoutContextType | undefined>(undefined);
@@ -61,19 +63,36 @@ export const CheckoutProvider = ({
   const showGooglePay = provider !== 'adyen' || adyenGPayEnabled;
 
   /*
-   * Navigation and nothing else. The purchase event this used to send returns
-   * with the tracking layer — it read a checkout cookie nothing in this
-   * application writes, behind an action that is itself a placeholder, so the
-   * branch could not execute and is not kept as a trap.
+   * A completed payment ends the checkout attempt: the record is discarded, the
+   * order is reported, and the visitor is sent on. The report is fire-and-forget
+   * because a payment is finished the moment it is taken — nobody waits on a
+   * marketing call to see that.
    *
-   * The transaction identifier the payment components pass is deliberately
-   * dropped rather than appended to the route: nothing reads one, and the
-   * upsell success route already carries a query string that appending would
-   * corrupt.
+   * Every argument comes off the price row the charge was raised against, so the
+   * report names the catalogue product that was actually billed rather than the
+   * plan the funnel offered, and the discarded cookie is not consulted for any of
+   * it. The caller's identity is not passed at all: the action reads it from the
+   * sealed session, which a page script cannot forge.
+   *
+   * The transaction identifier is deliberately not appended to the route:
+   * nothing reads one off either success screen, and the upsell success route
+   * already carries a query string that appending would corrupt.
    */
-  const handlePaymentSuccess = useCallback(() => {
-    router.push(successRoute);
-  }, [router, successRoute]);
+  const handlePaymentSuccess = useCallback(
+    (transactionId?: string) => {
+      deleteCheckoutCookie();
+
+      void actionSendPlacedOrderEvent({
+        amount: product.price.finalAmount,
+        currency: product.price.currency,
+        transactionId,
+        plan: product.name,
+      });
+
+      router.push(successRoute);
+    },
+    [product, router, successRoute],
+  );
 
   const value = useMemo(
     () => ({

@@ -113,6 +113,35 @@ came to, and a flag per extra saying whether there is anything left to spend on 
 are what the thank-you and upsell screens report to analytics; the flags are what the report
 screens unlock on.
 
+## The checkout funnel
+
+**Checkout attempt**
+: One visitor's run at buying a subscription, as the funnel records it: the **funnel plan** they
+chose, and the currency they chose if they chose one. Nothing else — no identifier, no amount, no
+address. It is written in the browser, read on the server render of checkout, and discarded when a
+payment completes. It lives for the browser session only, so a shared computer does not hand one
+visitor's choices to the next.
+
+It **absorbed the funnel's own plan cookie**, which no longer exists: two cookies holding a plan
+could disagree about what someone chose, and one of them died on every reload. If you are looking
+for where the plan is kept, this is it — do not add a third cookie.
+[ADR 0019](adr/0019-the-parked-checkout-island.md) records why an earlier version of this record was
+removed and what had to be true for it to come back.
+
+**Plan**
+: **Two different things, and both are correct in their own place.**
+
+The **funnel plan** is what the visitor answered on the homepage — `trial` or `subscription`. It is
+the funnel's own vocabulary, it is what the Checkout attempt records, and it is deliberately not the
+catalogue's, so renaming a product does not invalidate cookies already sitting in browsers.
+
+The **catalogue product** is what the payments service sells and charges — `FOUR_WEEKS_TRIAL`,
+`FOUR_WEEKS`. It is what the placed-order report names, because it is what was billed.
+
+`getPlanProductName` in the pricing reader is the one translation between them, and it is a choice of
+_product_: the payments service derives the amount from a price identifier and accepts nothing that
+could express "skip the trial".
+
 ## Location requests
 
 **Location request**

@@ -94,7 +94,8 @@ export const StripeCardPayment = ({ priceId, onPaymentSuccess }: StripeCheckoutC
 
       if (paymentSucceeded) {
         void actionSyncStripeSubscriptionStatus();
-        onPaymentSuccess(actionResult.data.clientSecret ?? undefined);
+        // The payment intent identifies the order; the client secret is a credential.
+        onPaymentSuccess(actionResult.data.paymentIntentId);
 
         return;
       }

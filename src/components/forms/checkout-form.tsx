@@ -7,10 +7,10 @@ import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 
-import type { FunnelPlan } from '@/actions/funnel-plan';
 import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
+import type { FunnelPlan } from '@/libs/checkout-cookie';
 import { getAmountDue } from '@/libs/pricing';
 import { getStripePromiseForKey } from '@/libs/stripe';
 import type { ProductWithPrice } from '@/types/pricing.types';

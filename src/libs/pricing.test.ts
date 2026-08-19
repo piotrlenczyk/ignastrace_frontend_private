@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
 
-import type { FunnelPlan } from '@/actions/funnel-plan';
 import type { paymentsSchemas } from '@/network/payments-api/payments-api-server-client';
 import type { Pricing } from '@/types/pricing.types';
 
+import type { FunnelPlan } from './checkout-cookie';
 import {
   getAmountDue,
   getCheckoutProduct,
@@ -194,6 +194,30 @@ describe('getInitialCurrency', () => {
 
   it('falls back to US dollars for a catalogue that publishes nothing', () => {
     expect(getInitialCurrency({ supportedCurrencies: [], marketCurrency: 'EUR' })).toBe('USD');
+  });
+
+  it("prefers the visitor's own currency over the market's when the catalogue publishes it", () => {
+    expect(
+      getInitialCurrency({ supportedCurrencies: ['USD', 'EUR'], marketCurrency: 'USD', preferredCurrency: 'EUR' }),
+    ).toBe('EUR');
+  });
+
+  it("falls back to the market's currency when the catalogue has stopped publishing the chosen one", () => {
+    expect(
+      getInitialCurrency({ supportedCurrencies: ['USD', 'EUR'], marketCurrency: 'EUR', preferredCurrency: 'PLN' }),
+    ).toBe('EUR');
+  });
+
+  it('matches the published currencies whichever case the chosen currency arrives in', () => {
+    expect(
+      getInitialCurrency({ supportedCurrencies: ['USD', 'EUR'], marketCurrency: 'USD', preferredCurrency: 'eur' }),
+    ).toBe('EUR');
+  });
+
+  it('falls back to US dollars when neither the chosen nor the market currency is published', () => {
+    expect(getInitialCurrency({ supportedCurrencies: ['GBP'], marketCurrency: 'PLN', preferredCurrency: 'EUR' })).toBe(
+      'USD',
+    );
   });
 });
 

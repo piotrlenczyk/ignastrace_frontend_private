@@ -4,11 +4,11 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
-import type { FunnelPlan } from '@/actions/funnel-plan';
 import { Checkout } from '@/components/checkout/Checkout';
 import CurrencySelector from '@/components/currency-selector';
 import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
+import { type FunnelPlan, setCheckoutCookie } from '@/libs/checkout-cookie';
 import { getCurrencyProducts, getPlanProductName, getPricingProduct } from '@/libs/pricing';
 import type { Pricing } from '@/types/pricing.types';
 
@@ -37,6 +37,17 @@ export const CheckoutPageClient = ({
   const [selectedCurrency, setSelectedCurrency] = useState(initialCurrency);
 
   /*
+   * The chosen currency is recorded as well as rendered, so a reload or a return
+   * to this screen quotes the price the visitor was comparing rather than their
+   * market's again. The selector itself is untouched — it is shared with the
+   * reverse-lookup checkout, which records nothing.
+   */
+  const handleCurrencyChange = (currency: string) => {
+    setSelectedCurrency(currency);
+    setCheckoutCookie({ currency });
+  };
+
+  /*
    * The funnel's plan selects the catalogue product, not one of two amounts on a
    * row: the payments service derives what is charged from the price identifier
    * it is handed, so the product carrying the right amount is the only way to
@@ -60,7 +71,7 @@ export const CheckoutPageClient = ({
           <CurrencySelector
             value={selectedCurrency}
             currencies={pricing.supportedCurrencies}
-            onChange={setSelectedCurrency}
+            onChange={handleCurrencyChange}
           />
         </div>
       </div>

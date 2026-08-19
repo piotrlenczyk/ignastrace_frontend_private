@@ -6,7 +6,9 @@ ahead of the payments-service checkout integration that
 integration has now happened, and the phone-lookup checkout screen renders this island in place of
 the legacy payment form. What each seam became is recorded under
 [Where the seams went](#where-the-seams-went) below, which also corrects two claims this record made
-that were never true.
+that were never true. One decision recorded there has since been **reversed**: the checkout cookie
+and the purchase-event call returned, once the cookie had a writer, a reader and a grave-digger —
+see the amendment on that bullet.
 
 ## Context
 
@@ -91,6 +93,29 @@ checkout-cookie` with it: that module was added by this island's own commit to s
   `actionSendPlacedOrderEvent` is left standing, unreferenced, as the placeholder the Klaviyo work
   resumes from. The purchase event returns with the tracking layer, which is also what retires
   `_shared/stubs/tracking.client`.
+
+  **Amended, August 2026 — the branch and the cookie are back, and the condition that justified
+  removing them is met.** The objection was never to the cookie: it was to a module with no writer,
+  serving a branch that could not execute. `libs/checkout-cookie` now records the **checkout
+  attempt** — the funnel plan and the chosen currency, nothing else — and every field has a writer
+  and a reader on the day it lands. The homepage writes the plan, the checkout screen's currency
+  selector writes the currency, the checkout page reads both on the server, and
+  `handlePaymentSuccess` discards the record when the payment completes. The cookie also absorbed
+  the funnel's own plan cookie, so `actions/funnel-plan` is deleted and `FunnelPlan` is inferred
+  from this cookie's schema: two cookies can no longer disagree about what a visitor chose.
+
+  `actionSendPlacedOrderEvent` is called again, and unconditionally — its arguments come from the
+  price row the charge was raised against, so nothing has to be read out of the cookie being
+  discarded. It lost its `email` input, which it now reads from the sealed session, and its
+  environment-switch guard, which named variables no environment file here defines; its `plan`
+  narrowed to the catalogue product enum. It is still a placeholder that logs. The tracking layer
+  and `_shared/stubs/tracking.client` are unaffected: GTM is not what came back.
+
+  The transaction identifier still does not reach the route — that part of the decision stands —
+  but it does reach the report, and for Stripe it is now the payment intent identifier rather than
+  the client secret the components used to hand over. A client secret can resume a payment session;
+  it was never an order identifier and does not belong in marketing data.
+
 - **The artwork points at this repository's own payment images.** The card-brand row referenced a
   `/payments-border/` directory that does not exist here, so it was broken; it and the wallet logos
   now read `/images/payment-*.svg`, and the card tile uses this project's `credit-card` icon.
