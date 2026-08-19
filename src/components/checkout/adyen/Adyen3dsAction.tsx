@@ -11,9 +11,9 @@ import {
 } from '@adyen/adyen-web';
 import { useEffect, useRef } from 'react';
 
-import { actionSubmitAdyenCompletionDetails } from '@/components/checkout/_shared/stubs/adyen.actions';
 import { cn } from '@/components/checkout/_shared/utils/style.utils';
 import { useCallbackRef } from '@/hooks/use-callback-ref';
+import { actionSubmitAdyenCompletionDetails } from '@/server/actions/adyen.actions';
 
 import { useAdyenCheckout } from './AdyenCheckoutContext';
 import { FailedCardPaymentError } from './paymentErrors';
@@ -71,7 +71,9 @@ export const Adyen3dsAction = ({
           }
 
           completionTransactionIdRef.current = result.transactionId;
+          // @ts-expect-error - TODO: [refactor] add type for paymentResult
           const isCompletedWithoutNextAction = !result.paymentResult.action && result.result === 'completed';
+          // @ts-expect-error - TODO: [refactor] add type for paymentResult
           const isFailedWithoutNextAction = !result.paymentResult.action && result.result !== 'completed';
 
           if (isCompletedWithoutNextAction) {

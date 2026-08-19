@@ -14,8 +14,8 @@ import {
 import { useLocale, useTranslations } from 'next-intl';
 import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 
-import { actionLoadAdyenPaymentMethods } from '@/components/checkout/_shared/stubs/adyen.actions';
 import { createPromiseCache } from '@/components/checkout/_shared/utils/promiseCache';
+import { actionLoadAdyenPaymentMethods } from '@/server/actions/adyen.actions';
 
 import { Adyen3dsAction } from './Adyen3dsAction';
 import { Adyen3DsActionModal } from './Adyen3DsActionModal';

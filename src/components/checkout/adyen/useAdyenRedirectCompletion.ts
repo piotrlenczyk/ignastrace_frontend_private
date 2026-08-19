@@ -1,8 +1,8 @@
 // Source: adapted from https://github.com/QR-CODE-App/payments-client-kickstart/ with modifications
 import { useEffect, useRef, useState } from 'react';
 
-import { actionSubmitAdyenCompletionDetails } from '@/components/checkout/_shared/stubs/adyen.actions';
 import { useCallbackRef } from '@/hooks/use-callback-ref';
+import { actionSubmitAdyenCompletionDetails } from '@/server/actions/adyen.actions';
 
 import {
   type AdyenRedirectSource,

@@ -2,8 +2,8 @@
 import { type CheckoutAdvancedFlowResponse, type PaymentAction, type UIElement } from '@adyen/adyen-web';
 import { type Dispatch, type MutableRefObject, type SetStateAction, useCallback, useEffect, useRef } from 'react';
 
-import { actionCreateAdyenSubscription } from '@/components/checkout/_shared/stubs/adyen.actions';
 import { getTrackingData } from '@/components/checkout/_shared/stubs/tracking.client';
+import { actionCreateAdyenSubscription } from '@/server/actions/adyen.actions';
 
 import {
   type AdyenCardComponentErrorHandler,
@@ -249,6 +249,7 @@ export const useAdyenCardFlow = ({
           return;
         }
 
+        // @ts-expect-error - TODO: [refactor] add type for paymentResult
         const action = result.paymentResult.action;
 
         if (action && isThreeDs2Action(action)) {
