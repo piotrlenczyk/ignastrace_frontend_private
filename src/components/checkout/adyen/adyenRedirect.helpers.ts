@@ -54,6 +54,47 @@ export const getAdyenRedirectSource = (): AdyenRedirectSource | null => {
   return source === 'card' || source === 'googlePay' || source === 'applePay' ? source : null;
 };
 
+/**
+ * Whether a screen is being rendered for a shopper coming back from a
+ * redirect-based Adyen challenge, as far as the address can say.
+ *
+ * A server render cannot check the recorded redirect source — that lives in the
+ * browser's session storage — so the address is all it has, and it is enough for
+ * the one decision a server render makes about it: a screen that redirects an
+ * authenticated visitor elsewhere must stand aside, because the payment is only
+ * completed once the checkout island has been rendered again. Sending them to the
+ * member area instead takes their money and never finishes the sale.
+ *
+ * A visitor arriving with a hand-typed or stale parameter therefore also skips
+ * the redirect, and lands on a checkout screen that completes nothing. That is
+ * the safe direction to be wrong in.
+ */
+export const hasAdyenRedirectResult = (redirectResult: string | string[] | undefined): boolean =>
+  Array.isArray(redirectResult) ? redirectResult.some(Boolean) : !!redirectResult;
+
+/**
+ * Whether the visitor in front of a screen is a shopper coming back from a
+ * redirect-based Adyen challenge that this application started.
+ *
+ * Both signals have to be present. A redirect result on its own is a stale link
+ * or a hand-typed parameter — nothing here started a challenge for it, so there
+ * is nothing to submit. A recorded source on its own is a challenge somebody
+ * walked away from, and carries no result either. Only the pair means a payment
+ * is waiting to be finished, which is the one condition under which a screen
+ * must mount the checkout island without anybody asking it to.
+ *
+ * It takes the two signals rather than reading them, so the trickiest condition
+ * in a redirect-resumed payment is a pure function a test can state rather than
+ * something only a browser can answer.
+ */
+export const isResumingAdyenRedirect = ({
+  redirectSource,
+  redirectResult,
+}: {
+  redirectSource: AdyenRedirectSource | null;
+  redirectResult: string | null;
+}): boolean => !!redirectSource && !!redirectResult;
+
 export const clearAdyenRedirectSource = () => {
   window.sessionStorage.removeItem(ADYEN_REDIRECT_SOURCE_STORAGE_KEY);
 };

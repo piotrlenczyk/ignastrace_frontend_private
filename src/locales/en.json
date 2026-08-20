@@ -1,10 +1,14 @@
 {
   "__NEW__": {
     "checkout": {
-      "CheckoutPage": {
-        "getMyCoverLetter": "Get my cover letter",
-        "getMyResume": "Get My Resume",
+      "Checkout": {
+        "total": "Total due:",
+        "selectMethod": "Payment method",
+        "processing": "Processing your payment…",
         "paymentGenericError": "Something went wrong, please try again later"
+      },
+      "CheckoutPage": {
+        "action": "Get location"
       },
       "components": {
         "payments": {

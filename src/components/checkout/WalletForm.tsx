@@ -9,14 +9,14 @@ type WalletProvider = 'applePay' | 'googlePay';
 const PROVIDER_CONFIG = {
   applePay: {
     labelKey: 'applePay.label',
-    icon: '/payments/applePay.svg',
+    icon: '/images/payment-apple.svg',
     alt: 'Apple Pay',
     width: 42,
     height: 18,
   },
   googlePay: {
     labelKey: 'googlePay.label',
-    icon: '/payments/googlePay.svg',
+    icon: '/images/payment-google.svg',
     alt: 'Google Pay',
     width: 42,
     height: 18,

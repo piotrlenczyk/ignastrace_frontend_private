@@ -125,7 +125,7 @@ const bootstrapAdyenCheckout = async ({
 
 export function AdyenCheckoutProvider({ priceId, clientKey, amount, children }: AdyenCheckoutProviderProps) {
   const locale = useLocale();
-  const t = useTranslations('__NEW__.checkout.CheckoutPage');
+  const t = useTranslations('__NEW__.checkout.Checkout');
   const [checkout, setCheckout] = useState<Core | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [paymentMethods, setPaymentMethods] = useState<RawPaymentMethod[]>([]);

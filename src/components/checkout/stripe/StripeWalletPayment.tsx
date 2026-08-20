@@ -17,7 +17,7 @@ type StripeWalletPaymentProps = {
 };
 
 export const StripeWalletPayment = ({ provider, priceId, onPaymentSuccess }: StripeWalletPaymentProps) => {
-  const t = useTranslations('__NEW__.checkout.CheckoutPage');
+  const t = useTranslations('__NEW__.checkout.Checkout');
   const stripe = useStripe();
   const elements = useElements();
 
@@ -70,7 +70,8 @@ export const StripeWalletPayment = ({ provider, priceId, onPaymentSuccess }: Str
       const paymentSucceeded = !error || error.payment_intent?.status === 'succeeded';
 
       if (paymentSucceeded) {
-        onPaymentSuccess(actionResult.data.clientSecret);
+        // The payment intent identifies the order; the client secret is a credential.
+        onPaymentSuccess(actionResult.data.paymentIntentId);
         return;
       }
 

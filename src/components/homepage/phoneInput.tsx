@@ -8,11 +8,11 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { saveFunnelPhone } from '@/actions/funnel-phone-number';
-import { saveFunnelPlan } from '@/actions/funnel-plan';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { useConsent } from '@/hooks/use-consent';
+import { setCheckoutCookie } from '@/libs/checkout-cookie';
 import { useRouter } from '@/libs/i18n-routing';
 import { cn } from '@/libs/utils';
 import { createPhoneFormSchema, type PhoneFormValues } from '@/types/phone-form.types';
@@ -94,7 +94,8 @@ export const PhoneInput = ({
     if (isAgreed && data) {
       const proceed = async (formData: PhoneFormValues) => {
         await saveFunnelPhone(formData.phone);
-        await saveFunnelPlan(plan);
+        // The plan opens the checkout attempt, keeping any currency already chosen.
+        setCheckoutCookie({ plan });
         router.push(destinationUrl);
       };
       proceed(data as PhoneFormValues);

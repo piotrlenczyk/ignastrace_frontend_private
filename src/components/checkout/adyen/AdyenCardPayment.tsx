@@ -23,7 +23,7 @@ export const AdyenCardPayment = ({ product, onPaymentSuccess }: AdyenCardPayment
   const { isLoading: isCheckoutLoading, setIsLoading: setIsCheckoutLoading } = useCheckoutLoading();
   const { isReady, isThreeDsActionVisible } = useAdyenCheckout();
   const { checkoutZipCodeEnabled } = useSettings();
-  const t = useTranslations('__NEW__.checkout.CheckoutPage');
+  const t = useTranslations('__NEW__.checkout.Checkout');
 
   const [numberError, setNumberError] = useState('');
   const [expiryError, setExpiryError] = useState('');

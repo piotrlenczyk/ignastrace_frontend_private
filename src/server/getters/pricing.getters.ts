@@ -45,11 +45,12 @@ export const getPricing = async (country: string) => {
  * currency to open in.
  *
  * The currency is settled here, on the server, so the first render is already
- * consistent — the market's own where the catalogue publishes a price in it, US
- * dollars where it does not. Both checkouts ask the same question, so they ask it
- * in one place.
+ * consistent — the currency the visitor chose where the catalogue still
+ * publishes it, the market's own otherwise. A screen that records no choice omits
+ * the preference and reads exactly as it did before; the rule itself stays in the
+ * pricing reader either way, where it is tested.
  */
-export const getCheckoutPricing = async (country: string) => {
+export const getCheckoutPricing = async (country: string, preferredCurrency?: string) => {
   const pricing = await getPricing(country);
 
   return {
@@ -57,6 +58,7 @@ export const getCheckoutPricing = async (country: string) => {
     initialCurrency: getInitialCurrency({
       supportedCurrencies: pricing.supportedCurrencies,
       marketCurrency: getCurrencyByCountryCode(country),
+      preferredCurrency,
     }),
   };
 };

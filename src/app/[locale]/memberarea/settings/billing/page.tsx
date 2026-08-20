@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 
 import { ROUTES } from '@/constants/routes';
-import { getCheckoutProduct, getMemberCurrency } from '@/libs/pricing';
+import { getMemberCurrency, getReactivationProduct } from '@/libs/pricing';
 import { getApi } from '@/libs/server/api';
 import { getUserPricing } from '@/server/getters/pricing.getters';
 import { getServerSettings } from '@/settings/settings.server';
@@ -17,14 +17,28 @@ import { BillingPageClient } from './_components/billing-page-client';
  * reasons: a read the server can do should not become a second network path in
  * the browser, and a screen a member reaches to read their billing history
  * should not fail because a price they are not being offered is unreadable.
+ *
+ * That is also why this is the one price resolution in the application that
+ * catches. Reactivation resolves the non-trial product strictly, so a catalogue
+ * publishing only the trial one throws rather than quietly selling a trial to
+ * someone who has already had it — and a member reading their history, their
+ * dates and their cancellation options must not lose all of it to a price they
+ * are not being offered. The incident is logged so a misconfigured catalogue is
+ * discoverable rather than silently costing sales.
  */
 const getActivationProduct = async ({ country, previousCurrency }: { country: string; previousCurrency: string }) => {
-  const pricing = await getUserPricing(country);
+  try {
+    const pricing = await getUserPricing(country);
 
-  return getCheckoutProduct({
-    pricing,
-    currency: getMemberCurrency({ supportedCurrencies: pricing.supportedCurrencies, previousCurrency }),
-  });
+    return getReactivationProduct({
+      pricing,
+      currency: getMemberCurrency({ supportedCurrencies: pricing.supportedCurrencies, previousCurrency }),
+    });
+  } catch (error) {
+    console.error('Cannot resolve a reactivation price; the billing screen renders without the offer', error);
+
+    return undefined;
+  }
 };
 
 const BillingPage = async () => {
