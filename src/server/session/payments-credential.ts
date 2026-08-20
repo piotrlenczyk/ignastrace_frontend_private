@@ -41,11 +41,19 @@ const NO_CREDENTIAL: PaymentsCredential = {
  * Both or neither. A URL with no token to spend at it, or a token with nowhere
  * to spend it, is a half-configured environment rather than a usable one.
  */
-const configuration = (): { renewalUrl: string; seedRefreshToken: string } | null => {
+const configuration = (): {
+  renewalUrl: string;
+  seedRefreshToken: string;
+  cfAccessClientId: string;
+  cfAccessClientSecret: string;
+} | null => {
   const renewalUrl = process.env.PAYMENTS_API_TOKEN_REFRESH_URL;
   const seedRefreshToken = process.env.PAYMENTS_API_SEED_REFRESH_TOKEN;
-
-  return renewalUrl && seedRefreshToken ? { renewalUrl, seedRefreshToken } : null;
+  const cfAccessClientId = process.env.CF_ACCESS_CLIENT_ID ?? '';
+  const cfAccessClientSecret = process.env.CF_ACCESS_CLIENT_SECRET ?? '';
+  return renewalUrl && seedRefreshToken
+    ? { renewalUrl, seedRefreshToken, cfAccessClientId, cfAccessClientSecret }
+    : null;
 };
 
 /**
@@ -111,10 +119,16 @@ const expiryOf = (accessToken: string): number => {
 const requestRenewal = async (
   renewalUrl: string,
   refreshToken: string,
+  cfAccessClientId: string,
+  cfAccessClientSecret: string,
 ): Promise<{ token: string; refresh: string }> => {
   const response = await fetch(renewalUrl, {
     method: 'POST',
-    headers: { 'content-type': 'application/json' },
+    headers: {
+      'content-type': 'application/json',
+      'CF-Access-Client-Id': cfAccessClientId,
+      'CF-Access-Client-Secret': cfAccessClientSecret,
+    },
     body: JSON.stringify({ refreshToken }),
   });
 
@@ -173,6 +187,8 @@ export const withPaymentsCredential = async (session: SessionData): Promise<Sess
     const { token, refresh } = await requestRenewal(
       config.renewalUrl,
       session.paymentsRefreshToken || config.seedRefreshToken,
+      config.cfAccessClientId,
+      config.cfAccessClientSecret,
     );
 
     return {

@@ -8,8 +8,9 @@ import { ROUTES } from '@/constants/routes';
 import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { CHECKOUT_COOKIE_KEY, DEFAULT_FUNNEL_PLAN, parseCheckoutData } from '@/libs/checkout-cookie';
+import { paymentsApiServerClient } from '@/network/payments-api/payments-api-server-client';
 import { reportCheckoutStarted } from '@/server/analytics/klaviyo.events';
-import { getCheckoutPricing } from '@/server/getters/pricing.getters';
+import { getCheckoutPricing, getUserPricing } from '@/server/getters/pricing.getters';
 import { getServerSession } from '@/server/session/session.utils';
 import { getServerSettings } from '@/settings/settings.server';
 
@@ -40,7 +41,8 @@ const CheckoutPage = async (props: PageProps<'/[locale]/checkout'>) => {
   const plan = attempt?.plan ?? DEFAULT_FUNNEL_PLAN;
 
   const { pricing, initialCurrency } = await getCheckoutPricing(country, attempt?.currency);
-
+  const a = await paymentsApiServerClient['/products/upsell'].GET({});
+  const b = await paymentsApiServerClient['/products/upsell/user'].GET({});
   /*
    * A shopper coming back from a redirect-based 3-D Secure challenge did not start
    * a checkout — they are finishing the one they started before they left. The
