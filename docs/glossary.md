@@ -208,3 +208,36 @@ overridden rather than a switch, which is why its override is not an **override 
 : The panel that reads the settled Settings back and sets the cookies that change them, including
 the ones the payments service honours. Turned on by configuration only — never by a cookie,
 because it discloses the configuration to whoever opens it.
+
+## The legacy surface and its retirement
+
+Introduced by [ADR 0022](adr/0022-retiring-the-legacy-layer-on-its-own-track.md), which records why
+this became a track of its own rather than a side effect of the redesign.
+
+**Legacy surface**
+: The set of calls this application still makes to the old backend, counted as distinct method-and-path
+pairs rather than as call sites. It has no registry in the code — every path is a string written where
+it is used — so the surface is only ever known by being counted. Shrinking it to nothing is the
+condition for deleting the apparatus around it: the client factory, the browser hook, the server
+getter, the unspecified proxy and the second host.
+
+**Retirement track**
+: Rewriting a legacy call because it is a legacy call, on its own schedule, independent of whether the
+screen around it is being redesigned. Its unit is one endpoint, and its unit of completion is the
+legacy wrapper being gone — not a new call existing beside the old one. It is the third part of the
+programme of work, alongside the redesign and the wiring-up.
+
+**Record ownership**
+: Which upstream holds the record a call is about. Two endpoints can describe the same act in the same
+words and still be about different records, and where that is true the pair is not a rename and cannot
+be migrated as one. Ownership is a fact about the backends, so it is asked of them rather than inferred
+here; two questions of this kind gate this track — whether the payments service observes a subscription
+the legacy API created, and whether the new API and the legacy API share reverse-lookup report storage.
+A record created in one upstream and read from the other is not a record.
+
+**Gap**
+: Something a screen needs that the new API does not answer — a family it does not model, or one it
+models without publishing a response schema. A gap is recorded and reported upstream, never routed
+around: a facade over the old backend would delete the legacy client by moving it, and the layer would
+have to be removed twice. A gap is why a task on this track can exist, be fully specified, and still not
+be startable.

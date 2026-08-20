@@ -8,7 +8,7 @@ import { ROUTES } from '@/constants/routes';
 import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { CHECKOUT_COOKIE_KEY, DEFAULT_FUNNEL_PLAN, parseCheckoutData } from '@/libs/checkout-cookie';
-import { getApi } from '@/libs/server/api';
+import { reportCheckoutStarted } from '@/server/analytics/klaviyo.events';
 import { getCheckoutPricing } from '@/server/getters/pricing.getters';
 import { getServerSession } from '@/server/session/session.utils';
 import { getServerSettings } from '@/settings/settings.server';
@@ -24,12 +24,7 @@ const CheckoutPage = async (props: PageProps<'/[locale]/checkout'>) => {
     redirect(ROUTES.SIGN_UP);
   }
 
-  const [api, settings, phoneNumber, requestCookies] = await Promise.all([
-    getApi(),
-    getServerSettings(),
-    getFunnelPhone(),
-    cookies(),
-  ]);
+  const [settings, phoneNumber, requestCookies] = await Promise.all([getServerSettings(), getFunnelPhone(), cookies()]);
   const country = settings.countryCode;
 
   const formattedNumber = formatPhoneNumber(phoneNumber);
@@ -67,7 +62,7 @@ const CheckoutPage = async (props: PageProps<'/[locale]/checkout'>) => {
   const enableUpsells = settings.upsellsEnabled;
 
   if (!isResumingRedirect) {
-    api.post('/klaviyo/checkout_started');
+    reportCheckoutStarted();
   }
 
   return (

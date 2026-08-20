@@ -10,8 +10,8 @@ import { ROUTES } from '@/constants/routes';
 import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { Link } from '@/libs/i18n-routing';
-import { getApi } from '@/libs/server/api';
 import { getUser } from '@/libs/subscription';
+import { reportOrderConfirmed } from '@/server/analytics/klaviyo.events';
 import { getServerSession } from '@/server/session/session.utils';
 import { getServerSettings } from '@/settings/settings.server';
 
@@ -32,7 +32,6 @@ const ThankYouPage = async () => {
   });
 
   const t = await getTranslations('pages.success');
-  const api = await getApi();
   const user = await getUser();
 
   const { upsellsEnabled } = await getServerSettings();
@@ -42,7 +41,7 @@ const ThankYouPage = async () => {
     ? (user.purchase_info?.upsellings_price || 0) / 100
     : (user.purchase_info?.trial_price || 0) / 100;
 
-  api.post('/klaviyo/order_confirmed');
+  reportOrderConfirmed();
 
   return (
     <>
