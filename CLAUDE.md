@@ -14,10 +14,16 @@ The programme of work has two parts:
 2. **Wire it up to the new API.**
 
 **Both parts are in scope now.** The design work is the bulk of it, but the data layer described
-below has landed and is the pattern new code follows. What is still out of scope is migrating
-legacy screens onto the new API for its own sake: legacy data plumbing dies with the screen it
-serves, when that screen is redesigned. Don't rewrite a screen's fetching unless you are
-redesigning the screen or a ticket asks for it.
+below has landed and is the pattern new code follows.
+
+**A third part has been added: retiring the legacy data layer, on a track of its own.** A legacy
+call is now rewritten because it is a legacy call, not because the screen around it is being
+redesigned — so the earlier rule that legacy plumbing dies with the screen it serves no longer
+holds. Work on that track only through its tasks: one endpoint per task, the legacy wrapper gone
+when the task ends, no adapters, and the screen on the new response shape.
+`docs/adr/0022-retiring-the-legacy-layer-on-its-own-track.md` records the trade — including what
+is deliberately out of scope and what is blocked on the upstream. Outside that track, still don't
+rewrite a screen's fetching unless you are redesigning the screen.
 
 ## Design implementation rules
 
@@ -121,9 +127,11 @@ The rules:
   poking at the client's result. Parsers and the parser manager sit behind it; leave them alone —
   the interface is deliberately the reference repository's, not the smallest thing that works.
 - **New code must not import the legacy clients** — `src/libs/api-client.ts`, `src/hooks/use-api.ts`
-  and `src/libs/server/api.ts`. They are frozen and deleted with the screens they serve. The
-  browser-side one now goes through its own proxy under `/api/legacy`; that whole layer is
-  temporary.
+  and `src/libs/server/api.ts`. They are frozen, and they are now being emptied call by call on the
+  retirement track rather than left to die with their screens
+  (`docs/adr/0022-retiring-the-legacy-layer-on-its-own-track.md`). The browser-side one goes through
+  its own proxy under `/api/legacy`; that whole layer is temporary, and the last task on that track
+  deletes it.
 - **A new endpoint needs no route handler.** Regenerate — `scripts/api-build.sh` emits both the
   types and the proxy's path allow-list — and add a hook.
 - Don't add a global 401 handler, a prefetch, or a hydration boundary without a ticket; all three
