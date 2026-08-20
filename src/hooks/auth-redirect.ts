@@ -4,29 +4,29 @@ import { redirect } from 'next/navigation';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { getServerSession } from '@/server/session/session.utils';
 
-type AuthRedirectOptions = {
-  routes: {
-    activeSubscription: Route;
-    endedSubscription: Route;
-    noSubscription?: Route;
-    hasSubscription?: Route;
-    hasUpsellings?: Route;
+export const redirectIfAuthenticated = async ({
+  activeSubscriptionRoute,
+  endedSubscriptionRoute,
+  noSubscriptionRoute,
+}: {
+  activeSubscriptionRoute?: Route;
+  endedSubscriptionRoute: Route;
+  noSubscriptionRoute?: Route;
+}): Promise<void> => {
+  const routes: Record<string, Route | undefined> = {
+    endedSubscription: endedSubscriptionRoute,
+    activeSubscription: activeSubscriptionRoute,
+    noSubscription: noSubscriptionRoute,
   };
-  allowUnauthenticated?: boolean;
-  redirectIfAuthenticated?: boolean;
-};
-
-export const redirectBySubscriptionStatus = async (options: AuthRedirectOptions): Promise<void> => {
-  const { routes, allowUnauthenticated = true, redirectIfAuthenticated = true } = options;
 
   try {
     const session = await getServerSession();
     const isAuthenticated = !!session;
 
-    if (isAuthenticated && redirectIfAuthenticated) {
+    if (isAuthenticated) {
       const redirectUrl = await getSubscriptionRedirect({
         routes,
-        allowUnauthenticated,
+        allowUnauthenticated: true,
       });
 
       if (redirectUrl) {
@@ -37,31 +37,4 @@ export const redirectBySubscriptionStatus = async (options: AuthRedirectOptions)
     console.error('Error in redirectBySubscriptionStatus:', error);
     throw error;
   }
-};
-
-export const redirectIfAuthenticated = async ({
-  activeSubscriptionRoute,
-  endedSubscriptionRoute,
-  noSubscriptionRoute,
-}: {
-  activeSubscriptionRoute?: Route;
-  endedSubscriptionRoute: Route;
-  noSubscriptionRoute?: Route;
-}): Promise<void> => {
-  const routes: any = {
-    endedSubscription: endedSubscriptionRoute,
-  };
-
-  if (activeSubscriptionRoute) {
-    routes.activeSubscription = activeSubscriptionRoute;
-  }
-
-  if (noSubscriptionRoute) {
-    routes.noSubscription = noSubscriptionRoute;
-  }
-
-  return redirectBySubscriptionStatus({
-    routes,
-    redirectIfAuthenticated: true,
-  });
 };
