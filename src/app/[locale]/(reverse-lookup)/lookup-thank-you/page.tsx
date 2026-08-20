@@ -12,6 +12,7 @@ import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { Link } from '@/libs/i18n-routing';
 import { getApi } from '@/libs/server/api';
 import { getUser } from '@/libs/subscription';
+import { reportOrderConfirmed } from '@/server/analytics/klaviyo.events';
 import { getServerSession } from '@/server/session/session.utils';
 
 import TrustPilot from './_components/trustPilot';
@@ -36,7 +37,14 @@ const ThankYouPage = async () => {
   const api = await getApi();
   const user = await getUser();
 
-  await Promise.all([api.post('/user/send_order_confirm_email', {}), api.post('/klaviyo/order_confirmed')]);
+  reportOrderConfirmed();
+
+  /*
+   * The last legacy call on this screen, and it stays: the new API models no
+   * order-confirmation e-mail at all, which ADR 0022 records as a gap on the
+   * upstream rather than something to route around from here.
+   */
+  await api.post('/user/send_order_confirm_email', {});
 
   return (
     <>

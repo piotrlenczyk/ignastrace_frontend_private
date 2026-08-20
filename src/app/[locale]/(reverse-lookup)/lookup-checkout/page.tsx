@@ -6,7 +6,7 @@ import FunnelLayout from '@/components/layouts/funnel-layout';
 import { ROUTES } from '@/constants/routes';
 import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
-import { getApi } from '@/libs/server/api';
+import { reportCheckoutStarted } from '@/server/analytics/klaviyo.events';
 import { getCheckoutPricing } from '@/server/getters/pricing.getters';
 import { getServerSession } from '@/server/session/session.utils';
 import { getServerSettings } from '@/settings/settings.server';
@@ -22,7 +22,7 @@ const Index = async (props: PageProps<'/[locale]/lookup-checkout'>) => {
     redirect(ROUTES.REVERSE_LOOKUP.SIGN_UP);
   }
 
-  const [api, settings, phoneNumber] = await Promise.all([getApi(), getServerSettings(), getFunnelPhone()]);
+  const [settings, phoneNumber] = await Promise.all([getServerSettings(), getFunnelPhone()]);
   const country = settings.countryCode;
 
   const formattedNumber = formatPhoneNumber(phoneNumber);
@@ -48,10 +48,7 @@ const Index = async (props: PageProps<'/[locale]/lookup-checkout'>) => {
   }
 
   if (!isResumingRedirect) {
-    api.post('/klaviyo/checkout_started', {
-      flow: 'reverse_lookup',
-      product: 'reverse_lookup',
-    });
+    reportCheckoutStarted({ flow: 'reverse_lookup', product: 'reverse_lookup' });
   }
 
   return (
