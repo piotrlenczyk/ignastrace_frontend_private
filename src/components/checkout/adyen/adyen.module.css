@@ -1,5 +1,5 @@
 /* Source: adapted from https://github.com/QR-CODE-App/payments-client-kickstart/ with modifications */
-@reference "../../../../styles/globals.css";
+@reference "../../../styles/application.css";
 
 .adyenCardComponent
   :global(
@@ -18,7 +18,7 @@
 }
 
 .adyenCardComponent :global(.adyen-checkout__input-wrapper) {
-  @apply border-0 shadow-none block bg-background-base rounded-lg transition w-full;
+  @apply border-0 shadow-none block bg-bg-primary rounded-lg transition w-full;
 }
 
 .adyenCardComponent :global(.adyen-checkout__input:read-only) {
@@ -33,11 +33,11 @@
 }
 
 .adyenCardComponent :global(.adyen-checkout__input) {
-  @apply ring-1 ring-inset ring-stroke-weak hover:ring-1 hover:ring-stroke-strong border-0 h-12 py-2 px-0 transition rounded-lg cursor-text;
+  @apply ring-1 ring-inset ring-border-primary hover:ring-1 hover:ring-border-brand border-0 h-12 py-2 px-0 transition rounded-lg cursor-text;
 }
 
 .adyenCardComponent :global(.adyen-checkout__field.adyen-checkout__field--error .adyen-checkout__input-wrapper) {
-  @apply bg-fill-error-weak;
+  @apply bg-bg-error-primary;
 }
 
 .adyenCardComponent :global(.adyen-checkout__input:active) {
@@ -45,11 +45,11 @@
 }
 
 .adyenCardComponent :global(.adyen-checkout__input--focus) {
-  @apply ring-2! ring-stroke-focus! border-none! outline-none! shadow-none!;
+  @apply ring-2! ring-effects-focus-ring! border-none! outline-none! shadow-none!;
 }
 
 .adyenCardComponent :global(.adyen-checkout__field.adyen-checkout__field--error .adyen-checkout__input) {
-  @apply ring-2 ring-stroke-error-strong hover:ring-1 hover:ring-stroke-strong;
+  @apply ring-2 ring-border-error hover:ring-1 hover:ring-border-brand;
 }
 
 .adyenCardComponent :global(.adyen-checkout-contextual-text--error) {
