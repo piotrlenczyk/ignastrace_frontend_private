@@ -3,10 +3,9 @@ import { redirect } from 'next/navigation';
 import { getFunnelPhone } from '@/actions/funnel-phone-number';
 import FunnelLayout from '@/components/layouts/funnel-layout';
 import { ROUTES } from '@/constants/routes';
-import { getCurrencyByCountryCode } from '@/libs/currency';
-import { getApi } from '@/libs/server/api';
+import { getCurrencyProducts, getPlanProductName, getPricingProduct } from '@/libs/pricing';
+import { getCheckoutPricing } from '@/server/getters/pricing.getters';
 import { getServerSettings } from '@/settings/settings.server';
-import type { Products } from '@/types/products';
 
 import AsSeenOn from '../_components/as-seen-on';
 import { CustomerOpinionsSection } from '../_components/customer-opinions-section';
@@ -17,15 +16,25 @@ import SummaryReportCard from '../_components/summary-report-card';
 import WhatYouGet from '../_components/whatYouGet';
 
 const SummaryPage = async () => {
-  const api = await getApi();
   const phoneNumber = await getFunnelPhone();
-  const country = (await getServerSettings()).countryCode;
-  const currency = getCurrencyByCountryCode(country);
-  const product = await api.get<Products>(`/products?currency=${currency}`);
 
   if (!phoneNumber) {
     return redirect(ROUTES.REVERSE_LOOKUP.HOME);
   }
+
+  const country = (await getServerSettings()).countryCode;
+  const { pricing, initialCurrency } = await getCheckoutPricing(country);
+
+  /*
+   * The trial product, resolved the way the checkout that follows resolves it:
+   * same catalogue read, same currency, same plan. This screen sells the trial and
+   * only the trial, and it carries no currency selector, so the amount quoted here
+   * is the amount the next screen opens on — one catalogue, one number.
+   */
+  const { price } = getPricingProduct({
+    plan: getPlanProductName('trial'),
+    currencyProducts: getCurrencyProducts({ products: pricing.products, currency: initialCurrency }),
+  });
 
   return (
     <FunnelLayout isReverseLookup showLogoLink={false}>
@@ -33,7 +42,7 @@ const SummaryPage = async () => {
         <section className="container-wide">
           <SummaryReportCard phoneNumber={phoneNumber} />
           <div className="mx-4 mt-4 mb-7 grid grid-cols-1 gap-8 md:mt-16 md:mb-5 md:grid-cols-2 md:pt-2 lg:mx-0">
-            <GetReport product={product} currency={currency} country={country} />
+            <GetReport price={price} country={country} />
             <WhatYouGet />
           </div>
           <AsSeenOn className="mx-4 pt-4 pb-6 md:mx-0 md:py-10" />
