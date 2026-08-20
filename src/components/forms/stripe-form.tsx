@@ -36,7 +36,6 @@ export const StripeForm = ({
   currency,
   amount,
   isReactivate = false,
-  skipTrial = isReactivate,
   isUpdatePaymentMethod = false,
   isSubmitting,
   routeToRedirect = '',
@@ -51,7 +50,6 @@ export const StripeForm = ({
   /** What falls due now, in minor units — the wallet sheet shows this figure. */
   amount: number;
   isReactivate?: boolean;
-  skipTrial?: boolean;
   isUpdatePaymentMethod?: boolean;
   isSubmitting: boolean;
   routeToRedirect?: string;
@@ -92,9 +90,6 @@ export const StripeForm = ({
 
   const { mutate: confirmStripePayment, isPending } = useConfirmStripePaymentMutation({
     stripe,
-    isReactivate,
-    skipTrial,
-    isUpdatePaymentMethod,
     onSuccess: () => {
       setIsRedirecting(true);
 
@@ -128,7 +123,6 @@ export const StripeForm = ({
       confirmStripePayment({
         data,
         email: session?.user.email || '',
-        currency,
         elements,
       });
     } catch {
@@ -141,7 +135,6 @@ export const StripeForm = ({
       confirmStripePayment({
         data,
         email: session?.user.email || '',
-        currency,
         elements,
       });
     } catch {
