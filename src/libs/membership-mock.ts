@@ -86,7 +86,7 @@ export const UNSUBSCRIBED_MEMBERSHIP: MockMembership = {
 };
 
 /** The switch. One line, one edit, both worlds. */
-export const ACTIVE_MEMBERSHIP: MockMembership = UNSUBSCRIBED_MEMBERSHIP;
+export const ACTIVE_MEMBERSHIP: MockMembership = SUBSCRIBED_MEMBERSHIP;
 
 /**
  * The real account stitched together with the mocked membership, in the shape

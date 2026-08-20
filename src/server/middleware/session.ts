@@ -3,6 +3,7 @@ import type { NextRequest, NextResponse } from 'next/server';
 
 import { apiServerClient } from '@/network/api/apiServerClient';
 import { unwrapApiResponse } from '@/network/http-response-handler';
+import { carryPaymentsCredential, withPaymentsCredential } from '@/server/session/payments-credential';
 import {
   getSessionOptions,
   SESSION_COOKIE_NAME,
@@ -128,6 +129,12 @@ const requestTokenRefresh = async (request: NextRequest, session: SessionData) =
  * Concurrent renewals are knowingly unguarded: the refresh token rotates, so
  * two requests arriving together can invalidate each other and sign the member
  * out. Deduplicating them is out of scope for now (see issue #16).
+ *
+ * The second, independent branch keeps the *payments* credential alive — a token
+ * pair belonging to one technical account on the other upstream, which that
+ * upstream is currently the only thing that will authenticate a member. It is
+ * temporary and it is a deletion, not an untangling: this branch and the module
+ * behind it go together. Both pairs are sealed once, into the one cookie.
  */
 export const session = async (request: NextRequest): Promise<SessionStep> => {
   const current = await readSession(request.cookies);
@@ -136,27 +143,48 @@ export const session = async (request: NextRequest): Promise<SessionStep> => {
     return { session: null, applyToResponse: LEAVE_RESPONSE_ALONE };
   }
 
-  if (Date.now() < current.accessTokenExpiresAt) {
+  let renewed = current;
+  let hasChanged = false;
+
+  if (Date.now() >= current.accessTokenExpiresAt) {
+    try {
+      const { token, refreshToken } = await requestTokenRefresh(request, current);
+
+      renewed = carryPaymentsCredential(current, createSessionObject({ access: token, refresh: refreshToken }));
+      hasChanged = true;
+    } catch {
+      request.cookies.delete(SESSION_COOKIE_NAME);
+
+      return {
+        session: null,
+        applyToResponse: (response) => response.cookies.delete(SESSION_COOKIE_NAME),
+      };
+    }
+  }
+
+  /*
+   * Ordered after the API pair on purpose: a session that has just stopped
+   * existing is not worth a foreign round trip. Nothing to do is answered with
+   * nothing rather than with a copy, because the common case must not reseal the
+   * cookie on every request.
+   */
+  const withCredential = await withPaymentsCredential(renewed);
+
+  if (withCredential) {
+    renewed = withCredential;
+    hasChanged = true;
+  }
+
+  if (!hasChanged) {
     return { session: current, applyToResponse: LEAVE_RESPONSE_ALONE };
   }
 
-  try {
-    const { token, refreshToken } = await requestTokenRefresh(request, current);
-    const renewed = createSessionObject({ access: token, refresh: refreshToken });
-    const sealed = await sealData(renewed, getSessionOptions());
+  const sealed = await sealData(renewed, getSessionOptions());
 
-    request.cookies.set(SESSION_COOKIE_NAME, sealed);
+  request.cookies.set(SESSION_COOKIE_NAME, sealed);
 
-    return {
-      session: renewed,
-      applyToResponse: (response) => response.cookies.set(SESSION_COOKIE_NAME, sealed, SESSION_COOKIE_OPTIONS),
-    };
-  } catch {
-    request.cookies.delete(SESSION_COOKIE_NAME);
-
-    return {
-      session: null,
-      applyToResponse: (response) => response.cookies.delete(SESSION_COOKIE_NAME),
-    };
-  }
+  return {
+    session: renewed,
+    applyToResponse: (response) => response.cookies.set(SESSION_COOKIE_NAME, sealed, SESSION_COOKIE_OPTIONS),
+  };
 };

@@ -48,6 +48,16 @@ person using the site. A renewal that fails clears the session and the request c
 anonymous — it does not redirect, because a middleware redirect is not followed for a server
 action.
 
+**Payments credential**
+: The second token pair the session carries, for the payments upstream — which authenticates a
+caller by a cookie holding a token _it_ issued, and therefore recognises none of the pair above.
+It belongs to one technical account rather than to the member, is seeded from configuration and
+renewed in the middleware alongside the API pair, and is the only credential the payments door
+presents. It says nothing about who anybody is; identity comes from the **access token** and only
+from there. Temporary, and switched off by unsetting its configuration —
+[ADR 0023](adr/0023-a-shared-technical-account-for-the-payments-upstream.md) records the
+trade-off it buys and the condition for deleting it.
+
 **Protected route**
 : A path only an authenticated account may open. An anonymous visitor on one is sent to the
 login route with their original destination preserved, so signing in returns them to where

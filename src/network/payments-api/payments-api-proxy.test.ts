@@ -65,14 +65,40 @@ const { GET, POST, PUT } = await import('./payments-api-proxy');
 
 const SESSION: SessionData = {
   isLoggedIn: true,
-  accessToken: 'access-token-1',
+  accessToken: 'an-api-access-token',
   accessTokenExpiresAt: Date.now() + 60 * 60 * 1000,
   refreshToken: 'refresh-token-1',
   user: { id: 'user-1', email: 'member@example.com', type: 'USER', roles: ['STANDARD_USER'] },
+  paymentsAccessToken: 'payments-access-token-1',
+  paymentsAccessTokenExpiresAt: Date.now() + 60 * 60 * 1000,
+  paymentsRefreshToken: 'payments-refresh-token-1',
 };
 
+/**
+ * The credential this door presents. Not the session's API access token: the
+ * payments upstream only recognises tokens it issued, so the session carries a
+ * second pair for it.
+ */
+const CREDENTIAL = SESSION.paymentsAccessToken;
+
+const seal = async (session: SessionData) =>
+  sealData(session, { password: SESSION_PASSWORD, ttl: SESSION_TTL_SECONDS });
+
 const signedIn = async () => {
-  cookieJar.set(SESSION_COOKIE_NAME, await sealData(SESSION, { password: SESSION_PASSWORD, ttl: SESSION_TTL_SECONDS }));
+  cookieJar.set(SESSION_COOKIE_NAME, await seal(SESSION));
+};
+
+/** A member signed in on an environment where no payments credential is configured. */
+const signedInWithoutCredential = async () => {
+  cookieJar.set(
+    SESSION_COOKIE_NAME,
+    await seal({
+      ...SESSION,
+      paymentsAccessToken: undefined,
+      paymentsAccessTokenExpiresAt: undefined,
+      paymentsRefreshToken: undefined,
+    }),
+  );
 };
 
 type Upstream = {
@@ -220,13 +246,32 @@ describe('the payments proxy', () => {
     });
   });
 
-  it("attaches the session's access token as the cookie the service authenticates with", async () => {
+  it("attaches the session's payments credential as the cookie the service authenticates with", async () => {
     await signedIn();
     const payments = serve();
 
     await GET(fromBrowser('/products/user'));
 
-    expect(payments.upstreamRequest().headers.get('cookie')).toBe(`access-token=${SESSION.accessToken}`);
+    expect(payments.upstreamRequest().headers.get('cookie')).toBe(`access-token=${CREDENTIAL}`);
+  });
+
+  it("never presents the session's API access token, which this service did not issue", async () => {
+    await signedIn();
+    const payments = serve();
+
+    await GET(fromBrowser('/products/user'));
+
+    expect(payments.upstreamRequest().headers.get('cookie')).not.toContain(SESSION.accessToken);
+  });
+
+  it('sends no cookie at all for a session holding no payments credential', async () => {
+    await signedInWithoutCredential();
+    const payments = serve();
+
+    const response = await GET(fromBrowser('/products/user'));
+
+    expect(response.status).toBe(200);
+    expect(payments.upstreamRequest().headers.get('cookie')).toBeNull();
   });
 
   it('forwards a request without a session rather than refusing it', async () => {
@@ -238,13 +283,23 @@ describe('the payments proxy', () => {
     expect(payments.upstreamRequest().headers.get('cookie')).toBeNull();
   });
 
+  it('reaches the public pricing path unauthenticated, as a visitor without an account does', async () => {
+    const payments = serve({ body: { products: [{ id: 'product-1' }] } });
+
+    const response = await GET(fromBrowser('/products'));
+
+    expect(response.status).toBe(200);
+    expect(payments.upstreamRequest().url).toBe(`${PAYMENTS_API}/products`);
+    expect(payments.upstreamRequest().headers.get('cookie')).toBeNull();
+  });
+
   it("discards a Cookie header the browser supplied, without displacing the session's", async () => {
     await signedIn();
     const payments = serve();
 
     await GET(fromBrowser('/products/user', { headers: { cookie: 'access-token=a-token-of-my-own' } }));
 
-    expect(payments.upstreamRequest().headers.get('cookie')).toBe(`access-token=${SESSION.accessToken}`);
+    expect(payments.upstreamRequest().headers.get('cookie')).toBe(`access-token=${CREDENTIAL}`);
   });
 
   it('discards a browser cookie even when there is no session to replace it with', async () => {
@@ -294,16 +349,14 @@ describe('the payments proxy', () => {
     expect(payments.upstreamRequest().headers.get('cookie')).toBe('paymentProvider=stripe; trialDays=7');
   });
 
-  it('merges the override cookies with the session cookie rather than displacing it', async () => {
+  it('merges the override cookies with the credential rather than displacing it', async () => {
     await signedIn();
     cookieJar.set('payments_splitPayment', 'true');
     const payments = serve();
 
     await GET(fromBrowser('/products/user'));
 
-    expect(payments.upstreamRequest().headers.get('cookie')).toBe(
-      `access-token=${SESSION.accessToken}; splitPayment=true`,
-    );
+    expect(payments.upstreamRequest().headers.get('cookie')).toBe(`access-token=${CREDENTIAL}; splitPayment=true`);
   });
 
   it('sends the override cookies for a caller with no session at all', async () => {
@@ -336,14 +389,14 @@ describe('the payments proxy', () => {
     expect(payments.upstreamRequest().headers.get('cookie')).toBeNull();
   });
 
-  it("never lets an override displace the session's own token", async () => {
+  it('never lets an override displace the credential the session holds', async () => {
     await signedIn();
     cookieJar.set('payments_access-token', 'a-token-of-the-page-script-s-choosing');
     const payments = serve();
 
     await GET(fromBrowser('/products/user'));
 
-    expect(payments.upstreamRequest().headers.get('cookie')).toBe(`access-token=${SESSION.accessToken}`);
+    expect(payments.upstreamRequest().headers.get('cookie')).toBe(`access-token=${CREDENTIAL}`);
   });
 
   it('re-encodes an override value the cookie store decoded, so one override stays one cookie', async () => {
@@ -355,7 +408,7 @@ describe('the payments proxy', () => {
     expect(payments.upstreamRequest().headers.get('cookie')).toBe('paymentProvider=stripe%3B%20trialDays%3D999');
   });
 
-  it("sends the session's token and the overrides, and no other cookie of this origin", async () => {
+  it('sends the credential and the overrides, and no other cookie of this origin', async () => {
     await signedIn();
     cookieJar.set('NEXT_LOCALE', 'es');
     cookieJar.set('payments_trialDays', '7');
@@ -363,7 +416,7 @@ describe('the payments proxy', () => {
 
     await GET(fromBrowser('/products/user'));
 
-    expect(payments.upstreamRequest().headers.get('cookie')).toBe(`access-token=${SESSION.accessToken}; trialDays=7`);
+    expect(payments.upstreamRequest().headers.get('cookie')).toBe(`access-token=${CREDENTIAL}; trialDays=7`);
   });
 
   it('discards an Authorization header the browser supplied', async () => {

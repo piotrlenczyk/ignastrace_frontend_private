@@ -17,6 +17,21 @@ export type SessionData = {
   accessTokenExpiresAt: number;
   refreshToken: string;
   user: SessionUser;
+  /*
+   * The payments credential: a second pair, for the other upstream, belonging to
+   * one technical account rather than to this member. Optional because a session
+   * is minted without it and stays usable without it — who the member is comes
+   * from the pair above, and only from there.
+   *
+   * TEMPORARY, and removable by deletion: the fields, the module that fills them
+   * and one branch of the middleware's session step go together the day a
+   * payments deployment trusts the API's own tokens. See
+   * docs/adr/0023-a-shared-technical-account-for-the-payments-upstream.md.
+   */
+  paymentsAccessToken?: string;
+  /** Epoch milliseconds, taken from the payments access token's `exp` claim. */
+  paymentsAccessTokenExpiresAt?: number;
+  paymentsRefreshToken?: string;
 };
 
 /**

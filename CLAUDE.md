@@ -87,12 +87,21 @@ separate rather than folded in. Server-side, the API is read through
 paths. A browser call to payments goes through the payments query hooks (`$paymentsApi` in
 `src/network/payments-api/payments-api-browser-client.ts`) onto the payments proxy at
 `/payments-api-proxy`, as an API call goes through `$api` onto the API's at `/api-proxy`. The
-payments door attaches the session's token as the **cookie** that service authenticates with — it
-offers a member no bearer — and refuses the back-office path families outright. A payments refusal
-arrives in the same flattened envelope as an API one, discriminated by `source: 'payments-api'`.
-Regenerate its specification with `npm run generate:payments-api`. The payments host is temporarily a
-resumewise development instance, the only one that answers today; when an Ignastrace one exists the
-change is that environment variable's value and a regeneration against the new host, not code.
+payments door attaches a token as the **cookie** that service authenticates with — it offers a member
+no bearer — and refuses the back-office path families outright. A payments refusal arrives in the same
+flattened envelope as an API one, discriminated by `source: 'payments-api'`. Regenerate its
+specification with `npm run generate:payments-api`. The payments host is temporarily a resumewise
+development instance, the only one that answers today; when an Ignastrace one exists the change is
+that environment variable's value and a regeneration against the new host, not code.
+
+**The token that door presents is not the member's.** That upstream only recognises tokens it issued,
+so the session carries a **second pair** — the payments credential, belonging to one shared technical
+account, seeded from configuration and renewed in a second branch of the middleware's session step.
+The API pair still says who the member is; the payments credential says nothing about anybody. It
+lives in `src/server/session/payments-credential.ts` and nowhere else, and it is temporary by
+construction: `docs/adr/0023-a-shared-technical-account-for-the-payments-upstream.md` records the
+trade and the condition for deleting it. Don't build on it, don't read it outside that module and the
+payments client, and don't gate it on a feature flag — configuration presence is the switch.
 
 The rules:
 

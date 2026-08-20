@@ -42,13 +42,21 @@ export const _paymentsClient = createClient<paths>({ baseUrl: process.env.PAYMEN
  * client's getters give: there is no request scope in every runtime this client
  * can be reached from, and a static import would still have to resolve there.
  */
-const sessionAccessToken = async (): Promise<string | null> => {
+/*
+ * The *payments* credential, not the session's API access token: this upstream
+ * only recognises tokens it issued itself, and the pair that says who the member
+ * is was issued by the other one. The middleware keeps this field filled from a
+ * technical account; an unconfigured environment leaves it empty, which is the
+ * same case as a caller with no session. TEMPORARY — see
+ * docs/adr/0023-a-shared-technical-account-for-the-payments-upstream.md.
+ */
+const paymentsAccessToken = async (): Promise<string | null> => {
   try {
     const { getSession } = await import('@/server/session/session.utils');
     const session = await getSession();
 
     // An empty session is an object without an access token, never `null`.
-    return session.accessToken ?? null;
+    return session.paymentsAccessToken ?? null;
   } catch {
     return null;
   }
@@ -92,15 +100,16 @@ const overrideCookies = async (): Promise<string[]> => {
 
 /**
  * Everything the payments service is sent that no call site should have to
- * remember: the session's access token as the cookie it authenticates with, the
- * caller's address and country, and the QA override cookies repackaged for it.
+ * remember: the session's payments credential as the cookie it authenticates
+ * with, the caller's address and country, and the QA override cookies repackaged
+ * for it.
  *
  * The credential and the two context headers are caller-wins, as on the API
  * client. A header already on the request is left exactly as it is, so a flow
- * that must present something other than the session's token still can, and a
- * caller without a request scope can state the context itself.
+ * that must present something other than the session's credential still can, and
+ * a caller without a request scope can state the context itself.
  *
- * A caller without a session simply goes out without a token, which is what lets
+ * A caller without a credential simply goes out without one, which is what lets
  * public pricing be read before anybody has an account — an unauthenticated call
  * is a normal case here, not a failure to be refused early.
  *
@@ -111,10 +120,10 @@ const overrideCookies = async (): Promise<string[]> => {
 const requestScopeMiddleware: Middleware = {
   async onRequest({ request }) {
     if (!request.headers.has('Cookie')) {
-      const accessToken = await sessionAccessToken();
+      const credential = await paymentsAccessToken();
 
-      if (accessToken) {
-        request.headers.set('Cookie', `${ACCESS_TOKEN_COOKIE}=${accessToken}`);
+      if (credential) {
+        request.headers.set('Cookie', `${ACCESS_TOKEN_COOKIE}=${credential}`);
       }
     }
 

@@ -4,7 +4,10 @@
 [0009](0009-one-proxy-for-every-browser-call.md), which named "a second API with a second error
 envelope" as the thing that would make its parser layer worth having; this is that case. It departs
 from [0015](0015-the-proxy-refuses-session-issuing-paths-not-a-prefix.md) on how a proxy refuses a
-path, for the payments door only — the record on the other door stands unchanged.
+path, for the payments door only — the record on the other door stands unchanged. Corrected on one
+point by [0023](0023-a-shared-technical-account-for-the-payments-upstream.md): the credential the
+payments door presents is **not** the session's own access token, because the deployment that answers
+today did not issue it. Everything else here stands.
 
 ## Context
 
