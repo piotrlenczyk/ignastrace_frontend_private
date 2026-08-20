@@ -144,6 +144,14 @@ settings:
   # TEMPORARY: the resumewise development instance is the only payments instance that answers today.
   PAYMENTS_API_BASE_URL: https://dev.resumewise.com/api/payments/v1
 
+  # Where the payments credential is renewed: host and path in one value, so a wrong assumption
+  # about that upstream's renewal contract is a configuration fix. Its companion,
+  # PAYMENTS_API_SEED_REFRESH_TOKEN, is the technical account's refresh token and is a secret, so
+  # it arrives with SESSION_PASSWORD from the external secret store rather than from here.
+  # TEMPORARY: both exist only while the payments credential is a shared account's — unsetting
+  # either one switches the arrangement off, leaving payments calls unauthenticated.
+  PAYMENTS_API_TOKEN_REFRESH_URL: https://dev.resumewise.com/api/payments/v1/auth/refresh-token
+
   OTEL_EXPORTER_OTLP_ENDPOINT: 'http://groundcover-sensor.groundcover:4318'
   OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
 

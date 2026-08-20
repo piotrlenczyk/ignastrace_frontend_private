@@ -1,6 +1,6 @@
 import { sealData, unsealData } from 'iron-session';
 import { type NextFetchEvent, NextRequest } from 'next/server';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { TRACKING_PREFIX } from '@/constants/tracking';
 import { SESSION_COOKIE_NAME, SESSION_TTL_SECONDS } from '@/server/session/session.constants';
@@ -10,10 +10,28 @@ const SITE = 'https://ignastrace.io';
 
 const API = 'https://api.ignastrace.test';
 
+/**
+ * Where the payments credential is renewed, and the refresh token configuration
+ * seeds that renewal with. Stubbed into the environment by the payments group
+ * alone: every other test in this file describes an environment where the
+ * arrangement is not configured, which is what keeps them unchanged.
+ */
+const PAYMENTS_RENEWAL_URL = 'https://payments.ignastrace.test/api/payments/v1/auth/refresh-token';
+
+const SEED_REFRESH_TOKEN = 'payments-refresh-seed';
+
 const SESSION_PASSWORD = 'a-test-sealing-password-of-at-least-32-characters';
 
 vi.stubEnv('SESSION_PASSWORD', SESSION_PASSWORD);
 vi.stubEnv('API_BASE_URL', API);
+
+/*
+ * Unconfigured unless a test says otherwise, and stated rather than assumed: the
+ * suite loads the developer's own environment file, so a machine that has the
+ * payments credential set up would otherwise send these tests at a real host.
+ */
+vi.stubEnv('PAYMENTS_API_TOKEN_REFRESH_URL', undefined);
+vi.stubEnv('PAYMENTS_API_SEED_REFRESH_TOKEN', undefined);
 
 /*
  * The network, substituted once for the whole file: the generated client the
@@ -27,10 +45,23 @@ let respond: (request: Request) => Promise<Response> = async (request) => {
   throw new Error(`Unexpected request to ${request.url}`);
 };
 
-vi.stubGlobal('fetch', async (request: Request) => {
+/*
+ * The payments credential's renewal answers separately, because it is a second
+ * and independent branch of the same step: a test about one pair states nothing
+ * about the other's endpoint, and an unexpected call to either one raises.
+ */
+let respondToPayments: (request: Request) => Promise<Response> = async (request) => {
+  throw new Error(`Unexpected request to ${request.url}`);
+};
+
+vi.stubGlobal('fetch', async (input: Request | string, init?: RequestInit) => {
+  // The API's renewal goes through the generated client, which hands over a
+  // `Request`; the payments one is a bare call, with a URL and an init object.
+  const request = input instanceof Request ? input : new Request(input, init);
+
   upstreamRequests.push(request);
 
-  return respond(request);
+  return request.url === PAYMENTS_RENEWAL_URL ? respondToPayments(request) : respond(request);
 });
 
 /*
@@ -117,7 +148,29 @@ const serveRenewalSuccess = () => serveRenewal({ status: 201, body: RENEWED });
 
 const serveRenewalRefusal = () => serveRenewal({ status: 401, body: { message: 'Unauthorized' } });
 
+/** The payments credential's renewal endpoint, answering however the test needs it to. */
+const servePaymentsRenewal = (route: { status: number; body?: unknown }) => {
+  respondToPayments = async () =>
+    new Response(route.body === undefined ? null : JSON.stringify(route.body), {
+      status: route.status,
+      headers: { 'Content-Type': 'application/json' },
+    });
+};
+
 const apiCalls = () => upstreamRequests.length;
+
+const paymentsRenewals = () => upstreamRequests.filter((request) => request.url === PAYMENTS_RENEWAL_URL);
+
+/** The request the payments upstream was actually sent, rather than the one a helper described. */
+const paymentsRenewalRequest = () => {
+  const [request] = paymentsRenewals();
+
+  if (!request) {
+    throw new Error('The payments upstream was not called.');
+  }
+
+  return request;
+};
 
 /** The request the API was actually sent, rather than the arguments a helper was called with. */
 const upstreamRequest = () => {
@@ -147,6 +200,9 @@ const sessionCookieOf = (response: Response) => {
 
 beforeEach(() => {
   serveRenewal({ status: 500 });
+  respondToPayments = async (request) => {
+    throw new Error(`Unexpected request to ${request.url}`);
+  };
   upstreamRequests.length = 0;
 });
 
@@ -299,6 +355,216 @@ describe('middleware', () => {
 
       expect(headers.get('x-locale')).toBe('es');
       expect(headers.get('x-forwarded-for')).toBe('203.0.113.7');
+    });
+  });
+
+  /*
+   * The payments credential: a second, independent branch of the same step,
+   * covered through the same seam. The configuration is stubbed for these tests
+   * only — everywhere else in this file the arrangement is unconfigured, which is
+   * both the deployment case worth covering and what keeps the tests above
+   * describing the API pair alone.
+   */
+  describe('the payments credential', () => {
+    const PAYMENTS_TOKEN = accessToken({ exp: IN_AN_HOUR });
+
+    const RENEWED_PAYMENTS = { token: PAYMENTS_TOKEN, refreshToken: 'payments-refresh-2' };
+
+    const servePaymentsRenewalSuccess = () => servePaymentsRenewal({ status: 201, body: RENEWED_PAYMENTS });
+
+    const servePaymentsRenewalRefusal = () => servePaymentsRenewal({ status: 401, body: { message: 'Unauthorized' } });
+
+    /** A session carrying a payments credential that has already run out. */
+    const WITH_STALE_CREDENTIAL: SessionData = {
+      ...VALID_SESSION,
+      paymentsAccessToken: accessToken({ exp: AN_HOUR_AGO }),
+      paymentsAccessTokenExpiresAt: AN_HOUR_AGO * 1000,
+      paymentsRefreshToken: 'payments-refresh-1',
+    };
+
+    /** A session whose payments credential is good for another hour. */
+    const WITH_LIVE_CREDENTIAL: SessionData = {
+      ...VALID_SESSION,
+      paymentsAccessToken: PAYMENTS_TOKEN,
+      paymentsAccessTokenExpiresAt: IN_AN_HOUR * 1000,
+      paymentsRefreshToken: 'payments-refresh-1',
+    };
+
+    beforeEach(() => {
+      vi.stubEnv('PAYMENTS_API_TOKEN_REFRESH_URL', PAYMENTS_RENEWAL_URL);
+      vi.stubEnv('PAYMENTS_API_SEED_REFRESH_TOKEN', SEED_REFRESH_TOKEN);
+    });
+
+    afterEach(() => {
+      vi.stubEnv('PAYMENTS_API_TOKEN_REFRESH_URL', undefined);
+      vi.stubEnv('PAYMENTS_API_SEED_REFRESH_TOKEN', undefined);
+      // The incidents below are logged deliberately, and the suite is set up to
+      // fail on a stray one — so the console goes back as it was found.
+      vi.restoreAllMocks();
+    });
+
+    it('is seeded from configuration when the session holds none', async () => {
+      servePaymentsRenewalSuccess();
+
+      const response = await run(await requestWith(VALID_SESSION));
+      const renewal = paymentsRenewalRequest();
+
+      expect(renewal.method).toBe('POST');
+      expect(await renewal.json()).toEqual({ refreshToken: SEED_REFRESH_TOKEN });
+      expect(await unseal(sessionCookieOf(response)!)).toMatchObject({
+        paymentsAccessToken: PAYMENTS_TOKEN,
+        paymentsAccessTokenExpiresAt: IN_AN_HOUR * 1000,
+        paymentsRefreshToken: 'payments-refresh-2',
+      });
+    });
+
+    it('spends the rotated refresh token the session holds rather than the seed', async () => {
+      servePaymentsRenewalSuccess();
+
+      const response = await run(await requestWith(WITH_STALE_CREDENTIAL));
+
+      expect(await paymentsRenewalRequest().json()).toEqual({ refreshToken: 'payments-refresh-1' });
+      expect(await unseal(sessionCookieOf(response)!)).toMatchObject({ paymentsRefreshToken: 'payments-refresh-2' });
+    });
+
+    it('leaves a credential that has not run out alone, without asking the upstream anything', async () => {
+      const response = await run(await requestWith(WITH_LIVE_CREDENTIAL));
+
+      expect(paymentsRenewals()).toHaveLength(0);
+      expect(sessionCookieOf(response)).toBeNull();
+    });
+
+    it('renews a credential that will not decode, rather than reading its expiry as valid forever', async () => {
+      vi.spyOn(console, 'error').mockImplementation(() => {});
+      servePaymentsRenewal({ status: 201, body: { token: 'not-a-token', refreshToken: 'payments-refresh-2' } });
+
+      const response = await run(await requestWith(VALID_SESSION));
+
+      expect(await unseal(sessionCookieOf(response)!)).toMatchObject({
+        paymentsAccessToken: 'not-a-token',
+        paymentsAccessTokenExpiresAt: 0,
+      });
+    });
+
+    it('clears the three fields when the renewal is refused, and logs the incident', async () => {
+      const logged = vi.spyOn(console, 'error').mockImplementation(() => {});
+      servePaymentsRenewalRefusal();
+
+      const response = await run(await requestWith(WITH_STALE_CREDENTIAL));
+      const sealed = await unseal(sessionCookieOf(response)!);
+
+      expect(sealed.paymentsAccessToken).toBeUndefined();
+      expect(sealed.paymentsAccessTokenExpiresAt).toBeUndefined();
+      expect(sealed.paymentsRefreshToken).toBeUndefined();
+      expect(logged).toHaveBeenCalled();
+    });
+
+    it('leaves the member signed in when the renewal is refused', async () => {
+      vi.spyOn(console, 'error').mockImplementation(() => {});
+      servePaymentsRenewalRefusal();
+
+      const response = await run(await requestWith(WITH_STALE_CREDENTIAL));
+
+      expect(response.headers.get('location')).toBeNull();
+      expect(await unseal(sessionCookieOf(response)!)).toMatchObject({
+        isLoggedIn: true,
+        accessToken: VALID_SESSION.accessToken,
+        refreshToken: 'refresh-1',
+      });
+    });
+
+    it('leaves the API pair exactly as it was, and asks the API nothing', async () => {
+      servePaymentsRenewalSuccess();
+
+      const response = await run(await requestWith(VALID_SESSION));
+
+      expect(paymentsRenewals()).toHaveLength(apiCalls());
+      expect(await unseal(sessionCookieOf(response)!)).toMatchObject({
+        accessToken: VALID_SESSION.accessToken,
+        accessTokenExpiresAt: IN_AN_HOUR * 1000,
+        refreshToken: 'refresh-1',
+        user: VALID_SESSION.user,
+      });
+    });
+
+    it('seals both pairs into the one cookie when each has run out', async () => {
+      serveRenewalSuccess();
+      servePaymentsRenewalSuccess();
+
+      const response = await run(await requestWith(EXPIRED_SESSION));
+
+      expect(await unseal(sessionCookieOf(response)!)).toMatchObject({
+        refreshToken: 'refresh-2',
+        paymentsRefreshToken: 'payments-refresh-2',
+      });
+    });
+
+    it('carries the credential across an API renewal rather than renewing it too', async () => {
+      serveRenewalSuccess();
+
+      const expiredWithLiveCredential: SessionData = {
+        ...EXPIRED_SESSION,
+        paymentsAccessToken: PAYMENTS_TOKEN,
+        paymentsAccessTokenExpiresAt: IN_AN_HOUR * 1000,
+        paymentsRefreshToken: 'payments-refresh-1',
+      };
+
+      const response = await run(await requestWith(expiredWithLiveCredential));
+
+      expect(paymentsRenewals()).toHaveLength(0);
+      expect(await unseal(sessionCookieOf(response)!)).toMatchObject({
+        refreshToken: 'refresh-2',
+        paymentsAccessToken: PAYMENTS_TOKEN,
+        paymentsRefreshToken: 'payments-refresh-1',
+      });
+    });
+
+    it('renews on the payments proxy, which needs the credential as much as a page does', async () => {
+      servePaymentsRenewalSuccess();
+
+      const response = await run(await requestWith(VALID_SESSION, '/payments-api-proxy/products/user'));
+
+      expect(response.status).toBe(200);
+      expect(await unseal(sessionCookieOf(response)!)).toMatchObject({ paymentsRefreshToken: 'payments-refresh-2' });
+    });
+
+    it('rewrites the request cookie too, so the payments proxy reads what was just renewed', async () => {
+      servePaymentsRenewalSuccess();
+
+      const request = await requestWith(VALID_SESSION, '/payments-api-proxy/products/user');
+      await run(request);
+
+      expect(await unseal(request.cookies.get(SESSION_COOKIE_NAME)!.value)).toMatchObject({
+        paymentsAccessToken: PAYMENTS_TOKEN,
+      });
+    });
+
+    it('mints nothing for a visitor without a session', async () => {
+      const response = await run(await requestWith(null, '/pricing'));
+
+      expect(paymentsRenewals()).toHaveLength(0);
+      expect(sessionCookieOf(response)).toBeNull();
+    });
+  });
+
+  describe('the payments credential, unconfigured', () => {
+    it('is never asked for, and the session does not grow', async () => {
+      const response = await run(await requestWith(VALID_SESSION));
+
+      expect(apiCalls()).toBe(0);
+      expect(sessionCookieOf(response)).toBeNull();
+    });
+
+    it('is dropped from a session that still carries one, so unsetting the configuration switches it off', async () => {
+      const response = await run(
+        await requestWith({ ...VALID_SESSION, paymentsAccessToken: 'a-credential-from-yesterday' }),
+      );
+
+      const sealed = await unseal(sessionCookieOf(response)!);
+
+      expect(apiCalls()).toBe(0);
+      expect(sealed.paymentsAccessToken).toBeUndefined();
+      expect(sealed.accessToken).toBe(VALID_SESSION.accessToken);
     });
   });
 
