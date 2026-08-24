@@ -4,9 +4,8 @@ import { z } from 'zod';
 
 import { unwrapApiResponse } from '@/network/http-response-handler';
 import { paymentsApiServerClient } from '@/network/payments-api/payments-api-server-client';
+import { getSubscription } from '@/server/getters/subscription.getters';
 import { actionClient } from '@/server/lib/safe-action';
-
-import { getSubscription } from './subscription.actions';
 
 export const actionStartStripeSubscription = actionClient
   .inputSchema(

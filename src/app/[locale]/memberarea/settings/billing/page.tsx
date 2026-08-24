@@ -2,10 +2,9 @@ import { redirect } from 'next/navigation';
 
 import { ROUTES } from '@/constants/routes';
 import { getMemberCurrency, getReactivationProduct } from '@/libs/pricing';
-import { getApi } from '@/libs/server/api';
 import { getUserPricing } from '@/server/getters/pricing.getters';
+import { getSubscription } from '@/server/getters/subscription.getters';
 import { getServerSettings } from '@/settings/settings.server';
-import type { Subscription } from '@/types/subscription';
 
 import { BillingPageClient } from './_components/billing-page-client';
 
@@ -41,19 +40,26 @@ const getActivationProduct = async ({ country, previousCurrency }: { country: st
   }
 };
 
+/**
+ * The subscription is read from the payments service, which is the only upstream
+ * that models one — the new API publishes no subscription path at all.
+ *
+ * A member the payments service holds nothing for is sent home, exactly as a
+ * member with no legacy subscription was before. That branch is now the common
+ * one rather than the exceptional one, and ADR 0024 records what it costs.
+ */
 const BillingPage = async () => {
-  const api = await getApi();
-  const subscription = await api.get<Subscription>('/subscription');
-
-  const country = (await getServerSettings()).countryCode;
+  const { data: subscription } = await getSubscription();
 
   if (!subscription) {
     redirect(ROUTES.HOME);
   }
 
+  const country = (await getServerSettings()).countryCode;
+
   const activationProduct =
-    subscription.status === 'expired'
-      ? await getActivationProduct({ country, previousCurrency: subscription.currency })
+    subscription.calculatedStatus === 'expired'
+      ? await getActivationProduct({ country, previousCurrency: subscription.product.price.currency })
       : undefined;
 
   return <BillingPageClient subscription={subscription} country={country} activationProduct={activationProduct} />;

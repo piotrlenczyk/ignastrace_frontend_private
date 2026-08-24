@@ -2,42 +2,10 @@
 
 import { z } from 'zod';
 
-import { paymentsApiServerClient } from '@/network/payments-api/payments-api-server-client';
 import { getServerSession } from '@/server/session/session.utils';
-import { SUBSCRIPTION_PLANS, type SubscriptionDetails } from '@/types/pricing.types';
+import { SUBSCRIPTION_PLANS } from '@/types/pricing.types';
 
 import { actionClient } from '../lib/safe-action';
-
-export const getSubscription = async () => {
-  const result = await paymentsApiServerClient['/subscriptions'].GET({
-    next: {
-      tags: ['subscription'],
-    },
-  });
-
-  if (result.data) {
-    // Has access if
-    // - subscription is active
-    // - subscription is cancelled and not expired
-    // - subscription is expired and has next payment attempt
-    const hasAccessActive = result.data.status === 'active';
-    const hasAccessCancelled = result.data.status === 'cancelled' && new Date(result.data.expiresAt) > new Date();
-    const hasAccessExpired = !!(result.data.status === 'expired' && result.data.nextPaymentAttemptAt);
-
-    return {
-      ...result,
-      data: {
-        ...result.data,
-        hasAccess: hasAccessActive || hasAccessCancelled || hasAccessExpired,
-        calculatedStatus: hasAccessExpired ? 'pending' : result.data.status,
-        couldCancel: hasAccessActive || hasAccessExpired,
-        couldReactivate: hasAccessCancelled,
-      } satisfies SubscriptionDetails,
-    };
-  }
-
-  return result;
-};
 
 /**
  * What was bought, reported to the marketing platform.
