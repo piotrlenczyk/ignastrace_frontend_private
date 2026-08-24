@@ -502,7 +502,7 @@ export type paths = {
       path?: never;
       cookie?: never;
     };
-    /** List every declared feature flag and its current on/off state */
+    /** List every stored feature flag and its current on/off state */
     get: operations['getFeaturesFeatures'];
     put?: never;
     post?: never;
@@ -793,7 +793,7 @@ export type paths = {
     };
     /**
      * Read a report owner's sex-offender record
-     * @description The most legally sensitive data this product serves. Gated behind a compliance feature flag (404 when off), report/owner ownership (404), and the SEX_OFFENDERS upsell (403 when absent) — every read past the flag check is written to a mandatory SensitiveDataAccessLog row. Returns PENDING while spec 09's async fetch job hasn't landed yet.
+     * @description The most legally sensitive data this product serves. Gated behind report/owner ownership (404) and the SEX_OFFENDERS upsell (403 when absent) — every read past the ownership check is written to a mandatory SensitiveDataAccessLog row. Returns PENDING while spec 09's async fetch job hasn't landed yet.
      */
     get: operations['getDetailSexOffenderDetail'];
     put?: never;
@@ -1113,10 +1113,132 @@ export type paths = {
     patch: operations['updateUserUsersAdmin'];
     trace?: never;
   };
+  '/api/v1/admin/feature-flags': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * List every feature flag
+     * @description Not paginated — a small, admin-curated table
+     */
+    get: operations['listFeatureFlagsAdmin'];
+    put?: never;
+    /** Create a feature flag */
+    post: operations['createFeatureFlagsAdmin'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/v1/admin/feature-flags/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    /** Delete a feature flag */
+    delete: operations['deleteFeatureFlagsAdmin'];
+    options?: never;
+    head?: never;
+    /** Update a feature flag */
+    patch: operations['updateFeatureFlagsAdmin'];
+    trace?: never;
+  };
+  '/api/v1/admin/ui-config': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Admin UI config
+     * @description Returns the config that drives the dynamic admin app (resources, columns, filters, forms).
+     */
+    get: operations['getConfigAdminUiConfig'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 };
 export type webhooks = Record<string, never>;
 export type components = {
   schemas: {
+    TargetResponse: {
+      targetId: string;
+      /** @enum {string} */
+      targetType:
+        | 'User'
+        | 'UserDetails'
+        | 'UserProtected'
+        | 'AuthRefreshToken'
+        | 'NotificationTemplate'
+        | 'NotificationCenter'
+        | 'StorageFile'
+        | 'FileAttachment'
+        | 'Storage'
+        | 'AuditLog'
+        | 'ReverseLookupReport'
+        | 'ReportOwner'
+        | 'ReportDataLeak'
+        | 'ReportSocialMediaAccount'
+        | 'ReportPhoto'
+        | 'ReportUpsell'
+        | 'UpsellCredit'
+        | 'ReportPdfExport'
+        | 'SexOffenderRecord'
+        | 'SensitiveDataAccessLog'
+        | 'LocationRequest'
+        | 'ConsentLink'
+        | 'FeatureFlag';
+    };
+    BaseSenderReceiverResponse: {
+      id: string;
+      firstName: string;
+      lastName: string;
+      email: string;
+    };
+    ItemContextResponse: {
+      target?: components['schemas']['TargetResponse'] | null;
+      isRead?: boolean | null;
+      senderId?: string | null;
+      receiverId?: string | null;
+      sender?: components['schemas']['BaseSenderReceiverResponse'] | null;
+    };
+    NotificationCenterItemResponse: {
+      id: string;
+      icon?: string | null;
+      title: string;
+      body: string;
+      context: components['schemas']['ItemContextResponse'];
+      /** Format: date-time */
+      createdAt: string;
+    };
+    UnreadCountResponse: {
+      unreadCount: number;
+    };
+    ResultCursorPagination: {
+      cursor?: string | null;
+      totalSize: number;
+      nextCursor?: string | null;
+    };
+    NotificationCenterResponse: {
+      data: components['schemas']['NotificationCenterItemResponse'][];
+      meta: components['schemas']['UnreadCountResponse'];
+      pagination: components['schemas']['ResultCursorPagination'];
+    };
     MarkAsRead: {
       ids: string[];
     };
@@ -1151,39 +1273,8 @@ export type components = {
        */
       refreshToken: string;
     };
-    LoginSSODto: {
-      /** @description Either exchange code or proxy token is required. */
-      exchangeCode: string;
-    };
-    FacebookDataDeletionDto: {
-      signed_request: string;
-    };
-    FacebookDataDeletionResponse: {
-      /**
-       * @description URL where the user can check the status of their data deletion request
-       * @example https://example.com/auth/sso/facebook/data-deletion/status/abc123
-       */
-      url: string;
-      /**
-       * @description Confirmation code for tracking the deletion request
-       * @example abc123def456
-       */
-      confirmation_code: string;
-    };
-    FacebookDataDeletionStatusResponse: {
-      /**
-       * @description Status of the data deletion request
-       * @example completed
-       */
-      status: string;
-      /**
-       * @description Message describing the current status
-       * @example User account and associated data have been successfully deleted.
-       */
-      message: string;
-    };
     /**
-     * @description Language code ISO6391
+     * @description Language the user chose during signup, as an ISO 639-1 code. Persisted when this product has content for it; ignored otherwise, so an unsupported code never fails the signup. Only applied when this signup creates a new account.
      * @enum {string}
      */
     ISO6391LanguageCode:
@@ -1370,6 +1461,48 @@ export type components = {
       | 'za'
       | 'zh'
       | 'zu';
+    LoginSSODto: {
+      /** @description Either exchange code or proxy token is required. */
+      exchangeCode: string;
+      /**
+       * @description Phone number the user entered during onboarding, in any format. Normalized to E.164 and stored; ignored if it cannot be parsed. Only applied when this signup creates a new account — it never overwrites a value on an existing one.
+       * @example +14155550123
+       */
+      onboardingPhoneNumber?: string | null;
+      /**
+       * @description Language the user chose during signup, as an ISO 639-1 code. Persisted when this product has content for it; ignored otherwise, so an unsupported code never fails the signup. Only applied when this signup creates a new account.
+       * @example es
+       */
+      language?: components['schemas']['ISO6391LanguageCode'] | null;
+    };
+    FacebookDataDeletionDto: {
+      signed_request: string;
+    };
+    FacebookDataDeletionResponse: {
+      /**
+       * @description URL where the user can check the status of their data deletion request
+       * @example https://example.com/auth/sso/facebook/data-deletion/status/abc123
+       */
+      url: string;
+      /**
+       * @description Confirmation code for tracking the deletion request
+       * @example abc123def456
+       */
+      confirmation_code: string;
+    };
+    FacebookDataDeletionStatusResponse: {
+      /**
+       * @description Status of the data deletion request
+       * @example completed
+       * @enum {string}
+       */
+      status: 'pending' | 'completed' | 'not_found';
+      /**
+       * @description Message describing the current status
+       * @example User account and associated data have been successfully deleted.
+       */
+      message: string;
+    };
     GuestSessionDto: {
       /**
        * @description Language code ISO6391
@@ -1393,6 +1526,16 @@ export type components = {
        * @example preview
        */
       redirectFlow?: components['schemas']['AuthRedirectTypes'] | null;
+      /**
+       * @description Phone number the user entered during onboarding, in any format. Normalized to E.164 and stored; ignored if it cannot be parsed.
+       * @example +14155550123
+       */
+      onboardingPhoneNumber?: string | null;
+      /**
+       * @description Language the user chose during signup, as an ISO 639-1 code. Persisted when this product has content for it; ignored otherwise, so an unsupported code never fails the signup. Only applied when this signup creates a new account.
+       * @example es
+       */
+      language?: components['schemas']['ISO6391LanguageCode'] | null;
     };
     EmailDto: {
       /**
@@ -1442,6 +1585,27 @@ export type components = {
        */
       email: string;
     };
+    ActivityItemLocationResponse: {
+      /**
+       * @description Whether the request targets a phone number or a shareable link
+       * @example FIND_BY_NUMBER
+       * @enum {string}
+       */
+      type: 'FIND_BY_NUMBER' | 'FIND_BY_LINK';
+      /**
+       * @description Recipient-facing consent URL; empty string when no ConsentLink exists yet
+       * @example https://app.mobitrace.io/l/abc123
+       */
+      shareLink: string;
+      /** @description Sender-chosen label, for FIND_BY_LINK requests */
+      linkName?: string | null;
+      /** @description Captured latitude; null until the request resolves */
+      latitude?: number | null;
+      /** @description Captured longitude; null until the request resolves */
+      longitude?: number | null;
+      /** @description Reverse-geocoded address; null until the request resolves */
+      address?: string | null;
+    };
     ActivityItemResponse: {
       /**
        * @description The underlying LocationRequest or ReverseLookupReport id
@@ -1468,6 +1632,18 @@ export type components = {
        * @description The sort key — LocationRequest.updatedAt, or (for a ReverseLookupReport, which has no updatedAt column of its own) completedAt when set, else createdAt
        */
       updatedAt: string;
+      /**
+       * Format: date-time
+       * @description When this item last changed status. Distinct from `updatedAt`, which is the merge sort key: for a REVERSE_LOOKUP_REPORT that key is completedAt ?? createdAt, which conflates "finished" with "status changed"
+       */
+      statusUpdatedAt: string;
+      /**
+       * @description The number this item concerns — LocationRequest.phoneNumber or the report subject
+       * @example +14155550123
+       */
+      phone?: string | null;
+      /** @description Present only for a LOCATION_REQUEST. Absent for a REVERSE_LOOKUP_REPORT, which has no per-report location — location lives on its ReportOwner rows */
+      location?: components['schemas']['ActivityItemLocationResponse'] | null;
       /** @description True only for a REVERSE_LOOKUP_REPORT in FAILED status */
       retryable: boolean;
     };
@@ -1497,6 +1673,10 @@ export type components = {
        * @example premium-report
        */
       product?: string | null;
+    };
+    KlaviyoEventResponse: {
+      /** @description False when the event was skipped because the user has no email on file */
+      ok: boolean;
     };
     CreateLocationRequestDto: {
       /**
@@ -1658,14 +1838,26 @@ export type components = {
      */
     BadRequestHttpStatusCode: 'BAD_REQUEST';
     BadRequestErrorResponse: {
-      /** @description Additional information about the error. */
-      message?: string | null;
+      /** @description Human-readable summary of the error. Always present and never null: the formatter emits `error.message || UNKNOWN_MESSAGE`, so there is no path that omits it. Declared required for the same reason `details` is — both are documented by what the formatter sends, not by whether a caller happens to need them (#112). Not intended for display to end users; it is a developer-facing summary, and `errorCode` is what a client should branch on. */
+      message: string;
       /** @description Specific error code that explains the particular issue that occurred. */
       errorCode: components['schemas']['BadRequestErrorCode'];
       /** @description HTTP status code that corresponds to the error. */
       code: components['schemas']['BadRequestHttpStatusCode'];
-      /** @description Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages. */
-      details: string[] | string;
+      /** @description Additional context about the error. A validation failure carries one entry per offending field — `{ field, constraints }`, where `field` is a dotted path from the request-body root (`location.city`, `owners.0.name`) and `constraints` are `class-validator` keys such as `isEmail` or `whitelistValidation`. Constraint keys are deliberately machine-readable and carry no message text: a client maps them to its own localised copy, and nothing quoting a DTO message or a received value crosses the wire. Sent identically in every environment (#110) — unlike other error text, this is not affected by `disableErrorMessages`. Other errors may carry a single descriptive string, or an array of strings. Always sent — an error with no extra context carries an empty array. */
+      details:
+        | {
+            /** @example email */
+            field: string;
+            /**
+             * @example [
+             *       "isEmail"
+             *     ]
+             */
+            constraints: string[];
+          }[]
+        | string[]
+        | string;
       /** @description Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment. */
       stacktrace?: string[];
     };
@@ -1689,14 +1881,26 @@ export type components = {
      */
     ForbiddenHttpStatusCode: 'FORBIDDEN';
     ForbiddenErrorResponse: {
-      /** @description Additional information about the error. */
-      message?: string | null;
+      /** @description Human-readable summary of the error. Always present and never null: the formatter emits `error.message || UNKNOWN_MESSAGE`, so there is no path that omits it. Declared required for the same reason `details` is — both are documented by what the formatter sends, not by whether a caller happens to need them (#112). Not intended for display to end users; it is a developer-facing summary, and `errorCode` is what a client should branch on. */
+      message: string;
       /** @description Specific error code that explains the particular issue that occurred. */
       errorCode: components['schemas']['ForbiddenErrorCode'];
       /** @description HTTP status code that corresponds to the error. */
       code: components['schemas']['ForbiddenHttpStatusCode'];
-      /** @description Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages. */
-      details: string[] | string;
+      /** @description Additional context about the error. A validation failure carries one entry per offending field — `{ field, constraints }`, where `field` is a dotted path from the request-body root (`location.city`, `owners.0.name`) and `constraints` are `class-validator` keys such as `isEmail` or `whitelistValidation`. Constraint keys are deliberately machine-readable and carry no message text: a client maps them to its own localised copy, and nothing quoting a DTO message or a received value crosses the wire. Sent identically in every environment (#110) — unlike other error text, this is not affected by `disableErrorMessages`. Other errors may carry a single descriptive string, or an array of strings. Always sent — an error with no extra context carries an empty array. */
+      details:
+        | {
+            /** @example email */
+            field: string;
+            /**
+             * @example [
+             *       "isEmail"
+             *     ]
+             */
+            constraints: string[];
+          }[]
+        | string[]
+        | string;
       /** @description Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment. */
       stacktrace?: string[];
     };
@@ -1715,14 +1919,26 @@ export type components = {
      */
     TooManyRequestsHttpStatusCode: 'TOO_MANY_REQUESTS';
     TooManyRequestsErrorResponse: {
-      /** @description Additional information about the error. */
-      message?: string | null;
+      /** @description Human-readable summary of the error. Always present and never null: the formatter emits `error.message || UNKNOWN_MESSAGE`, so there is no path that omits it. Declared required for the same reason `details` is — both are documented by what the formatter sends, not by whether a caller happens to need them (#112). Not intended for display to end users; it is a developer-facing summary, and `errorCode` is what a client should branch on. */
+      message: string;
       /** @description Specific error code that explains the particular issue that occurred. */
       errorCode: components['schemas']['TooManyRequestsErrorCode'];
       /** @description HTTP status code that corresponds to the error. */
       code: components['schemas']['TooManyRequestsHttpStatusCode'];
-      /** @description Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages. */
-      details: string[] | string;
+      /** @description Additional context about the error. A validation failure carries one entry per offending field — `{ field, constraints }`, where `field` is a dotted path from the request-body root (`location.city`, `owners.0.name`) and `constraints` are `class-validator` keys such as `isEmail` or `whitelistValidation`. Constraint keys are deliberately machine-readable and carry no message text: a client maps them to its own localised copy, and nothing quoting a DTO message or a received value crosses the wire. Sent identically in every environment (#110) — unlike other error text, this is not affected by `disableErrorMessages`. Other errors may carry a single descriptive string, or an array of strings. Always sent — an error with no extra context carries an empty array. */
+      details:
+        | {
+            /** @example email */
+            field: string;
+            /**
+             * @example [
+             *       "isEmail"
+             *     ]
+             */
+            constraints: string[];
+          }[]
+        | string[]
+        | string;
       /** @description Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment. */
       stacktrace?: string[];
     };
@@ -1737,18 +1953,27 @@ export type components = {
        */
       phoneNumber: string;
     };
+    /**
+     * @description Line type. UNKNOWN also covers every provider failure, which still returns 200.
+     * @enum {string}
+     */
+    LineType: 'MOBILE' | 'LANDLINE' | 'UNKNOWN';
     CarrierLookupResponse: {
+      /**
+       * @description The normalised E.164 number the lookup was performed against
+       * @example +14155550123
+       */
+      phone: string;
       /**
        * @description Carrier name, or null when unknown
        * @example AT&T
        */
       carrier: string | null;
       /**
-       * @description Line type
-       * @example mobile
-       * @enum {string}
+       * @description Line type. UNKNOWN also covers every provider failure, which still returns 200.
+       * @example MOBILE
        */
-      lineType: 'mobile' | 'landline' | 'unknown';
+      lineType: components['schemas']['LineType'];
     };
     ReverseLookupReportUsageCountResponse: {
       /**
@@ -1859,33 +2084,33 @@ export type components = {
       /** @enum {string|null} */
       sex?: 'MALE' | 'FEMALE' | 'INTERSEX' | null;
       /** @enum {string|null} */
-      eyeColor?: 'OTHER' | 'AMBER' | 'BLUE' | 'BROWN' | 'GRAY' | 'GREEN' | 'HAZEL' | 'RED' | 'VIOLET' | null;
+      eyeColor?: 'AMBER' | 'BLUE' | 'BROWN' | 'GRAY' | 'GREEN' | 'HAZEL' | 'RED' | 'VIOLET' | 'OTHER' | null;
       /** @enum {string|null} */
       hairColor?:
-        | 'OTHER'
-        | 'BROWN'
-        | 'GRAY'
-        | 'RED'
         | 'BLACK'
+        | 'BROWN'
         | 'BLONDE'
+        | 'RED'
+        | 'GRAY'
         | 'WHITE'
         | 'AUBURN'
         | 'CHESTNUT'
         | 'DYED'
         | 'BALD'
+        | 'OTHER'
         | null;
       /** @enum {string|null} */
       race?:
-        | 'OTHER'
         | 'WHITE'
         | 'BLACK_OR_AFRICAN_AMERICAN'
         | 'ASIAN'
         | 'NATIVE_AMERICAN'
         | 'PACIFIC_ISLANDER'
         | 'MIXED'
+        | 'OTHER'
         | null;
       /** @enum {string|null} */
-      ethnicity?: 'OTHER' | 'HISPANIC' | 'NON_HISPANIC' | null;
+      ethnicity?: 'HISPANIC' | 'NON_HISPANIC' | 'OTHER' | null;
       heightCm?: number | null;
       weightKg?: number | null;
       crime?: string | null;
@@ -1901,6 +2126,8 @@ export type components = {
       originalSourceUrl?: string | null;
       location?: components['schemas']['LocationResponse'] | null;
       photos?: string[] | null;
+      /** @description Distinguishing marks (tattoos/scars) as the provider's own structured list. Always null today — no provider this repo ships populates it, and the old backend never wrote it either. Serialized for contract parity only. */
+      marks?: Record<string, never> | null;
     };
     PhoneFormatsResponse: {
       /** @example +1 202-555-0123 */
@@ -1951,7 +2178,6 @@ export type components = {
       numChildren: number | null;
       householdSize: number | null;
       jobs: (
-        | 'OTHER'
         | 'AGRICULTURE'
         | 'CONSTRUCTION'
         | 'EDUCATION'
@@ -1977,9 +2203,9 @@ export type components = {
         | 'TELECOMMUNICATIONS'
         | 'LOGISTICS_AND_SUPPLY_CHAIN'
         | 'ENERGY_AND_UTILITIES'
+        | 'OTHER'
       )[];
       education: (
-        | 'OTHER'
         | 'NO_FORMAL_EDUCATION'
         | 'PRIMARY_SCHOOL'
         | 'SECONDARY_SCHOOL'
@@ -1989,6 +2215,7 @@ export type components = {
         | 'BACHELOR_DEGREE'
         | 'MASTER_DEGREE'
         | 'DOCTORAL_DEGREE'
+        | 'OTHER'
       )[];
       location?: components['schemas']['LocationResponse'] | null;
     };
@@ -2018,13 +2245,18 @@ export type components = {
     };
     SectionedReportSocialMediaResponse: {
       /** @enum {string} */
-      state: 'LOCKED' | 'NO_RESULTS' | 'RESULTS';
+      state: 'LOCKED' | 'PENDING' | 'NO_RESULTS' | 'RESULTS';
       unlockPriceRef?: string | null;
+      /**
+       * @description The handle the social-account lookup searched by — one value for the whole report, applied by the client to each account. Absent in the LOCKED state, since a handle is itself identifying information about the subject. Null when the report stored none.
+       * @example janedoe
+       */
+      username?: string | null;
       accounts?: components['schemas']['SectionedReportSocialMediaAccountResponse'][] | null;
     };
     SectionedReportDataBreachResponse: {
       /** @enum {string} */
-      state: 'LOCKED' | 'NO_RESULTS' | 'RESULTS';
+      state: 'LOCKED' | 'PENDING' | 'NO_RESULTS' | 'RESULTS';
       unlockPriceRef?: string | null;
       matchCount?: number | null;
     };
@@ -2034,12 +2266,19 @@ export type components = {
     };
     SectionedReportSexOffendersResponse: {
       /** @enum {string} */
-      state: 'LOCKED' | 'NO_RESULTS' | 'RESULTS';
+      state: 'LOCKED' | 'PENDING' | 'NO_RESULTS' | 'RESULTS';
       ownersWithRecords?: components['schemas']['SectionedReportOwnerWithRecordResponse'][] | null;
     };
     SectionedReportResponse: {
       /** @enum {string} */
       reportStatus: 'COMPLETED' | 'FAILED';
+      /**
+       * @description The report's own photo URLs — header image and gallery source. Empty when none were resolved. Excludes photos attached to a sex-offender record, which are served only by the gated sex-offender detail endpoint.
+       * @example [
+       *       "https://cdn.example.com/reports/abc/photo-1.jpg"
+       *     ]
+       */
+      photos: string[];
       profile: components['schemas']['SectionedReportProfileResponse'];
       owners: components['schemas']['SectionedReportOwnerResponse'][];
       socialMedia: components['schemas']['SectionedReportSocialMediaResponse'];
@@ -2068,7 +2307,7 @@ export type components = {
     DataBreachDetailResponse: {
       phone: string;
       photoUrl: string | null;
-      dataLeaks: components['schemas']['DataBreachLeakResponse'];
+      dataLeaks: components['schemas']['DataBreachLeakResponse'][];
     };
     ConsumeUpsellDto: {
       /**
@@ -2152,25 +2391,16 @@ export type components = {
        * @example John Doe
        */
       name?: string | null;
-    };
-    UserLanguageUpdateDto: {
       /**
-       * @description Language code ISO6391
-       * @example en
+       * @description Receive an email when a location request you sent changes status (e.g. declined). Defaults to true.
+       * @example true
        */
-      language: components['schemas']['ISO6391LanguageCode'];
-    };
-    UserPasswordUpdateDto: {
+      notifyStatusChanges?: boolean | null;
       /**
-       * @description Current password
-       * @example OldPassword123!
+       * @description Receive an email when a location request you sent is located. Defaults to true.
+       * @example true
        */
-      oldPassword: string;
-      /**
-       * @description New password
-       * @example NewStrongPass123!
-       */
-      newPassword: string;
+      notifyUserLocated?: boolean | null;
     };
     /**
      * @description User status
@@ -2227,6 +2457,21 @@ export type components = {
        */
       unlimitedPdfDownloadsUnlocked: boolean;
       /**
+       * @description Receive an email when a location request you sent changes status (e.g. declined). Defaults to true.
+       * @example true
+       */
+      notifyStatusChanges: boolean;
+      /**
+       * @description Receive an email when a location request you sent is located. Defaults to true.
+       * @example true
+       */
+      notifyUserLocated: boolean;
+      /**
+       * @description Phone number the user supplied during onboarding, in E.164. Null when none was supplied, or when what they typed could not be parsed — an unparseable value is dropped at signup by design (#88), so null is the only way a client or support can tell that nothing was stored.
+       * @example +14155550123
+       */
+      onboardingPhoneNumber: string | null;
+      /**
        * @description Authentication type
        * @example USER
        * @enum {string}
@@ -2260,6 +2505,25 @@ export type components = {
       /** @description User profile photo */
       photo: components['schemas']['PublicFileResponse'] | null;
     };
+    UserLanguageUpdateDto: {
+      /**
+       * @description Language code ISO6391
+       * @example en
+       */
+      language: components['schemas']['ISO6391LanguageCode'];
+    };
+    UserPasswordUpdateDto: {
+      /**
+       * @description Current password
+       * @example OldPassword123!
+       */
+      oldPassword: string;
+      /**
+       * @description New password
+       * @example NewStrongPass123!
+       */
+      newPassword: string;
+    };
     UserAdminResponse: {
       id: string;
       firstName?: string | null;
@@ -2281,15 +2545,60 @@ export type components = {
       data: components['schemas']['UserAdminResponse'][];
       pagination: components['schemas']['ResultPagePagination'];
     };
+    FeatureFlagAdminResponse: {
+      id: string;
+      name: string;
+      enabled: boolean;
+      /** Format: date-time */
+      createdAt: string;
+      /** Format: date-time */
+      updatedAt: string;
+    };
+    CreateFeatureFlagDto: {
+      /**
+       * @description Flag name (camelCase)
+       * @example enableSmsConsent
+       */
+      name: string;
+      /**
+       * @description Whether the flag is on
+       * @example false
+       */
+      enabled: boolean;
+    };
+    UpdateFeatureFlagDto: {
+      /**
+       * @description Flag name (camelCase)
+       * @example enableSmsConsent
+       */
+      name?: string | null;
+      /**
+       * @description Whether the flag is on
+       * @example false
+       */
+      enabled?: boolean | null;
+    };
     ErrorResponseSchema: {
-      /** @description Additional information about the error. */
-      message?: string | null;
+      /** @description Human-readable summary of the error. Always present and never null: the formatter emits `error.message || UNKNOWN_MESSAGE`, so there is no path that omits it. Declared required for the same reason `details` is — both are documented by what the formatter sends, not by whether a caller happens to need them (#112). Not intended for display to end users; it is a developer-facing summary, and `errorCode` is what a client should branch on. */
+      message: string;
       /** @description Specific error code that explains the particular issue that occurred. */
       errorCode: string;
       /** @description HTTP status code that corresponds to the error. */
       code: string;
-      /** @description Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages. */
-      details: string[] | string;
+      /** @description Additional context about the error. A validation failure carries one entry per offending field — `{ field, constraints }`, where `field` is a dotted path from the request-body root (`location.city`, `owners.0.name`) and `constraints` are `class-validator` keys such as `isEmail` or `whitelistValidation`. Constraint keys are deliberately machine-readable and carry no message text: a client maps them to its own localised copy, and nothing quoting a DTO message or a received value crosses the wire. Sent identically in every environment (#110) — unlike other error text, this is not affected by `disableErrorMessages`. Other errors may carry a single descriptive string, or an array of strings. Always sent — an error with no extra context carries an empty array. */
+      details:
+        | {
+            /** @example email */
+            field: string;
+            /**
+             * @example [
+             *       "isEmail"
+             *     ]
+             */
+            constraints: string[];
+          }[]
+        | string[]
+        | string;
       /** @description Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment. */
       stacktrace?: string[];
     };
@@ -2304,14 +2613,26 @@ export type components = {
      */
     UnauthorizedHttpStatusCode: 'UNAUTHORIZED';
     UnauthorizedErrorResponse: {
-      /** @description Additional information about the error. */
-      message?: string | null;
+      /** @description Human-readable summary of the error. Always present and never null: the formatter emits `error.message || UNKNOWN_MESSAGE`, so there is no path that omits it. Declared required for the same reason `details` is — both are documented by what the formatter sends, not by whether a caller happens to need them (#112). Not intended for display to end users; it is a developer-facing summary, and `errorCode` is what a client should branch on. */
+      message: string;
       /** @description Specific error code that explains the particular issue that occurred. */
       errorCode: components['schemas']['UnauthorizedErrorCode'];
       /** @description HTTP status code that corresponds to the error. */
       code: components['schemas']['UnauthorizedHttpStatusCode'];
-      /** @description Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages. */
-      details: string[] | string;
+      /** @description Additional context about the error. A validation failure carries one entry per offending field — `{ field, constraints }`, where `field` is a dotted path from the request-body root (`location.city`, `owners.0.name`) and `constraints` are `class-validator` keys such as `isEmail` or `whitelistValidation`. Constraint keys are deliberately machine-readable and carry no message text: a client maps them to its own localised copy, and nothing quoting a DTO message or a received value crosses the wire. Sent identically in every environment (#110) — unlike other error text, this is not affected by `disableErrorMessages`. Other errors may carry a single descriptive string, or an array of strings. Always sent — an error with no extra context carries an empty array. */
+      details:
+        | {
+            /** @example email */
+            field: string;
+            /**
+             * @example [
+             *       "isEmail"
+             *     ]
+             */
+            constraints: string[];
+          }[]
+        | string[]
+        | string;
       /** @description Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment. */
       stacktrace?: string[];
     };
@@ -2372,14 +2693,26 @@ export type components = {
      */
     NotFoundHttpStatusCode: 'NOT_FOUND';
     NotFoundErrorResponse: {
-      /** @description Additional information about the error. */
-      message?: string | null;
+      /** @description Human-readable summary of the error. Always present and never null: the formatter emits `error.message || UNKNOWN_MESSAGE`, so there is no path that omits it. Declared required for the same reason `details` is — both are documented by what the formatter sends, not by whether a caller happens to need them (#112). Not intended for display to end users; it is a developer-facing summary, and `errorCode` is what a client should branch on. */
+      message: string;
       /** @description Specific error code that explains the particular issue that occurred. */
       errorCode: components['schemas']['NotFoundErrorCode'];
       /** @description HTTP status code that corresponds to the error. */
       code: components['schemas']['NotFoundHttpStatusCode'];
-      /** @description Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages. */
-      details: string[] | string;
+      /** @description Additional context about the error. A validation failure carries one entry per offending field — `{ field, constraints }`, where `field` is a dotted path from the request-body root (`location.city`, `owners.0.name`) and `constraints` are `class-validator` keys such as `isEmail` or `whitelistValidation`. Constraint keys are deliberately machine-readable and carry no message text: a client maps them to its own localised copy, and nothing quoting a DTO message or a received value crosses the wire. Sent identically in every environment (#110) — unlike other error text, this is not affected by `disableErrorMessages`. Other errors may carry a single descriptive string, or an array of strings. Always sent — an error with no extra context carries an empty array. */
+      details:
+        | {
+            /** @example email */
+            field: string;
+            /**
+             * @example [
+             *       "isEmail"
+             *     ]
+             */
+            constraints: string[];
+          }[]
+        | string[]
+        | string;
       /** @description Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment. */
       stacktrace?: string[];
     };
@@ -2398,14 +2731,26 @@ export type components = {
      */
     InternalServerErrorHttpStatusCode: 'INTERNAL_SERVER_ERROR';
     InternalServerErrorResponse: {
-      /** @description Additional information about the error. */
-      message?: string | null;
+      /** @description Human-readable summary of the error. Always present and never null: the formatter emits `error.message || UNKNOWN_MESSAGE`, so there is no path that omits it. Declared required for the same reason `details` is — both are documented by what the formatter sends, not by whether a caller happens to need them (#112). Not intended for display to end users; it is a developer-facing summary, and `errorCode` is what a client should branch on. */
+      message: string;
       /** @description Specific error code that explains the particular issue that occurred. */
       errorCode: components['schemas']['InternalServerErrorCode'];
       /** @description HTTP status code that corresponds to the error. */
       code: components['schemas']['InternalServerErrorHttpStatusCode'];
-      /** @description Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages. */
-      details: string[] | string;
+      /** @description Additional context about the error. A validation failure carries one entry per offending field — `{ field, constraints }`, where `field` is a dotted path from the request-body root (`location.city`, `owners.0.name`) and `constraints` are `class-validator` keys such as `isEmail` or `whitelistValidation`. Constraint keys are deliberately machine-readable and carry no message text: a client maps them to its own localised copy, and nothing quoting a DTO message or a received value crosses the wire. Sent identically in every environment (#110) — unlike other error text, this is not affected by `disableErrorMessages`. Other errors may carry a single descriptive string, or an array of strings. Always sent — an error with no extra context carries an empty array. */
+      details:
+        | {
+            /** @example email */
+            field: string;
+            /**
+             * @example [
+             *       "isEmail"
+             *     ]
+             */
+            constraints: string[];
+          }[]
+        | string[]
+        | string;
       /** @description Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment. */
       stacktrace?: string[];
     };
@@ -2424,14 +2769,26 @@ export type components = {
      */
     ConflictHttpStatusCode: 'CONFLICT';
     ConflictErrorResponse: {
-      /** @description Additional information about the error. */
-      message?: string | null;
+      /** @description Human-readable summary of the error. Always present and never null: the formatter emits `error.message || UNKNOWN_MESSAGE`, so there is no path that omits it. Declared required for the same reason `details` is — both are documented by what the formatter sends, not by whether a caller happens to need them (#112). Not intended for display to end users; it is a developer-facing summary, and `errorCode` is what a client should branch on. */
+      message: string;
       /** @description Specific error code that explains the particular issue that occurred. */
       errorCode: components['schemas']['ConflictErrorCode'];
       /** @description HTTP status code that corresponds to the error. */
       code: components['schemas']['ConflictHttpStatusCode'];
-      /** @description Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages. */
-      details: string[] | string;
+      /** @description Additional context about the error. A validation failure carries one entry per offending field — `{ field, constraints }`, where `field` is a dotted path from the request-body root (`location.city`, `owners.0.name`) and `constraints` are `class-validator` keys such as `isEmail` or `whitelistValidation`. Constraint keys are deliberately machine-readable and carry no message text: a client maps them to its own localised copy, and nothing quoting a DTO message or a received value crosses the wire. Sent identically in every environment (#110) — unlike other error text, this is not affected by `disableErrorMessages`. Other errors may carry a single descriptive string, or an array of strings. Always sent — an error with no extra context carries an empty array. */
+      details:
+        | {
+            /** @example email */
+            field: string;
+            /**
+             * @example [
+             *       "isEmail"
+             *     ]
+             */
+            constraints: string[];
+          }[]
+        | string[]
+        | string;
       /** @description Stacktrace visible only when DEBUG mode is enabled. This MUST NOT be exposed in production environment. */
       stacktrace?: string[];
     };
@@ -2469,7 +2826,9 @@ export type operations = {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['NotificationCenterResponse'];
+        };
       };
       /** @description Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication. */
       401: {
@@ -2509,7 +2868,9 @@ export type operations = {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['UnreadCountResponse'];
+        };
       };
       /** @description Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication. */
       401: {
@@ -2549,6 +2910,7 @@ export type operations = {
       };
     };
     responses: {
+      /** @description Notifications marked as read. */
       200: {
         headers: {
           [name: string]: unknown;
@@ -2714,11 +3076,14 @@ export type operations = {
     };
     requestBody?: never;
     responses: {
+      /** @description Prometheus metrics exposition */
       200: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'text/plain': string;
+        };
       };
     };
   };
@@ -3492,7 +3857,9 @@ export type operations = {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['KlaviyoEventResponse'];
+        };
       };
       /** @description Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication. */
       401: {
@@ -3537,7 +3904,9 @@ export type operations = {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['KlaviyoEventResponse'];
+        };
       };
       /** @description Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication. */
       401: {
@@ -4486,7 +4855,9 @@ export type operations = {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['UserResponse'];
+        };
       };
       /** @description Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication. */
       401: {
@@ -4531,7 +4902,9 @@ export type operations = {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['UserResponse'];
+        };
       };
       /** @description Invalid request: missing required fields, invalid field values/formats, unmet validation constraints, or malformed request syntax. */
       400: {
@@ -4585,7 +4958,9 @@ export type operations = {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['UserResponse'];
+        };
       };
       /** @description Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication. */
       401: {
@@ -4865,6 +5240,255 @@ export type operations = {
         };
         content: {
           'application/json': components['schemas']['UserResponse'];
+        };
+      };
+      /** @description Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UnauthorizedErrorResponseSchema'];
+        };
+      };
+      /** @description Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action. */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ForbiddenErrorResponseSchema'];
+        };
+      };
+    };
+  };
+  listFeatureFlagsAdmin: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @description Language locale for localized content. Supported values: en, es */
+        'x-locale'?: 'en' | 'es';
+        /** @description Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically. */
+        'x-trace-id'?: string;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FeatureFlagAdminResponse'][];
+        };
+      };
+      /** @description Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UnauthorizedErrorResponseSchema'];
+        };
+      };
+      /** @description Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action. */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ForbiddenErrorResponseSchema'];
+        };
+      };
+    };
+  };
+  createFeatureFlagsAdmin: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @description Language locale for localized content. Supported values: en, es */
+        'x-locale'?: 'en' | 'es';
+        /** @description Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically. */
+        'x-trace-id'?: string;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateFeatureFlagDto'];
+      };
+    };
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FeatureFlagAdminResponse'];
+        };
+      };
+      /** @description Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UnauthorizedErrorResponseSchema'];
+        };
+      };
+      /** @description Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action. */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ForbiddenErrorResponseSchema'];
+        };
+      };
+      /** @description A flag with that name already exists */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  deleteFeatureFlagsAdmin: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @description Language locale for localized content. Supported values: en, es */
+        'x-locale'?: 'en' | 'es';
+        /** @description Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically. */
+        'x-trace-id'?: string;
+      };
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['StatusResponse'];
+        };
+      };
+      /** @description Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UnauthorizedErrorResponseSchema'];
+        };
+      };
+      /** @description Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action. */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ForbiddenErrorResponseSchema'];
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  updateFeatureFlagsAdmin: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @description Language locale for localized content. Supported values: en, es */
+        'x-locale'?: 'en' | 'es';
+        /** @description Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically. */
+        'x-trace-id'?: string;
+      };
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UpdateFeatureFlagDto'];
+      };
+    };
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FeatureFlagAdminResponse'];
+        };
+      };
+      /** @description Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UnauthorizedErrorResponseSchema'];
+        };
+      };
+      /** @description Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action. */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ForbiddenErrorResponseSchema'];
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description A flag with that name already exists */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  getConfigAdminUiConfig: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @description Language locale for localized content. Supported values: en, es */
+        'x-locale'?: 'en' | 'es';
+        /** @description Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically. */
+        'x-trace-id'?: string;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Admin UI config */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': Record<string, never>;
         };
       };
       /** @description Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication. */

@@ -135,7 +135,7 @@ const REFUSALS: [number, Envelope][] = [
     500,
     {
       error: {
-        message: null,
+        message: 'Nope.',
         errorCode: 'INTERNAL_SERVER_ERROR',
         code: 'INTERNAL_SERVER_ERROR',
         details: [],
