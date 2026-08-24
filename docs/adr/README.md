@@ -38,3 +38,4 @@ moves. Describe things by their role instead.
 | [0021](0021-the-checkout-island-takes-every-payment-but-one.md)               | The checkout island takes every payment but one, and no longer knows any route          | Accepted                                          |
 | [0022](0022-retiring-the-legacy-layer-on-its-own-track.md)                    | Retiring the legacy layer on its own track                                              | Accepted                                          |
 | [0023](0023-a-shared-technical-account-for-the-payments-upstream.md)          | A shared technical account is the payments credential, until the upstream trusts ours   | Accepted; temporary by construction               |
+| [0024](0024-the-subscription-read-moves-to-payments-before-the-data-does.md)  | The subscription read moves to payments before the data does                            | Accepted; one line of 0022 reversed               |

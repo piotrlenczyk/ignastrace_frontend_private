@@ -133,6 +133,14 @@
     },
     "social_sign_in": {
       "unavailable": "Signing in with Google or Facebook is temporarily unavailable. Please use your email address."
+    },
+    "settings": {
+      "billing": {
+        "incomplete_state": "Incomplete",
+        "initial_state": "Initial",
+        "next_payment_attempt_date": "Next payment attempt: {date}",
+        "pending_state": "Pending payment"
+      }
     }
   },
   "common": {

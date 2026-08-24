@@ -8,7 +8,7 @@ export function useCancelSubscriptionMutation({
   onSuccess,
   onError,
 }: {
-  onSuccess: (subscription: Subscription) => void;
+  onSuccess: () => void;
   onError: (error: ApiError) => void;
 }) {
   const api = useApi();
