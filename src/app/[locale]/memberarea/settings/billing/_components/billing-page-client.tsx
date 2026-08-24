@@ -6,13 +6,13 @@ import { Button } from '@/components/ui/button';
 import { Icon, type IconName } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
+import { useToast } from '@/hooks/use-toast';
 import { Link, useRouter } from '@/libs/i18n-routing';
+import { useReactivateSubscriptionMutation } from '@/network/payments-api/hooks/use-reactivate-subscription-mutation';
 import type { CalculatedSubscriptionStatus, ProductWithPrice, SubscriptionDetails } from '@/types/pricing.types';
 
 import { localeFormatDate } from '../../../status/_page/utils';
 import { LogoutButton } from '../../_components/logout-button';
-import { useCancelSubscriptionMutation } from '../_hooks/api/use-cancel-subscription-mutation';
-import { useReactivateSubscriptionMutation } from '../_hooks/api/use-reactivate-subscription-mutation';
 import { ActivateSubscription } from './activate-subscription';
 import { CancelSubscription } from './cancel-subscription';
 
@@ -57,35 +57,37 @@ export function BillingPageClient({ subscription, country, activationProduct }: 
   const tNew = useTranslations('__NEW__.settings.billing');
   const formatCldrPrice = createPriceFormatter();
   const router = useRouter();
+  const { toast } = useToast();
 
   const { price } = subscription.product;
   const badge = STATUS_BADGES[subscription.calculatedStatus];
   const formattedPrice = formatCldrPrice(price.amount, price.currency, country, locale);
 
   /*
-   * Both writes still go to the legacy backend — the payments cancellation and
-   * reactivation are blocked on a data migration (#77, #78) — so neither answers
-   * with the shape this screen now reads. Refreshing is what shows the member the
-   * result: the read is a server render, and there is no client-held copy of the
-   * subscription to update any more.
+   * Calling off a cancellation, on the same upstream the screen reads. The
+   * operation takes nothing — which subscription it resumes comes from the cookie
+   * the proxy attaches — and answers an acknowledgement rather than a
+   * subscription, so refreshing is what shows the member the result: the read is a
+   * server render, and there is no client-held copy of the subscription.
+   *
+   * The cancellation is not here. It lives in the dialog that confirms it, which
+   * is the only thing that knows when to close.
    */
-  const { mutate: cancelSubscription, isPending: isCanceling } = useCancelSubscriptionMutation({
-    onSuccess: () => {
-      router.refresh();
-    },
-    onError: () => {
-      console.error('Error canceling subscription');
-    },
-  });
+  const { mutate: reactivateSubscription, isPending: isReactivating } = useReactivateSubscriptionMutation();
 
-  const { mutate: reactivateSubscription, isPending: isReactivating } = useReactivateSubscriptionMutation({
-    onSuccess: () => {
-      router.refresh();
-    },
-    onError: () => {
-      console.error('Error reactivating subscription');
-    },
-  });
+  const handleReactivate = () =>
+    reactivateSubscription(
+      {},
+      {
+        onSuccess: () => {
+          router.refresh();
+        },
+        onError: (error) => {
+          console.error('The payments service refused to call off the cancellation', error);
+          toast({ title: tNew('reactivate_error'), variant: 'destructive' });
+        },
+      },
+    );
 
   return (
     <>
@@ -148,13 +150,13 @@ export function BillingPageClient({ subscription, country, activationProduct }: 
               </>
             )}
             {subscription.couldReactivate && (
-              <Button className="mt-4" onClick={() => reactivateSubscription()} disabled={isReactivating}>
+              <Button className="mt-4" onClick={handleReactivate} disabled={isReactivating}>
                 {t('canceled_cta')}
               </Button>
             )}
             {subscription.couldCancel && (
               <div className="mt-2">
-                <CancelSubscription onCancel={cancelSubscription} isPending={isCanceling} />
+                <CancelSubscription />
               </div>
             )}
           </div>

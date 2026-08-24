@@ -108,12 +108,18 @@ strictly — where no catalogue publishes one, they are offered nothing rather t
 purchase like any other: the payments service takes it through the checkout island, and it is
 reported as a placed order.
 
-It is **not** the payments service's own reactivate endpoint. That one resumes a subscription that
-was cancelled but has not expired yet, takes no payment, and is not adopted here. The two acts share
-a word and nothing else — one takes money for a new subscription, the other calls off a cancellation.
-The button on the billing screen that calls off a cancellation is a third thing again, on the legacy
-API. [ADR 0021](adr/0021-the-checkout-island-takes-every-payment-but-one.md) records why only the
-first of the three takes a payment here.
+It is **not** calling off a cancellation. That is the second act the word covers: resuming a
+subscription that was cancelled but has not expired yet, which takes no payment. The two share a word
+and nothing else — one takes money for a new subscription, the other undoes a decision about an
+existing one.
+
+**Calling off a cancellation**
+: Resuming a cancelled subscription before it expires. The billing screen offers it wherever the
+subscription is cancelled and its expiry is still ahead, and it is the payments service's own
+reactivate endpoint — one act on one endpoint, not a button and an operation standing apart.
+[ADR 0021](adr/0021-the-checkout-island-takes-every-payment-but-one.md) records why only the other
+sense takes a payment; [ADR 0025](adr/0025-the-subscription-writes-follow-the-read-onto-payments.md)
+records adopting that endpoint here, reversing 0021's line about it.
 
 **Upselling**
 : **Two different things, and they do not map onto each other.**
