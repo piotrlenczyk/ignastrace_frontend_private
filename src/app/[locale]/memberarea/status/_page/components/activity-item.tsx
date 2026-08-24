@@ -19,8 +19,13 @@ export const ActivityItem = ({ row }: { row: ActivityRow }) => {
   const locale = useLocale();
   const t = useTranslations('pages.status');
 
-  const settled = !isSettled(row.status);
-  const ContainerElement = settled ? 'button' : 'div';
+  /*
+   * A row opens only once it has something to open. The inverse decides the
+   * other affordance: a Location request that has not been answered is where
+   * asking again belongs, and a row that has been answered is not.
+   */
+  const navigable = isSettled(row.status);
+  const ContainerElement = navigable ? 'button' : 'div';
 
   const handleViewDetail = () => {
     switch (row.kind) {
@@ -76,15 +81,15 @@ export const ActivityItem = ({ row }: { row: ActivityRow }) => {
     <ContainerElement
       className={cn(
         'rounded-lg border border-stroke-weak p-4 text-left text-strong hover:border-primary',
-        settled && 'w-full active:fill-press',
+        navigable && 'w-full active:fill-press',
       )}
-      type={settled ? 'button' : undefined}
-      onClick={settled ? handleViewDetail : undefined}
+      type={navigable ? 'button' : undefined}
+      onClick={navigable ? handleViewDetail : undefined}
     >
       <div className="mb-1 flex items-center justify-between gap-2">
         <div className="text-xs capitalize">{statusFormatDate(row.updatedAt, locale)}</div>
         <div className="flex gap-2">
-          {!settled && isLocationRequest && (
+          {!navigable && isLocationRequest && (
             <Link href={askAgainLink}>
               <Icon name="reload" className="size-4 text-neutral" />
             </Link>

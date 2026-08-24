@@ -28,7 +28,12 @@
           }
         ],
         "responses": {
-          "200": { "description": "" },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/NotificationCenterResponse" } }
+            }
+          },
           "401": {
             "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
             "content": {
@@ -66,7 +71,10 @@
           }
         ],
         "responses": {
-          "200": { "description": "" },
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UnreadCountResponse" } } }
+          },
           "401": {
             "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
             "content": {
@@ -108,7 +116,7 @@
           "content": { "application/json": { "schema": { "$ref": "#/components/schemas/MarkAsRead" } } }
         },
         "responses": {
-          "200": { "description": "" },
+          "200": { "description": "Notifications marked as read." },
           "401": {
             "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
             "content": {
@@ -263,7 +271,12 @@
             "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
           }
         ],
-        "responses": { "200": { "description": "" } },
+        "responses": {
+          "200": {
+            "description": "Prometheus metrics exposition",
+            "content": { "text/plain": { "schema": { "type": "string" } } }
+          }
+        },
         "tags": ["Prometheus"]
       }
     },
@@ -315,7 +328,7 @@
             }
           }
         },
-        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "security": [],
         "summary": "Login",
         "tags": ["Auth"]
       }
@@ -362,7 +375,7 @@
             }
           }
         },
-        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "security": [],
         "summary": "Refresh Session",
         "tags": ["Auth"]
       }
@@ -469,7 +482,7 @@
             }
           }
         },
-        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "security": [],
         "summary": "SSO Registration/Login (SUSI)",
         "tags": ["Auth - Sso"]
       }
@@ -524,7 +537,7 @@
             }
           }
         },
-        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "security": [],
         "summary": "Facebook Data Deletion Callback",
         "tags": ["Auth - Sso"]
       }
@@ -576,7 +589,7 @@
             }
           }
         },
-        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "security": [],
         "summary": "Check Facebook Data Deletion Status",
         "tags": ["Auth - Sso"]
       }
@@ -623,7 +636,7 @@
             }
           }
         },
-        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "security": [],
         "summary": "Create Guest Session",
         "tags": ["Auth"]
       }
@@ -683,7 +696,7 @@
             }
           }
         },
-        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "security": [],
         "summary": "Register a new user",
         "tags": ["Auth"]
       }
@@ -737,7 +750,7 @@
             }
           }
         },
-        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "security": [],
         "summary": "Send magic link",
         "tags": ["Auth"]
       }
@@ -784,7 +797,7 @@
             }
           }
         },
-        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "security": [],
         "summary": "Verify magic link token",
         "tags": ["Auth"]
       }
@@ -831,7 +844,7 @@
             }
           }
         },
-        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "security": [],
         "summary": "Request a new password by email",
         "tags": ["Auth"]
       }
@@ -884,7 +897,7 @@
             }
           }
         },
-        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "security": [],
         "summary": "Get user by email",
         "tags": ["Auth"]
       }
@@ -1025,7 +1038,7 @@
                 "schema": {
                   "type": "object",
                   "additionalProperties": { "type": "boolean" },
-                  "example": { "sexOffenderReport": false }
+                  "example": { "enableSmsConsent": true, "enableReverseLookup": false }
                 }
               }
             }
@@ -1043,8 +1056,8 @@
             }
           }
         },
-        "security": [{ "bearer": [] }, { "x-api-key": [] }],
-        "summary": "List every declared feature flag and its current on/off state",
+        "security": [],
+        "summary": "List every stored feature flag and its current on/off state",
         "tags": ["Features"]
       }
     },
@@ -1072,7 +1085,10 @@
           "content": { "application/json": { "schema": { "$ref": "#/components/schemas/KlaviyoEventDto" } } }
         },
         "responses": {
-          "200": { "description": "Event accepted" },
+          "200": {
+            "description": "Event accepted",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/KlaviyoEventResponse" } } }
+          },
           "401": {
             "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
             "content": {
@@ -1115,7 +1131,10 @@
           "content": { "application/json": { "schema": { "$ref": "#/components/schemas/KlaviyoEventDto" } } }
         },
         "responses": {
-          "200": { "description": "Event accepted" },
+          "200": {
+            "description": "Event accepted",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/KlaviyoEventResponse" } } }
+          },
           "401": {
             "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
             "content": {
@@ -1412,7 +1431,7 @@
             }
           }
         },
-        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "security": [],
         "summary": "Check a consent link state",
         "tags": ["Consent-links"]
       }
@@ -1463,7 +1482,7 @@
             }
           }
         },
-        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "security": [],
         "summary": "Grant location consent",
         "tags": ["Consent-links"]
       }
@@ -1510,7 +1529,7 @@
             }
           }
         },
-        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "security": [],
         "summary": "Decline location consent",
         "tags": ["Consent-links"]
       }
@@ -1566,7 +1585,7 @@
             }
           }
         },
-        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "security": [],
         "summary": "Contact us",
         "tags": ["Support"]
       }
@@ -1612,7 +1631,7 @@
             }
           }
         },
-        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "security": [],
         "summary": "Anonymous carrier / line-type pre-check for a phone number",
         "tags": ["Reverse Lookup Reports"]
       }
@@ -1767,7 +1786,7 @@
     },
     "/api/v1/reverse-lookup-reports/{reportId}/owners/{ownerId}/sex-offender": {
       "get": {
-        "description": "The most legally sensitive data this product serves. Gated behind a compliance feature flag (404 when off), report/owner ownership (404), and the SEX_OFFENDERS upsell (403 when absent) — every read past the flag check is written to a mandatory SensitiveDataAccessLog row. Returns PENDING while spec 09's async fetch job hasn't landed yet.",
+        "description": "The most legally sensitive data this product serves. Gated behind report/owner ownership (404) and the SEX_OFFENDERS upsell (403 when absent) — every read past the ownership check is written to a mandatory SensitiveDataAccessLog row. Returns PENDING while spec 09's async fetch job hasn't landed yet.",
         "operationId": "getDetailSexOffenderDetail",
         "parameters": [
           { "name": "reportId", "required": true, "in": "path", "schema": { "type": "string" } },
@@ -2107,7 +2126,10 @@
           "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UserUpdateDto" } } }
         },
         "responses": {
-          "200": { "description": "User updated successfully" },
+          "200": {
+            "description": "User updated successfully",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UserResponse" } } }
+          },
           "401": {
             "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
             "content": {
@@ -2151,7 +2173,10 @@
           "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UserLanguageUpdateDto" } } }
         },
         "responses": {
-          "200": { "description": "User language updated successfully" },
+          "200": {
+            "description": "User language updated successfully",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UserResponse" } } }
+          },
           "400": {
             "description": "Invalid request: missing required fields, invalid field values/formats, unmet validation constraints, or malformed request syntax.",
             "content": {
@@ -2201,7 +2226,10 @@
           "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UserPasswordUpdateDto" } } }
         },
         "responses": {
-          "200": { "description": "Password updated successfully" },
+          "200": {
+            "description": "Password updated successfully",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UserResponse" } } }
+          },
           "401": {
             "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
             "content": {
@@ -2515,6 +2543,232 @@
         "summary": "Delete User Account",
         "tags": ["Admin - Users"]
       }
+    },
+    "/api/v1/admin/feature-flags": {
+      "get": {
+        "description": "Not paginated — a small, admin-curated table",
+        "operationId": "listFeatureFlagsAdmin",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/FeatureFlagAdminResponse" } }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "OktaToken": [] }, { "x-api-key": [] }],
+        "summary": "List every feature flag",
+        "tags": ["Admin - Feature-flags"]
+      },
+      "post": {
+        "operationId": "createFeatureFlagsAdmin",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CreateFeatureFlagDto" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/FeatureFlagAdminResponse" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          },
+          "409": { "description": "A flag with that name already exists" }
+        },
+        "security": [{ "OktaToken": [] }, { "x-api-key": [] }],
+        "summary": "Create a feature flag",
+        "tags": ["Admin - Feature-flags"]
+      }
+    },
+    "/api/v1/admin/feature-flags/{id}": {
+      "patch": {
+        "operationId": "updateFeatureFlagsAdmin",
+        "parameters": [
+          { "name": "id", "required": true, "in": "path", "schema": { "type": "string" } },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdateFeatureFlagDto" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/FeatureFlagAdminResponse" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          },
+          "404": { "description": "" },
+          "409": { "description": "A flag with that name already exists" }
+        },
+        "security": [{ "OktaToken": [] }, { "x-api-key": [] }],
+        "summary": "Update a feature flag",
+        "tags": ["Admin - Feature-flags"]
+      },
+      "delete": {
+        "operationId": "deleteFeatureFlagsAdmin",
+        "parameters": [
+          { "name": "id", "required": true, "in": "path", "schema": { "type": "string" } },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/StatusResponse" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          },
+          "404": { "description": "" }
+        },
+        "security": [{ "OktaToken": [] }, { "x-api-key": [] }],
+        "summary": "Delete a feature flag",
+        "tags": ["Admin - Feature-flags"]
+      }
+    },
+    "/api/v1/admin/ui-config": {
+      "get": {
+        "description": "Returns the config that drives the dynamic admin app (resources, columns, filters, forms).",
+        "operationId": "getConfigAdminUiConfig",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Admin UI config",
+            "content": { "application/json": { "schema": { "type": "object" } } }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "OktaToken": [] }, { "x-api-key": [] }],
+        "summary": "Admin UI config",
+        "tags": ["Admin - Ui-config"]
+      }
     }
   },
   "info": {
@@ -2555,6 +2809,109 @@
       }
     },
     "schemas": {
+      "TargetResponse": {
+        "type": "object",
+        "properties": {
+          "targetId": { "type": "string", "nullable": false },
+          "targetType": {
+            "enum": [
+              "User",
+              "UserDetails",
+              "UserProtected",
+              "AuthRefreshToken",
+              "NotificationTemplate",
+              "NotificationCenter",
+              "StorageFile",
+              "FileAttachment",
+              "Storage",
+              "AuditLog",
+              "ReverseLookupReport",
+              "ReportOwner",
+              "ReportDataLeak",
+              "ReportSocialMediaAccount",
+              "ReportPhoto",
+              "ReportUpsell",
+              "UpsellCredit",
+              "ReportPdfExport",
+              "SexOffenderRecord",
+              "SensitiveDataAccessLog",
+              "LocationRequest",
+              "ConsentLink",
+              "FeatureFlag"
+            ],
+            "type": "string",
+            "nullable": false
+          }
+        },
+        "required": ["targetId", "targetType"]
+      },
+      "BaseSenderReceiverResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "nullable": false },
+          "firstName": { "type": "string", "nullable": false },
+          "lastName": { "type": "string", "nullable": false },
+          "email": { "type": "string", "nullable": false }
+        },
+        "required": ["id", "firstName", "lastName", "email"]
+      },
+      "ItemContextResponse": {
+        "type": "object",
+        "properties": {
+          "target": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [{ "$ref": "#/components/schemas/TargetResponse" }]
+          },
+          "isRead": { "type": "boolean", "nullable": true },
+          "senderId": { "type": "string", "nullable": true },
+          "receiverId": { "type": "string", "nullable": true },
+          "sender": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [{ "$ref": "#/components/schemas/BaseSenderReceiverResponse" }]
+          }
+        }
+      },
+      "NotificationCenterItemResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "nullable": false },
+          "icon": { "type": "string", "nullable": true },
+          "title": { "type": "string", "nullable": false },
+          "body": { "type": "string", "nullable": false },
+          "context": { "nullable": false, "allOf": [{ "$ref": "#/components/schemas/ItemContextResponse" }] },
+          "createdAt": { "format": "date-time", "type": "string", "nullable": false }
+        },
+        "required": ["id", "title", "body", "context", "createdAt"]
+      },
+      "UnreadCountResponse": {
+        "type": "object",
+        "properties": { "unreadCount": { "type": "number", "nullable": false } },
+        "required": ["unreadCount"]
+      },
+      "ResultCursorPagination": {
+        "type": "object",
+        "properties": {
+          "cursor": { "type": "string", "nullable": true },
+          "totalSize": { "type": "number", "nullable": false },
+          "nextCursor": { "type": "string", "nullable": true }
+        },
+        "required": ["totalSize"]
+      },
+      "NotificationCenterResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "nullable": false,
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/NotificationCenterItemResponse" }
+          },
+          "meta": { "nullable": false, "allOf": [{ "$ref": "#/components/schemas/UnreadCountResponse" }] },
+          "pagination": { "$ref": "#/components/schemas/ResultCursorPagination" }
+        },
+        "required": ["data", "meta", "pagination"]
+      },
       "MarkAsRead": {
         "type": "object",
         "properties": { "ids": { "nullable": false, "type": "array", "items": { "type": "string" } } },
@@ -2607,58 +2964,6 @@
           }
         },
         "required": ["refreshToken"]
-      },
-      "LoginSSODto": {
-        "type": "object",
-        "properties": {
-          "exchangeCode": {
-            "type": "string",
-            "nullable": false,
-            "description": "Either exchange code or proxy token is required."
-          }
-        },
-        "required": ["exchangeCode"]
-      },
-      "FacebookDataDeletionDto": {
-        "type": "object",
-        "properties": { "signed_request": { "type": "string", "nullable": false } },
-        "required": ["signed_request"]
-      },
-      "FacebookDataDeletionResponse": {
-        "type": "object",
-        "properties": {
-          "url": {
-            "type": "string",
-            "nullable": false,
-            "description": "URL where the user can check the status of their data deletion request",
-            "example": "https://example.com/auth/sso/facebook/data-deletion/status/abc123"
-          },
-          "confirmation_code": {
-            "type": "string",
-            "nullable": false,
-            "description": "Confirmation code for tracking the deletion request",
-            "example": "abc123def456"
-          }
-        },
-        "required": ["url", "confirmation_code"]
-      },
-      "FacebookDataDeletionStatusResponse": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "nullable": false,
-            "description": "Status of the data deletion request",
-            "example": "completed"
-          },
-          "message": {
-            "type": "string",
-            "nullable": false,
-            "description": "Message describing the current status",
-            "example": "User account and associated data have been successfully deleted."
-          }
-        },
-        "required": ["status", "message"]
       },
       "ISO6391LanguageCode": {
         "type": "string",
@@ -2847,7 +3152,72 @@
           "zh",
           "zu"
         ],
-        "description": "Language code ISO6391"
+        "description": "Language the user chose during signup, as an ISO 639-1 code. Persisted when this product has content for it; ignored otherwise, so an unsupported code never fails the signup. Only applied when this signup creates a new account."
+      },
+      "LoginSSODto": {
+        "type": "object",
+        "properties": {
+          "exchangeCode": {
+            "type": "string",
+            "nullable": false,
+            "description": "Either exchange code or proxy token is required."
+          },
+          "onboardingPhoneNumber": {
+            "type": "string",
+            "nullable": true,
+            "description": "Phone number the user entered during onboarding, in any format. Normalized to E.164 and stored; ignored if it cannot be parsed. Only applied when this signup creates a new account — it never overwrites a value on an existing one.",
+            "example": "+14155550123"
+          },
+          "language": {
+            "nullable": true,
+            "description": "Language the user chose during signup, as an ISO 639-1 code. Persisted when this product has content for it; ignored otherwise, so an unsupported code never fails the signup. Only applied when this signup creates a new account.",
+            "example": "es",
+            "allOf": [{ "$ref": "#/components/schemas/ISO6391LanguageCode" }]
+          }
+        },
+        "required": ["exchangeCode"]
+      },
+      "FacebookDataDeletionDto": {
+        "type": "object",
+        "properties": { "signed_request": { "type": "string", "nullable": false } },
+        "required": ["signed_request"]
+      },
+      "FacebookDataDeletionResponse": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "nullable": false,
+            "description": "URL where the user can check the status of their data deletion request",
+            "example": "https://example.com/auth/sso/facebook/data-deletion/status/abc123"
+          },
+          "confirmation_code": {
+            "type": "string",
+            "nullable": false,
+            "description": "Confirmation code for tracking the deletion request",
+            "example": "abc123def456"
+          }
+        },
+        "required": ["url", "confirmation_code"]
+      },
+      "FacebookDataDeletionStatusResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "nullable": false,
+            "description": "Status of the data deletion request",
+            "example": "completed",
+            "enum": ["pending", "completed", "not_found"]
+          },
+          "message": {
+            "type": "string",
+            "nullable": false,
+            "description": "Message describing the current status",
+            "example": "User account and associated data have been successfully deleted."
+          }
+        },
+        "required": ["status", "message"]
       },
       "GuestSessionDto": {
         "type": "object",
@@ -2879,6 +3249,18 @@
             "description": "Redirect Type",
             "example": "preview",
             "allOf": [{ "$ref": "#/components/schemas/AuthRedirectTypes" }]
+          },
+          "onboardingPhoneNumber": {
+            "type": "string",
+            "nullable": true,
+            "description": "Phone number the user entered during onboarding, in any format. Normalized to E.164 and stored; ignored if it cannot be parsed.",
+            "example": "+14155550123"
+          },
+          "language": {
+            "nullable": true,
+            "description": "Language the user chose during signup, as an ISO 639-1 code. Persisted when this product has content for it; ignored otherwise, so an unsupported code never fails the signup. Only applied when this signup creates a new account.",
+            "example": "es",
+            "allOf": [{ "$ref": "#/components/schemas/ISO6391LanguageCode" }]
           }
         },
         "required": ["email"]
@@ -2960,6 +3342,45 @@
         },
         "required": ["id", "email"]
       },
+      "ActivityItemLocationResponse": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "enum": ["FIND_BY_NUMBER", "FIND_BY_LINK"],
+            "type": "string",
+            "nullable": false,
+            "description": "Whether the request targets a phone number or a shareable link",
+            "example": "FIND_BY_NUMBER"
+          },
+          "shareLink": {
+            "type": "string",
+            "nullable": false,
+            "description": "Recipient-facing consent URL; empty string when no ConsentLink exists yet",
+            "example": "https://app.mobitrace.io/l/abc123"
+          },
+          "linkName": {
+            "type": "string",
+            "nullable": true,
+            "description": "Sender-chosen label, for FIND_BY_LINK requests"
+          },
+          "latitude": {
+            "type": "number",
+            "nullable": true,
+            "description": "Captured latitude; null until the request resolves"
+          },
+          "longitude": {
+            "type": "number",
+            "nullable": true,
+            "description": "Captured longitude; null until the request resolves"
+          },
+          "address": {
+            "type": "string",
+            "nullable": true,
+            "description": "Reverse-geocoded address; null until the request resolves"
+          }
+        },
+        "required": ["type", "shareLink"]
+      },
       "ActivityItemResponse": {
         "type": "object",
         "properties": {
@@ -2993,13 +3414,31 @@
             "nullable": false,
             "description": "The sort key — LocationRequest.updatedAt, or (for a ReverseLookupReport, which has no updatedAt column of its own) completedAt when set, else createdAt"
           },
+          "statusUpdatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "nullable": false,
+            "description": "When this item last changed status. Distinct from `updatedAt`, which is the merge sort key: for a REVERSE_LOOKUP_REPORT that key is completedAt ?? createdAt, which conflates \"finished\" with \"status changed\""
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true,
+            "description": "The number this item concerns — LocationRequest.phoneNumber or the report subject",
+            "example": "+14155550123"
+          },
+          "location": {
+            "nullable": true,
+            "description": "Present only for a LOCATION_REQUEST. Absent for a REVERSE_LOOKUP_REPORT, which has no per-report location — location lives on its ReportOwner rows",
+            "type": "object",
+            "allOf": [{ "$ref": "#/components/schemas/ActivityItemLocationResponse" }]
+          },
           "retryable": {
             "type": "boolean",
             "nullable": false,
             "description": "True only for a REVERSE_LOOKUP_REPORT in FAILED status"
           }
         },
-        "required": ["id", "kind", "status", "createdAt", "updatedAt", "retryable"]
+        "required": ["id", "kind", "status", "createdAt", "updatedAt", "statusUpdatedAt", "retryable"]
       },
       "ActivityFeedResponse": {
         "type": "object",
@@ -3051,6 +3490,17 @@
             "example": "premium-report"
           }
         }
+      },
+      "KlaviyoEventResponse": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean",
+            "nullable": false,
+            "description": "False when the event was skipped because the user has no email on file"
+          }
+        },
+        "required": ["ok"]
       },
       "CreateLocationRequestDto": {
         "type": "object",
@@ -3258,7 +3708,11 @@
       "BadRequestErrorResponse": {
         "type": "object",
         "properties": {
-          "message": { "type": "string", "nullable": true, "description": "Additional information about the error." },
+          "message": {
+            "type": "string",
+            "nullable": false,
+            "description": "Human-readable summary of the error. Always present and never null: the formatter emits `error.message || UNKNOWN_MESSAGE`, so there is no path that omits it. Declared required for the same reason `details` is — both are documented by what the formatter sends, not by whether a caller happens to need them (#112). Not intended for display to end users; it is a developer-facing summary, and `errorCode` is what a client should branch on."
+          },
           "errorCode": {
             "nullable": false,
             "description": "Specific error code that explains the particular issue that occurred.",
@@ -3271,8 +3725,22 @@
           },
           "details": {
             "nullable": false,
-            "description": "Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages.",
-            "oneOf": [{ "type": "array", "items": { "type": "string" } }, { "type": "string" }]
+            "description": "Additional context about the error. A validation failure carries one entry per offending field — `{ field, constraints }`, where `field` is a dotted path from the request-body root (`location.city`, `owners.0.name`) and `constraints` are `class-validator` keys such as `isEmail` or `whitelistValidation`. Constraint keys are deliberately machine-readable and carry no message text: a client maps them to its own localised copy, and nothing quoting a DTO message or a received value crosses the wire. Sent identically in every environment (#110) — unlike other error text, this is not affected by `disableErrorMessages`. Other errors may carry a single descriptive string, or an array of strings. Always sent — an error with no extra context carries an empty array.",
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["field", "constraints"],
+                  "properties": {
+                    "field": { "type": "string", "example": "email" },
+                    "constraints": { "type": "array", "items": { "type": "string" }, "example": ["isEmail"] }
+                  }
+                }
+              },
+              { "type": "array", "items": { "type": "string" } },
+              { "type": "string" }
+            ]
           },
           "stacktrace": {
             "nullable": false,
@@ -3281,7 +3749,7 @@
             "items": { "type": "string" }
           }
         },
-        "required": ["errorCode", "code", "details"]
+        "required": ["message", "errorCode", "code", "details"]
       },
       "BadRequestErrorResponseSchema": {
         "type": "object",
@@ -3313,7 +3781,11 @@
       "ForbiddenErrorResponse": {
         "type": "object",
         "properties": {
-          "message": { "type": "string", "nullable": true, "description": "Additional information about the error." },
+          "message": {
+            "type": "string",
+            "nullable": false,
+            "description": "Human-readable summary of the error. Always present and never null: the formatter emits `error.message || UNKNOWN_MESSAGE`, so there is no path that omits it. Declared required for the same reason `details` is — both are documented by what the formatter sends, not by whether a caller happens to need them (#112). Not intended for display to end users; it is a developer-facing summary, and `errorCode` is what a client should branch on."
+          },
           "errorCode": {
             "nullable": false,
             "description": "Specific error code that explains the particular issue that occurred.",
@@ -3326,8 +3798,22 @@
           },
           "details": {
             "nullable": false,
-            "description": "Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages.",
-            "oneOf": [{ "type": "array", "items": { "type": "string" } }, { "type": "string" }]
+            "description": "Additional context about the error. A validation failure carries one entry per offending field — `{ field, constraints }`, where `field` is a dotted path from the request-body root (`location.city`, `owners.0.name`) and `constraints` are `class-validator` keys such as `isEmail` or `whitelistValidation`. Constraint keys are deliberately machine-readable and carry no message text: a client maps them to its own localised copy, and nothing quoting a DTO message or a received value crosses the wire. Sent identically in every environment (#110) — unlike other error text, this is not affected by `disableErrorMessages`. Other errors may carry a single descriptive string, or an array of strings. Always sent — an error with no extra context carries an empty array.",
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["field", "constraints"],
+                  "properties": {
+                    "field": { "type": "string", "example": "email" },
+                    "constraints": { "type": "array", "items": { "type": "string" }, "example": ["isEmail"] }
+                  }
+                }
+              },
+              { "type": "array", "items": { "type": "string" } },
+              { "type": "string" }
+            ]
           },
           "stacktrace": {
             "nullable": false,
@@ -3336,7 +3822,7 @@
             "items": { "type": "string" }
           }
         },
-        "required": ["errorCode", "code", "details"]
+        "required": ["message", "errorCode", "code", "details"]
       },
       "ForbiddenErrorResponseSchema": {
         "type": "object",
@@ -3362,7 +3848,11 @@
       "TooManyRequestsErrorResponse": {
         "type": "object",
         "properties": {
-          "message": { "type": "string", "nullable": true, "description": "Additional information about the error." },
+          "message": {
+            "type": "string",
+            "nullable": false,
+            "description": "Human-readable summary of the error. Always present and never null: the formatter emits `error.message || UNKNOWN_MESSAGE`, so there is no path that omits it. Declared required for the same reason `details` is — both are documented by what the formatter sends, not by whether a caller happens to need them (#112). Not intended for display to end users; it is a developer-facing summary, and `errorCode` is what a client should branch on."
+          },
           "errorCode": {
             "nullable": false,
             "description": "Specific error code that explains the particular issue that occurred.",
@@ -3375,8 +3865,22 @@
           },
           "details": {
             "nullable": false,
-            "description": "Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages.",
-            "oneOf": [{ "type": "array", "items": { "type": "string" } }, { "type": "string" }]
+            "description": "Additional context about the error. A validation failure carries one entry per offending field — `{ field, constraints }`, where `field` is a dotted path from the request-body root (`location.city`, `owners.0.name`) and `constraints` are `class-validator` keys such as `isEmail` or `whitelistValidation`. Constraint keys are deliberately machine-readable and carry no message text: a client maps them to its own localised copy, and nothing quoting a DTO message or a received value crosses the wire. Sent identically in every environment (#110) — unlike other error text, this is not affected by `disableErrorMessages`. Other errors may carry a single descriptive string, or an array of strings. Always sent — an error with no extra context carries an empty array.",
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["field", "constraints"],
+                  "properties": {
+                    "field": { "type": "string", "example": "email" },
+                    "constraints": { "type": "array", "items": { "type": "string" }, "example": ["isEmail"] }
+                  }
+                }
+              },
+              { "type": "array", "items": { "type": "string" } },
+              { "type": "string" }
+            ]
           },
           "stacktrace": {
             "nullable": false,
@@ -3385,7 +3889,7 @@
             "items": { "type": "string" }
           }
         },
-        "required": ["errorCode", "code", "details"]
+        "required": ["message", "errorCode", "code", "details"]
       },
       "TooManyRequestsErrorResponseSchema": {
         "type": "object",
@@ -3410,9 +3914,20 @@
         },
         "required": ["phoneNumber"]
       },
+      "LineType": {
+        "type": "string",
+        "enum": ["MOBILE", "LANDLINE", "UNKNOWN"],
+        "description": "Line type. UNKNOWN also covers every provider failure, which still returns 200."
+      },
       "CarrierLookupResponse": {
         "type": "object",
         "properties": {
+          "phone": {
+            "type": "string",
+            "nullable": false,
+            "description": "The normalised E.164 number the lookup was performed against",
+            "example": "+14155550123"
+          },
           "carrier": {
             "type": "string",
             "nullable": true,
@@ -3420,14 +3935,13 @@
             "example": "AT&T"
           },
           "lineType": {
-            "enum": ["mobile", "landline", "unknown"],
-            "type": "string",
             "nullable": false,
-            "description": "Line type",
-            "example": "mobile"
+            "description": "Line type. UNKNOWN also covers every provider failure, which still returns 200.",
+            "example": "MOBILE",
+            "allOf": [{ "$ref": "#/components/schemas/LineType" }]
           }
         },
-        "required": ["carrier", "lineType"]
+        "required": ["phone", "carrier", "lineType"]
       },
       "ReverseLookupReportUsageCountResponse": {
         "type": "object",
@@ -3568,28 +4082,28 @@
           "sex": { "nullable": true, "enum": ["MALE", "FEMALE", "INTERSEX"], "type": "string" },
           "eyeColor": {
             "nullable": true,
-            "enum": ["OTHER", "AMBER", "BLUE", "BROWN", "GRAY", "GREEN", "HAZEL", "RED", "VIOLET"],
+            "enum": ["AMBER", "BLUE", "BROWN", "GRAY", "GREEN", "HAZEL", "RED", "VIOLET", "OTHER"],
             "type": "string"
           },
           "hairColor": {
             "nullable": true,
-            "enum": ["OTHER", "BROWN", "GRAY", "RED", "BLACK", "BLONDE", "WHITE", "AUBURN", "CHESTNUT", "DYED", "BALD"],
+            "enum": ["BLACK", "BROWN", "BLONDE", "RED", "GRAY", "WHITE", "AUBURN", "CHESTNUT", "DYED", "BALD", "OTHER"],
             "type": "string"
           },
           "race": {
             "nullable": true,
             "enum": [
-              "OTHER",
               "WHITE",
               "BLACK_OR_AFRICAN_AMERICAN",
               "ASIAN",
               "NATIVE_AMERICAN",
               "PACIFIC_ISLANDER",
-              "MIXED"
+              "MIXED",
+              "OTHER"
             ],
             "type": "string"
           },
-          "ethnicity": { "nullable": true, "enum": ["OTHER", "HISPANIC", "NON_HISPANIC"], "type": "string" },
+          "ethnicity": { "nullable": true, "enum": ["HISPANIC", "NON_HISPANIC", "OTHER"], "type": "string" },
           "heightCm": { "type": "number", "nullable": true },
           "weightKg": { "type": "number", "nullable": true },
           "crime": { "type": "string", "nullable": true },
@@ -3605,7 +4119,12 @@
             "type": "object",
             "allOf": [{ "$ref": "#/components/schemas/LocationResponse" }]
           },
-          "photos": { "nullable": true, "type": "array", "items": { "type": "string" } }
+          "photos": { "nullable": true, "type": "array", "items": { "type": "string" } },
+          "marks": {
+            "type": "object",
+            "nullable": true,
+            "description": "Distinguishing marks (tattoos/scars) as the provider's own structured list. Always null today — no provider this repo ships populates it, and the old backend never wrote it either. Serialized for contract parity only."
+          }
         },
         "required": ["status"]
       },
@@ -3673,10 +4192,10 @@
           "numChildren": { "type": "number", "nullable": true },
           "householdSize": { "type": "number", "nullable": true },
           "jobs": {
+            "type": "array",
             "items": {
               "type": "string",
               "enum": [
-                "OTHER",
                 "AGRICULTURE",
                 "CONSTRUCTION",
                 "EDUCATION",
@@ -3701,17 +4220,17 @@
                 "REAL_ESTATE",
                 "TELECOMMUNICATIONS",
                 "LOGISTICS_AND_SUPPLY_CHAIN",
-                "ENERGY_AND_UTILITIES"
+                "ENERGY_AND_UTILITIES",
+                "OTHER"
               ]
             },
-            "nullable": false,
-            "type": "array"
+            "nullable": false
           },
           "education": {
+            "type": "array",
             "items": {
               "type": "string",
               "enum": [
-                "OTHER",
                 "NO_FORMAL_EDUCATION",
                 "PRIMARY_SCHOOL",
                 "SECONDARY_SCHOOL",
@@ -3720,11 +4239,11 @@
                 "ASSOCIATE_DEGREE",
                 "BACHELOR_DEGREE",
                 "MASTER_DEGREE",
-                "DOCTORAL_DEGREE"
+                "DOCTORAL_DEGREE",
+                "OTHER"
               ]
             },
-            "nullable": false,
-            "type": "array"
+            "nullable": false
           },
           "location": {
             "nullable": true,
@@ -3787,8 +4306,14 @@
       "SectionedReportSocialMediaResponse": {
         "type": "object",
         "properties": {
-          "state": { "enum": ["LOCKED", "NO_RESULTS", "RESULTS"], "type": "string", "nullable": false },
+          "state": { "enum": ["LOCKED", "PENDING", "NO_RESULTS", "RESULTS"], "type": "string", "nullable": false },
           "unlockPriceRef": { "type": "string", "nullable": true },
+          "username": {
+            "type": "string",
+            "nullable": true,
+            "description": "The handle the social-account lookup searched by — one value for the whole report, applied by the client to each account. Absent in the LOCKED state, since a handle is itself identifying information about the subject. Null when the report stored none.",
+            "example": "janedoe"
+          },
           "accounts": {
             "nullable": true,
             "type": "array",
@@ -3800,7 +4325,7 @@
       "SectionedReportDataBreachResponse": {
         "type": "object",
         "properties": {
-          "state": { "enum": ["LOCKED", "NO_RESULTS", "RESULTS"], "type": "string", "nullable": false },
+          "state": { "enum": ["LOCKED", "PENDING", "NO_RESULTS", "RESULTS"], "type": "string", "nullable": false },
           "unlockPriceRef": { "type": "string", "nullable": true },
           "matchCount": { "type": "number", "nullable": true }
         },
@@ -3817,7 +4342,7 @@
       "SectionedReportSexOffendersResponse": {
         "type": "object",
         "properties": {
-          "state": { "enum": ["LOCKED", "NO_RESULTS", "RESULTS"], "type": "string", "nullable": false },
+          "state": { "enum": ["LOCKED", "PENDING", "NO_RESULTS", "RESULTS"], "type": "string", "nullable": false },
           "ownersWithRecords": {
             "nullable": true,
             "type": "array",
@@ -3830,6 +4355,13 @@
         "type": "object",
         "properties": {
           "reportStatus": { "enum": ["COMPLETED", "FAILED"], "type": "string", "nullable": false },
+          "photos": {
+            "nullable": false,
+            "description": "The report's own photo URLs — header image and gallery source. Empty when none were resolved. Excludes photos attached to a sex-offender record, which are served only by the gated sex-offender detail endpoint.",
+            "example": ["https://cdn.example.com/reports/abc/photo-1.jpg"],
+            "type": "array",
+            "items": { "type": "string" }
+          },
           "profile": {
             "nullable": false,
             "allOf": [{ "$ref": "#/components/schemas/SectionedReportProfileResponse" }]
@@ -3852,7 +4384,7 @@
             "allOf": [{ "$ref": "#/components/schemas/SectionedReportSexOffendersResponse" }]
           }
         },
-        "required": ["reportStatus", "profile", "owners", "socialMedia", "dataBreach", "sexOffenders"]
+        "required": ["reportStatus", "photos", "profile", "owners", "socialMedia", "dataBreach", "sexOffenders"]
       },
       "DataBreachLeakResponse": {
         "type": "object",
@@ -3860,6 +4392,7 @@
           "id": { "type": "string", "nullable": false },
           "serviceName": { "type": "string", "nullable": false },
           "compromisedData": {
+            "type": "array",
             "items": {
               "type": "string",
               "enum": [
@@ -3875,8 +4408,7 @@
                 "DATE_OF_BIRTH"
               ]
             },
-            "nullable": false,
-            "type": "array"
+            "nullable": false
           },
           "date": { "format": "date-time", "type": "string", "nullable": false },
           "description": { "type": "string", "nullable": true }
@@ -3888,7 +4420,11 @@
         "properties": {
           "phone": { "type": "string", "nullable": false },
           "photoUrl": { "type": "string", "nullable": true },
-          "dataLeaks": { "nullable": false, "allOf": [{ "$ref": "#/components/schemas/DataBreachLeakResponse" }] }
+          "dataLeaks": {
+            "nullable": false,
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/DataBreachLeakResponse" }
+          }
         },
         "required": ["phone", "photoUrl", "dataLeaks"]
       },
@@ -3999,38 +4535,20 @@
             "example": "user@example.com"
           },
           "username": { "type": "string", "nullable": true, "description": "Username", "example": "johndoe123" },
-          "name": { "type": "string", "nullable": true, "description": "User name", "example": "John Doe" }
-        }
-      },
-      "UserLanguageUpdateDto": {
-        "type": "object",
-        "properties": {
-          "language": {
-            "nullable": false,
-            "description": "Language code ISO6391",
-            "example": "en",
-            "allOf": [{ "$ref": "#/components/schemas/ISO6391LanguageCode" }]
-          }
-        },
-        "required": ["language"]
-      },
-      "UserPasswordUpdateDto": {
-        "type": "object",
-        "properties": {
-          "oldPassword": {
-            "type": "string",
-            "nullable": false,
-            "description": "Current password",
-            "example": "OldPassword123!"
+          "name": { "type": "string", "nullable": true, "description": "User name", "example": "John Doe" },
+          "notifyStatusChanges": {
+            "type": "boolean",
+            "nullable": true,
+            "description": "Receive an email when a location request you sent changes status (e.g. declined). Defaults to true.",
+            "example": true
           },
-          "newPassword": {
-            "type": "string",
-            "nullable": false,
-            "description": "New password",
-            "example": "NewStrongPass123!"
+          "notifyUserLocated": {
+            "type": "boolean",
+            "nullable": true,
+            "description": "Receive an email when a location request you sent is located. Defaults to true.",
+            "example": true
           }
-        },
-        "required": ["oldPassword", "newPassword"]
+        }
       },
       "UserStatus": { "type": "string", "enum": ["ACTIVE", "PENDING"], "description": "User status" },
       "visibleRoles": { "type": "string", "enum": ["STANDARD_USER", "SUPPORT", "ADMIN"], "description": "User roles" },
@@ -4087,6 +4605,24 @@
             "description": "Whether the user has purchased the unlimited PDF downloads upsell",
             "example": false
           },
+          "notifyStatusChanges": {
+            "type": "boolean",
+            "nullable": false,
+            "description": "Receive an email when a location request you sent changes status (e.g. declined). Defaults to true.",
+            "example": true
+          },
+          "notifyUserLocated": {
+            "type": "boolean",
+            "nullable": false,
+            "description": "Receive an email when a location request you sent is located. Defaults to true.",
+            "example": true
+          },
+          "onboardingPhoneNumber": {
+            "type": "string",
+            "nullable": true,
+            "description": "Phone number the user supplied during onboarding, in E.164. Null when none was supplied, or when what they typed could not be parsed — an unparseable value is dropped at signup by design (#88), so null is the only way a client or support can tell that nothing was stored.",
+            "example": "+14155550123"
+          },
           "type": {
             "enum": ["GUEST", "USER"],
             "type": "string",
@@ -4127,7 +4663,49 @@
             "allOf": [{ "$ref": "#/components/schemas/PublicFileResponse" }]
           }
         },
-        "required": ["id", "email", "name", "isBlocked", "unlimitedPdfDownloadsUnlocked", "type", "status", "photo"]
+        "required": [
+          "id",
+          "email",
+          "name",
+          "isBlocked",
+          "unlimitedPdfDownloadsUnlocked",
+          "notifyStatusChanges",
+          "notifyUserLocated",
+          "onboardingPhoneNumber",
+          "type",
+          "status",
+          "photo"
+        ]
+      },
+      "UserLanguageUpdateDto": {
+        "type": "object",
+        "properties": {
+          "language": {
+            "nullable": false,
+            "description": "Language code ISO6391",
+            "example": "en",
+            "allOf": [{ "$ref": "#/components/schemas/ISO6391LanguageCode" }]
+          }
+        },
+        "required": ["language"]
+      },
+      "UserPasswordUpdateDto": {
+        "type": "object",
+        "properties": {
+          "oldPassword": {
+            "type": "string",
+            "nullable": false,
+            "description": "Current password",
+            "example": "OldPassword123!"
+          },
+          "newPassword": {
+            "type": "string",
+            "nullable": false,
+            "description": "New password",
+            "example": "NewStrongPass123!"
+          }
+        },
+        "required": ["oldPassword", "newPassword"]
       },
       "UserAdminResponse": {
         "type": "object",
@@ -4161,10 +4739,50 @@
         },
         "required": ["data", "pagination"]
       },
+      "FeatureFlagAdminResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "enabled": { "type": "boolean" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" }
+        },
+        "required": ["id", "name", "enabled", "createdAt", "updatedAt"]
+      },
+      "CreateFeatureFlagDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": false,
+            "description": "Flag name (camelCase)",
+            "example": "enableSmsConsent"
+          },
+          "enabled": { "type": "boolean", "nullable": false, "description": "Whether the flag is on", "example": false }
+        },
+        "required": ["name", "enabled"]
+      },
+      "UpdateFeatureFlagDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Flag name (camelCase)",
+            "example": "enableSmsConsent"
+          },
+          "enabled": { "type": "boolean", "nullable": true, "description": "Whether the flag is on", "example": false }
+        }
+      },
       "ErrorResponseSchema": {
         "type": "object",
         "properties": {
-          "message": { "type": "string", "nullable": true, "description": "Additional information about the error." },
+          "message": {
+            "type": "string",
+            "nullable": false,
+            "description": "Human-readable summary of the error. Always present and never null: the formatter emits `error.message || UNKNOWN_MESSAGE`, so there is no path that omits it. Declared required for the same reason `details` is — both are documented by what the formatter sends, not by whether a caller happens to need them (#112). Not intended for display to end users; it is a developer-facing summary, and `errorCode` is what a client should branch on."
+          },
           "errorCode": {
             "type": "string",
             "nullable": false,
@@ -4177,8 +4795,22 @@
           },
           "details": {
             "nullable": false,
-            "description": "Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages.",
-            "oneOf": [{ "type": "array", "items": { "type": "string" } }, { "type": "string" }]
+            "description": "Additional context about the error. A validation failure carries one entry per offending field — `{ field, constraints }`, where `field` is a dotted path from the request-body root (`location.city`, `owners.0.name`) and `constraints` are `class-validator` keys such as `isEmail` or `whitelistValidation`. Constraint keys are deliberately machine-readable and carry no message text: a client maps them to its own localised copy, and nothing quoting a DTO message or a received value crosses the wire. Sent identically in every environment (#110) — unlike other error text, this is not affected by `disableErrorMessages`. Other errors may carry a single descriptive string, or an array of strings. Always sent — an error with no extra context carries an empty array.",
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["field", "constraints"],
+                  "properties": {
+                    "field": { "type": "string", "example": "email" },
+                    "constraints": { "type": "array", "items": { "type": "string" }, "example": ["isEmail"] }
+                  }
+                }
+              },
+              { "type": "array", "items": { "type": "string" } },
+              { "type": "string" }
+            ]
           },
           "stacktrace": {
             "nullable": false,
@@ -4187,7 +4819,7 @@
             "items": { "type": "string" }
           }
         },
-        "required": ["errorCode", "code", "details"]
+        "required": ["message", "errorCode", "code", "details"]
       },
       "UnauthorizedErrorCode": {
         "type": "string",
@@ -4202,7 +4834,11 @@
       "UnauthorizedErrorResponse": {
         "type": "object",
         "properties": {
-          "message": { "type": "string", "nullable": true, "description": "Additional information about the error." },
+          "message": {
+            "type": "string",
+            "nullable": false,
+            "description": "Human-readable summary of the error. Always present and never null: the formatter emits `error.message || UNKNOWN_MESSAGE`, so there is no path that omits it. Declared required for the same reason `details` is — both are documented by what the formatter sends, not by whether a caller happens to need them (#112). Not intended for display to end users; it is a developer-facing summary, and `errorCode` is what a client should branch on."
+          },
           "errorCode": {
             "nullable": false,
             "description": "Specific error code that explains the particular issue that occurred.",
@@ -4215,8 +4851,22 @@
           },
           "details": {
             "nullable": false,
-            "description": "Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages.",
-            "oneOf": [{ "type": "array", "items": { "type": "string" } }, { "type": "string" }]
+            "description": "Additional context about the error. A validation failure carries one entry per offending field — `{ field, constraints }`, where `field` is a dotted path from the request-body root (`location.city`, `owners.0.name`) and `constraints` are `class-validator` keys such as `isEmail` or `whitelistValidation`. Constraint keys are deliberately machine-readable and carry no message text: a client maps them to its own localised copy, and nothing quoting a DTO message or a received value crosses the wire. Sent identically in every environment (#110) — unlike other error text, this is not affected by `disableErrorMessages`. Other errors may carry a single descriptive string, or an array of strings. Always sent — an error with no extra context carries an empty array.",
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["field", "constraints"],
+                  "properties": {
+                    "field": { "type": "string", "example": "email" },
+                    "constraints": { "type": "array", "items": { "type": "string" }, "example": ["isEmail"] }
+                  }
+                }
+              },
+              { "type": "array", "items": { "type": "string" } },
+              { "type": "string" }
+            ]
           },
           "stacktrace": {
             "nullable": false,
@@ -4225,7 +4875,7 @@
             "items": { "type": "string" }
           }
         },
-        "required": ["errorCode", "code", "details"]
+        "required": ["message", "errorCode", "code", "details"]
       },
       "UnauthorizedErrorResponseSchema": {
         "type": "object",
@@ -4300,7 +4950,11 @@
       "NotFoundErrorResponse": {
         "type": "object",
         "properties": {
-          "message": { "type": "string", "nullable": true, "description": "Additional information about the error." },
+          "message": {
+            "type": "string",
+            "nullable": false,
+            "description": "Human-readable summary of the error. Always present and never null: the formatter emits `error.message || UNKNOWN_MESSAGE`, so there is no path that omits it. Declared required for the same reason `details` is — both are documented by what the formatter sends, not by whether a caller happens to need them (#112). Not intended for display to end users; it is a developer-facing summary, and `errorCode` is what a client should branch on."
+          },
           "errorCode": {
             "nullable": false,
             "description": "Specific error code that explains the particular issue that occurred.",
@@ -4313,8 +4967,22 @@
           },
           "details": {
             "nullable": false,
-            "description": "Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages.",
-            "oneOf": [{ "type": "array", "items": { "type": "string" } }, { "type": "string" }]
+            "description": "Additional context about the error. A validation failure carries one entry per offending field — `{ field, constraints }`, where `field` is a dotted path from the request-body root (`location.city`, `owners.0.name`) and `constraints` are `class-validator` keys such as `isEmail` or `whitelistValidation`. Constraint keys are deliberately machine-readable and carry no message text: a client maps them to its own localised copy, and nothing quoting a DTO message or a received value crosses the wire. Sent identically in every environment (#110) — unlike other error text, this is not affected by `disableErrorMessages`. Other errors may carry a single descriptive string, or an array of strings. Always sent — an error with no extra context carries an empty array.",
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["field", "constraints"],
+                  "properties": {
+                    "field": { "type": "string", "example": "email" },
+                    "constraints": { "type": "array", "items": { "type": "string" }, "example": ["isEmail"] }
+                  }
+                }
+              },
+              { "type": "array", "items": { "type": "string" } },
+              { "type": "string" }
+            ]
           },
           "stacktrace": {
             "nullable": false,
@@ -4323,7 +4991,7 @@
             "items": { "type": "string" }
           }
         },
-        "required": ["errorCode", "code", "details"]
+        "required": ["message", "errorCode", "code", "details"]
       },
       "NotFoundErrorResponseSchema": {
         "type": "object",
@@ -4349,7 +5017,11 @@
       "InternalServerErrorResponse": {
         "type": "object",
         "properties": {
-          "message": { "type": "string", "nullable": true, "description": "Additional information about the error." },
+          "message": {
+            "type": "string",
+            "nullable": false,
+            "description": "Human-readable summary of the error. Always present and never null: the formatter emits `error.message || UNKNOWN_MESSAGE`, so there is no path that omits it. Declared required for the same reason `details` is — both are documented by what the formatter sends, not by whether a caller happens to need them (#112). Not intended for display to end users; it is a developer-facing summary, and `errorCode` is what a client should branch on."
+          },
           "errorCode": {
             "nullable": false,
             "description": "Specific error code that explains the particular issue that occurred.",
@@ -4362,8 +5034,22 @@
           },
           "details": {
             "nullable": false,
-            "description": "Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages.",
-            "oneOf": [{ "type": "array", "items": { "type": "string" } }, { "type": "string" }]
+            "description": "Additional context about the error. A validation failure carries one entry per offending field — `{ field, constraints }`, where `field` is a dotted path from the request-body root (`location.city`, `owners.0.name`) and `constraints` are `class-validator` keys such as `isEmail` or `whitelistValidation`. Constraint keys are deliberately machine-readable and carry no message text: a client maps them to its own localised copy, and nothing quoting a DTO message or a received value crosses the wire. Sent identically in every environment (#110) — unlike other error text, this is not affected by `disableErrorMessages`. Other errors may carry a single descriptive string, or an array of strings. Always sent — an error with no extra context carries an empty array.",
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["field", "constraints"],
+                  "properties": {
+                    "field": { "type": "string", "example": "email" },
+                    "constraints": { "type": "array", "items": { "type": "string" }, "example": ["isEmail"] }
+                  }
+                }
+              },
+              { "type": "array", "items": { "type": "string" } },
+              { "type": "string" }
+            ]
           },
           "stacktrace": {
             "nullable": false,
@@ -4372,7 +5058,7 @@
             "items": { "type": "string" }
           }
         },
-        "required": ["errorCode", "code", "details"]
+        "required": ["message", "errorCode", "code", "details"]
       },
       "InternalServerErrorResponseSchema": {
         "type": "object",
@@ -4398,7 +5084,11 @@
       "ConflictErrorResponse": {
         "type": "object",
         "properties": {
-          "message": { "type": "string", "nullable": true, "description": "Additional information about the error." },
+          "message": {
+            "type": "string",
+            "nullable": false,
+            "description": "Human-readable summary of the error. Always present and never null: the formatter emits `error.message || UNKNOWN_MESSAGE`, so there is no path that omits it. Declared required for the same reason `details` is — both are documented by what the formatter sends, not by whether a caller happens to need them (#112). Not intended for display to end users; it is a developer-facing summary, and `errorCode` is what a client should branch on."
+          },
           "errorCode": {
             "nullable": false,
             "description": "Specific error code that explains the particular issue that occurred.",
@@ -4411,8 +5101,22 @@
           },
           "details": {
             "nullable": false,
-            "description": "Additional context about the error. Validation failures carry an array of per-field messages; other errors may carry a single descriptive string. Always sent — an error with no extra context carries an empty array. Note that outside DEBUG and test environments the global ValidationPipe runs with `disableErrorMessages`, so a validation failure carries the single string `Bad Request` rather than per-field messages.",
-            "oneOf": [{ "type": "array", "items": { "type": "string" } }, { "type": "string" }]
+            "description": "Additional context about the error. A validation failure carries one entry per offending field — `{ field, constraints }`, where `field` is a dotted path from the request-body root (`location.city`, `owners.0.name`) and `constraints` are `class-validator` keys such as `isEmail` or `whitelistValidation`. Constraint keys are deliberately machine-readable and carry no message text: a client maps them to its own localised copy, and nothing quoting a DTO message or a received value crosses the wire. Sent identically in every environment (#110) — unlike other error text, this is not affected by `disableErrorMessages`. Other errors may carry a single descriptive string, or an array of strings. Always sent — an error with no extra context carries an empty array.",
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["field", "constraints"],
+                  "properties": {
+                    "field": { "type": "string", "example": "email" },
+                    "constraints": { "type": "array", "items": { "type": "string" }, "example": ["isEmail"] }
+                  }
+                }
+              },
+              { "type": "array", "items": { "type": "string" } },
+              { "type": "string" }
+            ]
           },
           "stacktrace": {
             "nullable": false,
@@ -4421,7 +5125,7 @@
             "items": { "type": "string" }
           }
         },
-        "required": ["errorCode", "code", "details"]
+        "required": ["message", "errorCode", "code", "details"]
       },
       "ConflictErrorResponseSchema": {
         "type": "object",

@@ -1,7 +1,5 @@
 import type { ActivityStatus } from './activity-row';
 
-export const INITIAL_SHOW_COUNT = 5;
-
 export const DATE_FORMAT_OPTIONS = {
   day: '2-digit',
   month: 'short',
@@ -13,8 +11,8 @@ export const DATE_FORMAT_OPTIONS = {
 
 /*
  * What the status badge looks like, and what it says. Both are keyed on the
- * activity list's own status vocabulary rather than on either source's, so a row
- * lands on the same badge whichever source answered for it.
+ * activity list's own status vocabulary rather than on the feed's, so a row lands
+ * on the same badge whichever kind the feed answered with.
  */
 
 export const STATUS_CLASSES = {

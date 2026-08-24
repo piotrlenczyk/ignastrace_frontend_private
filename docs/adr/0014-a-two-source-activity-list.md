@@ -1,7 +1,9 @@
 # 0014 — The activity list is composed from two sources
 
-**Status:** Accepted — August 2026. Temporary by construction; the exit conditions are listed
-below and the record is superseded the day they are met.
+**Status:** Superseded by [0026](0026-the-activity-feed-becomes-the-list.md) — August 2026. One of
+the two exit conditions listed below was met by the upstream; the other was not, and 0026 adopts the
+activity feed as the list's only source anyway. Everything here about a second source, and about the
+sex offender rows it kept alive, is history rather than the current state.
 
 ## Context
 

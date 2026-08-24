@@ -1,123 +1,91 @@
-import { getApi } from '@/libs/server/api';
 import type { components } from '@/network/api/api';
-import { apiServerClient } from '@/network/api/apiServerClient';
-import { unwrapApiResponse } from '@/network/http-response-handler';
 
 import type { ActivityRow, ActivityStatus } from './activity-row';
 
 /*
- * Where the activity list's rows come from, and the whole of the seam between its
- * two sources.
+ * The whole of the seam between the activity feed and the list that shows it.
  *
- * Location request rows come from the new API. Reverse lookup and sex offender
- * rows still come from the legacy merged endpoint, because the new API cannot
- * answer for them: its reverse lookup report carries no phone number, and the row
- * is titled by one; and its activity feed models two kinds, so a sex offender
- * report has no representation there at all. The record on the two-source list
- * states the conditions for deleting everything below marked as the legacy half.
+ * One source now answers for the list: the API's activity feed, which merges
+ * location requests and reverse lookup reports and orders them by recency across
+ * both. The record on that adoption states what it cost — the feed models two
+ * kinds, so a sex offender report has no representation in it, and the row's
+ * report id is assumed to name the same report the legacy report screen reads.
  *
- * That is also why this module imports a frozen legacy client, which new code
- * otherwise may not do. It is a knowing exception for the one read the new API
- * cannot serve, not an oversight, and it is confined to this module so that
- * removing it later is a deletion rather than an untangling.
+ * This module is a pure mapping and nothing else: no client, no cache, no
+ * ordering. That is what lets the screen map the page it rendered on the server
+ * and the browser map the pages it fetches afterwards through the same function.
  */
 
-type LocationRequest = components['schemas']['LocationRequestResponse'];
-
-/** The legacy half — every declaration from here to the composer dies with it. */
+type ActivityItem = components['schemas']['ActivityItemResponse'];
 
 /**
- * The two kinds the legacy source still answers for, and what each is called in
- * the list's own vocabulary. Its third kind, `Location`, is what the new API now
- * serves, so a row of that kind arriving from here is dropped rather than shown
- * twice.
+ * The two source vocabularies, onto the four states the screen draws.
+ *
+ * A location request states three; a reverse lookup report states four, two of
+ * which the screen has no separate picture for — a report being generated is
+ * still "waiting", and one whose generation failed is shown the same way as a
+ * request the recipient turned down.
  */
-const LEGACY_KINDS = {
-  ReverseLookup: 'REVERSE_LOOKUP_REPORT',
-  SexOffenderSearchReport: 'SEX_OFFENDER_REPORT',
-} as const;
-
-type LegacyKind = keyof typeof LEGACY_KINDS;
-
-const LEGACY_STATUSES = {
-  located: 'LOCATED',
-  rejected: 'REJECTED',
-  pending: 'PENDING',
-  ready: 'READY',
+const STATUSES = {
+  PENDING: 'PENDING',
+  LOCATED: 'LOCATED',
+  REJECTED: 'REJECTED',
+  PROCESSING: 'PENDING',
+  COMPLETED: 'READY',
+  FAILED: 'REJECTED',
 } as const satisfies Record<string, ActivityStatus>;
 
 /**
- * As much of the legacy merged response as the two surviving kinds need. Stated
- * here rather than as a shared type: it describes a source being retired, and
- * nothing outside this module should be able to reach for it.
+ * The feed passes each source's own status through unmapped and types it as a
+ * plain string, so a value this screen has never been taught is part of the
+ * contract rather than an anomaly. It reads as one still waiting: the row stays
+ * on the list and is not navigable, which is the honest picture of "something is
+ * happening that we cannot describe yet".
  */
-type LegacyServiceRequest = {
-  id: string;
-  source_type: LegacyKind | 'Location';
-  status: keyof typeof LEGACY_STATUSES;
-  location?: { name?: string };
-  phone?: string;
-  status_updated_at: string;
-};
-
-const _isLegacyKind = (request: LegacyServiceRequest): request is LegacyServiceRequest & { source_type: LegacyKind } =>
-  request.source_type in LEGACY_KINDS;
-
-const _fromServiceRequest = (request: LegacyServiceRequest & { source_type: LegacyKind }): ActivityRow => ({
-  id: request.id,
-  kind: LEGACY_KINDS[request.source_type],
-  status: LEGACY_STATUSES[request.status],
-  /*
-   * A reverse lookup row is titled by the number it was run on, a sex offender
-   * row by the name it was searched for.
-   */
-  title: (request.source_type === 'SexOffenderSearchReport' ? request.location?.name : request.phone) ?? '',
-  /*
-   * No address: neither of these kinds resolves one. Both describe themselves
-   * with a fixed line instead, which is the row's to write, not this mapping's.
-   */
-  updatedAt: request.status_updated_at,
-});
-
-const _readServiceRequests = async () => {
-  const api = await getApi();
-
-  return api.get<LegacyServiceRequest[]>('/service_requests');
-};
-
-/** The end of the legacy half. */
+const toStatus = (status: string): ActivityStatus => STATUSES[status as keyof typeof STATUSES] ?? 'PENDING';
 
 /**
- * A Location request as a row. The API's own status vocabulary is the list's, so
- * only the shape is mapped: the flat captured fields become the row's address, and
- * the type discriminator decides which of the two names the request carries.
- */
-const fromLocationRequest = (request: LocationRequest): ActivityRow => ({
-  id: request.id,
-  kind: request.type === 'FIND_BY_LINK' ? 'LOCATION_BY_LINK' : 'LOCATION_BY_NUMBER',
-  status: request.status,
-  title: (request.type === 'FIND_BY_LINK' ? request.linkName : request.phoneNumber) ?? '',
-  address: request.resolvedAddress ?? undefined,
-  updatedAt: request.updatedAt,
-});
-
-/**
- * The member's activity, in one list, most-recently-changed first.
+ * One feed item as a row.
  *
- * Both sources are read together and neither depends on the other's answer, so an
- * empty result from one leaves the other's rows exactly where they are. Each
- * source is already ordered by recency on its own; the sort is what makes the two
- * one list rather than one appended to the other.
+ * The feed's kind alone does not say which of the two location requests this is —
+ * that is on the nested location, which is also the only place an answered
+ * request's address is. Everything the screen varies between the two varies as a
+ * pair, so the pair becomes the row's kind.
  */
-export const readActivityList = async (): Promise<ActivityRow[]> => {
-  const [locationRequests] = await Promise.all([
-    apiServerClient['/api/v1/location-requests'].GET().then(unwrapApiResponse),
-    // TODO: [refactor]
-    // _readServiceRequests(),
-  ]);
+const toActivityRow = (item: ActivityItem): ActivityRow => {
+  const byLink = item.kind === 'LOCATION_REQUEST' && item.location?.type === 'FIND_BY_LINK';
 
-  return [
-    ...locationRequests.map(fromLocationRequest),
-    // ...serviceRequests.filter(isLegacyKind).map(fromServiceRequest),
-  ].sort((one, other) => Date.parse(other.updatedAt) - Date.parse(one.updatedAt));
+  return {
+    id: item.id,
+    kind:
+      item.kind === 'REVERSE_LOOKUP_REPORT'
+        ? 'REVERSE_LOOKUP_REPORT'
+        : byLink
+          ? 'LOCATION_BY_LINK'
+          : 'LOCATION_BY_NUMBER',
+    status: toStatus(item.status),
+    /*
+     * A link-type request is called by the name the member gave it; everything
+     * else is called by the number it concerns — the request's recipient, or the
+     * subject of the report.
+     */
+    title: (byLink ? item.location?.linkName : item.phone) ?? '',
+    address: item.location?.address ?? undefined,
+    /*
+     * The feed's own sort key, so the date a row shows is the one the list is
+     * ordered by. `statusUpdatedAt` is the truer answer to "when did this last
+     * change", and it is deliberately not used: it would put dates out of order
+     * down a list nobody re-sorts.
+     */
+    updatedAt: item.updatedAt,
+  };
 };
+
+/**
+ * A page of the feed as rows, in the order the API listed them.
+ *
+ * Nothing is sorted here. The feed is ordered by recency across both of its
+ * kinds, and a sort inside one page could only ever contradict that — the pages
+ * after this one are not in hand to sort against.
+ */
+export const toActivityRows = (items: ActivityItem[]): ActivityRow[] => items.map(toActivityRow);
