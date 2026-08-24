@@ -1,5 +1,7 @@
 import { jwtDecode } from 'jwt-decode';
+import type { config } from 'process';
 
+import type { session } from '../middleware/session';
 import type { SessionData } from './session.types';
 
 /*
@@ -43,16 +45,18 @@ const NO_CREDENTIAL: PaymentsCredential = {
  */
 const configuration = (): {
   renewalUrl: string;
+  seedAccessToken: string;
   seedRefreshToken: string;
   cfAccessClientId: string;
   cfAccessClientSecret: string;
 } | null => {
   const renewalUrl = process.env.PAYMENTS_API_TOKEN_REFRESH_URL;
+  const seedAccessToken = process.env.PAYMENTS_API_SEED_ACCESS_TOKEN ?? '';
   const seedRefreshToken = process.env.PAYMENTS_API_SEED_REFRESH_TOKEN;
   const cfAccessClientId = process.env.CF_ACCESS_CLIENT_ID ?? '';
   const cfAccessClientSecret = process.env.CF_ACCESS_CLIENT_SECRET ?? '';
   return renewalUrl && seedRefreshToken
-    ? { renewalUrl, seedRefreshToken, cfAccessClientId, cfAccessClientSecret }
+    ? { renewalUrl, seedAccessToken, seedRefreshToken, cfAccessClientId, cfAccessClientSecret }
     : null;
 };
 
@@ -118,6 +122,7 @@ const expiryOf = (accessToken: string): number => {
  */
 const requestRenewal = async (
   renewalUrl: string,
+  accessToken: string,
   refreshToken: string,
   cfAccessClientId: string,
   cfAccessClientSecret: string,
@@ -128,6 +133,7 @@ const requestRenewal = async (
       'content-type': 'application/json',
       'CF-Access-Client-Id': cfAccessClientId,
       'CF-Access-Client-Secret': cfAccessClientSecret,
+      Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify({ refreshToken }),
   });
@@ -186,6 +192,7 @@ export const withPaymentsCredential = async (session: SessionData): Promise<Sess
   try {
     const { token, refresh } = await requestRenewal(
       config.renewalUrl,
+      session.paymentsAccessToken ?? config.seedAccessToken,
       session.paymentsRefreshToken || config.seedRefreshToken,
       config.cfAccessClientId,
       config.cfAccessClientSecret,
