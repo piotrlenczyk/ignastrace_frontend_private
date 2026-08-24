@@ -1,39 +1,40 @@
 import { CardNumberElement } from '@stripe/react-stripe-js';
-import type {
-  PaymentIntent,
-  PaymentRequestPaymentMethodEvent,
-  Stripe,
-  StripeElements,
-  StripeError,
-} from '@stripe/stripe-js';
+import type { PaymentRequestPaymentMethodEvent, Stripe, StripeElements } from '@stripe/stripe-js';
 import { useMutation } from '@tanstack/react-query';
 import validator from 'validator';
 
 import { $api } from '@/network/api/api-browser-client';
+import {
+  type StripeSubscriptionPaymentUpdate,
+  useUpdateStripePaymentMethodMutation,
+} from '@/network/payments-api/hooks/use-update-stripe-payment-method-mutation';
 import type { StripeFormValues } from '@/types/stripe-form.types';
-import type { Subscription } from '@/types/subscription';
-import type { SubscriptionIntent } from '@/types/subscription-intent';
-import { getTrackingData } from '@/utils/tracking';
 
-import { useApi } from '../use-api';
-
+/**
+ * Collects a card — typed or handed over by a wallet — and puts it on the
+ * caller's subscription.
+ *
+ * It used to do two jobs: this one, and starting a subscription. The second was
+ * unreachable, since the one form that mounts this hook only ever asks for a card
+ * change, and its two legacy calls went with it.
+ */
 export function useConfirmStripePaymentMutation({
   stripe,
-  isReactivate,
-  skipTrial = isReactivate,
-  isUpdatePaymentMethod = false,
   onSuccess,
   onError,
 }: {
   stripe: Stripe | null;
-  isReactivate: boolean;
-  skipTrial?: boolean;
-  isUpdatePaymentMethod?: boolean;
-  onSuccess: (data: { paymentIntent: PaymentIntent }) => void;
-  onError: (error: StripeError) => void;
+  onSuccess: (data: StripeSubscriptionPaymentUpdate) => void;
+  /**
+   * A Stripe error from collecting or confirming the card, or the body the
+   * payments service refused the change with. Which of the two it is decides
+   * nothing at the only call site — it reports one message for either — so the
+   * type says what can arrive rather than naming one of them.
+   */
+  onError: (error: unknown) => void;
 }) {
-  const api = useApi();
   const { mutate: updateProfile } = $api.useMutation('put', '/api/v1/user');
+  const { mutateAsync: updateStripePaymentMethod } = useUpdateStripePaymentMethodMutation();
 
   /*
    * The name from the card, carried onto the account so it has one even when the
@@ -55,26 +56,34 @@ export function useConfirmStripePaymentMutation({
     updateProfile({ body: { name } });
   }
 
-  async function syncSubscription(paymentIntentStripeId: string) {
-    const subscription = await api.post<Subscription>('/subscription/sync', {
-      payment_intent_stripe_id: paymentIntentStripeId,
-    });
+  /**
+   * Puts the collected card on the subscription the payments service holds for
+   * this session, and sees through the charge that endpoint attempts at once.
+   *
+   * The legacy predecessor answered `{ success: boolean }` with a 200 either way,
+   * so the only thing to do with a refusal was to throw a message of this
+   * application's own invention. Now the refusal is the service's, and it travels
+   * as it arrived.
+   *
+   * A client secret in the answer means the immediate charge needs the cardholder
+   * present, and the confirmation is read exactly as the checkout island reads
+   * it — its absence means there was nothing to confirm. The subscription
+   * `status` is deliberately not branched on beyond that: the service publishes
+   * no enumeration for it, and inventing one here would be guessing at which
+   * values are a card change that failed.
+   */
+  async function updatePaymentMethod(stripe: Stripe, paymentMethodId: string) {
+    const update = await updateStripePaymentMethod({ body: { paymentMethodId } });
 
-    if (subscription.status !== 'active') {
-      throw new Error('Subscription not active');
+    if (update.clientSecret) {
+      const { error } = await stripe.confirmCardPayment(update.clientSecret);
+
+      if (error) {
+        throw error;
+      }
     }
-  }
 
-  async function updatePaymentMethod(paymentMethodId: string) {
-    const response = await api.put<Record<string, unknown>>('/subscription/update_payment_method', {
-      payment_method_id: paymentMethodId,
-    });
-
-    if (!response.success) {
-      throw new Error('Failed to update payment method');
-    }
-
-    return response;
+    return update;
   }
 
   async function payWithCard(
@@ -82,9 +91,7 @@ export function useConfirmStripePaymentMutation({
     elements: StripeElements,
     data: StripeFormValues,
     email: string,
-    currency: string,
-    trackingData: Record<string, string>,
-  ) {
+  ): Promise<StripeSubscriptionPaymentUpdate> {
     const card = elements.getElement(CardNumberElement);
 
     const addressData =
@@ -109,82 +116,27 @@ export function useConfirmStripePaymentMutation({
       throw new Error('Unable to create payment method.');
     }
 
-    if (isUpdatePaymentMethod) {
-      await updatePaymentMethod(paymentMethodId);
+    const update = await updatePaymentMethod(stripe, paymentMethodId);
 
-      if (!isReactivate) {
-        updateUserInfo(data.cardName);
-      }
+    updateUserInfo(data.cardName);
 
-      return { paymentIntent: { id: 'update_payment_method_success' } as PaymentIntent };
-    } else {
-      const subscription = await api.post<SubscriptionIntent>('/subscription', {
-        currency,
-        payment_method_id: paymentMethodId,
-        tracking_data: trackingData,
-        skip_trial: skipTrial,
-      });
-
-      if (!isReactivate) {
-        updateUserInfo(data.cardName);
-      }
-
-      const result = await stripe.confirmCardPayment(subscription.client_secret, { payment_method: paymentMethodId });
-
-      if (result.error) {
-        throw result.error;
-      }
-
-      return result;
-    }
+    return update;
   }
 
   async function payWithWallet(
     stripe: Stripe,
     data: PaymentRequestPaymentMethodEvent,
-    currency: string,
-    trackingData: Record<string, string>,
-  ) {
+  ): Promise<StripeSubscriptionPaymentUpdate> {
     const { complete, paymentMethod, payerName } = data;
 
     try {
-      const paymentMethodId = paymentMethod.id;
+      const update = await updatePaymentMethod(stripe, paymentMethod.id);
 
-      if (isUpdatePaymentMethod) {
-        await updatePaymentMethod(paymentMethodId);
+      updateUserInfo(payerName);
 
-        if (!isReactivate) {
-          updateUserInfo(payerName);
-        }
+      complete('success');
 
-        complete('success');
-
-        return { paymentIntent: { id: 'update_payment_method_success' } as PaymentIntent };
-      } else {
-        const subscription = await api.post<SubscriptionIntent>('/subscription', {
-          currency,
-          payment_method_id: paymentMethodId,
-          tracking_data: trackingData,
-          skip_trial: skipTrial,
-        });
-
-        if (!isReactivate) {
-          updateUserInfo(payerName);
-        }
-
-        const result = await stripe.confirmCardPayment(subscription.client_secret, {
-          payment_method: paymentMethodId,
-        });
-
-        if (result.error) {
-          complete('fail');
-          throw result.error;
-        } else {
-          complete('success');
-        }
-
-        return result;
-      }
+      return update;
     } catch (error) {
       complete('fail');
       throw error;
@@ -194,37 +146,19 @@ export function useConfirmStripePaymentMutation({
   async function confirmStripePayment({
     data,
     email,
-    currency,
     elements,
   }: {
     data: StripeFormValues | PaymentRequestPaymentMethodEvent;
     email: string;
-    currency: string;
     elements: StripeElements | null;
   }) {
-    if (!elements) {
-      throw new Error('Elements not found');
-    }
-
     if (!stripe || !elements) {
       throw new Error('Stripe or elements not found');
     }
-    if (!currency) {
-      throw new Error('Currency not found');
-    }
 
-    const trackingData = getTrackingData();
-
-    const result =
-      'complete' in data && 'paymentMethod' in data
-        ? await payWithWallet(stripe, data, currency, trackingData)
-        : await payWithCard(stripe, elements, data, email, currency, trackingData);
-
-    if (!isUpdatePaymentMethod) {
-      await syncSubscription(result.paymentIntent.id);
-    }
-
-    return result;
+    return 'complete' in data && 'paymentMethod' in data
+      ? payWithWallet(stripe, data)
+      : payWithCard(stripe, elements, data, email);
   }
 
   return useMutation({
