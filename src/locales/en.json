@@ -136,10 +136,12 @@
     },
     "settings": {
       "billing": {
+        "cancel_error": "We could not cancel your subscription. Please try again.",
         "incomplete_state": "Incomplete",
         "initial_state": "Initial",
         "next_payment_attempt_date": "Next payment attempt: {date}",
-        "pending_state": "Pending payment"
+        "pending_state": "Pending payment",
+        "reactivate_error": "We could not resume your subscription. Please try again."
       }
     }
   },

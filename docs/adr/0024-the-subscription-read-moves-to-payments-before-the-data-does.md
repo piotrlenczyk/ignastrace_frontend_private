@@ -7,7 +7,10 @@ the payments service, and the writes are not. It changes nothing in
 [0023](0023-a-shared-technical-account-for-the-payments-upstream.md) about which credential that
 service is called with, and it does not answer the question
 [0021](0021-the-checkout-island-takes-every-payment-but-one.md) named and #73 closed — it acts in
-spite of that answer, which is the whole of the trade recorded here.
+spite of that answer, which is the whole of the trade recorded here. **Superseded in one line by
+[0025](0025-the-subscription-writes-follow-the-read-onto-payments.md):** the cancellation and
+reactivation writes no longer stay on legacy, and everything this record says about that split is
+history rather than the current state.
 
 ## Context
 

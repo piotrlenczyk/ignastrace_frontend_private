@@ -23,10 +23,12 @@ holds. Work on that track only through its tasks: one endpoint per task, the leg
 when the task ends, no adapters, and the screen on the new response shape.
 `docs/adr/0022-retiring-the-legacy-layer-on-its-own-track.md` records the trade — including what
 is deliberately out of scope and what is blocked on the upstream. One line of it has since been
-reversed: the billing screen's subscription read is on the payments service ahead of any data
-migration, and `docs/adr/0024-the-subscription-read-moves-to-payments-before-the-data-does.md`
-records what that costs — the legacy population is redirected off the screen, and the cancellation
-and reactivation writes are still legacy. Outside that track, still don't
+reversed twice over: the billing screen's subscription read moved to the payments service ahead of any
+data migration (`docs/adr/0024-the-subscription-read-moves-to-payments-before-the-data-does.md`), and
+the cancellation and reactivation writes then followed it
+(`docs/adr/0025-the-subscription-writes-follow-the-read-onto-payments.md`). The screen is off the
+legacy client entirely; what that costs is that the legacy population is redirected off it, and every
+payments write is raised as the shared technical account. Outside that track, still don't
 rewrite a screen's fetching unless you are redesigning the screen.
 
 ## Design implementation rules

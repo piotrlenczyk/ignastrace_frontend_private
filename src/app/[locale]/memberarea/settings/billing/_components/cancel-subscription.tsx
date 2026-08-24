@@ -1,3 +1,5 @@
+'use client';
+
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
@@ -10,30 +12,57 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-
-type CancelSubscriptionProps = {
-  isPending: boolean;
-  onCancel: () => void;
-};
+import { useToast } from '@/hooks/use-toast';
+import { useRouter } from '@/libs/i18n-routing';
+import { useCancelSubscriptionMutation } from '@/network/payments-api/hooks/use-cancel-subscription-mutation';
 
 /**
  * The dialog only ever confirms a cancellation, never reports one.
  *
  * It used to have a second face — "your subscription has been canceled", off a
  * client-held copy of the subscription that the legacy mutation's response
- * updated. That copy is gone: the screen reads the payments service on the
- * server, and the write still goes to the legacy backend, so nothing this dialog
- * could read would ever say cancelled. The branch is pruned rather than left
- * verbatim, because the screen holding it is itself in scope — see ADR 0022's
- * correction of 0021, and ADR 0024 for what the write being elsewhere costs.
+ * updated. That copy is gone and is not coming back: the answer here is an
+ * acknowledgement, `{ message: string }`, with no subscription in it. What the
+ * member sees instead is the refreshed card — badge, cancellation date, the date
+ * access runs to, and the offer to call it off — which now tells the truth,
+ * because the write and the read are finally the same upstream.
+ *
+ * The dialog owns the act it confirms rather than being handed a callback: it is
+ * the only thing that knows when to close, and closing on success is the whole of
+ * what it does with the answer.
  */
-export function CancelSubscription({ isPending, onCancel }: CancelSubscriptionProps) {
+export function CancelSubscription() {
   const [isOpen, setIsOpen] = useState(false);
   const t = useTranslations('pages.settings.billing.cancel_dialog');
+  const tNew = useTranslations('__NEW__.settings.billing');
+  const router = useRouter();
+  const { toast } = useToast();
 
-  const handleCancel = () => {
-    onCancel();
-  };
+  const { mutate: cancelSubscription, isPending } = useCancelSubscriptionMutation();
+
+  /*
+   * An empty body: the operation declares one as required, and its only field is
+   * the member's own reason, which this dialog does not ask for.
+   *
+   * The refresh is what shows the result — the subscription is read in a server
+   * component, so there is no query key to invalidate. A refusal is not typed and
+   * cannot be, so the member is told the act failed in this application's words
+   * and the service's own body goes to the console.
+   */
+  const handleCancel = () =>
+    cancelSubscription(
+      { body: {} },
+      {
+        onSuccess: () => {
+          setIsOpen(false);
+          router.refresh();
+        },
+        onError: (error) => {
+          console.error('The payments service refused the cancellation', error);
+          toast({ title: tNew('cancel_error'), variant: 'destructive' });
+        },
+      },
+    );
 
   return (
     <>
