@@ -3,32 +3,38 @@ import { useLocale, useTranslations } from 'next-intl';
 
 import { Card } from '@/components/ui/card';
 import { cn } from '@/libs/utils';
-import type { SexOffenderDetail } from '@/server/getters/reverse-lookup.getters';
+import type { SexOffenderData } from '@/types/sex-offenders.types';
 import { getCountryName } from '@/utils/country-names';
 
-const AddressRow = ({ label, value }: { label: string; value: string | number }) => (
-  <div className="block border-b border-gray-100 pb-3 text-lg md:flex md:gap-3">
+const AddressRow = ({ key, label, value }: { key: string; label: string; value: string | number }) => (
+  <div key={key} className="block border-b border-gray-100 pb-3 text-lg md:flex md:gap-3">
     <h5 className="mb-1 w-60 font-bold md:mb-0">{label}</h5>
     <p>{value ?? '--'}</p>
   </div>
 );
 
-const AddressInformationComponent = ({ className, record }: { className?: string; record: SexOffenderDetail }) => {
+const AddressInformationComponent = ({
+  className,
+  sexOffenderData,
+}: {
+  className?: string;
+  sexOffenderData: SexOffenderData;
+}) => {
   const t = useTranslations('pages.reverse_lookup.report.sex_offenders.report.address_information');
   const locale = useLocale();
 
-  const location = record.location;
+  const location = sexOffenderData.reverse_lookup_location;
 
   const addressData = [
     { label: t('street'), value: location?.address || '--' },
     { label: t('city'), value: location?.city || '--' },
     { label: t('county'), value: location?.county || '--' },
     { label: t('state'), value: location?.state || '--' },
-    { label: t('postal_code'), value: location?.postalCode || '--' },
+    { label: t('postal_code'), value: location?.postal_code || '--' },
     { label: t('country'), value: location?.country ? getCountryName(location.country, locale) : '--' },
     { label: t('latitude'), value: location?.latitude?.toFixed(6) || '--' },
     { label: t('longitude'), value: location?.longitude?.toFixed(6) || '--' },
-    { label: t('length_of_residence'), value: location?.yearsOfResidence || '--' },
+    { label: t('length_of_residence'), value: location?.years_of_residence || '--' },
   ];
 
   const locationCoordinates =

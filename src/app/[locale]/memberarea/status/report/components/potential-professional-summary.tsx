@@ -3,23 +3,22 @@ import { useTranslations } from 'next-intl';
 import { Card } from '@/components/ui/card';
 import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
-import type { ReverseLookup } from '@/types/reverse-lookup.types';
+import type { SectionedReport } from '@/server/getters/reverse-lookup.getters';
 
+import { useJobLabel } from '../report-enum-labels';
 import { AlertInfo } from './alert-info';
 
 const PotentialProfessionalSummary = ({
   className,
-  reverseLookup,
+  owners,
 }: {
   className?: string;
-  reverseLookup: ReverseLookup;
+  owners: SectionedReport['owners'];
 }) => {
   const t = useTranslations('pages.reverse_lookup.report.potential_professional_summary');
+  const jobLabel = useJobLabel();
 
-  const jobs = reverseLookup.reverse_lookup_owners
-    .map((owner) => owner.jobs)
-    .flat()
-    .filter(Boolean);
+  const jobs = owners.flatMap((owner) => owner.jobs);
   const isEmpty = jobs.length === 0;
 
   return (
@@ -28,10 +27,10 @@ const PotentialProfessionalSummary = ({
 
       <AlertInfo>{t('info')}</AlertInfo>
 
-      {jobs.map((item) => (
-        <div key={item} className="flex items-center gap-2">
+      {jobs.map((job) => (
+        <div key={job} className="flex items-center gap-2">
           <Icon name="briefcase" className="text-secondary" />
-          <p className="text-lg font-bold">{item ? t(`values.${item}`) : ''}</p>
+          <p className="text-lg font-bold">{jobLabel(job)}</p>
         </div>
       ))}
     </Card>

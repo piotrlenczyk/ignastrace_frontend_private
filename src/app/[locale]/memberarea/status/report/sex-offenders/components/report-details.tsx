@@ -7,20 +7,28 @@ import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { usePdfDownload } from '@/hooks/use-pdf-download';
-import type { SexOffenderData } from '@/types/sex-offenders.types';
+import type { SexOffenderDetail } from '@/server/getters/reverse-lookup.getters';
 import type { User } from '@/types/user';
 
 import { DownloadReportButton } from '../../components/download-report-button';
 import StickyDownloadButton from '../../components/sticky-download-button';
+import { offenderName } from '../sex-offender-record';
 import AddressInformation from './address-information';
 import BodyCharacteristics from './body-characteristics';
 import CrimeInformation from './crime-information';
-import DistinctiveFeatures from './distinctive-features';
 import OthersInformation from './others-information';
 import PersonalInformationComponent from './personal-information';
 import Photos from './photos';
 
-export const ReportDetails = ({ sexOffenderData, user }: { user: User; sexOffenderData: SexOffenderData }) => {
+export const ReportDetails = ({
+  record,
+  reportId,
+  user,
+}: {
+  user: User;
+  record: SexOffenderDetail;
+  reportId: string;
+}) => {
   const t = useTranslations('pages.reverse_lookup.report.sex_offenders.report');
   const { downloadPdf, isGenerating } = usePdfDownload();
 
@@ -30,7 +38,8 @@ export const ReportDetails = ({ sexOffenderData, user }: { user: User; sexOffend
     return downloadPdf(window.location.href, 'mobitrace-sex-offenders.pdf');
   };
 
-  const photo = sexOffenderData.reverse_lookup_photos[0]?.content;
+  const photo = record.photos?.[0];
+  const name = offenderName(record);
 
   return (
     <section>
@@ -43,7 +52,7 @@ export const ReportDetails = ({ sexOffenderData, user }: { user: User; sexOffend
       >
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="sm" className="flex size-12 items-center gap-2">
-            <Link href={`${ROUTES.MEMBER.STATUS.REPORT}?id=${sexOffenderData.reverse_lookup_id}`}>
+            <Link href={`${ROUTES.MEMBER.STATUS.REPORT}?id=${reportId}`}>
               <Icon name="arrow-left" className="text-neutral" />
             </Link>
           </Button>
@@ -75,7 +84,7 @@ export const ReportDetails = ({ sexOffenderData, user }: { user: User; sexOffend
               <Icon name="check-circle" className="mr-1 size-5 text-secondary" />
               {t('records_found_for')}
             </p>
-            <span className="h3 font-bold">{sexOffenderData.name}</span>
+            <span className="h3 font-bold">{name}</span>
           </div>
         </div>
 
@@ -89,13 +98,12 @@ export const ReportDetails = ({ sexOffenderData, user }: { user: User; sexOffend
         </div>
 
         <div className="flex flex-col gap-4">
-          <PersonalInformationComponent sexOffenderData={sexOffenderData} />
-          <BodyCharacteristics sexOffenderData={sexOffenderData} />
-          <DistinctiveFeatures sexOffenderData={sexOffenderData} />
-          <CrimeInformation sexOffenderData={sexOffenderData} />
-          <AddressInformation sexOffenderData={sexOffenderData} />
-          <Photos sexOffenderData={sexOffenderData} />
-          <OthersInformation sexOffenderData={sexOffenderData} />
+          <PersonalInformationComponent record={record} />
+          <BodyCharacteristics record={record} />
+          <CrimeInformation record={record} />
+          <AddressInformation record={record} />
+          <Photos record={record} />
+          <OthersInformation record={record} />
           <div id="bottom-download-button" className="mb-4 lg:hidden">
             <DownloadReportButton
               hasUnlimitedDownloads={hasUnlimitedDownloads}

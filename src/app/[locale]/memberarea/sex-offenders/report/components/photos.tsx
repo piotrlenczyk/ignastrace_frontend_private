@@ -3,23 +3,21 @@ import { useTranslations } from 'next-intl';
 
 import { Card } from '@/components/ui/card';
 import { cn } from '@/libs/utils';
-import type { SexOffenderDetail } from '@/server/getters/reverse-lookup.getters';
+import type { SexOffenderData } from '@/types/sex-offenders.types';
 
-const PhotosComponent = ({ className, record }: { className?: string; record: SexOffenderDetail }) => {
+const PhotosComponent = ({ className, sexOffenderData }: { className?: string; sexOffenderData: SexOffenderData }) => {
   const t = useTranslations('pages.reverse_lookup.report.sex_offenders.report.photos');
-
-  const photos = record.photos ?? [];
 
   return (
     <Card className={cn('flex flex-col gap-6 border border-stroke-weak p-6 shadow-raised', className)}>
       <h4 className="font-bold">{t('title')}</h4>
 
-      {photos.length > 0 && (
+      {sexOffenderData.reverse_lookup_photos.length > 0 && (
         <div className="flex flex-wrap gap-6">
-          {photos.map((photo) => (
-            <div key={photo}>
+          {sexOffenderData.reverse_lookup_photos.map((photo) => (
+            <div key={photo.id}>
               <Image
-                src={photo}
+                src={photo.content}
                 alt="Photo"
                 width={192}
                 height={192}

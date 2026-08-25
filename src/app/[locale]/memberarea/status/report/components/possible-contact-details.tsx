@@ -3,15 +3,15 @@ import { useTranslations } from 'next-intl';
 import { Card } from '@/components/ui/card';
 import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
-import type { ReverseLookup } from '@/types/reverse-lookup.types';
+import type { SectionedReport } from '@/server/getters/reverse-lookup.getters';
 
 import { AlertInfo } from './alert-info';
 
-const PossibleContactDetails = ({ className, reverseLookup }: { className?: string; reverseLookup: ReverseLookup }) => {
+const PossibleContactDetails = ({ className, owners }: { className?: string; owners: SectionedReport['owners'] }) => {
   const t = useTranslations('pages.reverse_lookup.report.possible_contact_details');
 
-  const emails = reverseLookup.reverse_lookup_owners.map((owner) => owner.email).filter(Boolean);
-  const phones = reverseLookup.reverse_lookup_owners.map((owner) => owner.phone).filter(Boolean);
+  const emails = owners.map((owner) => owner.email).filter((email): email is string => Boolean(email));
+  const phones = owners.map((owner) => owner.phone).filter((phone): phone is string => Boolean(phone));
 
   const contactsData = [
     {

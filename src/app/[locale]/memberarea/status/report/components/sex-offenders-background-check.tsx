@@ -11,7 +11,7 @@ import { Card } from '@/components/ui/card';
 import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { cn } from '@/libs/utils';
-import type { ReverseLookup } from '@/types/reverse-lookup.types';
+import type { SectionedReport } from '@/server/getters/reverse-lookup.getters';
 import type { User } from '@/types/user';
 
 import { useConsumeUpsell } from '../_hooks/api/use-consume-upsell-mutation';
@@ -20,11 +20,15 @@ import SexOffenderUpsell from './sex-offenders-upsell';
 
 const SexOffendersBackgroundCheck = ({
   className,
-  reverseLookup,
+  sexOffenders,
+  owners,
+  reportId,
   user,
 }: {
   className?: string;
-  reverseLookup: ReverseLookup;
+  sexOffenders: SectionedReport['sexOffenders'];
+  owners: SectionedReport['owners'];
+  reportId: string;
   user: User;
 }) => {
   const t = useTranslations('pages.reverse_lookup.report.sex_offenders_background_check');
@@ -34,21 +38,26 @@ const SexOffendersBackgroundCheck = ({
   const [isConsumingUpsell, setIsConsumingUpsell] = useState(false);
   const [ownerId, setOwnerId] = useState<string>('');
 
-  const { createdReports, lockedReports, isEmpty } = useMemo(() => {
-    const reportedOwnerIds = new Set(
-      reverseLookup.sex_offender_reports.map((report) => report.reverse_lookup_owner_id),
-    );
+  /*
+   * This section is gated per owner, so the split is by which owners the member
+   * has unlocked rather than by which records exist: an owner named in
+   * `ownersWithRecords` is unlocked and gets a link, an owner absent from it is
+   * locked and gets the unlock button. `found` says whether there is anything
+   * behind the link — the negation of the legacy `is_empty_record` — and the
+   * legacy screen linked to an empty record too, so it is not read here.
+   *
+   * Both branches now show the owner's name. The new API states no name on a
+   * record and no identifier for one either, so the unlocked row shows what the
+   * locked row always showed, and the two read consistently.
+   */
+  const { unlockedOwners, lockedOwners, isEmpty } = useMemo(() => {
+    const unlockedIds = new Set((sexOffenders.ownersWithRecords ?? []).map((record) => record.ownerId));
 
-    const locked = reverseLookup.reverse_lookup_owners.filter((owner) => !reportedOwnerIds.has(owner.id));
+    const unlocked = owners.filter((owner) => unlockedIds.has(owner.id));
+    const locked = owners.filter((owner) => !unlockedIds.has(owner.id));
 
-    const created = reverseLookup.sex_offender_reports;
-
-    return {
-      createdReports: created,
-      lockedReports: locked,
-      isEmpty: created.length === 0 && locked.length === 0,
-    };
-  }, [reverseLookup]);
+    return { unlockedOwners: unlocked, lockedOwners: locked, isEmpty: owners.length === 0 };
+  }, [owners, sexOffenders.ownersWithRecords]);
 
   const { mutate: consumeUpsell } = useConsumeUpsell({
     onSuccess: () => {
@@ -60,12 +69,12 @@ const SexOffendersBackgroundCheck = ({
     },
   });
 
-  const handleUnlockClick = (ownerId: string) => {
-    setOwnerId(ownerId);
+  const handleUnlockClick = (unlockedOwnerId: string) => {
+    setOwnerId(unlockedOwnerId);
 
     if (user.purchase_info?.sex_offenders_upsell_available) {
       setIsConsumingUpsell(true);
-      consumeUpsell({ reverseLookupId: reverseLookup.id, product: 'sex_offenders', ownerId });
+      consumeUpsell({ reverseLookupId: reportId, product: 'sex_offenders', ownerId: unlockedOwnerId });
     } else {
       setShowUpsellDialog(true);
     }
@@ -82,15 +91,17 @@ const SexOffendersBackgroundCheck = ({
         <AlertInfo>{t('info')}</AlertInfo>
 
         <div className="relative flex flex-col gap-4">
-          {createdReports.map((report) => (
-            <div key={report.id} className="flex items-center justify-between">
-              <strong className="text-lg">{report.name}</strong>
+          {unlockedOwners.map((owner) => (
+            <div key={owner.id} className="flex items-center justify-between">
+              <strong className="text-lg">{owner.name}</strong>
               <Button variant="secondary" className="shrink-0" asChild>
-                <Link href={`${ROUTES.MEMBER.STATUS.SEX_OFFENDERS}?id=${report.id}`}>{t('show_report')}</Link>
+                <Link href={`${ROUTES.MEMBER.STATUS.SEX_OFFENDERS}?reportId=${reportId}&ownerId=${owner.id}`}>
+                  {t('show_report')}
+                </Link>
               </Button>
             </div>
           ))}
-          {lockedReports.map((owner) => (
+          {lockedOwners.map((owner) => (
             <div key={owner.id} className="flex items-center justify-between">
               <strong className="text-lg">{owner.name}</strong>
               <Button onClick={() => handleUnlockClick(owner.id)} disabled={isConsumingUpsell}>
@@ -109,7 +120,7 @@ const SexOffendersBackgroundCheck = ({
       <SexOffenderUpsell
         open={showUpsellDialog}
         onOpenChange={setShowUpsellDialog}
-        reportId={reverseLookup.id}
+        reportId={reportId}
         ownerId={ownerId}
       />
     </>

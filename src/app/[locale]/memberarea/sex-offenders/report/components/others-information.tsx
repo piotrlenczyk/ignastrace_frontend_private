@@ -3,9 +3,15 @@ import { useTranslations } from 'next-intl';
 import { Card } from '@/components/ui/card';
 import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
-import type { SexOffenderDetail } from '@/server/getters/reverse-lookup.getters';
+import type { SexOffenderData } from '@/types/sex-offenders.types';
 
-const OthersInformationComponent = ({ className, record }: { className?: string; record: SexOffenderDetail }) => {
+const OthersInformationComponent = ({
+  className,
+  sexOffenderData,
+}: {
+  className?: string;
+  sexOffenderData: SexOffenderData;
+}) => {
   const t = useTranslations('pages.reverse_lookup.report.sex_offenders.report.others_information');
 
   return (
@@ -17,30 +23,30 @@ const OthersInformationComponent = ({ className, record }: { className?: string;
           <Icon name="pin-location" className="text-brand" />
           <div>
             <h5 className="mb-0.5 font-bold">{t('jurisdiction')}</h5>
-            <p>{record.jurisdiction || '--'}</p>
+            <p>{sexOffenderData.jurisdiction || '--'}</p>
           </div>
         </div>
         <div className="flex items-start gap-2 text-lg">
           <Icon name="user" className="text-brand" />
           <div>
             <h5 className="mb-0.5 font-bold">{t('is_absconded')}</h5>
-            <p>{record.isAbsconder ? t('yes') : '--'}</p>
+            <p>{sexOffenderData.is_absconder ? t('yes') : '--'}</p>
           </div>
         </div>
         <div className="flex items-start gap-2 text-lg">
           <Icon name="user" className="text-brand" />
           <div>
             <h5 className="mb-0.5 font-bold">{t('is_predator')}</h5>
-            <p>{record.isPredator ? t('yes') : '--'}</p>
+            <p>{sexOffenderData.is_predator ? t('yes') : '--'}</p>
           </div>
         </div>
         <div className="flex items-start gap-2 text-lg">
           <Icon name="open" className="text-brand" />
           <div>
             <h5 className="mb-0.5 font-bold">{t('original_report')}</h5>
-            {record.originalSourceUrl ? (
+            {sexOffenderData.original_source ? (
               <a
-                href={record.originalSourceUrl}
+                href={sexOffenderData.original_source}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block cursor-pointer text-primary underline"

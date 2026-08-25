@@ -4,27 +4,25 @@ import ReverseLookupValue from '@/components/reverse-lookup-value';
 import { Card } from '@/components/ui/card';
 import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
-import type { ReverseLookup } from '@/types/reverse-lookup.types';
+import type { SectionedReport } from '@/server/getters/reverse-lookup.getters';
 import { useTranslatedCountryNames } from '@/utils/country-names';
 
 import { localeFormatDate } from '../../_page/utils';
 
-const ProfileSummary = ({ reverseLookup, className }: { reverseLookup: ReverseLookup; className?: string }) => {
+const ProfileSummary = ({ owners, className }: { owners: SectionedReport['owners']; className?: string }) => {
   const locale = useLocale();
   const t = useTranslations('pages.reverse_lookup.report.profile_summary');
   const tCommon = useTranslations('pages.reverse_lookup.report.common');
 
-  const usernames = reverseLookup.reverse_lookup_owners.map((owner) => owner.usernames).flat();
-  const countryCodes = [
-    ...new Set(reverseLookup.reverse_lookup_owners.map((owner) => owner.country_code).filter(Boolean)),
-  ];
+  const usernames = owners.flatMap((owner) => owner.usernames);
+  const countryCodes = [...new Set(owners.map((owner) => owner.countryCode ?? undefined).filter(Boolean))];
   const countries = useTranslatedCountryNames(countryCodes);
 
   const profileData = [
     {
       icon: 'user-group',
       label: t('possible_owners'),
-      value: reverseLookup.reverse_lookup_owners.map((owner) => owner.name),
+      value: owners.map((owner) => owner.name ?? undefined),
     },
     {
       icon: 'identification',
@@ -34,7 +32,7 @@ const ProfileSummary = ({ reverseLookup, className }: { reverseLookup: ReverseLo
     {
       icon: 'mail',
       label: t('associated_emails'),
-      value: reverseLookup.reverse_lookup_owners.map((owner) => owner.email),
+      value: owners.map((owner) => owner.email ?? undefined),
     },
     {
       icon: 'pin-location',
@@ -44,8 +42,8 @@ const ProfileSummary = ({ reverseLookup, className }: { reverseLookup: ReverseLo
     {
       icon: 'calendar',
       label: t('potential_date_of_birth'),
-      value: reverseLookup.reverse_lookup_owners
-        .map((owner) => (owner.date_of_birth ? localeFormatDate(owner.date_of_birth, locale) : null))
+      value: owners
+        .map((owner) => (owner.dateOfBirth ? localeFormatDate(owner.dateOfBirth, locale) : null))
         .filter((date): date is string => date !== null),
     },
   ] as const;

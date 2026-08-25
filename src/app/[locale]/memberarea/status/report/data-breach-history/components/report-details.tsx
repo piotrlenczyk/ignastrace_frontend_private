@@ -9,7 +9,7 @@ import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { usePdfDownload } from '@/hooks/use-pdf-download';
-import type { ReverseLookupDataLeak } from '@/types/reverse-lookup-data-leaks.types';
+import type { schemas } from '@/network/api/apiServerClient';
 import type { User } from '@/types/user';
 
 import { DownloadReportButton } from '../../components/download-report-button';
@@ -18,16 +18,16 @@ import { BreachCard } from './breach-card';
 
 export const ReportDetails = ({
   user,
-  reverseLookupDataLeaks,
+  dataLeaks,
   photo,
   phone,
-  reverseLookupId,
+  reportId,
 }: {
   user: User;
-  reverseLookupDataLeaks: ReverseLookupDataLeak[];
-  photo?: string;
+  dataLeaks: schemas['DataBreachLeakResponse'][];
+  photo: string | null;
   phone: string;
-  reverseLookupId: string;
+  reportId: string;
 }) => {
   const t = useTranslations('pages.reverse_lookup.report.data_breach_history.report');
 
@@ -52,7 +52,7 @@ export const ReportDetails = ({
       >
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="sm" className="flex size-12 items-center gap-2" asChild>
-            <Link href={`${ROUTES.MEMBER.STATUS.REPORT}?id=${reverseLookupId}`}>
+            <Link href={`${ROUTES.MEMBER.STATUS.REPORT}?id=${reportId}`}>
               <Icon name="arrow-left" className="text-neutral" />
             </Link>
           </Button>
@@ -91,7 +91,7 @@ export const ReportDetails = ({
         </div>
 
         <div className="flex flex-col gap-4">
-          {reverseLookupDataLeaks.map((breach) => (
+          {dataLeaks.map((breach) => (
             <BreachCard key={breach.id} breach={breach} />
           ))}
         </div>

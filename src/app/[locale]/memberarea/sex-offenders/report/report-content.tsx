@@ -4,13 +4,6 @@ import { useTranslations } from 'next-intl';
 
 import { DownloadReportButton } from '@/app/[locale]/memberarea/status/report/components/download-report-button';
 import StickyDownloadButton from '@/app/[locale]/memberarea/status/report/components/sticky-download-button';
-import AddressInformation from '@/app/[locale]/memberarea/status/report/sex-offenders/components/address-information';
-import BodyCharacteristics from '@/app/[locale]/memberarea/status/report/sex-offenders/components/body-characteristics';
-import CrimeInformation from '@/app/[locale]/memberarea/status/report/sex-offenders/components/crime-information';
-import DistinctiveFeatures from '@/app/[locale]/memberarea/status/report/sex-offenders/components/distinctive-features';
-import OthersInformation from '@/app/[locale]/memberarea/status/report/sex-offenders/components/others-information';
-import PersonalInformation from '@/app/[locale]/memberarea/status/report/sex-offenders/components/personal-information';
-import Photos from '@/app/[locale]/memberarea/status/report/sex-offenders/components/photos';
 import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
@@ -18,6 +11,14 @@ import { usePdfDownload } from '@/hooks/use-pdf-download';
 import { Link } from '@/libs/i18n-routing';
 import type { SexOffenderData } from '@/types/sex-offenders.types';
 import type { User } from '@/types/user';
+
+import AddressInformation from './components/address-information';
+import BodyCharacteristics from './components/body-characteristics';
+import CrimeInformation from './components/crime-information';
+import DistinctiveFeatures from './components/distinctive-features';
+import OthersInformation from './components/others-information';
+import PersonalInformation from './components/personal-information';
+import Photos from './components/photos';
 
 export const SexOffenderSearchReportContent = ({
   sexOffenderData,

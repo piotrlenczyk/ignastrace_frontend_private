@@ -2,13 +2,19 @@ import { redirect } from 'next/navigation';
 
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
-import { getApi } from '@/libs/server/api';
 import { getUser } from '@/libs/subscription';
+import { getSexOffenderDetail } from '@/server/getters/reverse-lookup.getters';
 import { getServerSession } from '@/server/session/session.utils';
-import type { SexOffenderData } from '@/types/sex-offenders.types';
+import { firstValue } from '@/utils/search-params';
 
+import { InPreparation } from '../components/in-preparation';
 import { ReportDetails } from './components/report-details';
 
+/*
+ * The record is addressed by the report and the owner it belongs to, not by a
+ * record identifier: the new API publishes none, and the pair is the key both the
+ * sectioned response's `ownersWithRecords` and the detail endpoint use.
+ */
 const SexOffendersPage = async (props: PageProps<'/[locale]/memberarea/status/report/sex-offenders'>) => {
   const searchParams = await props.searchParams;
   const session = await getServerSession();
@@ -18,7 +24,10 @@ const SexOffendersPage = async (props: PageProps<'/[locale]/memberarea/status/re
     redirect(ROUTES.HOME);
   }
 
-  if (!searchParams?.id) {
+  const reportId = firstValue(searchParams.reportId);
+  const ownerId = firstValue(searchParams.ownerId);
+
+  if (!reportId || !ownerId) {
     redirect(ROUTES.MEMBER.STATUS.HOME);
   }
 
@@ -33,18 +42,21 @@ const SexOffendersPage = async (props: PageProps<'/[locale]/memberarea/status/re
     redirect(redirectUrl);
   }
 
-  const api = await getApi();
+  const [record, user] = await Promise.all([getSexOffenderDetail(reportId, ownerId), getUser()]);
 
-  const [sexOffenderData, user] = await Promise.all([
-    api.get<SexOffenderData>(`/sex_offenders_data/${searchParams.id}`),
-    getUser(),
-  ]);
-
-  if (!sexOffenderData.upsell_purchased) {
+  /*
+   * The gate is the refusal itself rather than a flag in the response, and it
+   * sends the member where the flag-based one sent them.
+   */
+  if (record.outcome === 'not-unlocked') {
     redirect(ROUTES.MEMBER.STATUS.HOME);
   }
 
-  return <ReportDetails sexOffenderData={sexOffenderData} user={user} />;
+  if (record.outcome === 'in-preparation') {
+    return <InPreparation />;
+  }
+
+  return <ReportDetails record={record.data} reportId={reportId} user={user} />;
 };
 
 export default SexOffendersPage;

@@ -9,17 +9,17 @@ import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { usePdfDownload } from '@/hooks/use-pdf-download';
-import type { ReverseLookup } from '@/types/reverse-lookup.types';
+import type { SectionedReport } from '@/server/getters/reverse-lookup.getters';
 import type { User } from '@/types/user';
 
 import { DownloadReportButton } from './download-report-button';
 
-const ReportHeader = ({ reverseLookup, user }: { reverseLookup: ReverseLookup; user: User }) => {
+const ReportHeader = ({ report, user }: { report: SectionedReport; user: User }) => {
   const t = useTranslations('pages.reverse_lookup.report.header');
   const { downloadPdf, isGenerating } = usePdfDownload();
 
-  const phoneNumberFormatted = formatPhoneNumber(reverseLookup.phone);
-  const photo = reverseLookup.reverse_lookup_photos[0]?.content;
+  const phoneNumberFormatted = formatPhoneNumber(report.profile.phone ?? '');
+  const photo = report.photos[0];
   const hasUnlimitedDownloads = user.purchase_info?.unlimited_downloads_upsell_available ?? false;
 
   const handleDownload = () => {

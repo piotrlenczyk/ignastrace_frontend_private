@@ -1,13 +1,15 @@
 import { useLocale, useTranslations } from 'next-intl';
 
 import { Icon } from '@/components/ui/icon';
-import type { ReverseLookupDataLeak } from '@/types/reverse-lookup-data-leaks.types';
+import type { schemas } from '@/network/api/apiServerClient';
 
 import { localeFormatDate } from '../../../_page/utils';
+import { useCompromisedDataLabel } from '../../report-enum-labels';
 
-export const BreachCard = ({ breach }: { breach: ReverseLookupDataLeak }) => {
+export const BreachCard = ({ breach }: { breach: schemas['DataBreachLeakResponse'] }) => {
   const locale = useLocale();
   const t = useTranslations('pages.reverse_lookup.report.data_breach_history.report');
+  const compromisedDataLabel = useCompromisedDataLabel();
 
   return (
     <div
@@ -22,7 +24,7 @@ export const BreachCard = ({ breach }: { breach: ReverseLookupDataLeak }) => {
 
       <div className="flex flex-col gap-3">
         <div>
-          <h3 className="mb-1 text-base font-semibold">{breach.service_name}</h3>
+          <h3 className="mb-1 text-base font-semibold">{breach.serviceName}</h3>
           <p className="text-sm text-weak">{localeFormatDate(breach.date, locale)}</p>
         </div>
 
@@ -31,8 +33,8 @@ export const BreachCard = ({ breach }: { breach: ReverseLookupDataLeak }) => {
         <p className="font-semibold">{t('compromised_data')}:</p>
 
         <ul className="list-disc pl-5 text-sm">
-          {breach.compromised_data.map((data) => (
-            <li key={`${breach.service_name}-${data}`}>{t(`data_types.${data}`)}</li>
+          {breach.compromisedData.map((data) => (
+            <li key={`${breach.serviceName}-${data}`}>{compromisedDataLabel(data)}</li>
           ))}
         </ul>
       </div>

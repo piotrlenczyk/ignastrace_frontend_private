@@ -2,15 +2,16 @@ import { redirect } from 'next/navigation';
 
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
-import { getApi } from '@/libs/server/api';
 import { getUser } from '@/libs/subscription';
+import { getSectionedReport } from '@/server/getters/reverse-lookup.getters';
 import { getServerSession } from '@/server/session/session.utils';
 import { getServerSettings } from '@/settings/settings.server';
-import type { ReverseLookup } from '@/types/reverse-lookup.types';
+import { firstValue } from '@/utils/search-params';
 
 import CarrierDetails from './components/carrier-details';
 import DataBreachHistory from './components/data-breach-history';
 import DownloadPdfButton from './components/download-pdf-button';
+import { InPreparation } from './components/in-preparation';
 import PhonePublicInformation from './components/phone-public-information';
 import PossibleAddresses from './components/possible-addresses';
 import PossibleContactDetails from './components/possible-contact-details';
@@ -37,7 +38,9 @@ const ReportStatusPage = async (props: PageProps<'/[locale]/memberarea/status/re
     redirect(ROUTES.MEMBER.STATUS.HOME);
   }
 
-  if (!searchParams?.id) {
+  const reportId = firstValue(searchParams?.id);
+
+  if (!reportId) {
     redirect(ROUTES.MEMBER.STATUS.HOME);
   }
 
@@ -56,29 +59,42 @@ const ReportStatusPage = async (props: PageProps<'/[locale]/memberarea/status/re
     redirect(redirectUrl);
   }
 
-  const api = await getApi();
-  const [reverseLookup, user] = await Promise.all([
-    api.get<ReverseLookup>(`/reverse_lookups/${searchParams?.id}`),
-    getUser(),
-  ]);
+  const [sections, user] = await Promise.all([getSectionedReport(reportId), getUser()]);
+
+  /*
+   * A report the backend has not finished is told apart from a report that
+   * finished with nothing in it. A `FAILED` one is the latter: it arrives as a 200
+   * with empty sections, and every card below already draws its own empty state.
+   */
+  if (sections.outcome === 'in-preparation') {
+    return <InPreparation />;
+  }
+
+  const report = sections.data;
 
   return (
     <>
-      <ReportHeader reverseLookup={reverseLookup} user={user} />
+      <ReportHeader report={report} user={user} />
       <StickyDownloadPdfButton user={user} />
       <div className="flex flex-col gap-4 p-4 lg:px-6">
-        <ProfileSummary reverseLookup={reverseLookup} />
-        <SexOffendersBackgroundCheck reverseLookup={reverseLookup} user={user} className="print:hidden" />
-        <DataBreachHistory reverseLookup={reverseLookup} user={user} className="print:hidden" />
-        <PhonePublicInformation reverseLookup={reverseLookup} />
-        <Photos reverseLookup={reverseLookup} />
-        <PossibleContactDetails reverseLookup={reverseLookup} />
-        <PossiblePersonalDetails reverseLookup={reverseLookup} />
-        <PossibleAddresses reverseLookup={reverseLookup} />
-        <PossibleSocialMediaAccounts reverseLookup={reverseLookup} />
-        <PotentialProfessionalSummary reverseLookup={reverseLookup} />
-        <PotentialEducation reverseLookup={reverseLookup} />
-        <CarrierDetails reverseLookup={reverseLookup} />
+        <ProfileSummary owners={report.owners} />
+        <SexOffendersBackgroundCheck
+          sexOffenders={report.sexOffenders}
+          owners={report.owners}
+          reportId={reportId}
+          user={user}
+          className="print:hidden"
+        />
+        <DataBreachHistory dataBreach={report.dataBreach} reportId={reportId} user={user} className="print:hidden" />
+        <PhonePublicInformation owners={report.owners} />
+        <Photos photos={report.photos} />
+        <PossibleContactDetails owners={report.owners} />
+        <PossiblePersonalDetails owners={report.owners} />
+        <PossibleAddresses owners={report.owners} />
+        <PossibleSocialMediaAccounts socialMedia={report.socialMedia} reportId={reportId} />
+        <PotentialProfessionalSummary owners={report.owners} />
+        <PotentialEducation owners={report.owners} />
+        <CarrierDetails profile={report.profile} />
         <DownloadPdfButton user={user} />
       </div>
     </>
