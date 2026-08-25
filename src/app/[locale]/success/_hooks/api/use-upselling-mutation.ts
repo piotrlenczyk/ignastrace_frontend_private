@@ -13,8 +13,9 @@ export function useUpsellingMutation({
   const api = useApi();
 
   async function createUpselling(products: string[]) {
+    // Nothing selected is nothing to buy, so the screen just moves on.
     if (products.length === 0) {
-      return api.post('/user/send_order_confirm_email', {});
+      return;
     }
 
     return api.post('/upsellings', {

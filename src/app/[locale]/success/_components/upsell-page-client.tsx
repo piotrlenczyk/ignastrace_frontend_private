@@ -9,7 +9,6 @@ import { ROUTES } from '@/constants/routes';
 import { useMessageErrorToast } from '@/hooks/use-message-error-toast';
 import { useRouter } from '@/libs/i18n-routing';
 
-import { useSendOrderConfirmEmailMutation } from '../_hooks/api/use-send-order-confirm-email-mutation';
 import { useUpsellingMutation } from '../_hooks/api/use-upselling-mutation';
 import type { Product } from '../_types/product.type';
 import { OrderDetails } from './order-details';
@@ -45,15 +44,6 @@ const UpsellPageClient = ({ products }: { products: Product[] }) => {
       setIsSubmitted(false);
       setIsSubmitting(false);
       showErrorToast(tStripeForm('errors.stripe_generic_error'), tStripeForm('errors.stripe_generic_error_title'));
-    },
-  });
-
-  const { mutate: sendOrderConfirmEmail } = useSendOrderConfirmEmailMutation({
-    onSuccess: () => {
-      router.push(ROUTES.THANK_YOU);
-    },
-    onError: () => {
-      router.push(ROUTES.THANK_YOU);
     },
   });
 
@@ -93,7 +83,7 @@ const UpsellPageClient = ({ products }: { products: Product[] }) => {
           <Button
             variant="ghost"
             className="mx-auto text-base font-normal text-weak underline underline-offset-2"
-            onClick={() => sendOrderConfirmEmail()}
+            onClick={() => router.push(ROUTES.THANK_YOU)}
             disabled={isCreatingUpselling || isSubmitted}
           >
             {t('cancel_button')}
