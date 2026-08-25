@@ -29,7 +29,10 @@ the cancellation and reactivation writes then followed it
 (`docs/adr/0025-the-subscription-writes-follow-the-read-onto-payments.md`). The reverse-lookup family's
 member-facing pair — report creation and its usage count — has since been started against the same
 record's instruction not to, on an assumption about report storage the backend has still not confirmed
-(`docs/adr/0027-the-reverse-lookup-creation-starts-on-an-unanswered-assumption.md`); read that record
+(`docs/adr/0027-the-reverse-lookup-creation-starts-on-an-unanswered-assumption.md`); the report read,
+its data-breach read and its sex-offender read have since followed, taking the report's gating onto the
+new API's section state while the unlock that changes it is still written to legacy
+(`docs/adr/0028-the-report-reads-move-and-the-unlocks-stay-behind.md`); read both records
 before moving another call in that family. The billing screen is off the legacy client entirely; what
 that costs is that the legacy population is redirected off it, and every payments write is raised as
 the shared technical account. Outside that track, still don't

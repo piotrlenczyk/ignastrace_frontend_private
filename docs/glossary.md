@@ -206,21 +206,37 @@ nothing; creating a report does. The counter beside the form is decoration — t
 the creation call, which refuses with a code rather than only a status.
 
 **Report progress**
-: How far a report has got. Three vocabularies describe it today and **nothing translates between
-them**, because nothing in this application reads a report's status:
+: How far a report has got. Three vocabularies describe it and **nothing translates between them**:
 
-- the legacy backend's two — `pending` and `ready` — which the report screen still reads and the
-  progress screen already ignores in favour of an animation on a timer;
+- the legacy backend's two — `pending` and `ready` — which nothing reads any more. They survive as a
+  field on the shape the anonymous funnel's creation call answers with, and no screen branches on it;
 - the new API's four — `PENDING`, `PROCESSING`, `COMPLETED`, `FAILED` — returned at creation and meant
-  to be polled for, and read by nothing;
+  to be polled for. Two of them are now read, and only far enough to tell "still preparing" from
+  "ready": the sectioned read refuses while a report is `PENDING` or `PROCESSING`, and a `FAILED`
+  report is a 200 whose sections are empty, which the report screen draws as a report that completed
+  with nothing in it;
 - the activity list's own four — `PENDING`, `LOCATED`, `REJECTED`, `READY` — which are not a report's
   states at all but the list's shared vocabulary across every kind of row it draws.
 
 This entry exists so that whoever adds polling finds the mapping question already posed rather than
-inventing a fourth vocabulary to avoid it. What relates the three is not settled here and is not settled
-anywhere: only the new API's four belong to a report, and how the legacy pair and the list's four line up
-against them is the thing to establish, not to assume. `FAILED` is the state the product has no screen
-for, which is why the contract is not adopted yet.
+inventing a fourth vocabulary to avoid it.
+[ADR 0028](adr/0028-the-report-reads-move-and-the-unlocks-stay-behind.md) settled part of what it left
+open — the legacy pair is out of the reading path, and two of the new API's four are read for the first
+time — and left the rest where it was: how the list's four line up against a report's is still the thing
+to establish, not to assume. Designing the screen `FAILED` deserves, and polling progress from the
+creation screen, remain the separate task ADR 0027 named.
+
+**Section state**
+: What one gated section of a report is doing, in the new API's vocabulary: `LOCKED`, `PENDING`,
+`NO_RESULTS`, `RESULTS`. It is a section's word and not a report's — a report can be `COMPLETED` while
+its social-media section is `PENDING` — and it is the term the report's three gated sections now use in
+place of the legacy `reverse_lookup_*_upsell_purchased` booleans. `LOCKED` drives the unlock prompt,
+`PENDING` drives the in-progress presentation, and the other two drive content.
+
+The sex-offender section states it per owner rather than per report, which is why it also carries the
+list of owners the member has unlocked. And a section's state is **read from the new API while the
+unlock that changes it is still written to the legacy backend** — the asymmetry ADR 0028 records,
+along with the symptom if the two upstreams do not share those records.
 
 ## What is switched on
 
