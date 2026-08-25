@@ -4,64 +4,52 @@ import ReverseLookupValue from '@/components/reverse-lookup-value';
 import { Card } from '@/components/ui/card';
 import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
-import type { ReverseLookup } from '@/types/reverse-lookup.types';
+import type { SectionedReport } from '@/server/getters/reverse-lookup.getters';
 
 import { localeFormatDate } from '../../_page/utils';
+import { usePersonalDetailLabels } from '../report-enum-labels';
 import { AlertInfo } from './alert-info';
 
-const PossiblePersonalDetails = ({
-  className,
-  reverseLookup,
-}: {
-  className?: string;
-  reverseLookup: ReverseLookup;
-}) => {
+const PossiblePersonalDetails = ({ className, owners }: { className?: string; owners: SectionedReport['owners'] }) => {
   const locale = useLocale();
   const t = useTranslations('pages.reverse_lookup.report.possible_personal_details');
   const tCommon = useTranslations('pages.reverse_lookup.report.common');
+  const label = usePersonalDetailLabels();
 
-  const dateOfBirths = reverseLookup.reverse_lookup_owners
-    .map((owner) => (owner.date_of_birth ? localeFormatDate(owner.date_of_birth, locale) : undefined))
+  const dateOfBirths = owners
+    .map((owner) => (owner.dateOfBirth ? localeFormatDate(owner.dateOfBirth, locale) : undefined))
     .filter(Boolean);
 
-  const incomes = reverseLookup.reverse_lookup_owners
+  const incomes = owners
     .map((owner) =>
-      owner.income_min || owner.income_max ? `${owner.income_min || '...'}-${owner.income_max || '...'}` : undefined,
+      owner.incomeMin || owner.incomeMax ? `${owner.incomeMin || '...'}-${owner.incomeMax || '...'}` : undefined,
     )
     .filter(Boolean);
 
-  const genders = [
-    ...new Set(
-      reverseLookup.reverse_lookup_owners
-        .map((owner) => (owner.gender ? t(`values.${owner.gender}`) : undefined))
-        .filter(Boolean),
-    ),
-  ];
+  const genders = [...new Set(owners.map((owner) => (owner.gender ? label.gender(owner.gender) : undefined)))].filter(
+    Boolean,
+  );
 
-  const maritalStatuses = reverseLookup.reverse_lookup_owners
-    .map((owner) => (owner.marital_status ? t(`values.${owner.marital_status}`) : undefined))
+  const maritalStatuses = owners
+    .map((owner) => (owner.maritalStatus ? label.maritalStatus(owner.maritalStatus) : undefined))
     .filter(Boolean);
 
-  const children = reverseLookup.reverse_lookup_owners
+  const children = owners
     .map((owner) =>
-      owner.has_children === true
-        ? t(`values.children`, { count: owner.num_children ?? 0 })
-        : owner.has_children === false
+      owner.hasChildren === true
+        ? t(`values.children`, { count: owner.numChildren ?? 0 })
+        : owner.hasChildren === false
           ? t(`values.no_children`)
           : undefined,
     )
     .filter(Boolean);
 
   const householdSize = [
-    ...new Set(
-      reverseLookup.reverse_lookup_owners
-        .map((owner) => (owner.household_size ? owner.household_size : undefined))
-        .filter(Boolean),
-    ),
+    ...new Set(owners.map((owner) => (owner.householdSize ? owner.householdSize : undefined)).filter(Boolean)),
   ];
 
   const isEmpty =
-    reverseLookup.reverse_lookup_owners.length === 0 ||
+    owners.length === 0 ||
     (dateOfBirths.length === 0 &&
       genders.length === 0 &&
       maritalStatuses.length === 0 &&
@@ -101,6 +89,7 @@ const PossiblePersonalDetails = ({
       value: householdSize,
     },
   ] as const;
+
   return (
     <Card className={cn('flex flex-col gap-6 border-stroke-weak px-4 py-6 shadow-raised lg:px-6', className)}>
       <h4 className="font-bold">{isEmpty ? t('title_empty') : t('title')}</h4>

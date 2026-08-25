@@ -7,41 +7,27 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import { Card } from '@/components/ui/card';
-import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
-import type { ReverseLookup } from '@/types/reverse-lookup.types';
+import type { SectionedReport } from '@/server/getters/reverse-lookup.getters';
 
 import { AlertInfo } from './alert-info';
 
-const Photos = ({ className, reverseLookup }: { className?: string; reverseLookup: ReverseLookup }) => {
+const Photos = ({ className, photos }: { className?: string; photos: SectionedReport['photos'] }) => {
   const t = useTranslations('pages.reverse_lookup.report.photos');
-  const tSocial = useTranslations('pages.reverse_lookup.report.possible_social_media_accounts.sources');
 
   const options = { align: 'start', dragFree: true } as EmblaOptionsType;
   const [emblaRef] = useEmblaCarousel(options, [WheelGesturesPlugin()]);
   const [invalidImages, setInvalidImages] = useState<Set<string>>(new Set());
 
-  const isEmpty = reverseLookup.reverse_lookup_photos.length === 0;
+  const isEmpty = photos.length === 0;
 
-  const getSocialIcon = (source: string) => {
-    switch (source) {
-      case 'whatsapp':
-        return <Icon name="globe" className="size-10" />;
-      case 'facebook':
-        return <Icon name="globe" className="size-10 text-[#0966FF]" />;
-      default:
-        return null;
-    }
-  };
-
-  const photosData = reverseLookup.reverse_lookup_photos
-    .map((photo) => ({
-      id: photo.id,
-      image: photo.content,
-      logo: getSocialIcon(photo.source),
-      company: tSocial.has(photo.source as any) ? tSocial(photo.source as any) : t('other'),
-    }))
-    .filter((item) => !invalidImages.has(item.image));
+  /*
+   * The new API states a photo as a URL and nothing else — where it came from is
+   * gone. The tile's footer strip stays where it is, carrying the label this card
+   * already showed for a source it did not recognise, so that the card's height
+   * and layout do not shift under a member ahead of the redesign.
+   */
+  const photosData = photos.filter((photo) => !invalidImages.has(photo));
 
   const handleImageError = (imageSrc: string) => {
     setInvalidImages((prev) => new Set(prev).add(imageSrc));
@@ -61,19 +47,18 @@ const Photos = ({ className, reverseLookup }: { className?: string; reverseLooku
       {!isEmpty && (
         <div className="select-none" ref={emblaRef}>
           <div className="-ml-4 flex">
-            {photosData.map((item) => (
-              <div key={item.id} className="min-w-0 flex-[0_0_200px] pl-4">
+            {photosData.map((photo) => (
+              <div key={photo} className="min-w-0 flex-[0_0_200px] pl-4">
                 <div className="overflow-hidden">
                   <div className="relative aspect-square overflow-hidden rounded-t-2xl">
-                    <Image src={item.image} alt="Avatar" fill onError={() => handleImageError(item.image)} />
+                    <Image src={photo} alt="Avatar" fill onError={() => handleImageError(photo)} />
                   </div>
                   <div
                     className={`
                       flex min-h-[73px] items-center gap-2 rounded-b-2xl border border-t-0 border-stroke-weak px-3 py-4
                     `}
                   >
-                    {item.logo}
-                    {item.company && <p>{item.company}</p>}
+                    <p>{t('other')}</p>
                   </div>
                 </div>
               </div>

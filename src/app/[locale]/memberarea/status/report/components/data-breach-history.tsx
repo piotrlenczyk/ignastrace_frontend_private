@@ -11,7 +11,7 @@ import { Card } from '@/components/ui/card';
 import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { cn } from '@/libs/utils';
-import type { ReverseLookup } from '@/types/reverse-lookup.types';
+import type { SectionedReport } from '@/server/getters/reverse-lookup.getters';
 import type { User } from '@/types/user';
 
 import { useConsumeUpsell } from '../_hooks/api/use-consume-upsell-mutation';
@@ -19,11 +19,13 @@ import DataBreachUpsell from './data-breach-upsell';
 
 const DataBreachHistory = ({
   className,
-  reverseLookup,
+  dataBreach,
+  reportId,
   user,
 }: {
   className?: string;
-  reverseLookup: ReverseLookup;
+  dataBreach: SectionedReport['dataBreach'];
+  reportId: string;
   user: User;
 }) => {
   const t = useTranslations('pages.reverse_lookup.report.data_breach_history');
@@ -32,14 +34,21 @@ const DataBreachHistory = ({
   const [showUpsellDialog, setShowUpsellDialog] = useState(false);
   const [isConsumingUpsell, setIsConsumingUpsell] = useState(false);
 
-  const breachCount = reverseLookup.reverse_lookup_data_leaks_count;
+  const breachCount = dataBreach.matchCount ?? 0;
   const hasBreaches = breachCount > 0;
-  const upsellPurchased = reverseLookup.reverse_lookup_data_leaks_upsell_purchased;
+
+  /*
+   * The section's own state is the gate now, where a `…upsell_purchased` boolean
+   * on the report used to be. Spending a credit is still the legacy call, so this
+   * reads an unlock from one upstream that was written to another — the deliberate
+   * asymmetry ADR 0028 records.
+   */
+  const isLocked = dataBreach.state === 'LOCKED';
 
   const { mutate: consumeUpsell } = useConsumeUpsell({
     onSuccess: () => {
       router.refresh();
-      router.push(`${ROUTES.MEMBER.STATUS.DATA_BREACH_HISTORY}?id=${reverseLookup.id}`);
+      router.push(`${ROUTES.MEMBER.STATUS.DATA_BREACH_HISTORY}?id=${reportId}`);
     },
     onError: (error) => {
       console.error('Error consuming upsell', error);
@@ -50,7 +59,7 @@ const DataBreachHistory = ({
   const handleUnlockClick = () => {
     if (user.purchase_info?.data_leaks_upsell_available) {
       setIsConsumingUpsell(true);
-      consumeUpsell({ reverseLookupId: reverseLookup.id, product: 'data_leaks' });
+      consumeUpsell({ reverseLookupId: reportId, product: 'data_leaks' });
     } else {
       setShowUpsellDialog(true);
     }
@@ -61,11 +70,11 @@ const DataBreachHistory = ({
       return null;
     }
 
-    if (upsellPurchased) {
+    if (!isLocked) {
       return (
         <div className="flex justify-end">
           <Button variant="secondary" asChild>
-            <Link href={`${ROUTES.MEMBER.STATUS.DATA_BREACH_HISTORY}?id=${reverseLookup.id}`}>{t('show_report')}</Link>
+            <Link href={`${ROUTES.MEMBER.STATUS.DATA_BREACH_HISTORY}?id=${reportId}`}>{t('show_report')}</Link>
           </Button>
         </div>
       );
@@ -94,7 +103,7 @@ const DataBreachHistory = ({
         {renderActionButton()}
       </Card>
 
-      <DataBreachUpsell open={showUpsellDialog} onOpenChange={setShowUpsellDialog} reportId={reverseLookup.id} />
+      <DataBreachUpsell open={showUpsellDialog} onOpenChange={setShowUpsellDialog} reportId={reportId} />
     </>
   );
 };

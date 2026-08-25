@@ -4,18 +4,19 @@ import ReverseLookupValue from '@/components/reverse-lookup-value';
 import { Card } from '@/components/ui/card';
 import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
-import type { ReverseLookup, ReverseLookupLocation } from '@/types/reverse-lookup.types';
+import type { SectionedReport } from '@/server/getters/reverse-lookup.getters';
 import { getCountryName } from '@/utils/country-names';
 
 import { AlertInfo } from './alert-info';
 
-const PossibleAddresses = ({ className, reverseLookup }: { className?: string; reverseLookup: ReverseLookup }) => {
+const PossibleAddresses = ({ className, owners }: { className?: string; owners: SectionedReport['owners'] }) => {
   const t = useTranslations('pages.reverse_lookup.report.possible_addresses');
 
-  const locations = reverseLookup.reverse_lookup_owners
-    .map((owner) => owner.reverse_lookup_location)
-    .flat()
-    .filter(Boolean) as ReverseLookupLocation[];
+  /*
+   * Keyed by the owner rather than by the location: the new API states a location
+   * inline on its owner and gives it no identifier of its own.
+   */
+  const locations = owners.flatMap((owner) => (owner.location ? [{ owner: owner.id, ...owner.location }] : []));
 
   return (
     <Card className={cn('flex flex-col gap-6 border-stroke-weak px-4 py-6 shadow-raised lg:px-6', className)}>
@@ -24,7 +25,7 @@ const PossibleAddresses = ({ className, reverseLookup }: { className?: string; r
       <AlertInfo>{t('info')}</AlertInfo>
 
       {locations.map((location) => (
-        <div key={location.id} className="flex items-start gap-2">
+        <div key={location.owner} className="flex items-start gap-2">
           <Icon name="pin-location" className="size-6 text-secondary" />
           <div className="flex-1 text-lg leading-8">
             <div>
@@ -45,7 +46,7 @@ const PossibleAddresses = ({ className, reverseLookup }: { className?: string; r
             </div>
             <div>
               <strong>{t('labels.postal_code')}: </strong>
-              <ReverseLookupValue value={location.postal_code} />
+              <ReverseLookupValue value={location.postalCode} />
             </div>
             <div>
               <strong>{t('labels.country')}: </strong>
@@ -63,9 +64,9 @@ const PossibleAddresses = ({ className, reverseLookup }: { className?: string; r
               <strong>{t('labels.length_of_residence')}: </strong>
               <ReverseLookupValue
                 value={
-                  location.years_of_residence
-                    ? t('values.years', { count: location.years_of_residence })
-                    : location.years_of_residence
+                  location.yearsOfResidence
+                    ? t('values.years', { count: location.yearsOfResidence })
+                    : location.yearsOfResidence
                 }
               />
             </div>
