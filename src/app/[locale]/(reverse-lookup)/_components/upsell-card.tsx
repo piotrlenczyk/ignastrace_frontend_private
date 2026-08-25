@@ -9,13 +9,13 @@ import { Card } from '@/components/homepage/card';
 import LimitedOfferTag from '@/components/reverse-lookup/limited-offer-tag';
 import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
+import { UpsellPurchaseSurface } from '@/components/upsell/upsell-purchase-surface';
+import { useOwnsUpsell } from '@/hooks/api/use-owns-upsell';
+import { useUpsellUnlock } from '@/hooks/api/use-upsell-unlock';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { useMessageErrorToast } from '@/hooks/use-message-error-toast';
 import type { UpsellProduct, UpsellProductKey } from '@/libs/upsell-products';
-import { useCurrentMember } from '@/network/api/hooks/use-current-member';
 import { useSettings } from '@/settings/settings.provider';
-
-import { useUpsellingMutation } from '../../success/_hooks/api/use-upselling-mutation';
 
 type UpsellCardProps = {
   title: string;
@@ -29,16 +29,33 @@ type UpsellCardProps = {
   purchaseButtonText: string;
   /*
    * The payments row, as the payments service returned it, and the legacy key
-   * beside it rather than folded into it. The card renders the amount out of the
-   * first and buys and checks ownership with the second, which is exactly the
-   * divergence ADR 0029 records: a reader of this component can see that the
-   * price and the purchase come from two different upstreams.
+   * beside it rather than folded into it. Since ADR 0030 the card renders the
+   * amount off that row and charges the same row — the divergence ADR 0029
+   * recorded is closed — while the key is what names the upsell to the ownership
+   * read and to the translations.
    */
   product: UpsellProduct;
   productKey: UpsellProductKey;
 };
 
-const UpsellCard = ({
+/**
+ * One funnel step's offer, bought on the payments service.
+ *
+ * A step buys and stops there: at this moment no report exists to spend a credit
+ * against, so the credit waits on the member's balance and is spent later from the
+ * member area. ADR 0030 records why that is the whole of a step's job.
+ */
+const UpsellCard = (props: UpsellCardProps) => (
+  <UpsellPurchaseSurface price={props.product.price}>
+    <UpsellCardOffer {...props} />
+  </UpsellPurchaseSurface>
+);
+
+/**
+ * Inside the purchase surface, where the 3-D Secure confirmation is reachable.
+ * Split out for that reason alone.
+ */
+const UpsellCardOffer = ({
   title,
   specialOfferText,
   upsellBenefits,
@@ -52,38 +69,37 @@ const UpsellCard = ({
   const tStripeForm = useTranslations('components.forms.stripe_form');
 
   /*
-   * Read at render rather than inside the click handler, which is what fetching
-   * the member imperatively used to allow. `isLoading` is false both once the
-   * answer is in and for a visitor with no session — the query does not fire for
-   * one — so it gates the button only while there is genuinely an answer coming.
+   * Whether this visitor already has the thing on offer, read from whichever
+   * upstream knows: the new API's credit balances for a credit-balance product,
+   * the entitlement on the current user for unlimited PDF downloads. What it
+   * replaces is the composed member's list of extras, which was a fixture for
+   * every key but one — so a step deciding whether to sell was asking an invented
+   * question. ADR 0030 records the change.
    */
-  const { data: member, isLoading: isLoadingMember } = useCurrentMember();
+  const { ownsUpsell, isLoading: isLoadingOwnership } = useOwnsUpsell(productKey);
+  const { purchase } = useUpsellUnlock();
+
   const router = useRouter();
   const locale = useLocale();
   const { countryCode: country } = useSettings();
   const formatPrice = createPriceFormatter();
   const showErrorToast = useMessageErrorToast();
 
-  const [isPurchased, setIsPurchased] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSkipped, setIsSkipped] = useState(false);
 
-  const { mutate: createUpselling, isPending } = useUpsellingMutation({
-    onSuccess: () => {
-      router.push(redirectUrl);
-    },
-    onError: () => {
-      console.error('Error creating upselling');
-      setIsSubmitted(false);
-      showErrorToast(tStripeForm('errors.stripe_generic_error'), tStripeForm('errors.stripe_generic_error_title'));
-    },
-  });
-
+  /*
+   * Said before the button is pressed rather than after it. The old gate could
+   * only answer on the click — it fetched the member imperatively out of the
+   * handler — so a visitor who already owned the extra was shown the full offer
+   * and only told on pressing Buy. The ownership read is at render now, so a step
+   * with nothing to sell says so.
+   */
   const getButtonContent = () => {
-    if (isPurchased) {
+    if (ownsUpsell) {
       return t('already_purchased');
     }
-    if (isPending || isSubmitted) {
+    if (isSubmitted) {
       return (
         <span className="flex items-center gap-1">
           {t('processing')}
@@ -94,14 +110,19 @@ const UpsellCard = ({
     return purchaseButtonText;
   };
 
-  const handlePurchaseUpsell = () => {
-    if (member?.upsellings.includes(productKey)) {
-      setIsPurchased(true);
+  const handlePurchaseUpsell = async () => {
+    setIsSubmitted(true);
+
+    /* The price identifier off the row whose amount is on the button above. */
+    const result = await purchase(product.price.id);
+
+    if (result.outcome !== 'purchased') {
+      setIsSubmitted(false);
+      showErrorToast(tStripeForm('errors.stripe_generic_error'), tStripeForm('errors.stripe_generic_error_title'));
       return;
     }
 
-    setIsSubmitted(true);
-    createUpselling([productKey]);
+    router.push(redirectUrl);
   };
 
   const handleSkip = () => {
@@ -131,7 +152,7 @@ const UpsellCard = ({
           <Button
             className="font-semibold lg:hidden"
             onClick={handlePurchaseUpsell}
-            disabled={isPending || isPurchased || isSubmitted || isLoadingMember}
+            disabled={ownsUpsell || isSubmitted || isLoadingOwnership}
           >
             {getButtonContent()}
           </Button>
@@ -164,7 +185,7 @@ const UpsellCard = ({
           <Button
             className="hidden font-semibold lg:flex lg:flex-1 lg:text-lg"
             onClick={handlePurchaseUpsell}
-            disabled={isPending || isPurchased || isSubmitted || isSkipped || isLoadingMember}
+            disabled={ownsUpsell || isSubmitted || isSkipped || isLoadingOwnership}
           >
             {getButtonContent()}
           </Button>

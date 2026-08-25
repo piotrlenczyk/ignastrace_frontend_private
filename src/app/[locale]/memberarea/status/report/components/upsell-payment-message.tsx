@@ -13,11 +13,9 @@ type UpsellPaymentMessageProps = {
   onSuccessClose?: () => void;
   open?: boolean;
   isSuccess?: boolean;
-  reportId?: string | null;
   retryCount: number;
   product: 'data_leaks' | 'sex_offenders' | 'sex_offenders_search' | 'unlimited_pdf_downloads' | 'social_networks';
   onRetry: () => void;
-  onUpdatePaymentMethod: () => void;
   isRetrying?: boolean;
 };
 
@@ -27,7 +25,6 @@ type UpsellPaymentMessageButtonsProps = {
   onSuccess: () => void;
   onRetry: () => void;
   onClose: () => void;
-  onUpdatePaymentMethod: () => void;
   isRetrying?: boolean;
 };
 
@@ -37,7 +34,6 @@ function UpsellPaymentMessageButtons({
   onSuccess,
   onRetry,
   onClose,
-  onUpdatePaymentMethod,
   isRetrying = false,
 }: UpsellPaymentMessageButtonsProps) {
   const t = useTranslations('pages.reverse_lookup.report.upsell.payment_message');
@@ -76,9 +72,15 @@ function UpsellPaymentMessageButtons({
     );
   }
 
+  /*
+   * Out of retries. What used to stand here was "update your payment method",
+   * and it is gone with the legacy Stripe form it opened: through the payments
+   * service that step would change the card on the shared technical account's
+   * subscription, which is not this member's card. ADR 0030 records the deletion.
+   */
   return (
-    <Button className={buttonClassName} type="button" onClick={onUpdatePaymentMethod}>
-      {t('update_payment_method')}
+    <Button className={buttonClassName} type="button" onClick={onClose}>
+      {t('skip')}
     </Button>
   );
 }
@@ -90,7 +92,6 @@ export function UpsellPaymentMessage({
   isSuccess = false,
   retryCount,
   onRetry,
-  onUpdatePaymentMethod,
   onSuccessClose,
   isRetrying = false,
   product,
@@ -103,7 +104,13 @@ export function UpsellPaymentMessage({
   const handleSuccess = () => {
     onOpenChange(false);
 
+    /*
+     * The entitlement is on the account, and the gates that read it are server
+     * components — so the refresh is what makes the download button stop offering
+     * the upsell the member has just bought. The download itself follows.
+     */
     if (product === 'unlimited_pdf_downloads') {
+      router.refresh();
       onDownloadPdf?.();
       return;
     }
@@ -141,7 +148,6 @@ export function UpsellPaymentMessage({
             onSuccess={handleSuccess}
             onRetry={onRetry}
             onClose={handleClose}
-            onUpdatePaymentMethod={onUpdatePaymentMethod}
             isRetrying={isRetrying}
           />
         </div>

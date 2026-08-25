@@ -20,8 +20,7 @@ const DataBreachUpsell = ({ open, onOpenChange, reportId }: DataBreachUpsellProp
         'compromise_isa_contact_details',
         'professional_information_and_technical_data',
       ]}
-      purchaseParams={{ reverseLookupId: reportId }}
-      paymentMessageReportId={reportId}
+      reportId={reportId}
     />
   );
 };

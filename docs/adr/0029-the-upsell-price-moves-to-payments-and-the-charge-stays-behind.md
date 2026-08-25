@@ -5,7 +5,11 @@
 is the third record to move a read onto the payments service ahead of any data migration, after
 [0024](0024-the-subscription-read-moves-to-payments-before-the-data-does.md) and
 [0025](0025-the-subscription-writes-follow-the-read-onto-payments.md), and it closes #98 on the
-track's epic (#69).
+track's epic (#69). **Superseded in one line by
+[0030](0030-the-upsell-charge-follows-the-price-and-the-credit-is-spent-on-the-new-api.md):** the
+charge has since followed the price onto the payments service, so everything this record says about
+the purchase staying on legacy — "rejected outright" included — is history rather than the current
+state. The divergence it accepts survives for one purchase only, the standalone sex-offender search.
 
 ## Context
 
@@ -132,7 +136,10 @@ leaves two paths to the same data and a flag nobody deletes.
 no date, which is the same argument 0024, 0025, 0027 and 0028 each made in turn.
 
 **Moving the purchase too, so the displayed and charged amounts would agree.** Rejected outright: under
-0023 the write would charge the shared technical account.
+0023 the write would charge the shared technical account. **Reversed by
+[0030](0030-the-upsell-charge-follows-the-price-and-the-credit-is-spent-on-the-new-api.md)**, on the
+ground that 0021 already charges every subscription that way — so this was never a new class of risk,
+only the one the initial sale had already accepted.
 
 **Leaving the member-area dialog on legacy and moving only the three funnel steps.** Rejected because
 0022's rule is that a task ends when the legacy wrapper is gone; it would leave two paths to one list.

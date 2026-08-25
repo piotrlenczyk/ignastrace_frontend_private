@@ -82,10 +82,9 @@ const ReportStatusPage = async (props: PageProps<'/[locale]/memberarea/status/re
           sexOffenders={report.sexOffenders}
           owners={report.owners}
           reportId={reportId}
-          user={user}
           className="print:hidden"
         />
-        <DataBreachHistory dataBreach={report.dataBreach} reportId={reportId} user={user} className="print:hidden" />
+        <DataBreachHistory dataBreach={report.dataBreach} reportId={reportId} className="print:hidden" />
         <PhonePublicInformation owners={report.owners} />
         <Photos photos={report.photos} />
         <PossibleContactDetails owners={report.owners} />

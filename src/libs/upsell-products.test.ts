@@ -2,7 +2,13 @@ import { describe, expect, it } from 'vitest';
 
 import type { paymentsSchemas } from '@/network/payments-api/payments-api-server-client';
 
-import { resolveUpsellProduct, UPSELL_PRODUCT_SLUGS, type UpsellProductKey } from './upsell-products';
+import {
+  creditProductFor,
+  resolveUpsellProduct,
+  UPSELL_CREDIT_PRODUCTS,
+  UPSELL_PRODUCT_SLUGS,
+  type UpsellProductKey,
+} from './upsell-products';
 
 /*
  * The specification types a product's metadata opaquely — `Record<string, never>`
@@ -142,5 +148,38 @@ describe('resolveUpsellProduct', () => {
 
       expect(resolveUpsellProduct([only], key)).toBe(only);
     });
+  });
+});
+
+describe('the credit-balance product a legacy upsell key names', () => {
+  it.each([
+    ['data_leaks', 'DATA_LEAKS'],
+    ['sex_offenders', 'SEX_OFFENDERS'],
+    ['social_networks', 'SOCIAL_NETWORKS'],
+  ] as const)('names %s as the new API’s %s', (key, product) => {
+    expect(creditProductFor(key)).toBe(product);
+  });
+
+  /*
+   * Each of these is a fact about the upstream rather than a gap. Unlimited PDF
+   * downloads is an entitlement and not a balance; the standalone search and the
+   * `/success` screen's two extras have no counterpart in the new API at all.
+   */
+  it.each(['unlimited_pdf_downloads', 'sex_offenders_search', 'scan_pro', 'support_hotline'] as const)(
+    'names nothing for %s, which the new API holds no balance for',
+    (key) => {
+      expect(creditProductFor(key)).toBeUndefined();
+    },
+  );
+
+  /*
+   * Both maps are exhaustive over the same union and sit side by side, so adding
+   * an upsell key is a build failure beside them. This case fails the day one is
+   * added without an answer in each.
+   */
+  it('answers for every legacy upsell key, as the slug map does', () => {
+    const keys = Object.keys(UPSELL_PRODUCT_SLUGS) as UpsellProductKey[];
+
+    expect(Object.keys(UPSELL_CREDIT_PRODUCTS).sort()).toEqual([...keys].sort());
   });
 });

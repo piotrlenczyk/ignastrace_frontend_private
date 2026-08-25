@@ -1,224 +1,183 @@
 'use client';
 
-import { useLocale, useTranslations } from 'next-intl';
-import { useRef, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 
-import LimitedOfferTag from '@/components/reverse-lookup/limited-offer-tag';
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
-import { Icon } from '@/components/ui/icon';
-import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
-import { resolveUpsellProduct, type UpsellProductKey } from '@/libs/upsell-products';
+import { UpsellPurchaseSurface } from '@/components/upsell/upsell-purchase-surface';
+import { useUpsellUnlock } from '@/hooks/api/use-upsell-unlock';
+import {
+  creditProductFor,
+  resolveUpsellProduct,
+  type UpsellProduct,
+  type UpsellProductKey,
+} from '@/libs/upsell-products';
+import { CURRENT_USER_QUERY_KEY } from '@/network/api/hooks/use-current-user-query';
 import { useUpsellProductsQuery } from '@/network/payments-api/hooks/use-upsell-products-query';
-import { useSettings } from '@/settings/settings.provider';
 
-import { type PurchaseUpsellResponse, usePurchaseUpsell } from '../_hooks/api/use-purchase-upsell-mutation';
+import { type UpsellNamespace, UpsellOfferDialog } from './upsell-offer-dialog';
 import { UpsellPaymentMessage } from './upsell-payment-message';
-import { UpsellUpdatePaymentMethod } from './upsell-update-payment-method';
 
 /*
- * The five upsells this dialog is opened for — the two the `/success` screen
- * sells are not among them. A subset of the application's upsell keys rather
- * than a union of its own, so a key that stops existing stops compiling here.
+ * The four upsells this dialog is opened for. The standalone sex-offender search
+ * is not among them — its purchase also creates the search report and answers
+ * with its identifier, which the payments purchase cannot, so it keeps the legacy
+ * call and its own dialog. Nor are the two the `/success` screen sells. A subset
+ * of the application's upsell keys rather than a union of its own, so a key that
+ * stops existing stops compiling here.
  */
 type ProductKey = Extract<
   UpsellProductKey,
-  'data_leaks' | 'sex_offenders' | 'sex_offenders_search' | 'social_networks' | 'unlimited_pdf_downloads'
+  'data_leaks' | 'sex_offenders' | 'social_networks' | 'unlimited_pdf_downloads'
 >;
-
-type PurchaseParams = {
-  reverseLookupId?: string;
-  ownerId?: string;
-  sexOffenderSearchId?: string;
-  candidateIndex?: number;
-};
-
-/*
- * Every caller passes a namespace under `…report.upsell`. Saying so, rather
- * than accepting any namespace at all, is also what keeps this compiling: with
- * next-intl v4's typed messages, `useTranslations` over the full namespace
- * union instantiates one `t` signature per namespace in en.json and TypeScript
- * gives up ("excessively deep").
- */
-type UpsellNamespace = Extract<Parameters<typeof useTranslations>[0], `pages.reverse_lookup.report.upsell.${string}`>;
 
 type UpsellDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onDownloadPdf?: () => Promise<void>;
-  onPurchaseSuccess?: (data?: PurchaseUpsellResponse) => void;
   onSuccessClose?: () => void;
   productKey: ProductKey;
   translationNamespace: UpsellNamespace;
   benefitKeys: string[];
-  purchaseParams?: PurchaseParams;
-  paymentMessageReportId?: string;
+  /** The report a credit is spent against. Absent for unlimited PDF downloads, which spends none. */
+  reportId?: string;
+  /** The report owner this unlock applies to. Required by the new API for sex offenders, forbidden elsewhere. */
+  ownerId?: string;
 };
 
-const UpsellDialog = ({
-  open,
-  onOpenChange,
-  onDownloadPdf,
-  onPurchaseSuccess,
-  onSuccessClose,
-  productKey,
-  translationNamespace,
-  benefitKeys,
-  purchaseParams,
-  paymentMessageReportId,
-}: UpsellDialogProps) => {
-  const t = useTranslations(translationNamespace);
-  const formatPrice = createPriceFormatter();
-  const locale = useLocale();
-  const { countryCode: country } = useSettings();
-
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [retryCount, setRetryCount] = useState(0);
-  const [showMessage, setShowMessage] = useState(false);
-  const [showUpdatePaymentMethod, setShowUpdatePaymentMethod] = useState(false);
-
+/**
+ * The member area's unlock dialog: one price, one gesture, and the amount it
+ * charges is the amount it displays.
+ *
+ * Both halves of an unlock happen behind the one button. For the three products
+ * the new API holds a credit balance for, a credit is spent and one is bought
+ * first only where there is nothing to spend; for unlimited PDF downloads there
+ * is no balance and the purchase is the whole of it. Which of the two applies is
+ * read off `creditProductFor`, not decided here. See ADR 0030.
+ */
+const UpsellDialog = (props: UpsellDialogProps) => {
   /*
-   * The price comes from the payments service and the purchase goes to the
-   * legacy catalogue — the divergence ADR 0029 accepts. A query rather than the
-   * mutation-in-an-effect this replaced, so four dialogs on one report share one
-   * request and a read looks like a read.
+   * The price and the charge both come from the payments service now, off the same
+   * row. A query rather than the mutation-in-an-effect this replaced, so four
+   * dialogs on one report share one request and a read looks like a read.
    */
   const { data: upsellProducts } = useUpsellProductsQuery();
-  const product = resolveUpsellProduct(upsellProducts ?? [], productKey);
+  const product = resolveUpsellProduct(upsellProducts ?? [], props.productKey);
 
-  const closeDialogRef = useRef<(() => void) | null>(null);
+  /*
+   * Nothing below this mounts until the member has opened the dialog at least
+   * once. Five of these sit on one report screen, and the purchase surface loads
+   * Stripe.js — so mounting them all eagerly would fetch a third-party script on
+   * every report view for a purchase nobody has asked for. It latches on rather
+   * than tracking `open`, because the payment message outlives the offer it
+   * reports on — unmounting when the offer closes would take the report of the
+   * charge with it.
+   */
+  const [hasOpened, setHasOpened] = useState(false);
 
-  const { mutate: purchaseUpsell, isPending } = usePurchaseUpsell({
-    onSuccess: (data) => {
-      closeDialogRef.current?.();
-      closeDialogRef.current = null;
-
-      onOpenChange(false);
-      setShowMessage(true);
-      setIsSuccess(true);
-      setRetryCount(0);
-      onPurchaseSuccess?.(data);
-    },
-    onError: () => {
-      closeDialogRef.current?.();
-      closeDialogRef.current = null;
-
-      onOpenChange(false);
-      setShowMessage(true);
-      setIsSuccess(false);
-      setRetryCount((prev) => prev + 1);
-    },
-  });
-
-  const handlePurchaseUpsell = () => {
-    purchaseUpsell({
-      ...purchaseParams,
-      product: productKey,
-    });
-  };
-
-  const handleRetry = () => {
-    handlePurchaseUpsell();
-  };
-
-  const handleUpdatePaymentMethod = () => {
-    setShowMessage(false);
-    setShowUpdatePaymentMethod(true);
-  };
-
-  const handlePaymentMethodUpdated = (closeDialogFn: () => void) => {
-    closeDialogRef.current = closeDialogFn;
-    handlePurchaseUpsell();
-  };
-
-  const upsellBenefits = benefitKeys.map((key) => ({
-    icon: <Icon name="check-circle" className="size-6 text-secondary" />,
-    title: t(key as any),
-  }));
+  if (props.open && !hasOpened) {
+    setHasOpened(true);
+  }
 
   /*
    * No resolved product, no offer. The payments catalogue carries no row for this
    * upsell, the row it carries has no price, or the call was refused — and in
-   * every one of those cases there is no amount to put on the button, so the
-   * member is not offered the purchase at all. This replaces a hardcoded $1.95
-   * that was shown whenever the read did not answer. Every hook above runs first;
-   * the branch is here rather than earlier for that reason alone.
+   * every one of those cases there is no amount any upstream stands behind, so
+   * the member is not offered the purchase at all. ADR 0029 records the trade.
    */
-  if (!product) {
+  if (!product || !hasOpened) {
     return null;
   }
 
-  const formattedPrice = formatPrice(product.price.amount, product.price.currency, country, locale);
+  return (
+    <UpsellPurchaseSurface price={product.price}>
+      <UpsellPurchase {...props} product={product} />
+    </UpsellPurchaseSurface>
+  );
+};
+
+/**
+ * Inside the purchase surface, where the 3-D Secure confirmation is reachable.
+ *
+ * Split out for that reason alone: the Stripe instance the confirmation runs on
+ * comes from an Elements root, and a component cannot both provide that context
+ * and read it.
+ */
+const UpsellPurchase = ({
+  open,
+  onOpenChange,
+  onDownloadPdf,
+  onSuccessClose,
+  productKey,
+  translationNamespace,
+  benefitKeys,
+  reportId,
+  ownerId,
+  product,
+}: UpsellDialogProps & { product: UpsellProduct }) => {
+  const { unlockWithCredit, purchase } = useUpsellUnlock();
+  const queryClient = useQueryClient();
+
+  const [isPending, setIsPending] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
+  const [showMessage, setShowMessage] = useState(false);
+
+  const creditProduct = creditProductFor(productKey);
+
+  const handlePurchase = async () => {
+    setIsPending(true);
+
+    /*
+     * A credit-balance product is unlocked; anything else is simply bought. The
+     * `reportId` guard is the type checker's rather than a case that happens: every
+     * caller opening a credit-balance dialog passes the report it is unlocking, and
+     * a spend with nothing to spend against is not representable.
+     */
+    const succeeded =
+      creditProduct && reportId
+        ? (await unlockWithCredit({ product: creditProduct, reportId, ownerId }, product.price.id)).outcome ===
+          'unlocked'
+        : (await purchase(product.price.id)).outcome === 'purchased';
+
+    /*
+     * Unlimited PDF downloads is an entitlement on the account rather than a
+     * balance, so what a screen gates on is the current-user read. Invalidating it
+     * here is the client-side half; the refresh the success message fires is the
+     * server-rendered half.
+     */
+    if (succeeded && !creditProduct) {
+      await queryClient.invalidateQueries({ queryKey: CURRENT_USER_QUERY_KEY });
+    }
+
+    setIsPending(false);
+    onOpenChange(false);
+    setShowMessage(true);
+    setIsSuccess(succeeded);
+    setRetryCount(succeeded ? 0 : (previous) => previous + 1);
+  };
 
   return (
     <>
-      <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="max-w-[500px] p-6 md:p-8" hideCloseButton>
-          <DialogTitle className="sr-only"></DialogTitle>
-          <div className="flex flex-col gap-5">
-            <h4 className="h4 font-bold">{t('title')}</h4>
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center justify-between">
-                  <h4 className="text-lg font-bold">{t('total_due_today')}</h4>
-                  <span className="h4 text-right font-bold">{formattedPrice}</span>
-                </div>
-                <LimitedOfferTag className="mx-auto" />
-              </div>
-              <div className="flex flex-col gap-5">
-                <div className="flex items-center gap-3 rounded-lg bg-green-50 p-4">
-                  <Icon name="discount" className="size-6" />
-                  <span className="text-sm lg:text-base">{t('special_limited_time_offer')}</span>
-                </div>
-                {upsellBenefits.map((benefit) => (
-                  <div key={benefit.title} className="flex gap-[6px]">
-                    {benefit.icon}
-                    <span className="text-sm lg:text-base">{benefit.title}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="text-caption whitespace-pre-line text-weak">
-                {t('disclaimer_info', { price: formattedPrice })}
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <Button variant="secondary" onClick={() => onOpenChange(false)} className="text-base font-semibold">
-                {t('cancel')}
-              </Button>
-              <Button className="text-base font-semibold" onClick={handlePurchaseUpsell} disabled={isPending}>
-                {isPending ? (
-                  <>
-                    {t('processing_payment')} <Icon name="reload" className="size-4 animate-spin" />
-                  </>
-                ) : (
-                  t('purchase')
-                )}
-              </Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
+      <UpsellOfferDialog
+        open={open}
+        onOpenChange={onOpenChange}
+        product={product}
+        translationNamespace={translationNamespace}
+        benefitKeys={benefitKeys}
+        onPurchase={handlePurchase}
+        isPending={isPending}
+      />
 
       <UpsellPaymentMessage
         open={showMessage}
         onOpenChange={setShowMessage}
         onDownloadPdf={onDownloadPdf}
-        reportId={paymentMessageReportId}
         isSuccess={isSuccess}
         retryCount={retryCount}
         onSuccessClose={onSuccessClose}
-        onRetry={handleRetry}
-        onUpdatePaymentMethod={handleUpdatePaymentMethod}
+        onRetry={handlePurchase}
         isRetrying={isPending}
         product={productKey}
-      />
-
-      <UpsellUpdatePaymentMethod
-        open={showUpdatePaymentMethod}
-        onOpenChange={setShowUpdatePaymentMethod}
-        product={product}
-        country={country}
-        onPaymentMethodUpdated={handlePaymentMethodUpdated}
       />
     </>
   );
