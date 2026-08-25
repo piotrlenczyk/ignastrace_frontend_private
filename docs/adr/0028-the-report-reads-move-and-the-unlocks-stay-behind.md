@@ -257,12 +257,24 @@ a data migration.
 - **`SexOffenderData` and two shapes beside it survive**, with the out-of-scope sex-offender search
   screen as their only caller, and seven components moved to sit beside it. That screen is a row on the
   epic that this task did not create and did not close.
-- **Eight API findings are recorded and not filed upstream**, following 0027: `LOCKED` withholds the
+- **Nine API findings are recorded and not filed upstream**, following 0027: `LOCKED` withholds the
   base-scan accounts and the searched handle; the sectioned response carries no sex-offender record
   identifier; the record carries no `age`; height and weight are metric on an American registry
   product; `marks` is typed as an always-null object; a photo carries no source; social progress is
-  per section rather than per account; and the sectioned operation's in-preparation refusal is
-  declared nowhere and has no error code in any generated enumeration.
+  per section rather than per account; the sectioned operation's in-preparation refusal is
+  declared nowhere and has no error code in any generated enumeration; and the data-breach section's
+  `matchCount` is declared optional and nullable, on a section the API is already known to withhold
+  content from while it is `LOCKED`.
+- **That last finding is defended against rather than assumed away.** A count the API did not state is
+  read as unknown and not as zero, because reading it as zero would hide the unlock button from exactly
+  the member who has something to buy — only a zero the API actually stated hides the offer, which is
+  what the flag-based gate did with a count the legacy report always carried. The section's alert still
+  states a withheld count as zero, which is wrong but harmless beside a working unlock, and no copy was
+  invented for a case the endpoint's own description suggests does not arise.
+- **The carrier card gained a fallback the specification did not enumerate.** The new API declares the
+  carrier, the country and both phone formats nullable where the legacy shape declared them present, so
+  an absent one now reads as this screen's own "no record available" rather than as a bold label above
+  an empty line.
 - **Verification was the static checks plus the full suite**, with three new seams and 140 new tests:
   the getters module driven with the API substituted through `src/test/server-write-kit.ts`; the
   sectioned polling hook with a stubbed `fetch`; and the enum-label module walked value by value

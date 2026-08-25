@@ -34,8 +34,19 @@ const DataBreachHistory = ({
   const [showUpsellDialog, setShowUpsellDialog] = useState(false);
   const [isConsumingUpsell, setIsConsumingUpsell] = useState(false);
 
+  /*
+   * A count the API did not state is not a count of zero.
+   *
+   * `matchCount` is declared optional and nullable, and the section it belongs to
+   * is one the API withholds content from while it is `LOCKED` — as it withholds
+   * the social section's accounts. So an absent count is read as "unknown" rather
+   * than as "no breaches": reading it as zero would take the unlock button away
+   * from exactly the member who has something to buy.
+   */
   const breachCount = dataBreach.matchCount ?? 0;
+  const countIsStated = dataBreach.matchCount !== null && dataBreach.matchCount !== undefined;
   const hasBreaches = breachCount > 0;
+  const foundNothing = countIsStated && breachCount === 0;
 
   /*
    * The section's own state is the gate now, where a `…upsell_purchased` boolean
@@ -66,11 +77,17 @@ const DataBreachHistory = ({
   };
 
   const renderActionButton = () => {
-    if (!hasBreaches) {
+    /* Only a zero the API actually stated hides the offer, which is what the
+     * flag-based gate did with a count the legacy report always carried. */
+    if (foundNothing) {
       return null;
     }
 
     if (!isLocked) {
+      if (!hasBreaches) {
+        return null;
+      }
+
       return (
         <div className="flex justify-end">
           <Button variant="secondary" asChild>
