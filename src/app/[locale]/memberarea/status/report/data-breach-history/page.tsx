@@ -2,15 +2,18 @@ import { redirect } from 'next/navigation';
 
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
-import { getApi } from '@/libs/server/api';
 import { getUser } from '@/libs/subscription';
+import { getDataBreachDetail } from '@/server/getters/reverse-lookup.getters';
 import { getServerSession } from '@/server/session/session.utils';
-import type { ReverseLookup } from '@/types/reverse-lookup.types';
-import type { ReverseLookupDataLeakResponse } from '@/types/reverse-lookup-data-leaks.types';
 import { firstValue } from '@/utils/search-params';
 
 import { ReportDetails } from './components/report-details';
 
+/*
+ * One request where there were two. The data-breach endpoint carries the phone
+ * and the report's first photo alongside the breaches, and it is its own gate, so
+ * the report read that existed only to supply one boolean has nothing left to do.
+ */
 export default async function DataBreachHistoryPage(
   props: PageProps<'/[locale]/memberarea/status/report/data-breach-history'>,
 ) {
@@ -22,9 +25,9 @@ export default async function DataBreachHistoryPage(
     redirect(ROUTES.HOME);
   }
 
-  const reverseLookupId = firstValue(searchParams.id);
+  const reportId = firstValue(searchParams.id);
 
-  if (!reverseLookupId) {
+  if (!reportId) {
     redirect(ROUTES.MEMBER.STATUS.HOME);
   }
 
@@ -39,25 +42,15 @@ export default async function DataBreachHistoryPage(
     redirect(redirectUrl);
   }
 
-  const api = await getApi();
+  const [dataBreach, user] = await Promise.all([getDataBreachDetail(reportId), getUser()]);
 
-  const [reverseLookupDataLeaksResponse, reverseLookup, user] = await Promise.all([
-    api.get<ReverseLookupDataLeakResponse>(`/reverse_lookups/${reverseLookupId}/data_leaks`),
-    api.get<ReverseLookup>(`/reverse_lookups/${reverseLookupId}`),
-    getUser(),
-  ]);
-
-  if (!reverseLookup.reverse_lookup_data_leaks_upsell_purchased) {
+  /* The gate moved from a flag in the response to the refusal itself; a member
+   * without the upselling still goes home. */
+  if (dataBreach.outcome === 'not-unlocked') {
     redirect(ROUTES.MEMBER.STATUS.HOME);
   }
 
-  return (
-    <ReportDetails
-      user={user}
-      reverseLookupDataLeaks={reverseLookupDataLeaksResponse.reverse_lookup_data_leaks}
-      photo={reverseLookupDataLeaksResponse.photo}
-      phone={reverseLookupDataLeaksResponse.phone}
-      reverseLookupId={reverseLookupId}
-    />
-  );
+  const { phone, photoUrl, dataLeaks } = dataBreach.data;
+
+  return <ReportDetails user={user} dataLeaks={dataLeaks} photo={photoUrl} phone={phone} reportId={reportId} />;
 }
