@@ -1,13 +1,16 @@
+import type { CreditProduct } from '@/libs/upsell-unlock';
 import type { paymentsSchemas } from '@/network/payments-api/payments-api-server-client';
 
 /**
  * The application's word for an upsell, and it stays the legacy one.
  *
- * The purchase (`POST /reverse_lookups_upsellings`), the ownership check on the
- * member (`member.upsellings`) and the translation namespaces all speak this
- * vocabulary, and none of them move with the price. So the key identifies an
- * upsell everywhere in this application, and the payments service's own identity
- * for the same thing is reached through the map below rather than spread around.
+ * The translation namespaces, the two purchases that are still legacy calls — the
+ * standalone sex-offender search and the `/success` screen's extras — and the
+ * screens' own props all speak this vocabulary, and none of them moved when the
+ * price did or when the charge followed it. So the key identifies an upsell
+ * everywhere in this application, and each upstream's own identity for the same
+ * thing is reached through one of the two maps below rather than spread around:
+ * the payments service's slug, and the new API's credit-balance product.
  *
  * The union lives here rather than in the `/success` screen's legacy `Product`
  * type, which now reads it from here: the vocabulary belongs to the concept, not
@@ -43,10 +46,12 @@ export type UpsellProduct = paymentsSchemas['GetUpsellProductResponseDto'] & {
  *
  * **Every entry is the same placeholder today.** The payments instance is a
  * resumewise development one (ADR 0016) publishing a single upsell product, so
- * all seven keys point at it and all seven screens show that one product's price
- * while charging the legacy catalogue's — the divergence ADR 0029 records. The
- * day the backend publishes real Ignastrace upsell products, this constant is
- * the change and there is no other.
+ * all seven keys point at it: every screen shows that one product's price and,
+ * since ADR 0030, charges it too — so the amount displayed and the amount charged
+ * now agree, and what they agree on is one placeholder rather than the upsell the
+ * member chose. The credit the backend grants therefore need not correspond to
+ * the section that was bought. The day the backend publishes real Ignastrace
+ * upsell products, this constant is the change and there is no other.
  *
  * `scan_pro` and `support_hotline` belong to the `/success` screen's separate
  * legacy endpoint and no caller here asks for them. They appear because the map
@@ -61,6 +66,47 @@ export const UPSELL_PRODUCT_SLUGS: Record<UpsellProductKey, string> = {
   unlimited_pdf_downloads: 'resume-ai-review',
   social_networks: 'resume-ai-review',
 };
+
+/**
+ * Every legacy upsell key, and the new API's credit-balance product it names — or
+ * nothing, where the new API models no balance for it.
+ *
+ * The sibling of the slug map above, and deliberately beside it: one says how the
+ * payments service identifies an upsell, the other how the new API does, and a
+ * reader comparing the two can see at a glance which keys are known to both.
+ *
+ * `Record<UpsellProductKey, CreditProduct | null>` for the same reason the slug
+ * map is exhaustive: adding a key to the union is a build failure next to both
+ * maps rather than an upsell that silently resolves to nothing.
+ *
+ * The four `null`s are each a fact rather than an omission. `unlimited_pdf_downloads`
+ * is an entitlement on the current-user response, not a balance — the one concept
+ * both upstreams share, and it is bought outright and never spent.
+ * `sex_offenders_search` belongs to the standalone search, whose purchase stays on
+ * the legacy call because that call also creates the search report and answers
+ * with its identifier. `scan_pro` and `support_hotline` belong to the `/success`
+ * screen's separate legacy endpoint and have no counterpart in the new API at
+ * all. See ADR 0030.
+ */
+export const UPSELL_CREDIT_PRODUCTS: Record<UpsellProductKey, CreditProduct | null> = {
+  scan_pro: null,
+  support_hotline: null,
+  data_leaks: 'DATA_LEAKS',
+  sex_offenders: 'SEX_OFFENDERS',
+  sex_offenders_search: null,
+  unlimited_pdf_downloads: null,
+  social_networks: 'SOCIAL_NETWORKS',
+};
+
+/**
+ * The credit-balance product an upsell key names, or nothing.
+ *
+ * A caller reads the map through here so that "does this upsell have a credit
+ * balance behind it" is one question with one answer: a key that resolves takes
+ * the spend-first sequence, and a key that does not is bought outright.
+ */
+export const creditProductFor = (key: UpsellProductKey): CreditProduct | undefined =>
+  UPSELL_CREDIT_PRODUCTS[key] ?? undefined;
 
 /*
  * The generated type for a product's metadata is `Record<string, never>`, so
@@ -87,7 +133,9 @@ const productSlug = (metadata: paymentsSchemas['GetUpsellProductResponseDto']['m
  *
  * This is the only place that knows how a payments upsell row is identified. The
  * four screens reading `/products/upsell` — the three funnel steps and the
- * member area's unlock dialog — ask through here and branch on `undefined`.
+ * member area's unlock dialog — ask through here and branch on `undefined`. The
+ * row they get back is also the row that is charged: since ADR 0030 the purchase
+ * sends `price.id` off it.
  *
  * `undefined` means one thing to all of them: **do not offer this**. No row
  * carries the mapped slug, or the row that does carries no price, and either way

@@ -4,6 +4,9 @@ import { useSession } from '@/hooks/use-session';
 
 import { $api } from '../api-browser-client';
 
+/** The generated key this query is cached under, for invalidating it after a write that changes the account. */
+export const CURRENT_USER_QUERY_KEY = $api.queryOptions('get', '/api/v1/user/me', {}).queryKey;
+
 /**
  * The signed-in member's profile, read through the proxy and typed from the
  * generated specification.

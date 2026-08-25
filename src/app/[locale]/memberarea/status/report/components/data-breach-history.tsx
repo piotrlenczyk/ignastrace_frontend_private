@@ -10,29 +10,38 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
+import { useUpsellUnlock } from '@/hooks/api/use-upsell-unlock';
 import { cn } from '@/libs/utils';
+import { upsellCreditCount, useUpsellCreditsQuery } from '@/network/api/hooks/use-upsell-credits-query';
 import type { SectionedReport } from '@/server/getters/reverse-lookup.getters';
-import type { User } from '@/types/user';
 
-import { useConsumeUpsell } from '../_hooks/api/use-consume-upsell-mutation';
 import DataBreachUpsell from './data-breach-upsell';
 
 const DataBreachHistory = ({
   className,
   dataBreach,
   reportId,
-  user,
 }: {
   className?: string;
   dataBreach: SectionedReport['dataBreach'];
   reportId: string;
-  user: User;
 }) => {
   const t = useTranslations('pages.reverse_lookup.report.data_breach_history');
   const router = useRouter();
 
   const [showUpsellDialog, setShowUpsellDialog] = useState(false);
-  const [isConsumingUpsell, setIsConsumingUpsell] = useState(false);
+  const [isSpendingCredit, setIsSpendingCredit] = useState(false);
+
+  /*
+   * Whether the member has a credit to spend, read from the new API's balances
+   * rather than from the composed member's list of extras — which is the mocked
+   * membership of ADR 0013 for this key, so the old gate always said yes. A
+   * positive balance unlocks the section outright; anything else offers the
+   * purchase. ADR 0030 records the change.
+   */
+  const { data: creditBalances } = useUpsellCreditsQuery();
+  const { spendCredit } = useUpsellUnlock();
+  const hasCredit = upsellCreditCount(creditBalances, 'DATA_LEAKS') > 0;
 
   /*
    * A count the API did not state is not a count of zero.
@@ -49,31 +58,38 @@ const DataBreachHistory = ({
   const foundNothing = countIsStated && breachCount === 0;
 
   /*
-   * The section's own state is the gate now, where a `…upsell_purchased` boolean
-   * on the report used to be. Spending a credit is still the legacy call, so this
-   * reads an unlock from one upstream that was written to another — the deliberate
-   * asymmetry ADR 0028 records.
+   * The section's own state is the gate, where a `…upsell_purchased` boolean on
+   * the report used to be. Since ADR 0030 the spend that changes it is written to
+   * the same upstream this reads from, so the asymmetry ADR 0028 recorded here is
+   * gone.
    */
   const isLocked = dataBreach.state === 'LOCKED';
 
-  const { mutate: consumeUpsell } = useConsumeUpsell({
-    onSuccess: () => {
-      router.refresh();
-      router.push(`${ROUTES.MEMBER.STATUS.DATA_BREACH_HISTORY}?id=${reportId}`);
-    },
-    onError: (error) => {
-      console.error('Error consuming upsell', error);
-      setIsConsumingUpsell(false);
-    },
-  });
-
-  const handleUnlockClick = () => {
-    if (user.purchase_info?.data_leaks_upsell_available) {
-      setIsConsumingUpsell(true);
-      consumeUpsell({ reverseLookupId: reportId, product: 'data_leaks' });
-    } else {
+  /*
+   * A credit is spent where the balance says one is held, and the dialog is opened
+   * where it does not — or where the spend was refused, so that a stale balance
+   * costs a member a click rather than the unlock. No charge can follow from this
+   * button: the price is quoted in the dialog before any money moves.
+   */
+  const handleUnlockClick = async () => {
+    if (!hasCredit) {
       setShowUpsellDialog(true);
+      return;
     }
+
+    setIsSpendingCredit(true);
+
+    const outcome = await spendCredit({ product: 'DATA_LEAKS', reportId });
+
+    setIsSpendingCredit(false);
+
+    if (outcome !== 'spent') {
+      setShowUpsellDialog(true);
+      return;
+    }
+
+    router.refresh();
+    router.push(`${ROUTES.MEMBER.STATUS.DATA_BREACH_HISTORY}?id=${reportId}`);
   };
 
   const renderActionButton = () => {
@@ -99,8 +115,8 @@ const DataBreachHistory = ({
 
     return (
       <div className="flex justify-end">
-        <Button onClick={handleUnlockClick} disabled={isConsumingUpsell}>
-          {isConsumingUpsell ? <Icon name="reload" className="size-4" /> : <Icon name="unlock" className="size-4" />}
+        <Button onClick={handleUnlockClick} disabled={isSpendingCredit}>
+          {isSpendingCredit ? <Icon name="reload" className="size-4" /> : <Icon name="unlock" className="size-4" />}
           {t('unlock_report')}
         </Button>
       </div>

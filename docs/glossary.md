@@ -135,16 +135,26 @@ endpoint of its own: how many of a thing a member may still spend, not which thi
 In the payments service, an upselling is a **product in a catalogue**, identified by
 `metadata.productSlug` and carrying a price in cents. It is where an amount is read from, and it
 says nothing about who owns what. Since [ADR 0029](adr/0029-the-upsell-price-moves-to-payments-and-the-charge-stays-behind.md)
-every upsell price on screen comes from here, while the purchase and the ownership check stay on
-the funnel's vocabulary — so the amount displayed and the amount charged come from two different
-catalogues, deliberately, until the payments side publishes real Ignastrace products.
+every upsell price on screen comes from here, and since
+[ADR 0030](adr/0030-the-upsell-charge-follows-the-price-and-the-credit-is-spent-on-the-new-api.md)
+**this is also where an upsell is bought** — `POST /products/upsell/buy`, against the same price row
+whose amount was displayed, so the two numbers agree. Two purchases stay on the legacy catalogue:
+the standalone sex-offender search, whose call also creates the search report, and the `/success`
+screen's two extras.
+
+Ownership is read from neither of those. For the three credit-balance products it is the new API's
+balances; for unlimited PDF downloads it is the entitlement on the current user. The payments
+service's own purchased-products endpoint is deliberately never asked, because every payments call
+is made as one shared technical account and its per-user answers would be that account's.
 
 There is no one-to-one translation between the first two, and adopting the credit balance means
 remodelling the report and upsell screens rather than renaming a field. The single overlapping
 concept is **unlimited PDF downloads**, which the new API publishes as a boolean entitlement on the
-current-user response — the one commercial fact the account service does answer. The payments
-catalogue joins to the other two only through `UPSELL_PRODUCT_SLUGS`, a constant that maps every
-legacy key to the slug it is looked up by.
+current-user response — the one commercial fact the account service does answer. The three
+vocabularies are joined only by two constants that sit side by side in `src/libs/upsell-products.ts`
+and are exhaustive over the legacy key union: `UPSELL_PRODUCT_SLUGS`, the payments slug each key is
+looked up by, and `UPSELL_CREDIT_PRODUCTS`, the new API's credit-balance product each key names — or
+`null`, where the new API holds no balance for it.
 
 **Purchase information**
 : What a member paid and what they may still spend: the trial price, the total, what the extras

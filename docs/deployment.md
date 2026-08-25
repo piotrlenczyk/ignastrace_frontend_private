@@ -9,9 +9,6 @@ The following environment variables are required at build time. They will be mad
 
 - `NEXT_PUBLIC_API_URL`: The URL of the backend API.
 - `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`: The Google Maps API key.
-- `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`: The Stripe publishable key.
-- `NEXT_PUBLIC_LEMON_STRIPE_PUBLISHABLE_KEY`: The Lemon company Stripe publishable key.
-- `NEXT_PUBLIC_USE_LEMON_STRIPE`: Use the Lemon company's Stripe boolean flag.
 - `NEXT_PUBLIC_GTM_ID`: The Google Tag Manager ID.
 - `NEXT_PUBLIC_APP_URL`: The URL of the frontend application.
 - `NEXT_PUBLIC_REQUEST_ZIP`: Set to `true` to enable requesting the ZIP code for selected countries (check `const COUNTRIES_REQUESTING_ZIP`).
