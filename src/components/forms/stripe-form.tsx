@@ -4,11 +4,11 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
-import { useCreateReverseLookupMutation } from '@/app/[locale]/memberarea/(reverse-lookup)/phone-lookup/hooks/api/use-create-reverse-lookup-mutation';
 import { useSendOrderConfirmEmailMutation } from '@/app/[locale]/success/_hooks/api/use-send-order-confirm-email-mutation';
 import { Icon } from '@/components/ui/icon';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useConfirmStripePaymentMutation } from '@/hooks/api/use-confirm-stripe-payment-mutation';
+import { useCreateLegacyReverseLookupMutation } from '@/hooks/api/use-create-legacy-reverse-lookup-mutation';
 import { useSession } from '@/hooks/use-session';
 import { useRouter } from '@/libs/i18n-routing';
 import type { StripeFormValues } from '@/types/stripe-form.types';
@@ -79,7 +79,7 @@ export const StripeForm = ({
     },
   });
 
-  const { mutate: createReverseLookup } = useCreateReverseLookupMutation({
+  const { mutate: createReverseLookup } = useCreateLegacyReverseLookupMutation({
     onSuccess: () => {
       router.push(routeToRedirect);
     },

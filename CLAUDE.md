@@ -26,9 +26,13 @@ is deliberately out of scope and what is blocked on the upstream. One line of it
 reversed twice over: the billing screen's subscription read moved to the payments service ahead of any
 data migration (`docs/adr/0024-the-subscription-read-moves-to-payments-before-the-data-does.md`), and
 the cancellation and reactivation writes then followed it
-(`docs/adr/0025-the-subscription-writes-follow-the-read-onto-payments.md`). The screen is off the
-legacy client entirely; what that costs is that the legacy population is redirected off it, and every
-payments write is raised as the shared technical account. Outside that track, still don't
+(`docs/adr/0025-the-subscription-writes-follow-the-read-onto-payments.md`). The reverse-lookup family's
+member-facing pair — report creation and its usage count — has since been started against the same
+record's instruction not to, on an assumption about report storage the backend has still not confirmed
+(`docs/adr/0027-the-reverse-lookup-creation-starts-on-an-unanswered-assumption.md`); read that record
+before moving another call in that family. The billing screen is off the legacy client entirely; what
+that costs is that the legacy population is redirected off it, and every payments write is raised as
+the shared technical account. Outside that track, still don't
 rewrite a screen's fetching unless you are redesigning the screen.
 
 ## Design implementation rules
