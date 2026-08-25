@@ -100,6 +100,16 @@
         "subtitle": "Ignastrace is the ultimate solution for discovering anyone's location or records - simply by using their phone number"
       }
     },
+    "reverse_lookup_report": {
+      "line_types": {
+        "unknown": "Unknown"
+      },
+      "in_preparation": {
+        "title": "Still being prepared",
+        "description": "We are still gathering this information. Refresh in a moment to see it.",
+        "refresh": "Refresh"
+      }
+    },
     "footer": {
       "home_aria": "IgnasTrace.io home",
       "tagline": "Locate any mobile phone — fast and easy with Ignastrace.",
