@@ -6,12 +6,18 @@ import type { CreditProduct } from '@/libs/upsell-unlock';
 import type { components as apiComponents } from '../api';
 import { $api } from '../api-browser-client';
 
+/**
+ * The generated options this query is cached under.
+ *
+ * Exported whole rather than as a key alone, because the spend sequence reads the
+ * balance outside React: a conflicting spend means either an empty balance or
+ * content that is already unlocked, and only a fresh reading of the balance tells
+ * the two apart. Fetching these options through the query client is that read.
+ */
+export const UPSELL_CREDITS_QUERY_OPTIONS = $api.queryOptions('get', '/api/v1/reverse-lookup-upsellings/credits', {});
+
 /** The generated key this query is cached under, for invalidating it after a spend. */
-export const UPSELL_CREDITS_QUERY_KEY = $api.queryOptions(
-  'get',
-  '/api/v1/reverse-lookup-upsellings/credits',
-  {},
-).queryKey;
+export const UPSELL_CREDITS_QUERY_KEY = UPSELL_CREDITS_QUERY_OPTIONS.queryKey;
 
 /**
  * How many credits of each product the caller may still spend.

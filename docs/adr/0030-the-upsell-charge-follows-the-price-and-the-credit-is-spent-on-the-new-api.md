@@ -8,7 +8,13 @@ upselling purchase, and, for the funnel only, the upselling create call. It take
 [0028](0028-the-report-reads-move-and-the-unlocks-stay-behind.md) left behind, closing that record's
 "the unlocks stay behind". It changes nothing in
 [0023](0023-a-shared-technical-account-for-the-payments-upstream.md) and pays its price again,
-knowingly. It closes #100 on the track's epic (#69).
+knowingly. It closes #100 on the track's epic (#69). **Superseded in one section by
+[0031](0031-spend-versus-buy-is-settled-from-the-credit-balance.md):** the error code this record
+named as the signal for "no credit left" is not one the spend ever sends, so everything below about
+that code and the list holding it — the assumption stated as pointing the safe way included — is
+history rather than the current state. The refusal is now recognised by the envelope's status and
+told apart from its identical twin by a fresh reading of the balance. The spend-first order, and
+"reported, not retried", stand.
 
 ## Context
 

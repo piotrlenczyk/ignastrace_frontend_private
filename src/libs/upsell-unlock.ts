@@ -12,17 +12,31 @@ import type { components as apiComponents } from '@/network/api/api';
  * fakes. This follows `resolveUpsellProduct`'s precedent, which is the seam ADR
  * 0029 added for the same reason.
  *
- * See `docs/adr/0030-the-upsell-charge-follows-the-price-and-the-credit-is-spent-on-the-new-api.md`.
+ * See `docs/adr/0030-the-upsell-charge-follows-the-price-and-the-credit-is-spent-on-the-new-api.md`
+ * and `docs/adr/0031-spend-versus-buy-is-settled-from-the-credit-balance.md`.
  */
 
 /** What an attempt to spend a credit can answer. */
 export type SpendOutcome =
   /** The credit was spent and the section is unlocked. */
   | 'spent'
-  /** The caller holds no credit of this product — the one refusal that leads to a purchase. */
-  | 'no-credit'
+  /**
+   * The new API refused with a conflict, which it uses for two opposite
+   * conditions — an empty balance and content that is already unlocked — under
+   * one status, one error code and one message. So this says nothing on its own;
+   * the balance is what tells the two apart.
+   */
+  | 'conflict'
   /** Anything else the new API refused with. Never leads to a purchase. */
   | 'refused';
+
+/**
+ * How many credits of a product the caller holds, or that it could not be read.
+ *
+ * `'unknown'` is not a zero. A charge is raised only behind a number, so a read
+ * that failed refuses the unlock rather than guessing at the member's card.
+ */
+export type CreditBalance = number | 'unknown';
 
 /** What an attempt to buy on the payments service can answer. */
 export type PurchaseOutcome =
@@ -59,14 +73,32 @@ export type SpendRequest = {
 };
 
 /**
- * The three operations the sequence is composed of. Each is handed in, so the
+ * The four operations the sequence is composed of. Each is handed in, so the
  * rule below is driven from a test without a network.
  */
 export type UnlockOperations = {
   spend: (request: SpendRequest) => Promise<SpendOutcome>;
+  /**
+   * The member's balance of one credit product, read fresh. This is what a
+   * conflict is settled from, so a stale number is exactly what it must not
+   * answer with.
+   */
+  readBalance: (product: CreditProduct) => Promise<CreditBalance>;
   buy: (priceId: string) => Promise<PurchaseOutcome>;
   confirm: (clientSecret: string) => Promise<ConfirmationOutcome>;
 };
+
+/**
+ * What a spend answers once a conflict has been settled — the section's own
+ * unlock button's vocabulary, and the branch point of the sequence below.
+ */
+export type SettledSpend =
+  /** The section is open: the credit was spent, or it was already unlocked. */
+  | 'unlocked'
+  /** The balance is empty, so a purchase is what would open the section. */
+  | 'no-credit'
+  /** The spend failed, and nothing about the balance is known. Never leads to a purchase. */
+  | 'refused';
 
 /** What a caller acts on. */
 export type UnlockOutcome =
@@ -77,9 +109,10 @@ export type UnlockOutcome =
   /** The charge needs the cardholder, and the challenge was failed, dismissed or impossible. */
   | { outcome: 'confirmation-failed' }
   /**
-   * The new API refused the spend for a reason other than an empty balance, or
-   * refused the credit that had just been bought. The second case is the symptom
-   * ADR 0030 names: a charge that succeeded while the section stayed locked.
+   * The new API refused the spend for a reason that says nothing about the
+   * balance, or refused the credit that had just been bought. The second case is
+   * the symptom ADR 0030 names: a charge that succeeded while the section stayed
+   * locked.
    */
   | { outcome: 'spend-refused' };
 
@@ -120,30 +153,75 @@ export const buyUpsell = async (
 };
 
 /**
+ * Spends a credit and says what that spend meant, resolving the one refusal that
+ * carries two opposite meanings.
+ *
+ * The new API answers a spend it will not perform with a conflict, and it uses
+ * that same conflict both for a balance with nothing left in it and for content
+ * that is already unlocked — identical status, identical error code, identical
+ * message, and only a free-text sentence in `details` to tell them apart. Nothing
+ * here reads that sentence. The balance is re-read instead, and the API's own
+ * number settles it:
+ *
+ * - **more than zero** — the conflict cannot have meant an empty balance, so the
+ *   content is already unlocked and nothing needs buying;
+ * - **zero** — the balance is genuinely empty, and a purchase is what would open
+ *   the section;
+ * - **unreadable** — nothing is inferred. The attempt failed, and no charge may
+ *   follow from a balance nobody could read.
+ *
+ * This is the whole of what a section's own unlock button does, and the first
+ * step of `unlockUpsellWithCredit`, so the rule lives once and both entry points
+ * reach it.
+ */
+export const spendUpsellCredit = async (
+  request: SpendRequest,
+  { spend, readBalance }: Pick<UnlockOperations, 'spend' | 'readBalance'>,
+): Promise<SettledSpend> => {
+  const outcome = await spend(request);
+
+  if (outcome === 'spent') {
+    return 'unlocked';
+  }
+
+  if (outcome === 'refused') {
+    return 'refused';
+  }
+
+  const balance = await readBalance(request.product);
+
+  if (balance === 'unknown') {
+    return 'refused';
+  }
+
+  return balance > 0 ? 'unlocked' : 'no-credit';
+};
+
+/**
  * Unlocks a report section the new API models as a credit balance, spending a
- * credit and buying one first only where none is left.
+ * credit and buying one first only where the balance is empty.
  *
  * **Spend first.** A member who already holds a credit is never charged again,
  * whatever the balance a screen read a moment ago said — so the offer a stale
- * balance produced cannot take money twice. Only the one refusal that means "you
- * have none of these" leads to a purchase; every other refusal is a failure that
- * costs nothing, because a spend that failed for some other reason would not
- * start succeeding once a credit was bought.
+ * balance produced cannot take money twice. Only a fresh reading of zero leads to
+ * a purchase; a spend that failed for any other reason is a failure that costs
+ * nothing, because it would not start succeeding once a credit was bought.
  *
  * The backend grants the credit itself, listening to the payments service, which
  * is why the purchase is followed by a second spend and not by a grant of any
- * kind here. A second spend that is refused means the credit did not arrive: the
- * member has been charged and the section is still locked, which is stated as an
- * outcome rather than retried.
+ * kind here. That second spend is attempted once and its answer is final: a
+ * conflict there is not put back through the balance, because after a purchase
+ * anything other than a spent credit means the member has been charged and the
+ * section is still locked — which is stated as an outcome rather than retried.
  */
 export const unlockUpsellWithCredit = async (
   request: SpendRequest,
   priceId: string,
   operations: UnlockOperations,
 ): Promise<UnlockOutcome> => {
-  const firstSpend = await operations.spend(request);
+  const firstSpend = await spendUpsellCredit(request, operations);
 
-  if (firstSpend === 'spent') {
+  if (firstSpend === 'unlocked') {
     return { outcome: 'unlocked' };
   }
 
@@ -161,41 +239,22 @@ export const unlockUpsellWithCredit = async (
 };
 
 /**
- * The error code the new API refuses a spend with when the caller simply has no
- * credit of that product left — the one refusal `unlockUpsellWithCredit` turns
- * into a purchase.
- *
- * **Read from the API's code union rather than from its documentation, which
- * declares only 401 and 403 for this operation.** `UPSELL_REQUIRED_ERROR` names
- * exactly this condition: an upsell is required, which is what "you hold no
- * credit" is in that vocabulary.
- *
- * **One code, deliberately, and `ENTITY_NOT_FOUND_ERROR` is not it.** That code
- * is the tempting second candidate and the dangerous one: the entity named in a
- * consume request is the *report*, so it far more plausibly means "not your
- * report" than "no credit". Reading it as an empty balance would charge a member
- * whose spend failed for an unrelated reason and then fail the second spend —
- * precisely the charge-with-no-credit this sequence exists to prevent.
- *
- * So the list errs towards not charging. If the backend turns out to refuse an
- * empty balance with some other code, the symptom is loud and costs nothing: the
- * dialog reports a failed payment without any money moving, and the fix is one
- * entry here. ADR 0030 records both directions.
- */
-const EMPTY_BALANCE_ERROR_CODES: readonly string[] = ['UPSELL_REQUIRED_ERROR'];
-
-/**
- * Whether a refusal of the spend says the caller has no credit left, as opposed
- * to saying something went wrong.
+ * Whether a refusal of the spend is the conflict the new API answers both of its
+ * two "will not spend" conditions with.
  *
  * The refusal arrives at a query-library mutation as the body the API refused
- * with — no status, no `HttpClientError` — so it is read out of the envelope's
- * own `errorCode`. Anything that is not that envelope is not an empty balance: a
- * gateway's HTML, or the proxy's own refusal in the same envelope under a
- * `PROXY_*` code, says nothing about a balance, and guessing at it here would
- * raise a charge on a member whose spend failed for an unrelated reason.
+ * with — no status, no `HttpClientError` — but that envelope states the status as
+ * a word, and for the 409 this operation sends the word is `CONFLICT`. That is
+ * the whole of the classification: the envelope's `errorCode` is the generic
+ * handled-server-error member for both conditions, and the sentence naming which
+ * one it was sits in `details` as free text, which nothing here reads.
+ *
+ * Anything that is not that envelope is not a conflict: a gateway's HTML, or the
+ * proxy's own refusal in the same envelope under a `PROXY_*` code, says nothing
+ * about the spend, and treating one as a conflict would put an unrelated failure
+ * on the road to a charge.
  */
-export const isEmptyCreditBalance = (refusal: unknown): boolean => {
+export const isSpendConflict = (refusal: unknown): boolean => {
   if (typeof refusal !== 'object' || refusal === null) {
     return false;
   }
@@ -206,7 +265,7 @@ export const isEmptyCreditBalance = (refusal: unknown): boolean => {
     return false;
   }
 
-  const { errorCode } = error as { errorCode?: unknown };
+  const { code } = error as { code?: unknown };
 
-  return typeof errorCode === 'string' && EMPTY_BALANCE_ERROR_CODES.includes(errorCode);
+  return code === 'CONFLICT';
 };

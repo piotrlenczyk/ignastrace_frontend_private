@@ -11,6 +11,7 @@ import { Card } from '@/components/ui/card';
 import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { useUpsellUnlock } from '@/hooks/api/use-upsell-unlock';
+import { useGenericErrorToast } from '@/hooks/use-generic-error-toast';
 import { cn } from '@/libs/utils';
 import { upsellCreditCount, useUpsellCreditsQuery } from '@/network/api/hooks/use-upsell-credits-query';
 import type { SectionedReport } from '@/server/getters/reverse-lookup.getters';
@@ -44,6 +45,7 @@ const SexOffendersBackgroundCheck = ({
    */
   const { data: creditBalances } = useUpsellCreditsQuery();
   const { spendCredit } = useUpsellUnlock();
+  const showErrorToast = useGenericErrorToast();
   const hasCredit = upsellCreditCount(creditBalances, 'SEX_OFFENDERS') > 0;
 
   /*
@@ -70,10 +72,12 @@ const SexOffendersBackgroundCheck = ({
   /*
    * This section is gated per owner, and so is the spend: the owner the member
    * chose travels with the credit, so the unlock applies to that owner and not to
-   * another. A credit is spent where the balance says one is held, and the dialog
-   * is opened where it does not — or where the spend was refused, so a stale
-   * balance costs a click rather than the unlock. No charge can follow from this
-   * button; the price is quoted in the dialog first.
+   * another. A credit is spent where the balance says one is held, and the answer
+   * is the settled one: the owner's record is open, the balance turned out to be
+   * empty, or the attempt failed. Only an empty balance opens the dialog, so a
+   * record that was already unlocked is shown rather than offered for sale. No
+   * charge can follow from this button either way; the price is quoted in the
+   * dialog first. ADR 0031 records the inference behind the three answers.
    */
   const handleUnlockClick = async (unlockedOwnerId: string) => {
     setOwnerId(unlockedOwnerId);
@@ -89,8 +93,13 @@ const SexOffendersBackgroundCheck = ({
 
     setSpendingForOwnerId(null);
 
-    if (outcome !== 'spent') {
+    if (outcome === 'no-credit') {
       setShowUpsellDialog(true);
+      return;
+    }
+
+    if (outcome === 'refused') {
+      showErrorToast();
       return;
     }
 
