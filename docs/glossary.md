@@ -122,7 +122,7 @@ sense takes a payment; [ADR 0025](adr/0025-the-subscription-writes-follow-the-re
 records adopting that endpoint here, reversing 0021's line about it.
 
 **Upselling**
-: **Two different things, and they do not map onto each other.**
+: **Three different things, and no two of them map onto each other.**
 
 In the funnel, an upselling is one of seven product keys held as a list on the member — the
 extras someone bought alongside the subscription. Owning one is what lets a report screen
@@ -132,10 +132,19 @@ offer instead of into it.
 In the new API, an upselling is a per-product **credit balance** over three products on an
 endpoint of its own: how many of a thing a member may still spend, not which things they own.
 
-There is no one-to-one translation between the two, and adopting the second means remodelling
-the report and upsell screens rather than renaming a field. The single overlapping concept is
-**unlimited PDF downloads**, which the new API publishes as a boolean entitlement on the
-current-user response — the one commercial fact the account service does answer.
+In the payments service, an upselling is a **product in a catalogue**, identified by
+`metadata.productSlug` and carrying a price in cents. It is where an amount is read from, and it
+says nothing about who owns what. Since [ADR 0029](adr/0029-the-upsell-price-moves-to-payments-and-the-charge-stays-behind.md)
+every upsell price on screen comes from here, while the purchase and the ownership check stay on
+the funnel's vocabulary — so the amount displayed and the amount charged come from two different
+catalogues, deliberately, until the payments side publishes real Ignastrace products.
+
+There is no one-to-one translation between the first two, and adopting the credit balance means
+remodelling the report and upsell screens rather than renaming a field. The single overlapping
+concept is **unlimited PDF downloads**, which the new API publishes as a boolean entitlement on the
+current-user response — the one commercial fact the account service does answer. The payments
+catalogue joins to the other two only through `UPSELL_PRODUCT_SLUGS`, a constant that maps every
+legacy key to the slug it is looked up by.
 
 **Purchase information**
 : What a member paid and what they may still spend: the trial price, the total, what the extras

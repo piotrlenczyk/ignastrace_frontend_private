@@ -1,23 +1,30 @@
 'use client';
 
 import { useLocale, useTranslations } from 'next-intl';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
-import type { Product } from '@/app/[locale]/success/_types/product.type';
 import LimitedOfferTag from '@/components/reverse-lookup/limited-offer-tag';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Icon } from '@/components/ui/icon';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
+import { resolveUpsellProduct, type UpsellProductKey } from '@/libs/upsell-products';
+import { useUpsellProductsQuery } from '@/network/payments-api/hooks/use-upsell-products-query';
 import { useSettings } from '@/settings/settings.provider';
 
-import { useGetUpsellProductsMutation } from '../_hooks/api/use-get-upsell-products-mutation';
 import { type PurchaseUpsellResponse, usePurchaseUpsell } from '../_hooks/api/use-purchase-upsell-mutation';
 import { UpsellPaymentMessage } from './upsell-payment-message';
 import { UpsellUpdatePaymentMethod } from './upsell-update-payment-method';
 
-type ProductKey =
-  'data_leaks' | 'sex_offenders' | 'sex_offenders_search' | 'unlimited_pdf_downloads' | 'social_networks';
+/*
+ * The five upsells this dialog is opened for — the two the `/success` screen
+ * sells are not among them. A subset of the application's upsell keys rather
+ * than a union of its own, so a key that stops existing stops compiling here.
+ */
+type ProductKey = Extract<
+  UpsellProductKey,
+  'data_leaks' | 'sex_offenders' | 'sex_offenders_search' | 'social_networks' | 'unlimited_pdf_downloads'
+>;
 
 type PurchaseParams = {
   reverseLookupId?: string;
@@ -46,7 +53,6 @@ type UpsellDialogProps = {
   benefitKeys: string[];
   purchaseParams?: PurchaseParams;
   paymentMessageReportId?: string;
-  defaultPrice?: number;
 };
 
 const UpsellDialog = ({
@@ -60,7 +66,6 @@ const UpsellDialog = ({
   benefitKeys,
   purchaseParams,
   paymentMessageReportId,
-  defaultPrice = 195,
 }: UpsellDialogProps) => {
   const t = useTranslations(translationNamespace);
   const formatPrice = createPriceFormatter();
@@ -71,25 +76,15 @@ const UpsellDialog = ({
   const [retryCount, setRetryCount] = useState(0);
   const [showMessage, setShowMessage] = useState(false);
   const [showUpdatePaymentMethod, setShowUpdatePaymentMethod] = useState(false);
-  const [product, setProduct] = useState<Product>({
-    key: productKey,
-    price: defaultPrice,
-    currency: 'USD',
-  });
 
-  const formattedPrice = formatPrice(product.price, product.currency, country, locale);
-
-  const { mutate: getUpsellProducts } = useGetUpsellProductsMutation({
-    onSuccess: (products) => {
-      const upsellProduct = products.find((p) => p.key === productKey);
-      if (upsellProduct) {
-        setProduct(upsellProduct);
-      }
-    },
-    onError: () => {
-      console.error('Error getting upsell products');
-    },
-  });
+  /*
+   * The price comes from the payments service and the purchase goes to the
+   * legacy catalogue — the divergence ADR 0029 accepts. A query rather than the
+   * mutation-in-an-effect this replaced, so four dialogs on one report share one
+   * request and a read looks like a read.
+   */
+  const { data: upsellProducts } = useUpsellProductsQuery();
+  const product = resolveUpsellProduct(upsellProducts ?? [], productKey);
 
   const closeDialogRef = useRef<(() => void) | null>(null);
 
@@ -115,15 +110,10 @@ const UpsellDialog = ({
     },
   });
 
-  useEffect(() => {
-    getUpsellProducts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const handlePurchaseUpsell = () => {
     purchaseUpsell({
       ...purchaseParams,
-      product: product.key,
+      product: productKey,
     });
   };
 
@@ -145,6 +135,20 @@ const UpsellDialog = ({
     icon: <Icon name="check-circle" className="size-6 text-secondary" />,
     title: t(key as any),
   }));
+
+  /*
+   * No resolved product, no offer. The payments catalogue carries no row for this
+   * upsell, the row it carries has no price, or the call was refused — and in
+   * every one of those cases there is no amount to put on the button, so the
+   * member is not offered the purchase at all. This replaces a hardcoded $1.95
+   * that was shown whenever the read did not answer. Every hook above runs first;
+   * the branch is here rather than earlier for that reason alone.
+   */
+  if (!product) {
+    return null;
+  }
+
+  const formattedPrice = formatPrice(product.price.amount, product.price.currency, country, locale);
 
   return (
     <>

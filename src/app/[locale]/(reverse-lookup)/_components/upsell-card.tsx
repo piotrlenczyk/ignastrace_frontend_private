@@ -11,11 +11,11 @@ import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { useMessageErrorToast } from '@/hooks/use-message-error-toast';
+import type { UpsellProduct, UpsellProductKey } from '@/libs/upsell-products';
 import { useCurrentMember } from '@/network/api/hooks/use-current-member';
 import { useSettings } from '@/settings/settings.provider';
 
 import { useUpsellingMutation } from '../../success/_hooks/api/use-upselling-mutation';
-import type { Product } from '../../success/_types/product.type';
 
 type UpsellCardProps = {
   title: string;
@@ -27,7 +27,15 @@ type UpsellCardProps = {
   redirectUrl: string;
   iconUrl: string;
   purchaseButtonText: string;
-  product: Product;
+  /*
+   * The payments row, as the payments service returned it, and the legacy key
+   * beside it rather than folded into it. The card renders the amount out of the
+   * first and buys and checks ownership with the second, which is exactly the
+   * divergence ADR 0029 records: a reader of this component can see that the
+   * price and the purchase come from two different upstreams.
+   */
+  product: UpsellProduct;
+  productKey: UpsellProductKey;
 };
 
 const UpsellCard = ({
@@ -38,6 +46,7 @@ const UpsellCard = ({
   iconUrl,
   purchaseButtonText,
   product,
+  productKey,
 }: UpsellCardProps) => {
   const t = useTranslations('pages.reverse_lookup.upsell');
   const tStripeForm = useTranslations('components.forms.stripe_form');
@@ -86,13 +95,13 @@ const UpsellCard = ({
   };
 
   const handlePurchaseUpsell = () => {
-    if (member?.upsellings.includes(product.key)) {
+    if (member?.upsellings.includes(productKey)) {
       setIsPurchased(true);
       return;
     }
 
     setIsSubmitted(true);
-    createUpselling([product.key]);
+    createUpselling([productKey]);
   };
 
   const handleSkip = () => {
@@ -113,7 +122,7 @@ const UpsellCard = ({
               <h4 className="text-lg font-bold lg:text-2xl">{t('total_due_today')}</h4>
               <div className="flex flex-col">
                 <span className="h4 text-right font-bold">
-                  {formatPrice(product.price, product.currency, country, locale)}
+                  {formatPrice(product.price.amount, product.price.currency, country, locale)}
                 </span>
               </div>
             </div>

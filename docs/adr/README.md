@@ -43,3 +43,4 @@ moves. Describe things by their role instead.
 | [0026](0026-the-activity-feed-becomes-the-list.md)                             | The activity feed becomes the list, one exit condition short                            | Accepted; supersedes 0014                         |
 | [0027](0027-the-reverse-lookup-creation-starts-on-an-unanswered-assumption.md) | The reverse-lookup creation starts on an unanswered assumption                          | Accepted; one line of 0022 reversed               |
 | [0028](0028-the-report-reads-move-and-the-unlocks-stay-behind.md)              | The report reads move onto the new API and the unlocks stay behind on legacy            | Accepted; extends 0027's assumption               |
+| [0029](0029-the-upsell-price-moves-to-payments-and-the-charge-stays-behind.md) | The upsell price moves to payments and the charge stays behind on legacy                | Accepted; one line of 0022 reversed               |

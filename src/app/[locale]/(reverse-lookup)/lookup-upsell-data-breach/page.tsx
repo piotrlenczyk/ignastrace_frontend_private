@@ -4,10 +4,9 @@ import { getTranslations } from 'next-intl/server';
 import FunnelLayout from '@/components/layouts/funnel-layout';
 import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
-import { getApi } from '@/libs/server/api';
+import { getUpsellProduct } from '@/server/getters/upsell-products.getters';
 import { getServerSession } from '@/server/session/session.utils';
 
-import type { Product } from '../../success/_types/product.type';
 import UpsellCard from '../_components/upsell-card';
 import UpsellProgressSteps from '../_components/upsell-progress-steps';
 
@@ -35,13 +34,25 @@ const UpsellDataBreachPage = async () => {
     },
   ];
 
-  const api = await getApi();
-  const products = await api.get<Product[]>('/reverse_lookups_upsellings');
-  const upsellProduct = products.find((product) => product.key === 'data_leaks') || {
-    key: 'data_leaks',
-    price: 195,
-    currency: 'USD',
-  };
+  /*
+   * The step after this one, named once: the visitor reaches it either by
+   * skipping the offer, by buying it, or — below — because there is no offer to
+   * make.
+   */
+  const nextStep = ROUTES.REVERSE_LOOKUP.UPSELLS.SEX_OFFENDERS;
+  const upsellProduct = await getUpsellProduct('data_leaks');
+
+  /*
+   * No product, no offer. A payments catalogue with no row for this upsell, a row
+   * with no price, and a refused or unreachable payments service all arrive here
+   * as `undefined`, and all mean the same thing: this step has no amount any
+   * upstream stands behind, so it takes the visitor to the next one instead of
+   * showing a number nobody quoted. What this replaced was a hardcoded $1.95.
+   * ADR 0029 records the trade.
+   */
+  if (!upsellProduct) {
+    redirect(nextStep);
+  }
 
   return (
     <FunnelLayout isReverseLookup showLogoLink={false}>
@@ -54,9 +65,10 @@ const UpsellDataBreachPage = async () => {
               specialOfferText={t('special_limited_time_offer')}
               purchaseButtonText={t('purchase')}
               upsellBenefits={upsellBenefits}
-              redirectUrl={ROUTES.REVERSE_LOOKUP.UPSELLS.SEX_OFFENDERS}
+              redirectUrl={nextStep}
               iconUrl="/images/reverse-lookup/icon-data-breach.svg"
               product={upsellProduct}
+              productKey="data_leaks"
             />
             <div className="text-center text-caption text-weak">{t('disclaimer')}</div>
           </div>
