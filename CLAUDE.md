@@ -33,10 +33,16 @@ record's instruction not to, on an assumption about report storage the backend h
 its data-breach read and its sex-offender read have since followed, taking the report's gating onto the
 new API's section state while the unlock that changes it is still written to legacy
 (`docs/adr/0028-the-report-reads-move-and-the-unlocks-stay-behind.md`); read both records
-before moving another call in that family. The billing screen is off the legacy client entirely; what
-that costs is that the legacy population is redirected off it, and every payments write is raised as
-the shared technical account. Outside that track, still don't
-rewrite a screen's fetching unless you are redesigning the screen.
+before moving another call in that family. The upsell **product list** has since moved onto the
+payments service, reversing another of 0022's out-of-scope lines: the price on every upsell screen is
+read from `GET /products/upsell` while the purchase is still charged against the legacy catalogue, so
+the amount displayed and the amount charged come from two different upstreams
+(`docs/adr/0029-the-upsell-price-moves-to-payments-and-the-charge-stays-behind.md`). A payments upsell
+row is identified through `UPSELL_PRODUCT_SLUGS` in `src/libs/upsell-products.ts`, and where no product
+resolves the offer is skipped rather than priced from a fallback. The billing screen is off the legacy
+client entirely; what that costs is that the legacy population is redirected off it, and every payments
+write is raised as the shared technical account. Outside that track, still don't rewrite a screen's
+fetching unless you are redesigning the screen.
 
 ## Design implementation rules
 

@@ -7,10 +7,10 @@ import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 
-import type { Product } from '@/app/[locale]/success/_types/product.type';
 import { Icon } from '@/components/ui/icon';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { getStripePromise } from '@/libs/stripe';
+import type { UpsellProduct } from '@/libs/upsell-products';
 
 import { StripeForm } from './stripe-form';
 
@@ -20,7 +20,7 @@ const UpsellCheckoutForm = ({
   buttonText,
   onSuccess,
 }: {
-  product: Product;
+  product: UpsellProduct;
   country: string;
   buttonText: string;
   onSuccess: () => void;
@@ -54,10 +54,10 @@ const UpsellCheckoutForm = ({
         <div className="text-xl text-weak">{t('total')}</div>
         <div className="flex items-center gap-2">
           <div className="h4 leading-loose font-bold whitespace-nowrap">
-            {formatPrice(product.price, product.currency, country, locale)}
+            {formatPrice(product.price.amount, product.price.currency, country, locale)}
           </div>
           <div className="flex items-center gap-1 text-xs font-bold uppercase">
-            <span>{product.currency.toUpperCase()}</span>
+            <span>{product.price.currency.toUpperCase()}</span>
           </div>
         </div>
       </div>
@@ -67,8 +67,8 @@ const UpsellCheckoutForm = ({
       <Elements stripe={stripePromise} options={stripeOptions}>
         <StripeForm
           buttonText={buttonText}
-          currency={product.currency}
-          amount={product.price}
+          currency={product.price.currency}
+          amount={product.price.amount}
           isUpdatePaymentMethod
           shouldSendOrderConfirmEmail={false}
           isSubmitting={isSubmitting}
@@ -95,7 +95,7 @@ const UpsellCheckoutForm = ({
 
       <p className="mb-6 text-center text-xs text-weak">
         {tUpsell.rich('agree_description_upsell', {
-          price: formatPrice(product.price, product.currency, country, locale),
+          price: formatPrice(product.price.amount, product.price.currency, country, locale),
           terms: (chunks) => (
             <Link className="underline" target="_blank" href="/terms">
               {chunks}
