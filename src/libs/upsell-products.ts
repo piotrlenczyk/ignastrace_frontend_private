@@ -4,12 +4,12 @@ import type { paymentsSchemas } from '@/network/payments-api/payments-api-server
 /**
  * The application's word for an upsell, and it stays the legacy one.
  *
- * The translation namespaces, the two purchases that are still legacy calls — the
- * standalone sex-offender search and the `/success` screen's extras — and the
- * screens' own props all speak this vocabulary, and none of them moved when the
- * price did or when the charge followed it. So the key identifies an upsell
- * everywhere in this application, and each upstream's own identity for the same
- * thing is reached through one of the two maps below rather than spread around:
+ * The translation namespaces, the one purchase that is still a legacy call — the
+ * standalone sex-offender search — and the screens' own props all speak this
+ * vocabulary, and none of them moved when the price did or when the charge
+ * followed it. So the key identifies an upsell everywhere in this application,
+ * and each upstream's own identity for the same thing is reached through one of
+ * the two maps below rather than spread around:
  * the payments service's slug, and the new API's credit-balance product.
  *
  * The union lives here rather than in the `/success` screen's legacy `Product`
@@ -53,9 +53,10 @@ export type UpsellProduct = paymentsSchemas['GetUpsellProductResponseDto'] & {
  * the section that was bought. The day the backend publishes real Ignastrace
  * upsell products, this constant is the change and there is no other.
  *
- * `scan_pro` and `support_hotline` belong to the `/success` screen's separate
- * legacy endpoint and no caller here asks for them. They appear because the map
- * is exhaustive, not because they are in scope.
+ * `scan_pro` and `support_hotline` are looked up through this map too, since
+ * ADR 0032 moved the `/success` screen's two extras onto the payments catalogue:
+ * both the price on each card and the ownership guard in front of the screen
+ * resolve through the slug here.
  */
 export const UPSELL_PRODUCT_SLUGS: Record<UpsellProductKey, string> = {
   scan_pro: 'resume-ai-review',
@@ -84,9 +85,9 @@ export const UPSELL_PRODUCT_SLUGS: Record<UpsellProductKey, string> = {
  * both upstreams share, and it is bought outright and never spent.
  * `sex_offenders_search` belongs to the standalone search, whose purchase stays on
  * the legacy call because that call also creates the search report and answers
- * with its identifier. `scan_pro` and `support_hotline` belong to the `/success`
- * screen's separate legacy endpoint and have no counterpart in the new API at
- * all. See ADR 0030.
+ * with its identifier. `scan_pro` and `support_hotline` are bought on the payments
+ * service since ADR 0032 and have no counterpart in the new API at all, so there
+ * is nothing to spend after that purchase. See ADR 0030 and ADR 0032.
  */
 export const UPSELL_CREDIT_PRODUCTS: Record<UpsellProductKey, CreditProduct | null> = {
   scan_pro: null,
@@ -132,10 +133,10 @@ const productSlug = (metadata: paymentsSchemas['GetUpsellProductResponseDto']['m
  * The upsell product a screen may offer for a legacy key, or nothing.
  *
  * This is the only place that knows how a payments upsell row is identified. The
- * four screens reading `/products/upsell` — the three funnel steps and the
- * member area's unlock dialog — ask through here and branch on `undefined`. The
- * row they get back is also the row that is charged: since ADR 0030 the purchase
- * sends `price.id` off it.
+ * five screens reading `/products/upsell` — the three funnel steps, the member
+ * area's unlock dialog and the order-success screen's two extras — ask through
+ * here and branch on `undefined`. The row they get back is also the row that is
+ * charged: since ADR 0030 the purchase sends `price.id` off it.
  *
  * `undefined` means one thing to all of them: **do not offer this**. No row
  * carries the mapped slug, or the row that does carries no price, and either way
@@ -155,4 +156,53 @@ export const resolveUpsellProduct = (
   return products.find(
     (product): product is UpsellProduct => productSlug(product.metadata) === slug && product.price !== undefined,
   );
+};
+
+/**
+ * A payments upsell row the caller has bought, and how many times.
+ *
+ * The catalogue's shape with a count added, and the only thing in the system that
+ * answers anything at all about `scan_pro` and `support_hotline` — the new API
+ * models neither, which is why both keep their `null` in the credit map above.
+ */
+export type PurchasedUpsellProduct = paymentsSchemas['GetPurchasedUpsellProductResponseDto'];
+
+/**
+ * Whether the payments service's purchased-products response says the caller
+ * already owns any of these upsells.
+ *
+ * **This endpoint is asked, and that reverses ADR 0030.** That record and the
+ * glossary beside it said it never would be, because every payments call is
+ * raised as the shared technical account of ADR 0023 and its per-user answers are
+ * that account's. The objection is not answered — it is accepted, in one place
+ * and for one reason: the `/success` screen sells two extras that no other
+ * upstream knows anything about, and the alternative was the fixture the screen
+ * was gating on. ADR 0032 records the trade, and names the symptom: one purchase
+ * by anybody raises the count for everybody, and from that moment every member is
+ * sent past the offer instead of being shown it.
+ *
+ * The slug each key is looked up by comes from `UPSELL_PRODUCT_SLUGS`, so the day
+ * real products are published there is still exactly one constant to change.
+ *
+ * It is an **OR** over the keys at a count of one or more, reproducing what the
+ * screen did with the composed member's list of extras: a member who bought one
+ * of the two is never offered the other again.
+ *
+ * **An absent response answers owned.** A count nobody could read is not a zero,
+ * and the wrong answer in that direction re-sells an extra to somebody who has
+ * already paid for it. A caller that wants to tell the two apart branches on the
+ * absence itself first; one that does not still fails closed.
+ */
+export const ownsAnyUpsell = (purchased: PurchasedUpsellProduct[] | undefined, keys: UpsellProductKey[]): boolean => {
+  if (!purchased) {
+    return true;
+  }
+
+  const slugs = new Set(keys.map((key) => UPSELL_PRODUCT_SLUGS[key]));
+
+  return purchased.some((row) => {
+    const slug = productSlug(row.metadata);
+
+    return slug !== undefined && slugs.has(slug) && row.purchasedCount > 0;
+  });
 };

@@ -42,13 +42,18 @@ last line has since been reversed too: the **charge follows the price**, so an u
 payments service against the same price row whose amount was displayed, and the credit is spent on the
 new API — the order of spend, buy, confirm and spend again living in one pure module,
 `src/libs/upsell-unlock.ts`
-(`docs/adr/0030-the-upsell-charge-follows-the-price-and-the-credit-is-spent-on-the-new-api.md`). Two
-upselling purchases stay legacy by design, both recorded there. A payments upsell row is identified
+(`docs/adr/0030-the-upsell-charge-follows-the-price-and-the-credit-is-spent-on-the-new-api.md`). The
+order-success screen's two extras have since followed, taking its offer, its ownership guard and its
+purchase onto payments and dissolving its cart into a button per card
+(`docs/adr/0032-the-order-success-extras-move-to-payments-and-the-cart-dissolves.md`); one upselling
+purchase, the standalone sex-offender search's, stays legacy by design. A payments upsell row is identified
 through `UPSELL_PRODUCT_SLUGS` in `src/libs/upsell-products.ts` and its new-API counterpart through
 `UPSELL_CREDIT_PRODUCTS` beside it — both exhaustive over the legacy key union — and where no product
 resolves the offer is skipped rather than priced from a fallback. Ownership of an upsell is read from the
 new API's credit balances or its entitlement on the current user, **never** from the payments service's
-per-user answers, which are the shared technical account's. The billing screen is off the legacy client
+per-user answers, which are the shared technical account's — with one stated exception, the
+order-success screen's `scan_pro` and `support_hotline`, which exist in no other upstream and are read
+from exactly that endpoint (0032). Don't extend that exception to another key. The billing screen is off the legacy client
 entirely; what that costs is that the legacy population is redirected off it, and every payments write —
 an upsell charge included — is raised as the shared technical account. Outside that track, still don't rewrite a screen's
 fetching unless you are redesigning the screen.

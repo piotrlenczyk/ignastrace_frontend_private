@@ -153,6 +153,10 @@
         "pending_state": "Pending payment",
         "reactivate_error": "We could not resume your subscription. Please try again."
       }
+    },
+    "success_upsell": {
+      "buy_button": "Buy Now",
+      "bought_state": "Purchased"
     }
   },
   "common": {

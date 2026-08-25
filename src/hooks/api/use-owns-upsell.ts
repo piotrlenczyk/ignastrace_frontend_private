@@ -14,10 +14,13 @@ import { upsellCreditCount, useUpsellCreditsQuery } from '@/network/api/hooks/us
  * PDF downloads** it means the entitlement the new API publishes on the current
  * user, which is a member's own and nobody else's.
  *
- * What is deliberately not asked is the payments service's purchased-products
- * endpoint. Every payments call is made as one shared technical account, so its
- * per-user answers are that account's: reading ownership from there would make
- * one member's purchase everybody's unlock.
+ * What is deliberately not asked *here* is the payments service's
+ * purchased-products endpoint. Every payments call is made as one shared
+ * technical account, so its per-user answers are that account's: reading
+ * ownership from there would make one member's purchase everybody's unlock. The
+ * order-success screen does ask it, because its two extras exist in no other
+ * upstream at all — one exception, with the cost accepted and recorded in
+ * ADR 0032, and not a precedent for the keys this hook answers for.
  *
  * Nor is the composed member's list of extras asked any more. That list is the
  * mocked membership of ADR 0013 for every key except unlimited PDF downloads, so a

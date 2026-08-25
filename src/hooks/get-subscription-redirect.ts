@@ -1,6 +1,6 @@
 import type { Route } from 'next';
 
-import { getUserForPoliciesCheck, hasActiveSubscription, hasSubscription, hasUpsellings } from '@/libs/subscription';
+import { getUserForPoliciesCheck, hasActiveSubscription, hasSubscription } from '@/libs/subscription';
 
 export const getSubscriptionRedirect = async ({
   allowUnauthenticated = false,
@@ -12,7 +12,6 @@ export const getSubscriptionRedirect = async ({
     hasSubscription: Route;
     activeSubscription: Route;
     endedSubscription: Route;
-    hasUpsellings: Route;
   }>;
 }): Promise<Route | undefined> => {
   try {
@@ -22,10 +21,9 @@ export const getSubscriptionRedirect = async ({
       return undefined;
     }
 
-    const [hasAnySubscription, subscriptionIsActive, userHasUpsellings] = await Promise.all([
+    const [hasAnySubscription, subscriptionIsActive] = await Promise.all([
       hasSubscription({ user, allowUnauthenticated }),
       hasActiveSubscription({ user, allowUnauthenticated }),
-      hasUpsellings({ user, allowUnauthenticated }),
     ]);
 
     if (!hasAnySubscription) {
@@ -33,10 +31,6 @@ export const getSubscriptionRedirect = async ({
         return undefined;
       }
       return routes.noSubscription;
-    }
-
-    if (userHasUpsellings && routes.hasUpsellings) {
-      return routes.hasUpsellings;
     }
 
     if (subscriptionIsActive) {
