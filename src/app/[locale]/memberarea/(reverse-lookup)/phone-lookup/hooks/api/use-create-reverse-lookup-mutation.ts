@@ -1,25 +1,40 @@
-import { useMutation } from '@tanstack/react-query';
+'use client';
 
-import { useApi } from '@/hooks/use-api';
-import type { ApiError } from '@/libs/api-error';
-import type { ReverseLookupCompact } from '@/types/reverse-lookup.types';
+import { $api } from '@/network/api/api-browser-client';
 
-export function useCreateReverseLookupMutation({
+/**
+ * Creates a reverse-lookup report for a phone number, through the proxy and typed
+ * from the generated specification.
+ *
+ * A mutation rather than a server action because none of the three things that
+ * make a write an action holds: it sets no cookie of its own, redirects nothing
+ * server-side, and invalidates no Next cache. The funnel phone number is saved by
+ * a separate action with other callers, and the navigation that follows is the
+ * form's, in the browser.
+ *
+ * A caller states a phone number and hears back an identifier or a refusal, so the
+ * API's request shape stops here rather than being written out at the call site.
+ * Only the identifier is passed on: the response also carries a status and the
+ * carrier and line type the API captured synchronously, and none of it is read.
+ * The screen the member lands on counts down an animation and then offers the
+ * report, exactly as it did on the legacy call, and showing the carrier there
+ * would be a new capability on a screen awaiting redesign rather than a migration.
+ *
+ * A refusal is handed on as the envelope the API refused in — and as that alone,
+ * without the submitted variables and the query-library context that travel beside
+ * it — for the caller to recognise by the API's own error code.
+ */
+export const useCreateReverseLookupMutation = ({
   onSuccess,
   onError,
 }: {
-  onSuccess: (reverseLookup: ReverseLookupCompact) => void;
-  onError: (error: ApiError) => void;
-}) {
-  const api = useApi();
-
-  function createReverseLookupFunction(phone: string) {
-    return api.post<ReverseLookupCompact>('/reverse_lookups', { phone });
-  }
-
-  return useMutation({
-    mutationFn: createReverseLookupFunction,
-    onSuccess,
-    onError,
+  onSuccess: (reportId: string) => void;
+  onError: (refusal: unknown) => void;
+}) => {
+  const { mutate } = $api.useMutation('post', '/api/v1/reverse-lookup-reports', {
+    onSuccess: ({ id }) => onSuccess(id),
+    onError: (refusal) => onError(refusal),
   });
-}
+
+  return { mutate: (phoneNumber: string) => mutate({ body: { phoneNumber } }) };
+};

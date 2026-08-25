@@ -3,11 +3,11 @@
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
-import { useCreateReverseLookupMutation } from '@/app/[locale]/memberarea/(reverse-lookup)/phone-lookup/hooks/api/use-create-reverse-lookup-mutation';
 import { Checkout } from '@/components/checkout/Checkout';
 import CurrencySelector from '@/components/currency-selector';
 import { PaymentTrustRow } from '@/components/payment-trust-row';
 import { ROUTES } from '@/constants/routes';
+import { useCreateLegacyReverseLookupMutation } from '@/hooks/api/use-create-legacy-reverse-lookup-mutation';
 import { useRouter } from '@/libs/i18n-routing';
 import { getCurrencyProducts, getPlanProductName, getPricingProduct } from '@/libs/pricing';
 import type { Pricing } from '@/types/pricing.types';
@@ -58,7 +58,7 @@ export const LookupCheckoutPageClient = ({
    * the right one: their money has moved, and stranding them on a payment screen
    * is the one outcome worse than a report that has to be retried.
    */
-  const { mutate: createReverseLookup } = useCreateReverseLookupMutation({
+  const { mutate: createReverseLookup } = useCreateLegacyReverseLookupMutation({
     onSuccess: () => router.push(ROUTES.REVERSE_LOOKUP.UPSELLS.PDF),
     onError: () => router.push(ROUTES.REVERSE_LOOKUP.UPSELLS.PDF),
   });

@@ -192,6 +192,36 @@ never assembles one.
 : The rolling window the member's SMS dispatch counter and its limit belong to. Creating a
 Location request costs nothing against it; dispatching an SMS does.
 
+## Reverse-lookup reports
+
+**Reverse-lookup report**
+: What a member gets for a phone number they do not recognise. One record, created by one call and
+read by another — and, until the whole family is migrated, created and read in different upstreams.
+[ADR 0027](adr/0027-the-reverse-lookup-creation-starts-on-an-unanswered-assumption.md) records the
+assumption that makes that survivable and the symptom if it is false.
+
+**Report allowance**
+: The rolling 24-hour window a member's report count and its limit belong to. Reading the count spends
+nothing; creating a report does. The counter beside the form is decoration — the window is enforced by
+the creation call, which refuses with a code rather than only a status.
+
+**Report progress**
+: How far a report has got. Three vocabularies describe it today and **nothing translates between
+them**, because nothing in this application reads a report's status:
+
+- the legacy backend's two — `pending` and `ready` — which the report screen still reads and the
+  progress screen already ignores in favour of an animation on a timer;
+- the new API's four — `PENDING`, `PROCESSING`, `COMPLETED`, `FAILED` — returned at creation and meant
+  to be polled for, and read by nothing;
+- the activity list's own four — `PENDING`, `LOCATED`, `REJECTED`, `READY` — which are not a report's
+  states at all but the list's shared vocabulary across every kind of row it draws.
+
+This entry exists so that whoever adds polling finds the mapping question already posed rather than
+inventing a fourth vocabulary to avoid it. What relates the three is not settled here and is not settled
+anywhere: only the new API's four belong to a report, and how the legacy pair and the list's four line up
+against them is the thing to establish, not to assume. `FAILED` is the state the product has no screen
+for, which is why the contract is not adopted yet.
+
 ## What is switched on
 
 Introduced by [ADR 0020](adr/0020-one-answer-to-what-is-switched-on.md), which records why there

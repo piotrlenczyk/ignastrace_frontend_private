@@ -15,9 +15,9 @@ import { PhoneInput as PhoneInputBase } from '@/components/ui/phone-input/index'
 import { ROUTES } from '@/constants/routes';
 import { useMessageErrorToast } from '@/hooks/use-message-error-toast';
 import { createPhoneFormSchema, type PhoneFormValues } from '@/types/phone-form.types';
-import type { ReverseLookupCompact } from '@/types/reverse-lookup.types';
 
 import { useCreateReverseLookupMutation } from '../hooks/api/use-create-reverse-lookup-mutation';
+import { isReportLimitRefusal } from '../report-creation-limit';
 
 export const ReversePhoneLookupForm = ({ country }: { country: CountryCode }) => {
   const router = useRouter();
@@ -34,13 +34,20 @@ export const ReversePhoneLookupForm = ({ country }: { country: CountryCode }) =>
     mode: 'onSubmit',
   });
 
+  /*
+   * The two branches a refusal can be. A spent daily allowance is the one the
+   * member can act on, so it gets its own toast; everything else lands on the
+   * field, where a mistyped number is the likeliest cause. The allowance is
+   * recognised by the API's own error code and never by the status — the module
+   * beside this one is where the two codes it can arrive as live.
+   */
   const { mutate: createReverseLookup } = useCreateReverseLookupMutation({
-    onSuccess: async (reverseLookup: ReverseLookupCompact) => {
+    onSuccess: async (reportId) => {
       await saveFunnelPhone(form.getValues('phone'));
-      router.push(`${ROUTES.REVERSE_LOOKUP.MEMBER.PHONE_LOOKUP.PROGRESS}?id=${reverseLookup.id}`);
+      router.push(`${ROUTES.REVERSE_LOOKUP.MEMBER.PHONE_LOOKUP.PROGRESS}?id=${reportId}`);
     },
-    onError: (error) => {
-      if (error.status === 429) {
+    onError: (refusal) => {
+      if (isReportLimitRefusal(refusal)) {
         showErrorToastWithMessage(t('errors.rate_limit_exceeded'), t('errors.rate_limit_exceeded_title'));
       } else {
         form.setError('phone', {

@@ -8,7 +8,7 @@ import { Icon } from '@/components/ui/icon';
 import { Tooltip, TooltipArrow, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
-import { getApi } from '@/libs/server/api';
+import { apiServerClient } from '@/network/api/apiServerClient';
 import { getServerSession } from '@/server/session/session.utils';
 import { getServerSettings } from '@/settings/settings.server';
 import type { RequestCountData } from '@/types/request_count_data';
@@ -21,7 +21,6 @@ export default async function FindByNumberPage() {
 
   const session = await getServerSession();
   const isAuthenticated = !!session;
-  const api = await getApi();
 
   if (!isAuthenticated) {
     redirect(ROUTES.HOME);
@@ -41,11 +40,26 @@ export default async function FindByNumberPage() {
     },
   });
 
-  const requestCountData = await api.get<RequestCountData>(`/reverse_lookups/usage_count`);
-
   if (redirectUrl) {
     redirect(redirectUrl);
   }
+
+  /*
+   * How much of the member's rolling daily report allowance is left, read
+   * server-side on the screen that renders the form. Read the way the SMS compose
+   * screen reads its dispatch count: take what the API answered, and fall back to
+   * a spent-nothing count against the published limit when it answered nothing.
+   *
+   * Deliberately not put through `unwrapApiResponse`, and deliberately not allowed
+   * to fail the render. The counter is decoration — the gate is the creation call,
+   * which enforces the same window server-side — so an outage in it must not stop a
+   * member doing the thing they came for. The twin screen reads its counter this
+   * way, and two counters in one product reacting differently to one outage would
+   * be worse than the inconsistency with the rule.
+   */
+  const { data } = await apiServerClient['/api/v1/reverse-lookup-reports/usage-count'].GET();
+
+  const requestCountData: RequestCountData = data ?? { count: 0, limit: 5 };
 
   return (
     <ProductLayout>
