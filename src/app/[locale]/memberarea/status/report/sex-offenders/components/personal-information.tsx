@@ -1,20 +1,18 @@
 import { useLocale, useTranslations } from 'next-intl';
 
-import { localeFormatDate } from '@/app/[locale]/memberarea/status/_page/utils';
 import { Card } from '@/components/ui/card';
 import { Icon } from '@/components/ui/icon';
 import { cn } from '@/libs/utils';
-import type { SexOffenderData } from '@/types/sex-offenders.types';
+import type { SexOffenderDetail } from '@/server/getters/reverse-lookup.getters';
 
-const PersonalInformationComponent = ({
-  className,
-  sexOffenderData,
-}: {
-  className?: string;
-  sexOffenderData: SexOffenderData;
-}) => {
+import { localeFormatDate } from '../../../_page/utils';
+import { offenderName } from '../sex-offender-record';
+
+const PersonalInformationComponent = ({ className, record }: { className?: string; record: SexOffenderDetail }) => {
   const locale = useLocale();
   const t = useTranslations('pages.reverse_lookup.report.sex_offenders.report.personal_information');
+
+  const name = offenderName(record);
 
   return (
     <Card className={cn('flex flex-col gap-8 border border-stroke-weak p-6 shadow-raised', className)}>
@@ -25,7 +23,7 @@ const PersonalInformationComponent = ({
           <Icon name="star" className="text-brand" />
           <div>
             <h5 className="mb-0.5 font-bold">{t('name')}</h5>
-            <p>{sexOffenderData.name || '--'}</p>
+            <p>{name || '--'}</p>
           </div>
         </div>
 
@@ -33,9 +31,7 @@ const PersonalInformationComponent = ({
           <Icon name="star" className="text-brand" />
           <div>
             <h5 className="mb-0.5 font-bold">{t('first_name_nicknames')}</h5>
-            <p>
-              {sexOffenderData.first_name_nick_names?.length ? sexOffenderData.first_name_nick_names.join(', ') : '--'}
-            </p>
+            <p>{record.nickNames?.length ? record.nickNames.join(', ') : '--'}</p>
           </div>
         </div>
 
@@ -43,7 +39,7 @@ const PersonalInformationComponent = ({
           <Icon name="calendar" className="text-brand" />
           <div>
             <h5 className="mb-0.5 font-bold">{t('date_of_birth')}</h5>
-            <p>{sexOffenderData.date_of_birth ? localeFormatDate(sexOffenderData.date_of_birth, locale) : '--'}</p>
+            <p>{record.dateOfBirth ? localeFormatDate(record.dateOfBirth, locale) : '--'}</p>
           </div>
         </div>
       </div>
