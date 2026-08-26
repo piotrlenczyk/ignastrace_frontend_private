@@ -7,7 +7,6 @@ For this reason, the Docker image build process will fail if any of the required
 
 The following environment variables are required at build time. They will be made available to the running process too:
 
-- `NEXT_PUBLIC_API_URL`: The URL of the backend API.
 - `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`: The Google Maps API key.
 - `NEXT_PUBLIC_GTM_ID`: The Google Tag Manager ID.
 - `NEXT_PUBLIC_APP_URL`: The URL of the frontend application.
@@ -23,7 +22,6 @@ There are some additional runtime environment variables required when running th
 - `PAYMENTS_API_TOKEN_REFRESH_URL`: The full URL the payments credential is renewed at, host and path together, e.g. `https://dev.resumewise.com/api/payments/v1/auth/refresh-token`. TEMPORARY: it exists only while the payments credential is a shared technical account's — see `docs/adr/0023-a-shared-technical-account-for-the-payments-upstream.md`.
 - `PAYMENTS_API_SEED_REFRESH_TOKEN`: The refresh token of that technical account, used to obtain the first payments access token; the rotated one lives in the session from then on. A secret. TEMPORARY, with the variable above — leave both unset and payments calls simply go out unauthenticated, which refuses everything user-facing that upstream protects.
 - `IPSTACK_API_KEY`: The Ipstack API key.
-- `INTERNAL_API_URL`: The URL for the backend API that uses the internal container host. If this is not set, the NEXT_PUBLIC_API_URL will be used.
 - `PDF_GENERATION_APP_HOST`: This is the HOST that will be requested to generate the PDF. In this host the app needs to be running. Usually this will be http://localhost:3000.
 
 Those are private credentials and won't be included in the static bundle.

@@ -28,7 +28,6 @@ concurrency: ci-stage-branch
 env:
   AWS_REGION: us-east-1
   NEXT_TELEMETRY_DISABLED: 1
-  NEXT_PUBLIC_API_URL: https://stage.mobitrace.io/api/v1
   NEXT_PUBLIC_APP_URL: https://stage.mobitrace.io
   NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${{ secrets.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: pk_test_51RULmDGC6OGucnjKAxULVOyPcPGmKcZN6TW5b4V6ItQPLcFQkHVdPppxtbWaPRVemsa6qfJTxxYWvJDTT933T4ls00HC4cGEwv

@@ -124,7 +124,6 @@ settings:
   ENV: production
   PORT: 3000
   HOSTNAME: 0.0.0.0
-  INTERNAL_API_URL: http://mobitrace-backend:3000/api/v1
 
   # Feature flags this application owns, read at runtime by `src/settings`. Both
   # `1` and `true` count as on. FEATURE_REQUEST_ZIP was NEXT_PUBLIC_REQUEST_ZIP,

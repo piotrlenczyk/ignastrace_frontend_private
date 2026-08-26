@@ -16,99 +16,73 @@ The programme of work has two parts:
 **Both parts are in scope now.** The design work is the bulk of it, but the data layer described
 below has landed and is the pattern new code follows.
 
-**A third part has been added: retiring the legacy data layer, on a track of its own.** A legacy
-call is now rewritten because it is a legacy call, not because the screen around it is being
-redesigned — so the earlier rule that legacy plumbing dies with the screen it serves no longer
-holds. Work on that track only through its tasks: one endpoint per task, the legacy wrapper gone
-when the task ends, no adapters, and the screen on the new response shape.
-`docs/adr/0022-retiring-the-legacy-layer-on-its-own-track.md` records the trade — including what
-is deliberately out of scope and what is blocked on the upstream. One line of it has since been
-reversed twice over: the billing screen's subscription read moved to the payments service ahead of any
-data migration (`docs/adr/0024-the-subscription-read-moves-to-payments-before-the-data-does.md`), and
-the cancellation and reactivation writes then followed it
-(`docs/adr/0025-the-subscription-writes-follow-the-read-onto-payments.md`). The reverse-lookup family's
-member-facing pair — report creation and its usage count — has since been started against the same
-record's instruction not to, on an assumption about report storage the backend has still not confirmed
-(`docs/adr/0027-the-reverse-lookup-creation-starts-on-an-unanswered-assumption.md`); the report read,
-its data-breach read and its sex-offender read have since followed, taking the report's gating onto the
-new API's section state while the unlock that changes it is still written to legacy
-(`docs/adr/0028-the-report-reads-move-and-the-unlocks-stay-behind.md`); and the funnel's own creation —
-the carve-out 0027 made on the grounds that everything a paying visitor saw next read the legacy backend
-— has since followed the member's, because nothing downstream of that screen reads that backend any more
-(`docs/adr/0033-the-funnel-s-report-creation-follows-the-member-s.md`). With that, the reverse-lookup
-family is entirely off the legacy data layer; read those records before moving another call near it. The upsell **product list** has since moved onto the
-payments service, reversing another of 0022's out-of-scope lines: the price on every upsell screen is
-read from `GET /products/upsell` while the purchase is still charged against the legacy catalogue, so
-the amount displayed and the amount charged come from two different upstreams
-(`docs/adr/0029-the-upsell-price-moves-to-payments-and-the-charge-stays-behind.md`). That record's own
-last line has since been reversed too: the **charge follows the price**, so an upsell is bought on the
-payments service against the same price row whose amount was displayed, and the credit is spent on the
-new API — the order of spend, buy, confirm and spend again living in one pure module,
-`src/libs/upsell-unlock.ts`
-(`docs/adr/0030-the-upsell-charge-follows-the-price-and-the-credit-is-spent-on-the-new-api.md`). The
-order-success screen's two extras have since followed, taking its offer, its ownership guard and its
-purchase onto payments and dissolving its cart into a button per card
-(`docs/adr/0032-the-order-success-extras-move-to-payments-and-the-cart-dissolves.md`); one upselling
-purchase, the standalone sex-offender search's, stays legacy by design. A payments upsell row is identified
-through `UPSELL_PRODUCT_SLUGS` in `src/libs/upsell-products.ts` and its new-API counterpart through
-`UPSELL_CREDIT_PRODUCTS` beside it — both exhaustive over the legacy key union — and where no product
-resolves the offer is skipped rather than priced from a fallback. Ownership of an upsell is read from the
-new API's credit balances or its entitlement on the current user, **never** from the payments service's
-per-user answers, which are the shared technical account's — with one stated exception, the
-order-success screen's `scan_pro` and `support_hotline`, which exist in no other upstream and are read
-from exactly that endpoint (0032). Don't extend that exception to another key. The **notification
-centre** has since moved whole — the list, the read-marking write, and a third endpoint the old
-backend never offered, the unread count — which closes a gap 0022 recorded as blocking it
-(`docs/adr/0034-the-notification-centre-moves-whole-and-loses-eleven-languages.md`). The screen
-keeps its legacy palette and components and only its fetching changes: it shows the `title` and
-`body` the backend composes, so notification copy is English everywhere but `en` and `es`, and the
-header badge reads the member's real unread count instead of the hard-coded three in ADR 0013's mock
-— the first field to leave that mock because a real endpoint arrived. That record also diverges from
-0026 on where a paged read happens, and it takes the browser-side legacy surface down to three call
-sites. The **public cancellation form** has since taken it to two: its write moved onto payments'
-`POST /internal/subscriptions/cancel`, reversing the last standing line of 0025
-(`docs/adr/0035-the-public-cancellation-follows-onto-payments-through-a-server-action.md`). Read that
-one before moving another call into a refused path family. The payments proxy still refuses the whole
-`internal` family to the browser, so the call is a **server action** — not a hook, and not an exception
-in that list — and because the endpoint cancels by user id where the form collects an address, the
-action resolves the address first through the API's `POST /api/v1/auth/get-user-by-email`, which the API
-proxy likewise refuses to page scripts. It is also the one payments write that does **not** pay 0023's
-cost: that endpoint declares no security and acts on the user named in its body, so it cancels the
-member's subscription rather than the shared technical account's. The **subscription gate** — the one
-function every gated screen and every public marketing screen asks where a caller belongs — has since
-left the mocked membership of ADR 0013 for the payments service, which extends 0023's cost from the
-billing screen to the whole application
-(`docs/adr/0036-the-subscription-gate-reads-the-payments-service.md`). Access is one rule, the
-`hasAccess` the billing screen already branched on, computed once in `getSubscription()`; the gate maps
-it onto its three buckets, reads no account at all, settles guest-versus-member from the session's
-`isLoggedIn` flag, and treats **only a 404** as "no subscription" — every other refusal, and a service
-that cannot be reached at all, moves nobody and logs. Read that record before changing where a gate sends anybody, and before assuming a routing bug is
-one: when the shared technical account's own subscription expires, every member is routed as though
-theirs had. The **funnel's purchase events** have since left that same mock for the two upstreams that
-know: the subscription's own `purchase` event is valued from the subscription record's product price,
-and `upsell_purchase` from what the run actually bought, priced through the upsell resolver
-(`docs/adr/0037-the-funnel-s-purchase-events-report-what-was-bought.md`). What a funnel run bought is
-recorded in a **separate session cookie** — `src/libs/funnel-upsell-record.ts`, written by the funnel
-screens that charge and by no member-area surface, never a field on the checkout attempt, which a
-completed payment ends — and the whole decision lives in one pure module, `src/libs/funnel-purchase-event.ts`.
-No `upsell_purchase` is sent where the run comes to nothing, so that event's volume falls to real sales;
-both amounts still carry 0023's cost. With those two landed, **the mocked membership itself is deleted**
-(`docs/adr/0038-the-mocked-membership-is-deleted.md`, which supersedes 0013): nothing in this application
-invents member data any more, so a wrong field on a screen is always some upstream's real answer. The
-server-side account read returns the generated `UserResponse` with nothing merged onto it, the composed
-`User` domain type is **gone** rather than kept as a shim, and every screen that read it — the download
-controls, the report detail screens, the settings form, the funnel confirmation screens — reads the
-account's own `camelCase` field names, including the single `unlimitedPdfDownloadsUnlocked` that used to
-be written down twice. The two notification preferences and `onboardingPhoneNumber` come from the account;
-the owned-extras list, the prices and the per-extra availability flags were deleted rather than re-sourced
-because nothing read them. Don't reintroduce a member type, a composer, or an adapter over the account
-response. The billing screen is off the legacy client entirely; what that costs is that the legacy
-population is redirected off it, and every payments write — an upsell charge included — is raised as
-the shared technical account. Outside that track, still don't rewrite a screen's fetching unless you
-are redesigning the screen.
+**A third part has been finished: there is no legacy data layer.** The old backend, the client
+factory, the browser hook over it, the server getter, the unspecified proxy under `/api/legacy` and
+the second backend host in the environment are all gone. **There are two upstreams and only two** —
+the new API and the payments service — so every backend call a screen makes goes through the data
+layer described below, and nothing here invents member data any more: a wrong field on a screen is
+always some upstream's real answer. The decision records from
+`docs/adr/0022-retiring-the-legacy-layer-on-its-own-track.md`, where the track was opened, to
+`docs/adr/0039-the-standalone-search-moves-and-its-unlock-joins-the-sequence.md`, where it closed,
+are the history of how that happened; read one before contradicting it, not to learn the shape of
+today's code.
 
-Separately from that track, the **Activity Hub** shows a third kind of row again: the new API's feed
-models purchased sex-offender search reports, so they are back on the list — in one recency order with
+What that leaves as standing rules:
+
+- **Don't rewrite a screen's fetching unless you are redesigning the screen.** The retirement track
+  was the exception to that rule, and it has closed.
+- **An upsell is identified twice, in two constants that sit side by side** in
+  `src/libs/upsell-products.ts` and are exhaustive over the product-key union: `UPSELL_PRODUCT_SLUGS`,
+  the payments slug a key is priced and charged by, and `UPSELL_CREDIT_PRODUCTS`, the new API's
+  credit-balance product a key names — or `null`, which is a fact about the upstream rather than an
+  omission. Where no product resolves, the offer is skipped rather than priced from a fallback.
+- **The order money moves in lives in one pure module**, `src/libs/upsell-unlock.ts`: spend a credit,
+  buy one first only where a **fresh balance** says there is nothing to spend — never an error code
+  (`docs/adr/0031-spend-versus-buy-is-settled-from-the-credit-balance.md`) — then confirm and spend
+  again. The price on screen and the amount charged come off the same payments row, for every upsell
+  without exception
+  (`docs/adr/0030-the-upsell-charge-follows-the-price-and-the-credit-is-spent-on-the-new-api.md`,
+  `docs/adr/0039-the-standalone-search-moves-and-its-unlock-joins-the-sequence.md`).
+- **Ownership of an upsell is read from the new API** — its credit balances, or the entitlement on the
+  current user — and **never** from the payments service's per-user answers, which are the shared
+  technical account's. One stated exception: the order-success screen's `scan_pro` and
+  `support_hotline`, which exist in no other upstream (`docs/adr/0032-the-order-success-extras-move-to-payments-and-the-cart-dissolves.md`). Don't extend it to another
+  key. For the standalone sex-offender search ownership is not askable at all, and the compiler refuses
+  it: a spendable credit is not an unlocked candidate.
+- **Every payments write is raised as one shared technical account**, and pays the cost
+  `docs/adr/0023-a-shared-technical-account-for-the-payments-upstream.md` records. The one exception is
+  the public cancellation, whose endpoint declares no security and acts on the user named in its body.
+- **The public cancellation is a server action, not a hook** — the payments proxy refuses the whole
+  `internal` family to the browser — and it resolves the member's id from the address the form collects
+  through the API's `POST /api/v1/auth/get-user-by-email`, which the API proxy likewise refuses to page
+  scripts (`docs/adr/0035-the-public-cancellation-follows-onto-payments-through-a-server-action.md`). Read that record before moving another call into a refused path family.
+- **The subscription gate is one rule asked one way.** `hasAccess`, computed once in
+  `getSubscription()`, mapped onto the gate's three buckets; it reads no account, settles
+  guest-versus-member from the session's `isLoggedIn` flag, and treats **only a 404** as "no
+  subscription" — every other refusal, and a service that cannot be reached at all, moves nobody and
+  logs (`docs/adr/0036-the-subscription-gate-reads-the-payments-service.md`). Read it before changing where a gate sends anybody, and before assuming a
+  routing bug is one: when the shared technical account's own subscription expires, every member is
+  routed as though theirs had.
+- **The funnel's purchase events report what was actually bought** (`docs/adr/0037-the-funnel-s-purchase-events-report-what-was-bought.md`). The
+  subscription's `purchase` is valued from the subscription record's product price and `upsell_purchase`
+  from the run's own purchases, priced through the upsell resolver; no `upsell_purchase` is sent where a
+  run comes to nothing. What a run bought lives in a **separate session cookie**,
+  `src/libs/funnel-upsell-record.ts`, written by the funnel screens that charge and by no member-area
+  surface — never a field on the checkout attempt, which a completed payment ends — and the decision
+  itself is one pure module, `src/libs/funnel-purchase-event.ts`.
+- **There is no member domain type.** The server-side account read returns the generated `UserResponse`
+  with nothing merged onto it, and every screen reads the account's own `camelCase` field names
+  (`docs/adr/0038-the-mocked-membership-is-deleted.md`, which supersedes 0013). Don't reintroduce a
+  member type, a composer, or an adapter over the account response.
+- **A report's gated sections are gated on the new API's section state**, not on booleans, and the
+  unlock that changes a section is the same payments charge and new-API spend as every other upsell.
+  `docs/glossary.md` defines the states.
+- **The notification centre shows the `title` and `body` the backend composes**, so notification copy is
+  English everywhere but `en` and `es`, and the header badge is the member's real unread count
+  (`docs/adr/0034-the-notification-centre-moves-whole-and-loses-eleven-languages.md`).
+
+The **Activity Hub** shows a third kind of row: the new API's feed
+models purchased sex-offender search reports, so they are on the list — in one recency order with
 location requests and reverse-lookup reports, opening the standalone record's screen, and **titled by
 what they are rather than by whom they are about**, because the feed publishes no name
 (`docs/adr/0040-the-third-kind-arrives-and-the-rows-come-back-untitled.md`, which corrects the
@@ -230,12 +204,6 @@ The rules:
 - **Read a response through `unwrapApiResponse`** (`src/network/http-response-handler.ts`), not by
   poking at the client's result. Parsers and the parser manager sit behind it; leave them alone —
   the interface is deliberately the reference repository's, not the smallest thing that works.
-- **New code must not import the legacy clients** — `src/libs/api-client.ts`, `src/hooks/use-api.ts`
-  and `src/libs/server/api.ts`. They are frozen, and they are now being emptied call by call on the
-  retirement track rather than left to die with their screens
-  (`docs/adr/0022-retiring-the-legacy-layer-on-its-own-track.md`). The browser-side one goes through
-  its own proxy under `/api/legacy`; that whole layer is temporary, and the last task on that track
-  deletes it.
 - **A new endpoint needs no route handler.** Regenerate — `scripts/api-build.sh` emits both the
   types and the proxy's path allow-list — and add a hook.
 - Don't add a global 401 handler, a prefetch, or a hydration boundary without a ticket; all three
@@ -264,7 +232,7 @@ cookies — and a reader is never told which.
   absent defers to the source. The QA widget that sets these cookies is environment-gated and
   cookie-proof by design.
 - **The backend flags come from the new API's `/features`, through `apiServerClient`** — no bare
-  request and no legacy client. Its registry is `camelCase` and deploy-time only; today it declares
+  request. Its registry is `camelCase` and deploy-time only; today it declares
   `sexOffenderReport` alone, and the keys for `reverseLookup` and `smsConsent` are mapped ahead of
   it. Adding a flag on that side is a `FEATURE_FLAG_*` variable plus a line in the backend's
   `features.config.ts`, and only the exact string `true` turns it on there.

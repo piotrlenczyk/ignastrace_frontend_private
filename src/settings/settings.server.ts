@@ -79,7 +79,7 @@ const readCountryCode = async (): Promise<CountryCode> => {
  * — this is not a screen's own read, it is one input to a page that has to render
  * either way. The incident is logged and the caller falls back to the declared
  * defaults; notably nothing redirects and nothing signs anybody out, which the
- * frozen legacy client did on a 401 and which turned a flag lookup in the root
+ * deleted legacy client did on a 401 and which turned a flag lookup in the root
  * layout into a redirect for every visitor.
  *
  * Read through the generated server-side client like every other server read.
