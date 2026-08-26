@@ -14,7 +14,11 @@ named as the signal for "no credit left" is not one the spend ever sends, so eve
 that code and the list holding it — the assumption stated as pointing the safe way included — is
 history rather than the current state. The refusal is now recognised by the envelope's status and
 told apart from its identical twin by a fresh reading of the balance. The spend-first order, and
-"reported, not retried", stand.
+"reported, not retried", stand. **One further line has since been reversed by
+[0032](0032-the-order-success-extras-move-to-payments-and-the-cart-dissolves.md):** the payments
+service's purchased-products endpoint, which this record says is deliberately never asked, **is asked
+by the order-success screen**, whose two extras exist in no other upstream. That is one screen and two
+keys; everywhere else the rule below still holds.
 
 ## Context
 
@@ -177,7 +181,9 @@ in the adapter because every path through it moves them.
   one place 0029's divergence survives.
 - **The `/success` screen's extras** keep their own legacy list and create calls. Neither
   `scan_pro` nor `support_hotline` has a counterpart in the new API's credit balances, and the screen
-  is a separate endpoint — hence a separate task.
+  is a separate endpoint — hence a separate task. _That task is
+  [0032](0032-the-order-success-extras-move-to-payments-and-the-cart-dissolves.md): both calls have
+  since moved, and with them the ownership read this record placed off limits._
 
 So the legacy browser client and its proxy stay alive, and this task does not let the retirement epic's
 closing task run.
@@ -232,7 +238,8 @@ and the two identity maps carry every decision this task adds.
   one report, and each purchase surface would otherwise fetch a third-party script for a purchase
   nobody asked for. The gate latches on rather than tracking the dialog, because the payment message
   outlives the offer it reports on.
-- **Two legacy upselling writes survive**, and #69's closing task still cannot run.
+- **Two legacy upselling writes survive**, and #69's closing task still cannot run. _One of the two,
+  the `/success` screen's create call, has since gone with 0032; the standalone search's remains._
 - **The application has exactly one way to take a card**, and no build-time Stripe key. A new screen
   cannot be wired to one, because there is none.
 - **The glossary's "Upselling" entry names the purchase's new home** alongside the three senses it

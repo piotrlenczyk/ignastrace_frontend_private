@@ -71,11 +71,3 @@ export const hasEndedSubscription = async (options: SubscriptionCheckOptions = {
   }
   return checkedUser.subscription_status === 'expired';
 };
-
-export const hasUpsellings = async (options: SubscriptionCheckOptions = {}) => {
-  const checkedUser = await getUserForPoliciesCheck(options);
-  if (!checkedUser) {
-    return false;
-  }
-  return checkedUser.upsellings.length > 0;
-};

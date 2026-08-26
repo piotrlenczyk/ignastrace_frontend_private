@@ -138,14 +138,19 @@ says nothing about who owns what. Since [ADR 0029](adr/0029-the-upsell-price-mov
 every upsell price on screen comes from here, and since
 [ADR 0030](adr/0030-the-upsell-charge-follows-the-price-and-the-credit-is-spent-on-the-new-api.md)
 **this is also where an upsell is bought** — `POST /products/upsell/buy`, against the same price row
-whose amount was displayed, so the two numbers agree. Two purchases stay on the legacy catalogue:
-the standalone sex-offender search, whose call also creates the search report, and the `/success`
-screen's two extras.
+whose amount was displayed, so the two numbers agree. One purchase stays on the legacy catalogue: the
+standalone sex-offender search, whose call also creates the search report.
 
-Ownership is read from neither of those. For the three credit-balance products it is the new API's
-balances; for unlimited PDF downloads it is the entitlement on the current user. The payments
-service's own purchased-products endpoint is deliberately never asked, because every payments call
-is made as one shared technical account and its per-user answers would be that account's.
+Ownership is read from neither of those, with one stated exception. For the three credit-balance
+products it is the new API's balances; for unlimited PDF downloads it is the entitlement on the
+current user. The payments service's own purchased-products endpoint is not asked for any of those,
+because every payments call is made as one shared technical account and its per-user answers would be
+that account's. **The exception is the order-success screen's two extras, `scan_pro` and
+`support_hotline`, whose ownership is read from exactly that endpoint** — it is the only upstream that
+knows anything about them at all, and the cost is that one purchase by anybody withdraws the offer
+from everybody. [ADR 0032](adr/0032-the-order-success-extras-move-to-payments-and-the-cart-dissolves.md)
+records the reversal, and [ADR 0030](adr/0030-the-upsell-charge-follows-the-price-and-the-credit-is-spent-on-the-new-api.md)
+the rule it is an exception to.
 
 There is no one-to-one translation between the first two, and adopting the credit balance means
 remodelling the report and upsell screens rather than renaming a field. The single overlapping

@@ -4,6 +4,7 @@ import type { paymentsSchemas } from '@/network/payments-api/payments-api-server
 
 import {
   creditProductFor,
+  ownsAnyUpsell,
   resolveUpsellProduct,
   UPSELL_CREDIT_PRODUCTS,
   UPSELL_PRODUCT_SLUGS,
@@ -181,5 +182,94 @@ describe('the credit-balance product a legacy upsell key names', () => {
     const keys = Object.keys(UPSELL_PRODUCT_SLUGS) as UpsellProductKey[];
 
     expect(Object.keys(UPSELL_CREDIT_PRODUCTS).sort()).toEqual([...keys].sort());
+  });
+});
+
+/*
+ * The purchased-products response is the catalogue's shape with a count added, so
+ * its fixture extends the builder above rather than restating it.
+ */
+const purchased = ({
+  purchasedCount = 1,
+  ...rest
+}: {
+  id?: string;
+  metadata?: unknown;
+  withPrice?: boolean;
+  amount?: number;
+  purchasedCount?: number;
+} = {}): paymentsSchemas['GetPurchasedUpsellProductResponseDto'] => ({
+  ...product(rest),
+  purchasedCount,
+});
+
+const SUCCESS_KEYS: UpsellProductKey[] = ['scan_pro', 'support_hotline'];
+const SCAN_PRO_SLUG = UPSELL_PRODUCT_SLUGS.scan_pro;
+
+describe('ownsAnyUpsell', () => {
+  it('answers owned for a row carrying a mapped slug with one purchase', () => {
+    expect(ownsAnyUpsell([purchased({ metadata: { productSlug: SCAN_PRO_SLUG } })], SUCCESS_KEYS)).toBe(true);
+  });
+
+  it('answers owned for a row carrying a mapped slug with several purchases', () => {
+    expect(
+      ownsAnyUpsell([purchased({ metadata: { productSlug: SCAN_PRO_SLUG }, purchasedCount: 4 })], SUCCESS_KEYS),
+    ).toBe(true);
+  });
+
+  it('answers not owned for a row carrying a mapped slug that has never been bought', () => {
+    expect(
+      ownsAnyUpsell([purchased({ metadata: { productSlug: SCAN_PRO_SLUG }, purchasedCount: 0 })], SUCCESS_KEYS),
+    ).toBe(false);
+  });
+
+  it('answers not owned when no row carries a mapped slug', () => {
+    expect(ownsAnyUpsell([purchased({ metadata: { productSlug: 'something-else' } })], SUCCESS_KEYS)).toBe(false);
+  });
+
+  it('answers not owned for an empty response', () => {
+    expect(ownsAnyUpsell([], SUCCESS_KEYS)).toBe(false);
+  });
+
+  it('answers not owned when the caller names no keys at all', () => {
+    expect(ownsAnyUpsell([purchased({ metadata: { productSlug: SCAN_PRO_SLUG } })], [])).toBe(false);
+  });
+
+  it.each([
+    ['absent', undefined],
+    ['null', null],
+    ['a string', 'scan_pro'],
+    ['an array', [{ productSlug: SCAN_PRO_SLUG }]],
+    ['an object with no productSlug', { planName: 'FOUR_WEEKS' }],
+    ['an object whose productSlug is not a string', { productSlug: 7 }],
+  ])('skips a row whose metadata is %s rather than throwing', (_case, metadata) => {
+    expect(ownsAnyUpsell([purchased({ metadata })], SUCCESS_KEYS)).toBe(false);
+
+    expect(
+      ownsAnyUpsell([purchased({ metadata }), purchased({ metadata: { productSlug: SCAN_PRO_SLUG } })], SUCCESS_KEYS),
+    ).toBe(true);
+  });
+
+  /*
+   * The screen fails closed on an unreadable count: re-selling an extra to
+   * somebody who already paid for it is the one wrong answer that costs money,
+   * so an absent response is treated exactly as ownership.
+   */
+  it('answers owned for an absent response, so a caller that cannot read the count fails closed', () => {
+    expect(ownsAnyUpsell(undefined, SUCCESS_KEYS)).toBe(true);
+  });
+
+  it('is an OR over the keys, so one purchase against either answers owned', () => {
+    const bought = (key: UpsellProductKey) => purchased({ metadata: { productSlug: UPSELL_PRODUCT_SLUGS[key] } });
+
+    expect(ownsAnyUpsell([bought('scan_pro')], SUCCESS_KEYS)).toBe(true);
+    expect(ownsAnyUpsell([bought('support_hotline')], SUCCESS_KEYS)).toBe(true);
+  });
+
+  it('reads the slug map rather than a slug of its own, so a key it is not asked about is ignored', () => {
+    const rows = [purchased({ metadata: { productSlug: UPSELL_PRODUCT_SLUGS.scan_pro } })];
+
+    expect(ownsAnyUpsell(rows, ['scan_pro'])).toBe(true);
+    expect(ownsAnyUpsell(rows, [])).toBe(false);
   });
 });
