@@ -329,6 +329,23 @@ list of owners the member has unlocked. And a section's state is **read from the
 unlock that changes it is still written to the legacy backend** — the asymmetry ADR 0028 records,
 along with the symptom if the two upstreams do not share those records.
 
+**Sex-offender section**
+: The gated section _inside_ a reverse-lookup report, bought per report owner and stated as a section
+state per owner. It is about the number the report was run on, it has no identifier of its own, and it
+is reached only by opening the report that contains it.
+
+**Sex-offender search report**
+: The standalone record a member buys against one candidate of a sex-offender registry search — its own
+purchase, its own identifier, its own screen, created and read on the new API
+([ADR 0039](adr/0039-the-standalone-search-moves-and-its-unlock-joins-the-sequence.md)). It has nothing
+to do with a reverse-lookup report and is not reached through one.
+
+These two entries exist because the product calls both "a sex offender report", and the activity list
+spelled its row kind ambiguously enough to be read as either. The list's kind is now
+`SEX_OFFENDER_SEARCH_REPORT`, the second of the two, matching the feed's own name
+([ADR 0040](adr/0040-the-third-kind-arrives-and-the-rows-come-back-untitled.md)). The feed publishes no
+name for such a record, so its row is titled by what it is.
+
 ## The notification centre
 
 Moved onto the new API by [ADR 0034](adr/0034-the-notification-centre-moves-whole-and-loses-eleven-languages.md),

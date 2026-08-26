@@ -31,7 +31,7 @@ export const ActivityItem = ({ row }: { row: ActivityRow }) => {
     switch (row.kind) {
       case 'REVERSE_LOOKUP_REPORT':
         return router.push(`${ROUTES.MEMBER.STATUS.REPORT}?id=${row.id}`);
-      case 'SEX_OFFENDER_REPORT':
+      case 'SEX_OFFENDER_SEARCH_REPORT':
         return router.push(`${ROUTES.MEMBER.SEX_OFFENDERS_SEARCH.REPORT}?id=${row.id}`);
       default:
         return router.push(`${ROUTES.MEMBER.STATUS.DETAIL}?id=${row.id}`);
@@ -55,8 +55,12 @@ export const ActivityItem = ({ row }: { row: ActivityRow }) => {
     switch (row.kind) {
       case 'LOCATION_BY_LINK':
         return t('link_name', { name: row.title });
-      case 'SEX_OFFENDER_REPORT':
-        return row.title;
+      /*
+       * The feed publishes no name for a purchased record, so the row is titled
+       * by what it is rather than by whom it is about.
+       */
+      case 'SEX_OFFENDER_SEARCH_REPORT':
+        return t('sex_offender_report_title');
       default:
         return formatPhoneNumber(row.title).number;
     }
@@ -66,7 +70,7 @@ export const ActivityItem = ({ row }: { row: ActivityRow }) => {
     switch (row.kind) {
       case 'REVERSE_LOOKUP_REPORT':
         return t('reverse_lookup_description');
-      case 'SEX_OFFENDER_REPORT':
+      case 'SEX_OFFENDER_SEARCH_REPORT':
         return t('sex_offender_report_description');
       default:
         return row.status === 'LOCATED'
