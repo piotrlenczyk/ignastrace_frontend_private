@@ -1985,6 +1985,7 @@
       "rejected_status": "Rejected",
       "reverse_lookup_description": "Summary of public data found for the phone number",
       "sex_offender_report_description": "Sex offender background report",
+      "sex_offender_report_title": "Sex offender report",
       "title": "Activity Hub"
     },
     "success": {

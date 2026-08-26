@@ -107,6 +107,19 @@ population is redirected off it, and every payments write — an upsell charge i
 the shared technical account. Outside that track, still don't rewrite a screen's fetching unless you
 are redesigning the screen.
 
+Separately from that track, the **Activity Hub** shows a third kind of row again: the new API's feed
+models purchased sex-offender search reports, so they are back on the list — in one recency order with
+location requests and reverse-lookup reports, opening the standalone record's screen, and **titled by
+what they are rather than by whom they are about**, because the feed publishes no name
+(`docs/adr/0040-the-third-kind-arrives-and-the-rows-come-back-untitled.md`, which corrects the
+consequence of 0026 that said those rows stayed gone and closes the last exit condition ADR 0014 named).
+The list's row kind is `SEX_OFFENDER_SEARCH_REPORT` — the feed's own name, and the standalone record,
+never the sex-offender **section** of a reverse-lookup report; the glossary distinguishes the two. The
+mapping in `src/app/[locale]/memberarea/status/_page/activity-list.ts` stays a pure function that names
+every source kind explicitly, so a fourth kind upstream is a compile error rather than a row drawn as
+something else — which is exactly how these rows came to be shown as unanswered text messages. The
+screen otherwise keeps its legacy palette, components and translation namespace.
+
 ## Design implementation rules
 
 ### Tokens: `src/styles/new` is the only palette for new work

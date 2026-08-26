@@ -4,9 +4,8 @@
  * The feed answers for the list now, and this is what its items are mapped onto.
  * It is deliberately not an adapter onto that shape — the feed's model is not the
  * target — so a row component, an icon and the status badge state the list's own
- * vocabulary of kinds and of statuses and nothing of the API's. The record on
- * adopting the feed says what that vocabulary still describes and the feed does
- * not answer for; the mapping onto this type is the seam that goes with it.
+ * vocabulary of kinds and of statuses and nothing of the API's. The mapping onto
+ * this type is the seam that goes with it.
  */
 
 /**
@@ -16,15 +15,17 @@
  * type beside it, because everything that varies between them varies as a pair:
  * the icon, how the row is titled, where it leads, and whether it offers a retry.
  *
- * The sex offender kind has no source filling it: the feed models two kinds and
- * that is not one of them. It stays because the icons, the descriptions and the
- * destination are still written for it, so restoring those rows the day the feed
- * carries them is a mapping rather than a re-modelling.
+ * `SEX_OFFENDER_SEARCH_REPORT` is the standalone record a member buys against a
+ * registry candidate, and not the sex offender *section* of a reverse lookup
+ * report — two different things the product calls by nearly the same name. The
+ * name here is the feed's own, so the two vocabularies agree and the difference
+ * between them carries no implied meaning.
  */
-export type ActivityKind = 'LOCATION_BY_LINK' | 'LOCATION_BY_NUMBER' | 'REVERSE_LOOKUP_REPORT' | 'SEX_OFFENDER_REPORT';
+export type ActivityKind =
+  'LOCATION_BY_LINK' | 'LOCATION_BY_NUMBER' | 'REVERSE_LOOKUP_REPORT' | 'SEX_OFFENDER_SEARCH_REPORT';
 
 /**
- * How far a row has got. Four states for the two vocabularies the feed passes
+ * How far a row has got. Four states for the three vocabularies the feed passes
  * through: a location request's three, plus one for a report that has been
  * produced. A report being generated is one still waiting, and one whose
  * generation failed is drawn the way a request the recipient turned down is.
@@ -39,8 +40,9 @@ export type ActivityRow = {
   status: ActivityStatus;
   /**
    * What the row is called, unformatted: the name the member gave a link-type
-   * request, the number a number-type request or a reverse lookup is about, or
-   * the name a sex offender report was produced for.
+   * request, or the number a number-type request or a reverse lookup is about.
+   * Empty for a sex offender search report — the feed publishes no name for one,
+   * so that kind is titled by what it is, in the row component.
    *
    * Unformatted because a number is also what a retry is addressed to, and a
    * number formatted for reading is not one a query string can carry.

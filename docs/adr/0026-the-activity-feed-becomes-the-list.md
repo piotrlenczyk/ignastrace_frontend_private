@@ -1,11 +1,13 @@
 # 0026 — The activity feed becomes the list, one exit condition short
 
-**Status:** Accepted — August 2026. **Supersedes
+**Status:** Accepted — August 2026; one consequence corrected by
+[0040](0040-the-third-kind-arrives-and-the-rows-come-back-untitled.md). **Supersedes
 [0014](0014-a-two-source-activity-list.md)**, which rejected this feed as the list's spine and named
 two conditions for adopting it. One has been met by the upstream. The other has not, and this record
-adopts the feed anyway — that is the whole of the trade below. It also stands on an answer the
-legacy retirement track ([0022](0022-retiring-the-legacy-layer-on-its-own-track.md)) said would be
-obtained from the backend before anything depended on it, and which has not been obtained.
+adopts the feed anyway — that is the whole of the trade below. That second condition has since been
+met too, and 0040 is where the rows come back. This record also stands on an answer the legacy
+retirement track ([0022](0022-retiring-the-legacy-layer-on-its-own-track.md)) said would be obtained
+from the backend before anything depended on it, and which has not been obtained.
 
 ## Context
 
@@ -92,6 +94,11 @@ reason.
 0014 called their disappearance unacceptable and kept a frozen client alive to prevent it; the client
 went quiet anyway. Stating it here makes it a known gap with an owner upstream, rather than a
 commented-out line nobody is accountable for.
+
+> **Corrected by [0040](0040-the-third-kind-arrives-and-the-rows-come-back-untitled.md).** The gap is
+> closed: the feed models the kind, the rows are on the list again, and this consequence no longer
+> holds. What remains of it is narrower — such a row is titled by what it is rather than by whom it is
+> about, because the feed publishes no name — and 0040 names the condition that closes that.
 
 **A failed report is indistinguishable from a rejected request on the row.** Both are drawn the same
 way, and the description a rejected location request shows — advice about the message sent to the

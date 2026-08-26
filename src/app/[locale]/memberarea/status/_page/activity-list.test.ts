@@ -7,12 +7,13 @@ import { toActivityRows } from './activity-list';
 /*
  * The mapping from the activity feed's items onto the list's own rows.
  *
- * This is where the two kinds the feed answers for are absorbed, so it is where
+ * This is where the three kinds the feed answers for are absorbed, so it is where
  * the promises the screen depends on live: that a location request lands on the
- * kind its type names, that a row is titled by the right field for its kind,
- * that both status vocabularies land on the four the screen knows, that a status
- * nobody has taught it yet is still a visible row, and that the feed's order is
- * carried through rather than re-sorted.
+ * kind its type names, that a purchased sex offender search report lands on its
+ * own kind rather than on a location request's, that a row is titled by the right
+ * field for its kind, that all three status vocabularies land on the four the
+ * screen knows, that a status nobody has taught it yet is still a visible row,
+ * and that the feed's order is carried through rather than re-sorted.
  */
 
 type ActivityItem = components['schemas']['ActivityItemResponse'];
@@ -59,6 +60,22 @@ const REPORT: ActivityItem = {
   retryable: false,
 };
 
+/*
+ * A purchased standalone sex offender search report, exactly as the feed states
+ * one: the report's own id, the fixed `READY` status, no phone, no location, and
+ * every timestamp the moment of purchase.
+ */
+const SEX_OFFENDER_SEARCH_REPORT: ActivityItem = {
+  id: 'search-report-1',
+  kind: 'SEX_OFFENDER_SEARCH_REPORT',
+  status: 'READY',
+  createdAt: '2026-08-17T09:00:00.000Z',
+  updatedAt: '2026-08-17T09:00:00.000Z',
+  statusUpdatedAt: '2026-08-17T09:00:00.000Z',
+  phone: null,
+  retryable: false,
+};
+
 const withStatus = (item: ActivityItem, status: string): ActivityItem => ({ ...item, status });
 
 describe('toActivityRows', () => {
@@ -73,6 +90,24 @@ describe('toActivityRows', () => {
     expect(toActivityRows([REPORT])[0]?.kind).toBe('REVERSE_LOOKUP_REPORT');
   });
 
+  it('carries a purchased sex offender search report through as its own kind', () => {
+    expect(toActivityRows([SEX_OFFENDER_SEARCH_REPORT])[0]?.kind).toBe('SEX_OFFENDER_SEARCH_REPORT');
+  });
+
+  it('lands a purchased sex offender search report on the state that opens it', () => {
+    expect(toActivityRows([SEX_OFFENDER_SEARCH_REPORT])[0]?.status).toBe('READY');
+  });
+
+  it('leaves a purchased sex offender search report untitled, since the feed publishes no name', () => {
+    expect(toActivityRows([SEX_OFFENDER_SEARCH_REPORT])[0]?.title).toBe('');
+  });
+
+  it('does not read a report with no phone and no location as a location request', () => {
+    expect(toActivityRows([SEX_OFFENDER_SEARCH_REPORT])[0]).toEqual(
+      expect.objectContaining({ kind: 'SEX_OFFENDER_SEARCH_REPORT', title: '', address: undefined }),
+    );
+  });
+
   it('titles a row by the field its kind is named after', () => {
     const rows = toActivityRows([NUMBER_REQUEST, LINK_REQUEST, REPORT]);
 
@@ -83,7 +118,7 @@ describe('toActivityRows', () => {
     });
   });
 
-  it('lands both sources’ statuses on the four the screen knows', () => {
+  it('lands all three sources’ statuses on the four the screen knows', () => {
     const items = [
       withStatus(NUMBER_REQUEST, 'PENDING'),
       withStatus(NUMBER_REQUEST, 'LOCATED'),
@@ -92,6 +127,7 @@ describe('toActivityRows', () => {
       withStatus(REPORT, 'PROCESSING'),
       withStatus(REPORT, 'COMPLETED'),
       withStatus(REPORT, 'FAILED'),
+      withStatus(SEX_OFFENDER_SEARCH_REPORT, 'READY'),
     ];
 
     expect(toActivityRows(items).map((row) => row.status)).toEqual([
@@ -102,6 +138,7 @@ describe('toActivityRows', () => {
       'PENDING',
       'READY',
       'REJECTED',
+      'READY',
     ]);
   });
 
@@ -112,17 +149,18 @@ describe('toActivityRows', () => {
   });
 
   it('carries a resolved address on the row, and nothing where there is none', () => {
-    const rows = toActivityRows([NUMBER_REQUEST, LINK_REQUEST, REPORT]);
+    const rows = toActivityRows([NUMBER_REQUEST, LINK_REQUEST, REPORT, SEX_OFFENDER_SEARCH_REPORT]);
 
     expect(rows.find((row) => row.id === 'number-1')?.address).toBe('1600 Pennsylvania Avenue NW, Washington');
     expect(rows.find((row) => row.id === 'link-1')?.address).toBeUndefined();
     expect(rows.find((row) => row.id === 'report-1')?.address).toBeUndefined();
+    expect(rows.find((row) => row.id === 'search-report-1')?.address).toBeUndefined();
   });
 
-  it('orders the rows as the feed ordered them', () => {
-    const rows = toActivityRows([LINK_REQUEST, REPORT, NUMBER_REQUEST]);
+  it('orders the rows as the feed ordered them, across all three kinds', () => {
+    const rows = toActivityRows([LINK_REQUEST, SEX_OFFENDER_SEARCH_REPORT, REPORT, NUMBER_REQUEST]);
 
-    expect(rows.map((row) => row.id)).toEqual(['link-1', 'report-1', 'number-1']);
+    expect(rows.map((row) => row.id)).toEqual(['link-1', 'search-report-1', 'report-1', 'number-1']);
   });
 
   it('takes the row’s date from the feed’s own sort key', () => {
