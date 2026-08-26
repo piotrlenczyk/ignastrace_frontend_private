@@ -27,7 +27,7 @@ import FunnelLayout from '@/components/layouts/funnel-layout';
 import { FALLBACK_COUNTRY } from '@/constants/countries';
 import { ROUTES } from '@/constants/routes';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
-import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
+import { getSubscriptionRedirect } from '@/libs/subscription';
 import { LanguageLocale } from '@/utils/config';
 
 import { Loader } from './components/loader';
@@ -72,7 +72,6 @@ const LoaderPage = async () => {
         : ROUTES.MEMBER.FIND_BY_NUMBER.HOME,
       endedSubscription: ROUTES.MEMBER.SETTINGS.BILLING,
     },
-    allowUnauthenticated: true,
   });
 
   if (redirectUrl) {

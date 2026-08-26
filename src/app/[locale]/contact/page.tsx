@@ -2,15 +2,15 @@ import { getTranslations } from 'next-intl/server';
 
 import WebsiteLayout from '@/components/layouts/website-layout';
 import { ROUTES } from '@/constants/routes';
-import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
+import { redirectIfAuthenticated } from '@/libs/subscription';
 
 import { ContactInformation } from './components/contact-information';
 import { ContactForm } from './form';
 
 export default async function Contact() {
   await redirectIfAuthenticated({
-    activeSubscriptionRoute: ROUTES.MEMBER.SETTINGS.GET_HELP,
-    endedSubscriptionRoute: ROUTES.MEMBER.SETTINGS.BILLING,
+    activeSubscription: ROUTES.MEMBER.SETTINGS.GET_HELP,
+    endedSubscription: ROUTES.MEMBER.SETTINGS.BILLING,
   });
 
   const t = await getTranslations('pages.contact');

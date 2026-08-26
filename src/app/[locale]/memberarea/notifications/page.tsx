@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation';
 
 import { getFunnelPhone } from '@/actions/funnel-phone-number';
 import { ROUTES } from '@/constants/routes';
-import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
+import { getSubscriptionRedirect } from '@/libs/subscription';
 import { getServerSession } from '@/server/session/session.utils';
 
 import NotificationsClientPage from './_page';

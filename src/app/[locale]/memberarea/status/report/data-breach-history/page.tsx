@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 
 import { ROUTES } from '@/constants/routes';
-import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
+import { getSubscriptionRedirect } from '@/libs/subscription';
 import { getUser } from '@/libs/subscription';
 import { getDataBreachDetail } from '@/server/getters/reverse-lookup.getters';
 import { getServerSession } from '@/server/session/session.utils';

@@ -7,7 +7,7 @@ import { RequestCounter } from '@/components/request-counter';
 import { Icon } from '@/components/ui/icon';
 import { Tooltip, TooltipArrow, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { ROUTES } from '@/constants/routes';
-import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
+import { getSubscriptionRedirect } from '@/libs/subscription';
 import { apiServerClient } from '@/network/api/apiServerClient';
 import { getServerSession } from '@/server/session/session.utils';
 import { getServerSettings } from '@/settings/settings.server';

@@ -4,8 +4,8 @@ import { getFunnelPhone } from '@/actions/funnel-phone-number';
 import { hasAdyenRedirectResult } from '@/components/checkout/adyen/adyenRedirect.helpers';
 import FunnelLayout from '@/components/layouts/funnel-layout';
 import { ROUTES } from '@/constants/routes';
-import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
+import { redirectIfAuthenticated } from '@/libs/subscription';
 import { reportCheckoutStarted } from '@/server/analytics/klaviyo.events';
 import { getCheckoutPricing } from '@/server/getters/pricing.getters';
 import { getServerSession } from '@/server/session/session.utils';
@@ -41,9 +41,9 @@ const Index = async (props: PageProps<'/[locale]/lookup-checkout'>) => {
 
   if (!isResumingRedirect) {
     await redirectIfAuthenticated({
-      activeSubscriptionRoute: ROUTES.REVERSE_LOOKUP.HOME,
-      endedSubscriptionRoute: ROUTES.REVERSE_LOOKUP.HOME,
-      noSubscriptionRoute: !formattedNumber.valid ? ROUTES.REVERSE_LOOKUP.HOME : undefined,
+      activeSubscription: ROUTES.REVERSE_LOOKUP.HOME,
+      endedSubscription: ROUTES.REVERSE_LOOKUP.HOME,
+      noSubscription: !formattedNumber.valid ? ROUTES.REVERSE_LOOKUP.HOME : undefined,
     });
   }
 

@@ -4,7 +4,7 @@ import { Locator } from '@/components/homepage/locator';
 import WebsiteLayout from '@/components/layouts/website-layout';
 import { Icon, type IconName } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
-import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
+import { redirectIfAuthenticated } from '@/libs/subscription';
 import { getServerSettings } from '@/settings/settings.server';
 
 type CardType = {
@@ -37,8 +37,8 @@ const Card = ({ title, description, icon, t }: CardType & { t: any }) => {
 
 export default async function About() {
   await redirectIfAuthenticated({
-    activeSubscriptionRoute: ROUTES.MEMBER.SETTINGS.GET_HELP,
-    endedSubscriptionRoute: ROUTES.MEMBER.SETTINGS.BILLING,
+    activeSubscription: ROUTES.MEMBER.SETTINGS.GET_HELP,
+    endedSubscription: ROUTES.MEMBER.SETTINGS.BILLING,
   });
 
   const country = (await getServerSettings()).countryCode;

@@ -1,13 +1,13 @@
 import { getLocale } from 'next-intl/server';
 
 import { ROUTES } from '@/constants/routes';
-import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
 import { getTranslatedHtml } from '@/libs/server/i18n-html-content';
+import { redirectIfAuthenticated } from '@/libs/subscription';
 
 export default async function TermsAndConditionsPage() {
   await redirectIfAuthenticated({
-    activeSubscriptionRoute: ROUTES.MEMBER.TERMS,
-    endedSubscriptionRoute: ROUTES.MEMBER.SETTINGS.BILLING,
+    activeSubscription: ROUTES.MEMBER.TERMS,
+    endedSubscription: ROUTES.MEMBER.SETTINGS.BILLING,
   });
   const locale = await getLocale();
 

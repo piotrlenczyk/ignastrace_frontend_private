@@ -7,7 +7,7 @@ import FunnelLayout from '@/components/layouts/funnel-layout';
 import { AnimatedLink } from '@/components/navigation/components/animated-link';
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
-import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
+import { getSubscriptionRedirect } from '@/libs/subscription';
 import { getServerSession } from '@/server/session/session.utils';
 
 import { OnboardingSteps } from './components/onboarding-steps';

@@ -4,7 +4,7 @@ import { getTranslations } from 'next-intl/server';
 import { getFunnelPhone } from '@/actions/funnel-phone-number';
 import ProductLayout from '@/components/layouts/product-layout';
 import { ROUTES } from '@/constants/routes';
-import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
+import { getSubscriptionRedirect } from '@/libs/subscription';
 import { getServerSession } from '@/server/session/session.utils';
 
 import { CreateCustomLinkForm } from './create-link-form';
