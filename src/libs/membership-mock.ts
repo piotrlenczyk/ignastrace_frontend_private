@@ -9,9 +9,13 @@ import type { Upselling, User } from '@/types/user';
  * The account service answers with the account: who someone is, what they are
  * called, which language they read. It answers almost nothing about the commercial
  * relationship — whether a subscription was ever bought, what was paid for it,
- * which upsells are owned, how many notifications are unread. The screens that
- * gate on those facts predate the new API and still need them, so they come from
- * here until an endpoint publishes them.
+ * which upsells are owned. The screens that gate on those facts predate the new
+ * API and still need them, so they come from here until an endpoint publishes
+ * them.
+ *
+ * One field has already left on those terms: the count of unread notifications,
+ * which the new API's notification centre now answers for. That is the exit this
+ * mock is supposed to have, taken a field at a time.
  *
  * Almost, because there is one exception, and the type below carves it out:
  * whether unlimited PDF downloads have been unlocked is a fact the account
@@ -46,7 +50,6 @@ export const SUBSCRIBED_MEMBERSHIP: MockMembership = {
   notify_user_located: true,
   subscription_status: 'active',
   upsellings: ['sex_offenders', 'data_leaks'],
-  unread_count: 3,
   currency: 'usd',
   /*
    * `…_upsell_available` reads as "the member has this to spend", not "this is
@@ -73,7 +76,6 @@ export const UNSUBSCRIBED_MEMBERSHIP: MockMembership = {
   notify_user_located: false,
   subscription_status: 'initial',
   upsellings: [],
-  unread_count: 0,
   currency: 'usd',
   purchase_info: {
     trial_price: 199,
@@ -92,10 +94,14 @@ export const ACTIVE_MEMBERSHIP: MockMembership = SUBSCRIBED_MEMBERSHIP;
  * The real account stitched together with the mocked membership, in the shape
  * every consuming screen already reads.
  *
- * Both composers — the server one in the subscription policy module, the browser
- * one in the current-member hook — end here, so the seam between what is real and
- * what is invented is a single function. When the endpoints arrive, this is what
- * stops merging and starts reading them.
+ * One composer ends here — the server one, in the subscription policy module — so
+ * the seam between what is real and what is invented is a single function. When
+ * the endpoints arrive, this is what stops merging and starts reading them.
+ *
+ * There was a browser-side twin beside it, and it went with the last field a page
+ * script asked it for: the unread notification count, which the notification
+ * centre now answers directly. A client component that needs the account itself
+ * reads the account query; nothing in the browser needs the mock any more.
  */
 export const composeMember = (account: components['schemas']['UserResponse']): User => {
   const ownsUnlimitedDownloads = account.unlimitedPdfDownloadsUnlocked;

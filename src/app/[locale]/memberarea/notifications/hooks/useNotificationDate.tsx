@@ -1,16 +1,22 @@
 import { useFormatter } from 'next-intl';
 
-import type { Notification } from '@/types/notification';
-
-export const useNotificationDate = (notification: Notification) => {
+/**
+ * When a notification arrived, read the way the screen has always read it: a
+ * relative time for the last seven days, a date before that.
+ *
+ * It takes the timestamp as the API states it — an ISO string — rather than a
+ * shape of its own, so the row model carries the arrival time through unparsed.
+ */
+export const useNotificationDate = (createdAt: string) => {
   const format = useFormatter();
 
+  const arrivedAt = new Date(createdAt);
   const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
   const date =
-    notification.created_at > sevenDaysAgo
-      ? format.relativeTime(notification.created_at)
-      : format.dateTime(notification.created_at, {
+    arrivedAt > sevenDaysAgo
+      ? format.relativeTime(arrivedAt)
+      : format.dateTime(arrivedAt, {
           year: 'numeric',
           month: 'long',
           day: 'numeric',

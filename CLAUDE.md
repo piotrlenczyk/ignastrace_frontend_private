@@ -56,10 +56,19 @@ resolves the offer is skipped rather than priced from a fallback. Ownership of a
 new API's credit balances or its entitlement on the current user, **never** from the payments service's
 per-user answers, which are the shared technical account's — with one stated exception, the
 order-success screen's `scan_pro` and `support_hotline`, which exist in no other upstream and are read
-from exactly that endpoint (0032). Don't extend that exception to another key. The billing screen is off the legacy client
-entirely; what that costs is that the legacy population is redirected off it, and every payments write —
-an upsell charge included — is raised as the shared technical account. Outside that track, still don't rewrite a screen's
-fetching unless you are redesigning the screen.
+from exactly that endpoint (0032). Don't extend that exception to another key. The **notification
+centre** has since moved whole — the list, the read-marking write, and a third endpoint the old
+backend never offered, the unread count — which closes a gap 0022 recorded as blocking it
+(`docs/adr/0034-the-notification-centre-moves-whole-and-loses-eleven-languages.md`). The screen
+keeps its legacy palette and components and only its fetching changes: it shows the `title` and
+`body` the backend composes, so notification copy is English everywhere but `en` and `es`, and the
+header badge reads the member's real unread count instead of the hard-coded three in ADR 0013's mock
+— the first field to leave that mock because a real endpoint arrived. That record also diverges from
+0026 on where a paged read happens, and it takes the browser-side legacy surface down to three call
+sites. The billing screen is off the legacy client entirely; what that costs is that the legacy
+population is redirected off it, and every payments write — an upsell charge included — is raised as
+the shared technical account. Outside that track, still don't rewrite a screen's fetching unless you
+are redesigning the screen.
 
 ## Design implementation rules
 

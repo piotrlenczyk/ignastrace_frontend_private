@@ -268,6 +268,32 @@ list of owners the member has unlocked. And a section's state is **read from the
 unlock that changes it is still written to the legacy backend** — the asymmetry ADR 0028 records,
 along with the symptom if the two upstreams do not share those records.
 
+## The notification centre
+
+Moved onto the new API by [ADR 0034](adr/0034-the-notification-centre-moves-whole-and-loses-eleven-languages.md),
+which records what that cost and what it assumes.
+
+**Notification centre**
+: The member's list of what the product has told them, and the endpoints behind it — the list, the
+**unread count**, and the write that marks notifications read. Its copy is composed _upstream_: a
+notification arrives with a title and a body already written, in one of the two languages that
+endpoint renders, so this application shows what the backend wrote rather than assembling a sentence
+of its own. That is why moving it was not a change of client alone.
+
+**Unread count**
+: How many notifications the member has not read, as the centre's own endpoint answers it. What the
+header badge shows on every member-area screen — which is why the dedicated endpoint is read rather
+than the same number that arrives on the list response's `meta`, available only where the list is.
+It falls when the screen marks notifications read, and it is not set to zero locally: notifications
+behind the cursor are unread and uncounted here.
+
+**Notification target**
+: What one notification is _about_: a record's id together with its type, out of an enumeration the
+API shares across families. It is the only thing on a notification that says where its row leads, so
+it decides the destination and the icon together. Two of its types name a screen this application
+has; a notification carrying any other type, or none, is a row that shows its copy and does not
+open — the backend adding a type is part of the contract, not an anomaly.
+
 ## What is switched on
 
 Introduced by [ADR 0020](adr/0020-one-answer-to-what-is-switched-on.md), which records why there
