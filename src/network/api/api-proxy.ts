@@ -9,10 +9,11 @@ import { _client } from './apiServerClient';
  * and is forwarded with the bearer attached server-side, so the script itself
  * needs no credential.
  *
- * One of two such doors: `network/legacy/legacy-proxy.ts` is the same idea onto
- * the legacy backend. Between them nothing in the browser needs a bearer any
- * more, which is what allowed the readable access-token cookie ADR 0008
- * described to be deleted.
+ * One of two such doors: `network/payments-api/payments-api-proxy.ts` is the
+ * same idea onto the payments service, which authenticates with a cookie rather
+ * than a bearer. Between them nothing in the browser needs a credential at all,
+ * which is what allowed the readable access-token cookie ADR 0008 described to
+ * be deleted.
  *
  * The upstream path is mounted verbatim — `/api/v1/user/me` here is
  * `/api/v1/user/me` there — so a path literal out of the generated

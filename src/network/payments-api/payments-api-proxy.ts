@@ -9,7 +9,7 @@ import { _paymentsClient } from './payments-api-server-client';
  * cookie that service authenticates with, so the script itself needs no
  * credential and names no host.
  *
- * The third such door, and the same shape as `network/api/api-proxy.ts`: the
+ * The second of two such doors, and the same shape as `network/api/api-proxy.ts`: the
  * upstream path is mounted verbatim — `/products` here is `/products` there —
  * so a path literal out of the generated specification is valid on both sides
  * of the hop and the generated request, response and error types apply end to

@@ -29,11 +29,13 @@ email, account type and roles rather than asking an endpoint for them. It never 
 server: a call from the browser goes through a **proxy**, which attaches it on the way past.
 
 **Proxy**
-: A route handler in this application that forwards a browser's call to a backend with the
-session's bearer attached server-side. There are two — one onto the new API, which validates
-the path against the generated specification, and one onto the legacy backend, which has no
-specification and is bounded by the single host it forwards to. Both discard any
-`Authorization` the browser supplies, so the session's token is the only one presentable.
+: A route handler in this application that forwards a browser's call to an upstream with a
+credential attached server-side. There are two, one per upstream — the new API's, which
+attaches the session's bearer, and the payments service's, which attaches the payments
+credential as the cookie that service authenticates with and refuses the back-office path
+families outright. Both validate the path against their upstream's generated specification,
+and both discard any `Authorization` the browser supplies, so the credential this application
+holds is the only one presentable.
 
 **Refresh token**
 : The long-lived credential that buys a new access token when the current one expires. It
@@ -171,7 +173,7 @@ them as a list on the member, and that list is gone with the composed shape
 ([ADR 0038](adr/0038-the-mocked-membership-is-deleted.md)); the key survives it, as the thing each
 upstream's own identity is looked up by.
 
-In the new API, an upselling is a per-product **credit balance** over three products on an
+In the new API, an upselling is a per-product **credit balance** over four products on an
 endpoint of its own: how many of a thing a member may still spend, not which things they own.
 
 In the payments service, an upselling is a **product in a catalogue**, identified by
@@ -180,12 +182,15 @@ says nothing about who owns what. Since [ADR 0029](adr/0029-the-upsell-price-mov
 every upsell price on screen comes from here, and since
 [ADR 0030](adr/0030-the-upsell-charge-follows-the-price-and-the-credit-is-spent-on-the-new-api.md)
 **this is also where an upsell is bought** — `POST /products/upsell/buy`, against the same price row
-whose amount was displayed, so the two numbers agree. One purchase stays on the legacy catalogue: the
-standalone sex-offender search, whose call also creates the search report.
+whose amount was displayed, so the two numbers agree. Since
+[ADR 0039](adr/0039-the-standalone-search-moves-and-its-unlock-joins-the-sequence.md) that holds for
+every upsell without exception.
 
-Ownership is read from neither of those, with one stated exception. For the three credit-balance
-products it is the new API's balances; for unlimited PDF downloads it is the entitlement on the
-current user. The payments service's own purchased-products endpoint is not asked for any of those,
+Ownership is read from neither of those, with one stated exception. For three of the four
+credit-balance products it is the new API's balances; for unlimited PDF downloads it is the
+entitlement on the current user. For the fourth, the standalone sex-offender search, ownership is
+not askable at all — a spendable credit is not an unlocked candidate, and the new API publishes
+nothing that says which candidates a member has bought. The payments service's own purchased-products endpoint is not asked for any of those,
 because every payments call is made as one shared technical account and its per-user answers would be
 that account's. **The exception is the order-success screen's two extras, `scan_pro` and
 `support_hotline`, whose ownership is read from exactly that endpoint** — it is the only upstream that
@@ -325,9 +330,10 @@ place of the legacy `reverse_lookup_*_upsell_purchased` booleans. `LOCKED` drive
 `PENDING` drives the in-progress presentation, and the other two drive content.
 
 The sex-offender section states it per owner rather than per report, which is why it also carries the
-list of owners the member has unlocked. And a section's state is **read from the new API while the
-unlock that changes it is still written to the legacy backend** — the asymmetry ADR 0028 records,
-along with the symptom if the two upstreams do not share those records.
+list of owners the member has unlocked. The asymmetry ADR 0028 recorded — the state read from the new
+API while the unlock that changes it was written to the old backend — is gone: since
+[ADR 0030](adr/0030-the-upsell-charge-follows-the-price-and-the-credit-is-spent-on-the-new-api.md) an
+unlock is a payments charge and a new-API spend, so one upstream both states a section and changes it.
 
 **Sex-offender section**
 : The gated section _inside_ a reverse-lookup report, bought per report owner and stated as a section
@@ -408,32 +414,45 @@ because it discloses the configuration to whoever opens it.
 ## The legacy surface and its retirement
 
 Introduced by [ADR 0022](adr/0022-retiring-the-legacy-layer-on-its-own-track.md), which records why
-this became a track of its own rather than a side effect of the redesign.
+this became a track of its own rather than a side effect of the redesign. **The track is finished**:
+[ADR 0039](adr/0039-the-standalone-search-moves-and-its-unlock-joins-the-sequence.md) moved the last
+four calls and the apparatus was deleted with it. The words below are kept because the records use
+them and because two of them still describe how this application thinks.
 
 **Legacy surface**
-: The set of calls this application still makes to the old backend, counted as distinct method-and-path
-pairs rather than as call sites. It has no registry in the code — every path is a string written where
-it is used — so the surface is only ever known by being counted. Shrinking it to nothing is the
-condition for deleting the apparatus around it: the client factory, the browser hook, the server
-getter, the unspecified proxy and the second host.
+: The set of calls this application made to the old backend, counted as distinct method-and-path pairs
+rather than as call sites. It had no registry in the code — every path was a string written where it was
+used — so the surface was only ever known by being counted. Shrinking it to nothing was the condition
+for deleting the apparatus around it: the client factory, the browser hook, the server getter, the
+unspecified proxy and the second host. Both halves have happened. **The surface is empty and the
+apparatus is gone**, so the word now names a thing this application no longer has.
 
 **Retirement track**
 : Rewriting a legacy call because it is a legacy call, on its own schedule, independent of whether the
-screen around it is being redesigned. Its unit is one endpoint, and its unit of completion is the
-legacy wrapper being gone — not a new call existing beside the old one. It is the third part of the
-programme of work, alongside the redesign and the wiring-up.
+screen around it is being redesigned. Its unit was one endpoint, and its unit of completion was the
+legacy wrapper being gone — not a new call existing beside the old one. It was the third part of the
+programme of work, alongside the redesign and the wiring-up; the redesign is what remains.
 
 **Record ownership**
 : Which upstream holds the record a call is about. Two endpoints can describe the same act in the same
 words and still be about different records, and where that is true the pair is not a rename and cannot
 be migrated as one. Ownership is a fact about the backends, so it is asked of them rather than inferred
-here; two questions of this kind gate this track — whether the payments service observes a subscription
-the legacy API created, and whether the new API and the legacy API share reverse-lookup report storage.
-A record created in one upstream and read from the other is not a record.
+here. Two questions of this kind gated the track and neither was ever answered — whether the payments
+service observes a subscription the old API created, and whether the new API and the old API shared
+reverse-lookup report storage — because the calls on both sides of each moved together and left nothing
+for two upstreams to disagree about. A record created in one upstream and read from the other is not a
+record, and that stays true of the two upstreams there are now.
 
 **Gap**
 : Something a screen needs that the new API does not answer — a family it does not model, or one it
 models without publishing a response schema. A gap is recorded and reported upstream, never routed
-around: a facade over the old backend would delete the legacy client by moving it, and the layer would
-have to be removed twice. A gap is why a task on this track can exist, be fully specified, and still not
-be startable.
+around: a facade over the old backend would have deleted the legacy client by moving it, and the layer
+would have had to be removed twice. A gap is why a task on this track could exist, be fully specified,
+and still not be startable.
+
+A gap closes two ways, and the second is the one this family demonstrated. It closes because the work
+is redesigned around what the API does answer — or it closes **because the upstream fills it**, which
+is what happened to the standalone sex-offender search: the gap that had it written off as a redesign
+rather than a migration was the absence of a whole family, and the API later published it, unlock
+identifier included. So a recorded gap is a statement about a date and not about a verdict, and a task
+closed on one is worth reopening rather than rewriting.
