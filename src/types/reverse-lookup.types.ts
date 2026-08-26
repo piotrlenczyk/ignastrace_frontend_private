@@ -2,24 +2,16 @@
  * What is left of the legacy reverse-lookup shapes, and who still reads it.
  *
  * The report, its data-breach records and its sex-offender records are read from
- * the new API and typed from the generated specification, so the fat `ReverseLookup`
- * object and every enumeration only it used are gone. Three shapes survive because
- * two callers outside that migration still need them:
- *
- * - `ReverseLookupCompact` is what the anonymous funnel's legacy creation call
- *   answers with, kept there deliberately by ADR 0027;
- * - `ReverseLookupLocation` and `ReverseLookupPhoto` are read by the sex-offender
- *   *search* record, a different legacy endpoint on a different screen, which this
- *   migration does not touch.
+ * the new API and typed from the generated specification, and the reports
+ * themselves are created there too, so the fat `ReverseLookup` object, every
+ * enumeration only it used, and the compact shape the legacy creation call
+ * answered with are all gone. Two shapes survive because one caller outside that
+ * migration still needs them: `ReverseLookupLocation` and `ReverseLookupPhoto`
+ * are read by the sex-offender *search* record, a different legacy endpoint on a
+ * different screen, which that migration does not touch.
  *
  * Nothing is added here. It goes when its last caller goes.
  */
-
-export type ReverseLookupCompact = {
-  id: string;
-  phone: string;
-  status: 'pending' | 'ready';
-};
 
 export type ReverseLookupLocation = {
   id: string;
