@@ -20,10 +20,23 @@ import type { SessionData } from '@/server/session/session.types';
 
 export const API = 'https://api.ignastrace.test';
 
+/**
+ * The other upstream's host. Both clients capture their base URL when their
+ * module first runs, so this belongs here with the API's rather than in a test
+ * file: a write that reaches the payments service would otherwise build a
+ * relative URL and fail before it ever reached a route.
+ *
+ * The routes below are matched on the path alone, so which host a request went
+ * to is not what tells two upstreams apart in an assertion — the path is. The
+ * two specifications share none.
+ */
+export const PAYMENTS = 'https://payments.ignastrace.test';
+
 export const SESSION_PASSWORD = 'a-test-sealing-password-of-at-least-32-characters';
 
 vi.stubEnv('SESSION_PASSWORD', SESSION_PASSWORD);
 vi.stubEnv('API_BASE_URL', API);
+vi.stubEnv('PAYMENTS_API_BASE_URL', PAYMENTS);
 
 const upstreamRequests: Request[] = [];
 
@@ -146,6 +159,14 @@ export const serveApi = (routes: Record<string, Route>) => {
 export const refusal = (errorCode: string, code: string, message: string) => ({
   error: { errorCode, code, message },
 });
+
+/**
+ * The payments service's error envelope, which is its framework's default rather
+ * than anything its specification declares — every operation there publishes a
+ * success and no failure. Written out because a refusal from that upstream is
+ * only recognisable by this shape.
+ */
+export const paymentsRefusal = (statusCode: number, message: string) => ({ message, statusCode });
 
 export const sealedSession = async (): Promise<SessionData> =>
   unsealData<SessionData>(cookieJar.entry(SESSION_COOKIE_NAME)!.value, {

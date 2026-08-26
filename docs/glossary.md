@@ -121,6 +121,26 @@ reactivate endpoint — one act on one endpoint, not a button and an operation s
 sense takes a payment; [ADR 0025](adr/0025-the-subscription-writes-follow-the-read-onto-payments.md)
 records adopting that endpoint here, reversing 0021's line about it.
 
+**Cancelling a subscription**
+: Ending a running subscription so that it does not renew. It happens on two unrelated surfaces, and
+the difference between them is who is asking. On the **billing screen** a signed-in member cancels
+their own, and the payments service knows which one from the session's cookie — it names no
+subscription. On the **public cancellation form** (`/cancellation`) somebody who is not signed in
+cancels by typing an address, so the subscription has to be named: the address is resolved to a user
+and that user's subscription is cancelled by id.
+
+The two are one act on two surfaces, and the payments service tells them apart by
+`cancellationSource` — a field only the second surface's endpoint offers, whose value for it is
+`public_cancellation`. That is the channel
+[ADR 0025](adr/0025-the-subscription-writes-follow-the-read-onto-payments.md) wanted and refused to
+fake through the free-text reason field;
+[ADR 0035](adr/0035-the-public-cancellation-follows-onto-payments-through-a-server-action.md) records
+the second surface arriving on an endpoint that publishes it.
+
+It is **not** the same as calling off a cancellation, which undoes it, or as a member deleting their
+account, which is a different act with its own endpoint — though two of the four cancellation sources
+the payments service publishes are documented as doing both at once.
+
 **Upselling**
 : **Three different things, and no two of them map onto each other.**
 

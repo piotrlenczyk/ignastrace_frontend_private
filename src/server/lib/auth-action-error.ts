@@ -37,3 +37,29 @@ const WRONG_PASSWORD_CODE: BusinessErrorCode = 'CREDENTIALS_ERROR';
  */
 export const isWrongPasswordActionError = (serverError: unknown): boolean =>
   isHttpClientActionError(serverError) && serverError.data.errorCode === WRONG_PASSWORD_CODE;
+
+type NotFoundErrorCode = components['schemas']['NotFoundErrorCode'];
+
+/*
+ * The address lookup finding nothing, read off the API's own codes rather than
+ * off the 404 it sends them with. The specification declares two for this
+ * condition — one naming the entity generally, one naming the user — and both
+ * are accepted, as with the registration conflict above, so the screen behaves
+ * the same whichever one the deployment answers with.
+ *
+ * Typed against the generated enumeration, so a rename in the specification
+ * fails the type check rather than quietly falling through to the generic toast.
+ */
+const ACCOUNT_NOT_FOUND_CODES: readonly NotFoundErrorCode[] = ['ENTITY_NOT_FOUND_ERROR', 'USER_DOES_NOT_EXIST_ERROR'];
+
+/**
+ * Whether an action's `serverError` is the API saying no account holds the
+ * address it was given — the refusal the public cancellation form turns into
+ * "we could not find that address" rather than into a generic failure.
+ *
+ * The status is deliberately not consulted. That action reaches two upstreams,
+ * only one of which publishes codes at all, so the code is the one thing that
+ * says the lookup is what refused and why.
+ */
+export const isAccountNotFoundActionError = (serverError: unknown): boolean =>
+  isHttpClientActionError(serverError) && ACCOUNT_NOT_FOUND_CODES.some((code) => code === serverError.data.errorCode);
