@@ -200,9 +200,14 @@ looked up by, and `UPSELL_CREDIT_PRODUCTS`, the new API's credit-balance product
 
 **Purchase information**
 : What a member paid and what they may still spend: the trial price, the total, what the extras
-came to, and a flag per extra saying whether there is anything left to spend on it. The prices
-are what the thank-you and upsell screens report to analytics; the flags are what the report
-screens unlock on.
+came to, and a flag per extra saying whether there is anything left to spend on it. The flags are
+what the report screens unlock on.
+
+**The three prices have no reader left.** The confirmation screens that reported them to analytics
+now read the subscription record's own product price and the upsell catalogue instead
+([ADR 0037](adr/0037-the-funnel-s-purchase-events-report-what-was-bought.md)), so `trial_price`,
+`total_price` and `upsellings_price` — and the member's `currency` beside them — are invented
+numbers nothing asks for. They stay until the mocked membership is deleted whole.
 
 ## The checkout funnel
 
@@ -218,6 +223,20 @@ could disagree about what someone chose, and one of them died on every reload. I
 for where the plan is kept, this is it — do not add a third cookie.
 [ADR 0019](adr/0019-the-parked-checkout-island.md) records why an earlier version of this record was
 removed and what had to be true for it to come back.
+
+**Funnel upsell record**
+: What one funnel run bought _on top of_ the subscription — a list of **upsell** keys, in the order
+they were charged for. Written by the funnel screen that took each payment, read once by the
+confirmation screen at the end of the run, and discarded there. It is the only thing that passes
+between a purchase made in the browser and a confirmation screen rendered on the server.
+
+It is **not** part of the Checkout attempt and must not become a field on it: a completed payment
+ends the attempt, and the upsell steps run afterwards. Like the attempt it lives for the browser
+session only, states keys in the funnel's own vocabulary rather than the catalogue's, and is refused
+whole if it does not parse.
+[ADR 0037](adr/0037-the-funnel-s-purchase-events-report-what-was-bought.md) records why the funnel
+needed one at all: without it, every visitor who reached a thank-you screen was reported as having
+bought the same invented amount, refusals included.
 
 **Plan**
 : **Two different things, and both are correct in their own place.**

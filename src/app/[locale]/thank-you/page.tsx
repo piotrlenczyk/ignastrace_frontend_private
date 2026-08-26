@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 
 import { getFunnelPhone } from '@/actions/funnel-phone-number';
+import { FunnelUpsellRecordEnd } from '@/components/funnel-upsell-record-end';
 import GTMPurchaseEvent from '@/components/gtm-purchase-event';
 import FunnelLayout from '@/components/layouts/funnel-layout';
 import TrustPilot from '@/components/success/trustPilot';
@@ -12,6 +13,7 @@ import { Link } from '@/libs/i18n-routing';
 import { redirectIfAuthenticated } from '@/libs/subscription';
 import { getUser } from '@/libs/subscription';
 import { reportOrderConfirmed } from '@/server/analytics/klaviyo.events';
+import { getFunnelPurchaseEvent } from '@/server/getters/funnel-purchase-event.getters';
 import { getServerSession } from '@/server/session/session.utils';
 import { getServerSettings } from '@/settings/settings.server';
 
@@ -36,22 +38,20 @@ const ThankYouPage = async () => {
 
   const { upsellsEnabled } = await getServerSettings();
 
-  const gtmEventName = upsellsEnabled ? 'upsell_purchase' : 'purchase';
-  const gtmEventValue = upsellsEnabled
-    ? (user.purchase_info?.upsellings_price || 0) / 100
-    : (user.purchase_info?.trial_price || 0) / 100;
+  /*
+   * With the upsell steps switched on this is the end of a run that may have
+   * bought extras, so it reports those; with them off there are none, and the
+   * subscription's own event is what fires. Every number in it used to come out
+   * of the mocked membership, which invented all of them — see ADR 0037.
+   */
+  const purchaseEvent = await getFunnelPurchaseEvent(upsellsEnabled ? 'upsells' : 'subscription');
 
   reportOrderConfirmed();
 
   return (
     <>
-      <GTMPurchaseEvent
-        event={gtmEventName}
-        userId={user.id}
-        email={user.email}
-        value={gtmEventValue}
-        currency={user.currency.toUpperCase()}
-      />
+      {purchaseEvent ? <GTMPurchaseEvent {...purchaseEvent} userId={user.id} email={user.email} /> : null}
+      <FunnelUpsellRecordEnd />
       <FunnelLayout>
         <main className="s-main flex full-main items-center p-6">
           <div className="container-small flex flex-col items-center gap-6 text-center">

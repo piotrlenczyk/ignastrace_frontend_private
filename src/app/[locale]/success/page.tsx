@@ -7,6 +7,7 @@ import { ROUTES } from '@/constants/routes';
 import { getSubscriptionRedirect } from '@/libs/subscription';
 import { getUser } from '@/libs/subscription';
 import { ownsAnyUpsell, resolveUpsellProduct } from '@/libs/upsell-products';
+import { getFunnelPurchaseEvent } from '@/server/getters/funnel-purchase-event.getters';
 import { getPurchasedUpsellProducts, getUpsellProducts } from '@/server/getters/upsell-products.getters';
 import { getServerSession } from '@/server/session/session.utils';
 import { getServerSettings } from '@/settings/settings.server';
@@ -89,15 +90,18 @@ const UpsellPage = async () => {
     return <ThankYouPage />;
   }
 
+  /*
+   * The subscription's own event, valued from the subscription record's product
+   * price rather than from the mocked membership's invented one — see ADR 0037.
+   * This screen does not report the funnel's upsell record and does not end it:
+   * its two extras are bought after this fires, and the thank-you screen after it
+   * is what reports them.
+   */
+  const purchaseEvent = await getFunnelPurchaseEvent('subscription');
+
   return (
     <>
-      <GTMPurchaseEvent
-        event="purchase"
-        userId={user.id}
-        email={user.email}
-        value={(user.purchase_info?.trial_price || 0) / 100}
-        currency={user.currency.toUpperCase()}
-      />
+      {purchaseEvent ? <GTMPurchaseEvent {...purchaseEvent} userId={user.id} email={user.email} /> : null}
       <FunnelLayout positionMobileHeader="static" showLogoLink={false}>
         <UpsellPageClient offers={offers} />
       </FunnelLayout>

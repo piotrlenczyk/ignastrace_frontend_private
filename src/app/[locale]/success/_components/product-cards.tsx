@@ -8,6 +8,7 @@ import { Icon } from '@/components/ui/icon';
 import { UpsellPurchaseSurface } from '@/components/upsell/upsell-purchase-surface';
 import { useUpsellUnlock } from '@/hooks/api/use-upsell-unlock';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
+import { recordFunnelUpsell } from '@/libs/funnel-upsell-record';
 import { useSettings } from '@/settings/settings.provider';
 
 import type { SuccessUpsellKey, UpsellOffer } from '../_types/upsell-offer';
@@ -106,6 +107,14 @@ const ProductCardOffer = ({ offer: { key, product } }: { offer: UpsellOffer }) =
       setHasFailed(true);
       return;
     }
+
+    /*
+     * The funnel's record of what this run bought, written only where the charge
+     * actually went through. The thank-you screen after this one prices it; before
+     * this existed it reported one invented amount to everybody who reached it,
+     * whether or not they had bought either extra.
+     */
+    recordFunnelUpsell(key);
 
     setIsBought(true);
   };

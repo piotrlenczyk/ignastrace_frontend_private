@@ -5,7 +5,11 @@ below and the record is superseded the day they are met. Two of them have since 
 fields have left the payload: the unread notification tally, which the new API's notification centre
 answers ([0034](0034-the-notification-centre-moves-whole-and-loses-eleven-languages.md)), and the
 subscription's state, which the payments service holds and every gate now reads from there
-([0036](0036-the-subscription-gate-reads-the-payments-service.md)).
+([0036](0036-the-subscription-gate-reads-the-payments-service.md)). A third has left the _readers_
+rather than the payload: the amounts and the currency the funnel's purchase events reported now come
+from the subscription record and the upsell catalogue
+([0037](0037-the-funnel-s-purchase-events-report-what-was-bought.md)), so `trial_price`,
+`total_price`, `upsellings_price` and `currency` sit in the fixture with nothing reading them.
 
 ## Context
 
