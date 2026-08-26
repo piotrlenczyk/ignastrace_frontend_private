@@ -136,7 +136,7 @@ const PossibleSocialMediaAccounts = ({
         productKey="social_networks"
         translationNamespace="pages.reverse_lookup.report.upsell.social_networks"
         benefitKeys={['scan_10_major_social_platforms', 'related_usernames_and_public_profile', 'matching_accounts']}
-        reportId={reportId}
+        spendRequest={{ product: 'SOCIAL_NETWORKS', reportId }}
       />
     </>
   );

@@ -10,21 +10,28 @@ import { ROUTES } from '@/constants/routes';
 import { usePdfDownload } from '@/hooks/use-pdf-download';
 import { Link } from '@/libs/i18n-routing';
 import type { schemas } from '@/network/api/apiServerClient';
-import type { SexOffenderData } from '@/types/sex-offenders.types';
+import type { SexOffenderSearchReport } from '@/server/getters/sex-offender-search.getters';
 
 import AddressInformation from './components/address-information';
 import BodyCharacteristics from './components/body-characteristics';
 import CrimeInformation from './components/crime-information';
-import DistinctiveFeatures from './components/distinctive-features';
 import OthersInformation from './components/others-information';
 import PersonalInformation from './components/personal-information';
 import Photos from './components/photos';
 
+/*
+ * Six cards where there were seven. **Distinguishing marks is gone.** ADR 0028
+ * kept it on this screen on the stated grounds that its upstream populated the
+ * marks; the new API types them as an always-null object and documents that no
+ * provider it ships writes one. So the card had nothing left to render, and ADR
+ * 0039 records the contradiction as a finding rather than keeping nine empty rows
+ * on the screen.
+ */
 export const SexOffenderSearchReportContent = ({
-  sexOffenderData,
+  record,
   user,
 }: {
-  sexOffenderData: SexOffenderData;
+  record: SexOffenderSearchReport;
   user: schemas['UserResponse'];
 }) => {
   const t = useTranslations('pages.reverse_lookup.report.sex_offenders.report');
@@ -36,7 +43,7 @@ export const SexOffenderSearchReportContent = ({
     return downloadPdf(window.location.href, 'mobitrace-sex-offenders.pdf');
   };
 
-  const photo = sexOffenderData.reverse_lookup_photos[0]?.content;
+  const photo = record.photos[0];
 
   return (
     <main>
@@ -81,7 +88,7 @@ export const SexOffenderSearchReportContent = ({
               <Icon name="check-circle" className="mr-1 size-5 text-secondary" />
               {t('records_found_for')}
             </p>
-            <span className="h3 font-bold">{sexOffenderData.name}</span>
+            <span className="h3 font-bold">{record.name || '--'}</span>
           </div>
         </div>
 
@@ -95,13 +102,12 @@ export const SexOffenderSearchReportContent = ({
         </div>
 
         <div className="flex flex-col gap-4">
-          <PersonalInformation sexOffenderData={sexOffenderData} />
-          <BodyCharacteristics sexOffenderData={sexOffenderData} />
-          <DistinctiveFeatures sexOffenderData={sexOffenderData} />
-          <CrimeInformation sexOffenderData={sexOffenderData} />
-          <AddressInformation sexOffenderData={sexOffenderData} />
-          <Photos sexOffenderData={sexOffenderData} />
-          <OthersInformation sexOffenderData={sexOffenderData} />
+          <PersonalInformation record={record} />
+          <BodyCharacteristics record={record} />
+          <CrimeInformation record={record} />
+          <AddressInformation record={record} />
+          <Photos record={record} />
+          <OthersInformation record={record} />
           <div id="bottom-download-button" className="mb-4 lg:hidden">
             <DownloadReportButton
               hasUnlimitedDownloads={hasUnlimitedDownloads}

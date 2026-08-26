@@ -73,14 +73,21 @@ export const useUpsellUnlock = () => {
     [buyProduct],
   );
 
+  /*
+   * A spent credit answers with the report the new API materialised for it, which
+   * only the standalone search has: that unlock creates the report as it commits,
+   * and this answer is the only place its identifier is ever stated. Every other
+   * product spends against a report the caller already named, and the field
+   * arrives null.
+   */
   const spend = useCallback(
     async (request: SpendRequest): Promise<SpendOutcome> => {
       try {
-        await consumeCredit({ body: request });
+        const answer = await consumeCredit({ body: request });
 
-        return 'spent';
+        return { status: 'spent', searchReportId: answer.searchReportId ?? undefined };
       } catch (refusal) {
-        return isSpendConflict(refusal) ? 'conflict' : 'refused';
+        return isSpendConflict(refusal) ? { status: 'conflict' } : { status: 'refused' };
       }
     },
     [consumeCredit],

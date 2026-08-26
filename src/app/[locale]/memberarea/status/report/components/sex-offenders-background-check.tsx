@@ -88,16 +88,16 @@ const SexOffendersBackgroundCheck = ({
 
     setSpendingForOwnerId(unlockedOwnerId);
 
-    const outcome = await spendCredit({ product: 'SEX_OFFENDERS', reportId, ownerId: unlockedOwnerId });
+    const settled = await spendCredit({ product: 'SEX_OFFENDERS', reportId, ownerId: unlockedOwnerId });
 
     setSpendingForOwnerId(null);
 
-    if (outcome === 'no-credit') {
+    if (settled.outcome === 'no-credit') {
       setShowUpsellDialog(true);
       return;
     }
 
-    if (outcome === 'refused') {
+    if (settled.outcome === 'refused') {
       showErrorToast();
       return;
     }

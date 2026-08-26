@@ -5,12 +5,8 @@ import { useState } from 'react';
 
 import { UpsellPurchaseSurface } from '@/components/upsell/upsell-purchase-surface';
 import { useUpsellUnlock } from '@/hooks/api/use-upsell-unlock';
-import {
-  creditProductFor,
-  resolveUpsellProduct,
-  type UpsellProduct,
-  type UpsellProductKey,
-} from '@/libs/upsell-products';
+import { resolveUpsellProduct, type UpsellProduct, type UpsellProductKey } from '@/libs/upsell-products';
+import type { SpendRequest } from '@/libs/upsell-unlock';
 import { CURRENT_USER_QUERY_KEY } from '@/network/api/hooks/use-current-user-query';
 import { useUpsellProductsQuery } from '@/network/payments-api/hooks/use-upsell-products-query';
 
@@ -18,16 +14,21 @@ import { type UpsellNamespace, UpsellOfferDialog } from './upsell-offer-dialog';
 import { UpsellPaymentMessage } from './upsell-payment-message';
 
 /*
- * The four upsells this dialog is opened for. The standalone sex-offender search
- * is not among them — its purchase also creates the search report and answers
- * with its identifier, which the payments purchase cannot, so it keeps the legacy
- * call and its own dialog. Nor are the two the `/success` screen sells. A subset
- * of the application's upsell keys rather than a union of its own, so a key that
- * stops existing stops compiling here.
+ * The five upsells this dialog is opened for — every one in the application but
+ * the two the `/success` screen sells, which have no counterpart in the new API
+ * and are bought on their own screen. A subset of the application's upsell keys
+ * rather than a union of its own, so a key that stops existing stops compiling
+ * here.
+ *
+ * The standalone sex-offender search joined this list in ADR 0039. It was
+ * excluded while its purchase was the one that also created the search report and
+ * answered with its identifier — something the payments purchase cannot do. The
+ * new API's spend answers with that identifier now, so the search unlocks through
+ * the same sequence as everything else and its bespoke dialog is gone.
  */
 type ProductKey = Extract<
   UpsellProductKey,
-  'data_leaks' | 'sex_offenders' | 'social_networks' | 'unlimited_pdf_downloads'
+  'data_leaks' | 'sex_offenders' | 'sex_offenders_search' | 'social_networks' | 'unlimited_pdf_downloads'
 >;
 
 type UpsellDialogProps = {
@@ -35,24 +36,46 @@ type UpsellDialogProps = {
   onOpenChange: (open: boolean) => void;
   onDownloadPdf?: () => Promise<void>;
   onSuccessClose?: () => void;
+  /**
+   * What a successful unlock materialised, told to the caller as it happens.
+   *
+   * Only the standalone search materialises anything: its spend creates the search
+   * report and names it, and that identifier exists nowhere else — the new API
+   * publishes no way to find a search report after the fact. Every other product
+   * spends against a report the caller already named, so nothing is passed.
+   *
+   * It can arrive empty even on a successful unlock. A conflicting spend settled
+   * by a positive balance means the candidate was already open, and no spend
+   * happened, so there is no report to name. ADR 0039 records that dead end.
+   */
+  onUnlocked?: (searchReportId: string | undefined) => void;
   productKey: ProductKey;
   translationNamespace: UpsellNamespace;
   benefitKeys: string[];
-  /** The report a credit is spent against. Absent for unlimited PDF downloads, which spends none. */
-  reportId?: string;
-  /** The report owner this unlock applies to. Required by the new API for sex offenders, forbidden elsewhere. */
-  ownerId?: string;
+  /**
+   * The credit to spend once the offer is accepted, prepared by the caller.
+   *
+   * Its presence is what decides spend-versus-buy. Absent for unlimited PDF
+   * downloads, which spends nothing and is bought outright.
+   */
+  spendRequest?: SpendRequest;
 };
 
 /**
  * The member area's unlock dialog: one price, one gesture, and the amount it
  * charges is the amount it displays.
  *
- * Both halves of an unlock happen behind the one button. For the three products
- * the new API holds a credit balance for, a credit is spent and one is bought
- * first only where there is nothing to spend; for unlimited PDF downloads there
- * is no balance and the purchase is the whole of it. Which of the two applies is
- * read off `creditProductFor`, not decided here. See ADR 0030.
+ * Both halves of an unlock happen behind the one button. Where the caller handed
+ * down a spend request, a credit is spent and one is bought first only if there
+ * is nothing to spend; where it handed down none — unlimited PDF downloads, which
+ * the new API models as an entitlement — the purchase is the whole of it.
+ *
+ * **Which of the two applies is the caller's statement, not a lookup here.** This
+ * reverses the comment ADR 0030 left in this file, which read the answer off
+ * `creditProductFor` and guarded it with a report identifier. Only the call site
+ * knows which report, owner, search or candidate is being unlocked, so only the
+ * call site can state a request the new API will accept — and a request it will
+ * not accept is now unrepresentable rather than merely unlikely.
  */
 const UpsellDialog = (props: UpsellDialogProps) => {
   /*
@@ -107,11 +130,11 @@ const UpsellPurchase = ({
   onOpenChange,
   onDownloadPdf,
   onSuccessClose,
+  onUnlocked,
   productKey,
   translationNamespace,
   benefitKeys,
-  reportId,
-  ownerId,
+  spendRequest,
   product,
 }: UpsellDialogProps & { product: UpsellProduct }) => {
   const { unlockWithCredit, purchase } = useUpsellUnlock();
@@ -122,30 +145,35 @@ const UpsellPurchase = ({
   const [retryCount, setRetryCount] = useState(0);
   const [showMessage, setShowMessage] = useState(false);
 
-  const creditProduct = creditProductFor(productKey);
-
   const handlePurchase = async () => {
     setIsPending(true);
 
-    /*
-     * A credit-balance product is unlocked; anything else is simply bought. The
-     * `reportId` guard is the type checker's rather than a case that happens: every
-     * caller opening a credit-balance dialog passes the report it is unlocking, and
-     * a spend with nothing to spend against is not representable.
-     */
-    const succeeded =
-      creditProduct && reportId
-        ? (await unlockWithCredit({ product: creditProduct, reportId, ownerId }, product.price.id)).outcome ===
-          'unlocked'
-        : (await purchase(product.price.id)).outcome === 'purchased';
+    /* A prepared request is unlocked; anything else is simply bought. */
+    let succeeded: boolean;
+
+    if (spendRequest) {
+      const unlock = await unlockWithCredit(spendRequest, product.price.id);
+
+      succeeded = unlock.outcome === 'unlocked';
+
+      /*
+       * Said before the success message is shown, because the report it names is
+       * what the message's close navigates to.
+       */
+      if (unlock.outcome === 'unlocked') {
+        onUnlocked?.(unlock.searchReportId);
+      }
+    } else {
+      succeeded = (await purchase(product.price.id)).outcome === 'purchased';
+    }
 
     /*
-     * Unlimited PDF downloads is an entitlement on the account rather than a
-     * balance, so what a screen gates on is the current-user read. Invalidating it
-     * here is the client-side half; the refresh the success message fires is the
-     * server-rendered half.
+     * Unlimited PDF downloads — the only upsell this dialog buys outright — is an
+     * entitlement on the account rather than a balance, so what a screen gates on
+     * is the current-user read. Invalidating it here is the client-side half; the
+     * refresh the success message fires is the server-rendered half.
      */
-    if (succeeded && !creditProduct) {
+    if (succeeded && !spendRequest) {
       await queryClient.invalidateQueries({ queryKey: CURRENT_USER_QUERY_KEY });
     }
 

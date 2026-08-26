@@ -2013,6 +2013,159 @@
         "tags": ["Reverse Lookup Reports"]
       }
     },
+    "/api/v1/sex-offender-searches": {
+      "post": {
+        "description": "Searches the registry by name, optionally filtered by city/state/ZIP, and stores the vendor's response. Free — only unlocking a specific candidate is charged. Returns the candidate list; an empty list is a normal result, not an error. Fails 503 without persisting anything if the provider is unavailable.",
+        "operationId": "createSexOffenderSearch",
+        "parameters": [
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CreateSexOffenderSearchDto" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/SexOffenderSearchResponse" } }
+            }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Run a sex-offender registry search",
+        "tags": ["Sex Offender Search"]
+      }
+    },
+    "/api/v1/sex-offender-searches/{searchId}": {
+      "get": {
+        "description": "Re-derives the candidate list from the search's stored vendor payload, so `candidateIndex` is identical to the one returned when the search was created. 404s when the search is not the caller's — deliberately the same status as a search that does not exist.",
+        "operationId": "getSexOffenderSearch",
+        "parameters": [
+          {
+            "name": "searchId",
+            "required": true,
+            "in": "path",
+            "description": "Path parameter",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/SexOffenderSearchResponse" } }
+            }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Re-read a search and its candidates",
+        "tags": ["Sex Offender Search"]
+      }
+    },
+    "/api/v1/sex-offender-search-reports/{searchReportId}": {
+      "get": {
+        "description": "Returns the full record for a candidate the caller has unlocked. The row existing is the entitlement. 404s when the report is not the caller's — the same status as one that does not exist. Every 200 writes exactly one compliance access-log row; a 404 writes none.",
+        "operationId": "getSexOffenderSearchReport",
+        "parameters": [
+          {
+            "name": "searchReportId",
+            "required": true,
+            "in": "path",
+            "description": "Path parameter",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "x-locale",
+            "in": "header",
+            "required": false,
+            "description": "Language locale for localized content. Supported values: en, es",
+            "schema": { "type": "string", "enum": ["en", "es"] }
+          },
+          {
+            "name": "x-trace-id",
+            "in": "header",
+            "required": false,
+            "description": "Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically.",
+            "schema": { "type": "string", "pattern": "^[a-zA-Z0-9-]+$" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/SexOffenderSearchReportResponse" } }
+            }
+          },
+          "401": {
+            "description": "Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UnauthorizedErrorResponseSchema" } }
+            }
+          },
+          "403": {
+            "description": "Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ForbiddenErrorResponseSchema" } }
+            }
+          }
+        },
+        "security": [{ "bearer": [] }, { "x-api-key": [] }],
+        "summary": "Read a purchased sex-offender search report",
+        "tags": ["Sex Offender Search"]
+      }
+    },
     "/api/v1/reverse-lookup-reports/{reportId}/pdf": {
       "post": {
         "description": "409 if the underlying report is not COMPLETED yet.",
@@ -2834,6 +2987,10 @@
               "UpsellCredit",
               "ReportPdfExport",
               "SexOffenderRecord",
+              "SexOffenderSearch",
+              "SexOffenderSearchReport",
+              "SexOffenderSearchPhoto",
+              "SensitiveSearchAccessLog",
               "SensitiveDataAccessLog",
               "LocationRequest",
               "ConsentLink",
@@ -3391,7 +3548,7 @@
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "kind": {
-            "enum": ["LOCATION_REQUEST", "REVERSE_LOOKUP_REPORT"],
+            "enum": ["LOCATION_REQUEST", "REVERSE_LOOKUP_REPORT", "SEX_OFFENDER_SEARCH_REPORT"],
             "type": "string",
             "nullable": false,
             "example": "LOCATION_REQUEST"
@@ -4432,7 +4589,7 @@
         "type": "object",
         "properties": {
           "product": {
-            "enum": ["SEX_OFFENDERS", "DATA_LEAKS", "SOCIAL_NETWORKS"],
+            "enum": ["SEX_OFFENDERS", "DATA_LEAKS", "SOCIAL_NETWORKS", "SEX_OFFENDERS_SEARCH"],
             "type": "string",
             "nullable": false,
             "description": "Which upsell product to spend a credit against",
@@ -4440,8 +4597,8 @@
           },
           "reportId": {
             "type": "string",
-            "nullable": false,
-            "description": "The report to unlock this product's content on, owned by the caller",
+            "nullable": true,
+            "description": "The report to unlock this product's content on, owned by the caller. Required for DATA_LEAKS, SOCIAL_NETWORKS and SEX_OFFENDERS; forbidden for SEX_OFFENDERS_SEARCH.",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "ownerId": {
@@ -4449,25 +4606,57 @@
             "nullable": true,
             "description": "Required for SEX_OFFENDERS (the ReportOwner to unlock); forbidden for every other product",
             "example": "123e4567-e89b-12d3-a456-426614174001"
+          },
+          "searchId": {
+            "type": "string",
+            "nullable": true,
+            "description": "Required for SEX_OFFENDERS_SEARCH (the search to unlock a candidate on); forbidden otherwise",
+            "example": "123e4567-e89b-12d3-a456-426614174002"
+          },
+          "candidateIndex": {
+            "type": "number",
+            "minimum": 0,
+            "nullable": true,
+            "description": "Required for SEX_OFFENDERS_SEARCH (which candidate of the search to unlock, as returned in `matches[].candidateIndex`); forbidden otherwise",
+            "example": 0
           }
         },
-        "required": ["product", "reportId"]
+        "required": ["product"]
       },
       "ConsumeUpsellResponse": {
         "type": "object",
         "properties": {
           "product": {
-            "enum": ["SEX_OFFENDERS", "DATA_LEAKS", "SOCIAL_NETWORKS"],
+            "enum": ["SEX_OFFENDERS", "DATA_LEAKS", "SOCIAL_NETWORKS", "SEX_OFFENDERS_SEARCH"],
             "type": "string",
             "nullable": false,
             "description": "The product just unlocked",
             "example": "DATA_LEAKS"
           },
-          "reportId": { "type": "string", "nullable": false, "description": "The report this unlock applies to" },
+          "reportId": {
+            "type": "string",
+            "nullable": true,
+            "description": "The report this unlock applies to. Null only for SEX_OFFENDERS_SEARCH, which is not report-scoped; non-null for every other product."
+          },
           "ownerId": {
             "type": "string",
             "nullable": true,
             "description": "Set for SEX_OFFENDERS; null for every other product"
+          },
+          "searchId": {
+            "type": "string",
+            "nullable": true,
+            "description": "Set for SEX_OFFENDERS_SEARCH; absent for every other product"
+          },
+          "candidateIndex": {
+            "type": "number",
+            "nullable": true,
+            "description": "Set for SEX_OFFENDERS_SEARCH; absent for every other product"
+          },
+          "searchReportId": {
+            "type": "string",
+            "nullable": true,
+            "description": "The purchased report just materialized — old BE's `sex_offender_search_report_id`. Read this to navigate straight to the detail screen. Set for SEX_OFFENDERS_SEARCH only."
           },
           "grantedAt": {
             "format": "date-time",
@@ -4476,13 +4665,13 @@
             "description": "When this unlock was granted"
           }
         },
-        "required": ["product", "reportId", "grantedAt"]
+        "required": ["product", "grantedAt"]
       },
       "UpsellCreditSummaryResponse": {
         "type": "object",
         "properties": {
           "product": {
-            "enum": ["SEX_OFFENDERS", "DATA_LEAKS", "SOCIAL_NETWORKS"],
+            "enum": ["SEX_OFFENDERS", "DATA_LEAKS", "SOCIAL_NETWORKS", "SEX_OFFENDERS_SEARCH"],
             "type": "string",
             "nullable": false,
             "description": "Product this credit balance is for",
@@ -4496,6 +4685,156 @@
           }
         },
         "required": ["product", "count"]
+      },
+      "CreateSexOffenderSearchDto": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": false,
+            "description": "The subject's first name",
+            "example": "Mason"
+          },
+          "lastName": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": false,
+            "description": "The subject's last name",
+            "example": "Hawthorne"
+          },
+          "city": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true,
+            "description": "Optional city filter",
+            "example": "New York"
+          },
+          "state": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true,
+            "description": "Optional state filter",
+            "example": "NY"
+          },
+          "zipCode": {
+            "type": "string",
+            "maxLength": 20,
+            "nullable": true,
+            "description": "Optional ZIP-code filter",
+            "example": "10001"
+          }
+        },
+        "required": ["firstName", "lastName"]
+      },
+      "SexOffenderSearchMatchResponse": {
+        "type": "object",
+        "properties": {
+          "candidateIndex": {
+            "type": "number",
+            "nullable": false,
+            "description": "This candidate's index into the search's stored vendor payload. Stable for the life of the search, and the address used to unlock the candidate.",
+            "example": 0
+          },
+          "firstName": { "type": "string", "nullable": true },
+          "lastName": { "type": "string", "nullable": true },
+          "dateOfBirth": { "type": "string", "nullable": true, "example": "1979-04-02" },
+          "address": { "type": "string", "nullable": true },
+          "city": { "type": "string", "nullable": true },
+          "state": { "type": "string", "nullable": true },
+          "photoUrl": { "type": "string", "nullable": true }
+        },
+        "required": ["candidateIndex"]
+      },
+      "SexOffenderSearchResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "nullable": false },
+          "firstName": { "type": "string", "nullable": false },
+          "lastName": { "type": "string", "nullable": false },
+          "city": { "type": "string", "nullable": true },
+          "state": { "type": "string", "nullable": true },
+          "zipCode": { "type": "string", "nullable": true },
+          "matches": {
+            "nullable": false,
+            "description": "The vendor's candidates, derived from the stored payload on every read. Empty when the search found nobody — a normal success, not an error.",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/SexOffenderSearchMatchResponse" }
+          }
+        },
+        "required": ["id", "firstName", "lastName", "matches"]
+      },
+      "SexOffenderSearchReportResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "nullable": false },
+          "searchId": { "type": "string", "nullable": false },
+          "candidateIndex": { "type": "number", "nullable": false },
+          "purchasedAt": { "format": "date-time", "type": "string", "nullable": false },
+          "name": { "type": "string", "nullable": true },
+          "firstName": { "type": "string", "nullable": true },
+          "lastName": { "type": "string", "nullable": true },
+          "middleName": { "type": "string", "nullable": true },
+          "nickNames": { "nullable": false, "type": "array", "items": { "type": "string" } },
+          "dateOfBirth": { "format": "date-time", "type": "string", "nullable": true },
+          "age": { "type": "number", "nullable": true },
+          "sex": { "nullable": true, "enum": ["MALE", "FEMALE", "INTERSEX"], "type": "string" },
+          "eyeColor": {
+            "nullable": true,
+            "enum": ["AMBER", "BLUE", "BROWN", "GRAY", "GREEN", "HAZEL", "RED", "VIOLET", "OTHER"],
+            "type": "string"
+          },
+          "hairColor": {
+            "nullable": true,
+            "enum": ["BLACK", "BROWN", "BLONDE", "RED", "GRAY", "WHITE", "AUBURN", "CHESTNUT", "DYED", "BALD", "OTHER"],
+            "type": "string"
+          },
+          "race": {
+            "nullable": true,
+            "enum": [
+              "WHITE",
+              "BLACK_OR_AFRICAN_AMERICAN",
+              "ASIAN",
+              "NATIVE_AMERICAN",
+              "PACIFIC_ISLANDER",
+              "MIXED",
+              "OTHER"
+            ],
+            "type": "string"
+          },
+          "ethnicity": { "nullable": true, "enum": ["HISPANIC", "NON_HISPANIC", "OTHER"], "type": "string" },
+          "heightCm": { "type": "number", "nullable": true },
+          "weightKg": { "type": "number", "nullable": true },
+          "marks": {
+            "type": "object",
+            "nullable": true,
+            "description": "Distinguishing marks as the provider's own structured list. Always null today — no provider this repo ships populates it, and old BE never wrote it either. Serialized for contract parity with the report-scoped detail endpoint."
+          },
+          "crime": { "type": "string", "nullable": true },
+          "jurisdiction": { "type": "string", "nullable": true },
+          "convictionDate": { "format": "date-time", "type": "string", "nullable": true },
+          "registrationDate": { "format": "date-time", "type": "string", "nullable": true },
+          "riskLevel": { "nullable": true, "enum": ["LOW", "MEDIUM", "HIGH"], "type": "string" },
+          "isAbsconder": { "type": "boolean", "nullable": false },
+          "isPredator": { "type": "boolean", "nullable": false },
+          "originalSourceUrl": { "type": "string", "nullable": true },
+          "location": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [{ "$ref": "#/components/schemas/LocationResponse" }]
+          },
+          "photos": { "nullable": false, "type": "array", "items": { "type": "string" } }
+        },
+        "required": [
+          "id",
+          "searchId",
+          "candidateIndex",
+          "purchasedAt",
+          "nickNames",
+          "isAbsconder",
+          "isPredator",
+          "photos"
+        ]
       },
       "CreatePdfExportResponse": {
         "type": "object",

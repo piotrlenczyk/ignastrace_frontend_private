@@ -14,9 +14,14 @@ import { ROUTES } from '@/constants/routes';
 import { US_STATES } from '@/constants/us-states';
 import { useGenericErrorToast } from '@/hooks/use-generic-error-toast';
 import { useRouter } from '@/libs/i18n-routing';
+import { useCreateSexOffenderSearchMutation } from '@/network/api/hooks/use-create-sex-offender-search-mutation';
 
-import { useCreateSexOffenderSearchMutation } from './hooks/api/use-create-sex-offender-search-mutation';
-import { createSexOffenderSearchSchema, type SexOffenderSearchFormValues } from './types/search.types';
+import {
+  createSexOffenderSearchSchema,
+  SEARCH_ALL_STATES,
+  sexOffenderSearchBody,
+  type SexOffenderSearchFormValues,
+} from './types/search.types';
 
 export const SexOffenderSearchForm = () => {
   const t = useTranslations('pages.sex_offenders_search.form');
@@ -28,31 +33,28 @@ export const SexOffenderSearchForm = () => {
   const form = useForm<SexOffenderSearchFormValues>({
     resolver: zodResolver(createSexOffenderSearchSchema(t)),
     defaultValues: {
-      first_name: '',
-      last_name: '',
+      firstName: '',
+      lastName: '',
       city: '',
-      state: 'all',
-      zip_code: '',
+      state: SEARCH_ALL_STATES,
+      zipCode: '',
     },
   });
 
-  const { mutate, isPending } = useCreateSexOffenderSearchMutation({
-    onSuccess: (data) => {
-      setIsRedirecting(true);
-      router.push(`${ROUTES.MEMBER.SEX_OFFENDERS_SEARCH.RESULTS}?id=${data.id}`);
-    },
-    onError: () => {
-      showErrorToast();
-    },
-  });
+  const { mutate, isPending } = useCreateSexOffenderSearchMutation();
 
-  const handleSubmit = (data: SexOffenderSearchFormValues) => {
-    mutate({
-      ...data,
-      // Radix Select.Item throws at runtime on an empty-string value, so "all states" is
-      // represented by the 'all' sentinel; convert it back to undefined before posting.
-      state: data.state === 'all' ? undefined : data.state,
-    });
+  const handleSubmit = (values: SexOffenderSearchFormValues) => {
+    mutate(
+      { body: sexOffenderSearchBody(values) },
+      {
+        onSuccess: (search) => {
+          setIsRedirecting(true);
+          router.push(`${ROUTES.MEMBER.SEX_OFFENDERS_SEARCH.RESULTS}?id=${search.id}`);
+        },
+        /* A provider outage keeps the generic toast this form has always shown. */
+        onError: () => showErrorToast(),
+      },
+    );
   };
 
   if (isPending || isRedirecting) {
@@ -74,7 +76,7 @@ export const SexOffenderSearchForm = () => {
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           <FormField
             control={form.control}
-            name="first_name"
+            name="firstName"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="sr-only">{t('first_name_placeholder')}</FormLabel>
@@ -87,7 +89,7 @@ export const SexOffenderSearchForm = () => {
           />
           <FormField
             control={form.control}
-            name="last_name"
+            name="lastName"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="sr-only">{t('last_name_placeholder')}</FormLabel>
@@ -128,7 +130,7 @@ export const SexOffenderSearchForm = () => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="all">{t('state_placeholder')}</SelectItem>
+                    <SelectItem value={SEARCH_ALL_STATES}>{t('state_placeholder')}</SelectItem>
                     {US_STATES.map((state) => (
                       <SelectItem key={state.value} value={state.value}>
                         {state.label}
@@ -142,7 +144,7 @@ export const SexOffenderSearchForm = () => {
           />
           <FormField
             control={form.control}
-            name="zip_code"
+            name="zipCode"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="sr-only">{t('zip_placeholder')}</FormLabel>

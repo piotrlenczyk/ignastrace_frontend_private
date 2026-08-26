@@ -2,11 +2,11 @@ import { redirect } from 'next/navigation';
 
 import ProductLayout from '@/components/layouts/product-layout';
 import { ROUTES } from '@/constants/routes';
-import { getApi } from '@/libs/server/api';
 import { getSubscriptionRedirect } from '@/libs/subscription';
 import { getUser } from '@/libs/subscription';
+import { getSexOffenderSearchReport } from '@/server/getters/sex-offender-search.getters';
 import { getServerSession } from '@/server/session/session.utils';
-import type { SexOffenderData } from '@/types/sex-offenders.types';
+import { firstValue } from '@/utils/search-params';
 
 import { SexOffenderSearchReportContent } from './report-content';
 
@@ -19,7 +19,9 @@ const SexOffenderSearchReportPage = async (props: PageProps<'/[locale]/memberare
     redirect(ROUTES.HOME);
   }
 
-  if (!searchParams?.id) {
+  const searchReportId = firstValue(searchParams.id);
+
+  if (!searchReportId) {
     redirect(ROUTES.MEMBER.SEX_OFFENDERS_SEARCH.HOME);
   }
 
@@ -34,16 +36,17 @@ const SexOffenderSearchReportPage = async (props: PageProps<'/[locale]/memberare
     redirect(redirectUrl);
   }
 
-  const api = await getApi();
-
-  const [sexOffenderData, user] = await Promise.all([
-    api.get<SexOffenderData>(`/sex_offender_search_reports/${searchParams.id}`),
-    getUser(),
-  ]);
+  /*
+   * A report that is not the caller's answers 404, deliberately the same status as
+   * one that does not exist — so a link made before the cutover, whose identifier
+   * the new upstream never issued, reaches the error boundary rather than
+   * somebody else's record. Nothing here classifies it.
+   */
+  const [record, user] = await Promise.all([getSexOffenderSearchReport(searchReportId), getUser()]);
 
   return (
     <ProductLayout>
-      <SexOffenderSearchReportContent sexOffenderData={sexOffenderData} user={user} />
+      <SexOffenderSearchReportContent record={record} user={user} />
     </ProductLayout>
   );
 };

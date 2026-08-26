@@ -16,12 +16,24 @@ const PRICE_ID = 'price-uuid';
 const REQUEST = { product: 'DATA_LEAKS', reportId: 'report-uuid' } as const;
 
 /**
+ * The standalone search's request, and the only one of the four products that is
+ * not report-scoped: a search and a candidate index, with no report identifier —
+ * which the new API forbids here — and the identifier of the report the spend
+ * materialises coming back the other way.
+ */
+const SEARCH_REQUEST = { product: 'SEX_OFFENDERS_SEARCH', searchId: 'search-uuid', candidateIndex: 2 } as const;
+
+const SPENT: SpendOutcome = { status: 'spent' };
+const CONFLICT: SpendOutcome = { status: 'conflict' };
+const REFUSED: SpendOutcome = { status: 'refused' };
+
+/**
  * The four operations, each answering what a case is about. A spend can be told
  * to answer differently the second time, which is the only place in the sequence
  * where one operation is reached twice.
  */
 const operations = ({
-  spend = ['spent'],
+  spend = [SPENT],
   balance = 0,
   buy = { status: 'refused' },
   confirm = 'confirmed',
@@ -34,7 +46,7 @@ const operations = ({
   const answers = [...spend];
 
   return {
-    spend: vi.fn(async () => answers.shift() ?? answers.at(-1) ?? 'refused'),
+    spend: vi.fn(async () => answers.shift() ?? REFUSED),
     readBalance: vi.fn(async () => balance),
     buy: vi.fn(async () => buy),
     confirm: vi.fn(async () => confirm),
@@ -43,7 +55,7 @@ const operations = ({
 
 describe('unlocking a section the new API holds a credit balance for', () => {
   it('spends a credit where one is left, and buys nothing', async () => {
-    const ops = operations({ spend: ['spent'] });
+    const ops = operations({ spend: [SPENT] });
 
     await expect(unlockUpsellWithCredit(REQUEST, PRICE_ID, ops)).resolves.toEqual({ outcome: 'unlocked' });
 
@@ -54,7 +66,7 @@ describe('unlocking a section the new API holds a credit balance for', () => {
   });
 
   it('spends the credit against the report and the owner it was asked to unlock', async () => {
-    const ops = operations({ spend: ['spent'] });
+    const ops = operations({ spend: [SPENT] });
     const request = { product: 'SEX_OFFENDERS', reportId: 'report-uuid', ownerId: 'owner-uuid' } as const;
 
     await unlockUpsellWithCredit(request, PRICE_ID, ops);
@@ -62,8 +74,49 @@ describe('unlocking a section the new API holds a credit balance for', () => {
     expect(ops.spend).toHaveBeenCalledWith(request);
   });
 
+  /*
+   * The standalone search's request, which names no report at all. It travels
+   * verbatim, and the balance behind its conflict is read for its own product —
+   * so nothing in the sequence assumes a report-scoped spend.
+   */
+  it('spends against the search and the candidate it was asked to unlock', async () => {
+    const ops = operations({ spend: [CONFLICT], balance: 1 });
+
+    await expect(unlockUpsellWithCredit(SEARCH_REQUEST, PRICE_ID, ops)).resolves.toEqual({ outcome: 'unlocked' });
+
+    expect(ops.spend).toHaveBeenCalledWith(SEARCH_REQUEST);
+    expect(ops.readBalance).toHaveBeenCalledWith('SEX_OFFENDERS_SEARCH');
+  });
+
+  /*
+   * The identifier the standalone search's spend materialises. It is born inside
+   * the spend and there is no second call that would answer with it, so the
+   * sequence carries it out to the caller rather than dropping it.
+   */
+  it('carries out the identifier of the report the spend materialised', async () => {
+    const ops = operations({ spend: [{ status: 'spent', searchReportId: 'search-report-uuid' }] });
+
+    await expect(unlockUpsellWithCredit(SEARCH_REQUEST, PRICE_ID, ops)).resolves.toEqual({
+      outcome: 'unlocked',
+      searchReportId: 'search-report-uuid',
+    });
+  });
+
+  it('carries out the identifier of a report the spend after a purchase materialised', async () => {
+    const ops = operations({
+      spend: [CONFLICT, { status: 'spent', searchReportId: 'search-report-uuid' }],
+      balance: 0,
+      buy: { status: 'purchased' },
+    });
+
+    await expect(unlockUpsellWithCredit(SEARCH_REQUEST, PRICE_ID, ops)).resolves.toEqual({
+      outcome: 'unlocked',
+      searchReportId: 'search-report-uuid',
+    });
+  });
+
   it('buys before spending where the conflicting spend left a zero balance, and unlocks on the second spend', async () => {
-    const ops = operations({ spend: ['conflict', 'spent'], balance: 0, buy: { status: 'purchased' } });
+    const ops = operations({ spend: [CONFLICT, SPENT], balance: 0, buy: { status: 'purchased' } });
 
     await expect(unlockUpsellWithCredit(REQUEST, PRICE_ID, ops)).resolves.toEqual({ outcome: 'unlocked' });
 
@@ -80,7 +133,7 @@ describe('unlocking a section the new API holds a credit balance for', () => {
    * for it is the mistake this whole inference exists to prevent.
    */
   it('unlocks without buying where the conflicting spend left a credit in the balance', async () => {
-    const ops = operations({ spend: ['conflict'], balance: 1, buy: { status: 'purchased' } });
+    const ops = operations({ spend: [CONFLICT], balance: 1, buy: { status: 'purchased' } });
 
     await expect(unlockUpsellWithCredit(REQUEST, PRICE_ID, ops)).resolves.toEqual({ outcome: 'unlocked' });
 
@@ -89,7 +142,7 @@ describe('unlocking a section the new API holds a credit balance for', () => {
   });
 
   it('refuses without buying where the balance behind the conflict cannot be read', async () => {
-    const ops = operations({ spend: ['conflict'], balance: 'unknown', buy: { status: 'purchased' } });
+    const ops = operations({ spend: [CONFLICT], balance: 'unknown', buy: { status: 'purchased' } });
 
     await expect(unlockUpsellWithCredit(REQUEST, PRICE_ID, ops)).resolves.toEqual({ outcome: 'spend-refused' });
 
@@ -99,7 +152,7 @@ describe('unlocking a section the new API holds a credit balance for', () => {
 
   it('confirms the charge the provider asks the cardholder for, then spends', async () => {
     const ops = operations({
-      spend: ['conflict', 'spent'],
+      spend: [CONFLICT, SPENT],
       balance: 0,
       buy: { status: 'confirmation-required', clientSecret: 'secret' },
       confirm: 'confirmed',
@@ -113,7 +166,7 @@ describe('unlocking a section the new API holds a credit balance for', () => {
 
   it('reports a confirmation that was failed or dismissed, and spends nothing more', async () => {
     const ops = operations({
-      spend: ['conflict', 'spent'],
+      spend: [CONFLICT, SPENT],
       balance: 0,
       buy: { status: 'confirmation-required', clientSecret: 'secret' },
       confirm: 'refused',
@@ -134,7 +187,7 @@ describe('unlocking a section the new API holds a credit balance for', () => {
    */
   it('reports a confirmation it has no instance to make', async () => {
     const ops = operations({
-      spend: ['conflict', 'spent'],
+      spend: [CONFLICT, SPENT],
       balance: 0,
       buy: { status: 'confirmation-required', clientSecret: 'secret' },
       confirm: 'unavailable',
@@ -148,7 +201,7 @@ describe('unlocking a section the new API holds a credit balance for', () => {
   });
 
   it('reports a purchase that was refused, and spends nothing more', async () => {
-    const ops = operations({ spend: ['conflict', 'spent'], balance: 0, buy: { status: 'refused' } });
+    const ops = operations({ spend: [CONFLICT, SPENT], balance: 0, buy: { status: 'refused' } });
 
     await expect(unlockUpsellWithCredit(REQUEST, PRICE_ID, ops)).resolves.toEqual({ outcome: 'purchase-failed' });
 
@@ -162,7 +215,7 @@ describe('unlocking a section the new API holds a credit balance for', () => {
    * even asks what the balance is.
    */
   it('buys nothing and reads no balance where the spend was refused outside a conflict', async () => {
-    const ops = operations({ spend: ['refused'], balance: 0, buy: { status: 'purchased' } });
+    const ops = operations({ spend: [REFUSED], balance: 0, buy: { status: 'purchased' } });
 
     await expect(unlockUpsellWithCredit(REQUEST, PRICE_ID, ops)).resolves.toEqual({ outcome: 'spend-refused' });
 
@@ -177,7 +230,7 @@ describe('unlocking a section the new API holds a credit balance for', () => {
    * later cannot turn into a second purchase inside one attempt.
    */
   it('reports a bought credit the new API then would not spend, without re-reading the balance', async () => {
-    const ops = operations({ spend: ['conflict', 'conflict'], balance: 0, buy: { status: 'purchased' } });
+    const ops = operations({ spend: [CONFLICT, CONFLICT], balance: 0, buy: { status: 'purchased' } });
 
     await expect(unlockUpsellWithCredit(REQUEST, PRICE_ID, ops)).resolves.toEqual({ outcome: 'spend-refused' });
 
@@ -189,11 +242,20 @@ describe('unlocking a section the new API holds a credit balance for', () => {
 
 describe("spending a credit for a section's own unlock button", () => {
   it('answers unlocked where the credit was spent', async () => {
-    const ops = operations({ spend: ['spent'] });
+    const ops = operations({ spend: [SPENT] });
 
-    await expect(spendUpsellCredit(REQUEST, ops)).resolves.toBe('unlocked');
+    await expect(spendUpsellCredit(REQUEST, ops)).resolves.toEqual({ outcome: 'unlocked' });
 
     expect(ops.readBalance).not.toHaveBeenCalled();
+  });
+
+  it('answers with the identifier of the report the spend materialised', async () => {
+    const ops = operations({ spend: [{ status: 'spent', searchReportId: 'search-report-uuid' }] });
+
+    await expect(spendUpsellCredit(SEARCH_REQUEST, ops)).resolves.toEqual({
+      outcome: 'unlocked',
+      searchReportId: 'search-report-uuid',
+    });
   });
 
   /*
@@ -202,33 +264,47 @@ describe("spending a credit for a section's own unlock button", () => {
    * what they already hold.
    */
   it('answers unlocked where a conflict turns out to have a credit behind it', async () => {
-    const ops = operations({ spend: ['conflict'], balance: 2 });
+    const ops = operations({ spend: [CONFLICT], balance: 2 });
 
-    await expect(spendUpsellCredit(REQUEST, ops)).resolves.toBe('unlocked');
+    await expect(spendUpsellCredit(REQUEST, ops)).resolves.toEqual({ outcome: 'unlocked' });
+  });
+
+  /*
+   * Nothing was spent on this path — the content was already unlocked — so there
+   * is no newly materialised report to name, and the answer states none rather
+   * than an identifier nobody read.
+   */
+  it('names no report where the unlock came from the balance rather than a spend', async () => {
+    const ops = operations({ spend: [CONFLICT], balance: 2 });
+
+    await expect(spendUpsellCredit(SEARCH_REQUEST, ops)).resolves.toEqual({
+      outcome: 'unlocked',
+      searchReportId: undefined,
+    });
   });
 
   it('answers no-credit where a conflict turns out to have an empty balance behind it', async () => {
-    const ops = operations({ spend: ['conflict'], balance: 0 });
+    const ops = operations({ spend: [CONFLICT], balance: 0 });
 
-    await expect(spendUpsellCredit(REQUEST, ops)).resolves.toBe('no-credit');
+    await expect(spendUpsellCredit(REQUEST, ops)).resolves.toEqual({ outcome: 'no-credit' });
   });
 
   it('answers refused where the balance behind a conflict cannot be read', async () => {
-    const ops = operations({ spend: ['conflict'], balance: 'unknown' });
+    const ops = operations({ spend: [CONFLICT], balance: 'unknown' });
 
-    await expect(spendUpsellCredit(REQUEST, ops)).resolves.toBe('refused');
+    await expect(spendUpsellCredit(REQUEST, ops)).resolves.toEqual({ outcome: 'refused' });
   });
 
   it('answers refused, and reads no balance, for a refusal outside a conflict', async () => {
-    const ops = operations({ spend: ['refused'] });
+    const ops = operations({ spend: [REFUSED] });
 
-    await expect(spendUpsellCredit(REQUEST, ops)).resolves.toBe('refused');
+    await expect(spendUpsellCredit(REQUEST, ops)).resolves.toEqual({ outcome: 'refused' });
 
     expect(ops.readBalance).not.toHaveBeenCalled();
   });
 
   it('never buys anything: no price has been quoted at this point', async () => {
-    const ops = operations({ spend: ['conflict'], balance: 0 });
+    const ops = operations({ spend: [CONFLICT], balance: 0 });
 
     await spendUpsellCredit(REQUEST, ops);
 

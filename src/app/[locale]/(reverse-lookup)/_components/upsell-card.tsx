@@ -10,12 +10,12 @@ import LimitedOfferTag from '@/components/reverse-lookup/limited-offer-tag';
 import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import { UpsellPurchaseSurface } from '@/components/upsell/upsell-purchase-surface';
-import { useOwnsUpsell } from '@/hooks/api/use-owns-upsell';
+import { type OwnableUpsellKey, useOwnsUpsell } from '@/hooks/api/use-owns-upsell';
 import { useUpsellUnlock } from '@/hooks/api/use-upsell-unlock';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { useMessageErrorToast } from '@/hooks/use-message-error-toast';
 import { recordFunnelUpsell } from '@/libs/funnel-upsell-record';
-import type { UpsellProduct, UpsellProductKey } from '@/libs/upsell-products';
+import type { UpsellProduct } from '@/libs/upsell-products';
 import { useSettings } from '@/settings/settings.provider';
 
 type UpsellCardProps = {
@@ -36,7 +36,12 @@ type UpsellCardProps = {
    * read and to the translations.
    */
   product: UpsellProduct;
-  productKey: UpsellProductKey;
+  /*
+   * Narrower than the application's upsell-key union: a funnel step decides
+   * whether to make its offer at all from the ownership read below, and the
+   * standalone search is the one key that read has no answer for.
+   */
+  productKey: OwnableUpsellKey;
 };
 
 /**
