@@ -14,10 +14,13 @@ import type { SexOffenderSearch } from '@/server/getters/sex-offender-search.get
 import { SexOffenderSearchPurchase } from './sex-offenders-search-purchase';
 
 /*
- * The placeholder every absent field on this feature uses. A registry that named
- * a candidate incompletely — or not at all — still produces a row the member can
- * select and unlock, because the record behind it is addressed by its index and
- * not by its name.
+ * The same placeholder every absent field on this feature shows — written out
+ * literally by the record screen's cards, and named here because a candidate's
+ * name is composed rather than read straight off a field.
+ *
+ * A registry that named a candidate incompletely — or not at all — still produces
+ * a row the member can select and unlock, because the record behind it is
+ * addressed by its index and not by its name.
  */
 const ABSENT = '--';
 
