@@ -16,7 +16,9 @@ export const CURRENT_USER_QUERY_KEY = $api.queryOptions('get', '/api/v1/user/me'
  * view of a member — subscription status, upsellings, purchase prices, the
  * unread notification count — where `/api/v1/user/me` answers with the account
  * itself. A screen that needs one of those other facts asks the endpoint that
- * owns it; there is no longer one call that returns everything.
+ * owns it; there is no longer one call that returns everything, and nothing
+ * composes one either — the fixture that used to stand in for the rest of that
+ * view is gone (ADR 0038).
  *
  * Identity is not one of the things it is for. Who is signed in is already in
  * the tree before hydration, from the sealed session — `useSession` is the

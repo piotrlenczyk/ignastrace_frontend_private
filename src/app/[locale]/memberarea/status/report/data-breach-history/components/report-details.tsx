@@ -10,7 +10,6 @@ import { ROUTES } from '@/constants/routes';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { usePdfDownload } from '@/hooks/use-pdf-download';
 import type { schemas } from '@/network/api/apiServerClient';
-import type { User } from '@/types/user';
 
 import { DownloadReportButton } from '../../components/download-report-button';
 import StickyDownloadButton from '../../components/sticky-download-button';
@@ -23,7 +22,7 @@ export const ReportDetails = ({
   phone,
   reportId,
 }: {
-  user: User;
+  user: schemas['UserResponse'];
   dataLeaks: schemas['DataBreachLeakResponse'][];
   photo: string | null;
   phone: string;
@@ -35,7 +34,7 @@ export const ReportDetails = ({
 
   const { number: formattedPhoneNumber } = formatPhoneNumber(phone);
 
-  const hasUnlimitedDownloads = user.purchase_info?.unlimited_downloads_upsell_available ?? false;
+  const hasUnlimitedDownloads = user.unlimitedPdfDownloadsUnlocked;
 
   const handleDownloadReport = () => {
     return downloadPdf(window.location.href, 'mobitrace-data-breach-history.pdf');

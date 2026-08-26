@@ -76,26 +76,30 @@ because the API can issue one, not because anything here produces one.
 
 ## The member and what they have bought
 
-One legacy call used to answer all of this at once, which is why the two halves below are easy
-to confuse. [ADR 0013](adr/0013-a-mocked-membership-until-the-api-publishes-one.md) records why
-one of them is currently invented.
+One legacy call used to answer all of this at once, which is why the two halves below are easy to
+confuse. They are two upstreams now, and nothing in this application merges them
+([ADR 0038](adr/0038-the-mocked-membership-is-deleted.md)).
 
 **Account**
-: Who someone is, as the account service holds it: an identifier, an email address, a display
-name, a language, a photo, an account type. It is the thing authentication issues a token for,
-and the only part of a member the new API answers questions about.
+: Who someone is, as the account service holds it: an identifier, an email address, a display name,
+a language, a photo, an account type — and three facts about the person rather than the purchase:
+the two email notification preferences, the phone number typed at onboarding, and whether unlimited
+PDF downloads have been unlocked. It is the thing authentication issues a token for, and every
+member field any screen reads comes from here.
 
 **Membership**
-: The commercial relationship — what has been paid, what extras are owned, what a member has asked
-to be notified about. It is _not_ part of the account, and the screens that read what is left of it
-read a fixture. One part of it has left: the state of the subscription, which the payments service
-publishes and which every gating decision now reads from there
-([ADR 0036](adr/0036-the-subscription-gate-reads-the-payments-service.md)).
+: **Not a live concept.** It was the name for the commercial relationship while one legacy response
+carried it alongside the account, and while a fixture stood in for it
+([ADR 0013](adr/0013-a-mocked-membership-until-the-api-publishes-one.md)). The word is kept here only
+so that an old comment or record can be read: what it described is now the **subscription**, which
+belongs to the payments service, plus the **credit balances** and the entitlement the new API
+publishes. Nothing is composed and nothing is invented.
 
 **Member**
-: The account and the membership seen as one object, which is the shape every screen in the
-member area reads. It exists because the legacy call answered in that shape and a dozen screens
-were written against it; it is composed rather than fetched.
+: An account with a subscription. Not an object — no call answers with one, and no type in this
+application describes one. A screen that needs identity reads the account; a screen that gates on
+paying asks the **subscription gate**; a screen that needs to know what somebody owns asks the
+upstream that holds it.
 
 **Subscription status**
 : The payments service's vocabulary, and the only one this application has: `initial`, `incomplete`,
@@ -161,10 +165,11 @@ the payments service publishes are documented as doing both at once.
 **Upselling**
 : **Three different things, and no two of them map onto each other.**
 
-In the funnel, an upselling is one of seven product keys held as a list on the member — the
-extras someone bought alongside the subscription. Owning one is what lets a report screen
-unlock the corresponding section, and having any at all is what sends a member past the upsell
-offer instead of into it.
+In the funnel, an upselling is one of seven product **keys** — the extras someone buys alongside the
+subscription, and the vocabulary this application names them in everywhere. The legacy response held
+them as a list on the member, and that list is gone with the composed shape
+([ADR 0038](adr/0038-the-mocked-membership-is-deleted.md)); the key survives it, as the thing each
+upstream's own identity is looked up by.
 
 In the new API, an upselling is a per-product **credit balance** over three products on an
 endpoint of its own: how many of a thing a member may still spend, not which things they own.
@@ -199,15 +204,15 @@ looked up by, and `UPSELL_CREDIT_PRODUCTS`, the new API's credit-balance product
 `null`, where the new API holds no balance for it.
 
 **Purchase information**
-: What a member paid and what they may still spend: the trial price, the total, what the extras
-came to, and a flag per extra saying whether there is anything left to spend on it. The flags are
-what the report screens unlock on.
-
-**The three prices have no reader left.** The confirmation screens that reported them to analytics
-now read the subscription record's own product price and the upsell catalogue instead
-([ADR 0037](adr/0037-the-funnel-s-purchase-events-report-what-was-bought.md)), so `trial_price`,
-`total_price` and `upsellings_price` — and the member's `currency` beside them — are invented
-numbers nothing asks for. They stay until the mocked membership is deleted whole.
+: **Gone.** The legacy response's block of what a member paid and what they may still spend — the
+trial price, the total, what the extras came to, and a flag per extra — outlived every one of its
+readers and was deleted with the fixture that supplied it
+([ADR 0038](adr/0038-the-mocked-membership-is-deleted.md)). What replaced each part: the report
+screens gate on the new API's **section state**
+([ADR 0028](adr/0028-the-report-reads-move-and-the-unlocks-stay-behind.md)), the confirmation screens
+value their events from the subscription record and the upsell catalogue
+([ADR 0037](adr/0037-the-funnel-s-purchase-events-report-what-was-bought.md)), and what a member may
+still spend is the **credit balance**.
 
 ## The checkout funnel
 

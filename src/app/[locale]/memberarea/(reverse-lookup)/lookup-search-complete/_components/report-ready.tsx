@@ -9,11 +9,11 @@ import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { usePdfDownload } from '@/hooks/use-pdf-download';
 import { cn } from '@/libs/utils';
-import type { User } from '@/types/user';
+import type { schemas } from '@/network/api/apiServerClient';
 
 type ReportReadyProps = {
   className?: string;
-  user: User;
+  user: schemas['UserResponse'];
 };
 
 export const ReportReady = ({ className, user }: ReportReadyProps) => {
@@ -22,7 +22,7 @@ export const ReportReady = ({ className, user }: ReportReadyProps) => {
   const id = useSearchParams().get('id');
   const { downloadPdf, isGenerating } = usePdfDownload();
 
-  const hasUnlimitedDownloads = user.purchase_info?.unlimited_downloads_upsell_available;
+  const hasUnlimitedDownloads = user.unlimitedPdfDownloadsUnlocked;
 
   const handleViewReport = () => {
     router.push(`${ROUTES.MEMBER.STATUS.REPORT}?id=${id}`);

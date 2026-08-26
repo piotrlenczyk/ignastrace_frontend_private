@@ -1,15 +1,24 @@
 # 0013 — A mocked membership stands in until the API publishes one
 
-**Status:** Accepted — August 2026. Temporary by construction; the exit conditions are listed
-below and the record is superseded the day they are met. Two of them have since been met and the
-fields have left the payload: the unread notification tally, which the new API's notification centre
-answers ([0034](0034-the-notification-centre-moves-whole-and-loses-eleven-languages.md)), and the
-subscription's state, which the payments service holds and every gate now reads from there
-([0036](0036-the-subscription-gate-reads-the-payments-service.md)). A third has left the _readers_
-rather than the payload: the amounts and the currency the funnel's purchase events reported now come
-from the subscription record and the upsell catalogue
-([0037](0037-the-funnel-s-purchase-events-report-what-was-bought.md)), so `trial_price`,
-`total_price`, `upsellings_price` and `currency` sit in the fixture with nothing reading them.
+**Status:** Superseded by [0038](0038-the-mocked-membership-is-deleted.md) — August 2026. Temporary
+by construction, and it lasted as long as its exit conditions took. Two were met and the fields left
+the payload: the unread notification tally, which the new API's notification centre answers
+([0034](0034-the-notification-centre-moves-whole-and-loses-eleven-languages.md)), and the
+subscription's state, which the payments service holds and every gate reads from there
+([0036](0036-the-subscription-gate-reads-the-payments-service.md)). A third left the _readers_ rather
+than the payload: the amounts and the currency the funnel's purchase events reported now come from
+the subscription record and the upsell catalogue
+([0037](0037-the-funnel-s-purchase-events-report-what-was-bought.md)). 0038 removed the rest — the
+preferences and the onboarding number, which the account service publishes after all, and the fields
+nothing read — and deleted the composed shape with them. Everything below describes what was, and is
+kept for why it was.
+
+The three records that took its fields: the notification centre's, for the unread count
+([0034](0034-the-notification-centre-moves-whole-and-loses-eleven-languages.md)); this track's gate
+record, for the subscription ([0036](0036-the-subscription-gate-reads-the-payments-service.md)); and
+the deletion itself, which took the last three
+([0038](0038-the-mocked-membership-is-deleted.md)). 0037 emptied the amounts of their readers on the
+way.
 
 ## Context
 
@@ -122,3 +131,10 @@ The mock goes when the API publishes what it stands in for. Concretely, all of:
 Until each of those exists, deleting a field from the payload only moves the invention somewhere
 less visible. When they all do, the two composers stop merging and start reading, the payload module
 is deleted whole, and this record is superseded.
+
+**That happened, and not the way this list expected.** The subscription came from the other
+upstream; the notification tally arrived as written; the preferences and the onboarding number turned
+out to be published by the account service already, so no new home was needed for them. The
+entitlements answer never arrived and was not waited for: the fields that would have needed it had
+lost every reader by then and were deleted rather than re-sourced. See
+[0038](0038-the-mocked-membership-is-deleted.md).

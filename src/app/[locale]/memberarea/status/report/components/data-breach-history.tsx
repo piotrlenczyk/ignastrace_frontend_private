@@ -36,8 +36,8 @@ const DataBreachHistory = ({
 
   /*
    * Whether the member has a credit to spend, read from the new API's balances
-   * rather than from the composed member's list of extras — which is the mocked
-   * membership of ADR 0013 for this key, so the old gate always said yes. A
+   * rather than from the composed member's list of extras — which was a fixture
+   * for this key, so the old gate always said yes. A
    * positive balance attempts the unlock outright; anything else offers the
    * purchase. ADR 0030 records the change.
    */

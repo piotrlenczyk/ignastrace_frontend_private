@@ -1,31 +1,28 @@
 import type { Route } from 'next';
 import { redirect } from 'next/navigation';
 
-import { apiServerClient } from '@/network/api/apiServerClient';
+import { apiServerClient, type schemas } from '@/network/api/apiServerClient';
 import { unwrapApiResponse } from '@/network/http-response-handler';
 import { getSubscription } from '@/server/getters/subscription.getters';
 import { getServerSession } from '@/server/session/session.utils';
 import type { SubscriptionDetails } from '@/types/pricing.types';
-import type { User } from '@/types/user';
-
-import { composeMember } from './membership-mock';
 
 /**
- * The signed-in member as a server render sees one: the account read from the
- * new API, stitched together with the membership facts no endpoint publishes yet.
+ * The signed-in member's account as a server render sees one: the account
+ * service's own response, typed by the generated specification and with nothing
+ * merged onto it.
  *
- * This is the server-side composer. Every screen that used to fetch the funnel's
- * aggregate calls it, so there is one place to rewrite when the commercial
- * endpoints exist — see the mock module, and the ADR it points at.
+ * It used to be stitched together with a fixture standing in for the commercial
+ * half of a member, and it is not any more — every fact that fixture invented is
+ * either read from the upstream that owns it or gone with its last reader. See
+ * docs/adr/0038-the-mocked-membership-is-deleted.md.
  */
-export const getUser = async (): Promise<User> => {
-  const account = await apiServerClient['/api/v1/user/me'].GET().then(unwrapApiResponse);
-
-  return composeMember(account);
+export const getUser = async (): Promise<schemas['UserResponse']> => {
+  return apiServerClient['/api/v1/user/me'].GET().then(unwrapApiResponse);
 };
 
 /**
- * The member, or `undefined` when the caller is an anonymous visitor.
+ * The account, or `undefined` when the caller is an anonymous visitor.
  *
  * The session's own `isLoggedIn` flag decides, rather than the object: an empty
  * session is still an object, so testing truthiness would admit a visitor who
@@ -36,7 +33,7 @@ export const getUser = async (): Promise<User> => {
  * middleware's redirect and their own session check, so nothing downstream needs
  * `/user/me` to raise a 401 on their behalf.
  */
-export const getSignedInUser = async (): Promise<User | undefined> => {
+export const getSignedInUser = async (): Promise<schemas['UserResponse'] | undefined> => {
   const session = await getServerSession();
 
   return session?.isLoggedIn ? getUser() : undefined;

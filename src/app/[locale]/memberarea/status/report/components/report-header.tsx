@@ -9,18 +9,18 @@ import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { usePdfDownload } from '@/hooks/use-pdf-download';
+import type { schemas } from '@/network/api/apiServerClient';
 import type { SectionedReport } from '@/server/getters/reverse-lookup.getters';
-import type { User } from '@/types/user';
 
 import { DownloadReportButton } from './download-report-button';
 
-const ReportHeader = ({ report, user }: { report: SectionedReport; user: User }) => {
+const ReportHeader = ({ report, user }: { report: SectionedReport; user: schemas['UserResponse'] }) => {
   const t = useTranslations('pages.reverse_lookup.report.header');
   const { downloadPdf, isGenerating } = usePdfDownload();
 
   const phoneNumberFormatted = formatPhoneNumber(report.profile.phone ?? '');
   const photo = report.photos[0];
-  const hasUnlimitedDownloads = user.purchase_info?.unlimited_downloads_upsell_available ?? false;
+  const hasUnlimitedDownloads = user.unlimitedPdfDownloadsUnlocked;
 
   const handleDownload = () => {
     return downloadPdf(window.location.href, 'mobitrace-report.pdf');

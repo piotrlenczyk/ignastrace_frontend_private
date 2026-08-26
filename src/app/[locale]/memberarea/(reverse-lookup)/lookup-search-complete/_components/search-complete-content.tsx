@@ -4,11 +4,17 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import { OwnerInformationCard } from '@/components/reverse-lookup/owner-information-card';
-import type { User } from '@/types/user';
+import type { schemas } from '@/network/api/apiServerClient';
 
 import { ReportReady } from './report-ready';
 
-export const SearchCompleteContent = ({ phoneNumber, user }: { phoneNumber: string; user: User }) => {
+export const SearchCompleteContent = ({
+  phoneNumber,
+  user,
+}: {
+  phoneNumber: string;
+  user: schemas['UserResponse'];
+}) => {
   const t = useTranslations('pages.reverse_lookup.member_area.phone_lookup');
   const [isShowPDF, setIsShowPDF] = useState(false);
 

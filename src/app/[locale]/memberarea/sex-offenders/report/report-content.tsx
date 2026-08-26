@@ -9,8 +9,8 @@ import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { usePdfDownload } from '@/hooks/use-pdf-download';
 import { Link } from '@/libs/i18n-routing';
+import type { schemas } from '@/network/api/apiServerClient';
 import type { SexOffenderData } from '@/types/sex-offenders.types';
-import type { User } from '@/types/user';
 
 import AddressInformation from './components/address-information';
 import BodyCharacteristics from './components/body-characteristics';
@@ -25,12 +25,12 @@ export const SexOffenderSearchReportContent = ({
   user,
 }: {
   sexOffenderData: SexOffenderData;
-  user: User;
+  user: schemas['UserResponse'];
 }) => {
   const t = useTranslations('pages.reverse_lookup.report.sex_offenders.report');
   const { downloadPdf, isGenerating } = usePdfDownload();
 
-  const hasUnlimitedDownloads = user.purchase_info?.unlimited_downloads_upsell_available ?? false;
+  const hasUnlimitedDownloads = user.unlimitedPdfDownloadsUnlocked;
 
   const handleDownloadReport = () => {
     return downloadPdf(window.location.href, 'mobitrace-sex-offenders.pdf');

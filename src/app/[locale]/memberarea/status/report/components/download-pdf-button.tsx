@@ -3,15 +3,15 @@
 import { useTranslations } from 'next-intl';
 
 import { usePdfDownload } from '@/hooks/use-pdf-download';
-import type { User } from '@/types/user';
+import type { schemas } from '@/network/api/apiServerClient';
 
 import { DownloadReportButton } from './download-report-button';
 
-const DownloadPdfButton = ({ user }: { user: User }) => {
+const DownloadPdfButton = ({ user }: { user: schemas['UserResponse'] }) => {
   const t = useTranslations('pages.reverse_lookup.report');
   const { downloadPdf, isGenerating } = usePdfDownload();
 
-  const hasUnlimitedDownloads = user.purchase_info?.unlimited_downloads_upsell_available ?? false;
+  const hasUnlimitedDownloads = user.unlimitedPdfDownloadsUnlocked;
 
   const handleDownload = () => {
     return downloadPdf(window.location.href, 'mobitrace-report.pdf');
