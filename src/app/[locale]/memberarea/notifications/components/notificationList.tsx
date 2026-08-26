@@ -3,21 +3,29 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 
-import type { NotificationsApiResponse } from '../hooks/useGetNotifications';
+import type { NotificationRow } from '../notification-row';
 import { NotificationItem } from './notification';
 
-const Results = ({ data, fetchMoreFn }: { data: NotificationsApiResponse; fetchMoreFn: () => void }) => {
+type NotificationListProps = {
+  rows: NotificationRow[];
+  /** Whether the centre carries on past the pages already loaded. */
+  hasMore: boolean;
+  isFetching: boolean;
+  fetchMoreFn: () => void;
+};
+
+const Results = ({ rows, hasMore, isFetching, fetchMoreFn }: NotificationListProps) => {
   const t = useTranslations('pages.notifications');
 
   return (
     <>
       <div className="flex flex-col gap-3">
-        {data.notifications.map((notification) => (
-          <NotificationItem notification={notification} key={notification.id} />
+        {rows.map((row) => (
+          <NotificationItem row={row} key={row.id} />
         ))}
       </div>
-      {data.has_more && (
-        <Button className="mt-4 w-full" variant="secondary" size="lg" onClick={fetchMoreFn}>
+      {hasMore && (
+        <Button className="mt-4 w-full" variant="secondary" size="lg" disabled={isFetching} onClick={fetchMoreFn}>
           {t('load_more')}
         </Button>
       )}
@@ -39,16 +47,6 @@ const EmptyState = () => {
   );
 };
 
-export const NotificationList = ({
-  data,
-  fetchMoreFn,
-}: {
-  data: NotificationsApiResponse;
-  fetchMoreFn: () => void;
-}) => {
-  return data.notifications && data.notifications.length ? (
-    <Results data={data} fetchMoreFn={fetchMoreFn} />
-  ) : (
-    <EmptyState />
-  );
+export const NotificationList = (props: NotificationListProps) => {
+  return props.rows.length ? <Results {...props} /> : <EmptyState />;
 };

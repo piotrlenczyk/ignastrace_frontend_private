@@ -17,7 +17,6 @@ export type User = {
   notify_user_located: boolean;
   subscription_status: SubscriptionStatus;
   upsellings: Upselling[];
-  unread_count: number;
   currency: string;
   purchase_info?: {
     trial_price: number;
