@@ -16,19 +16,32 @@ import type { components as apiComponents } from '@/network/api/api';
  * and `docs/adr/0031-spend-versus-buy-is-settled-from-the-credit-balance.md`.
  */
 
-/** What an attempt to spend a credit can answer. */
+/**
+ * What an attempt to spend a credit can answer.
+ *
+ * An object union rather than three words, because one of the three answers
+ * carries something: the standalone search's spend materialises the report it
+ * unlocks and names it back, and that identifier is born inside the operation.
+ * Every answer in this module is shaped this way now — an operation says
+ * `status`, a sequence below says `outcome` — so nothing has to be captured
+ * beside the rule to get out of it.
+ */
 export type SpendOutcome =
-  /** The credit was spent and the section is unlocked. */
-  | 'spent'
+  /**
+   * The credit was spent and the section is unlocked. `searchReportId` is the
+   * report the spend just materialised, which only `SEX_OFFENDERS_SEARCH` has:
+   * every other product spends against a report that already exists.
+   */
+  | { status: 'spent'; searchReportId?: string }
   /**
    * The new API refused with a conflict, which it uses for two opposite
    * conditions — an empty balance and content that is already unlocked — under
    * one status, one error code and one message. So this says nothing on its own;
    * the balance is what tells the two apart.
    */
-  | 'conflict'
+  | { status: 'conflict' }
   /** Anything else the new API refused with. Never leads to a purchase. */
-  | 'refused';
+  | { status: 'refused' };
 
 /**
  * How many credits of a product the caller holds, or that it could not be read.
@@ -64,13 +77,35 @@ export type ConfirmationOutcome =
 /** The new API's name for a product it holds a credit balance for. */
 export type CreditProduct = apiComponents['schemas']['ConsumeUpsellDto']['product'];
 
-/** Which credit is being spent, against which report, and for which owner. */
-export type SpendRequest = {
-  product: CreditProduct;
-  reportId: string;
-  /** Required for `SEX_OFFENDERS`, and forbidden for every other product. */
-  ownerId?: string;
-};
+/**
+ * Which credit is being spent, and what it is spent against.
+ *
+ * A union over the product rather than one shape with optional fields, because
+ * the new API's rules about those fields are per-product and absolute: it forbids
+ * a report identifier for `SEX_OFFENDERS_SEARCH` and requires a search and a
+ * candidate index instead, and forbids those two everywhere else. Stated as one
+ * shape, an illegal combination compiles and the upstream rejects it at runtime;
+ * stated as this, it does not compile at all.
+ *
+ * The four members are the four products of `CreditProduct`, which the assertion
+ * below keeps them exhaustive over.
+ */
+export type SpendRequest =
+  /** The two report-scoped products, spent against a report the caller owns. */
+  | { product: 'DATA_LEAKS' | 'SOCIAL_NETWORKS'; reportId: string }
+  /** Gated per report owner, so the owner travels with the credit. */
+  | { product: 'SEX_OFFENDERS'; reportId: string; ownerId: string }
+  /** The standalone search, which is not report-scoped: no report exists yet to name. */
+  | { product: 'SEX_OFFENDERS_SEARCH'; searchId: string; candidateIndex: number };
+
+/**
+ * Every product the new API holds a balance for is named by one of the requests
+ * above. A fifth arriving in the generated union is a build failure on this line
+ * rather than an unlock nobody can ask for.
+ */
+type EveryCreditProductIsSpendable = Exclude<CreditProduct, SpendRequest['product']> extends never ? true : never;
+
+const _spendableProductsAreExhaustive: EveryCreditProductIsSpendable = true;
 
 /**
  * The four operations the sequence is composed of. Each is handed in, so the
@@ -93,17 +128,25 @@ export type UnlockOperations = {
  * unlock button's vocabulary, and the branch point of the sequence below.
  */
 export type SettledSpend =
-  /** The section is open: the credit was spent, or it was already unlocked. */
-  | 'unlocked'
+  /**
+   * The section is open: the credit was spent, or it was already unlocked. Only a
+   * spend that actually happened can name a report it materialised, so an unlock
+   * inferred from the balance names none.
+   */
+  | { outcome: 'unlocked'; searchReportId?: string }
   /** The balance is empty, so a purchase is what would open the section. */
-  | 'no-credit'
+  | { outcome: 'no-credit' }
   /** The spend failed, and nothing about the balance is known. Never leads to a purchase. */
-  | 'refused';
+  | { outcome: 'refused' };
 
 /** What a caller acts on. */
 export type UnlockOutcome =
-  /** The section is unlocked: a credit was spent, whether or not one was bought first. */
-  | { outcome: 'unlocked' }
+  /**
+   * The section is unlocked: a credit was spent, whether or not one was bought
+   * first. `searchReportId` names the report the standalone search's spend
+   * materialised, and is the only thing a caller cannot find out any other way.
+   */
+  | { outcome: 'unlocked'; searchReportId?: string }
   /** The charge did not go through. Nothing was spent and nothing is owed. */
   | { outcome: 'purchase-failed' }
   /** The charge needs the cardholder, and the challenge was failed, dismissed or impossible. */
@@ -180,21 +223,21 @@ export const spendUpsellCredit = async (
 ): Promise<SettledSpend> => {
   const outcome = await spend(request);
 
-  if (outcome === 'spent') {
-    return 'unlocked';
+  if (outcome.status === 'spent') {
+    return { outcome: 'unlocked', searchReportId: outcome.searchReportId };
   }
 
-  if (outcome === 'refused') {
-    return 'refused';
+  if (outcome.status === 'refused') {
+    return { outcome: 'refused' };
   }
 
   const balance = await readBalance(request.product);
 
   if (balance === 'unknown') {
-    return 'refused';
+    return { outcome: 'refused' };
   }
 
-  return balance > 0 ? 'unlocked' : 'no-credit';
+  return balance > 0 ? { outcome: 'unlocked' } : { outcome: 'no-credit' };
 };
 
 /**
@@ -221,11 +264,11 @@ export const unlockUpsellWithCredit = async (
 ): Promise<UnlockOutcome> => {
   const firstSpend = await spendUpsellCredit(request, operations);
 
-  if (firstSpend === 'unlocked') {
-    return { outcome: 'unlocked' };
+  if (firstSpend.outcome === 'unlocked') {
+    return { outcome: 'unlocked', searchReportId: firstSpend.searchReportId };
   }
 
-  if (firstSpend === 'refused') {
+  if (firstSpend.outcome === 'refused') {
     return { outcome: 'spend-refused' };
   }
 
@@ -235,7 +278,11 @@ export const unlockUpsellWithCredit = async (
     return { outcome: purchase.outcome };
   }
 
-  return (await operations.spend(request)) === 'spent' ? { outcome: 'unlocked' } : { outcome: 'spend-refused' };
+  const secondSpend = await operations.spend(request);
+
+  return secondSpend.status === 'spent'
+    ? { outcome: 'unlocked', searchReportId: secondSpend.searchReportId }
+    : { outcome: 'spend-refused' };
 };
 
 /**

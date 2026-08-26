@@ -84,16 +84,16 @@ const DataBreachHistory = ({
 
     setIsSpendingCredit(true);
 
-    const outcome = await spendCredit({ product: 'DATA_LEAKS', reportId });
+    const settled = await spendCredit({ product: 'DATA_LEAKS', reportId });
 
     setIsSpendingCredit(false);
 
-    if (outcome === 'no-credit') {
+    if (settled.outcome === 'no-credit') {
       setShowUpsellDialog(true);
       return;
     }
 
-    if (outcome === 'refused') {
+    if (settled.outcome === 'refused') {
       showErrorToast();
       return;
     }

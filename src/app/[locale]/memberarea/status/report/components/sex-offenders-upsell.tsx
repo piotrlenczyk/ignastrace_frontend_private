@@ -17,8 +17,7 @@ const SexOffenderUpsell = ({ open, onOpenChange, reportId, ownerId }: SexOffende
       productKey="sex_offenders"
       translationNamespace="pages.reverse_lookup.report.upsell.sex_offenders"
       benefitKeys={['instant_nationwide_search', 'comprehensive_data', 'realtime_verification']}
-      reportId={reportId}
-      ownerId={ownerId}
+      spendRequest={{ product: 'SEX_OFFENDERS', reportId, ownerId }}
     />
   );
 };

@@ -20,7 +20,7 @@ const DataBreachUpsell = ({ open, onOpenChange, reportId }: DataBreachUpsellProp
         'compromise_isa_contact_details',
         'professional_information_and_technical_data',
       ]}
-      reportId={reportId}
+      spendRequest={{ product: 'DATA_LEAKS', reportId }}
     />
   );
 };

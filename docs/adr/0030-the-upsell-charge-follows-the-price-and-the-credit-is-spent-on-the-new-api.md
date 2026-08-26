@@ -18,7 +18,12 @@ told apart from its identical twin by a fresh reading of the balance. The spend-
 [0032](0032-the-order-success-extras-move-to-payments-and-the-cart-dissolves.md):** the payments
 service's purchased-products endpoint, which this record says is deliberately never asked, **is asked
 by the order-success screen**, whose two extras exist in no other upstream. That is one screen and two
-keys; everywhere else the rule below still holds.
+keys; everywhere else the rule below still holds. **A third line is reversed by the prefactor in #118:**
+the unlock dialog no longer reads spend-versus-buy off `UPSELL_CREDIT_PRODUCTS`. It takes a spend
+request its caller prepared, and the presence of one _is_ the decision — because only the call site
+knows which report, owner, search or candidate is being unlocked, and so only the call site can state a
+request the new API will accept. Both maps stay, and the credit map still answers what a member owns;
+what moved is where the question is asked.
 
 ## Context
 

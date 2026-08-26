@@ -5,12 +5,8 @@ import { useState } from 'react';
 
 import { UpsellPurchaseSurface } from '@/components/upsell/upsell-purchase-surface';
 import { useUpsellUnlock } from '@/hooks/api/use-upsell-unlock';
-import {
-  creditProductFor,
-  resolveUpsellProduct,
-  type UpsellProduct,
-  type UpsellProductKey,
-} from '@/libs/upsell-products';
+import { resolveUpsellProduct, type UpsellProduct, type UpsellProductKey } from '@/libs/upsell-products';
+import type { SpendRequest } from '@/libs/upsell-unlock';
 import { CURRENT_USER_QUERY_KEY } from '@/network/api/hooks/use-current-user-query';
 import { useUpsellProductsQuery } from '@/network/payments-api/hooks/use-upsell-products-query';
 
@@ -38,21 +34,30 @@ type UpsellDialogProps = {
   productKey: ProductKey;
   translationNamespace: UpsellNamespace;
   benefitKeys: string[];
-  /** The report a credit is spent against. Absent for unlimited PDF downloads, which spends none. */
-  reportId?: string;
-  /** The report owner this unlock applies to. Required by the new API for sex offenders, forbidden elsewhere. */
-  ownerId?: string;
+  /**
+   * The credit to spend once the offer is accepted, prepared by the caller.
+   *
+   * Its presence is what decides spend-versus-buy. Absent for unlimited PDF
+   * downloads, which spends nothing and is bought outright.
+   */
+  spendRequest?: SpendRequest;
 };
 
 /**
  * The member area's unlock dialog: one price, one gesture, and the amount it
  * charges is the amount it displays.
  *
- * Both halves of an unlock happen behind the one button. For the three products
- * the new API holds a credit balance for, a credit is spent and one is bought
- * first only where there is nothing to spend; for unlimited PDF downloads there
- * is no balance and the purchase is the whole of it. Which of the two applies is
- * read off `creditProductFor`, not decided here. See ADR 0030.
+ * Both halves of an unlock happen behind the one button. Where the caller handed
+ * down a spend request, a credit is spent and one is bought first only if there
+ * is nothing to spend; where it handed down none — unlimited PDF downloads, which
+ * the new API models as an entitlement — the purchase is the whole of it.
+ *
+ * **Which of the two applies is the caller's statement, not a lookup here.** This
+ * reverses the comment ADR 0030 left in this file, which read the answer off
+ * `creditProductFor` and guarded it with a report identifier. Only the call site
+ * knows which report, owner, search or candidate is being unlocked, so only the
+ * call site can state a request the new API will accept — and a request it will
+ * not accept is now unrepresentable rather than merely unlikely.
  */
 const UpsellDialog = (props: UpsellDialogProps) => {
   /*
@@ -110,8 +115,7 @@ const UpsellPurchase = ({
   productKey,
   translationNamespace,
   benefitKeys,
-  reportId,
-  ownerId,
+  spendRequest,
   product,
 }: UpsellDialogProps & { product: UpsellProduct }) => {
   const { unlockWithCredit, purchase } = useUpsellUnlock();
@@ -122,30 +126,21 @@ const UpsellPurchase = ({
   const [retryCount, setRetryCount] = useState(0);
   const [showMessage, setShowMessage] = useState(false);
 
-  const creditProduct = creditProductFor(productKey);
-
   const handlePurchase = async () => {
     setIsPending(true);
 
-    /*
-     * A credit-balance product is unlocked; anything else is simply bought. The
-     * `reportId` guard is the type checker's rather than a case that happens: every
-     * caller opening a credit-balance dialog passes the report it is unlocking, and
-     * a spend with nothing to spend against is not representable.
-     */
-    const succeeded =
-      creditProduct && reportId
-        ? (await unlockWithCredit({ product: creditProduct, reportId, ownerId }, product.price.id)).outcome ===
-          'unlocked'
-        : (await purchase(product.price.id)).outcome === 'purchased';
+    /* A prepared request is unlocked; anything else is simply bought. */
+    const succeeded = spendRequest
+      ? (await unlockWithCredit(spendRequest, product.price.id)).outcome === 'unlocked'
+      : (await purchase(product.price.id)).outcome === 'purchased';
 
     /*
-     * Unlimited PDF downloads is an entitlement on the account rather than a
-     * balance, so what a screen gates on is the current-user read. Invalidating it
-     * here is the client-side half; the refresh the success message fires is the
-     * server-rendered half.
+     * Unlimited PDF downloads — the only upsell this dialog buys outright — is an
+     * entitlement on the account rather than a balance, so what a screen gates on
+     * is the current-user read. Invalidating it here is the client-side half; the
+     * refresh the success message fires is the server-rendered half.
      */
-    if (succeeded && !creditProduct) {
+    if (succeeded && !spendRequest) {
       await queryClient.invalidateQueries({ queryKey: CURRENT_USER_QUERY_KEY });
     }
 
