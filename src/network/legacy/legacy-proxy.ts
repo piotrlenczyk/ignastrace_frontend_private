@@ -16,12 +16,12 @@ import { LEGACY_PROXY_BASE_PATH } from './legacy-proxy-path';
  * onto an arbitrary one.
  *
  * The count that argument was first made about — twenty-nine hooks — has been
- * emptied by the retirement track down to **three call sites**: the standalone
- * sex-offender search, its upselling purchase, and the public subscription
- * cancellation. The notification centre's two went with its move onto the new
- * API. It is stated so that whoever weighs the argument next weighs it against
- * the surface that is actually left, and so that the number is corrected rather
- * than quietly inherited.
+ * emptied by the retirement track down to **two call sites**: the standalone
+ * sex-offender search and its upselling purchase. The notification centre's two
+ * went with its move onto the new API, and the public subscription cancellation
+ * with its move onto payments. It is stated so that whoever weighs the argument
+ * next weighs it against the surface that is actually left, and so that the
+ * number is corrected rather than quietly inherited.
  *
  * A dot segment in the path can therefore reach a sibling path on that host —
  * which is the same access the browser already has, and nothing beyond it,

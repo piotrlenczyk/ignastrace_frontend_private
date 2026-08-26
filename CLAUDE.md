@@ -65,7 +65,16 @@ keeps its legacy palette and components and only its fetching changes: it shows 
 header badge reads the member's real unread count instead of the hard-coded three in ADR 0013's mock
 — the first field to leave that mock because a real endpoint arrived. That record also diverges from
 0026 on where a paged read happens, and it takes the browser-side legacy surface down to three call
-sites. The billing screen is off the legacy client entirely; what that costs is that the legacy
+sites. The **public cancellation form** has since taken it to two: its write moved onto payments'
+`POST /internal/subscriptions/cancel`, reversing the last standing line of 0025
+(`docs/adr/0035-the-public-cancellation-follows-onto-payments-through-a-server-action.md`). Read that
+one before moving another call into a refused path family. The payments proxy still refuses the whole
+`internal` family to the browser, so the call is a **server action** — not a hook, and not an exception
+in that list — and because the endpoint cancels by user id where the form collects an address, the
+action resolves the address first through the API's `POST /api/v1/auth/get-user-by-email`, which the API
+proxy likewise refuses to page scripts. It is also the one payments write that does **not** pay 0023's
+cost: that endpoint declares no security and acts on the user named in its body, so it cancels the
+member's subscription rather than the shared technical account's. The billing screen is off the legacy client entirely; what that costs is that the legacy
 population is redirected off it, and every payments write — an upsell charge included — is raised as
 the shared technical account. Outside that track, still don't rewrite a screen's fetching unless you
 are redesigning the screen.
