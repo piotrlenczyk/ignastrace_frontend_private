@@ -86,10 +86,11 @@ name, a language, a photo, an account type. It is the thing authentication issue
 and the only part of a member the new API answers questions about.
 
 **Membership**
-: The commercial relationship — whether a subscription was ever bought and what state it is in,
-what has been paid, what extras are owned, what a member has asked to be notified about. It is
-_not_ part of the account, no endpoint publishes it, and every screen that gates on it currently
-reads a fixture.
+: The commercial relationship — what has been paid, what extras are owned, what a member has asked
+to be notified about. It is _not_ part of the account, and the screens that read what is left of it
+read a fixture. One part of it has left: the state of the subscription, which the payments service
+publishes and which every gating decision now reads from there
+([ADR 0036](adr/0036-the-subscription-gate-reads-the-payments-service.md)).
 
 **Member**
 : The account and the membership seen as one object, which is the shape every screen in the
@@ -97,9 +98,25 @@ member area reads. It exists because the legacy call answered in that shape and 
 were written against it; it is composed rather than fetched.
 
 **Subscription status**
-: The funnel's vocabulary for where a member stands: never bought, incomplete, active, cancelled
-but still running, expired. The gating decisions are expressed in these terms — no subscription
-sends someone to checkout, an ended one sends them to billing.
+: The payments service's vocabulary, and the only one this application has: `initial`, `incomplete`,
+`active`, `cancelled`, `expired`. A sixth value is derived rather than published — `pending`, for a
+subscription the service is still retrying payment on, which is `expired` carrying a next payment
+attempt.
+
+Access is not a status but a rule, `hasAccess`, computed once where the subscription is read:
+`active`, `cancelled` before its expiry, or `expired` with an attempt still to come. The three
+buckets the **subscription gate** routes on are built from it — no record at all, `initial` or
+`incomplete` mean no subscription; `hasAccess` means the member is paying; anything else has ended.
+Those two statuses are the only ones anything branches on by name. Where each bucket sends somebody
+is the call site's to say, and by convention it is checkout for the first and billing for the last.
+
+**Subscription gate**
+: The one question every screen that gates on paying asks: where does this caller belong? It answers
+with a route or with nothing, out of three buckets — no subscription, active subscription, ended
+subscription — and each call site names where each bucket sends somebody. A signed-out visitor is
+always left where they are, and so is a member whose subscription cannot be read at all: an outage
+in the payments service moves nobody
+([ADR 0036](adr/0036-the-subscription-gate-reads-the-payments-service.md)).
 
 **Reactivation**
 : Buying a subscription again after the previous one **expired**. A member in that state is not

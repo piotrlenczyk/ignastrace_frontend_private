@@ -3,8 +3,9 @@ import { redirect } from 'next/navigation';
 
 import { apiServerClient } from '@/network/api/apiServerClient';
 import { unwrapApiResponse } from '@/network/http-response-handler';
+import { getSubscription } from '@/server/getters/subscription.getters';
 import { getServerSession } from '@/server/session/session.utils';
-import type { SubscriptionStatus } from '@/types/subscription';
+import type { SubscriptionDetails } from '@/types/pricing.types';
 import type { User } from '@/types/user';
 
 import { composeMember } from './membership-mock';
@@ -41,49 +42,106 @@ export const getSignedInUser = async (): Promise<User | undefined> => {
   return session?.isLoggedIn ? getUser() : undefined;
 };
 
-/** The statuses that mean no payment has ever succeeded. */
-const NEVER_PAID: SubscriptionStatus[] = ['initial', 'incomplete', 'incomplete_expired'];
-
-/** Has paid for a subscription at some point, whatever became of it since. */
-export const hasSubscription = (user: User) => !NEVER_PAID.includes(user.subscription_status);
-
-/** Has access now. A cancelled subscription still runs to the end of its period. */
-export const hasActiveSubscription = (user: User) =>
-  user.subscription_status === 'active' || user.subscription_status === 'cancelled';
-
-/** Has run out and will not renew — the member has to start a new subscription. */
-export const hasEndedSubscription = (user: User) => user.subscription_status === 'expired';
-
 /**
  * Where the three states of a subscription send a member. A route left out means
  * "stay on this screen".
  */
 export type SubscriptionRoutes = {
-  /** Never paid. */
+  /** No record at all, or one no payment ever succeeded against. */
   noSubscription?: Route;
-  /** Paying, or cancelled but still inside the paid period. */
+  /** Has access: paying, inside a cancelled period, or still being retried. */
   activeSubscription?: Route;
-  /** Expired. */
+  /** Ran out, and nobody is retrying it. */
   endedSubscription?: Route;
+};
+
+/** The gate's third answer, which is neither a subscription nor the absence of one. */
+const UNREADABLE = Symbol('unreadable subscription');
+
+/**
+ * The member's subscription, `undefined` where the payments service holds none,
+ * and `UNREADABLE` where it could not be asked at all.
+ *
+ * Three answers rather than two, because the gate acts differently on each and
+ * the difference is the point of this module's fail-open branch: an absence is
+ * an ordinary fact about a member, while a service that refuses or cannot be
+ * reached is a fact about neither the member nor this application, and must not
+ * move anybody.
+ *
+ * Both failures are caught here — the refusal the service answers with, and the
+ * rejection a transport failure raises — because a member reading a screen is
+ * ejected from it either way otherwise, and the difference between a 500 and an
+ * unresolvable host is not one the member can act on.
+ */
+const readSubscription = async (): Promise<SubscriptionDetails | undefined | typeof UNREADABLE> => {
+  try {
+    const { data, error, response } = await getSubscription();
+
+    if (data) {
+      return data;
+    }
+
+    if (response.status === 404) {
+      return undefined;
+    }
+
+    console.error(
+      `The subscription gate could not read the payments service (${response.status}); nobody is moved.`,
+      error,
+    );
+  } catch (failure) {
+    console.error('The subscription gate could not reach the payments service; nobody is moved.', failure);
+  }
+
+  return UNREADABLE;
 };
 
 /**
  * The route this member's subscription state calls for, or `undefined` to stay
  * put. A guest always stays put — a screen that must not be seen by one guards
  * that itself.
+ *
+ * The answer comes from the payments service, which is the only upstream that
+ * models a subscription, and through the same `hasAccess` rule the billing
+ * screen branches on: one rule for access, one upstream that answers it. The
+ * member's account is not read here at all — it has nothing to say about a
+ * subscription — so a gated render costs one upstream call rather than two.
+ *
+ * Whether the caller is a member is settled from the session's own flag rather
+ * than from anything the network says, and that is load-bearing: the payments
+ * credential is seeded for any session the middleware can read, so a visitor
+ * would otherwise be answered with the shared technical account's subscription
+ * and redirected off the public screens.
+ *
+ * Only a 404 means "no subscription". Every other refusal — and a service that
+ * cannot be reached at all — leaves the member exactly where they are and is
+ * logged, which diverges on purpose from the billing screen's reading of the
+ * same getter: that screen cannot render without the record, so absence and
+ * outage are the same thing to it, while this one only needs to know whether it
+ * is entitled to move somebody. Ejecting the paying population from the member
+ * area on a foreign system's outage — or putting a payment button in front of
+ * them — is the worse failure.
+ *
+ * See docs/adr/0036-the-subscription-gate-reads-the-payments-service.md.
  */
 export const getSubscriptionRedirect = async (options: { routes: SubscriptionRoutes }): Promise<Route | undefined> => {
-  const user = await getSignedInUser();
+  const session = await getServerSession();
 
-  if (!user) {
+  if (!session?.isLoggedIn) {
     return undefined;
   }
 
-  if (!hasSubscription(user)) {
+  const subscription = await readSubscription();
+
+  if (subscription === UNREADABLE) {
+    return undefined;
+  }
+
+  if (!subscription || subscription.status === 'initial' || subscription.status === 'incomplete') {
     return options.routes.noSubscription;
   }
 
-  if (hasActiveSubscription(user)) {
+  if (subscription.hasAccess) {
     return options.routes.activeSubscription;
   }
 

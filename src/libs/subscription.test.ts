@@ -1,61 +1,80 @@
 import type { Route } from 'next';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { SubscriptionStatus } from '@/types/subscription';
-import type { User } from '@/types/user';
+import type { paymentsSchemas } from '@/network/payments-api/payments-api-server-client';
+/*
+ * The kit installs the substitutions on import, so it comes before the module
+ * under test — which is pulled in with `await import(...)` below for the same
+ * reason.
+ */
+import { paymentsRefusal, redirect, REDIRECTED, resetKit, serveApi, signedIn } from '@/test/server-write-kit';
 
-import {
-  getSubscriptionRedirect,
-  hasActiveSubscription,
-  hasEndedSubscription,
-  hasSubscription,
-  redirectIfAuthenticated,
-} from './subscription';
+const { getSubscriptionRedirect, redirectIfAuthenticated } = await import('./subscription');
 
 /*
- * Only the two boundaries are mocked: who the session says is here, and what the
- * account service answers. Everything between them — the composer, the three
- * predicates, the branch that picks a route — is the code under test, which is
- * the point of the shape it now has. The version this replaced had to mock five
- * exports of its own dependency to say anything at all.
+ * The subscription gate: the one function every gated screen asks where a member
+ * belongs.
+ *
+ * Nothing of this application is substituted. The gate, the getter it reads, the
+ * `hasAccess` rule that getter computes and the redirect itself are all inside
+ * the test, and the only boundaries are the request's cookie jar and `fetch` —
+ * which is the point. The gate's whole job is a routing decision taken from an
+ * upstream answer, so a test that stood in for the answer, or for the decision,
+ * could not say anything about either.
  */
-const { getServerSession, composeMember, redirect } = vi.hoisted(() => ({
-  getServerSession: vi.fn(),
-  composeMember: vi.fn(),
-  redirect: vi.fn(),
-}));
 
-vi.mock('@/server/session/session.utils', () => ({ getServerSession }));
-vi.mock('@/libs/membership-mock', () => ({ composeMember }));
-vi.mock('next/navigation', () => ({ redirect }));
-vi.mock('@/network/api/apiServerClient', () => ({
-  apiServerClient: { '/api/v1/user/me': { GET: vi.fn().mockResolvedValue({}) } },
-}));
-vi.mock('@/network/http-response-handler', () => ({
-  unwrapApiResponse: <T>(response: T) => response,
-}));
+const SUBSCRIPTIONS_PATH = '/subscriptions';
 
-const memberWith = (subscription_status: SubscriptionStatus): User => ({
-  id: 'member-1',
-  email: 'member@example.com',
-  locale: 'en',
-  notify_status_changes: true,
-  notify_user_located: true,
-  subscription_status,
-  upsellings: [],
-  currency: 'usd',
-  onboarding_phone_number: '+12025550143',
+const IN_A_WEEK = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
+const A_WEEK_AGO = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+
+/**
+ * As much of the payments service's subscription as the gate's rule reads.
+ *
+ * The overrides are typed against the generated shape rather than left open, so
+ * that a misspelled `cancelledAt` fails the type check instead of quietly
+ * describing a subscription the service could never answer with.
+ */
+const subscription = (overrides: Partial<paymentsSchemas['SubscriptionResponseDto']>) => ({
+  id: '473ec52e-fe53-42f5-97ca-1042c945f866',
+  provider: 'stripe',
+  onTrial: false,
+  providerSubscriptionId: 'sub_1NiybOExYvlWir54VD73AXXF',
+  createdAt: A_WEEK_AGO,
+  expiresAt: IN_A_WEEK,
+  ...overrides,
 });
 
-/** The visitor is signed in, and their subscription is in this state. */
-const signedInWith = (status: SubscriptionStatus) => {
-  getServerSession.mockResolvedValue({ isLoggedIn: true });
-  composeMember.mockReturnValue(memberWith(status));
+const servePayments = (route: { status: number; body?: unknown }) => serveApi({ [SUBSCRIPTIONS_PATH]: route });
+
+/** The subscription the payments service holds for this member. */
+const holding = (overrides: Partial<paymentsSchemas['SubscriptionResponseDto']>) =>
+  servePayments({ status: 200, body: subscription(overrides) });
+
+/** The answer the service gives for a member it has no subscription row for. */
+const holdingNothing = () =>
+  servePayments({ status: 404, body: paymentsRefusal(404, 'Subscription for user not found') });
+
+/**
+ * The service refusing for a reason that is not an absence, with the incident it
+ * logs captured rather than printed through the test run.
+ */
+const refusing = () => {
+  servePayments({ status: 500, body: paymentsRefusal(500, 'Internal server error') });
+
+  return vi.spyOn(console, 'error').mockImplementation(() => {});
 };
 
-/** Nobody is signed in. An empty session object, because that is what a guest gets. */
-const signedOut = () => {
-  getServerSession.mockResolvedValue({ isLoggedIn: false });
+/**
+ * The service not answering at all. Serving no route at all is what the kit turns
+ * into a rejected request, which is the shape a transport failure arrives in —
+ * an unresolvable host or a reset connection, rather than a refusal with a status
+ * on it.
+ */
+const unreachable = () => {
+  serveApi({});
+
+  return vi.spyOn(console, 'error').mockImplementation(() => {});
 };
 
 const ROUTES = {
@@ -64,73 +83,105 @@ const ROUTES = {
   endedSubscription: '/memberarea/settings/billing' as Route,
 };
 
-beforeEach(() => {
-  vi.clearAllMocks();
+const routeFor = () => getSubscriptionRedirect({ routes: ROUTES });
+
+beforeEach(async () => {
+  resetKit();
+  await signedIn();
 });
 
-describe('the subscription predicates', () => {
-  it.each<[SubscriptionStatus, boolean]>([
-    ['initial', false],
-    ['incomplete', false],
-    ['incomplete_expired', false],
-    ['active', true],
-    ['cancelled', true],
-    ['expired', true],
-  ])('hasSubscription is %s → %s', (status, expected) => {
-    expect(hasSubscription(memberWith(status))).toBe(expected);
-  });
-
-  it.each<[SubscriptionStatus, boolean]>([
-    ['initial', false],
-    ['incomplete', false],
-    ['incomplete_expired', false],
-    ['active', true],
-    ['cancelled', true],
-    ['expired', false],
-  ])('hasActiveSubscription is %s → %s', (status, expected) => {
-    expect(hasActiveSubscription(memberWith(status))).toBe(expected);
-  });
-
-  it('reads only an expired subscription as ended', () => {
-    expect(hasEndedSubscription(memberWith('expired'))).toBe(true);
-    expect(hasEndedSubscription(memberWith('cancelled'))).toBe(false);
-  });
+afterEach(() => {
+  vi.restoreAllMocks();
 });
 
 describe('getSubscriptionRedirect()', () => {
-  it('sends a member who has never paid to the no-subscription route', async () => {
-    signedInWith('initial');
+  it('sends a member whose subscription never got past `initial` to the no-subscription route', async () => {
+    holding({ status: 'initial' });
 
-    await expect(getSubscriptionRedirect({ routes: ROUTES })).resolves.toBe(ROUTES.noSubscription);
+    await expect(routeFor()).resolves.toBe(ROUTES.noSubscription);
+  });
+
+  it('sends a member whose subscription never completed to the no-subscription route', async () => {
+    holding({ status: 'incomplete' });
+
+    await expect(routeFor()).resolves.toBe(ROUTES.noSubscription);
+  });
+
+  it('sends a member the service holds no subscription for to the no-subscription route', async () => {
+    holdingNothing();
+
+    await expect(routeFor()).resolves.toBe(ROUTES.noSubscription);
   });
 
   it('sends a paying member to the active route', async () => {
-    signedInWith('active');
+    holding({ status: 'active' });
 
-    await expect(getSubscriptionRedirect({ routes: ROUTES })).resolves.toBe(ROUTES.activeSubscription);
+    await expect(routeFor()).resolves.toBe(ROUTES.activeSubscription);
   });
 
-  it('sends a member inside a cancelled but unexpired period to the active route', async () => {
-    signedInWith('cancelled');
+  it('keeps a cancelled member on the active route until their period runs out', async () => {
+    holding({ status: 'cancelled', expiresAt: IN_A_WEEK, cancelledAt: A_WEEK_AGO });
 
-    await expect(getSubscriptionRedirect({ routes: ROUTES })).resolves.toBe(ROUTES.activeSubscription);
+    await expect(routeFor()).resolves.toBe(ROUTES.activeSubscription);
   });
 
-  it('sends an expired member to the ended route', async () => {
-    signedInWith('expired');
+  it('sends a cancelled member past their expiry to the ended route', async () => {
+    holding({ status: 'cancelled', expiresAt: A_WEEK_AGO, cancelledAt: A_WEEK_AGO });
 
-    await expect(getSubscriptionRedirect({ routes: ROUTES })).resolves.toBe(ROUTES.endedSubscription);
+    await expect(routeFor()).resolves.toBe(ROUTES.endedSubscription);
   });
 
-  it('leaves a guest where they are, without reading the account', async () => {
-    signedOut();
+  it('keeps a member the service is still retrying payment on the active route', async () => {
+    holding({ status: 'expired', expiresAt: A_WEEK_AGO, nextPaymentAttemptAt: IN_A_WEEK });
 
-    await expect(getSubscriptionRedirect({ routes: ROUTES })).resolves.toBeUndefined();
-    expect(composeMember).not.toHaveBeenCalled();
+    await expect(routeFor()).resolves.toBe(ROUTES.activeSubscription);
+  });
+
+  it('sends an expired member nobody is retrying to the ended route', async () => {
+    holding({ status: 'expired', expiresAt: A_WEEK_AGO });
+
+    await expect(routeFor()).resolves.toBe(ROUTES.endedSubscription);
+  });
+
+  it('reads the subscription from the payments service and nothing else', async () => {
+    const payments = holding({ status: 'active' });
+
+    await routeFor();
+
+    expect(payments.paths()).toEqual([SUBSCRIPTIONS_PATH]);
+  });
+
+  it('leaves a member where they are when the payments service refuses for any other reason', async () => {
+    refusing();
+
+    await expect(routeFor()).resolves.toBeUndefined();
+  });
+
+  it('reports an unreadable subscription as an incident', async () => {
+    const reported = refusing();
+
+    await routeFor();
+
+    expect(reported).toHaveBeenCalled();
+  });
+
+  it('leaves a member where they are when the payments service cannot be reached at all', async () => {
+    const reported = unreachable();
+
+    await expect(routeFor()).resolves.toBeUndefined();
+    expect(reported).toHaveBeenCalled();
+  });
+
+  it('leaves a signed-out visitor where they are, without calling the payments service', async () => {
+    resetKit();
+    const payments = servePayments({ status: 200, body: subscription({ status: 'active' }) });
+
+    await expect(routeFor()).resolves.toBeUndefined();
+    expect(payments.paths()).toEqual([]);
   });
 
   it('leaves a member where they are when their state names no route', async () => {
-    signedInWith('active');
+    holding({ status: 'active' });
 
     await expect(
       getSubscriptionRedirect({ routes: { endedSubscription: ROUTES.endedSubscription } }),
@@ -140,15 +191,40 @@ describe('getSubscriptionRedirect()', () => {
 
 describe('redirectIfAuthenticated()', () => {
   it('redirects a member whose state names a route', async () => {
-    signedInWith('expired');
+    holding({ status: 'expired', expiresAt: A_WEEK_AGO });
 
-    await redirectIfAuthenticated(ROUTES);
+    await expect(redirectIfAuthenticated(ROUTES)).rejects.toThrow(REDIRECTED);
 
     expect(redirect).toHaveBeenCalledWith(ROUTES.endedSubscription);
   });
 
-  it('does not redirect a guest', async () => {
-    signedOut();
+  it('redirects a paying member off a public screen', async () => {
+    holding({ status: 'active' });
+
+    await expect(redirectIfAuthenticated(ROUTES)).rejects.toThrow(REDIRECTED);
+
+    expect(redirect).toHaveBeenCalledWith(ROUTES.activeSubscription);
+  });
+
+  it('redirects a member who has never paid to the no-subscription route', async () => {
+    holdingNothing();
+
+    await expect(redirectIfAuthenticated(ROUTES)).rejects.toThrow(REDIRECTED);
+
+    expect(redirect).toHaveBeenCalledWith(ROUTES.noSubscription);
+  });
+
+  it('leaves a member with no subscription on the public screen they are reading', async () => {
+    holdingNothing();
+
+    await redirectIfAuthenticated({ endedSubscription: ROUTES.endedSubscription });
+
+    expect(redirect).not.toHaveBeenCalled();
+  });
+
+  it('does not redirect a signed-out visitor', async () => {
+    resetKit();
+    servePayments({ status: 200, body: subscription({ status: 'active' }) });
 
     await redirectIfAuthenticated(ROUTES);
 

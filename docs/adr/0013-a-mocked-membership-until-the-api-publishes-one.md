@@ -1,7 +1,11 @@
 # 0013 — A mocked membership stands in until the API publishes one
 
 **Status:** Accepted — August 2026. Temporary by construction; the exit conditions are listed
-below and the record is superseded the day they are met.
+below and the record is superseded the day they are met. Two of them have since been met and the
+fields have left the payload: the unread notification tally, which the new API's notification centre
+answers ([0034](0034-the-notification-centre-moves-whole-and-loses-eleven-languages.md)), and the
+subscription's state, which the payments service holds and every gate now reads from there
+([0036](0036-the-subscription-gate-reads-the-payments-service.md)).
 
 ## Context
 
@@ -100,11 +104,15 @@ relationship is invented.
 
 The mock goes when the API publishes what it stands in for. Concretely, all of:
 
-- an endpoint answering the subscription's state, in terms the gating decision can be expressed in —
-  never bought, active, ended;
+- ~~an endpoint answering the subscription's state, in terms the gating decision can be expressed in —
+  never bought, active, ended;~~ **met, by the other upstream.** The payments service publishes the
+  subscription, and 0036 moved the gate onto it. Not the way this record expected — it is not the new
+  API, and the call is raised as one shared technical account rather than as the member — so the fact
+  is real but whose fact it is remains wrong until 0023 is paid off;
 - an entitlements answer that resolves what the funnel calls **upsellings** into whatever the new
   model turns out to be, and a decision about what the report screens should ask for instead;
-- a notification tally, and somewhere to store the two preferences;
+- ~~a notification tally~~, **met** — the notification centre publishes the unread count, per 0034 —
+  and somewhere to store the two preferences;
 - somewhere the onboarding phone number lives.
 
 Until each of those exists, deleting a field from the payload only moves the invention somewhere

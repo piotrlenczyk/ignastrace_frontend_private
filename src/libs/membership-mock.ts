@@ -13,18 +13,21 @@ import type { Upselling, User } from '@/types/user';
  * API and still need them, so they come from here until an endpoint publishes
  * them.
  *
- * One field has already left on those terms: the count of unread notifications,
- * which the new API's notification centre now answers for. That is the exit this
- * mock is supposed to have, taken a field at a time.
+ * Two facts have already left on those terms: the count of unread notifications,
+ * which the new API's notification centre now answers for, and the state of the
+ * subscription, which the payments service holds and the subscription gate now
+ * reads directly. That is the exit this mock is supposed to have, taken a field
+ * at a time.
  *
  * Almost, because there is one exception, and the type below carves it out:
  * whether unlimited PDF downloads have been unlocked is a fact the account
  * service does hold, so it is read rather than invented.
  *
- * Two payloads sit side by side because the two worlds behave differently on
- * every gated screen, and a developer has to be able to walk both. `ACTIVE_MEMBERSHIP`
- * names the one in force; changing that one line moves the whole application
- * between them.
+ * Two payloads sit side by side because a developer has to be able to walk both
+ * of the worlds the remaining fields describe. `ACTIVE_MEMBERSHIP` names the one
+ * in force; changing that one line moves the whole application between them. It
+ * no longer moves the subscription gate, which reads a record rather than this
+ * file.
  */
 
 /**
@@ -48,7 +51,6 @@ export type MockMembership = Omit<User, 'id' | 'email' | 'locale' | 'upsellings'
 export const SUBSCRIBED_MEMBERSHIP: MockMembership = {
   notify_status_changes: true,
   notify_user_located: true,
-  subscription_status: 'active',
   upsellings: ['sex_offenders', 'data_leaks'],
   currency: 'usd',
   /*
@@ -67,14 +69,14 @@ export const SUBSCRIBED_MEMBERSHIP: MockMembership = {
 };
 
 /**
- * A member who has never paid. Every subscription gate sends this one away, which
- * is the path that has no other way of being reached while the backend cannot
- * answer the question.
+ * A member who has never paid: no extras owned, nothing to spend, and both
+ * notification preferences off. Where they are sent is no longer decided here —
+ * the subscription gate asks the payments service — so this payload now differs
+ * from the other one only in what it says a member owns.
  */
 export const UNSUBSCRIBED_MEMBERSHIP: MockMembership = {
   notify_status_changes: false,
   notify_user_located: false,
-  subscription_status: 'initial',
   upsellings: [],
   currency: 'usd',
   purchase_info: {

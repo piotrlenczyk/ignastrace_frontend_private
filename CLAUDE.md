@@ -74,7 +74,17 @@ in that list — and because the endpoint cancels by user id where the form coll
 action resolves the address first through the API's `POST /api/v1/auth/get-user-by-email`, which the API
 proxy likewise refuses to page scripts. It is also the one payments write that does **not** pay 0023's
 cost: that endpoint declares no security and acts on the user named in its body, so it cancels the
-member's subscription rather than the shared technical account's. The billing screen is off the legacy client entirely; what that costs is that the legacy
+member's subscription rather than the shared technical account's. The **subscription gate** — the one
+function every gated screen and every public marketing screen asks where a caller belongs — has since
+left the mocked membership of ADR 0013 for the payments service, which extends 0023's cost from the
+billing screen to the whole application
+(`docs/adr/0036-the-subscription-gate-reads-the-payments-service.md`). Access is one rule, the
+`hasAccess` the billing screen already branched on, computed once in `getSubscription()`; the gate maps
+it onto its three buckets, reads no account at all, settles guest-versus-member from the session's
+`isLoggedIn` flag, and treats **only a 404** as "no subscription" — every other refusal, and a service
+that cannot be reached at all, moves nobody and logs. Read that record before changing where a gate sends anybody, and before assuming a routing bug is
+one: when the shared technical account's own subscription expires, every member is routed as though
+theirs had. The billing screen is off the legacy client entirely; what that costs is that the legacy
 population is redirected off it, and every payments write — an upsell charge included — is raised as
 the shared technical account. Outside that track, still don't rewrite a screen's fetching unless you
 are redesigning the screen.
