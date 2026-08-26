@@ -1,5 +1,3 @@
-import type { SubscriptionStatus } from './subscription';
-
 export type Upselling =
   | 'support_hotline'
   | 'scan_pro'
@@ -15,7 +13,6 @@ export type User = {
   locale: string;
   notify_status_changes: boolean;
   notify_user_located: boolean;
-  subscription_status: SubscriptionStatus;
   upsellings: Upselling[];
   currency: string;
   purchase_info?: {
