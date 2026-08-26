@@ -884,6 +884,66 @@ export type paths = {
     patch?: never;
     trace?: never;
   };
+  '/api/v1/sex-offender-searches': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Run a sex-offender registry search
+     * @description Searches the registry by name, optionally filtered by city/state/ZIP, and stores the vendor's response. Free — only unlocking a specific candidate is charged. Returns the candidate list; an empty list is a normal result, not an error. Fails 503 without persisting anything if the provider is unavailable.
+     */
+    post: operations['createSexOffenderSearch'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/v1/sex-offender-searches/{searchId}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Re-read a search and its candidates
+     * @description Re-derives the candidate list from the search's stored vendor payload, so `candidateIndex` is identical to the one returned when the search was created. 404s when the search is not the caller's — deliberately the same status as a search that does not exist.
+     */
+    get: operations['getSexOffenderSearch'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/v1/sex-offender-search-reports/{searchReportId}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Read a purchased sex-offender search report
+     * @description Returns the full record for a candidate the caller has unlocked. The row existing is the entitlement. 404s when the report is not the caller's — the same status as one that does not exist. Every 200 writes exactly one compliance access-log row; a 404 writes none.
+     */
+    get: operations['getSexOffenderSearchReport'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/api/v1/reverse-lookup-reports/{reportId}/pdf': {
     parameters: {
       query?: never;
@@ -1199,6 +1259,10 @@ export type components = {
         | 'UpsellCredit'
         | 'ReportPdfExport'
         | 'SexOffenderRecord'
+        | 'SexOffenderSearch'
+        | 'SexOffenderSearchReport'
+        | 'SexOffenderSearchPhoto'
+        | 'SensitiveSearchAccessLog'
         | 'SensitiveDataAccessLog'
         | 'LocationRequest'
         | 'ConsentLink'
@@ -1616,7 +1680,7 @@ export type components = {
        * @example LOCATION_REQUEST
        * @enum {string}
        */
-      kind: 'LOCATION_REQUEST' | 'REVERSE_LOOKUP_REPORT';
+      kind: 'LOCATION_REQUEST' | 'REVERSE_LOOKUP_REPORT' | 'SEX_OFFENDER_SEARCH_REPORT';
       /**
        * @description The source's own status enum value, passed through unmapped
        * @example COMPLETED
@@ -2315,17 +2379,27 @@ export type components = {
        * @example DATA_LEAKS
        * @enum {string}
        */
-      product: 'SEX_OFFENDERS' | 'DATA_LEAKS' | 'SOCIAL_NETWORKS';
+      product: 'SEX_OFFENDERS' | 'DATA_LEAKS' | 'SOCIAL_NETWORKS' | 'SEX_OFFENDERS_SEARCH';
       /**
-       * @description The report to unlock this product's content on, owned by the caller
+       * @description The report to unlock this product's content on, owned by the caller. Required for DATA_LEAKS, SOCIAL_NETWORKS and SEX_OFFENDERS; forbidden for SEX_OFFENDERS_SEARCH.
        * @example 123e4567-e89b-12d3-a456-426614174000
        */
-      reportId: string;
+      reportId?: string | null;
       /**
        * @description Required for SEX_OFFENDERS (the ReportOwner to unlock); forbidden for every other product
        * @example 123e4567-e89b-12d3-a456-426614174001
        */
       ownerId?: string | null;
+      /**
+       * @description Required for SEX_OFFENDERS_SEARCH (the search to unlock a candidate on); forbidden otherwise
+       * @example 123e4567-e89b-12d3-a456-426614174002
+       */
+      searchId?: string | null;
+      /**
+       * @description Required for SEX_OFFENDERS_SEARCH (which candidate of the search to unlock, as returned in `matches[].candidateIndex`); forbidden otherwise
+       * @example 0
+       */
+      candidateIndex?: number | null;
     };
     ConsumeUpsellResponse: {
       /**
@@ -2333,11 +2407,17 @@ export type components = {
        * @example DATA_LEAKS
        * @enum {string}
        */
-      product: 'SEX_OFFENDERS' | 'DATA_LEAKS' | 'SOCIAL_NETWORKS';
-      /** @description The report this unlock applies to */
-      reportId: string;
+      product: 'SEX_OFFENDERS' | 'DATA_LEAKS' | 'SOCIAL_NETWORKS' | 'SEX_OFFENDERS_SEARCH';
+      /** @description The report this unlock applies to. Null only for SEX_OFFENDERS_SEARCH, which is not report-scoped; non-null for every other product. */
+      reportId?: string | null;
       /** @description Set for SEX_OFFENDERS; null for every other product */
       ownerId?: string | null;
+      /** @description Set for SEX_OFFENDERS_SEARCH; absent for every other product */
+      searchId?: string | null;
+      /** @description Set for SEX_OFFENDERS_SEARCH; absent for every other product */
+      candidateIndex?: number | null;
+      /** @description The purchased report just materialized — old BE's `sex_offender_search_report_id`. Read this to navigate straight to the detail screen. Set for SEX_OFFENDERS_SEARCH only. */
+      searchReportId?: string | null;
       /**
        * Format: date-time
        * @description When this unlock was granted
@@ -2350,12 +2430,126 @@ export type components = {
        * @example DATA_LEAKS
        * @enum {string}
        */
-      product: 'SEX_OFFENDERS' | 'DATA_LEAKS' | 'SOCIAL_NETWORKS';
+      product: 'SEX_OFFENDERS' | 'DATA_LEAKS' | 'SOCIAL_NETWORKS' | 'SEX_OFFENDERS_SEARCH';
       /**
        * @description Unconsumed, unrefunded credit count for this product
        * @example 1
        */
       count: number;
+    };
+    CreateSexOffenderSearchDto: {
+      /**
+       * @description The subject's first name
+       * @example Mason
+       */
+      firstName: string;
+      /**
+       * @description The subject's last name
+       * @example Hawthorne
+       */
+      lastName: string;
+      /**
+       * @description Optional city filter
+       * @example New York
+       */
+      city?: string | null;
+      /**
+       * @description Optional state filter
+       * @example NY
+       */
+      state?: string | null;
+      /**
+       * @description Optional ZIP-code filter
+       * @example 10001
+       */
+      zipCode?: string | null;
+    };
+    SexOffenderSearchMatchResponse: {
+      /**
+       * @description This candidate's index into the search's stored vendor payload. Stable for the life of the search, and the address used to unlock the candidate.
+       * @example 0
+       */
+      candidateIndex: number;
+      firstName?: string | null;
+      lastName?: string | null;
+      /** @example 1979-04-02 */
+      dateOfBirth?: string | null;
+      address?: string | null;
+      city?: string | null;
+      state?: string | null;
+      photoUrl?: string | null;
+    };
+    SexOffenderSearchResponse: {
+      id: string;
+      firstName: string;
+      lastName: string;
+      city?: string | null;
+      state?: string | null;
+      zipCode?: string | null;
+      /** @description The vendor's candidates, derived from the stored payload on every read. Empty when the search found nobody — a normal success, not an error. */
+      matches: components['schemas']['SexOffenderSearchMatchResponse'][];
+    };
+    SexOffenderSearchReportResponse: {
+      id: string;
+      searchId: string;
+      candidateIndex: number;
+      /** Format: date-time */
+      purchasedAt: string;
+      name?: string | null;
+      firstName?: string | null;
+      lastName?: string | null;
+      middleName?: string | null;
+      nickNames: string[];
+      /** Format: date-time */
+      dateOfBirth?: string | null;
+      age?: number | null;
+      /** @enum {string|null} */
+      sex?: 'MALE' | 'FEMALE' | 'INTERSEX' | null;
+      /** @enum {string|null} */
+      eyeColor?: 'AMBER' | 'BLUE' | 'BROWN' | 'GRAY' | 'GREEN' | 'HAZEL' | 'RED' | 'VIOLET' | 'OTHER' | null;
+      /** @enum {string|null} */
+      hairColor?:
+        | 'BLACK'
+        | 'BROWN'
+        | 'BLONDE'
+        | 'RED'
+        | 'GRAY'
+        | 'WHITE'
+        | 'AUBURN'
+        | 'CHESTNUT'
+        | 'DYED'
+        | 'BALD'
+        | 'OTHER'
+        | null;
+      /** @enum {string|null} */
+      race?:
+        | 'WHITE'
+        | 'BLACK_OR_AFRICAN_AMERICAN'
+        | 'ASIAN'
+        | 'NATIVE_AMERICAN'
+        | 'PACIFIC_ISLANDER'
+        | 'MIXED'
+        | 'OTHER'
+        | null;
+      /** @enum {string|null} */
+      ethnicity?: 'HISPANIC' | 'NON_HISPANIC' | 'OTHER' | null;
+      heightCm?: number | null;
+      weightKg?: number | null;
+      /** @description Distinguishing marks as the provider's own structured list. Always null today — no provider this repo ships populates it, and old BE never wrote it either. Serialized for contract parity with the report-scoped detail endpoint. */
+      marks?: Record<string, never> | null;
+      crime?: string | null;
+      jurisdiction?: string | null;
+      /** Format: date-time */
+      convictionDate?: string | null;
+      /** Format: date-time */
+      registrationDate?: string | null;
+      /** @enum {string|null} */
+      riskLevel?: 'LOW' | 'MEDIUM' | 'HIGH' | null;
+      isAbsconder: boolean;
+      isPredator: boolean;
+      originalSourceUrl?: string | null;
+      location?: components['schemas']['LocationResponse'] | null;
+      photos: string[];
     };
     CreatePdfExportResponse: {
       id: string;
@@ -4722,6 +4916,142 @@ export type operations = {
         };
         content: {
           'application/json': components['schemas']['UpsellCreditSummaryResponse'][];
+        };
+      };
+      /** @description Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UnauthorizedErrorResponseSchema'];
+        };
+      };
+      /** @description Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action. */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ForbiddenErrorResponseSchema'];
+        };
+      };
+    };
+  };
+  createSexOffenderSearch: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @description Language locale for localized content. Supported values: en, es */
+        'x-locale'?: 'en' | 'es';
+        /** @description Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically. */
+        'x-trace-id'?: string;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateSexOffenderSearchDto'];
+      };
+    };
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['SexOffenderSearchResponse'];
+        };
+      };
+      /** @description Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UnauthorizedErrorResponseSchema'];
+        };
+      };
+      /** @description Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action. */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ForbiddenErrorResponseSchema'];
+        };
+      };
+    };
+  };
+  getSexOffenderSearch: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @description Language locale for localized content. Supported values: en, es */
+        'x-locale'?: 'en' | 'es';
+        /** @description Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically. */
+        'x-trace-id'?: string;
+      };
+      path: {
+        /** @description Path parameter */
+        searchId: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['SexOffenderSearchResponse'];
+        };
+      };
+      /** @description Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UnauthorizedErrorResponseSchema'];
+        };
+      };
+      /** @description Permission denied. The authenticated user lacks the required permissions to access this resource or perform this action. */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ForbiddenErrorResponseSchema'];
+        };
+      };
+    };
+  };
+  getSexOffenderSearchReport: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @description Language locale for localized content. Supported values: en, es */
+        'x-locale'?: 'en' | 'es';
+        /** @description Custom trace ID to correlate logs for this request. Allowed characters: alphanumeric and hyphens. If not provided or invalid, one is generated automatically. */
+        'x-trace-id'?: string;
+      };
+      path: {
+        /** @description Path parameter */
+        searchReportId: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['SexOffenderSearchReportResponse'];
         };
       };
       /** @description Authentication failed due to: expired/invalid access token, incorrect credentials, or missing authentication. */
