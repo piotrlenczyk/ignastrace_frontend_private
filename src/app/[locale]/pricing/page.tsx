@@ -1,8 +1,8 @@
 import WebsiteLayout from '@/components/layouts/website-layout';
 import { ROUTES } from '@/constants/routes';
-import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
 import { getCurrencyByCountryCode } from '@/libs/currency';
 import { getCurrencyProducts } from '@/libs/pricing';
+import { redirectIfAuthenticated } from '@/libs/subscription';
 import { getPricePagePricing } from '@/server/getters/pricing.getters';
 import { getServerSettings } from '@/settings/settings.server';
 
@@ -10,8 +10,8 @@ import { PricingContent } from './_components/content';
 
 export default async function PricingPage() {
   await redirectIfAuthenticated({
-    activeSubscriptionRoute: ROUTES.MEMBER.SETTINGS.BILLING,
-    endedSubscriptionRoute: ROUTES.MEMBER.SETTINGS.BILLING,
+    activeSubscription: ROUTES.MEMBER.SETTINGS.BILLING,
+    endedSubscription: ROUTES.MEMBER.SETTINGS.BILLING,
   });
 
   const countryCode = (await getServerSettings()).countryCode;

@@ -8,8 +8,8 @@ import { Locator } from '@/components/homepage/locator';
 import { WhyChoose } from '@/components/homepage/whyChoose';
 import WebsiteLayout from '@/components/layouts/website-layout';
 import { ROUTES } from '@/constants/routes';
-import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
 import { resolveLocale } from '@/libs/i18n-routing';
+import { redirectIfAuthenticated } from '@/libs/subscription';
 import { getServerSettings } from '@/settings/settings.server';
 
 export async function generateMetadata(props: PageProps<'/[locale]/locate-phone'>) {
@@ -31,8 +31,8 @@ const Index = async () => {
   const country = (await getServerSettings()).countryCode;
 
   await redirectIfAuthenticated({
-    activeSubscriptionRoute: ROUTES.MEMBER.FIND_BY_NUMBER.HOME,
-    endedSubscriptionRoute: ROUTES.MEMBER.SETTINGS.BILLING,
+    activeSubscription: ROUTES.MEMBER.FIND_BY_NUMBER.HOME,
+    endedSubscription: ROUTES.MEMBER.SETTINGS.BILLING,
   });
 
   return (

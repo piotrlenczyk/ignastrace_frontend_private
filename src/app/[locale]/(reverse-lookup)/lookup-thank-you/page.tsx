@@ -7,9 +7,9 @@ import GTMPurchaseEvent from '@/components/gtm-purchase-event';
 import FunnelLayout from '@/components/layouts/funnel-layout';
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
-import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { Link } from '@/libs/i18n-routing';
+import { redirectIfAuthenticated } from '@/libs/subscription';
 import { getUser } from '@/libs/subscription';
 import { reportOrderConfirmed } from '@/server/analytics/klaviyo.events';
 import { getServerSession } from '@/server/session/session.utils';
@@ -28,8 +28,8 @@ const ThankYouPage = async () => {
   const formattedNumber = formatPhoneNumber(phoneNumber);
 
   await redirectIfAuthenticated({
-    endedSubscriptionRoute: ROUTES.MEMBER.SETTINGS.BILLING,
-    noSubscriptionRoute: formattedNumber.valid ? ROUTES.REVERSE_LOOKUP.CHECKOUT : ROUTES.REVERSE_LOOKUP.HOME,
+    endedSubscription: ROUTES.MEMBER.SETTINGS.BILLING,
+    noSubscription: formattedNumber.valid ? ROUTES.REVERSE_LOOKUP.CHECKOUT : ROUTES.REVERSE_LOOKUP.HOME,
   });
 
   const t = await getTranslations('pages.reverse_lookup.thank_you');

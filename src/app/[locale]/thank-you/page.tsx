@@ -7,9 +7,9 @@ import FunnelLayout from '@/components/layouts/funnel-layout';
 import TrustPilot from '@/components/success/trustPilot';
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
-import { redirectIfAuthenticated } from '@/hooks/auth-redirect';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
 import { Link } from '@/libs/i18n-routing';
+import { redirectIfAuthenticated } from '@/libs/subscription';
 import { getUser } from '@/libs/subscription';
 import { reportOrderConfirmed } from '@/server/analytics/klaviyo.events';
 import { getServerSession } from '@/server/session/session.utils';
@@ -27,8 +27,8 @@ const ThankYouPage = async () => {
   const formattedNumber = formatPhoneNumber(phoneNumber);
 
   await redirectIfAuthenticated({
-    endedSubscriptionRoute: ROUTES.MEMBER.SETTINGS.BILLING,
-    noSubscriptionRoute: formattedNumber.valid ? ROUTES.CHECKOUT : ROUTES.HOME,
+    endedSubscription: ROUTES.MEMBER.SETTINGS.BILLING,
+    noSubscription: formattedNumber.valid ? ROUTES.CHECKOUT : ROUTES.HOME,
   });
 
   const t = await getTranslations('pages.success');

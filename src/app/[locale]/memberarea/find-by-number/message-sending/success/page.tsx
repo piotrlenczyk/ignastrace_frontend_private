@@ -6,8 +6,8 @@ import ProductLayout from '@/components/layouts/product-layout';
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
-import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
 import { Link } from '@/libs/i18n-routing';
+import { getSubscriptionRedirect } from '@/libs/subscription';
 import { getServerSession } from '@/server/session/session.utils';
 
 export default async function MessageSendingPage() {

@@ -4,7 +4,7 @@ import ThankYouPage from '@/app/[locale]/thank-you/page';
 import GTMPurchaseEvent from '@/components/gtm-purchase-event';
 import FunnelLayout from '@/components/layouts/funnel-layout';
 import { ROUTES } from '@/constants/routes';
-import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
+import { getSubscriptionRedirect } from '@/libs/subscription';
 import { getUser } from '@/libs/subscription';
 import { ownsAnyUpsell, resolveUpsellProduct } from '@/libs/upsell-products';
 import { getPurchasedUpsellProducts, getUpsellProducts } from '@/server/getters/upsell-products.getters';

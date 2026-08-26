@@ -4,7 +4,7 @@ import { getFunnelPhone } from '@/actions/funnel-phone-number';
 import FunnelLayout from '@/components/layouts/funnel-layout';
 import { ROUTES } from '@/constants/routes';
 import { formatPhoneNumber } from '@/hooks/format-phone-number';
-import { getSubscriptionRedirect } from '@/hooks/get-subscription-redirect';
+import { getSubscriptionRedirect } from '@/libs/subscription';
 import { getServerSession } from '@/server/session/session.utils';
 
 import { SearchCompleteContent } from './components/content';
@@ -20,7 +20,6 @@ const SearchComplete = async () => {
         : ROUTES.MEMBER.FIND_BY_NUMBER.HOME,
       endedSubscription: ROUTES.MEMBER.SETTINGS.BILLING,
     },
-    allowUnauthenticated: true,
   });
 
   if (redirectUrl) {
