@@ -10,10 +10,18 @@ import { LEGACY_PROXY_BASE_PATH } from './legacy-proxy-path';
  * here and is forwarded with the bearer attached server-side.
  *
  * It validates no path. There is no specification for that backend to check one
- * against, and inventing an allow-list from the twenty-nine hooks that call it
- * would be a list that goes stale the first time one of them changes. What
- * bounds this proxy is the single host it forwards to: it is a door onto the
- * legacy backend, not a tunnel onto an arbitrary one.
+ * against, and inventing an allow-list from the hooks that call it would be a list
+ * that goes stale the first time one of them changes. What bounds this proxy is the
+ * single host it forwards to: it is a door onto the legacy backend, not a tunnel
+ * onto an arbitrary one.
+ *
+ * The count that argument was first made about — twenty-nine hooks — has been
+ * emptied by the retirement track down to **five call sites**: the notification
+ * list and its read-marking write, the standalone sex-offender search and its
+ * upselling purchase, and the public subscription cancellation. It is stated so
+ * that whoever weighs the argument next weighs it against the surface that is
+ * actually left, and so that the number is corrected rather than quietly
+ * inherited.
  *
  * A dot segment in the path can therefore reach a sibling path on that host —
  * which is the same access the browser already has, and nothing beyond it,

@@ -219,10 +219,14 @@ Location request costs nothing against it; dispatching an SMS does.
 ## Reverse-lookup reports
 
 **Reverse-lookup report**
-: What a member gets for a phone number they do not recognise. One record, created by one call and
-read by another — and, until the whole family is migrated, created and read in different upstreams.
-[ADR 0027](adr/0027-the-reverse-lookup-creation-starts-on-an-unanswered-assumption.md) records the
-assumption that makes that survivable and the symptom if it is false.
+: What a member gets for a phone number they do not recognise. One record, created by one call and read
+by another, and now created and read in **one** upstream: the new API, from both the member's
+phone-lookup form and the public funnel's checkout.
+[ADR 0027](adr/0027-the-reverse-lookup-creation-starts-on-an-unanswered-assumption.md) and
+[ADR 0033](adr/0033-the-funnel-s-report-creation-follows-the-member-s.md) record the assumption that made
+each half of that survivable and the symptom if it is false. The assumption still applies, but only
+backwards: reports created before the funnel's cutover live in the legacy backend and are read from the
+new API, so a report that does not open is diagnosed by its creation date.
 
 **Report allowance**
 : The rolling 24-hour window a member's report count and its limit belong to. Reading the count spends
@@ -232,8 +236,10 @@ the creation call, which refuses with a code rather than only a status.
 **Report progress**
 : How far a report has got. Three vocabularies describe it and **nothing translates between them**:
 
-- the legacy backend's two — `pending` and `ready` — which nothing reads any more. They survive as a
-  field on the shape the anonymous funnel's creation call answers with, and no screen branches on it;
+- the legacy backend's two — `pending` and `ready` — which are gone from this repository altogether:
+  nothing read them, and the shape that carried them went with the funnel's creation call
+  ([ADR 0033](adr/0033-the-funnel-s-report-creation-follows-the-member-s.md)). They are named here
+  because reports created before that cutover still carry one;
 - the new API's four — `PENDING`, `PROCESSING`, `COMPLETED`, `FAILED` — returned at creation and meant
   to be polled for. Two of them are now read, and only far enough to tell "still preparing" from
   "ready": the sectioned read refuses while a report is `PENDING` or `PROCESSING`, and a `FAILED`

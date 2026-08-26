@@ -7,7 +7,7 @@ import { Checkout } from '@/components/checkout/Checkout';
 import CurrencySelector from '@/components/currency-selector';
 import { PaymentTrustRow } from '@/components/payment-trust-row';
 import { ROUTES } from '@/constants/routes';
-import { useCreateLegacyReverseLookupMutation } from '@/hooks/api/use-create-legacy-reverse-lookup-mutation';
+import { useCreateReverseLookupMutation } from '@/hooks/api/use-create-reverse-lookup-mutation';
 import { useRouter } from '@/libs/i18n-routing';
 import { getCurrencyProducts, getPlanProductName, getPricingProduct } from '@/libs/pricing';
 import type { Pricing } from '@/types/pricing.types';
@@ -48,17 +48,20 @@ export const LookupCheckoutPageClient = ({
   });
 
   /*
-   * The reverse lookup the visitor just paid for, created through the legacy API
-   * — the same call this screen has always made. The whole downstream funnel
-   * reads that record from the same upstream, so creating it on the new API's own
-   * reverse-lookup endpoint would strand the report the visitor is on their way
-   * to.
+   * The reverse-lookup report the visitor just paid for, created on the new API —
+   * the upstream the report they will eventually open is read from. It used to be
+   * created on the legacy backend, ring-fenced there while everything downstream
+   * of this screen still read that backend; none of it does any more, so leaving
+   * the write behind is what would strand the report rather than what saves it.
    *
-   * A refused creation still sends them onward, which is today's behaviour and
-   * the right one: their money has moved, and stranding them on a payment screen
-   * is the one outcome worse than a report that has to be retried.
+   * Both callbacks go to the same place, which is what this screen wants rather
+   * than something left half-written. A refused creation still sends the visitor
+   * onward: their money has moved, and stranding them on a payment screen is the
+   * one outcome worse than a report that has to be retried. Nothing is branched on
+   * and no code is recognised — every refusal is the same refusal here. The
+   * identifier the API answers with is discarded, as it always was.
    */
-  const { mutate: createReverseLookup } = useCreateLegacyReverseLookupMutation({
+  const { mutate: createReverseLookup } = useCreateReverseLookupMutation({
     onSuccess: () => router.push(ROUTES.REVERSE_LOOKUP.UPSELLS.PDF),
     onError: () => router.push(ROUTES.REVERSE_LOOKUP.UPSELLS.PDF),
   });
