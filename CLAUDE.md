@@ -84,7 +84,15 @@ it onto its three buckets, reads no account at all, settles guest-versus-member 
 `isLoggedIn` flag, and treats **only a 404** as "no subscription" — every other refusal, and a service
 that cannot be reached at all, moves nobody and logs. Read that record before changing where a gate sends anybody, and before assuming a routing bug is
 one: when the shared technical account's own subscription expires, every member is routed as though
-theirs had. The billing screen is off the legacy client entirely; what that costs is that the legacy
+theirs had. The **funnel's purchase events** have since left that same mock for the two upstreams that
+know: the subscription's own `purchase` event is valued from the subscription record's product price,
+and `upsell_purchase` from what the run actually bought, priced through the upsell resolver
+(`docs/adr/0037-the-funnel-s-purchase-events-report-what-was-bought.md`). What a funnel run bought is
+recorded in a **separate session cookie** — `src/libs/funnel-upsell-record.ts`, written by the funnel
+screens that charge and by no member-area surface, never a field on the checkout attempt, which a
+completed payment ends — and the whole decision lives in one pure module, `src/libs/funnel-purchase-event.ts`.
+No `upsell_purchase` is sent where the run comes to nothing, so that event's volume falls to real sales;
+both amounts still carry 0023's cost. The billing screen is off the legacy client entirely; what that costs is that the legacy
 population is redirected off it, and every payments write — an upsell charge included — is raised as
 the shared technical account. Outside that track, still don't rewrite a screen's fetching unless you
 are redesigning the screen.

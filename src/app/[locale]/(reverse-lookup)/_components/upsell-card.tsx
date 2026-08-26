@@ -14,6 +14,7 @@ import { useOwnsUpsell } from '@/hooks/api/use-owns-upsell';
 import { useUpsellUnlock } from '@/hooks/api/use-upsell-unlock';
 import { createPriceFormatter } from '@/hooks/cldr-price-formatter';
 import { useMessageErrorToast } from '@/hooks/use-message-error-toast';
+import { recordFunnelUpsell } from '@/libs/funnel-upsell-record';
 import type { UpsellProduct, UpsellProductKey } from '@/libs/upsell-products';
 import { useSettings } from '@/settings/settings.provider';
 
@@ -121,6 +122,14 @@ const UpsellCardOffer = ({
       showErrorToast(tStripeForm('errors.stripe_generic_error'), tStripeForm('errors.stripe_generic_error_title'));
       return;
     }
+
+    /*
+     * The funnel's record of what this run bought, written only where the charge
+     * actually went through. The confirmation screen at the end of the run reads
+     * it and prices it; before this existed it reported an invented amount to
+     * everybody who reached it, whether or not they had bought anything.
+     */
+    recordFunnelUpsell(productKey);
 
     router.push(redirectUrl);
   };

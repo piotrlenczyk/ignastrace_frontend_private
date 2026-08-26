@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 
 import { getFunnelPhone } from '@/actions/funnel-phone-number';
+import { FunnelUpsellRecordEnd } from '@/components/funnel-upsell-record-end';
 import GTMPurchaseEvent from '@/components/gtm-purchase-event';
 import FunnelLayout from '@/components/layouts/funnel-layout';
 import { Button } from '@/components/ui/button';
@@ -12,6 +13,7 @@ import { Link } from '@/libs/i18n-routing';
 import { redirectIfAuthenticated } from '@/libs/subscription';
 import { getUser } from '@/libs/subscription';
 import { reportOrderConfirmed } from '@/server/analytics/klaviyo.events';
+import { getFunnelPurchaseEvent } from '@/server/getters/funnel-purchase-event.getters';
 import { getServerSession } from '@/server/session/session.utils';
 
 import TrustPilot from './_components/trustPilot';
@@ -35,17 +37,21 @@ const ThankYouPage = async () => {
   const t = await getTranslations('pages.reverse_lookup.thank_you');
   const user = await getUser();
 
+  /*
+   * The end of a reverse-lookup run, which reports what its three upsell steps
+   * actually charged for — nothing at all for a visitor who skipped every one of
+   * them. What the mocked membership answered here was one invented amount for
+   * everybody who reached this screen, refusals included; ADR 0037 records the
+   * change.
+   */
+  const purchaseEvent = await getFunnelPurchaseEvent('upsells');
+
   reportOrderConfirmed();
 
   return (
     <>
-      <GTMPurchaseEvent
-        event="upsell_purchase"
-        userId={user.id}
-        email={user.email}
-        value={(user.purchase_info?.upsellings_price || 0) / 100}
-        currency={user.currency.toUpperCase()}
-      />
+      {purchaseEvent ? <GTMPurchaseEvent {...purchaseEvent} userId={user.id} email={user.email} /> : null}
+      <FunnelUpsellRecordEnd />
 
       <FunnelLayout isReverseLookup>
         <main className="s-main flex full-main items-center p-6">
