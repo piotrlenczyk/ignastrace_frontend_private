@@ -38,9 +38,10 @@ type UpsellOfferDialogProps = {
  *
  * Presentation and nothing else — it takes the amount and the gesture and knows
  * neither which upstream the amount came from nor what pressing the button will
- * do. That is what lets the one purchase that is still a legacy call, the
- * standalone sex-offender search, show the member exactly what every migrated
- * one does.
+ * do. That is what let the standalone sex-offender search show the member exactly
+ * what every migrated upsell did while its purchase was still a legacy call, and
+ * what let its bespoke dialog be deleted without a member noticing when ADR 0039
+ * moved it.
  */
 export const UpsellOfferDialog = ({
   open,

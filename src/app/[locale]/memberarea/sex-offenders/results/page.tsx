@@ -2,10 +2,10 @@ import { redirect } from 'next/navigation';
 
 import ProductLayout from '@/components/layouts/product-layout';
 import { ROUTES } from '@/constants/routes';
-import { getApi } from '@/libs/server/api';
 import { getSubscriptionRedirect } from '@/libs/subscription';
+import { getSexOffenderSearch } from '@/server/getters/sex-offender-search.getters';
 import { getServerSession } from '@/server/session/session.utils';
-import type { SexOffenderSearch } from '@/types/sex-offenders.types';
+import { firstValue } from '@/utils/search-params';
 
 import { SexOffenderSearchResults } from './results-content';
 
@@ -18,7 +18,9 @@ const SexOffenderSearchResultsPage = async (props: PageProps<'/[locale]/memberar
     redirect(ROUTES.HOME);
   }
 
-  if (!searchParams?.id) {
+  const searchId = firstValue(searchParams.id);
+
+  if (!searchId) {
     redirect(ROUTES.MEMBER.SEX_OFFENDERS_SEARCH.HOME);
   }
 
@@ -33,8 +35,7 @@ const SexOffenderSearchResultsPage = async (props: PageProps<'/[locale]/memberar
     redirect(redirectUrl);
   }
 
-  const api = await getApi();
-  const search = await api.get<SexOffenderSearch>(`/sex_offender_searches/${searchParams.id}`);
+  const search = await getSexOffenderSearch(searchId);
 
   return (
     <ProductLayout>

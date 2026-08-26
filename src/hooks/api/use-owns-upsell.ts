@@ -5,12 +5,26 @@ import { useCurrentUserQuery } from '@/network/api/hooks/use-current-user-query'
 import { upsellCreditCount, useUpsellCreditsQuery } from '@/network/api/hooks/use-upsell-credits-query';
 
 /**
+ * An upsell key this question can be asked about.
+ *
+ * **The standalone sex-offender search is excluded, and the compiler is what
+ * enforces it.** The new API holds a credit balance for that key as it does for
+ * the report-scoped three, but a balance there means something different: it says
+ * how many candidate unlocks the member has left to spend, not which candidate is
+ * open. A member holding two search credits owns no record at all, and a member
+ * who has spent every one of theirs owns as many records as they bought. So "does
+ * this member own this upsell" has no answer for that key, and asking it does not
+ * compile rather than being answered plausibly and wrongly. ADR 0039 records it.
+ */
+export type OwnableUpsellKey = Exclude<UpsellProductKey, 'sex_offenders_search'>;
+
+/**
  * Whether the member already has this upsell, read from whichever upstream
  * actually knows — and whether the answer is in yet.
  *
  * Two upstreams answer, because the two kinds of upsell are different things. For
- * the three products the new API models as a **credit balance**, having one means
- * a positive balance, and it is spent rather than bought again. For **unlimited
+ * the report-scoped products the new API models as a **credit balance**, having
+ * one means a positive balance, and it is spent rather than bought again. For **unlimited
  * PDF downloads** it means the entitlement the new API publishes on the current
  * user, which is a member's own and nobody else's.
  *
@@ -31,7 +45,7 @@ import { upsellCreditCount, useUpsellCreditsQuery } from '@/network/api/hooks/us
  * is in, and false for a key neither upstream is asked about, so a button is
  * disabled only while there is genuinely an answer coming.
  */
-export const useOwnsUpsell = (key: UpsellProductKey) => {
+export const useOwnsUpsell = (key: OwnableUpsellKey) => {
   const creditProduct = creditProductFor(key);
   const isEntitlement = key === 'unlimited_pdf_downloads';
 
@@ -47,9 +61,9 @@ export const useOwnsUpsell = (key: UpsellProductKey) => {
   }
 
   /*
-   * Neither upstream publishes ownership for the standalone sex-offender search or
-   * for the `/success` screen's two extras, and both are out of scope here. Saying
-   * "not owned" is what the screens that sell them already assume.
+   * Neither upstream publishes ownership for the `/success` screen's two extras,
+   * which are out of scope here. Saying "not owned" is what the screen that sells
+   * them already assumes.
    */
   return { ownsUpsell: false, isLoading: false };
 };

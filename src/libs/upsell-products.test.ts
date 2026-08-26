@@ -157,16 +157,17 @@ describe('the credit-balance product a legacy upsell key names', () => {
     ['data_leaks', 'DATA_LEAKS'],
     ['sex_offenders', 'SEX_OFFENDERS'],
     ['social_networks', 'SOCIAL_NETWORKS'],
+    ['sex_offenders_search', 'SEX_OFFENDERS_SEARCH'],
   ] as const)('names %s as the new API’s %s', (key, product) => {
     expect(creditProductFor(key)).toBe(product);
   });
 
   /*
    * Each of these is a fact about the upstream rather than a gap. Unlimited PDF
-   * downloads is an entitlement and not a balance; the standalone search and the
-   * `/success` screen's two extras have no counterpart in the new API at all.
+   * downloads is an entitlement and not a balance; the `/success` screen's two
+   * extras have no counterpart in the new API at all.
    */
-  it.each(['unlimited_pdf_downloads', 'sex_offenders_search', 'scan_pro', 'support_hotline'] as const)(
+  it.each(['unlimited_pdf_downloads', 'scan_pro', 'support_hotline'] as const)(
     'names nothing for %s, which the new API holds no balance for',
     (key) => {
       expect(creditProductFor(key)).toBeUndefined();

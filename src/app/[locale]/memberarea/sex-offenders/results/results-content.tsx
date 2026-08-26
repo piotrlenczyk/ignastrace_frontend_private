@@ -9,9 +9,20 @@ import { Icon } from '@/components/ui/icon';
 import { ROUTES } from '@/constants/routes';
 import { Link } from '@/libs/i18n-routing';
 import { cn } from '@/libs/utils';
-import type { SexOffenderSearch } from '@/types/sex-offenders.types';
+import type { SexOffenderSearch } from '@/server/getters/sex-offender-search.getters';
 
 import { SexOffenderSearchPurchase } from './sex-offenders-search-purchase';
+
+/*
+ * The placeholder every absent field on this feature uses. A registry that named
+ * a candidate incompletely — or not at all — still produces a row the member can
+ * select and unlock, because the record behind it is addressed by its index and
+ * not by its name.
+ */
+const ABSENT = '--';
+
+const candidateName = ({ firstName, lastName }: SexOffenderSearch['matches'][number]) =>
+  [firstName, lastName].filter(Boolean).join(' ') || ABSENT;
 
 export const SexOffenderSearchResults = ({ search }: { search: SexOffenderSearch }) => {
   const t = useTranslations('pages.sex_offenders_search.results');
@@ -47,18 +58,18 @@ export const SexOffenderSearchResults = ({ search }: { search: SexOffenderSearch
           <legend className="sr-only">{t('results_found_subtitle')}</legend>
           {search.matches.map((match) => (
             <label
-              key={match.candidate_index}
+              key={match.candidateIndex}
               className={cn(
                 'flex cursor-pointer items-center gap-3 rounded-2xl border p-3 text-left',
-                selectedIndex === match.candidate_index ? 'border-primary bg-primary-50' : 'border-stroke-weak',
+                selectedIndex === match.candidateIndex ? 'border-primary bg-primary-50' : 'border-stroke-weak',
               )}
             >
               <input
                 type="radio"
                 name="candidate"
-                value={match.candidate_index}
-                checked={selectedIndex === match.candidate_index}
-                onChange={() => setSelectedIndex(match.candidate_index)}
+                value={match.candidateIndex}
+                checked={selectedIndex === match.candidateIndex}
+                onChange={() => setSelectedIndex(match.candidateIndex)}
                 className={cn(
                   'size-5 shrink-0 appearance-none rounded-full border-2 border-stroke-weak bg-white',
                   'checked:border-[5px] checked:border-primary',
@@ -66,17 +77,23 @@ export const SexOffenderSearchResults = ({ search }: { search: SexOffenderSearch
                   'focus-visible:ring-offset-2',
                 )}
               />
-              {match.photo_url && (
+              {match.photoUrl && (
+                /*
+                 * The name is beside the photo already, and a candidate the
+                 * registry named incompletely would put a placeholder into a
+                 * screen reader. Empty alternative text says "decorative", which
+                 * is what this is.
+                 */
                 <Image
-                  src={match.photo_url}
-                  alt={`${match.first_name} ${match.last_name}`}
+                  src={match.photoUrl}
+                  alt=""
                   width={60}
                   height={60}
                   className="size-[60px] shrink-0 rounded-xl object-cover"
                 />
               )}
               <div>
-                <p className="text-lg font-bold lg:text-2xl">{`${match.first_name} ${match.last_name}`}</p>
+                <p className="text-lg font-bold lg:text-2xl">{candidateName(match)}</p>
                 <p className="flex items-center gap-1 text-sm text-weak">
                   <Icon name="pin-location" className="size-3 shrink-0" />
                   {[match.address, match.city, match.state, 'USA'].filter(Boolean).join(', ')}
@@ -100,10 +117,16 @@ export const SexOffenderSearchResults = ({ search }: { search: SexOffenderSearch
       </div>
 
       {selectedIndex !== null && (
+        /*
+         * Keyed by the candidate, so choosing a different one starts a fresh
+         * purchase: the report identifier an unlock answered with belongs to the
+         * candidate it unlocked, and nothing of it should survive into another.
+         */
         <SexOffenderSearchPurchase
+          key={selectedIndex}
           open={isPurchaseOpen}
           onOpenChange={setIsPurchaseOpen}
-          sexOffenderSearchId={search.id}
+          searchId={search.id}
           candidateIndex={selectedIndex}
         />
       )}

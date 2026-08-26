@@ -14,16 +14,21 @@ import { type UpsellNamespace, UpsellOfferDialog } from './upsell-offer-dialog';
 import { UpsellPaymentMessage } from './upsell-payment-message';
 
 /*
- * The four upsells this dialog is opened for. The standalone sex-offender search
- * is not among them — its purchase also creates the search report and answers
- * with its identifier, which the payments purchase cannot, so it keeps the legacy
- * call and its own dialog. Nor are the two the `/success` screen sells. A subset
- * of the application's upsell keys rather than a union of its own, so a key that
- * stops existing stops compiling here.
+ * The five upsells this dialog is opened for — every one in the application but
+ * the two the `/success` screen sells, which have no counterpart in the new API
+ * and are bought on their own screen. A subset of the application's upsell keys
+ * rather than a union of its own, so a key that stops existing stops compiling
+ * here.
+ *
+ * The standalone sex-offender search joined this list in ADR 0039. It was
+ * excluded while its purchase was the one that also created the search report and
+ * answered with its identifier — something the payments purchase cannot do. The
+ * new API's spend answers with that identifier now, so the search unlocks through
+ * the same sequence as everything else and its bespoke dialog is gone.
  */
 type ProductKey = Extract<
   UpsellProductKey,
-  'data_leaks' | 'sex_offenders' | 'social_networks' | 'unlimited_pdf_downloads'
+  'data_leaks' | 'sex_offenders' | 'sex_offenders_search' | 'social_networks' | 'unlimited_pdf_downloads'
 >;
 
 type UpsellDialogProps = {
@@ -31,6 +36,19 @@ type UpsellDialogProps = {
   onOpenChange: (open: boolean) => void;
   onDownloadPdf?: () => Promise<void>;
   onSuccessClose?: () => void;
+  /**
+   * What a successful unlock materialised, told to the caller as it happens.
+   *
+   * Only the standalone search materialises anything: its spend creates the search
+   * report and names it, and that identifier exists nowhere else — the new API
+   * publishes no way to find a search report after the fact. Every other product
+   * spends against a report the caller already named, so nothing is passed.
+   *
+   * It can arrive empty even on a successful unlock. A conflicting spend settled
+   * by a positive balance means the candidate was already open, and no spend
+   * happened, so there is no report to name. ADR 0039 records that dead end.
+   */
+  onUnlocked?: (searchReportId: string | undefined) => void;
   productKey: ProductKey;
   translationNamespace: UpsellNamespace;
   benefitKeys: string[];
@@ -112,6 +130,7 @@ const UpsellPurchase = ({
   onOpenChange,
   onDownloadPdf,
   onSuccessClose,
+  onUnlocked,
   productKey,
   translationNamespace,
   benefitKeys,
@@ -130,9 +149,23 @@ const UpsellPurchase = ({
     setIsPending(true);
 
     /* A prepared request is unlocked; anything else is simply bought. */
-    const succeeded = spendRequest
-      ? (await unlockWithCredit(spendRequest, product.price.id)).outcome === 'unlocked'
-      : (await purchase(product.price.id)).outcome === 'purchased';
+    let succeeded: boolean;
+
+    if (spendRequest) {
+      const unlock = await unlockWithCredit(spendRequest, product.price.id);
+
+      succeeded = unlock.outcome === 'unlocked';
+
+      /*
+       * Said before the success message is shown, because the report it names is
+       * what the message's close navigates to.
+       */
+      if (unlock.outcome === 'unlocked') {
+        onUnlocked?.(unlock.searchReportId);
+      }
+    } else {
+      succeeded = (await purchase(product.price.id)).outcome === 'purchased';
+    }
 
     /*
      * Unlimited PDF downloads — the only upsell this dialog buys outright — is an

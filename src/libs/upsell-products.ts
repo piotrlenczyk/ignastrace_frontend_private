@@ -4,13 +4,13 @@ import type { paymentsSchemas } from '@/network/payments-api/payments-api-server
 /**
  * The application's word for an upsell, and it stays the legacy one.
  *
- * The translation namespaces, the one purchase that is still a legacy call — the
- * standalone sex-offender search — and the screens' own props all speak this
- * vocabulary, and none of them moved when the price did or when the charge
- * followed it. So the key identifies an upsell everywhere in this application,
- * and each upstream's own identity for the same thing is reached through one of
- * the two maps below rather than spread around:
- * the payments service's slug, and the new API's credit-balance product.
+ * The translation namespaces and the screens' own props all speak this
+ * vocabulary, and none of them moved when the price did, when the charge
+ * followed it, or when the last upsell left the legacy catalogue. So the key
+ * identifies an upsell everywhere in this application, and each upstream's own
+ * identity for the same thing is reached through one of the two maps below
+ * rather than spread around: the payments service's slug, and the new API's
+ * credit-balance product.
  *
  * The union lives here rather than in the `/success` screen's legacy `Product`
  * type, which now reads it from here: the vocabulary belongs to the concept, not
@@ -50,8 +50,10 @@ export type UpsellProduct = paymentsSchemas['GetUpsellProductResponseDto'] & {
  * since ADR 0030, charges it too — so the amount displayed and the amount charged
  * now agree, and what they agree on is one placeholder rather than the upsell the
  * member chose. The credit the backend grants therefore need not correspond to
- * the section that was bought. The day the backend publishes real Ignastrace
- * upsell products, this constant is the change and there is no other.
+ * the section that was bought — the assumption ADR 0039 states, together with the
+ * symptom it produces on the standalone search. The day the backend publishes
+ * real Ignastrace upsell products, this constant is the change and there is no
+ * other.
  *
  * `scan_pro` and `support_hotline` are looked up through this map too, since
  * ADR 0032 moved the `/success` screen's two extras onto the payments catalogue:
@@ -80,21 +82,23 @@ export const UPSELL_PRODUCT_SLUGS: Record<UpsellProductKey, string> = {
  * map is exhaustive: adding a key to the union is a build failure next to both
  * maps rather than an upsell that silently resolves to nothing.
  *
- * The four `null`s are each a fact rather than an omission. `unlimited_pdf_downloads`
+ * The three `null`s are each a fact rather than an omission. `unlimited_pdf_downloads`
  * is an entitlement on the current-user response, not a balance — the one concept
- * both upstreams share, and it is bought outright and never spent.
- * `sex_offenders_search` belongs to the standalone search, whose purchase stays on
- * the legacy call because that call also creates the search report and answers
- * with its identifier. `scan_pro` and `support_hotline` are bought on the payments
- * service since ADR 0032 and have no counterpart in the new API at all, so there
- * is nothing to spend after that purchase. See ADR 0030 and ADR 0032.
+ * both upstreams share, and it is bought outright and never spent. `scan_pro` and
+ * `support_hotline` are bought on the payments service since ADR 0032 and have no
+ * counterpart in the new API at all, so there is nothing to spend after that
+ * purchase. See ADR 0030 and ADR 0032.
+ *
+ * `sex_offenders_search` held the fourth `null` until ADR 0039: the new API now
+ * holds a balance for the standalone search too, and spending one of those credits
+ * is what materialises the search report the screen navigates to.
  */
 export const UPSELL_CREDIT_PRODUCTS: Record<UpsellProductKey, CreditProduct | null> = {
   scan_pro: null,
   support_hotline: null,
   data_leaks: 'DATA_LEAKS',
   sex_offenders: 'SEX_OFFENDERS',
-  sex_offenders_search: null,
+  sex_offenders_search: 'SEX_OFFENDERS_SEARCH',
   unlimited_pdf_downloads: null,
   social_networks: 'SOCIAL_NETWORKS',
 };
