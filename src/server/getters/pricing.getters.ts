@@ -26,11 +26,10 @@ export const getPricePagePricing = async () => {
  * checkout is where money changes hands, and an error page beats a payment form
  * with no price on it.
  *
- * TODO: the screens reading this still decide whether to redirect a member from
- * the mocked membership. The payments integration this follows sends a member
- * holding a subscription in any state to billing instead, and reads the absence
- * of one as its current-subscription endpoint answering not-found. Completing
- * that is what retires the mock on these screens.
+ * The screens reading this gate through the subscription gate, which reads the
+ * payments service and takes a not-found as the absence of a subscription
+ * (ADR 0036) — so the redirect these screens make is on the same upstream the
+ * price is.
  */
 export const getPricing = async (country: string) => {
   const { data = [] } = await paymentsApiServerClient['/products'].GET({

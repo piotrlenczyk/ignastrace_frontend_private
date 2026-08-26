@@ -22,10 +22,10 @@ import { upsellCreditCount, useUpsellCreditsQuery } from '@/network/api/hooks/us
  * upstream at all — one exception, with the cost accepted and recorded in
  * ADR 0032, and not a precedent for the keys this hook answers for.
  *
- * Nor is the composed member's list of extras asked any more. That list is the
- * mocked membership of ADR 0013 for every key except unlimited PDF downloads, so a
- * screen deciding whether to sell an upsell was reading an invented answer — the
- * fixture ADR 0030 replaces.
+ * Nor is the composed member's list of extras asked any more. That list was
+ * invented for every key except unlimited PDF downloads, so a screen deciding
+ * whether to sell an upsell was reading an invented answer — the fixture ADR 0030
+ * replaced and ADR 0038 deleted.
  *
  * `isLoading` is what a caller gates a purchase button on: false once the answer
  * is in, and false for a key neither upstream is asked about, so a button is

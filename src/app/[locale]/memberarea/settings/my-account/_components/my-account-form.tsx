@@ -14,7 +14,6 @@ import { Switch } from '@/components/ui/switch';
 import { useGenericErrorToast } from '@/hooks/use-generic-error-toast';
 import { toast } from '@/hooks/use-toast';
 import { useRouter } from '@/libs/i18n-routing';
-import { ACTIVE_MEMBERSHIP } from '@/libs/membership-mock';
 import type { components } from '@/network/api/api';
 import { actionUpdateAccount } from '@/server/actions/account.actions';
 import { isEmailTakenActionError, isWrongPasswordActionError } from '@/server/lib/auth-action-error';
@@ -26,17 +25,20 @@ import { DeleteAccount } from './delete-account';
 type Account = components['schemas']['UserResponse'];
 
 /*
- * The name and the address are the account's own, read from the account service.
- * The two notification switches are not: no endpoint publishes or accepts them,
- * so they show the mocked membership's value and return to it after a save. See
- * the mock module for why that is preferred to hiding the feature mid-migration.
+ * Every value on this form is the account's own, read from the account service
+ * and handed down by the server-rendered page — this component imports no member
+ * data and fetches none.
+ *
+ * The two notification switches read the account's preferences, where they used
+ * to read a fixture's. Only the read moved: no endpoint accepts them yet, so a
+ * save still returns them to what the account holds.
  */
 function getFormValues(account: Account) {
   return {
     name: account.name ?? '',
     email: account.email ?? '',
-    notify_status_changes: ACTIVE_MEMBERSHIP.notify_status_changes,
-    notify_user_located: ACTIVE_MEMBERSHIP.notify_user_located,
+    notify_status_changes: account.notifyStatusChanges,
+    notify_user_located: account.notifyUserLocated,
     current_password: '',
     password: '',
     confirm_password: '',

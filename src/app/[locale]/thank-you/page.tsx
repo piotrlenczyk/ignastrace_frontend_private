@@ -50,7 +50,7 @@ const ThankYouPage = async () => {
 
   return (
     <>
-      {purchaseEvent ? <GTMPurchaseEvent {...purchaseEvent} userId={user.id} email={user.email} /> : null}
+      {purchaseEvent ? <GTMPurchaseEvent {...purchaseEvent} userId={user.id} email={user.email ?? ''} /> : null}
       <FunnelUpsellRecordEnd />
       <FunnelLayout>
         <main className="s-main flex full-main items-center p-6">
@@ -121,7 +121,7 @@ const ThankYouPage = async () => {
               </svg>
             </div>
             <h1 className="h3 font-bold">{t('title')}</h1>
-            <p className="text-lg">{t('description', { email: user.email })}</p>
+            <p className="text-lg">{t('description', { email: user.email ?? '' })}</p>
 
             <TrustPilot />
 

@@ -101,7 +101,7 @@ const UpsellPage = async () => {
 
   return (
     <>
-      {purchaseEvent ? <GTMPurchaseEvent {...purchaseEvent} userId={user.id} email={user.email} /> : null}
+      {purchaseEvent ? <GTMPurchaseEvent {...purchaseEvent} userId={user.id} email={user.email ?? ''} /> : null}
       <FunnelLayout positionMobileHeader="static" showLogoLink={false}>
         <UpsellPageClient offers={offers} />
       </FunnelLayout>

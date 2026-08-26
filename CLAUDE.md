@@ -92,7 +92,17 @@ recorded in a **separate session cookie** — `src/libs/funnel-upsell-record.ts`
 screens that charge and by no member-area surface, never a field on the checkout attempt, which a
 completed payment ends — and the whole decision lives in one pure module, `src/libs/funnel-purchase-event.ts`.
 No `upsell_purchase` is sent where the run comes to nothing, so that event's volume falls to real sales;
-both amounts still carry 0023's cost. The billing screen is off the legacy client entirely; what that costs is that the legacy
+both amounts still carry 0023's cost. With those two landed, **the mocked membership itself is deleted**
+(`docs/adr/0038-the-mocked-membership-is-deleted.md`, which supersedes 0013): nothing in this application
+invents member data any more, so a wrong field on a screen is always some upstream's real answer. The
+server-side account read returns the generated `UserResponse` with nothing merged onto it, the composed
+`User` domain type is **gone** rather than kept as a shim, and every screen that read it — the download
+controls, the report detail screens, the settings form, the funnel confirmation screens — reads the
+account's own `camelCase` field names, including the single `unlimitedPdfDownloadsUnlocked` that used to
+be written down twice. The two notification preferences and `onboardingPhoneNumber` come from the account;
+the owned-extras list, the prices and the per-extra availability flags were deleted rather than re-sourced
+because nothing read them. Don't reintroduce a member type, a composer, or an adapter over the account
+response. The billing screen is off the legacy client entirely; what that costs is that the legacy
 population is redirected off it, and every payments write — an upsell charge included — is raised as
 the shared technical account. Outside that track, still don't rewrite a screen's fetching unless you
 are redesigning the screen.

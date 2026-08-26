@@ -23,9 +23,10 @@ export const UPSELL_CREDITS_QUERY_KEY = UPSELL_CREDITS_QUERY_OPTIONS.queryKey;
  * How many credits of each product the caller may still spend.
  *
  * This is what decides "offer the unlock" against "offer the purchase", and it is
- * the answer that replaces a fixture: the composed member's list of extras is the
- * mocked membership of ADR 0013 for every key but unlimited PDF downloads, so a
- * funnel step or a report section asking it was asking an invented question.
+ * the answer that replaced a fixture: the composed member's list of extras was
+ * invented for every key but unlimited PDF downloads, so a funnel step or a report
+ * section asking it was asking an invented question. That list is gone with the
+ * composed shape (ADR 0038); this is what the question is asked of now.
  *
  * It answers for the three products the new API models as a balance. The
  * payments service's own purchased-products endpoint is deliberately not used
