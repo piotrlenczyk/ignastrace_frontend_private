@@ -73,7 +73,14 @@ export const LanguageSelectorV2 = ({ className }: { className?: string }) => {
   return (
     <>
       {/* Mobile — bottom sheet */}
-      <div className={cn('lg:hidden', className)}>
+      {/*
+       * `flex`, not the default block: the trigger is an `inline-flex` button, so
+       * in a block wrapper it sits on the text baseline and the wrapper grows to
+       * the 26px line box with the descender space below it. The button then
+       * occupies the top 20px, and the navbar's `items-center` centres the
+       * wrapper rather than the button — leaving the selector 3px above Log in.
+       */}
+      <div className={cn('flex items-center lg:hidden', className)}>
         <Dialog.Root open={sheetOpen} onOpenChange={setSheetOpen}>
           <Dialog.Trigger asChild>
             <ButtonV2 hierarchy="link-gray" size="md" className={triggerClasses} aria-label={t('change_language')}>
@@ -123,7 +130,7 @@ export const LanguageSelectorV2 = ({ className }: { className?: string }) => {
                 })}
               </ul>
               <Dialog.Close asChild>
-                <ButtonV2 hierarchy="secondary-gray" size="lg" className="w-full">
+                <ButtonV2 hierarchy="secondary" size="lg" className="w-full">
                   {t('cancel')}
                 </ButtonV2>
               </Dialog.Close>
@@ -133,7 +140,8 @@ export const LanguageSelectorV2 = ({ className }: { className?: string }) => {
       </div>
 
       {/* Desktop — dropdown, no Figma frame; legacy interaction restyled */}
-      <div className={cn('hidden lg:block', className)}>
+      {/* `lg:flex` rather than `lg:block`, for the baseline reason above. */}
+      <div className={cn('hidden lg:flex lg:items-center', className)}>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <ButtonV2 hierarchy="link-gray" size="md" className={triggerClasses} aria-label={t('change_language')}>

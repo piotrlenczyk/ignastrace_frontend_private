@@ -50,3 +50,5 @@ bin/lokalise2
 
 # Storybook build output
 storybook-static
+
+launch.json

@@ -34,14 +34,28 @@ export const MobileMenuV2 = ({ open, onOpenChange }: { open: boolean; onOpenChan
     <div className="lg:hidden">
       <Dialog.Root open={open} onOpenChange={onOpenChange} modal={false}>
         <Dialog.Trigger asChild>
-          <ButtonV2
-            hierarchy="tertiary-gray"
-            size="md"
-            className="-mr-2 px-2"
+          {/*
+           * A plain button rather than `ButtonV2`: the mobile header
+           * (13002:2765) draws the hamburger as a bare 20px glyph in `fg-primary`
+           * sitting directly in the 24px-gap action row — no surface, no padding.
+           * Every `ButtonV2` hierarchy sets its own icon colour through a
+           * descendant selector, which a class at the call site cannot outrank,
+           * so using it here would mean fighting the component to get `fg-primary`.
+           *
+           * That leaves a 20px hit target, under the 44px usually wanted on touch.
+           * It is what the frame specifies; raising it is a design change.
+           */}
+          <button
+            type="button"
             aria-label={open ? t('close_menu') : t('open_menu')}
+            className={`
+              flex shrink-0 cursor-pointer items-center justify-center text-fg-primary
+              focus-visible:ring-2 focus-visible:ring-effects-focus-ring focus-visible:ring-offset-2
+              focus-visible:outline-hidden
+            `}
           >
-            <Icon className="size-6 shrink-0" />
-          </ButtonV2>
+            <Icon className="size-5 shrink-0" />
+          </button>
         </Dialog.Trigger>
         <Dialog.Portal>
           <Dialog.Content
@@ -76,7 +90,7 @@ export const MobileMenuV2 = ({ open, onOpenChange }: { open: boolean; onOpenChan
               </ul>
             </nav>
 
-            <ButtonV2 asChild hierarchy="secondary-gray" size="lg" className="w-full max-w-sm">
+            <ButtonV2 asChild hierarchy="secondary" size="lg" className="w-full max-w-sm">
               <Link href={ROUTES.SIGN_IN} onClick={() => onOpenChange(false)}>
                 {t('login')}
               </Link>

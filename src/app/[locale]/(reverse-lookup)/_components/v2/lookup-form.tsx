@@ -10,7 +10,7 @@ import { saveFunnelPhone } from '@/actions/funnel-phone-number';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Icon } from '@/components/ui/icon';
 import { ButtonV2 } from '@/components/ui/v2/button';
-import { PhoneFieldV2 } from '@/components/ui/v2/phone-field';
+import { PhoneCtaFormV2 } from '@/components/ui/v2/phone-cta-form';
 import { ROUTES } from '@/constants/routes';
 import { clearSummaryTimer } from '@/hooks/use-timer-utils';
 import { useRouter } from '@/libs/i18n-routing';
@@ -24,9 +24,14 @@ import { createPhoneFormSchema, type PhoneFormValues } from '@/types/phone-form.
  * then `saveFunnelPhone` then `router.push(destinationUrl)`, same server-error
  * fallback onto the `phone` field, same default destination.
  *
- * The layout reflows rather than duplicating: the design keeps the button inside
- * the bordered row on desktop and drops it to a full-width block below the field on
- * mobile, so the border and padding move to the outer element at `lg`.
+ * The field, its border, the country divider and the error message are all
+ * `PhoneCtaFormV2` — the whole `CTA From` component set. The only thing left here
+ * is the mobile submit button: the set's desktop frame carries the button inside
+ * the field (which the component renders, `hidden lg:inline-flex`) and its mobile
+ * frame carries none at all, so placing the mobile one belongs to the screen.
+ *
+ * Both buttons are `type="submit"` on the same form and exactly one is ever
+ * visible, so Enter and click reach the same handler at either breakpoint.
  */
 export const LookupForm = ({
   className,
@@ -64,60 +69,37 @@ export const LookupForm = ({
   return (
     <div className={cn('w-full', className)}>
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(handleSubmit)}
-          className={`
-            flex flex-col gap-3
-            lg:h-16 lg:flex-row lg:items-center lg:gap-4 lg:rounded-md lg:border lg:border-border-primary
-            lg:bg-bg-primary lg:p-2
-          `}
-        >
-          <div
-            className={`
-              flex items-center rounded-md border border-border-primary bg-bg-primary p-2
-              lg:min-w-px lg:flex-1 lg:rounded-none lg:border-0 lg:p-0
-            `}
-          >
-            <FormField
-              control={form.control}
-              name="phone"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormControl>
-                    <PhoneFieldV2
-                      onChange={(formattedPhone) => field.onChange(formattedPhone)}
-                      defaultCountry={defaultCountry}
-                      placeholder={t('placeholder')}
-                      /*
-                       * The divider between the country selector and the input is a
-                       * right border on the country cell in the design, so it is
-                       * drawn by the selector's sibling rather than a spacer node.
-                       */
-                      className="
-                        divide-x divide-border-primary
-                        [&>button]:mr-2 [&>button]:border-r [&>button]:border-border-primary [&>button]:pr-3
-                      "
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <ButtonV2 type="submit" size="xl" disabled={isSubmitting} className="w-full gap-1.5 px-8 lg:w-auto">
-            {isSubmitting ? (
-              <Icon name="reload" className="size-5 animate-spin" />
-            ) : (
-              <Icon name="search" className="size-5" />
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col gap-3">
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormControl>
+                  <PhoneCtaFormV2
+                    onChange={(formattedPhone) => field.onChange(formattedPhone)}
+                    defaultCountry={defaultCountry}
+                    placeholder={t('placeholder')}
+                    submitLabel={t('submit')}
+                    loading={isSubmitting}
+                    error={form.formState.errors.phone?.message}
+                  />
+                </FormControl>
+              </FormItem>
             )}
+          />
+
+          <ButtonV2
+            type="submit"
+            size="xl"
+            loading={isSubmitting}
+            iconLeading={<Icon name="search" />}
+            className="w-full px-8 lg:hidden"
+          >
             {t('submit')}
           </ButtonV2>
         </form>
       </Form>
-
-      {form.formState.errors.phone && (
-        <p className="mt-2 font-body text-sm-medium text-text-error-primary">{form.formState.errors.phone.message}</p>
-      )}
     </div>
   );
 };
