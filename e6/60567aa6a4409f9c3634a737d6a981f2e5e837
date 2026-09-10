@@ -1,0 +1,65 @@
+src/components/navigation/v2/language-selector.tsx
+  f81f9c186ddff1a9 76-83,133,143-144
+src/components/ui/v2/phone-cta-form.stories.tsx
+  f81f9c186ddff1a9 5,8,12,15,19-23,25-26,32-33,39-43,48,51-52,54,57,59,62,70-72,75,77-113
+src/components/ui/v2/phone-cta-form.tsx
+  f81f9c186ddff1a9 16,21-23,25,27-45,51-54,62-70,75,81,83,89-134,179,183-189,192,201-221,223-239,241,243-252,254-256,258-331
+.gitignore
+  h_1509f411c28ee9 53-54
+.storybook/preview.tsx
+  f81f9c186ddff1a9 23
+src/components/ui/v2/button.tsx
+  f81f9c186ddff1a9 8,10-12,14-25,29-32,34,37-42,44-53,55-62,64,66-70,72-74,76-79,81-82,85-88,91-94,96-111,113-115,117,123-138,140-146,150-154,157-162,165-167,170-172,176-177,183-184,189-201,204-220,225-241,243-268,270-280
+src/components/navigation/v2/navbar.tsx
+  f81f9c186ddff1a9 16-24,29-32,44,46-58,65,72-73,78
+src/app/[locale]/(reverse-lookup)/_components/v2/lookup-form.tsx
+  f81f9c186ddff1a9 13,27-34,72-88,90-98
+src/components/navigation/v2/mobile-menu.tsx
+  f81f9c186ddff1a9 37-49,51-55,57-58,93
+src/components/layouts/v2/footer.tsx
+  f81f9c186ddff1a9 8,14-20,73-77,84-85,88-89,94,106-114
+src/components/ui/v2/button.stories.tsx
+  f81f9c186ddff1a9 6,8-11,21-23,30-31,35,42-61,65-66,72,75,81,88-93,96-115,119-150,157,164-166,168-213,217-219,224-228
+src/locales/en.json
+  f81f9c186ddff1a9 46
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.2",
+  "base_commit_sha": "e660567aa6a4409f9c3634a737d6a981f2e5e837",
+  "prompts": {
+    "d3ed8c59adcdb042": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9938f865-ac74-4cdb-823e-a1e2a1966020",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Bartłomiej Matoga",
+      "messages": [],
+      "total_additions": 72,
+      "total_deletions": 4,
+      "accepted_lines": 11,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.miquido.dev/cas/b3ae52213dd76a7cef620722462cd286371e6f05b7a087883f8b7ceae3378085"
+    },
+    "f81f9c186ddff1a9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5e393916-691c-48ab-83e3-40996f6cc79c",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Bartłomiej Matoga",
+      "messages": [],
+      "total_additions": 1029,
+      "total_deletions": 567,
+      "accepted_lines": 959,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.miquido.dev/cas/06f3c80371d340d07e693926847355789c0e341d84a875f36c7f42523a588105"
+    }
+  },
+  "humans": {
+    "h_1509f411c28ee9": {
+      "author": "Bartłomiej Matoga"
+    }
+  }
+}
