@@ -43,7 +43,7 @@
       "cancel": "Cancel",
       "change_language": "Change language"
     },
-    "phone_field": {
+    "phone_cta_form": {
       "search": "Search by country or code...",
       "no_results": "Country code not found."
     },

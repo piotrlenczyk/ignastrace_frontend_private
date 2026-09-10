@@ -20,7 +20,7 @@ const preview: Preview = {
     /*
      * The App Router mocks: `useSearchParams`, `usePathname` and `useRouter`
      * resolve to Storybook's implementations, which is what lets client
-     * components like PhoneFieldV2 render outside a Next request.
+     * components like PhoneCtaFormV2 render outside a Next request.
      */
     nextjs: {
       appDirectory: true,
